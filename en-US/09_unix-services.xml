@@ -675,21 +675,6 @@
 	<replaceable>server</replaceable>, and to bind both connections
 	together.</para>
 
-	<para>In both cases, connections are made to port 25 on the
-	<replaceable>server</replaceable> host, which pass through the SSH
-	tunnel established between the local machine and the
-	<replaceable>intermediary</replaceable> machine. In the first case,
-	the entrance to the tunnel is local port 8000, and the data move
-	towards the <replaceable>intermediary</replaceable> machine before
-	being directed to the <replaceable>server</replaceable> on the
-	“public” network. In the second case, the input and output in
-	the tunnel are reversed; the entrance is port 8000 on the
-	<replaceable>intermediary</replaceable> machine, the output is on
-	the local host, and the data are then directed to the
-	<replaceable>server</replaceable>. In practice, the server is
-	usually either the local machine or the intermediary. That way SSH
-	secures the connection from one end to the other.</para>
-
         <figure id="figure.ssh-L">
           <title>Forwarding a local port with SSH</title>
           <mediaobject>
@@ -707,6 +692,22 @@
             </imageobject>
           </mediaobject>
         </figure>
+
+	<para>In both cases, connections are made to port 25 on the
+	<replaceable>server</replaceable> host, which pass through the SSH
+	tunnel established between the local machine and the
+	<replaceable>intermediary</replaceable> machine. In the first case,
+	the entrance to the tunnel is local port 8000, and the data move
+	towards the <replaceable>intermediary</replaceable> machine before
+	being directed to the <replaceable>server</replaceable> on the
+	“public” network. In the second case, the input and output in
+	the tunnel are reversed; the entrance is port 8000 on the
+	<replaceable>intermediary</replaceable> machine, the output is on
+	the local host, and the data are then directed to the
+	<replaceable>server</replaceable>. In practice, the server is
+	usually either the local machine or the intermediary. That way SSH
+	secures the connection from one end to the other.</para>
+
       </section>
     </section>
     <section id="sect.remote-desktops">
@@ -1102,6 +1103,11 @@
       modules are installed and activated by default, even if the
       corresponding service is not installed on the machine.</para>
 
+      <para>Webmin is used through a web interface, but it does not require
+      Apache to be installed. Essentially, this software has its own
+      integrated mini web server. This server listens by default on port
+      10000 and accepts secure HTTP connections.</para>
+
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Changing the root password</title>
 
@@ -1118,11 +1124,6 @@
 	recommended for important systems with strong security constraints
 	(firewall, sensitive servers, etc.).</para>
       </sidebar>
-
-      <para>Webmin is used through a web interface, but it does not require
-      Apache to be installed. Essentially, this software has its own
-      integrated mini web server. This server listens by default on port
-      10000 and accepts secure HTTP connections.</para>
 
       <para>Included modules cover a wide variety of services, among
       which:</para>
@@ -1553,6 +1554,8 @@ ident  stream tcp nowait  nobody     /usr/sbin/identd   identd -i
       and more reliable than <command>sendmail</command>, which features a
       long history of security vulnerabilities.</para>
     </sidebar>
+
+    <?latex \pagebreak ?>
 
     <sidebar>
       <title><emphasis>ALTERNATIVE</emphasis> Other <command>inetd</command> commands</title>

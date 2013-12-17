@@ -562,6 +562,16 @@
       <!-- TODO: add sidebar to present non-graphical helper tools like
 	   ferm: http://ferm.foo-projects.org -->
 
+      <figure id="figure.fwbuilder">
+        <title>Fwbuilder's main window</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/fwbuilder.png" scalefit="1"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <indexterm><primary><command>fwbuilder</command></primary></indexterm>
+
       <para>The principle is simple. In the first step, one needs to
       describe all the elements that will be involved in the actual
       rules:</para>
@@ -590,16 +600,6 @@
       rulesets for IPv4 and IPv6, or create only one and let
       <command>fwbuilder</command> translate the rules according to the
       addresses assigned to the objects.</para>
-
-      <figure id="figure.fwbuilder">
-        <title>Fwbuilder's main window</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/fwbuilder.png" scalefit="1"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-      <indexterm><primary><command>fwbuilder</command></primary></indexterm>
 
       <para><command>fwbuilder</command> can then generate a script
       configuring the firewall according to the rules that have been
@@ -1318,6 +1318,8 @@ iface eth0 inet static
       all those files must not be changed by hand. You should use the
       programs designed for this purpose.</para>
 
+      <?latex \pagebreak ?>
+
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> More documentation</title>
 
@@ -1612,24 +1614,6 @@ interface(`myapp_read_log',`
         </example>
 
         <sidebar>
-          <title><emphasis>DOCUMENTATION</emphasis> Explanations about the <emphasis>reference policy</emphasis></title>
-
-	  <para>The <emphasis>reference policy</emphasis> evolves like any
-	  free software project: based on volunteer contributions. The
-	  project is hosted by Tresys, one of the most active companies in
-	  the SELinux field. Their wiki contains explanations on how the
-	  rules are structured and how you can create new ones. <ulink
-	  type="block"
-	  url="http://oss.tresys.com/projects/refpolicy/wiki/GettingStarted"/></para>
-        </sidebar>
-      </section>
-      <section>
-        <title>Writing a <filename>.te</filename> File</title>
-
-	<para>Have a look at the <filename>example.te</filename>
-	file:</para>
-
-        <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> The <command>m4</command> macro language</title>
 
 	  <para>To properly structure the policy, the SELinux developers
@@ -1648,6 +1632,26 @@ interface(`myapp_read_log',`
 	  Likewise, some rights are in fact sets of rights which are
 	  replaced by their values at compilation time.</para>
         </sidebar>
+
+	<?latex \pagebreak ?>
+
+        <sidebar>
+          <title><emphasis>DOCUMENTATION</emphasis> Explanations about the <emphasis>reference policy</emphasis></title>
+
+	  <para>The <emphasis>reference policy</emphasis> evolves like any
+	  free software project: based on volunteer contributions. The
+	  project is hosted by Tresys, one of the most active companies in
+	  the SELinux field. Their wiki contains explanations on how the
+	  rules are structured and how you can create new ones. <ulink
+	  type="block"
+	  url="http://oss.tresys.com/projects/refpolicy/wiki/GettingStarted"/></para>
+        </sidebar>
+      </section>
+      <section>
+        <title>Writing a <filename>.te</filename> File</title>
+
+	<para>Have a look at the <filename>example.te</filename>
+	file:</para>
 
         <programlisting>policy_module(myapp,1.0.0) <co id="example.te.module"/>
 
@@ -1758,6 +1762,8 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 
 	<para>To better understand this message, let us study it piece by
 	piece.</para>
+
+	<?latex \pagebreak ?>
 
         <table colsep="1">
           <title>Analysis of an SELinux trace</title>
@@ -2196,7 +2202,7 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <literal>/usr/sbin/apache2</literal>. If we follow that example, the
       thing to do is to note its process identifier, and check
       <filename>/proc/<replaceable>pid</replaceable>/exe</filename> to see
-      what program this process is currently running:</para>
+      what program this process is currently running:<?latex \pagebreak ?></para>
 
       <screen>
 <computeroutput># </computeroutput><userinput>ls -al /proc/3719/exe</userinput>
@@ -2443,6 +2449,8 @@ www.falcot.com 200.58.141.84 - - [27/Nov/2004:13:33:34 +0100] "GET /phpbb/viewto
       administrative privileges. Did they reach their target? In this case,
       probably not, since no files seem to have been modified after the
       initial breach.</para>
+
+      <?latex \pagebreak ?>
 
       <para>In this example, the whole intrusion has been reconstructed,
       and it can be deduced that the attacker has been able to take

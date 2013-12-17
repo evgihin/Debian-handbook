@@ -171,7 +171,7 @@
       <title>Starting the Rebuild</title>
 
       <para>When all the needed changes have been applied to the sources,
-      we can start generating the actual binary package
+      we can generate the binary package
       (<filename>.deb</filename> file). The whole process is managed by the
       <command>dpkg-buildpackage</command> command.</para>
 
@@ -666,6 +666,29 @@ deb http://packages.falcot.com/ internal/
     the files required by APT, such as
     <filename>Packages.gz</filename>.</para>
 
+    <para>Configuring <command>mini-dinstall</command> requires setting up
+    a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp
+    case, the contents are as follows:</para>
+
+    <programlisting>
+[DEFAULT]
+archive_style = flat
+archivedir = /srv/vhosts/packages
+
+verify_sigs = 0
+mail_to = admin@falcot.com
+
+generate_release = 1
+release_origin = Falcot Corp
+release_codename = stable
+
+[updates]
+release_label = Recompiled Debian Packages
+
+[internal]
+release_label = Internal Packages
+</programlisting>
+
     <sidebar>
       <title><emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command></title>
       <indexterm><primary><command>apt-ftparchive</command></primary></indexterm>
@@ -693,29 +716,6 @@ deb http://packages.falcot.com/ internal/
       creating <filename>Sources.gz</filename> files in a similar
       fashion.</para>
     </sidebar>
-
-    <para>Configuring <command>mini-dinstall</command> requires setting up
-    a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp
-    case, the contents are as follows:</para>
-
-    <programlisting>
-[DEFAULT]
-archive_style = flat
-archivedir = /srv/vhosts/packages
-
-verify_sigs = 0
-mail_to = admin@falcot.com
-
-generate_release = 1
-release_origin = Falcot Corp
-release_codename = stable
-
-[updates]
-release_label = Recompiled Debian Packages
-
-[internal]
-release_label = Internal Packages
-</programlisting>
 
     <para>One decision worth noting is the generation of
     <filename>Release</filename> files for each archive. This can help
@@ -787,9 +787,9 @@ release_label = Internal Packages
     <section>
       <title>Learning to Make Packages</title>
 
-      <para>Creating a quality Debian package is not always a simple task,
-      and becoming a package maintainer takes some learning, both with
-      theory and practice. It's not a simple matter of building and
+      <para>Creating a quality Debian package is not a simple task,
+      and becoming a package maintainer takes some learning. It's not
+      a simple matter of building and
       installing software; rather, the bulk of the complexity comes from
       understanding the problems and conflicts, and more generally the
       interactions, with the myriad of other packages available.</para>

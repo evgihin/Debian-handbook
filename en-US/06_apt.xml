@@ -1256,10 +1256,9 @@ Pin-Priority: 490
       <title>Tracking Automatically Installed Packages</title>
 
       <para>One of the essential functionalities of
-      <command>apt-get</command> (which was initially specific to
-      <command>aptitude</command>) is the tracking of packages installed
+      <command>apt-get</command> is the tracking of packages installed
       only through dependencies. These packages are called “automatic”,
-      and often include libraries for instance.</para>
+      and often include libraries.</para>
       
       <para>With this information, when packages are removed, the package
       managers can compute a list of automatic packages that are
@@ -1319,8 +1318,8 @@ i A apt-xapian-index Depends    python-debian (&gt;= 0.1.15)
 	packages.</para>
 
 	<para><command>debfoster</command> has a more elaborate approach,
-	very similar to APT's one: it maintains a
-	list of packages that have been explicitly installed, and
+	close to APT's one: it maintains a
+	list of explicitly installed packages, and
 	remembers what packages are really required between each
 	invocation. If new packages appear on the system and if
 	<command>debfoster</command> doesn't know them as required
@@ -1454,15 +1453,6 @@ More tags: suite::debian works-with::software:package role::program interface::c
       <command>apt-get</command>'s, and its interface much easier to
       understand.</para>
 
-      <figure>
-        <title>The <command>aptitude</command> package manager</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/aptitude.png" scalefit="1" width="75%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-
       <para>When it starts, <command>aptitude</command> shows a list of
       packages sorted by state (installed, non-installed, or installed but
       not available on the mirrors — other sections display tasks,
@@ -1502,6 +1492,15 @@ More tags: suite::debian works-with::software:package role::program interface::c
 	url="file:///usr/share/doc/aptitude/html/en/index.html"/></para>
       </sidebar>
 
+      <figure>
+        <title>The <command>aptitude</command> package manager</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/aptitude.png" scalefit="1" width="75%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
       <para>To search for a package, you can type
       <keycombo><keycap>/</keycap></keycombo> followed by a search pattern.
       This pattern matches the name of the package, but can also be applied
@@ -1512,22 +1511,6 @@ More tags: suite::debian works-with::software:package role::program interface::c
       <keycombo><keycap>l</keycap></keycombo> key (as in
       <foreignphrase>limit</foreignphrase>) and enter the pattern.</para>
 
-      <para>Managing the “automatic flag” of Debian packages (see <xref
-      linkend="sect.automatic-tracking" />) is a breeze with
-      <command>aptitude</command>. It is possible to browse the list of
-      installed packages and mark packages as automatic with <keycombo
-      action="simul"><keycap>Shift</keycap> <keycap>m</keycap></keycombo>
-      or to remove the mark with the
-      <keycombo><keycap>m</keycap></keycombo> key. “Automatic packages”
-      are tagged with an “A” in the list of packages. This feature also
-      offers a simple way to visualize the packages in use on a machine,
-      without all the libraries and dependencies that you don't really
-      care about. The related pattern that can be used with
-      <keycombo><keycap>l</keycap></keycombo> (to activate the filter
-      mode) is <literal>~i!~M</literal>. It specifies that you only want
-      to see installed packages (<literal>~i</literal>) not marked as
-      automatic (<literal>!~M</literal>).</para> 
-      
       <sidebar>
 	<title><emphasis>TOOL</emphasis> Using <command>aptitude</command> on the command-line interface</title>
 
@@ -1558,6 +1541,22 @@ More tags: suite::debian works-with::software:package role::program interface::c
 	(after a confirmation request).</para>
       </sidebar>
 
+      <para>Managing the “automatic flag” of Debian packages (see <xref
+      linkend="sect.automatic-tracking" />) is a breeze with
+      <command>aptitude</command>. It is possible to browse the list of
+      installed packages and mark packages as automatic with <keycombo
+      action="simul"><keycap>Shift</keycap> <keycap>m</keycap></keycombo>
+      or to remove the mark with the
+      <keycombo><keycap>m</keycap></keycombo> key. “Automatic packages”
+      are tagged with an “A” in the list of packages. This feature also
+      offers a simple way to visualize the packages in use on a machine,
+      without all the libraries and dependencies that you don't really
+      care about. The related pattern that can be used with
+      <keycombo><keycap>l</keycap></keycombo> (to activate the filter
+      mode) is <literal>~i!~M</literal>. It specifies that you only want
+      to see installed packages (<literal>~i</literal>) not marked as
+      automatic (<literal>!~M</literal>).</para> 
+      
       <section>
         <title>Managing Recommendations, Suggestions and Tasks</title>
 

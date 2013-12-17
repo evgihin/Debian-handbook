@@ -11,7 +11,14 @@
 <xsl:param name="latex.class.options">twoside,11pt</xsl:param>
 <xsl:param name="latex.enddocument">
   <!-- Force empty page at the end, required by lulu for distribution -->
-  <xsl:text>&#10;\clearpage&#10;</xsl:text>
+  <xsl:text>&#10;\newpage&#10;</xsl:text>
+  <xsl:text>\thispagestyle{empty}&#10;</xsl:text>
+  <xsl:text>\hbox{}&#10;</xsl:text>
+  <!-- Supplementary empty pages for padding -->
+  <xsl:text>\newpage&#10;</xsl:text>
+  <xsl:text>\thispagestyle{empty}&#10;</xsl:text>
+  <xsl:text>\hbox{}&#10;</xsl:text>
+  <xsl:text>\newpage&#10;</xsl:text>
   <xsl:text>\thispagestyle{empty}&#10;</xsl:text>
   <xsl:text>\hbox{}&#10;</xsl:text>
   <xsl:text>\end{document}&#10;</xsl:text>
