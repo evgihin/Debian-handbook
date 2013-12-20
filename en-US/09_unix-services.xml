@@ -163,27 +163,6 @@
       the BIOS memory to reset the password…</para>
     </sidebar>
 
-    <sidebar>
-      <title><emphasis>BACK TO BASICS</emphasis> Kernel modules and options</title>
-      <indexterm><primary>modules</primary><secondary>kernel modules</secondary></indexterm>
-
-      <para>Kernel modules also have options that can be configured by
-      putting some files in <filename>/etc/modprobe.d/</filename>. These
-      options are defined with directives like this: <literal>options
-      <replaceable>module-name</replaceable>
-      <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>.
-      Several options can be specified with a single directive if
-      necessary.</para>
-
-      <para>These configuration files are intended for
-      <command>modprobe</command> — the program that loads a kernel
-      module with its dependencies (modules can indeed call other modules).
-      This program is provided by the <emphasis
-      role="pkg">kmod</emphasis> package.</para>
-      <indexterm><primary><command>modprobe</command></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">kmod</emphasis></primary></indexterm>
-    </sidebar>
-
     <para>After this stage, <command>init</command> takes over and starts
     the programs enabled in the default runlevel (which is usually runlevel
     2). It executes <command>/etc/init.d/rc 2</command>, a script that
@@ -205,6 +184,27 @@
     with <command>portmap</command>) are started first, followed by
     standard services and the graphical interface
     (<command>gdm</command>).</para>
+
+    <sidebar>
+      <title><emphasis>BACK TO BASICS</emphasis> Kernel modules and options</title>
+      <indexterm><primary>modules</primary><secondary>kernel modules</secondary></indexterm>
+
+      <para>Kernel modules also have options that can be configured by
+      putting some files in <filename>/etc/modprobe.d/</filename>. These
+      options are defined with directives like this: <literal>options
+      <replaceable>module-name</replaceable>
+      <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>.
+      Several options can be specified with a single directive if
+      necessary.</para>
+
+      <para>These configuration files are intended for
+      <command>modprobe</command> — the program that loads a kernel
+      module with its dependencies (modules can indeed call other modules).
+      This program is provided by the <emphasis
+      role="pkg">kmod</emphasis> package.</para>
+      <indexterm><primary><command>modprobe</command></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">kmod</emphasis></primary></indexterm>
+    </sidebar>
 
     <para>This dependency-based boot system makes it possible to automate
     re-numbering, which could be rather tedious if it had to be done
@@ -307,14 +307,6 @@
     <filename>/etc/rc<replaceable>X</replaceable>.d</filename> directories)
     to adapt them to particular needs.</para>
 
-    <figure id="figure.boot-process">
-      <title>Boot sequence of a computer running Linux</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/startup.png" scalefit="1" width="80%"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
     <indexterm><primary>initialization script</primary></indexterm>
 
     <para>All the scripts contained in the various
@@ -336,6 +328,15 @@
     role="pkg">rcconf</emphasis> package) which provides a more
     user-friendly interface.</para>
     <indexterm><primary><command>update-rc.d</command></primary></indexterm>
+
+    <figure id="figure.boot-process">
+      <title>Boot sequence of a computer running Linux</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/startup.png" scalefit="1" width="80%"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
 
     <sidebar>
       <title><emphasis>DEBIAN POLICY</emphasis> Restarting services</title>
@@ -478,6 +479,13 @@
       maintain a free version of SSH.</para>
       <indexterm><primary>OpenSSH</primary></indexterm>
 
+      <para>OpenSSH is split into two packages: the client part is in the <emphasis
+      role="pkg">openssh-client</emphasis> package, and the server is in
+      the <emphasis role="pkg">openssh-server</emphasis> package. The
+      <emphasis role="pkg">ssh</emphasis> meta-package depends on both
+      parts and facilitates installation of both (<command>apt-get install
+      ssh</command>).</para>
+
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> <foreignphrase>Fork</foreignphrase></title>
         <indexterm><primary>fork</primary></indexterm>
@@ -496,13 +504,6 @@
 	resolution would be preferable. Mergers of two projects that
 	previously went through a prior fork are not unheard of.</para>
       </sidebar>
-
-      <para>OpenSSH is split into two packages: the client part is in the <emphasis
-      role="pkg">openssh-client</emphasis> package, and the server is in
-      the <emphasis role="pkg">openssh-server</emphasis> package. The
-      <emphasis role="pkg">ssh</emphasis> meta-package depends on both
-      parts and facilitates installation of both (<command>apt-get install
-      ssh</command>).</para>
 
       <section id="sect.ssh-key-based-auth">
         <title>Key-Based Authentication</title>
@@ -1513,6 +1514,8 @@
 	C).</para>
       </listitem>
     </itemizedlist>
+
+    <?latex \pagebreak ?>
 
     <para>The following example illustrates the most common cases:</para>
 

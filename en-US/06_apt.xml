@@ -665,6 +665,37 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
       <indexterm><primary><command>aptitude purge</command></primary></indexterm>
 
       <sidebar>
+        <title><emphasis>TIP</emphasis> Removing and installing at the same time</title>
+
+	<para>It is possible to ask <command>apt-get</command> (or
+	<command>aptitude</command>) to install certain packages and remove
+	others on the same command line by adding a suffix. With an
+	<command>apt-get install</command> command, add
+	“<literal>-</literal>” to the names of the packages you wish to
+	remove. With an <command>apt-get remove</command> command, add
+	“<literal>+</literal>” to the names of the packages you wish to
+	install.</para>
+
+	<para>The next example shows two different ways to install
+	<replaceable>package1</replaceable> and to remove
+	<replaceable>package2</replaceable>.</para>
+
+        <screen># <userinput>apt-get install <replaceable>package1</replaceable> <replaceable>package2-</replaceable></userinput>
+[...]
+# <userinput>apt-get remove <replaceable>package1+</replaceable> <replaceable>package2</replaceable></userinput>
+[...]
+</screen>
+
+	<para>This can also be used to exclude packages which would
+	otherwise be installed, for example due to a
+	<literal>Recommends</literal>. In general, the dependency solver
+	will use that information as a hint to look for alternative
+	solutions.</para>
+      </sidebar>
+
+      <?latex \pagebreak ?>
+
+      <sidebar>
         <title><emphasis>TIP</emphasis> Installing the same selection of packages several times</title>
 
 	<para>It can be useful to systematically install the same list of
@@ -699,35 +730,6 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
 	<command>apt-get</command> invocation executes
 	the required operations! <command>aptitude</command> does not have
 	this command.</para>
-      </sidebar>
-
-      <sidebar>
-        <title><emphasis>TIP</emphasis> Removing and installing at the same time</title>
-
-	<para>It is possible to ask <command>apt-get</command> (or
-	<command>aptitude</command>) to install certain packages and remove
-	others on the same command line by adding a suffix. With an
-	<command>apt-get install</command> command, add
-	“<literal>-</literal>” to the names of the packages you wish to
-	remove. With an <command>apt-get remove</command> command, add
-	“<literal>+</literal>” to the names of the packages you wish to
-	install.</para>
-
-	<para>The next example shows two different ways to install
-	<replaceable>package1</replaceable> and to remove
-	<replaceable>package2</replaceable>.</para>
-
-        <screen># <userinput>apt-get install <replaceable>package1</replaceable> <replaceable>package2-</replaceable></userinput>
-[...]
-# <userinput>apt-get remove <replaceable>package1+</replaceable> <replaceable>package2</replaceable></userinput>
-[...]
-</screen>
-
-	<para>This can also be used to exclude packages which would
-	otherwise be installed, for example due to a
-	<literal>Recommends</literal>. In general, the dependency solver
-	will use that information as a hint to look for alternative
-	solutions.</para>
       </sidebar>
 
       <sidebar>
@@ -1454,15 +1456,6 @@ More tags: suite::debian works-with::software:package role::program interface::c
       <command>apt-get</command>'s, and its interface much easier to
       understand.</para>
 
-      <figure>
-        <title>The <command>aptitude</command> package manager</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/aptitude.png" scalefit="1" width="75%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-
       <para>When it starts, <command>aptitude</command> shows a list of
       packages sorted by state (installed, non-installed, or installed but
       not available on the mirrors — other sections display tasks,
@@ -1489,6 +1482,15 @@ More tags: suite::debian works-with::software:package role::program interface::c
       changes), and <keycombo><keycap>q</keycap></keycombo> quits the
       current view. If you are in the initial view, this will effectively
       close <command>aptitude</command>.</para>
+
+      <figure>
+        <title>The <command>aptitude</command> package manager</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/aptitude.png" scalefit="1" width="75%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
 
       <sidebar>
         <title><emphasis>DOCUMENTATION</emphasis> <command>aptitude</command></title>

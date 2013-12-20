@@ -562,6 +562,16 @@
       <!-- TODO: add sidebar to present non-graphical helper tools like
 	   ferm: http://ferm.foo-projects.org -->
 
+      <figure id="figure.fwbuilder">
+        <title>Fwbuilder's main window</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/fwbuilder.png" scalefit="1"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <indexterm><primary><command>fwbuilder</command></primary></indexterm>
+
       <para>The principle is simple. In the first step, one needs to
       describe all the elements that will be involved in the actual
       rules:</para>
@@ -590,16 +600,6 @@
       rulesets for IPv4 and IPv6, or create only one and let
       <command>fwbuilder</command> translate the rules according to the
       addresses assigned to the objects.</para>
-
-      <figure id="figure.fwbuilder">
-        <title>Fwbuilder's main window</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/fwbuilder.png" scalefit="1"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-      <indexterm><primary><command>fwbuilder</command></primary></indexterm>
 
       <para><command>fwbuilder</command> can then generate a script
       configuring the firewall according to the rules that have been
@@ -856,18 +856,6 @@ iface eth0 inet static
         <title>Auditing Packages: <command>debsums</command> and its Limits</title>
         <indexterm><primary><command>debsums</command></primary></indexterm>
 
-        <sidebar>
-          <title><emphasis>GOING FURTHER</emphasis> Protecting against upstream changes</title>
-
-	  <para><command>debsums</command> is useful in detecting changes
-	  to files coming from a Debian package, but it will be useless if
-	  the package itself is compromised, for instance if the Debian
-	  mirror is compromised. Protecting against this class of attacks
-	  involves using APT's digital signature verification system (see
-	  <xref linkend="sect.package-authentication"/>), and taking care
-	  to only install packages from a certified origin.</para>
-        </sidebar>
-
 	<para><command>debsums</command> is an interesting tool since it
 	allows finding what installed files have been modified (potentially
 	by an attacker), but this should be taken with a grain of salt.
@@ -893,6 +881,18 @@ iface eth0 inet static
 	absoluteness of these principles, but their use is not called into
 	question so far, since creating different contents yielding the
 	same fingerprint still seems to be quite a difficult task.</para>
+
+        <sidebar>
+          <title><emphasis>GOING FURTHER</emphasis> Protecting against upstream changes</title>
+
+	  <para><command>debsums</command> is useful in detecting changes
+	  to files coming from a Debian package, but it will be useless if
+	  the package itself is compromised, for instance if the Debian
+	  mirror is compromised. Protecting against this class of attacks
+	  involves using APT's digital signature verification system (see
+	  <xref linkend="sect.package-authentication"/>), and taking care
+	  to only install packages from a certified origin.</para>
+        </sidebar>
 
 	<para>In addition, the <filename>md5sums</filename> files are
 	stored on the hard disk; a thorough attacker will therefore update
