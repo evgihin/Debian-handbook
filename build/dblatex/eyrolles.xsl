@@ -16,7 +16,7 @@
 <xsl:param name="page.margin.top">1.3cm</xsl:param>
 <xsl:param name="page.margin.bottom">1.3cm</xsl:param>
 
-<!-- In  Full-bleed mode, add crop margins of 0.25" (0.63cm) around
+<!-- In  Full-bleed mode, add crop margins of 5mm around
 actual page. By default the page is centered as required in this mode.
 -->
 <xsl:param name="crop.marks">
@@ -46,5 +46,17 @@ actual page. By default the page is centered as required in this mode.
     <xsl:value-of select="concat(string($paper.height), 'cm')"/>
   </xsl:if>
 </xsl:param>
+
+<xsl:template match="*" mode="pagenumber.markup">
+  <xsl:text>\pageref*{</xsl:text>
+  <xsl:value-of select="(@id|@xml:id)[1]"/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template match="*" mode="page.citation">
+<xsl:text> {\color{textgray} </xsl:text>
+<xsl:apply-imports />
+<xsl:text>}</xsl:text>
+</xsl:template>
 
 </xsl:stylesheet>
