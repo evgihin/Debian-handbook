@@ -412,8 +412,11 @@
 % Largeur du bandeau gris de début de chapitre
 \newlength{\FrameWidth}
 % Marge de débord
+\newlength{\bleedmargin}
+\setlength\bleedmargin{5mm}
 \newlength{\overflowmargin}
-\setlength\overflowmargin{5mm}
+\setlength\overflowmargin{2mm}
+
 % Épaisseurs des double filets
 \newlength{\dblerulewidth}
 \setlength{\dblerulewidth}{1pt}
@@ -681,13 +684,27 @@
   \thispagestyle{empty}
   % On sauvegarde le titre (pour les en-têtes)
   \renewcommand*\chaptertitle{#1}%
+  % traitement du bandeau gris avec l'image
+  % Largeur de l'image incluse
+  \setlength{\PictureWidth}{\dimexpr \paperwidth+2\overflowmargin}
+  % On ajoute le débord pour le bandeau gris
+  \setlength{\FrameWidth}{\dimexpr \paperwidth+2\bleedmargin}
+  % Nouveau dessin tout en haut à gauche du papier
+  \rput(\the\dimexpr -\outermargin-\bleedmargin,\the\dimexpr \headsep+\headheight+\topmargin+\topskip+1in+\bleedmargin){%
+    % bandeau gris sur toute la page
+    \psframe*[linecolor=shadecolor]
+             (0,0)
+             (\FrameWidth,\the\dimexpr -\paperheight-2\bleedmargin)
+    % Image sur la page avec un débort perdu de \overflowmargin
+    \rput[tl](\the\dimexpr \bleedmargin-\overflowmargin, \the\dimexpr -\bleedmargin+\overflowmargin){\includegraphics[width=\PictureWidth,keepaspectratio]{\@chapterimage}}
+  }
   % Traitement des keywords
-  \rput[t](\the\dimexpr -\outermargin+3cm,0){%
+  \rput[t](\the\dimexpr -\outermargin+3cm,-14cm){%
     \begin{minipage}[t]{3cm}
       \titremotsclesfont
       \raggedleft\par
       \@keywordsname\par
-      \hrulefill\par\vspace{-0.9\baselineskip}
+      %\hrulefill\par\vspace{-0.9\baselineskip}
       \hrulefill\par
       \motsclesfont
       \count@ \z@
@@ -697,45 +714,43 @@
       \unless\ifnum\count@>\nbkeywords
       \repeat
       \vspace{-0.3\baselineskip}
-      \hrulefill\par\vspace{-0.9\baselineskip}
+      %\hrulefill\par\vspace{-0.9\baselineskip}
       \hrulefill\par
     \end{minipage}
   }
-  % traitement du bandeau gris avec l'image
-  % Largeur de l'image incluse
-  \setlength{\PictureWidth}{\dimexpr \paperwidth-5cm}
-  % On ajoute le débord pour le bandeau gris
-  \setlength{\FrameWidth}{\PictureWidth+\overflowmargin}
-  \rput(\the\dimexpr -\outermargin+5cm,0){%
-    % bandeau gris
-    \psframe*[linecolor=shadecolor]
-             (0,\the\dimexpr \headsep+\headheight+\topmargin+\topskip+1in+\overflowmargin)
-             (\FrameWidth,\the\dimexpr -\paperheight+\headsep+\headheight+\topmargin+\topskip+1in-\overflowmargin)
-    % Image
-    \rput[tl](0,0){\includegraphics[width=\PictureWidth,keepaspectratio]{\@chapterimage}}
-  }
   \clearpage
   % page impaire
+  % Première page de chapitre (pour les numéros)
   \refstepcounter{chapter}
   % Mise dans la toc seulement ici pour avoir le bon numéro de page
   \addcontentsline{toc}{chapter}{\thechapter. #1}%
   % Même bandeau en haut de page que la précédente. Les marges
   % changent. On passe de 8cm à gauche à 1.5cm (6.5cm de différence)
   \thispagestyle{empty}
+  % Fond gris sur toute la page
+  % XXX: Je ne comprends pourquoi le dernier +0.45in est requis alors
+  % qu'il ne l'est pas sur la page d'avant...
+  \rput(\the\dimexpr -\innermargin-\bleedmargin,\the\dimexpr \headsep+\headheight+\topmargin+\topskip+1in+\voffset+\bleedmargin+0.45in){%
+    % bandeau gris sur toute la page
+    \psframe*[linecolor=shadecolor]
+             (0,0)
+             (\FrameWidth,\the\dimexpr -\paperheight-2\bleedmargin)
+  }
+  % Contenu
   \sbox\Freeb@xa{\chapternamefont \interletter{\@chapapp}\unskip}%
   \hspace*{\stretch{1}}%
   \makebox[\wd\Freeb@xa]{%
     \begin{minipage}{\wd\Freeb@xa}
       \chapternamefont \interletter{\@chapapp}\unskip\par
       \kern3pt
-      \hrule height \dblerulewidth
-      \kern\dblerulesep
+      %\hrule height \dblerulewidth
+      %\kern\dblerulesep
       \hrule height \dblerulewidth
       \kern24pt
       \hbox to \wd\Freeb@xa{\hss\chapternumfont \thechapter}%
       \kern24pt
-      \hrule height \dblerulewidth
-      \kern\dblerulesep
+      %\hrule height \dblerulewidth
+      %\kern\dblerulesep
       \hrule height \dblerulewidth
     \end{minipage}\hss
   }\par
@@ -753,14 +768,14 @@
   \makebox[\linewidth]{%
     \begin{minipage}{\linewidth}
       \hspace*{\stretch{1}}{\minitocnamefont \minitocname\strut}\par
-      \hrule height \dblerulewidth
-      \kern\dblerulesep
+      %\hrule height \dblerulewidth
+      %\kern\dblerulesep
       \hrule height \dblerulewidth
       \kern12pt
       \displaytc\par
       \kern12pt
-      \hrule height \dblerulewidth
-      \kern\dblerulesep
+      %\hrule height \dblerulewidth
+      %\kern\dblerulesep
       \hrule height \dblerulewidth
     \end{minipage}\hss
   }
@@ -780,14 +795,14 @@
   % On sauvegarde le titre (pour les en-têtes)
   \renewcommand*\chaptertitle{#1}%
   \thispagestyle{empty}
-  \hrule height \dblerulewidth
-  \kern\dblerulesep
+  %\hrule height \dblerulewidth
+  %\kern\dblerulesep
   \hrule height \dblerulewidth
   \kern12pt
   {\chapterfont \raggedleft \strut #1\strut\par}
   \kern12pt
-  \hrule height \dblerulewidth
-  \kern\dblerulesep
+  %\hrule height \dblerulewidth
+  %\kern\dblerulesep
   \hrule height \dblerulewidth
   % On commence le texte après !
   \par\vspace{1cm}
@@ -807,14 +822,14 @@
     \begin{minipage}{\wd\Freeb@xa}
       \chapternamefont \interletter{\@chapapp}\unskip\par
       \kern3pt
-      \hrule height \dblerulewidth
-      \kern\dblerulesep
+      %\hrule height \dblerulewidth
+      %\kern\dblerulesep
       \hrule height \dblerulewidth
       \kern24pt
       \hbox to \wd\Freeb@xa{\hss\chapternumfont \thechapter}%
       \kern24pt
-      \hrule height \dblerulewidth
-      \kern\dblerulesep
+      %\hrule height \dblerulewidth
+      %\kern\dblerulesep
       \hrule height \dblerulewidth
     \end{minipage}\hss
   }\par
@@ -833,13 +848,13 @@
     \begin{minipage}{\linewidth}
       \hspace*{\stretch{1}}{\minitocnamefont \minitocname\strut}\par
       \hrule height \dblerulewidth
-      \kern\dblerulesep
-      \hrule height \dblerulewidth
+      %\kern\dblerulesep
+      %\hrule height \dblerulewidth
       \kern12pt
       \displaytc\par
       \kern12pt
-      \hrule height \dblerulewidth
-      \kern\dblerulesep
+      %\hrule height \dblerulewidth
+      %\kern\dblerulesep
       \hrule height \dblerulewidth
     \end{minipage}\hss
   }
@@ -858,14 +873,14 @@
     \addcontentsline{toc}{chapter}{#1}%
   \fi
   \thispagestyle{empty}
-  \hrule height \dblerulewidth
-  \kern\dblerulesep
+  %\hrule height \dblerulewidth
+  %\kern\dblerulesep
   \hrule height \dblerulewidth
   \kern12pt
   {\chapterfont \raggedleft \strut #1\strut\par}
   \kern12pt
-  \hrule height \dblerulewidth
-  \kern\dblerulesep
+  %\hrule height \dblerulewidth
+  %\kern\dblerulesep
   \hrule height \dblerulewidth
   % On commence le texte après !
   \par\vspace{1cm}

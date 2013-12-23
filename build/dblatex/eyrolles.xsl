@@ -16,7 +16,7 @@
 <xsl:param name="page.margin.top">1.3cm</xsl:param>
 <xsl:param name="page.margin.bottom">1.3cm</xsl:param>
 
-<!-- In  Full-bleed mode, add crop margins of 0.25" (0.63cm) around
+<!-- In  Full-bleed mode, add crop margins of 5mm around
 actual page. By default the page is centered as required in this mode.
 -->
 <xsl:param name="crop.marks">
