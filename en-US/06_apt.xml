@@ -665,35 +665,35 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
       <indexterm><primary><command>aptitude purge</command></primary></indexterm>
 
       <sidebar>
-        <title><emphasis>TIP</emphasis> Removing and installing at the same time</title>
+        <title><emphasis>TIP</emphasis> <command>apt-get --reinstall</command> and <command>aptitude reinstall</command></title>
+        <indexterm><primary>reinstallation</primary></indexterm>
 
-	<para>It is possible to ask <command>apt-get</command> (or
-	<command>aptitude</command>) to install certain packages and remove
-	others on the same command line by adding a suffix. With an
-	<command>apt-get install</command> command, add
-	“<literal>-</literal>” to the names of the packages you wish to
-	remove. With an <command>apt-get remove</command> command, add
-	“<literal>+</literal>” to the names of the packages you wish to
-	install.</para>
+	<para>The system can sometimes be damaged after the removal or
+	modification of files in a package. The easiest way to retrieve
+	these files is to reinstall the affected package. Unfortunately,
+	the packaging system finds that the latter is already installed and
+	politely refuses to reinstall it; to avoid this, use the
+	<literal>--reinstall</literal> option of the
+	<command>apt-get</command> command. The following command
+	reinstalls <emphasis role="pkg">postfix</emphasis> even if it is
+	already present:</para>
 
-	<para>The next example shows two different ways to install
-	<replaceable>package1</replaceable> and to remove
-	<replaceable>package2</replaceable>.</para>
-
-        <screen># <userinput>apt-get install <replaceable>package1</replaceable> <replaceable>package2-</replaceable></userinput>
-[...]
-# <userinput>apt-get remove <replaceable>package1+</replaceable> <replaceable>package2</replaceable></userinput>
-[...]
+        <screen><computeroutput># </computeroutput><userinput>apt-get --reinstall install postfix</userinput>
 </screen>
 
-	<para>This can also be used to exclude packages which would
-	otherwise be installed, for example due to a
-	<literal>Recommends</literal>. In general, the dependency solver
-	will use that information as a hint to look for alternative
-	solutions.</para>
-      </sidebar>
+	<para>The <command>aptitude</command> command line is slightly
+	different, but achieves the same result with <command>aptitude
+	reinstall postfix</command>.</para>
 
-      <?latex \pagebreak ?>
+	<para>The problem does not arise with <command>dpkg</command>, but
+	the administrator rarely uses it directly.</para>
+
+	<para>Be careful, using <command>apt-get --reinstall</command> to
+	restore packages modified during an attack certainly cannot recover
+	the system as it was. <xref
+	linkend="sect.dealing-with-compromised-machine"/> details the
+	necessary steps to take with a compromised system.</para>
+      </sidebar>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Installing the same selection of packages several times</title>
@@ -732,36 +732,37 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
 	this command.</para>
       </sidebar>
 
+
       <sidebar>
-        <title><emphasis>TIP</emphasis> <command>apt-get --reinstall</command> and <command>aptitude reinstall</command></title>
-        <indexterm><primary>reinstallation</primary></indexterm>
+        <title><emphasis>TIP</emphasis> Removing and installing at the same time</title>
 
-	<para>The system can sometimes be damaged after the removal or
-	modification of files in a package. The easiest way to retrieve
-	these files is to reinstall the affected package. Unfortunately,
-	the packaging system finds that the latter is already installed and
-	politely refuses to reinstall it; to avoid this, use the
-	<literal>--reinstall</literal> option of the
-	<command>apt-get</command> command. The following command
-	reinstalls <emphasis role="pkg">postfix</emphasis> even if it is
-	already present:</para>
+	<para>It is possible to ask <command>apt-get</command> (or
+	<command>aptitude</command>) to install certain packages and remove
+	others on the same command line by adding a suffix. With an
+	<command>apt-get install</command> command, add
+	“<literal>-</literal>” to the names of the packages you wish to
+	remove. With an <command>apt-get remove</command> command, add
+	“<literal>+</literal>” to the names of the packages you wish to
+	install.</para>
 
-        <screen><computeroutput># </computeroutput><userinput>apt-get --reinstall install postfix</userinput>
+	<para>The next example shows two different ways to install
+	<replaceable>package1</replaceable> and to remove
+	<replaceable>package2</replaceable>.</para>
+
+        <screen># <userinput>apt-get install <replaceable>package1</replaceable> <replaceable>package2-</replaceable></userinput>
+[...]
+# <userinput>apt-get remove <replaceable>package1+</replaceable> <replaceable>package2</replaceable></userinput>
+[...]
 </screen>
 
-	<para>The <command>aptitude</command> command line is slightly
-	different, but achieves the same result with <command>aptitude
-	reinstall postfix</command>.</para>
-
-	<para>The problem does not arise with <command>dpkg</command>, but
-	the administrator rarely uses it directly.</para>
-
-	<para>Be careful, using <command>apt-get --reinstall</command> to
-	restore packages modified during an attack certainly cannot recover
-	the system as it was. <xref
-	linkend="sect.dealing-with-compromised-machine"/> details the
-	necessary steps to take with a compromised system.</para>
+	<para>This can also be used to exclude packages which would
+	otherwise be installed, for example due to a
+	<literal>Recommends</literal>. In general, the dependency solver
+	will use that information as a hint to look for alternative
+	solutions.</para>
       </sidebar>
+
+
 
       <para>If the file <filename>sources.list</filename> mentions several
       distributions, it is possible to give the version of the package to
@@ -788,6 +789,7 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
         <screen><computeroutput># </computeroutput><userinput>apt-get install spamassassin/unstable</userinput>
 </screen>
       </example>
+
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> The cache of <filename>.deb</filename> files</title>
@@ -823,6 +825,31 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
       upgrade possible. <command>apt-get</command> is slightly more
       demanding than <command>aptitude</command> because it will refuse to
       install packages which were not installed beforehand.</para>
+
+
+      <para><command>apt-get</command> will generally select the most
+      recent version number (except for packages from <emphasis
+      role="distribution">Experimental</emphasis> and
+      <emphasis role="distribution">stable-backports</emphasis>, which are
+      ignored by default whatever their version number). If you specified
+      <emphasis role="distribution">Testing</emphasis> or <emphasis
+      role="distribution">Unstable</emphasis> in your
+      <filename>sources.list</filename>, <command>apt-get
+      upgrade</command> will switch most of your <emphasis
+      role="distribution">Stable</emphasis> system to <emphasis
+      role="distribution">Testing</emphasis> or <emphasis
+      role="distribution">Unstable</emphasis>, which might not be what you
+      intended.</para>
+
+      <para>To tell <command>apt-get</command> to use a specific
+      distribution when searching for upgraded packages, you need to use
+      the <literal>-t</literal> or <literal>--target-release</literal>
+      option, followed by the name of the
+      distribution you want (for example: <command>apt-get -t stable
+      upgrade</command>). To avoid specifying this option every time
+      you use <command>apt-get</command>, you can add
+      <literal>APT::Default-Release "stable";</literal> in the file
+      <filename>/etc/apt/apt.conf.d/local</filename>.</para>
 
       <sidebar id="sidebar.apt-pdiff">
         <title><emphasis>TIP</emphasis> Incremental upgrade</title>
@@ -867,30 +894,6 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
 	<literal>false</literal>.</para>
       </sidebar>
 
-      <para><command>apt-get</command> will generally select the most
-      recent version number (except for packages from <emphasis
-      role="distribution">Experimental</emphasis> and
-      <emphasis role="distribution">stable-backports</emphasis>, which are
-      ignored by default whatever their version number). If you specified
-      <emphasis role="distribution">Testing</emphasis> or <emphasis
-      role="distribution">Unstable</emphasis> in your
-      <filename>sources.list</filename>, <command>apt-get
-      upgrade</command> will switch most of your <emphasis
-      role="distribution">Stable</emphasis> system to <emphasis
-      role="distribution">Testing</emphasis> or <emphasis
-      role="distribution">Unstable</emphasis>, which might not be what you
-      intended.</para>
-
-      <para>To tell <command>apt-get</command> to use a specific
-      distribution when searching for upgraded packages, you need to use
-      the <literal>-t</literal> or <literal>--target-release</literal>
-      option, followed by the name of the
-      distribution you want (for example: <command>apt-get -t stable
-      upgrade</command>). To avoid specifying this option every time
-      you use <command>apt-get</command>, you can add
-      <literal>APT::Default-Release "stable";</literal> in the file
-      <filename>/etc/apt/apt.conf.d/local</filename>.</para>
-
       <indexterm><primary><command>apt-get dist-upgrade</command></primary></indexterm>
       <indexterm><primary><command>aptitude dist-upgrade</command></primary></indexterm>
       <indexterm><primary><command>aptitude full-upgrade</command></primary></indexterm>
@@ -925,16 +928,6 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
       Remember for instance that it is possible for APT to tell
       <command>dpkg</command> to ignore file conflict errors by specifying
       <literal>DPkg::Options { "--force-overwrite"; }</literal>.</para>
-
-      <para>If the Web can only be accessed through a proxy, add a line
-      like <literal>Acquire::http::proxy
-      "http://<replaceable>yourproxy</replaceable>:3128"</literal>. For an
-      FTP proxy, write <literal>Acquire::ftp::proxy
-      "ftp://<replaceable>yourproxy</replaceable>"</literal>. To discover
-      more configuration options, read the
-      <citerefentry><refentrytitle>apt.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-      manual page with the <command>man apt.conf</command> command (for
-      details on manual pages, see <xref linkend="sect.manual-pages" />).</para>
 
       <sidebar id="sidebar.directory.d">
         <title><emphasis>BACK TO BASICS</emphasis> Directories ending in <filename>.d</filename></title>
@@ -987,6 +980,17 @@ deb http://apt.falcot.com:9999/debian wheezy main contrib non-free
 	into <filename>/var/lib/exim4/config.autogenerated</filename> by
 	the <command>update-exim4.conf</command> command.</para>
       </sidebar>
+
+      <para>If the Web can only be accessed through a proxy, add a line
+      like <literal>Acquire::http::proxy
+      "http://<replaceable>yourproxy</replaceable>:3128"</literal>. For an
+      FTP proxy, write <literal>Acquire::ftp::proxy
+      "ftp://<replaceable>yourproxy</replaceable>"</literal>. To discover
+      more configuration options, read the
+      <citerefentry><refentrytitle>apt.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+      manual page with the <command>man apt.conf</command> command (for
+      details on manual pages, see <xref linkend="sect.manual-pages" />).</para>
+
     </section>
     <section id="sect.apt.priorities">
       <title>Managing Package Priorities</title>
@@ -1754,6 +1758,11 @@ pub   4096R/65FFB764 2012-05-08 [expires: 2019-05-07]
 uid                  Wheezy Stable Release Key &lt;debian-release@lists.debian.org&gt;
 </screen>
 
+    <para>Once the appropriate keys are in the keyring, APT will check the
+    signatures before any risky operation, so that front-ends will display
+    a warning if asked to install a package whose authenticity can't be
+    ascertained.</para>
+
     <sidebar>
       <title><emphasis>IN PRACTICE</emphasis> Adding trusted keys</title>
       <indexterm><primary>trusted key</primary></indexterm>
@@ -1785,10 +1794,6 @@ uid                  Wheezy Stable Release Key &lt;debian-release@lists.debian.o
       </para>
     </sidebar>
 
-    <para>Once the appropriate keys are in the keyring, APT will check the
-    signatures before any risky operation, so that front-ends will display
-    a warning if asked to install a package whose authenticity can't be
-    ascertained.</para>
   </section>
   <section id="sect.dist-upgrade">
     <title>Upgrading from One Stable Distribution to the Next</title>

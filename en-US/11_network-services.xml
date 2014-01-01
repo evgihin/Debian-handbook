@@ -1649,20 +1649,6 @@ HostAliases="falcot.org"
 </programlisting>
       </example>
 
-      <para>AWStats uses many icons stored in the
-      <filename>/usr/share/awstats/icon/</filename> directory. In order for
-      these icons to be available on the web site, the Apache configuration
-      needs to be adapted to include the following directive:</para>
-
-      <programlisting>
-Alias /awstats-icon/ /usr/share/awstats/icon/
-</programlisting>
-
-      <para>After a few minutes (and once the script has been run a few
-      times), the results are available online: <ulink type="block"
-      url="http://www.falcot.com/cgi-bin/awstats.pl"/><ulink type="block"
-      url="http://www.falcot.org/cgi-bin/awstats.pl"/></para>
-
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Log file rotation</title>
 
@@ -1705,6 +1691,21 @@ $ <userinput>sudo ln -sf /usr/share/awstats/tools/update.sh \
 	<literal>create 644 root adm</literal> line (instead of the default
 	<literal>640</literal> permissions).</para>
       </sidebar>
+
+      <para>AWStats uses many icons stored in the
+      <filename>/usr/share/awstats/icon/</filename> directory. In order for
+      these icons to be available on the web site, the Apache configuration
+      needs to be adapted to include the following directive:</para>
+
+      <programlisting>
+Alias /awstats-icon/ /usr/share/awstats/icon/
+</programlisting>
+
+      <para>After a few minutes (and once the script has been run a few
+      times), the results are available online: <ulink type="block"
+      url="http://www.falcot.com/cgi-bin/awstats.pl"/><ulink type="block"
+      url="http://www.falcot.org/cgi-bin/awstats.pl"/></para>
+
     </section>
   </section>
   <section id="sect.ftp-file-server">
@@ -2058,14 +2059,6 @@ arrakis.internal.falcot.com:/srv/shared /shared nfs rw,nosuid 0 0
     <para>Samba can also act as an Windows domain controller. This is an
     outstanding tool for ensuring seamless integration of Linux servers and
     the office desktop machines still running Windows.</para>
-    <section>
-      <title>Samba Server</title>
-
-      <para>The <emphasis role="pkg">samba</emphasis> package contains the
-      main two servers of Samba 3, <command>smbd</command> and
-      <command>nmbd</command>.</para>
-      <indexterm><primary><command>smbd</command></primary></indexterm>
-      <indexterm><primary><command>nmbd</command></primary></indexterm>
 
       <sidebar>
 	<!-- XXX: To drop in the Jessie version -->
@@ -2096,6 +2089,16 @@ arrakis.internal.falcot.com:/srv/shared /shared nfs rw,nosuid 0 0
 	will be dropped from the next version of Debian, known as
 	<emphasis role="distribution">Jessie</emphasis>.</para>
       </sidebar>
+
+
+    <section>
+      <title>Samba Server</title>
+
+      <para>The <emphasis role="pkg">samba</emphasis> package contains the
+      main two servers of Samba 3, <command>smbd</command> and
+      <command>nmbd</command>.</para>
+      <indexterm><primary><command>smbd</command></primary></indexterm>
+      <indexterm><primary><command>nmbd</command></primary></indexterm>
 
       <sidebar>
         <title><emphasis>DOCUMENTATION</emphasis> Going further</title>
@@ -2173,6 +2176,8 @@ arrakis.internal.falcot.com:/srv/shared /shared nfs rw,nosuid 0 0
 	  that were effected in the <literal>[global]</literal>
 	  section.</para>
 
+	  <example>
+	  <title>Changes to <filename>smb.conf</filename></title>
           <programlisting>
 [global]
 
@@ -2224,6 +2229,7 @@ arrakis.internal.falcot.com:/srv/shared /shared nfs rw,nosuid 0 0
    printing = cups <co id="smb.conf.printing"/>
    printcap name = cups
 </programlisting>
+	  </example>
           <calloutlist>
             <callout arearefs="smb.conf.wins">
 	      <para>Indicates that Samba should act as a Netbios name
@@ -2876,6 +2882,15 @@ result: 0 Success
 	to be modified, so as to configure NSS to use the freshly-installed
 	<command>ldap</command> module.</para>
 
+	<para>The <command>ldap</command> module is usually inserted before
+	others, and it will therefore be queried first. The notable
+	exception is the <literal>hosts</literal> service since contacting
+	the LDAP server requires consulting DNS first (to resolve
+	<literal>ldap.falcot.com</literal>). Without this exception, a
+	hostname query would try to ask the LDAP server; this would trigger
+	a name resolution for the LDAP server, and so on in an infinite
+	loop.</para>
+
         <example>
           <title>The <filename>/etc/nsswitch.conf</filename> file</title>
 
@@ -2902,14 +2917,6 @@ netgroup: ldap files
 </programlisting>
         </example>
 
-	<para>The <command>ldap</command> module is usually inserted before
-	others, and it will therefore be queried first. The notable
-	exception is the <literal>hosts</literal> service since contacting
-	the LDAP server requires consulting DNS first (to resolve
-	<literal>ldap.falcot.com</literal>). Without this exception, a
-	hostname query would try to ask the LDAP server; this would trigger
-	a name resolution for the LDAP server, and so on in an infinite
-	loop.</para>
 
 	<para>If the LDAP server should be considered authoritative (and
 	the local files used by the <command>files</command> module

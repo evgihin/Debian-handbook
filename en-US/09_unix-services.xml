@@ -1871,6 +1871,17 @@ job 31 at Fri Jul 27 09:00:00 2012</computeroutput>
     <citerefentry><refentrytitle>anacrontab</refentrytitle>
     <manvolnum>5</manvolnum></citerefentry> manual page.</para>
 
+    <para>Installation of the <emphasis role="pkg">anacron</emphasis>
+    package deactivates execution by <command>cron</command> of the scripts
+    in the <filename>/etc/cron.hourly/</filename>,
+    <filename>/etc/cron.daily/</filename>,
+    <filename>/etc/cron.weekly/</filename>, and
+    <filename>/etc/cron.monthly/</filename> directories. This avoids their
+    double execution by <command>anacron</command> and
+    <command>cron</command>. The <command>cron</command> command remains
+    active and will continue to handle the other scheduled tasks
+    (especially those scheduled by users).</para>
+
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Priorities and <command>nice</command></title>
 
@@ -1901,16 +1912,7 @@ job 31 at Fri Jul 27 09:00:00 2012</computeroutput>
       “niceness” of a process is reserved to the root user).</para>
     </sidebar>
 
-    <para>Installation of the <emphasis role="pkg">anacron</emphasis>
-    package deactivates execution by <command>cron</command> of the scripts
-    in the <filename>/etc/cron.hourly/</filename>,
-    <filename>/etc/cron.daily/</filename>,
-    <filename>/etc/cron.weekly/</filename>, and
-    <filename>/etc/cron.monthly/</filename> directories. This avoids their
-    double execution by <command>anacron</command> and
-    <command>cron</command>. The <command>cron</command> command remains
-    active and will continue to handle the other scheduled tasks
-    (especially those scheduled by users).</para>
+
   </section>
   <section id="sect.quotas">
     <title>Quotas</title>
@@ -1935,17 +1937,6 @@ job 31 at Fri Jul 27 09:00:00 2012</computeroutput>
     space usage.</para>
     <indexterm><primary><command>edquota</command></primary></indexterm>
 
-    <sidebar>
-      <title><emphasis>GOING FURTHER</emphasis> Defining quotas with a script</title>
-      <indexterm><primary><command>setquota</command></primary></indexterm>
-
-      <para>The <command>setquota</command> program can be used in a script
-      to automatically change many quotas. Its
-      <citerefentry><refentrytitle>setquota</refentrytitle>
-      <manvolnum>8</manvolnum></citerefentry> manual page details the
-      syntax to use.</para>
-    </sidebar>
-
     <para>The quota system allows you to set four limits:</para>
     <itemizedlist>
       <listitem>
@@ -1964,6 +1955,17 @@ job 31 at Fri Jul 27 09:00:00 2012</computeroutput>
 	is thus a limit on the number of user files.</para>
       </listitem>
     </itemizedlist>
+
+    <sidebar>
+      <title><emphasis>GOING FURTHER</emphasis> Defining quotas with a script</title>
+      <indexterm><primary><command>setquota</command></primary></indexterm>
+
+      <para>The <command>setquota</command> program can be used in a script
+      to automatically change many quotas. Its
+      <citerefentry><refentrytitle>setquota</refentrytitle>
+      <manvolnum>8</manvolnum></citerefentry> manual page details the
+      syntax to use.</para>
+    </sidebar>
 
     <para>A “soft” limit can be temporarily exceeded; the user will
     simply be warned that they are exceeding the quota by the

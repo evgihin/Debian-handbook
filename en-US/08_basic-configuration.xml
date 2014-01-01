@@ -999,16 +999,6 @@ nameserver 8.8.8.8
       </itemizedlist>
 
       <sidebar>
-        <title><emphasis>DOCUMENTATION</emphasis> <filename>/etc/passwd</filename>, <filename>/etc/shadow</filename> and <filename>/etc/group</filename> file formats</title>
-
-	<para>These formats are documented in the following man pages:
-	<citerefentry><refentrytitle>passwd</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-	<citerefentry><refentrytitle>shadow</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-	and
-	<citerefentry><refentrytitle>group</refentrytitle><manvolnum>5</manvolnum></citerefentry>.</para>
-      </sidebar>
-
-      <sidebar>
         <title><emphasis>SECURITY</emphasis> <filename>/etc/shadow</filename> file security</title>
 
 	<para><filename>/etc/shadow</filename>, unlike its alter-ego,
@@ -1021,6 +1011,18 @@ nameserver 8.8.8.8
 	longer possible on systems using
 	<filename>/etc/shadow</filename>.</para>
       </sidebar>
+      
+      <sidebar>
+        <title><emphasis>DOCUMENTATION</emphasis> <filename>/etc/passwd</filename>, <filename>/etc/shadow</filename> and <filename>/etc/group</filename> file formats</title>
+
+	<para>These formats are documented in the following man pages:
+	<citerefentry><refentrytitle>passwd</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+	<citerefentry><refentrytitle>shadow</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+	and
+	<citerefentry><refentrytitle>group</refentrytitle><manvolnum>5</manvolnum></citerefentry>.</para>
+      </sidebar>
+
+
     </section>
     <section id="sect.account-modification">
       <title>Modifying an Existing Account or Password</title>
@@ -1427,6 +1429,35 @@ nameserver 8.8.8.8
       <ulink type="block" url="http://www.cups.org/"/></para>
     </sidebar>
 
+      <sidebar id="sidebar.symbolic-link">
+        <title><emphasis>BACK TO BASICS</emphasis> Symbolic links</title>
+        <indexterm><primary>link</primary><secondary>symbolic</secondary></indexterm>
+        <indexterm><primary>symbolic link</primary></indexterm>
+        <indexterm><primary><command>ln</command></primary></indexterm>
+
+	<para>A symbolic link is a pointer to another file. When you access
+	it, the file to which it points is opened. Removal of the link will
+	not cause deletion of the file to which it points. Likewise, it
+	does not have its own set of permissions, but rather retains the
+	permissions of its target. Finally, it can point to any type of
+	file: directories, special files (sockets, named pipes, device
+	files, etc.), even other symbolic links.</para>
+
+	<para>The <command>ln -s <replaceable>target</replaceable>
+	<replaceable>link-name</replaceable></command> command creates a
+	symbolic link, named <replaceable>link-name</replaceable>, pointing
+	to <replaceable>target</replaceable>.</para>
+
+	<para>If the target does not exist, then the link is “broken”
+	and accessing it will result in an error indicating that the target
+	file does not exist. If the link points to another link, you will
+	have a “chain” of links that turns into a “cycle” if one of
+	the targets points to one of its predecessors. In this case,
+	accessing one of the links in the cycle will result in a specific
+	error (“too many levels of symbolic links”); this means the
+	kernel gave up after several rounds of the cycle.</para>
+      </sidebar>
+
     <para>After installation of these different packages,
     <command>cups</command> is administered easily through a web interface
     accessible at the local address:
@@ -1450,6 +1481,7 @@ nameserver 8.8.8.8
       by <emphasis>cups</emphasis> to ensure compatibility.</para>
       <indexterm><primary><filename>printcap</filename></primary></indexterm>
     </sidebar>
+
   </section>
   <section id="sect.config-bootloader">
     <title>Configuring the Bootloader</title>
@@ -1475,6 +1507,31 @@ nameserver 8.8.8.8
     </sidebar>
     <section id="sect.identify-disks">
       <title>Identifying the Disks</title>
+
+
+      <indexterm><primary>hard drive, names</primary></indexterm>
+      <indexterm><primary>names</primary><secondary>of hard drives</secondary></indexterm>
+
+      <para>Configuration of the bootloader must identify the different
+      hard drives and their partitions. Linux uses “block” special files
+      stored in the <filename>/dev/</filename> directory,
+      for this purpose. Historically, <filename>/dev/hda</filename> was the
+      master disk on the first IDE controller, and
+      <filename>/dev/hdb</filename> its first slave,
+      <filename>/dev/hdc</filename> and <filename>/dev/hdd</filename>
+      being, respectively, the master and slave disks on the second IDE
+      controller, and so on down for any others.
+      <filename>/dev/sda</filename> corresponded to the first SCSI drive,
+      <filename>/dev/sdb</filename> being the second, etc. Since Debian
+      <emphasis role="distribution">Squeeze</emphasis>, this naming scheme
+      has been unified by the Linux kernel, and
+      all hard drives (IDE/PATA, SATA, SCSI, USB, IEEE 1394) are now
+      represented by <filename>/dev/sd*</filename>.</para>
+
+      <para>Each partition is represented by its number on the disk on
+      which it resides: for instance, <filename>/dev/sda1</filename> is the
+      first partition on the first disk, and <filename>/dev/sdb3</filename>
+      is the third partition on the second disk.</para>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> <emphasis>udev</emphasis> and <filename>/dev/</filename></title>
@@ -1525,30 +1582,6 @@ nameserver 8.8.8.8
 	boot.</para>
       </sidebar>
 
-      <indexterm><primary>hard drive, names</primary></indexterm>
-      <indexterm><primary>names</primary><secondary>of hard drives</secondary></indexterm>
-
-      <para>Configuration of the bootloader must identify the different
-      hard drives and their partitions. Linux uses “block” special files
-      stored in the <filename>/dev/</filename> directory,
-      for this purpose. Historically, <filename>/dev/hda</filename> was the
-      master disk on the first IDE controller, and
-      <filename>/dev/hdb</filename> its first slave,
-      <filename>/dev/hdc</filename> and <filename>/dev/hdd</filename>
-      being, respectively, the master and slave disks on the second IDE
-      controller, and so on down for any others.
-      <filename>/dev/sda</filename> corresponded to the first SCSI drive,
-      <filename>/dev/sdb</filename> being the second, etc. Since Debian
-      <emphasis role="distribution">Squeeze</emphasis>, this naming scheme
-      has been unified by the Linux kernel, and
-      all hard drives (IDE/PATA, SATA, SCSI, USB, IEEE 1394) are now
-      represented by <filename>/dev/sd*</filename>.</para>
-
-      <para>Each partition is represented by its number on the disk on
-      which it resides: for instance, <filename>/dev/sda1</filename> is the
-      first partition on the first disk, and <filename>/dev/sdb3</filename>
-      is the third partition on the second disk.</para>
-
       <para>The PC architecture (or “i386”) is limited to four
       “primary” partitions per disk. To go beyond this limitation, one
       of them must be created as an “extended” partition, and it can
@@ -1571,7 +1604,7 @@ nameserver 8.8.8.8
       <filename>/dev/disk/by-id</filename>. On a machine with two physical
       disks, for example, one could find the following:</para>
 
-      <screen>mirexpress:/dev/disk/by-id# <computeroutput/><userinput>ls -l</userinput><computeroutput>
+      <screen role="scale">mirexpress:/dev/disk/by-id# <computeroutput/><userinput>ls -l</userinput><computeroutput>
 total 0
 lrwxrwxrwx 1 root root  9 23 jul. 08:58 ata-STM3500418AS_9VM3L3KP -&gt; ../../sda
 lrwxrwxrwx 1 root root 10 23 jul. 08:58 ata-STM3500418AS_9VM3L3KP-part1 -&gt; ../../sda1
@@ -1671,26 +1704,6 @@ other=/dev/sda1
       /dev/sda</command>.
       <indexterm><primary><command>grub-install</command></primary></indexterm></para>
 
-      <sidebar>
-        <title><emphasis>NOTE</emphasis> Disk names for GRUB</title>
-
-	<para>GRUB can only identify hard drives based on information
-	provided by the BIOS. <literal>(hd0)</literal> corresponds to the
-	first disk thus detected, <literal>(hd1)</literal> the second, etc.
-	In most cases, this order corresponds exactly to the usual order of
-	disks under Linux, but problems can occur when you associate SCSI
-	and IDE disks. GRUB stores correspondences that it detects in the
-	file <filename>/boot/grub/device.map</filename>. If you find errors
-	there (because you know that your BIOS detects drives in a
-	different order), correct them manually and run
-	<command>grub-install</command> again.</para>
-
-	<para>Partitions also have a specific name in GRUB. When you use
-	“classical” partitions in MS-DOS format, the first partition on
-	the first disk is labeled, <literal>(hd0,msdos1)</literal>, the
-	second <literal>(hd0,msdos2)</literal>, etc.</para>
-      </sidebar>
-
       <para>GRUB 2 configuration is stored in
       <filename>/boot/grub/grub.cfg</filename>, but this file (in Debian)
       is generated from others. Be careful not to modify it by hand, since
@@ -1712,6 +1725,27 @@ other=/dev/sda1
       <filename>20_linux_xen</filename> takes into account Xen virtual systems,
       and <filename>30_os-prober</filename> lists other operating systems
       (Windows, Mac OSX, Hurd).</para>
+
+      <sidebar>
+        <title><emphasis>NOTE</emphasis> Disk names for GRUB</title>
+
+	<para>GRUB can only identify hard drives based on information
+	provided by the BIOS. <literal>(hd0)</literal> corresponds to the
+	first disk thus detected, <literal>(hd1)</literal> the second, etc.
+	In most cases, this order corresponds exactly to the usual order of
+	disks under Linux, but problems can occur when you associate SCSI
+	and IDE disks. GRUB stores correspondences that it detects in the
+	file <filename>/boot/grub/device.map</filename>. If you find errors
+	there (because you know that your BIOS detects drives in a
+	different order), correct them manually and run
+	<command>grub-install</command> again.</para>
+
+	<para>Partitions also have a specific name in GRUB. When you use
+	“classical” partitions in MS-DOS format, the first partition on
+	the first disk is labeled, <literal>(hd0,msdos1)</literal>, the
+	second <literal>(hd0,msdos2)</literal>, etc.</para>
+      </sidebar>
+
     </section>
     <section id="sect.config-yaboot">
       <title>For Macintosh Computers (PowerPC): Configuring Yaboot</title>
@@ -1784,35 +1818,6 @@ macosx=/dev/sda5
       <title>Timezone</title>
       <indexterm><primary>timezone</primary></indexterm>
 
-      <sidebar id="sidebar.symbolic-link">
-        <title><emphasis>BACK TO BASICS</emphasis> Symbolic links</title>
-        <indexterm><primary>link</primary><secondary>symbolic</secondary></indexterm>
-        <indexterm><primary>symbolic link</primary></indexterm>
-        <indexterm><primary><command>ln</command></primary></indexterm>
-
-	<para>A symbolic link is a pointer to another file. When you access
-	it, the file to which it points is opened. Removal of the link will
-	not cause deletion of the file to which it points. Likewise, it
-	does not have its own set of permissions, but rather retains the
-	permissions of its target. Finally, it can point to any type of
-	file: directories, special files (sockets, named pipes, device
-	files, etc.), even other symbolic links.</para>
-
-	<para>The <command>ln -s <replaceable>target</replaceable>
-	<replaceable>link-name</replaceable></command> command creates a
-	symbolic link, named <replaceable>link-name</replaceable>, pointing
-	to <replaceable>target</replaceable>.</para>
-
-	<para>If the target does not exist, then the link is “broken”
-	and accessing it will result in an error indicating that the target
-	file does not exist. If the link points to another link, you will
-	have a “chain” of links that turns into a “cycle” if one of
-	the targets points to one of its predecessors. In this case,
-	accessing one of the links in the cycle will result in a specific
-	error (“too many levels of symbolic links”); this means the
-	kernel gave up after several rounds of the cycle.</para>
-      </sidebar>
-
       <para>The timezone, configured during initial installation, is a
       configuration item for the <emphasis role="pkg">tzdata</emphasis>
       package. To modify it, use the <command>dpkg-reconfigure
@@ -1829,17 +1834,6 @@ macosx=/dev/sda5
       <indexterm><primary><filename>/usr/share/zoneinfo/</filename></primary></indexterm>
       <indexterm><primary>DST</primary></indexterm>
       <indexterm><primary>daylight saving time</primary></indexterm>
-
-      <para>When you need to temporarily change the timezone, use the
-      <varname>TZ</varname> environment variable, which takes priority over
-      the configured system default:</para>
-      <indexterm><primary><varname>TZ</varname></primary></indexterm>
-
-      <screen id="screen.tz">
-<computeroutput>$ </computeroutput><userinput>date</userinput>
-<computeroutput>Wed Mar 28 15:51:19 CEST 2012</computeroutput>
-<computeroutput>$ </computeroutput><userinput>TZ="Pacific/Honolulu" date</userinput>
-<computeroutput>Wed Mar 28 03:51:21 HST 2012</computeroutput></screen>
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> System clock, hardware clock</title>
@@ -1889,6 +1883,18 @@ macosx=/dev/sda5
 	the local time (and make sure to manually check your clock in spring and
 	autumn).</para>
       </sidebar>
+
+      <para>When you need to temporarily change the timezone, use the
+      <varname>TZ</varname> environment variable, which takes priority over
+      the configured system default:</para>
+      <indexterm><primary><varname>TZ</varname></primary></indexterm>
+
+      <screen id="screen.tz">
+<computeroutput>$ </computeroutput><userinput>date</userinput>
+<computeroutput>Wed Mar 28 15:51:19 CEST 2012</computeroutput>
+<computeroutput>$ </computeroutput><userinput>TZ="Pacific/Honolulu" date</userinput>
+<computeroutput>Wed Mar 28 03:51:21 HST 2012</computeroutput></screen>
+
     </section>
     <section id="sect.time-synchronization">
       <title>Time Synchronization</title>
@@ -2193,7 +2199,7 @@ macosx=/dev/sda5
       <example id="example.fstab">
         <title>Example <filename>/etc/fstab</filename> file:</title>
 
-        <programlisting>
+        <programlisting role="scale">
 # /etc/fstab: static file system information.
 #
 # &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
@@ -2436,6 +2442,19 @@ arrakis:/shared /shared         nfs     defaults        0       0
       <replaceable>target</replaceable> is one of the values described
       below.</para>
 
+      <sidebar>
+        <title><emphasis>TIP</emphasis> Dealing with outdated <filename>.config</filename> files</title>
+
+	<para>When you provide a <filename>.config</filename> file that has been
+	generated with another (usually older) kernel version, you will have to
+	update it. You can do so with <command>make oldconfig</command>, it will
+	interactively ask you the questions corresponding to the new
+	configuration options. If you want to use the default answer to
+	all those questions you can use <command>make
+	olddefconfig</command>. With <command>make oldnoconfig</command>,
+	it will assume a negative answer to all questions.</para>
+      </sidebar>
+
       <para><command>make menuconfig</command> compiles and executes a
       text-mode interface (this is where the <emphasis
       role="pkg">libncurses5-dev</emphasis> package is required) which
@@ -2469,18 +2488,6 @@ arrakis:/shared /shared         nfs     defaults        0       0
       64-bit PC) or <command>make i386_defconfig</command> (in the case of
       a 32-bit PC).</para>
 
-      <sidebar>
-        <title><emphasis>TIP</emphasis> Dealing with outdated <filename>.config</filename> files</title>
-
-	<para>When you provide a <filename>.config</filename> file that has been
-	generated with another (usually older) kernel version, you will have to
-	update it. You can do so with <command>make oldconfig</command>, it will
-	interactively ask you the questions corresponding to the new
-	configuration options. If you want to use the default answer to
-	all those questions you can use <command>make
-	olddefconfig</command>. With <command>make oldnoconfig</command>,
-	it will assume a negative answer to all questions.</para>
-      </sidebar>
     </section>
     <section id="sect.kernel-build">
       <title>Compiling and Building the Package</title>

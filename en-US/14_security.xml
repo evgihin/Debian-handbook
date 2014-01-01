@@ -66,13 +66,6 @@
       </listitem>
     </itemizedlist>
 
-    <para>The term “risk” is customarily used to refer collectively to
-    these three factors: what to protect, what needs to be prevented from
-    happening, and who will try to make it happen. Modeling the risk
-    requires answers to these three questions. From this risk model, a
-    security policy can be constructed, and the policy can be implemented
-    with concrete actions.</para>
-
     <sidebar>
       <title><emphasis>NOTE</emphasis> Permanent questioning</title>
 
@@ -85,6 +78,13 @@
       rest on one's laurels. The risk components evolve, and the response
       to that risk must evolve accordingly.</para>
     </sidebar>
+
+    <para>The term “risk” is customarily used to refer collectively to
+    these three factors: what to protect, what needs to be prevented from
+    happening, and who will try to make it happen. Modeling the risk
+    requires answers to these three questions. From this risk model, a
+    security policy can be constructed, and the policy can be implemented
+    with concrete actions.</para>
 
     <para>Extra constraints are also worth taking into account, as they can
     restrict the range of available policies. How far are we willing to
@@ -1200,15 +1200,6 @@ iface eth0 inet static
       the rights required by each program. It is a fundamental principle of
       SELinux.</para>
 
-      <figure>
-        <title>Automatic transitions between domains</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/selinux-transitions.png" scalefit="1" width="35%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Finding the security context</title>
         <indexterm><primary>security context</primary></indexterm>
@@ -1250,6 +1241,16 @@ iface eth0 inet static
 	sake of uniformity, all objects get assigned a complete security
 	context.</para>
       </sidebar>
+
+      <figure>
+        <title>Automatic transitions between domains</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/selinux-transitions.png" scalefit="1" width="35%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
     </section>
     <section id="sect.selinux-setup">
       <title>Setting Up SELinux</title>
@@ -1612,24 +1613,6 @@ interface(`myapp_read_log',`
         </example>
 
         <sidebar>
-          <title><emphasis>DOCUMENTATION</emphasis> Explanations about the <emphasis>reference policy</emphasis></title>
-
-	  <para>The <emphasis>reference policy</emphasis> evolves like any
-	  free software project: based on volunteer contributions. The
-	  project is hosted by Tresys, one of the most active companies in
-	  the SELinux field. Their wiki contains explanations on how the
-	  rules are structured and how you can create new ones. <ulink
-	  type="block"
-	  url="http://oss.tresys.com/projects/refpolicy/wiki/GettingStarted"/></para>
-        </sidebar>
-      </section>
-      <section>
-        <title>Writing a <filename>.te</filename> File</title>
-
-	<para>Have a look at the <filename>example.te</filename>
-	file:</para>
-
-        <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> The <command>m4</command> macro language</title>
 
 	  <para>To properly structure the policy, the SELinux developers
@@ -1648,6 +1631,25 @@ interface(`myapp_read_log',`
 	  Likewise, some rights are in fact sets of rights which are
 	  replaced by their values at compilation time.</para>
         </sidebar>
+
+
+        <sidebar>
+          <title><emphasis>DOCUMENTATION</emphasis> Explanations about the <emphasis>reference policy</emphasis></title>
+
+	  <para>The <emphasis>reference policy</emphasis> evolves like any
+	  free software project: based on volunteer contributions. The
+	  project is hosted by Tresys, one of the most active companies in
+	  the SELinux field. Their wiki contains explanations on how the
+	  rules are structured and how you can create new ones. <ulink
+	  type="block"
+	  url="http://oss.tresys.com/projects/refpolicy/wiki/GettingStarted"/></para>
+        </sidebar>
+      </section>
+      <section>
+        <title>Writing a <filename>.te</filename> File</title>
+
+	<para>Have a look at the <filename>example.te</filename>
+	file:</para>
 
         <programlisting>policy_module(myapp,1.0.0) <co id="example.te.module"/>
 

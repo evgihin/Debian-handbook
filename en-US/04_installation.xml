@@ -256,6 +256,24 @@
       </para>
 
       <sidebar>
+        <title><emphasis>BACK TO BASICS</emphasis> Boot loader</title>
+        <indexterm><primary>loader</primary><secondary>bootloader</secondary></indexterm>
+        <indexterm><primary>loader</primary><secondary>bootloader</secondary></indexterm>
+        <indexterm><primary>bootloader</primary></indexterm>
+        <indexterm><primary>boot</primary><secondary>loader</secondary></indexterm>
+        <indexterm><primary>bootloader</primary></indexterm>
+
+	<para>The bootloader is a low-level program that is
+	responsible for booting the Linux kernel just after the BIOS
+	passes off its control. To handle this task, it must be able
+	to locate the Linux kernel to boot on the disk. On the i386
+	and amd64 architectures, the two most used programs to perform
+	this task are LILO, the older of the two, and GRUB, its modern
+	replacement. Isolinux and Syslinux are alternatives frequently
+	used to boot from removable media.</para>
+      </sidebar>
+
+      <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> 32 or 64 bits?</title>
         <indexterm><primary>PAE</primary></indexterm>
         <indexterm><primary>Physical Address Extension</primary></indexterm>
@@ -309,24 +327,6 @@
 	url="http://ftp.debian.org/debian/tools/win32-loader/stable/"/>
 	<ulink type="block"
 	url="http://www.goodbye-microsoft.com/"/></para>
-      </sidebar>
-
-      <sidebar>
-        <title><emphasis>BACK TO BASICS</emphasis> Boot loader</title>
-        <indexterm><primary>loader</primary><secondary>bootloader</secondary></indexterm>
-        <indexterm><primary>loader</primary><secondary>bootloader</secondary></indexterm>
-        <indexterm><primary>bootloader</primary></indexterm>
-        <indexterm><primary>boot</primary><secondary>loader</secondary></indexterm>
-        <indexterm><primary>bootloader</primary></indexterm>
-
-	<para>The bootloader is a low-level program that is
-	responsible for booting the Linux kernel just after the BIOS
-	passes off its control. To handle this task, it must be able
-	to locate the Linux kernel to boot on the disk. On the i386
-	and amd64 architectures, the two most used programs to perform
-	this task are LILO, the older of the two, and GRUB, its modern
-	replacement. Isolinux and Syslinux are alternatives frequently
-	used to boot from removable media.</para>
       </sidebar>
 
       <para>Each menu entry hides a specific boot command line, which can
@@ -661,7 +661,7 @@
         <title>Disk to use for guided partitioning</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="images/inst-partman-disk.png" scalefit="1" width="65%"/>
+            <imagedata fileref="images/inst-partman-disk.png" scalefit="1" width="80%"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -715,7 +715,24 @@
           <title>Guided partitioning</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/inst-autopartman-mode.png" scalefit="1" width="65%"/>
+              <imagedata fileref="images/inst-autopartman-mode.png" scalefit="1" width="80%"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+	<para>After choosing the type of partition, the software calculates
+	a suggestion, and describes it on the screen; the user can then
+	modify it if needed. You can, in particular, choose another
+	filesystem if the standard choice (<emphasis>ext4</emphasis>) isn't
+	appropriate. In most cases, however, the proposed partitioning is
+	reasonable and it can be accepted by selecting the “Finish
+	partitioning and write changes to disk” entry.</para>
+
+        <figure>
+          <title>Validating partitioning</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/inst-partman-validation.png" scalefit="1" width="90%"/>
             </imageobject>
           </mediaobject>
         </figure>
@@ -763,22 +780,6 @@
 	  mechanism applied to the filesystem.</para>
         </sidebar>
 
-	<para>After choosing the type of partition, the software calculates
-	a suggestion, and describes it on the screen; the user can then
-	modify it if needed. You can, in particular, choose another
-	filesystem if the standard choice (<emphasis>ext4</emphasis>) isn't
-	appropriate. In most cases, however, the proposed partitioning is
-	reasonable and it can be accepted by selecting the “Finish
-	partitioning and write changes to disk” entry.</para>
-
-        <figure>
-          <title>Validating partitioning</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/inst-partman-validation.png" scalefit="1" width="65%"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
       </section>
       <section>
         <title>Manual Partitioning</title>
@@ -1014,6 +1015,7 @@
 	  encrypted.</para>
         </sidebar>
 
+
 	<para>To create an encrypted partition, you must first assign an
 	available partition for this purpose. To do so, select a partition
 	and indicate that it is to be used as a “physical volume for
@@ -1031,6 +1033,8 @@
 	physical volume for LVM so as to protect several partitions (LVM
 	logical volumes) with the same encryption key, including the swap
 	partition (see sidebar).</para>
+
+
       </section>
     </section>
     <section>
@@ -1149,6 +1153,15 @@
       actually be installed will be fine-tuned and completed later on, but
       this provides a good starting point in a simple manner.</para>
 
+      <figure>
+        <title>Task choices</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/inst-tasksel.png" scalefit="1" width="65%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
       <para>Some packages are also automatically installed according to the
       hardware detected (thanks to the program
       <command>discover-pkginstall</command> from the <emphasis
@@ -1158,14 +1171,6 @@
       allowing for better integration of the virtual machine with the host
       system.</para>
 
-      <figure>
-        <title>Task choices</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/inst-tasksel.png" scalefit="1" width="65%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
     </section>
     <section>
       <title>Installing the GRUB Bootloader</title>

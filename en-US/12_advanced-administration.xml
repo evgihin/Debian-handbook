@@ -1576,8 +1576,6 @@ Disk identifier: 0x00039a9f
 	url="http://wiki.xenproject.org/wiki/Xen_Kernel_Feature_Matrix"/></para>
       </sidebar>
 
-      <para>Using Xen under Debian requires three components:</para>
-
       <sidebar>
         <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
 
@@ -1604,6 +1602,9 @@ Disk identifier: 0x00039a9f
 	processors), even non-modified operating systems can run as domU
 	(including Windows).</para>
       </sidebar>
+
+      <para>Using Xen under Debian requires three components:</para>
+
       <itemizedlist>
         <listitem>
 	  <para>The hypervisor itself. According to the available hardware,
@@ -3319,16 +3320,6 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US console-keymaps-at/keymap
 	<filename>if_eth0</filename> symbolic link, and it will monitor
 	network traffic on the eth0 interface.</para>
 
-	<para>Once all plugins are correctly set up, the daemon
-	configuration must be updated to describe access control for the
-	collected data. This involves <literal>allow</literal> directives
-	in the <filename>/etc/munin/munin-node.conf</filename> file. The
-	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
-	and only allows access to the local host. An administrator will
-	usually add a similar line containing the IP address of the grapher
-	host, then restart the daemon with <command>invoke-rc.d munin-node
-	restart</command>.</para>
-
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Creating local plugins</title>
 
@@ -3378,6 +3369,17 @@ load.info 5 minute load average
 	  according to whether the plugin should be enabled on this
 	  host.</para>
         </sidebar>
+
+	<para>Once all plugins are correctly set up, the daemon
+	configuration must be updated to describe access control for the
+	collected data. This involves <literal>allow</literal> directives
+	in the <filename>/etc/munin/munin-node.conf</filename> file. The
+	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
+	and only allows access to the local host. An administrator will
+	usually add a similar line containing the IP address of the grapher
+	host, then restart the daemon with <command>invoke-rc.d munin-node
+	restart</command>.</para>
+
       </section>
       <section>
         <title>Configuring the Grapher</title>
