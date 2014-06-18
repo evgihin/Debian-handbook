@@ -21,6 +21,12 @@
   <xsl:text>\newpage&#10;</xsl:text>
   <xsl:text>\thispagestyle{empty}&#10;</xsl:text>
   <xsl:text>\hbox{}&#10;</xsl:text>
+  <xsl:text>\newpage&#10;</xsl:text>
+  <xsl:text>\thispagestyle{empty}&#10;</xsl:text>
+  <xsl:text>\hbox{}&#10;</xsl:text>
+  <xsl:text>\newpage&#10;</xsl:text>
+  <xsl:text>\thispagestyle{empty}&#10;</xsl:text>
+  <xsl:text>\hbox{}&#10;</xsl:text>
   <xsl:text>\end{document}&#10;</xsl:text>
 </xsl:param>
 <xsl:param name="geometry.options">headheight=0cm,headsep=0cm</xsl:param>
