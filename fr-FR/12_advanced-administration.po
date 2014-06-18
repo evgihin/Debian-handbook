@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Debian Administrator's Handbook\n"
-"POT-Creation-Date: 2013-12-17 10:27+0100\n"
-"PO-Revision-Date: 2013-12-20 18:32+0100\n"
+"POT-Creation-Date: 2014-01-09 08:27+0100\n"
+"PO-Revision-Date: 2014-03-15 15:01+0100\n"
 "Last-Translator: Raphaël Hertzog <hertzog@debian.org>\n"
 "Language-Team: none\n"
 "Language: fr-FR\n"
@@ -328,11 +328,6 @@ msgstr "sur le disque <filename>sdd</filename>, seule la partition <filename>sdd
 msgid "finally, a <filename>sde</filename> disk, still 4 GB, entirely available."
 msgstr "enfin, un disque <filename>sde</filename>, toujours de 4 Go, est entièrement disponible."
 
-#. Tag: para
-#, no-c-format
-msgid "We're going to use these physical elements to build two volumes, one RAID-0 and one mirror (RAID-1). Let's start with the RAID-0 volume:"
-msgstr "Nous allons construire sur ces éléments physiques deux volumes, l'un en RAID-0, l'autre en miroir. Commençons par le RAID-0 :"
-
 #. Tag: title
 #, no-c-format
 msgid "<emphasis>NOTE</emphasis> Identifying existing RAID volumes"
@@ -342,6 +337,11 @@ msgstr "<emphasis>NOTE</emphasis> Identifier les volumes RAID existants"
 #, no-c-format
 msgid "The <filename>/proc/mdstat</filename> file lists existing volumes and their states. When creating a new RAID volume, care should be taken not to name it the same as an existing volume."
 msgstr "Le fichier <filename>/proc/mdstat</filename> liste les volumes existants et leur état. On prendra soin lors de la création d'un nouveau volume RAID de ne pas essayer de le nommer avec le nom d'un volume existant."
+
+#. Tag: para
+#, no-c-format
+msgid "We're going to use these physical elements to build two volumes, one RAID-0 and one mirror (RAID-1). Let's start with the RAID-0 volume:"
+msgstr "Nous allons construire sur ces éléments physiques deux volumes, l'un en RAID-0, l'autre en miroir. Commençons par le RAID-0 :"
 
 #. Tag: screen
 #, no-c-format
@@ -595,7 +595,7 @@ msgstr "<emphasis>ASTUCE</emphasis> Démarrer un miroir en mode dégradé"
 #. Tag: para
 #, no-c-format
 msgid "Sometimes two disks are not immediately available when one wants to start a RAID-1 mirror, for instance because one of the disks one plans to include is already used to store the data one wants to move to the array. In such circumstances, it is possible to deliberately create a degraded RAID-1 array by passing <filename>missing</filename> instead of a device file as one of the arguments to <command>mdadm</command>. Once the data have been copied to the “mirror”, the old disk can be added to the array. A synchronization will then take place, giving us the redundancy that was wanted in the first place."
-msgstr "Lorsque l'on souhaite sécuriser des données présentes sur un disque non-RAID et les migrer vers un volume RAID-1, il n'est pas toujours possible de disposer à la fois de l'ancien disque et des deux nouveaux en même temps (souvent parce que le disque existant va être intégré dans le miroir). On peut alors délibérément créer le volume RAID-1 en mode dégradé, en passant <filename>missing</filename> en argument à <command>mdadm</command> à la place d'un des deux périphériques à utiliser. Une fois que les données auront été copiées vers le « miroir », le disque historique pourra être intégré au volume. Une synchronisation aura alors lieu, à la suite de quoi les données seront stockées de manière redondante."
+msgstr "Lorsque l'on souhaite sécuriser des données présentes sur un disque non RAID et les migrer vers un volume RAID-1, il n'est pas toujours possible de disposer à la fois de l'ancien disque et des deux nouveaux en même temps (souvent parce que le disque existant va être intégré dans le miroir). On peut alors délibérément créer le volume RAID-1 en mode dégradé, en passant <filename>missing</filename> en argument à <command>mdadm</command> à la place d'un des deux périphériques à utiliser. Une fois que les données auront été copiées vers le « miroir », le disque historique pourra être intégré au volume. Une synchronisation aura alors lieu, à la suite de quoi les données seront stockées de manière redondante."
 
 #. Tag: title
 #, no-c-format
@@ -817,7 +817,7 @@ msgstr "Sauvegarde de la configuration"
 #. Tag: para
 #, no-c-format
 msgid "Most of the meta-data concerning RAID volumes are saved directly on the disks that make up these arrays, so that the kernel can detect the arrays and their components and assemble them automatically when the system starts up. However, backing up this configuration is encouraged, because this detection isn't fail-proof, and it is only expected that it will fail precisely in sensitive circumstances. In our example, if the <filename>sde</filename> disk failure had been real (instead of simulated) and the system had been restarted without removing this <filename>sde</filename> disk, this disk could start working again due to having been probed during the reboot. The kernel would then have three physical elements, each claiming to contain half of the same RAID volume. Another source of confusion can come when RAID volumes from two servers are consolidated onto one server only. If these arrays were running normally before the disks were moved, the kernel would be able to detect and reassemble the pairs properly; but if the moved disks had been aggregated into an <filename>md1</filename> on the old server, and the new server already has an <filename>md1</filename>, one of the mirrors would be renamed."
-msgstr "La plupart des méta-données concernant les volumes RAID sont sauvegardées directement sur les disques qui les composent, de sorte que le noyau peut détecter les différents ensembles avec leurs composants et les assembler automatiquement lors du démarrage du système. Cela dit, il convient de sauvegarder cette configuration, car cette détection n'est pas infaillible et aura tendance à faillir précisément en période sensible. Si dans notre exemple la panne du disque <filename>sde</filename> était réelle, et si on redémarrait le système sans en le retirer, ce disque pourrait, à la faveur du redémarrage, « retomber en marche ». Le noyau aurait alors trois éléments physiques, chacun prétendant représenter la moitié du même volume RAID. Une autre source de confusion peut subvenir si l'on consolide des volumes RAID de deux serveurs sur un seul. Si ces ensembles étaient en fonctionnement normal avant le déplacement des disques, le noyau saura reconstituer les paires correctement. Mais pour peu que les disques déplacés soient agrégés en un <filename>/dev/md1</filename> et qu'il existe également un <filename>md1</filename> sur le serveur consolidé, l'un des miroirs sera contraint de changer de nom."
+msgstr "La plupart des méta-données concernant les volumes RAID sont sauvegardées directement sur les disques qui les composent, de sorte que le noyau peut détecter les différents ensembles avec leurs composants et les assembler automatiquement lors du démarrage du système. Cela dit, il convient de sauvegarder cette configuration, car cette détection n'est pas infaillible et aura tendance à faillir précisément en période sensible. Si dans notre exemple la panne du disque <filename>sde</filename> était réelle, et si on redémarrait le système sans le retirer, ce disque pourrait, à la faveur du redémarrage, « retomber en marche ». Le noyau aurait alors trois éléments physiques, chacun prétendant représenter la moitié du même volume RAID. Une autre source de confusion peut subvenir si l'on consolide des volumes RAID de deux serveurs sur un seul. Si ces ensembles étaient en fonctionnement normal avant le déplacement des disques, le noyau saura reconstituer les paires correctement. Mais pour peu que les disques déplacés soient agrégés en un <filename>/dev/md1</filename> et qu'il existe également un <filename>md1</filename> sur le serveur consolidé, l'un des miroirs sera contraint de changer de nom."
 
 #. Tag: para
 #, no-c-format
@@ -1575,7 +1575,7 @@ msgstr "<emphasis>NOTE</emphasis> Si les performances comptent…"
 #. Tag: para
 #, no-c-format
 msgid "If input/output speed is of the essence, especially in terms of access times, using LVM and/or RAID in one of the many combinations may have some impact on performances, and this may influence decisions as to which to pick. However, these differences in performance are really minor, and will only be measurable in a few use cases. If performance matters, the best gain to be obtained would be to use non-rotating storage media (<indexterm><primary>SSD</primary></indexterm><emphasis>solid-state drives</emphasis> or SSDs); their cost per megabyte is higher than that of standard hard disk drives, and their capacity is usually smaller, but they provide excellent performance for random accesses. If the usage pattern includes many input/output operations scattered all around the filesystem, for instance for databases where complex queries are routinely being run, then the advantage of running them on an SSD far outweigh whatever could be gained by picking LVM over RAID or the reverse. In these situations, the choice should be determined by other considerations than pure speed, since the performance aspect is most easily handled by using SSDs."
-msgstr "Si les performances des entrées/sorties sont importantes, notamment en termes de temps d'accès, il faut savoir que l'usage de LVM et/ou de RAID peut avoir un impact qui influerea sur votre choix. Toutefois, ces différences de performance sont vraiment mineures et ne seront mesurables que dans quelques cas. Si les performances comptent, le meilleur gain que l'on puisse obtenir viendra de l'usage de disques non-rotatifs (<indexterm><primary>SSD</primary></indexterm><foreignphrase>Solid-State Drives</foreignphrase> ou SSD) ; leur coût au mégaoctet est plus élevé que celui des disques durs standards et leur capacité généralement inférieure, mais ils fournissent d'excellentes performances pour des accès aléatoires aux données. Si le cas d'usage inclut de nombreuses lectures/écritures réparties sur tout le système de fichiers, comme pour des bases de données sur lesquelles des requêtes complexes sont fréquemment exécutées, alors le bénéfice apporté par le SSD dépasse largement ce qui peut être gagné en privilégiant LVM sur RAID ou l'inverse. Dans ces situations, le choix doit être déterminé par d'autres considérations que la vitesse pure, puisque la problématique des performances est plus facilement gérée par l'usage de SSD."
+msgstr "Si les performances des entrées/sorties sont importantes, notamment en termes de temps d'accès, il faut savoir que l'usage de LVM et/ou de RAID peut avoir un impact qui influerea sur votre choix. Toutefois, ces différences de performance sont vraiment mineures et ne seront mesurables que dans quelques cas. Si les performances comptent, le meilleur gain que l'on puisse obtenir viendra de l'usage de disques non rotatifs (<indexterm><primary>SSD</primary></indexterm><foreignphrase>Solid-State Drives</foreignphrase> ou SSD) ; leur coût au mégaoctet est plus élevé que celui des disques durs standards et leur capacité généralement inférieure, mais ils fournissent d'excellentes performances pour des accès aléatoires aux données. Si le cas d'usage inclut de nombreuses lectures/écritures réparties sur tout le système de fichiers, comme pour des bases de données sur lesquelles des requêtes complexes sont fréquemment exécutées, alors le bénéfice apporté par le SSD dépasse largement ce qui peut être gagné en privilégiant LVM sur RAID ou l'inverse. Dans ces situations, le choix doit être déterminé par d'autres considérations que la vitesse pure, puisque la problématique des performances est plus facilement gérée par l'usage de SSD."
 
 #. Tag: para
 #, no-c-format
@@ -1795,7 +1795,7 @@ msgstr "Xen n'est pour l'instant disponible que sur les architectures i386 et am
 #. Tag: title
 #, no-c-format
 msgid "<emphasis>CULTURE</emphasis> Xen and non-Linux kernels"
-msgstr "<emphasis>CULTURE</emphasis> Xen et les noyaux non-Linux"
+msgstr "<emphasis>CULTURE</emphasis> Xen et les noyaux non Linux"
 
 #. Tag: para
 #, no-c-format
@@ -1805,7 +1805,7 @@ msgstr "Xen requiert que les systèmes d'exploitation qu'il doit animer soient m
 #. Tag: para
 #, no-c-format
 msgid "However, if Xen can rely on the hardware functions dedicated to virtualization (which are only present in more recent processors), even non-modified operating systems can run as domU (including Windows)."
-msgstr "Toutefois si Xen peut s'appuyer sur les fonctions matérielles dédiées spécifiquement à la virtualisation, qui ne sont proposées que par les processeurs les plus récents, il est alors possible d'employer des systèmes d'exploitation non-modifiés (dont Windows) en tant que domU."
+msgstr "Toutefois si Xen peut s'appuyer sur les fonctions matérielles dédiées spécifiquement à la virtualisation, qui ne sont proposées que par les processeurs les plus récents, il est alors possible d'employer des systèmes d'exploitation non modifiés (dont Windows) en tant que domU."
 
 #. Tag: para
 #, no-c-format
@@ -1871,7 +1871,7 @@ msgstr "<emphasis>POUR ALLER PLUS LOIN</emphasis> Installer autre chose que Debi
 #. Tag: para
 #, no-c-format
 msgid "In case of a non-Linux system, care should be taken to define the kernel the domU must use, using the <literal>--kernel</literal> option."
-msgstr "S'il s'agit d'installer un système non-Linux, on n'oubliera pas de spécifier le noyau à utiliser par le domU, avec l'option <literal>--kernel</literal>."
+msgstr "S'il s'agit d'installer un système non Linux, on n'oubliera pas de spécifier le noyau à utiliser par le domU, avec l'option <literal>--kernel</literal>."
 
 #. Tag: para
 #, no-c-format
@@ -2380,7 +2380,7 @@ msgstr "Signalons que le script de création de template Debian accepte une opti
 #. Tag: para
 #, no-c-format
 msgid "The newly-created filesystem now contains a minimal Debian system, and by default the container shares the network device with the host system. Since this is not really wanted, we will edit the container's configuration file (<filename>/var/lib/lxc/testlxc/config</filename>) and add a few <literal>lxc.network.*</literal> entries:"
-msgstr "Le système de fichiers nouvellement créé contient désormais un système Debian minimal. Le conteneur associé partage, par défaut, le périphériquer réseau avec le système hôte. Puisque cela n'est pas vraiment souhaitable, nous éditerons le fichier de configuration du conteneur (<filename>/var/lib/lxc/testlxc/config</filename>) et ajouterons ces quelques directives <literal>lxc.network.*</literal> :"
+msgstr "Le système de fichiers nouvellement créé contient désormais un système Debian minimal. Le conteneur associé partage, par défaut, le périphérique réseau avec le système hôte. Puisque cela n'est pas vraiment souhaitable, nous éditerons le fichier de configuration du conteneur (<filename>/var/lib/lxc/testlxc/config</filename>) et ajouterons ces quelques directives <literal>lxc.network.*</literal> :"
 
 #. Tag: programlisting
 #, no-c-format
@@ -2572,7 +2572,7 @@ msgstr "<primary><emphasis role=\"pkg\">virtinst</emphasis></primary>"
 #. Tag: para
 #, no-c-format
 msgid "We first install the required packages, with <command>apt-get install qemu-kvm libvirt-bin virtinst virt-manager virt-viewer</command>. <emphasis role=\"pkg\">libvirt-bin</emphasis> provides the <command>libvirtd</command> daemon, which allows (potentially remote) management of the virtual machines running of the host, and starts the required VMs when the host boots. In addition, this package provides the <command>virsh</command> command-line tool, which allows controlling the <command>libvirtd</command>-managed machines."
-msgstr "Installons donc tous les paquets requis avec <command>apt-get install qemu-kvm libvirt-bin virtinst virtual-manager virt-viewer</command>. <emphasis role=\"pkg\">libvirt-bin</emphasis> fournit le démon <command>libvirtd</command> qui sert à de gérer des machines virtuelles (éventuellement à distance) et qui va mettre en route les machines virtuelles requises au démarrage du serveur. En outre, le paquet fournit <command>virsh</command> un outil en ligne de commande qui permet de contrôler les machines virtuelles gérées par <command>libvirtd</command>."
+msgstr "Installons donc tous les paquets requis avec <command>apt-get install qemu-kvm libvirt-bin virtinst virtual-manager virt-viewer</command>. <emphasis role=\"pkg\">libvirt-bin</emphasis> fournit le démon <command>libvirtd</command> qui sert à gérer des machines virtuelles (éventuellement à distance) et qui va mettre en route les machines virtuelles requises au démarrage du serveur. En outre, le paquet fournit <command>virsh</command> un outil en ligne de commande qui permet de contrôler les machines virtuelles gérées par <command>libvirtd</command>."
 
 #. Tag: para
 #, no-c-format
@@ -2587,7 +2587,7 @@ msgstr "Tout comme avec Xen ou LXC, la configuration la plus courante pour des s
 #. Tag: para
 #, no-c-format
 msgid "Alternatively, and in the default configuration provided by KVM, the virtual machine is assigned a private address (in the 192.168.122.0/24 range), and NAT is set up so that the VM can access the outside network."
-msgstr "Alternativement, la configuration par défaut employée par KVM est d'attribuer une addresse privée à la machine virtuelle (dans la plage 192.168.122.0/24) et de faire du NAT pour que la machine ait un accès au réseau extérieur."
+msgstr "Alternativement, la configuration par défaut employée par KVM est d'attribuer une adresse privée à la machine virtuelle (dans la plage 192.168.122.0/24) et de faire du NAT pour que la machine ait un accès au réseau extérieur."
 
 #. Tag: para
 #, no-c-format
@@ -2685,7 +2685,7 @@ msgstr "L'option <literal>--connect</literal> permet d'indiquer l'hyperviseur à
 #. Tag: para
 #, no-c-format
 msgid "Since KVM is managed the same way as QEMU, the <literal>--virt-type kvm</literal> allows specifying the use of KVM even though the URL looks like QEMU."
-msgstr "KVM se gérant de manière similaire à QEMU, l'option <literal>--virt-type kvm</literal> précise que l'on souhaite employer KVM même si l'URL de connection précise indique QEMU."
+msgstr "KVM se gérant de manière similaire à QEMU, l'option <literal>--virt-type kvm</literal> précise que l'on souhaite employer KVM même si l'URL de connexion précise indique QEMU."
 
 #. Tag: para
 #, no-c-format
@@ -2700,7 +2700,7 @@ msgstr "L'option <literal>--ram</literal> définit la quantité de mémoire vive
 #. Tag: para
 #, no-c-format
 msgid "The <literal>--disk</literal> specifies the location of the image file that is to represent our virtual machine's hard disk; that file is created, unless present, with a size (in GB) specified by the <literal>size</literal> parameter. The <literal>format</literal> parameter allows choosing among several ways of storing the image file. The default format (<literal>raw</literal>) is a single file exactly matching the disk's size and contents. We picked a more advanced format here, that is specific to QEMU and allows starting with a small file that only grows when the virtual machine starts actually using space."
-msgstr "L'option <literal>--disk</literal> indique l'emplacement du fichier image qui va représenter le disque dur de notre machine virtuelle. Si le fichier n'existe pas, il est créé en respectant la taille en Go indiquée dans le paramètre <literal>size</literal>. Le paramère <literal>format</literal> permet de stocker le disque virtuel de différentes manières. Le format par défaut (<literal>raw</literal>) est un fichier de la taille exacte du disque, copie exacte de son contenu. Le format retenu ici est un peu plus avancé (et spécifique à QEMU) et permet de démarrer avec un petit fichier dont la taille augmente au fur et à mesure que l'espace disque est réellement utilisé par la machine virtuelle."
+msgstr "L'option <literal>--disk</literal> indique l'emplacement du fichier image qui va représenter le disque dur de notre machine virtuelle. Si le fichier n'existe pas, il est créé en respectant la taille en Go indiquée dans le paramètre <literal>size</literal>. Le paramètre <literal>format</literal> permet de stocker le disque virtuel de différentes manières. Le format par défaut (<literal>raw</literal>) est un fichier de la taille exacte du disque, copie exacte de son contenu. Le format retenu ici est un peu plus avancé (et spécifique à QEMU) et permet de démarrer avec un petit fichier dont la taille augmente au fur et à mesure que l'espace disque est réellement utilisé par la machine virtuelle."
 
 #. Tag: para
 #, no-c-format
@@ -2859,7 +2859,7 @@ msgstr "Si la machine virtuelle doit faire fonctionner Debian (ou une de ses dé
 
 #. Tag: para
 #, no-c-format
-msgid "The procedure requires setting up a <filename>yum.conf</filename> file containing the necessary parameters, including the path to the source RPM repositories, the path to the plugin configuration, and the destination folder. For this example, we will assume that the environment will be stored in /var/tmp/yum-bootstrap. The file /var/tmp/yum-bootstrap/yum.conf file should look like this:"
+msgid "The procedure requires setting up a <filename>yum.conf</filename> file containing the necessary parameters, including the path to the source RPM repositories, the path to the plugin configuration, and the destination folder. For this example, we will assume that the environment will be stored in <filename>/var/tmp/yum-bootstrap</filename>. The file <filename>/var/tmp/yum-bootstrap/yum.conf</filename> file should look like this:"
 msgstr "La procédure nécessite de mettre en place un fichier <filename>yum.conf</filename> avec les paramètres requis, notamment le chemin vers les dépôts RPM, le chemin de la configuration des greffons et le répertoire cible. Pour cet exemple, nous supposerons que l'environnement sera stocké dans <filename>/var/tmp/yum-bootstrap/</filename>. Le fichier <filename>/var/tmp/yum-bootstrap/yum.conf</filename> devrait ressembler à ceci :"
 
 #. Tag: programlisting
@@ -2903,8 +2903,8 @@ msgstr ""
 
 #. Tag: para
 #, no-c-format
-msgid "The <filename>/var/tmp/yum-bootstrap/repos.d</filename> directory should contain the descriptions of the RPM source repositories, just as in <filename>/etc/yum.repo.d</filename> in an already installed RPM-based system. Here is an example for a CentOS 6 installation:"
-msgstr "Le répertoire <filename>/var/tmp/yum-bootstrap/repos.d</filename> devrait contenir la description des dépôts RPM source, similaire à ce que l'on trouverait dans <filename>/etc/yum.repo.d</filename> sur un système RPM déjà installé. Voici un exemple pour une installation de CentOS 6 :"
+msgid "The <filename>/var/tmp/yum-bootstrap/repos.d</filename> directory should contain the descriptions of the RPM source repositories, just as in <filename>/etc/yum.repos.d</filename> in an already installed RPM-based system. Here is an example for a CentOS 6 installation:"
+msgstr "Le répertoire <filename>/var/tmp/yum-bootstrap/repos.d</filename> devrait contenir la description des dépôts RPM source, similaire à ce que l'on trouverait dans <filename>/etc/yum.repos.d</filename> sur un système RPM déjà installé. Voici un exemple pour une installation de CentOS 6 :"
 
 #. Tag: programlisting
 #, no-c-format
@@ -3024,7 +3024,7 @@ msgstr "Chacune de ces solutions a des avantages et des inconvénients : System
 #. Tag: para
 #, no-c-format
 msgid "On the other hand, an automated installation using debian-installer can adapt to the specifics of each machine: the installer will fetch the appropriate kernel and software packages from the relevant repositories, detect available hardware, partition the whole hard disk to take advantage of all the available space, install the corresponding Debian system, and set up an appropriate bootloader. However, the standard installer will only install standard Debian versions, with the base system and a set of pre-selected “tasks”; this precludes installing a particular system with non-packaged applications. Fulfilling this particular need requires customizing the installer… Fortunately, the installer is very modular, and there are tools to automate most of the work required for this customization, most importantly simple-CDD (CDD being an acronym for <emphasis>Custom Debian Derivative</emphasis>). Even the simple-CDD solution, however, only handles initial installations; this is usually not a problem since the APT tools allow efficient deployment of updates later on."
-msgstr "Une installation automatisée avec debian-installer saura au contraire s'adapter aux spécificités des différentes machines : il récupérera le noyau et les logiciels dans les dépôts correspondants, détectera le matériel présent, partitionnera l'ensemble du disque pour exploiter tout l'espace disponible, installera le système Debian et configurera un chargeur de démarrage. En revanche, avec l'installateur standard, seules des versions Debian « standard » seront installées : c'est-à-dire le système de base plus les « tâches » que l'on aura pré-sélectionnées. Impossible donc d'installer un profil très particulier comprenant des applications non-empaquetées. Pour répondre à ces problématiques, il faut modifier l'installateur… Fort heureusement, ce dernier est très modulaire et des outils existent pour automatiser le plus gros de ce travail : il s'agit de simple-CDD (CDD est l'acronyme de <foreignphrase>Custom Debian Derivative</foreignphrase> — dérivée personnalisée de Debian). Même avec simple-CDD, cette solution ne répond qu'au besoin des installations initiales ; ce n'est pourtant pas jugé problématique puisque les outils APT permettent ensuite de déployer efficacement des mises à jour."
+msgstr "Une installation automatisée avec debian-installer saura au contraire s'adapter aux spécificités des différentes machines : il récupérera le noyau et les logiciels dans les dépôts correspondants, détectera le matériel présent, partitionnera l'ensemble du disque pour exploiter tout l'espace disponible, installera le système Debian et configurera un chargeur de démarrage. En revanche, avec l'installateur standard, seules des versions Debian « standard » seront installées : c'est-à-dire le système de base plus les « tâches » que l'on aura pré-sélectionnées. Impossible donc d'installer un profil très particulier comprenant des applications non empaquetées. Pour répondre à ces problématiques, il faut modifier l'installateur… Fort heureusement, ce dernier est très modulaire et des outils existent pour automatiser le plus gros de ce travail : il s'agit de simple-CDD (CDD est l'acronyme de <foreignphrase>Custom Debian Derivative</foreignphrase> — dérivée personnalisée de Debian). Même avec simple-CDD, cette solution ne répond qu'au besoin des installations initiales ; ce n'est pourtant pas jugé problématique puisque les outils APT permettent ensuite de déployer efficacement des mises à jour."
 
 #. Tag: para
 #, no-c-format
@@ -3499,8 +3499,8 @@ msgstr "<primary>Zabbix</primary>"
 
 #. Tag: para
 #, no-c-format
-msgid "Although Munin and Nagios are in very common use, they are not the only players in the monitoring field, and each of them only handles half of the task (graphing on one side, alerting on the other). Zabbix, on the other hand, integrates both parts of monitoring; it also has a web interface for configuring the most common aspects. It has grown by leaps and bounds during the last few years, and can now be considered a viable contender; unfortunately, Zabbix isn't present in Debian Wheezy due to timing issues in the release process, but packages will be provided as backports or in unofficial repositories. <ulink type=\"block\" url=\"http://www.zabbix.org/\" />"
-msgstr "Bien que Munin et Nagios soient très répandus, ils ne sont pas les seuls logiciels permettant la supervision et ils ne traitent qu'une partie de la problématique (graphage ou alerte). On citera notamment Zabbix. Il intègre les deux activités en un seul logiciel et est pour partie configuré via une interface web. Il s'est grandement amélioré dans les dernières années et peut être considéré comme une alternative viable ; malheureusement Zabbix n'est pas présent dans Debian Wheezy en raison de problèmes de calendrier de sortie, mais des paquets seront vraisemblalement fournis soit dans le dépôt des rétroportages soit dans un dépôt non-officiel. <ulink type=\"block\" url=\"http://www.zabbix.org/\" />"
+msgid "Although Munin and Nagios are in very common use, they are not the only players in the monitoring field, and each of them only handles half of the task (graphing on one side, alerting on the other). Zabbix, on the other hand, integrates both parts of monitoring; it also has a web interface for configuring the most common aspects. It has grown by leaps and bounds during the last few years, and can now be considered a viable contender; unfortunately, Zabbix isn't present in Debian <emphasis role=\"distribution\">Wheezy</emphasis> due to timing issues in the release process, but packages will be provided as backports or in unofficial repositories. <ulink type=\"block\" url=\"http://www.zabbix.org/\" />"
+msgstr "Bien que Munin et Nagios soient très répandus, ils ne sont pas les seuls logiciels permettant la supervision et ils ne traitent qu'une partie de la problématique (graphage ou alerte). On citera notamment Zabbix. Il intègre les deux activités en un seul logiciel et est pour partie configuré via une interface web. Il s'est grandement amélioré dans les dernières années et peut être considéré comme une alternative viable ; malheureusement Zabbix n'est pas présent dans Debian <emphasis role=\"distribution\">Wheezy</emphasis> en raison de problèmes de calendrier de sortie, mais des paquets seront vraisemblalement fournis soit dans le dépôt des rétroportages soit dans un dépôt non officiel. <ulink type=\"block\" url=\"http://www.zabbix.org/\" />"
 
 #. Tag: title
 #, no-c-format
@@ -3989,4 +3989,3 @@ msgstr "<emphasis>POUR ALLER PLUS LOIN</emphasis> Tests distants avec NRPE"
 #, no-c-format
 msgid "Many Nagios plugins allow checking some parameters local to a host; if many machines need these checks while a central installation gathers them, the NRPE (<emphasis>Nagios Remote Plugin Executor</emphasis>) plugin needs to be deployed. The <emphasis role=\"pkg\">nagios-nrpe-plugin</emphasis> package needs to be installed on the Nagios server, and <emphasis role=\"pkg\">nagios-nrpe-server</emphasis> on the hosts where local tests need to run. The latter gets its configuration from <filename>/etc/nagios/nrpe.cfg</filename>. This file should list the tests that can be started remotely, and the IP addresses of the machines allowed to trigger them. On the Nagios side, enabling these remote tests is a simple matter of adding matching services using the new <emphasis>check_nrpe</emphasis> command."
 msgstr "De nombreux greffons de Nagios permettent de vérifier l'état de certains paramètres locaux d'une machine. Si l'on souhaite effectuer ces vérifications sur de nombreuses machines tout en centralisant les résultats sur une seule installation, il faut employer le greffon NRPE (<foreignphrase>Nagios Remote Plugin Executor</foreignphrase>). On installe <emphasis role=\"pkg\">nagios-nrpe-plugin</emphasis> sur le serveur Nagios et <emphasis role=\"pkg\">nagios-nrpe-server</emphasis> sur les machines sur lesquelles on veut exécuter certains tests locaux. Ce dernier se configure par le biais du fichier <filename>/etc/nagios/nrpe.cfg</filename>. On y indique les tests que l'on peut démarrer à distance ainsi que les adresses IP des machines qui sont autorisées à les déclencher. Du côté de Nagios, il suffit d'ajouter les services correspondants en faisant appel à la nouvelle commande <emphasis>check_nrpe</emphasis>."
-
