@@ -533,6 +533,7 @@ Working Devices : 2
 	  array. A synchronization will then take place, giving us the
 	  redundancy that was wanted in the first place.</para>
         </sidebar>
+<?latex \pagebreak ?>
 
         <sidebar>
           <title><emphasis>TIP</emphasis> Setting up a mirror without synchronization</title>
@@ -590,6 +591,7 @@ Working Devices : 1
 	disk fail in turn, the data would be lost. We want to avoid that
 	risk, so we'll replace the failed disk with a new one,
 	<filename>sdf</filename>:</para>
+<?latex \pagebreak ?>
 
         <screen><computeroutput># </computeroutput><userinput>mdadm /dev/md1 --add /dev/sdf</userinput>
 <computeroutput>mdadm: added /dev/sdf
@@ -960,6 +962,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 	12 GB, respectively. Let's now carve them up into “virtual
 	partitions” (LVs). This involves the <command>lvcreate</command>
 	command, and a slightly more complex syntax:</para>
+<?latex \pagebreak ?>
 
         <screen id="screen.lvcreate"><computeroutput># </computeroutput><userinput>lvdisplay</userinput>
 <computeroutput># </computeroutput><userinput>lvcreate -n lv_files -L 5G vg_critical</userinput>
@@ -1558,13 +1561,6 @@ Device    Boot     Start       End   Sectors Size Id Type
       </sidebar>
 
       <sidebar>
-        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
-
-        <para>Xen is currently only available for the i386, amd64, arm64
-        and armhf architectures.</para>
-      </sidebar>
-
-      <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and non-Linux kernels</title>
 
 	<para>Xen requires modifications to all the operating systems
@@ -1581,6 +1577,13 @@ Device    Boot     Start       End   Sectors Size Id Type
 	to virtualization (which are only present in more recent
 	processors), even non-modified operating systems can run as domU
 	(including Windows).</para>
+      </sidebar>
+
+      <sidebar>
+        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
+
+        <para>Xen is currently only available for the i386, amd64, arm64
+        and armhf architectures.</para>
       </sidebar>
 
       <para>Using Xen under Debian requires three components:</para>
@@ -1659,14 +1662,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  case, the <literal>--dist</literal> option will also most often
 	  be used (with a distribution name such as <emphasis
 	  role="distribution">jessie</emphasis>).</para>
-
-          <sidebar>
-            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
-
-	    <para>In case of a non-Linux system, care should be taken to
-	    define the kernel the domU must use, using the
-	    <literal>--kernel</literal> option.</para>
-          </sidebar>
         </listitem>
         <listitem>
 	  <para><literal>--dhcp</literal> states that the domU's network
@@ -1695,6 +1690,15 @@ Device    Boot     Start       End   Sectors Size Id Type
 	    <command>xen-create-image</command>, however, so editing the
 	    Xen image's configuration file is in order after its initial
 	    creation with <command>xen-create-image</command>.</para>
+          </sidebar>
+
+          <sidebar>
+            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
+
+	    <para>In case of a non-Linux system, care should be taken to
+	    define the kernel the domU must use, using the
+            <literal>--kernel</literal> option.
+            </para>
           </sidebar>
         </listitem>
       </itemizedlist>
@@ -2174,7 +2178,7 @@ lxc.network.hwaddr = 4a:49:43:49:79:20
 
 	<para>Now that our virtual machine image is ready, let's start the
 	container:</para>
-
+<?latex \pagebreak ?>
         <screen width="94" role="scale"><computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-start --daemon --name=testlxc
 </userinput><computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-console -n testlxc
 </userinput><computeroutput>Debian GNU/Linux 8 testlxc tty1
@@ -2232,7 +2236,7 @@ root@testlxc:~# </computeroutput></screen>
         which are not part of any group. In both cases, the order within a group
         is defined by the <literal>lxc.start.order</literal> option.
         </para>
-
+<?latex \pagebreak ?>
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Mass virtualization</title>
 
@@ -3148,7 +3152,7 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
     messages, and so on). Both have a modular design, which makes it easy
     to create new plug-ins to monitor specific parameters or
     services.</para>
-
+<?latex \pagebreak ?>
     <sidebar>
       <title><emphasis>ALTERNATIVE</emphasis> Zabbix, an integrated monitoring tool</title>
       <indexterm><primary>Zabbix</primary></indexterm>

@@ -60,15 +60,6 @@
     real init, and the machine goes back to the standard boot
     process.</para>
 
-    <figure id="figure.boot-process-systemd">
-      <title>Boot sequence of a computer running Linux with systemd</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/startup-systemd.png" scalefit="1" width="80%"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-
     <section id="sect.systemd"><title>The systemd init system</title>
 
     <para>The “real init” is currently provided by <emphasis
@@ -121,6 +112,15 @@
       <command>runit</command> or <command>minit</command>, but they are
       relatively specialized and not widespread.</para>
     </sidebar>
+
+    <figure id="figure.boot-process-systemd">
+      <title>Boot sequence of a computer running Linux with systemd</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/startup-systemd.png" scalefit="1" width="70%"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
 
     <sidebar>
       <title><emphasis>SPECIFIC CASE</emphasis> Booting from the network</title>
@@ -667,17 +667,6 @@ up. </para></listitem>
       encrypted.</para>
 
       <sidebar>
-        <title><emphasis>CULTURE</emphasis> Telnet and RSH are obsolete</title>
-	<indexterm><primary><command>telnet</command></primary></indexterm>
-	<indexterm><primary><command>rsh</command></primary></indexterm>
-
-	<para>Before SSH, <emphasis>Telnet</emphasis> and
-	<emphasis>RSH</emphasis> were the main tools used to login
-	remotely. They are now largely obsolete and should no longer be
-	used even if Debian still provides them.</para>
-      </sidebar>
-
-      <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Authentication, encryption</title>
 
 	<para>When you need to give a client the ability to conduct or
@@ -692,6 +681,17 @@ up. </para></listitem>
 	<para>Authentication and encryption are often mentioned together,
 	both because they are frequently used together, and because they
 	are usually implemented with similar mathematical concepts.</para>
+      </sidebar>
+
+      <sidebar>
+        <title><emphasis>CULTURE</emphasis> Telnet and RSH are obsolete</title>
+	<indexterm><primary><command>telnet</command></primary></indexterm>
+	<indexterm><primary><command>rsh</command></primary></indexterm>
+
+	<para>Before SSH, <emphasis>Telnet</emphasis> and
+	<emphasis>RSH</emphasis> were the main tools used to login
+	remotely. They are now largely obsolete and should no longer be
+	used even if Debian still provides them.</para>
       </sidebar>
 
       <para>SSH also offers two file transfer services.
@@ -777,21 +777,6 @@ up. </para></listitem>
 	$(ssh-agent)</command>.</para>
 
         <sidebar>
-          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
-
-	  <para>Whoever has the private key can login on the account thus
-	  configured. This is why access to the private key is protected by
-	  a “passphrase”. Someone who acquires a copy of a private key
-	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
-	  to know this phrase in order to be able to use it. This
-	  additional protection is not, however, impregnable, and if you
-	  think that this file has been compromised, it is best to disable
-	  that key on the computers in which it has been installed (by
-	  removing it from the <filename>authorized_keys</filename> files)
-	  and replacing it with a newly generated key.</para>
-        </sidebar>
-
-        <sidebar>
           <title><emphasis>CULTURE</emphasis> OpenSSL flaw in Debian <emphasis role="distribution">Etch</emphasis></title>
 
 	  <para>The OpenSSL library, as initially provided in Debian
@@ -846,6 +831,22 @@ up. </para></listitem>
           were developed.
 	  <ulink type="block" url="http://sources.debian.net"/></para>
         </sidebar>
+
+        <sidebar>
+          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
+
+	  <para>Whoever has the private key can login on the account thus
+	  configured. This is why access to the private key is protected by
+	  a “passphrase”. Someone who acquires a copy of a private key
+	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
+	  to know this phrase in order to be able to use it. This
+	  additional protection is not, however, impregnable, and if you
+	  think that this file has been compromised, it is best to disable
+	  that key on the computers in which it has been installed (by
+	  removing it from the <filename>authorized_keys</filename> files)
+	  and replacing it with a newly generated key.</para>
+        </sidebar>
+
       </section>
       <section id="sect.ssh-x11">
         <title>Using Remote X11 Applications</title>
@@ -1411,7 +1412,7 @@ up. </para></listitem>
       specifying the locations of the corresponding configuration files and
       some executable files (program). Frequently the system will politely
       prompt you when it fails to activate a requested module.</para>
-
+<?latex \pagebreak ?>
       <sidebar>
         <title><emphasis>ALTERNATIVE</emphasis> GNOME control center</title>
         <indexterm><primary><emphasis role="pkg">gnome-control-center</emphasis></primary></indexterm>
@@ -2127,6 +2128,16 @@ job 31 at Mon Jul 27 09:00:00 2015</computeroutput>
     <citerefentry><refentrytitle>anacrontab</refentrytitle>
     <manvolnum>5</manvolnum></citerefentry> manual page.</para>
 
+    <para>Installation of the <emphasis role="pkg">anacron</emphasis>
+    package deactivates execution by <command>cron</command> of the scripts
+    in the <filename>/etc/cron.hourly/</filename>,
+    <filename>/etc/cron.daily/</filename>,
+    <filename>/etc/cron.weekly/</filename>, and
+    <filename>/etc/cron.monthly/</filename> directories. This avoids their
+    double execution by <command>anacron</command> and
+    <command>cron</command>. The <command>cron</command> command remains
+    active and will continue to handle the other scheduled tasks
+    (especially those scheduled by users).</para>
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Priorities and <command>nice</command></title>
 
@@ -2157,16 +2168,6 @@ job 31 at Mon Jul 27 09:00:00 2015</computeroutput>
       “niceness” of a process is reserved for the root user).</para>
     </sidebar>
 
-    <para>Installation of the <emphasis role="pkg">anacron</emphasis>
-    package deactivates execution by <command>cron</command> of the scripts
-    in the <filename>/etc/cron.hourly/</filename>,
-    <filename>/etc/cron.daily/</filename>,
-    <filename>/etc/cron.weekly/</filename>, and
-    <filename>/etc/cron.monthly/</filename> directories. This avoids their
-    double execution by <command>anacron</command> and
-    <command>cron</command>. The <command>cron</command> command remains
-    active and will continue to handle the other scheduled tasks
-    (especially those scheduled by users).</para>
   </section>
   <section id="sect.quotas">
     <title>Quotas</title>
