@@ -331,20 +331,6 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
 	be written <command>A | B, A | C</command>. <ulink type="block"
 	url="http://www.debian.org/doc/debian-policy/ch-relationships.html"/></para>
 
-        <indexterm><primary>meta-package</primary></indexterm>
-	<para>The dependencies system is a good mechanism for guaranteeing
-	the operation of a program, but it has another use with
-	“meta-packages”. These are empty packages that only describe
-	dependencies. They facilitate the installation of a consistent
-	group of programs preselected by the meta-package maintainer; as
-	such, <command>apt install
-	<replaceable>meta-package</replaceable></command> will
-	automatically install all of these programs using the
-	meta-package's dependencies. The <emphasis
-	role="pkg">gnome</emphasis>, <emphasis role="pkg">kde-full</emphasis>
-	and <emphasis role="pkg">linux-image-amd64</emphasis> packages
-	are examples of meta-packages.</para>
-
         <sidebar>
           <title><emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal> </title>
           <indexterm><primary><literal>Pre-Depends</literal>, header field</primary></indexterm>
@@ -369,6 +355,21 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
 	  pre-dependency. It is generally possible to find another solution
 	  as a work-around.</para>
         </sidebar>
+
+        <indexterm><primary>meta-package</primary></indexterm>
+	<para>The dependencies system is a good mechanism for guaranteeing
+	the operation of a program, but it has another use with
+	“meta-packages”. These are empty packages that only describe
+	dependencies. They facilitate the installation of a consistent
+	group of programs preselected by the meta-package maintainer; as
+	such, <command>apt install
+	<replaceable>meta-package</replaceable></command> will
+	automatically install all of these programs using the
+	meta-package's dependencies. The <emphasis
+	role="pkg">gnome</emphasis>, <emphasis role="pkg">kde-full</emphasis>
+	and <emphasis role="pkg">linux-image-amd64</emphasis> packages
+	are examples of meta-packages.</para>
+
 
         <sidebar>
           <title><emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>, <literal>Suggests</literal>, and <literal>Enhances</literal> fields</title>
@@ -510,6 +511,8 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
 	  by the system, but this technique will prohibit the
 	  installation of two mail servers side by side.</para>
 
+          <?latex \pagebreak ?>
+
           <sidebar>
             <title><emphasis>DEBIAN POLICY</emphasis> List of virtual packages</title>
             <indexterm><primary>package</primary><secondary>virtual package</secondary></indexterm>
@@ -555,7 +558,7 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
             <title>Use of a <literal>Provides</literal> field in order to not break dependencies</title>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/virtual-package.png" width="50%"/>
+                <imagedata fileref="images/virtual-package.png" width="40%"/>
               </imageobject>
             </mediaobject>
           </figure>
@@ -635,6 +638,8 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
 	replaced, the package is considered to be removed. Finally, this
 	field also encourages <command>dpkg</command> to remove the
 	replaced package where there is a conflict.</para>
+
+        <?latex \pagebreak ?>
 
         <sidebar id="sidebar.debtags">
           <title><emphasis>GOING FURTHER</emphasis> The <literal>Tag</literal> field</title>
@@ -835,21 +840,6 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
 	  purge should not be taken lightly.</para>
         </sidebar>
 
-        <indexterm><primary><filename>config</filename>, <command>debconf</command> script</primary></indexterm>
-
-	<para>The four scripts detailed above are complemented by a
-	<filename>config</filename> script, provided by packages using
-	<command>debconf</command> to acquire information from the user for
-	configuration. During installation, this script defines in detail
-	the questions asked by <command>debconf</command>. The responses
-	are recorded in the <command>debconf</command> database for future
-	reference. The script is generally executed by
-	<command>apt</command> prior to installing packages one by one in
-	order to group all the questions and ask them all to the user at
-	the beginning of the process. The pre- and post-installation
-	scripts can then use this information to operate according to the
-	user's wishes.</para>
-
         <sidebar>
           <title><emphasis>TOOL</emphasis> <command>debconf</command></title>
           <indexterm><primary><command>debconf</command></primary></indexterm>
@@ -881,6 +871,22 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
 	  installation on its own, without having to stay there staring at
 	  the screen waiting for questions.</para>
         </sidebar>
+
+        <indexterm><primary><filename>config</filename>, <command>debconf</command> script</primary></indexterm>
+
+	<para>The four scripts detailed above are complemented by a
+	<filename>config</filename> script, provided by packages using
+	<command>debconf</command> to acquire information from the user for
+	configuration. During installation, this script defines in detail
+	the questions asked by <command>debconf</command>. The responses
+	are recorded in the <command>debconf</command> database for future
+	reference. The script is generally executed by
+	<command>apt</command> prior to installing packages one by one in
+	order to group all the questions and ask them all to the user at
+	the beginning of the process. The pre- and post-installation
+	scripts can then use this information to operate according to the
+	user's wishes.</para>
+
       </section>
     </section>
     <section id="sect.conffiles">
@@ -1712,6 +1718,8 @@ Setting up gcc-4.9-base:armhf (4.9.1-19) ...
 	<emphasis role="distribution">Wheezy</emphasis>,
 	not all libraries have been converted yet.
 	</para>
+
+        <?latex \pagebreak ?>
 
 	<screen><computeroutput>$ </computeroutput><userinput>dpkg -s gcc-4.9-base
 </userinput><computeroutput>dpkg-query: error: --status needs a valid package name but 'gcc-4.9-base' is not: ambiguous package name 'gcc-4.9-base' with more than one installed instance

@@ -349,6 +349,7 @@ Description: Fake package - module manually installed in site_perl
       role="pkg">dh-make</emphasis> package) to add files required by the
       package generation process, which will all be stored in a
       <filename>debian</filename> subdirectory:</para>
+    <?latex \pagebreak ?>
 
       <screen>
 <computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>
@@ -467,6 +468,7 @@ Description: Internal Falcot Corp Documentation
  Their use is INTERNAL ONLY.
 </programlisting>
       </example>
+      <?latex \pagebreak ?>
 
       <example>
         <title>The <filename>changelog</filename> file</title>
@@ -641,34 +643,6 @@ deb http://packages.falcot.com/ internal/
     the files required by APT, such as
     <filename>Packages.gz</filename>.</para>
 
-    <sidebar>
-      <title><emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command></title>
-      <indexterm><primary><command>apt-ftparchive</command></primary></indexterm>
-
-      <para>If <command>mini-dinstall</command> seems too complex for your
-      Debian archive needs, you can also use the
-      <command>apt-ftparchive</command> command. This tool scans the
-      contents of a directory and displays (on its standard output) a
-      matching <filename>Packages</filename> file. In the Falcot Corp case,
-      administrators could upload the packages directly into
-      <filename>/srv/vhosts/packages/updates/</filename> or
-      <filename>/srv/vhosts/packages/internal/</filename>, then run the
-      following commands to create the <filename>Packages.gz</filename>
-      files:</para>
-
-      <screen>
-<computeroutput>$ </computeroutput><userinput>cd /srv/vhosts/packages</userinput>
-<computeroutput>$ </computeroutput><userinput>apt-ftparchive packages updates &gt;updates/Packages</userinput>
-<computeroutput>$ </computeroutput><userinput>gzip updates/Packages</userinput>
-<computeroutput>$ </computeroutput><userinput>apt-ftparchive packages internal &gt;internal/Packages</userinput>
-<computeroutput>$ </computeroutput><userinput>gzip internal/Packages</userinput>
-</screen>
-
-      <para>The <command>apt-ftparchive sources</command> command allows
-      creating <filename>Sources.gz</filename> files in a similar
-      fashion.</para>
-    </sidebar>
-
     <para>Configuring <command>mini-dinstall</command> requires setting up
     a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp
     case, the contents are as follows:</para>
@@ -697,6 +671,35 @@ release_label = Internal Packages
     manage package installation priorities using the
     <filename>/etc/apt/preferences</filename> configuration file (see
     <xref linkend="sect.apt.priorities" /> for details).</para>
+
+    <sidebar>
+      <title><emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command></title>
+      <indexterm><primary><command>apt-ftparchive</command></primary></indexterm>
+
+      <para>If <command>mini-dinstall</command> seems too complex for your
+      Debian archive needs, you can also use the
+      <command>apt-ftparchive</command> command. This tool scans the
+      contents of a directory and displays (on its standard output) a
+      matching <filename>Packages</filename> file. In the Falcot Corp case,
+      administrators could upload the packages directly into
+      <filename>/srv/vhosts/packages/updates/</filename> or
+      <filename>/srv/vhosts/packages/internal/</filename>, then run the
+      following commands to create the <filename>Packages.gz</filename>
+      files:</para>
+
+      <screen>
+<computeroutput>$ </computeroutput><userinput>cd /srv/vhosts/packages</userinput>
+<computeroutput>$ </computeroutput><userinput>apt-ftparchive packages updates &gt;updates/Packages</userinput>
+<computeroutput>$ </computeroutput><userinput>gzip updates/Packages</userinput>
+<computeroutput>$ </computeroutput><userinput>apt-ftparchive packages internal &gt;internal/Packages</userinput>
+<computeroutput>$ </computeroutput><userinput>gzip internal/Packages</userinput>
+</screen>
+
+      <para>The <command>apt-ftparchive sources</command> command allows
+      creating <filename>Sources.gz</filename> files in a similar
+      fashion.</para>
+    </sidebar>
+
 
     <sidebar>
       <title><emphasis>SECURITY</emphasis> <command>mini-dinstall</command> and permissions</title>

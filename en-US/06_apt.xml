@@ -1246,6 +1246,8 @@ Pin-Priority: 500
       role="distribution">Unstable</emphasis>. You can modify
       <filename>/etc/apt/preferences</filename> to this effect:</para>
 
+      <?latex \pagebreak ?>
+
       <programlisting>Package: *
 Pin: release a=unstable
 Pin-Priority: 490
@@ -1287,19 +1289,6 @@ Pin-Priority: 490
       interactive interface of <command>aptitude</command> also
       makes it easy to review the “automatic flag” on many packages.</para>
 
-      <indexterm><primary><command>aptitude why</command></primary></indexterm>
-      <para>People might want to know why an automatically installed
-      package is present on the system. To get this information from the
-      command line, you can use <command>aptitude why
-        <replaceable>package</replaceable></command>
-      (<command>apt</command> and <command>apt-get</command> have no
-      similar feature):</para>
-
-      <screen><computeroutput>$ </computeroutput><userinput>aptitude why python-debian
-</userinput><computeroutput>i   aptitude         Recommends apt-xapian-index         
-i A apt-xapian-index Depends    python-debian (&gt;= 0.1.15)
-</computeroutput></screen>
-
       <sidebar>
 	<title><emphasis>ALTERNATIVE</emphasis> <command>deborphan</command> and <command>debfoster</command></title>
 
@@ -1331,6 +1320,20 @@ i A apt-xapian-index Depends    python-debian (&gt;= 0.1.15)
 	the package (possibly together with those that depend on it),
 	mark it as explicitly required, or ignore it temporarily.</para>
       </sidebar>
+
+      <indexterm><primary><command>aptitude why</command></primary></indexterm>
+      <para>People might want to know why an automatically installed
+      package is present on the system. To get this information from the
+      command line, you can use <command>aptitude why
+        <replaceable>package</replaceable></command>
+      (<command>apt</command> and <command>apt-get</command> have no
+      similar feature):</para>
+
+      <screen><computeroutput>$ </computeroutput><userinput>aptitude why python-debian
+</userinput><computeroutput>i   aptitude         Recommends apt-xapian-index         
+i A apt-xapian-index Depends    python-debian (&gt;= 0.1.15)
+</computeroutput></screen>
+
     </section>
   </section>
 
@@ -1609,6 +1612,26 @@ More tags: suite::debian works-with::software:package role::program interface::c
 	either select a full task for installation or removal, or browse
 	the list of packages included in the task to select a smaller
 	subset.</para>
+        <sidebar>
+          <title><emphasis>NOTE</emphasis> <command>aptitude</command>'s log</title>
+
+	  <para>Like <command>dpkg</command>, <command>aptitude</command>
+	  keeps a trace of executed actions in its logfile
+	  (<filename>/var/log/aptitude</filename>). However, since both
+	  commands work at a very different level, you cannot find the same
+	  information in their respective logfiles. While
+	  <command>dpkg</command> logs all the operations executed on
+	  individual packages step by step, <command>aptitude</command>
+	  gives a broader view of high-level operations like a system-wide
+	  upgrade.</para>
+
+	  <para>Beware, this logfile only contains a summary of operations
+	  performed by <command>aptitude</command>. If other front-ends (or
+	  even <command>dpkg</command> itself) are occasionally used, then
+	  <command>aptitude</command>'s log will only contain a partial
+	  view of the operations, so you can't rely on it to build a
+	  trustworthy history of the system.</para>
+        </sidebar>
       </section>
       <section>
         <title>Better Solver Algorithms</title>
@@ -1635,26 +1658,6 @@ More tags: suite::debian works-with::software:package role::program interface::c
 	to zero, you can safely go to the summary screen of pending actions
 	for a last check before you apply them.</para>
 
-        <sidebar>
-          <title><emphasis>NOTE</emphasis> <command>aptitude</command>'s log</title>
-
-	  <para>Like <command>dpkg</command>, <command>aptitude</command>
-	  keeps a trace of executed actions in its logfile
-	  (<filename>/var/log/aptitude</filename>). However, since both
-	  commands work at a very different level, you cannot find the same
-	  information in their respective logfiles. While
-	  <command>dpkg</command> logs all the operations executed on
-	  individual packages step by step, <command>aptitude</command>
-	  gives a broader view of high-level operations like a system-wide
-	  upgrade.</para>
-
-	  <para>Beware, this logfile only contains a summary of operations
-	  performed by <command>aptitude</command>. If other front-ends (or
-	  even <command>dpkg</command> itself) are occasionally used, then
-	  <command>aptitude</command>'s log will only contain a partial
-	  view of the operations, so you can't rely on it to build a
-	  trustworthy history of the system.</para>
-        </sidebar>
       </section>
     </section>
     <section>
@@ -1675,7 +1678,7 @@ More tags: suite::debian works-with::software:package role::program interface::c
         <title><command>synaptic</command> package manager</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="images/synaptic.png" scalefit="1" width="75%"/>
+            <imagedata fileref="images/synaptic.png" scalefit="1" width="65%"/>
           </imageobject>
         </mediaobject>
       </figure>

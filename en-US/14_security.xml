@@ -73,6 +73,7 @@
     security policy can be constructed, and the policy can be implemented
     with concrete actions.</para>
 
+  <?latex \pagebreak ?>
     <sidebar>
       <title><emphasis>NOTE</emphasis> Permanent questioning</title>
 
@@ -557,6 +558,15 @@
 <computeroutput># </computeroutput><userinput>apt install fwbuilder</userinput>
 </screen>
 
+      <figure id="figure.fwbuilder">
+        <title>Fwbuilder's main window</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/fwbuilder.png" scalefit="1" width="85%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
       <para>The principle is simple. In the first step, one needs to
       describe all the elements that will be involved in the actual
       rules:</para>
@@ -586,14 +596,6 @@
       <command>fwbuilder</command> translate the rules according to the
       addresses assigned to the objects.</para>
 
-      <figure id="figure.fwbuilder">
-        <title>Fwbuilder's main window</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/fwbuilder.png" scalefit="1"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
       <indexterm><primary><command>fwbuilder</command></primary></indexterm>
 
       <para><command>fwbuilder</command> can then generate a script
@@ -821,6 +823,31 @@ iface eth0 inet static
       would therefore be worth investigating. This section presents a few
       tools able to monitor files and to warn the administrator when an
       unexpected change occurs (or simply to list such changes).</para>
+
+        <sidebar>
+          <title><emphasis>BACK TO BASICS</emphasis> File fingerprint</title>
+	  <indexterm><primary>fingerprint</primary></indexterm>
+	  <indexterm><primary>control sum</primary></indexterm>
+	  <indexterm><primary>MD5</primary></indexterm>
+	  <indexterm><primary>SHA1</primary></indexterm> 
+          <para>As a reminder: a
+          fingerprint is a value, often a number (even though in hexadecimal
+          notation), that contains a kind of signature for the contents of a
+          file. This signature is calculated with an algorithm (MD5 or SHA1
+          being well-known examples) that more or less guarantee that even
+          the tiniest change in the file contents implies a change in the
+          fingerprint; this is known as the “avalanche effect”. This
+          allows a simple numerical fingerprint to serve as a litmus test to
+          check whether the contents of a file have been altered. These
+          algorithms are not reversible; in other words, for most of them,
+          knowing a fingerprint doesn't allow finding the corresponding
+          contents. Recent mathematical advances seem to weaken the
+          absoluteness of these principles, but their use is not called into
+          question so far, since creating different contents yielding the
+          same fingerprint still seems to be quite a difficult task.
+          </para>
+        </sidebar>
+
       <section id="sect.dpkg-verify">
         <title>Auditing Packages with <command>dpkg --verify</command></title>
         <indexterm><primary><command>dpkg</command></primary><secondary><command>dpkg --verify</command></secondary></indexterm>
@@ -846,30 +873,6 @@ iface eth0 inet static
           a thorough attacker will therefore update these files so they
           contain the new checksums for the subverted files.
         </para>
-
-        <sidebar>
-          <title><emphasis>BACK TO BASICS</emphasis> File fingerprint</title>
-	  <indexterm><primary>fingerprint</primary></indexterm>
-	  <indexterm><primary>control sum</primary></indexterm>
-	  <indexterm><primary>MD5</primary></indexterm>
-	  <indexterm><primary>SHA1</primary></indexterm> 
-          <para>As a reminder: a
-          fingerprint is a value, often a number (even though in hexadecimal
-          notation), that contains a kind of signature for the contents of a
-          file. This signature is calculated with an algorithm (MD5 or SHA1
-          being well-known examples) that more or less guarantee that even
-          the tiniest change in the file contents implies a change in the
-          fingerprint; this is known as the “avalanche effect”. This
-          allows a simple numerical fingerprint to serve as a litmus test to
-          check whether the contents of a file have been altered. These
-          algorithms are not reversible; in other words, for most of them,
-          knowing a fingerprint doesn't allow finding the corresponding
-          contents. Recent mathematical advances seem to weaken the
-          absoluteness of these principles, but their use is not called into
-          question so far, since creating different contents yielding the
-          same fingerprint still seems to be quite a difficult task.
-          </para>
-        </sidebar>
 
         <para>Running <command>dpkg -V</command> will verify all installed
           packages and will print out a line for each file with a failing
@@ -1110,6 +1113,7 @@ iface eth0 inet static
         Alternatively, <command>oinkmaster</command> (in the package of the same name)
         can be used to download Snort rulesets from external sources.
       </para>
+
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Integration with <command>prelude</command></title>
 
@@ -1172,6 +1176,7 @@ iface eth0 inet static
         Enabling AppArmor is thus just a matter of installing a few
         packages and adding some parameters to the kernel command line:
       </para>
+
       <screen><computeroutput># </computeroutput><userinput>apt install apparmor apparmor-profiles apparmor-utils
 </userinput><computeroutput>[...]
 # </computeroutput><userinput>perl -pi -e 's,GRUB_CMDLINE_LINUX="(.*)"$,GRUB_CMDLINE_LINUX="$1 apparmor=1 security=apparmor",' /etc/default/grub
@@ -1584,7 +1589,7 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
         <title>Security contexts and Unix users</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="images/selinux-context.png" scalefit="1" width="65%"/>
+            <imagedata fileref="images/selinux-context.png" scalefit="1" width="55%"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -1629,15 +1634,6 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
       the rights required by each program. It is a fundamental principle of
       SELinux.</para>
 
-      <figure>
-        <title>Automatic transitions between domains</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/selinux-transitions.png" scalefit="1" width="35%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Finding the security context</title>
         <indexterm><primary>security context</primary></indexterm>
@@ -1679,6 +1675,16 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
 	sake of uniformity, all objects get assigned a complete security
 	context.</para>
       </sidebar>
+
+      <figure>
+        <title>Automatic transitions between domains</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/selinux-transitions.png" scalefit="1" width="50%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
     </section>
     <section id="sect.selinux-setup">
       <title>Setting Up SELinux</title>
@@ -1690,6 +1696,21 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
       <para>The <command>apt install selinux-basics
       selinux-policy-default</command> command will automatically install
       the packages required to configure an SELinux system.</para>
+
+      <para>The <emphasis role="pkg">selinux-policy-default</emphasis>
+      package contains a set of standard rules. By default, this policy
+      only restricts access for a few widely exposed services. The user
+      sessions are not restricted and it is thus unlikely that SELinux
+      would block legitimate user operations. However, this does enhance
+      the security of system services running on the machine. To setup a
+      policy equivalent to the old “strict” rules, you just have to
+      disable the <literal>unconfined</literal> module (modules management
+      is detailed further in this section).</para>
+
+      <para>Once the policy has been installed, you should label all the
+      available files (which means assigning them a type). This operation
+      must be manually started with <command>fixfiles
+      relabel</command>.</para>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Reference policy not in jessie</title>
@@ -1714,20 +1735,6 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
         </para>
       </sidebar>
 
-      <para>The <emphasis role="pkg">selinux-policy-default</emphasis>
-      package contains a set of standard rules. By default, this policy
-      only restricts access for a few widely exposed services. The user
-      sessions are not restricted and it is thus unlikely that SELinux
-      would block legitimate user operations. However, this does enhance
-      the security of system services running on the machine. To setup a
-      policy equivalent to the old “strict” rules, you just have to
-      disable the <literal>unconfined</literal> module (modules management
-      is detailed further in this section).</para>
-
-      <para>Once the policy has been installed, you should label all the
-      available files (which means assigning them a type). This operation
-      must be manually started with <command>fixfiles
-      relabel</command>.</para>
 
       <para>The SELinux system is now ready. To enable it, you should add
       the <literal>selinux=1 security=selinux</literal> parameter to the Linux kernel. The
@@ -1769,6 +1776,8 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
       configuration files that you can find in <filename>/etc/</filename>,
       all those files must not be changed by hand. You should use the
       programs designed for this purpose.</para>
+
+      <?latex \pagebreak ?>
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> More documentation</title>
@@ -2200,6 +2209,20 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
           </callout>
         </calloutlist>
 
+        <sidebar>
+          <title><emphasis>COMPLEMENTS</emphasis> No roles in policy rules</title>
+          <indexterm><primary>Type Enforcement</primary></indexterm>
+          <indexterm><primary>Enforcement, Type Enforcement</primary></indexterm>
+
+	  <para>It might seem weird that roles do not appear at all when
+	  creating new rules. SELinux uses only the domains to find out
+	  which operations are allowed. The role intervenes only indirectly
+	  by allowing the user to switch to another domain. SELinux is
+	  based on a theory known as <emphasis>Type Enforcement</emphasis>
+	  and the type is the only element that matters when granting
+	  rights.</para>
+        </sidebar>
+
 	<para>Now you just have to find the minimal set of rules required
 	to ensure that the target application or service works properly. To
 	achieve this, you should have a good knowledge of how the
@@ -2218,6 +2241,8 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 
 	<para>To better understand this message, let us study it piece by
 	piece.</para>
+
+        <?latex \pagebreak ?>
 
         <table colsep="1">
           <title>Analysis of an SELinux trace</title>
@@ -2310,19 +2335,6 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 	just add a “<literal>dontaudit</literal>” rule to avoid the log
 	entry despite the effective denial.</para>
 
-        <sidebar>
-          <title><emphasis>COMPLEMENTS</emphasis> No roles in policy rules</title>
-          <indexterm><primary>Type Enforcement</primary></indexterm>
-          <indexterm><primary>Enforcement, Type Enforcement</primary></indexterm>
-
-	  <para>It might seem weird that roles do not appear at all when
-	  creating new rules. SELinux uses only the domains to find out
-	  which operations are allowed. The role intervenes only indirectly
-	  by allowing the user to switch to another domain. SELinux is
-	  based on a theory known as <emphasis>Type Enforcement</emphasis>
-	  and the type is the only element that matters when granting
-	  rights.</para>
-        </sidebar>
       </section>
       <section>
         <title>Compiling the Files</title>
@@ -2733,6 +2745,8 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       /proc/[0-9]*</command> for a little more information on running
       programs), and every performed check should carefully be written
       down.</para>
+
+      <?latex \pagebreak ?>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Hot analysis</title>

@@ -913,6 +913,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 	disks into a <filename>vg_critical</filename> VG; the other VG,
 	<filename>vg_normal</filename>, will also include slower
 	elements.</para>
+      <?latex \pagebreak ?>
 
         <screen id="screen.vgcreate"><computeroutput># </computeroutput><userinput>vgdisplay</userinput>
 <computeroutput>  No volume groups found
@@ -960,6 +961,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 	12 GB, respectively. Let's now carve them up into “virtual
 	partitions” (LVs). This involves the <command>lvcreate</command>
 	command, and a slightly more complex syntax:</para>
+      <?latex \pagebreak ?>
 
         <screen id="screen.lvcreate"><computeroutput># </computeroutput><userinput>lvdisplay</userinput>
 <computeroutput># </computeroutput><userinput>lvcreate -n lv_files -L 5G vg_critical</userinput>
@@ -1070,6 +1072,7 @@ brw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2
 
 	<para>To make things easier, convenience symbolic links are also
 	created in directories matching the VGs:</para>
+      <?latex \pagebreak ?>
 
         <screen><computeroutput># </computeroutput><userinput>ls -l /dev/vg_critical</userinput>
 <computeroutput>total 0
@@ -1369,36 +1372,6 @@ Device    Boot     Start       End   Sectors Size Id Type
         </listitem>
       </itemizedlist>
 
-      <para>Once the VGs are created, they can be partitioned in a very
-      flexible way. One must keep in mind that LVs created in
-      <filename>vg_raid</filename> will be preserved even if one of the
-      disks fails, which will not be the case for LVs created in
-      <filename>vg_bulk</filename>; on the other hand, the latter will be
-      allocated in parallel on both disks, which allows higher read or
-      write speeds for large files.</para>
-
-      <!-- XXX: Separate /usr partition is no longer a good idea and thus the
-           example here should be possibly modified... -->
-      <para>We will therefore create the <filename>lv_usr</filename>,
-      <filename>lv_var</filename> and <filename>lv_home</filename> LVs on
-      <filename>vg_raid</filename>, to host the matching filesystems;
-      another large LV, <filename>lv_movies</filename>, will be used to
-      host the definitive versions of movies after editing. The other VG
-      will be split into a large <filename>lv_rushes</filename>, for data
-      straight out of the digital video cameras, and a
-      <filename>lv_tmp</filename> for temporary files. The location of the
-      work area is a less straightforward choice to make: while good
-      performance is needed for that volume, is it worth risking losing
-      work if a disk fails during an editing session? Depending on the
-      answer to that question, the relevant LV will be created on one VG or
-      the other.</para>
-
-      <para>We now have both some redundancy for important data and much
-      flexibility in how the available space is split across the
-      applications. Should new software be installed later on (for editing
-      audio clips, for instance), the LV hosting <filename>/usr/</filename>
-      can be grown painlessly.</para>
-
       <sidebar>
         <title><emphasis>NOTE</emphasis> Why three RAID-1 volumes?</title>
 
@@ -1438,6 +1411,37 @@ Device    Boot     Start       End   Sectors Size Id Type
 	<filename>lv_rushes</filename> logical volume can then be grown
 	according to requirements.</para>
       </sidebar>
+
+      <para>Once the VGs are created, they can be partitioned in a very
+      flexible way. One must keep in mind that LVs created in
+      <filename>vg_raid</filename> will be preserved even if one of the
+      disks fails, which will not be the case for LVs created in
+      <filename>vg_bulk</filename>; on the other hand, the latter will be
+      allocated in parallel on both disks, which allows higher read or
+      write speeds for large files.</para>
+
+      <!-- XXX: Separate /usr partition is no longer a good idea and thus the
+           example here should be possibly modified... -->
+      <para>We will therefore create the <filename>lv_usr</filename>,
+      <filename>lv_var</filename> and <filename>lv_home</filename> LVs on
+      <filename>vg_raid</filename>, to host the matching filesystems;
+      another large LV, <filename>lv_movies</filename>, will be used to
+      host the definitive versions of movies after editing. The other VG
+      will be split into a large <filename>lv_rushes</filename>, for data
+      straight out of the digital video cameras, and a
+      <filename>lv_tmp</filename> for temporary files. The location of the
+      work area is a less straightforward choice to make: while good
+      performance is needed for that volume, is it worth risking losing
+      work if a disk fails during an editing session? Depending on the
+      answer to that question, the relevant LV will be created on one VG or
+      the other.</para>
+
+      <para>We now have both some redundancy for important data and much
+      flexibility in how the available space is split across the
+      applications. Should new software be installed later on (for editing
+      audio clips, for instance), the LV hosting <filename>/usr/</filename>
+      can be grown painlessly.</para>
+
     </section>
   </section>
   <section id="sect.virtualization">
@@ -1659,14 +1663,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  case, the <literal>--dist</literal> option will also most often
 	  be used (with a distribution name such as <emphasis
 	  role="distribution">jessie</emphasis>).</para>
-
-          <sidebar>
-            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
-
-	    <para>In case of a non-Linux system, care should be taken to
-	    define the kernel the domU must use, using the
-	    <literal>--kernel</literal> option.</para>
-          </sidebar>
         </listitem>
         <listitem>
 	  <para><literal>--dhcp</literal> states that the domU's network
@@ -1696,8 +1692,17 @@ Device    Boot     Start       End   Sectors Size Id Type
 	    Xen image's configuration file is in order after its initial
 	    creation with <command>xen-create-image</command>.</para>
           </sidebar>
+
+          <sidebar>
+            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
+
+	    <para>In case of a non-Linux system, care should be taken to
+	    define the kernel the domU must use, using the
+	    <literal>--kernel</literal> option.</para>
+          </sidebar>
         </listitem>
       </itemizedlist>
+      <?latex \pagebreak ?>
 
       <para>Once these choices are made, we can create the image for our
       future Xen domU:</para>
@@ -3233,6 +3238,8 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
 	host, then restart the daemon with <command>service munin-node
 	restart</command>.</para>
 
+        <?latex \pagebreak ?>
+
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Creating local plugins</title>
 
@@ -3574,6 +3581,8 @@ define service{
 	  properties they can have. It also explains how to create new
 	  plugins.</para>
         </sidebar>
+
+        <?latex \pagebreak ?>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Remote tests with NRPE</title>

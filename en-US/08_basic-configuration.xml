@@ -74,6 +74,38 @@
       be used. This enables consideration of idiomatic or typographical
       differences between different regions with a common language.</para>
 
+      <para>The <emphasis role="pkg">locales</emphasis> package includes
+      all the elements required for proper functioning of
+      “localization” of various applications. During installation,
+      this package will ask to select a set of supported
+      languages. This set can be changed at any time by running
+      <command>dpkg-reconfigure locales</command> as root.</para>
+
+      <para>The first question invites you to select “locales” to
+      support. Selecting all English locales (meaning those beginning
+      with “<literal>en_</literal>”) is a reasonable choice. Do not
+      hesitate to also enable other locales if the machine will host
+      foreign users. The list of locales enabled on the system is
+      stored in the <filename>/etc/locale.gen</filename> file. It is
+      possible to edit this file by hand, but you should run
+      <command>locale-gen</command> after any modifications. It will
+      generate the necessary files for the added locales to work, and
+      remove any obsolete files.</para>
+
+      <para>The second question, entitled “Default locale for the system environment”,
+      requests a default locale. The recommended choice in the U.S.A. is
+      “<literal>en_US.UTF-8</literal>”. British English speakers will
+      prefer “<literal>en_GB.UTF-8</literal>”, and Canadians will
+      prefer either “<literal>en_CA.UTF-8</literal>” or, for French,
+      “<literal>fr_CA.UTF-8</literal>”. The
+      <filename>/etc/default/locale</filename> file will then be modified
+      to store this choice. From there, it is picked up by all user sessions
+      since PAM will inject its content in the <varname>LANG</varname>
+      environment variable.</para>
+      <indexterm><primary>environment</primary></indexterm>
+      <indexterm><primary>locale</primary></indexterm>
+      <indexterm><primary><varname>LANG</varname></primary></indexterm>
+
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Character sets</title>
         <indexterm><primary>character set</primary></indexterm>
@@ -114,38 +146,6 @@
 	<para>This is the encoding that should generally be used,
 	and is thus the default on Debian systems.</para>
       </sidebar>
-
-      <para>The <emphasis role="pkg">locales</emphasis> package includes
-      all the elements required for proper functioning of
-      “localization” of various applications. During installation,
-      this package will ask to select a set of supported
-      languages. This set can be changed at any time by running
-      <command>dpkg-reconfigure locales</command> as root.</para>
-
-      <para>The first question invites you to select “locales” to
-      support. Selecting all English locales (meaning those beginning
-      with “<literal>en_</literal>”) is a reasonable choice. Do not
-      hesitate to also enable other locales if the machine will host
-      foreign users. The list of locales enabled on the system is
-      stored in the <filename>/etc/locale.gen</filename> file. It is
-      possible to edit this file by hand, but you should run
-      <command>locale-gen</command> after any modifications. It will
-      generate the necessary files for the added locales to work, and
-      remove any obsolete files.</para>
-
-      <para>The second question, entitled “Default locale for the system environment”,
-      requests a default locale. The recommended choice in the U.S.A. is
-      “<literal>en_US.UTF-8</literal>”. British English speakers will
-      prefer “<literal>en_GB.UTF-8</literal>”, and Canadians will
-      prefer either “<literal>en_CA.UTF-8</literal>” or, for French,
-      “<literal>fr_CA.UTF-8</literal>”. The
-      <filename>/etc/default/locale</filename> file will then be modified
-      to store this choice. From there, it is picked up by all user sessions
-      since PAM will inject its content in the <varname>LANG</varname>
-      environment variable.</para>
-      <indexterm><primary>environment</primary></indexterm>
-      <indexterm><primary>locale</primary></indexterm>
-      <indexterm><primary><varname>LANG</varname></primary></indexterm>
 
       <sidebar id="sidebar.intro-pam">
         <title><emphasis>BEHIND THE SCENES</emphasis> <filename>/etc/environment</filename> and <filename>/etc/default/locale</filename></title>
@@ -717,6 +717,7 @@ adsl:2345:respawn:/usr/sbin/pppd call dsl-provider
       <para>Note that this program is installed by default when the
       “Desktop Environment” task is chosen during initial
       installation.</para>
+    <?latex \pagebreak ?>
 
       <sidebar>
         <title><emphasis>ALTERNATIVE</emphasis> Configuration by “network profile”</title>
@@ -1510,6 +1511,38 @@ nameserver 8.8.8.8
     <section id="sect.identify-disks">
       <title>Identifying the Disks</title>
 
+      <indexterm><primary>hard drive, names</primary></indexterm>
+      <indexterm><primary>names</primary><secondary>of hard drives</secondary></indexterm>
+
+      <para>Configuration of the bootloader must identify the
+      different hard drives and their partitions. Linux uses “block”
+      special files stored in the <filename>/dev/</filename>
+      directory, for this purpose.  Since Debian <emphasis
+      role="distribution">Squeeze</emphasis>, the naming scheme for
+      hard drives has been unified by the Linux kernel, and all hard
+      drives (IDE/PATA, SATA, SCSI, USB, IEEE 1394) are now
+      represented by <filename>/dev/sd*</filename>.</para>
+
+      <para>Each partition is represented by its number on the disk on
+      which it resides: for instance, <filename>/dev/sda1</filename> is the
+      first partition on the first disk, and <filename>/dev/sdb3</filename>
+      is the third partition on the second disk.</para>
+
+      <indexterm><primary>partition</primary><secondary>primary</secondary></indexterm>
+      <indexterm><primary>partition</primary><secondary>extended</secondary></indexterm>
+      <indexterm><primary>partition</primary><secondary>secondary</secondary></indexterm>
+      <indexterm><primary>partition table</primary><secondary>MS-DOS format</secondary></indexterm>
+      <para>The PC architecture (or “i386”, including its younger
+      cousin “amd64”) has long been limited to using the “MS-DOS”
+      partition table format, which only allows four “primary”
+      partitions per disk. To go beyond this limitation under this
+      scheme, one of them has to be created as an “extended”
+      partition, and it can then contain additional “secondary”
+      partitions. These secondary partitions are numbered from 5. Thus
+      the first secondary partition could be
+      <filename>/dev/sda5</filename>, followed by
+      <filename>/dev/sda6</filename>, etc.</para>
+
       <sidebar>
         <title><emphasis>CULTURE</emphasis> <emphasis>udev</emphasis> and <filename>/dev/</filename></title>
 
@@ -1561,37 +1594,6 @@ nameserver 8.8.8.8
 	them on boot.</para>
       </sidebar>
 
-      <indexterm><primary>hard drive, names</primary></indexterm>
-      <indexterm><primary>names</primary><secondary>of hard drives</secondary></indexterm>
-
-      <para>Configuration of the bootloader must identify the
-      different hard drives and their partitions. Linux uses “block”
-      special files stored in the <filename>/dev/</filename>
-      directory, for this purpose.  Since Debian <emphasis
-      role="distribution">Squeeze</emphasis>, the naming scheme for
-      hard drives has been unified by the Linux kernel, and all hard
-      drives (IDE/PATA, SATA, SCSI, USB, IEEE 1394) are now
-      represented by <filename>/dev/sd*</filename>.</para>
-
-      <para>Each partition is represented by its number on the disk on
-      which it resides: for instance, <filename>/dev/sda1</filename> is the
-      first partition on the first disk, and <filename>/dev/sdb3</filename>
-      is the third partition on the second disk.</para>
-
-      <indexterm><primary>partition</primary><secondary>primary</secondary></indexterm>
-      <indexterm><primary>partition</primary><secondary>extended</secondary></indexterm>
-      <indexterm><primary>partition</primary><secondary>secondary</secondary></indexterm>
-      <indexterm><primary>partition table</primary><secondary>MS-DOS format</secondary></indexterm>
-      <para>The PC architecture (or “i386”, including its younger
-      cousin “amd64”) has long been limited to using the “MS-DOS”
-      partition table format, which only allows four “primary”
-      partitions per disk. To go beyond this limitation under this
-      scheme, one of them has to be created as an “extended”
-      partition, and it can then contain additional “secondary”
-      partitions. These secondary partitions are numbered from 5. Thus
-      the first secondary partition could be
-      <filename>/dev/sda5</filename>, followed by
-      <filename>/dev/sda6</filename>, etc.</para>
 
       <para>Another restriction of the MS-DOS partition table format is
       that it only allows disks up to 2 TiB in size, which is becoming
@@ -1887,6 +1889,7 @@ macosx=/dev/sda5
       <varname>TZ</varname> environment variable, which takes priority over
       the configured system default:</para>
       <indexterm><primary><varname>TZ</varname></primary></indexterm>
+      <?latex \pagebreak ?>
 
       <screen id="screen.tz">
 <computeroutput>$ </computeroutput><userinput>date</userinput>
@@ -2258,6 +2261,7 @@ macosx=/dev/sda5
 	  filesystems get the value <literal>2</literal>.</para>
         </listitem>
       </itemizedlist>
+      <?latex \pagebreak ?>
 
       <example id="example.fstab">
         <title>Example <filename>/etc/fstab</filename> file</title>
@@ -2540,6 +2544,7 @@ arrakis:/shared /shared         nfs     defaults        0       0
       like <command>make x86_64_defconfig</command> (in the case of a
       64-bit PC) or <command>make i386_defconfig</command> (in the case of
       a 32-bit PC).</para>
+    <?latex \pagebreak ?>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Dealing with outdated <filename>.config</filename> files</title>
