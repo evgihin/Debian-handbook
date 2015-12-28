@@ -40,6 +40,14 @@
     <xsl:with-param name="key" select="'minitoc'"/>
   </xsl:call-template>
   <xsl:text>}&#10;</xsl:text>
+
+  <!-- Override the babel/frenchb table name with the value used by dblatex -->
+  <xsl:text>\def\frenchtablename{</xsl:text>
+  <xsl:call-template name="gentext">
+    <xsl:with-param name="key" select="'Table'"/>
+  </xsl:call-template>
+  <xsl:text>}&#10;</xsl:text>
+
 </xsl:template>
 
 <!-- Use custom symbol before URL -->
