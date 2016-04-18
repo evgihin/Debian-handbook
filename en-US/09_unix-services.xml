@@ -64,7 +64,7 @@
       <title>Boot sequence of a computer running Linux with systemd</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/startup-systemd.png" scalefit="1" width="80%"/>
+          <imagedata fileref="images/startup-systemd.png" scalefit="1" width="50%"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -149,7 +149,7 @@
       several processes, not necessarily running under different user
       IDs.</para>
     </sidebar>
-
+    <?latex \pagebreak ?>
     <sidebar>
       <title><emphasis>SECURITY</emphasis> Using a shell as <command>init</command> to gain root rights</title>
 
@@ -935,7 +935,7 @@ up. </para></listitem>
           <title>Forwarding a local port with SSH</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/ssh-L.png" width="35%"/>
+              <imagedata fileref="images/ssh-L.png" width="30%"/>
             </imageobject>
           </mediaobject>
         </figure>
@@ -944,7 +944,7 @@ up. </para></listitem>
           <title>Forwarding a remote port with SSH</title>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/ssh-R.png" width="35%"/>
+              <imagedata fileref="images/ssh-R.png" width="30%"/>
             </imageobject>
           </mediaobject>
         </figure>
@@ -998,6 +998,23 @@ up. </para></listitem>
       on the machine remotely, and show the user how to proceed.</para>
 
       <sidebar>
+        <title><emphasis>BACK TO BASICS</emphasis> Display manager</title>
+        <indexterm><primary><command>gdm3</command></primary></indexterm>
+        <indexterm><primary><command>kdm</command></primary></indexterm>
+        <indexterm><primary><command>xdm</command></primary></indexterm>
+        <indexterm><primary><command>lightdm</command></primary></indexterm>
+        <indexterm><primary>manager</primary><secondary>display manager</secondary></indexterm>
+        <indexterm><primary>display manager</primary></indexterm>
+
+	<para><command>gdm3</command>, <command>kdm</command>, <command>lightdm</command>, and
+	<command>xdm</command> are Display Managers. They take control of
+	the graphical interface shortly after boot in order to provide the
+	user a login screen. Once the user has logged in, they execute the
+	programs needed to start a graphical work session.</para>
+      </sidebar>
+      <?latex \pagebreak ?>
+
+      <sidebar>
         <title><emphasis>SECURITY</emphasis> VNC over SSH</title>
         <indexterm><primary>SSH tunnel</primary><secondary>VNC</secondary></indexterm>
 
@@ -1023,22 +1040,6 @@ up. </para></listitem>
 
 	<para>When the VNC session is closed, remember to close the tunnel
 	by also quitting the corresponding SSH session.</para>
-      </sidebar>
-
-      <sidebar>
-        <title><emphasis>BACK TO BASICS</emphasis> Display manager</title>
-        <indexterm><primary><command>gdm3</command></primary></indexterm>
-        <indexterm><primary><command>kdm</command></primary></indexterm>
-        <indexterm><primary><command>xdm</command></primary></indexterm>
-        <indexterm><primary><command>lightdm</command></primary></indexterm>
-        <indexterm><primary>manager</primary><secondary>display manager</secondary></indexterm>
-        <indexterm><primary>display manager</primary></indexterm>
-
-	<para><command>gdm3</command>, <command>kdm</command>, <command>lightdm</command>, and
-	<command>xdm</command> are Display Managers. They take control of
-	the graphical interface shortly after boot in order to provide the
-	user a login screen. Once the user has logged in, they execute the
-	programs needed to start a graphical work session.</para>
       </sidebar>
 
       <para>VNC also works for mobile users, or company executives, who
@@ -1910,6 +1911,30 @@ ident  stream tcp nowait  nobody     /usr/sbin/identd   identd -i
       <indexterm><primary><filename>crontab</filename></primary></indexterm>
 
       <sidebar>
+        <title><emphasis>SPECIAL CASE</emphasis> <command>cron</command> and daylight savings time</title>
+
+	<para>In Debian, <command>cron</command> takes the time change (for
+	Daylight Savings Time, or in fact for any significant change in the
+	local time) into account as best as it can. Thus, the commands that
+	should have been executed during an hour that never existed (for
+	example, tasks scheduled at 2:30 am during the Spring time change
+	in France, since at 2:00 am the clock jumps directly to 3:00 am)
+	are executed shortly after the time change (thus around 3:00 am
+	DST). On the other hand, in autumn, when commands would be executed
+	several times (2:30 am DST, then an hour later at 2:30 am standard
+	time, since at 3:00 am DST the clock turns back to 2:00 am) are
+	only executed once.</para>
+
+	<para>Be careful, however, if the order in which the different
+	scheduled tasks and the delay between their respective executions
+	matters, you should check the compatibility of these constraints
+	with <command>cron</command>'s behavior; if necessary, you can
+	prepare a special schedule for the two problematic nights per
+	year.</para>
+      </sidebar>
+      <?latex \pagebreak ?>
+
+      <sidebar>
         <title><emphasis>TIP</emphasis> Text shortcuts for <command>cron</command></title>
 
 	<para><command>cron</command> recognizes some abbreviations which
@@ -1938,29 +1963,6 @@ ident  stream tcp nowait  nobody     /usr/sbin/identd   identd -i
 	    beginning of each hour).</para>
           </listitem>
         </itemizedlist>
-      </sidebar>
-
-      <sidebar>
-        <title><emphasis>SPECIAL CASE</emphasis> <command>cron</command> and daylight savings time</title>
-
-	<para>In Debian, <command>cron</command> takes the time change (for
-	Daylight Savings Time, or in fact for any significant change in the
-	local time) into account as best as it can. Thus, the commands that
-	should have been executed during an hour that never existed (for
-	example, tasks scheduled at 2:30 am during the Spring time change
-	in France, since at 2:00 am the clock jumps directly to 3:00 am)
-	are executed shortly after the time change (thus around 3:00 am
-	DST). On the other hand, in autumn, when commands would be executed
-	several times (2:30 am DST, then an hour later at 2:30 am standard
-	time, since at 3:00 am DST the clock turns back to 2:00 am) are
-	only executed once.</para>
-
-	<para>Be careful, however, if the order in which the different
-	scheduled tasks and the delay between their respective executions
-	matters, you should check the compatibility of these constraints
-	with <command>cron</command>'s behavior; if necessary, you can
-	prepare a special schedule for the two problematic nights per
-	year.</para>
       </sidebar>
 
       <para>Each significant line of a <emphasis>crontab</emphasis>
