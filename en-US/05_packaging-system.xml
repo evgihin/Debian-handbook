@@ -931,6 +931,24 @@ SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</comput
       the file and attempt to re-instate the relevant modifications
       (previously identified with <command>diff</command>).</para>
 
+      <sidebar id="sidebar.questions-conffiles-bis">
+        <title><emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions</title>
+
+	<para>The <command>--force-confask</command> option requires
+	<command>dpkg</command> to display the questions about the
+	configuration files, even in cases where they would not normally be
+	necessary. Thus, when reinstalling a package with this option,
+	<command>dpkg</command> will ask the questions again for all of the
+	configuration files modified by the administrator. This is very
+	convenient, especially for reinstalling the original configuration
+	file if it has been deleted and no other copy is available: a
+	normal re-installation won't work, because <command>dpkg</command>
+	considers removal as a form of legitimate modification, and, thus,
+	doesn't install the desired configuration file.</para>
+      </sidebar>
+
+      <?latex \pagebreak ?>
+
       <sidebar id="sidebar.questions-conffiles">
         <title><emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questions</title>
 
@@ -974,22 +992,6 @@ DPkg::options { "--force-confdef"; "--force-confold"; }
 	<para>Including this option in the configuration file means that it
 	will also be used in a graphical interface such as
 	<command>aptitude</command>.</para>
-      </sidebar>
-
-      <sidebar id="sidebar.questions-conffiles-bis">
-        <title><emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions</title>
-
-	<para>The <command>--force-confask</command> option requires
-	<command>dpkg</command> to display the questions about the
-	configuration files, even in cases where they would not normally be
-	necessary. Thus, when reinstalling a package with this option,
-	<command>dpkg</command> will ask the questions again for all of the
-	configuration files modified by the administrator. This is very
-	convenient, especially for reinstalling the original configuration
-	file if it has been deleted and no other copy is available: a
-	normal re-installation won't work, because <command>dpkg</command>
-	considers removal as a form of legitimate modification, and, thus,
-	doesn't install the desired configuration file.</para>
       </sidebar>
     </section>
   </section>
