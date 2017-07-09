@@ -60,7 +60,7 @@
     real init, and the machine goes back to the standard boot
     process.</para>
 
-    <figure id="figure.boot-process-systemd">
+    <figure id="figure.boot-process-systemd" float="1">
       <title>Boot sequence of a computer running Linux with systemd</title>
       <mediaobject>
         <imageobject condition="pdf">
@@ -683,6 +683,21 @@ up. </para></listitem>
 	used even if Debian still provides them.</para>
       </sidebar>
 
+      <para>SSH also offers two file transfer services.
+      <command>scp</command> is a command line tool that can be used like
+      <command>cp</command>, except that any path to another machine is
+      prefixed with the machine's name, followed by a colon.</para>
+
+      <screen><computeroutput>$ </computeroutput><userinput>scp file machine:/tmp/</userinput>
+</screen>
+
+      <para><command>sftp</command> is an interactive command, similar to
+      <command>ftp</command>. In a single session, <command>sftp</command>
+      can transfer several files, and it is possible to manipulate remote
+      files with it (delete, rename, change permissions, etc.).</para>
+      <indexterm><primary><command>scp</command></primary></indexterm>
+      <indexterm><primary><command>sftp</command></primary></indexterm>
+
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Authentication, encryption</title>
 
@@ -699,21 +714,6 @@ up. </para></listitem>
 	both because they are frequently used together, and because they
 	are usually implemented with similar mathematical concepts.</para>
       </sidebar>
-
-      <para>SSH also offers two file transfer services.
-      <command>scp</command> is a command line tool that can be used like
-      <command>cp</command>, except that any path to another machine is
-      prefixed with the machine's name, followed by a colon.</para>
-
-      <screen><computeroutput>$ </computeroutput><userinput>scp file machine:/tmp/</userinput>
-</screen>
-
-      <para><command>sftp</command> is an interactive command, similar to
-      <command>ftp</command>. In a single session, <command>sftp</command>
-      can transfer several files, and it is possible to manipulate remote
-      files with it (delete, rename, change permissions, etc.).</para>
-      <indexterm><primary><command>scp</command></primary></indexterm>
-      <indexterm><primary><command>sftp</command></primary></indexterm>
 
       <para>Debian uses OpenSSH, a free version of SSH maintained by the
       <command>OpenBSD</command> project (a free operating system based on
@@ -783,21 +783,6 @@ up. </para></listitem>
 	$(ssh-agent)</command>.</para>
 
         <sidebar>
-          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
-
-	  <para>Whoever has the private key can login on the account thus
-	  configured. This is why access to the private key is protected by
-	  a “passphrase”. Someone who acquires a copy of a private key
-	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
-	  to know this phrase in order to be able to use it. This
-	  additional protection is not, however, impregnable, and if you
-	  think that this file has been compromised, it is best to disable
-	  that key on the computers in which it has been installed (by
-	  removing it from the <filename>authorized_keys</filename> files)
-	  and replacing it with a newly generated key.</para>
-        </sidebar>
-
-        <sidebar>
           <title><emphasis>CULTURE</emphasis> OpenSSL flaw in Debian <emphasis role="distribution">Etch</emphasis></title>
 
 	  <para>The OpenSSL library, as initially provided in Debian
@@ -852,6 +837,24 @@ up. </para></listitem>
           were developed.
 	  <ulink type="block" url="http://sources.debian.net"/></para>
         </sidebar>
+
+	<?latex \pagebreak ?>
+	
+        <sidebar>
+          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
+
+	  <para>Whoever has the private key can login on the account thus
+	  configured. This is why access to the private key is protected by
+	  a “passphrase”. Someone who acquires a copy of a private key
+	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
+	  to know this phrase in order to be able to use it. This
+	  additional protection is not, however, impregnable, and if you
+	  think that this file has been compromised, it is best to disable
+	  that key on the computers in which it has been installed (by
+	  removing it from the <filename>authorized_keys</filename> files)
+	  and replacing it with a newly generated key.</para>
+        </sidebar>
+
       </section>
       <section id="sect.ssh-x11">
         <title>Using Remote X11 Applications</title>
@@ -2360,21 +2363,6 @@ job 31 at Mon Jul 27 09:00:00 2015</computeroutput>
       <indexterm><primary>backup</primary><secondary>copy</secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">dirvish</emphasis></primary></indexterm>
 
-      <para>This backup mechanism is easily implemented with the
-      <command>dirvish</command> program. It uses a backup storage space
-      (“bank” in its vocabulary) in which it places timestamped copies
-      of sets of backup files (these sets are called “vaults” in the
-      dirvish documentation).</para>
-
-      <para>The main configuration is in the
-      <filename>/etc/dirvish/master.conf</filename> file. It defines the
-      location of the backup storage space, the list of “vaults” to
-      manage, and default values for expiration of the backups. The rest of
-      the configuration is located in the
-      <filename><replaceable>bank</replaceable>/<replaceable>vault</replaceable>/dirvish/default.conf</filename>
-      files and contains the specific configuration for the corresponding
-      set of files.</para>
-
       <example id="example.dirvish-master">
         <title>The <filename>/etc/dirvish/master.conf</filename> file</title>
 
@@ -2394,6 +2382,21 @@ expire-rule:
     *   *     1-7 1,4,7,10  1
 </programlisting>
       </example>
+
+      <para>This backup mechanism is easily implemented with the
+      <command>dirvish</command> program. It uses a backup storage space
+      (“bank” in its vocabulary) in which it places timestamped copies
+      of sets of backup files (these sets are called “vaults” in the
+      dirvish documentation).</para>
+
+      <para>The main configuration is in the
+      <filename>/etc/dirvish/master.conf</filename> file. It defines the
+      location of the backup storage space, the list of “vaults” to
+      manage, and default values for expiration of the backups. The rest of
+      the configuration is located in the
+      <filename><replaceable>bank</replaceable>/<replaceable>vault</replaceable>/dirvish/default.conf</filename>
+      files and contains the specific configuration for the corresponding
+      set of files.</para>
 
       <para>The <literal>bank</literal> setting indicates the directory in
       which the backups are stored. The <literal>exclude</literal> setting
@@ -2848,6 +2851,8 @@ exclude:
       <programlisting>KERNEL=="sd?", SUBSYSTEM=="block", ATTRS{serial}=="M004021000001", SYMLINK+="usb_key/disk"
 KERNEL=="sd?[0-9]", SUBSYSTEM=="block", ATTRS{serial}=="M004021000001", SYMLINK+="usb_key/part%n"
 </programlisting>
+
+      <?latex \pagebreak ?>
 
       <para>Once these rules are set in a file, named for example
       <filename>/etc/udev/rules.d/010_local.rules</filename>, you can
