@@ -277,17 +277,6 @@
         </mediaobject>
       </figure>
 
-      <para>Each chain is a list of rules; each rule is a set of conditions
-      and an action to execute when the conditions are met. When processing
-      a packet, the firewall scans the appropriate chain, one rule after
-      another; when the conditions for one rule are met, it “jumps”
-      (hence the <literal>-j</literal> option in the commands) to the
-      specified action to continue processing. The most common behaviors
-      are standardized, and dedicated actions exist for them. Taking one of
-      these standard actions interrupts the processing of the chain, since
-      the packet's fate is already sealed (barring an exception mentioned
-      below):</para>
-
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> ICMP</title>
 
@@ -326,6 +315,17 @@
 	Protocol</emphasis>). ICMPv6 is defined in RFC4443. <ulink
 	type="block" url="http://www.faqs.org/rfcs/rfc4443.html"/></para>
       </sidebar>
+
+      <para>Each chain is a list of rules; each rule is a set of conditions
+      and an action to execute when the conditions are met. When processing
+      a packet, the firewall scans the appropriate chain, one rule after
+      another; when the conditions for one rule are met, it “jumps”
+      (hence the <literal>-j</literal> option in the commands) to the
+      specified action to continue processing. The most common behaviors
+      are standardized, and dedicated actions exist for them. Taking one of
+      these standard actions interrupts the processing of the chain, since
+      the packet's fate is already sealed (barring an exception mentioned
+      below):</para>
 
       <para/>
       <itemizedlist>
@@ -2080,43 +2080,12 @@ interface(`myapp_read_log',`
 </programlisting>
         </example>
 
-        <sidebar>
-          <title><emphasis>DOCUMENTATION</emphasis> Explanations about the <emphasis>reference policy</emphasis></title>
-
-	  <para>The <emphasis>reference policy</emphasis> evolves like any
-	  free software project: based on volunteer contributions. The
-	  project is hosted by Tresys, one of the most active companies in
-	  the SELinux field. Their wiki contains explanations on how the
-	  rules are structured and how you can create new ones. <ulink
-	  type="block"
-	  url="https://github.com/TresysTechnology/refpolicy/wiki/GettingStarted"/></para>
-        </sidebar>
       </section>
       <section id="sect.writing-a-te-file">
         <title>Writing a <filename>.te</filename> File</title>
 
 	<para>Have a look at the <filename>example.te</filename>
 	file:</para>
-
-        <sidebar>
-          <title><emphasis>GOING FURTHER</emphasis> The <command>m4</command> macro language</title>
-
-	  <para>To properly structure the policy, the SELinux developers
-	  used a macro-command processor. Instead of duplicating many
-	  similar <emphasis>allow</emphasis> directives, they created
-	  “macro functions” to use a higher-level logic, which also
-	  results in a much more readable policy.</para>
-
-	  <para>In practice, <command>m4</command> is used to compile those
-	  rules. It does the opposite operation: it expands all those
-	  high-level directives into a huge database of
-	  <emphasis>allow</emphasis> directives.</para>
-
-	  <para>The SELinux “interfaces” are only macro functions which
-	  will be substituted by a set of rules at compilation time.
-	  Likewise, some rights are in fact sets of rights which are
-	  replaced by their values at compilation time.</para>
-        </sidebar>
 
         <programlisting>policy_module(myapp,1.0.0) <co id="example.te.module"/>
 
@@ -2208,6 +2177,37 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 	    url="http://www.selinuxproject.org/page/ObjectClassesPerms"/></para>
           </callout>
         </calloutlist>
+
+        <sidebar>
+          <title><emphasis>DOCUMENTATION</emphasis> Explanations about the <emphasis>reference policy</emphasis></title>
+
+	  <para>The <emphasis>reference policy</emphasis> evolves like any
+	  free software project: based on volunteer contributions. The
+	  project is hosted by Tresys, one of the most active companies in
+	  the SELinux field. Their wiki contains explanations on how the
+	  rules are structured and how you can create new ones. <ulink
+	  type="block"
+	  url="https://github.com/TresysTechnology/refpolicy/wiki/GettingStarted"/></para>
+        </sidebar>
+        <sidebar>
+          <title><emphasis>GOING FURTHER</emphasis> The <command>m4</command> macro language</title>
+
+	  <para>To properly structure the policy, the SELinux developers
+	  used a macro-command processor. Instead of duplicating many
+	  similar <emphasis>allow</emphasis> directives, they created
+	  “macro functions” to use a higher-level logic, which also
+	  results in a much more readable policy.</para>
+
+	  <para>In practice, <command>m4</command> is used to compile those
+	  rules. It does the opposite operation: it expands all those
+	  high-level directives into a huge database of
+	  <emphasis>allow</emphasis> directives.</para>
+
+	  <para>The SELinux “interfaces” are only macro functions which
+	  will be substituted by a set of rules at compilation time.
+	  Likewise, some rights are in fact sets of rights which are
+	  replaced by their values at compilation time.</para>
+        </sidebar>
 
 	<para>Now you just have to find the minimal set of rules required
 	to ensure that the target application or service works properly. To
