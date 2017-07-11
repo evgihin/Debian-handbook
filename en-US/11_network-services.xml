@@ -1653,6 +1653,8 @@ Deny from all
       The Falcot administrators keep it unchanged apart from the following
       parameters:</para>
 
+      <?latex \pagebreak ?>
+
       <programlisting>
 LogFile="/var/log/apache2/access.log"
 LogFormat = "%virtualname %host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"
@@ -2391,6 +2393,8 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid3/squidGuard.conf
       <filename>/etc/squidguard/squidGuard.conf.default</filename> as
       template if required).</para>
 
+      <?latex \pagebreak ?>
+
       <para>The working database must be regenerated with
       <command>update-squidguard</command> after each change of the
       <command>squidGuard</command> configuration file (or one of the lists
@@ -2636,6 +2640,32 @@ result: 0 Success
       time has come to make use of this data. This section focuses on how
       to configure a Linux system so that the various system directories
       use the LDAP database.</para>
+        <example>
+          <title>The <filename>/etc/nsswitch.conf</filename> file</title>
+
+          <programlisting>
+# /etc/nsswitch.conf
+#
+# Example configuration of GNU Name Service Switch functionality.
+# If you have the `glibc-doc' and `info' packages installed, try:
+# `info libc "Name Service Switch"' for information about this file.
+
+passwd: ldap compat
+group: ldap compat
+shadow: ldap compat
+
+hosts: files dns ldap
+networks: ldap files
+
+protocols: ldap db files
+services: ldap db files
+ethers: ldap db files
+rpc: ldap db files
+
+netgroup: ldap files
+</programlisting>
+        </example>
+
       <section id="sect.config-nss">
         <title>Configuring NSS</title>
 
@@ -2708,32 +2738,6 @@ result: 0 Success
 	<para>The <filename>/etc/nsswitch.conf</filename> file then needs
 	to be modified, so as to configure NSS to use the freshly-installed
 	<command>ldap</command> module.</para>
-
-        <example>
-          <title>The <filename>/etc/nsswitch.conf</filename> file</title>
-
-          <programlisting>
-# /etc/nsswitch.conf
-#
-# Example configuration of GNU Name Service Switch functionality.
-# If you have the `glibc-doc' and `info' packages installed, try:
-# `info libc "Name Service Switch"' for information about this file.
-
-passwd: ldap compat
-group: ldap compat
-shadow: ldap compat
-
-hosts: files dns ldap
-networks: ldap files
-
-protocols: ldap db files
-services: ldap db files
-ethers: ldap db files
-rpc: ldap db files
-
-netgroup: ldap files
-</programlisting>
-        </example>
 
 	<para>The <command>ldap</command> module is usually inserted before
 	others, and it will therefore be queried first. The notable
@@ -2886,6 +2890,21 @@ Done.
 </userinput><computeroutput># </computeroutput><userinput>mv newcert.pem /etc/ssl/certs/ldap.falcot.com.pem
 </userinput></screen>
 
+	  <sidebar>
+	    <title><emphasis>TOOL</emphasis> <command>ldapvi</command> to edit an LDAP directory</title>
+	    <indexterm><primary><command>ldapvi</command></primary></indexterm>
+	    <para>With <command>ldapvi</command>, you can display an LDIF
+	    output of any part of the LDAP directory, make some changes in
+	    the text editor, and let the tool do the corresponding LDAP
+	    operations for you.
+	    </para>
+	    <para>It is thus a convenient way to update the configuration
+	    of the LDAP server, simply by editing the <literal>cn=config</literal>
+	    hierarchy.</para>
+	    <screen><computeroutput># </computeroutput><userinput>ldapvi -Y EXTERNAL -h ldapi:/// -b cn=config
+</userinput></screen>
+	  </sidebar>
+
 	  <para>The <command>slapd</command> daemon also needs to be told
 	  to use these keys for encryption. The LDAP server configuration
 	  is managed dynamically: the configuration can be updated with
@@ -2915,21 +2934,6 @@ SASL SSF: 0
 modifying entry "cn=config"
 </computeroutput></screen>
           </example>
-
-	  <sidebar>
-	    <title><emphasis>TOOL</emphasis> <command>ldapvi</command> to edit an LDAP directory</title>
-	    <indexterm><primary><command>ldapvi</command></primary></indexterm>
-	    <para>With <command>ldapvi</command>, you can display an LDIF
-	    output of any part of the LDAP directory, make some changes in
-	    the text editor, and let the tool do the corresponding LDAP
-	    operations for you.
-	    </para>
-	    <para>It is thus a convenient way to update the configuration
-	    of the LDAP server, simply by editing the <literal>cn=config</literal>
-	    hierarchy.</para>
-	    <screen><computeroutput># </computeroutput><userinput>ldapvi -Y EXTERNAL -h ldapi:/// -b cn=config
-</userinput></screen>
-	  </sidebar>
 
 	  <para>The last step for enabling encryption involves changing the
 	  <varname>SLAPD_SERVICES</varname> variable in the
