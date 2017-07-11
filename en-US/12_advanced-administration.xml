@@ -1510,19 +1510,6 @@ Device    Boot     Start       End   Sectors Size Id Type
       the kernels of the operating systems one wishes to use on a Xen
       hypervisor need to be adapted to run on Xen.</para>
 
-      <para>Let's spend some time on terms. The hypervisor is the lowest
-      layer, that runs directly on the hardware, even below the kernel.
-      This hypervisor can split the rest of the software across several
-      <emphasis>domains</emphasis>, which can be seen as so many virtual
-      machines. One of these domains (the first one that gets started) is
-      known as <emphasis>dom0</emphasis>, and has a special role, since
-      only this domain can control the hypervisor and the execution of
-      other domains. These other domains are known as
-      <emphasis>domU</emphasis>. In other words, and from a user point of
-      view, the <emphasis>dom0</emphasis> matches the “host” of other
-      virtualization systems, while a <emphasis>domU</emphasis> can be seen
-      as a “guest”.</para>
-
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and the various versions of Linux</title>
 
@@ -1563,6 +1550,19 @@ Device    Boot     Start       End   Sectors Size Id Type
         <para>Xen is currently only available for the i386, amd64, arm64
         and armhf architectures.</para>
       </sidebar>
+
+      <para>Let's spend some time on terms. The hypervisor is the lowest
+      layer, that runs directly on the hardware, even below the kernel.
+      This hypervisor can split the rest of the software across several
+      <emphasis>domains</emphasis>, which can be seen as so many virtual
+      machines. One of these domains (the first one that gets started) is
+      known as <emphasis>dom0</emphasis>, and has a special role, since
+      only this domain can control the hypervisor and the execution of
+      other domains. These other domains are known as
+      <emphasis>domU</emphasis>. In other words, and from a user point of
+      view, the <emphasis>dom0</emphasis> matches the “host” of other
+      virtualization systems, while a <emphasis>domU</emphasis> can be seen
+      as a “guest”.</para>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and non-Linux kernels</title>
@@ -1660,13 +1660,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  be used (with a distribution name such as <emphasis
 	  role="distribution">jessie</emphasis>).</para>
 
-          <sidebar>
-            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
-
-	    <para>In case of a non-Linux system, care should be taken to
-	    define the kernel the domU must use, using the
-	    <literal>--kernel</literal> option.</para>
-          </sidebar>
         </listitem>
         <listitem>
 	  <para><literal>--dhcp</literal> states that the domU's network
@@ -1686,6 +1679,17 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  logical volume inside that group, and this logical volume will be
 	  made available to the domU as a hard disk drive.</para>
 
+        </listitem>
+      </itemizedlist>
+      
+          <sidebar>
+            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
+
+	    <para>In case of a non-Linux system, care should be taken to
+	    define the kernel the domU must use, using the
+	    <literal>--kernel</literal> option.</para>
+          </sidebar>
+
           <sidebar>
             <title><emphasis>NOTE</emphasis> Storage in the domU</title>
 
@@ -1696,8 +1700,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	    Xen image's configuration file is in order after its initial
 	    creation with <command>xen-create-image</command>.</para>
           </sidebar>
-        </listitem>
-      </itemizedlist>
 
       <para>Once these choices are made, we can create the image for our
       future Xen domU:</para>
@@ -1792,6 +1794,21 @@ iface xenbr0 inet dhcp
     bridge_maxwait 0
     </programlisting>
 
+      <sidebar>
+        <title><emphasis>TOOL</emphasis> Choice of toolstacks to manage Xen VM</title>
+        <indexterm><primary><command>xm</command></primary></indexterm>
+        <indexterm><primary><command>xe</command></primary></indexterm>
+        <para>
+          In Debian 7 and older releases, <command>xm</command> was the reference
+          command line tool to use to manage Xen virtual machines. It has
+          now been replaced by <command>xl</command> which is mostly
+          backwards compatible. But those are not the only available
+          tools: <command>virsh</command> of libvirt and
+          <command>xe</command> of XenServer's XAPI (commercial offering
+          of Xen) are alternative tools.
+        </para>
+      </sidebar>
+
       <para>After rebooting to make sure the bridge is automatically
       created, we can now start the domU with the Xen control tools, in
       particular the <command>xl</command> command. This command allows
@@ -1808,35 +1825,6 @@ Domain-0                                     0   463     1     r-----      9.8
 Domain-0                                     0   366     1     r-----     11.4
 testxen                                      1   128     1     -b----      1.1</computeroutput>
 </screen>
-
-      <sidebar>
-        <title><emphasis>TOOL</emphasis> Choice of toolstacks to manage Xen VM</title>
-        <indexterm><primary><command>xm</command></primary></indexterm>
-        <indexterm><primary><command>xe</command></primary></indexterm>
-        <para>
-          In Debian 7 and older releases, <command>xm</command> was the reference
-          command line tool to use to manage Xen virtual machines. It has
-          now been replaced by <command>xl</command> which is mostly
-          backwards compatible. But those are not the only available
-          tools: <command>virsh</command> of libvirt and
-          <command>xe</command> of XenServer's XAPI (commercial offering
-          of Xen) are alternative tools.
-        </para>
-      </sidebar>
-
-      <sidebar>
-        <title><emphasis>CAUTION</emphasis> Only one domU per image!</title>
-
-	<para>While it is of course possible to have several domU systems
-	running in parallel, they will all need to use their own image,
-	since each domU is made to believe it runs on its own hardware
-	(apart from the small slice of the kernel that talks to the
-	hypervisor). In particular, it isn't possible for two domU systems
-	running simultaneously to share storage space. If the domU systems
-	are not run at the same time, it is however quite possible to reuse
-	a single swap partition, or the partition hosting the
-	<filename>/home</filename> filesystem.</para>
-      </sidebar>
 
       <para>Note that the <filename>testxen</filename> domU uses real
       memory taken from the RAM that would otherwise be available to the
@@ -1866,6 +1854,20 @@ testxen login: </computeroutput>
       achieved through the <keycombo
       action="simul"><keycap>Control</keycap> <keycap>]</keycap></keycombo>
       key combination.</para>
+
+      <sidebar>
+        <title><emphasis>CAUTION</emphasis> Only one domU per image!</title>
+
+	<para>While it is of course possible to have several domU systems
+	running in parallel, they will all need to use their own image,
+	since each domU is made to believe it runs on its own hardware
+	(apart from the small slice of the kernel that talks to the
+	hypervisor). In particular, it isn't possible for two domU systems
+	running simultaneously to share storage space. If the domU systems
+	are not run at the same time, it is however quite possible to reuse
+	a single swap partition, or the partition hosting the
+	<filename>/home</filename> filesystem.</para>
+      </sidebar>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Getting the console straight away</title>
@@ -2330,6 +2332,18 @@ root@testlxc:~# </computeroutput></screen>
 	machines from the command line. Finally, <emphasis
 	role="pkg">virt-viewer</emphasis> allows accessing a VM's graphical
 	console.</para>
+
+        <sidebar>
+          <title><emphasis>TIP</emphasis> Add your user to the libvirt group</title>
+          <para>All samples in this section assume that you are running commands
+          as root. Effectively, if you want to control a local libvirt
+          daemon, you need either to be root or to be a member of the
+          <literal>libvirt</literal> group (which is not the case by
+          default). Thus if you want to avoid using root rights too often,
+          you can add yoursel to the <literal>libvirt</literal> group and
+          run the various commands under your user identity.</para>
+        </sidebar>
+
       </section>
       <section>
         <title>Network Configuration</title>
@@ -2373,17 +2387,6 @@ root@testlxc:~# </computeroutput></screen>
 <computeroutput>Pool srv-kvm created
 
 root@mirwiz:~# </computeroutput></screen>
-
-        <sidebar>
-          <title><emphasis>TIP</emphasis> Add your user to the libvirt group</title>
-          <para>All samples in this section assume that you are running commands
-          as root. Effectively, if you want to control a local libvirt
-          daemon, you need either to be root or to be a member of the
-          <literal>libvirt</literal> group (which is not the case by
-          default). Thus if you want to avoid using root rights too often,
-          you can add yoursel to the <literal>libvirt</literal> group and
-          run the various commands under your user identity.</para>
-        </sidebar>
 
 	<para>Let us now start the installation process for the virtual
 	machine, and have a closer look at
@@ -2833,6 +2836,17 @@ warning: centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm: Header V3 RSA/SHA256
 	installation is to save them into the configuration for
 	<command>isolinux</command> (in the CD-ROM case) or
 	<command>syslinux</command> (USB key).</para>
+        <sidebar>
+          <title><emphasis>DOCUMENTATION</emphasis> Installation guide appendix</title>
+
+	  <para>The installation guide, available online, includes detailed
+	  documentation on the use of a preseed file in an appendix. It
+	  also includes a detailed and commented sample file, which can
+	  serve as a base for local customizations. <ulink type="block"
+	  url="https://www.debian.org/releases/jessie/amd64/apb.html"/>
+	  <ulink type="block"
+	  url="https://www.debian.org/releases/jessie/example-preseed.txt"/></para>
+        </sidebar>
       </section>
       <section>
         <title>Creating a Preseed File</title>
@@ -2874,17 +2888,6 @@ warning: centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm: Header V3 RSA/SHA256
 	parameter will instruct Debconf to only ask critical questions, and
 	use the default answer for others.</para>
 
-        <sidebar>
-          <title><emphasis>DOCUMENTATION</emphasis> Installation guide appendix</title>
-
-	  <para>The installation guide, available online, includes detailed
-	  documentation on the use of a preseed file in an appendix. It
-	  also includes a detailed and commented sample file, which can
-	  serve as a base for local customizations. <ulink type="block"
-	  url="https://www.debian.org/releases/jessie/amd64/apb.html"/>
-	  <ulink type="block"
-	  url="https://www.debian.org/releases/jessie/example-preseed.txt"/></para>
-        </sidebar>
       </section>
       <section>
         <title>Creating a Customized Boot Media</title>
