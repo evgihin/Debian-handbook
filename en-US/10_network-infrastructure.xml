@@ -1327,6 +1327,9 @@ if_prefix=eth0
     </section>
 
   </section>
+
+  <?latex \pagebreak ?>
+
   <section id="sect.domain-name-servers">
     <title>Domain Name Servers (DNS)</title>
     <section id="sect.dns-principe">
@@ -1419,16 +1422,6 @@ if_prefix=eth0
       <indexterm><primary>ISC</primary></indexterm>
       <indexterm><primary>Internet Software Consortium</primary></indexterm>
 
-      <sidebar>
-        <title><emphasis>CULTURE</emphasis> DNSSEC</title>
-        <indexterm><primary>DNSSEC</primary></indexterm>
-
-	<para>The DNSSEC norm is quite complex; this partly explains why
-	it is not in widespread usage yet (even if it perfectly coexists
-	with DNS servers unaware of DNSSEC). To understand all the ins and
-	outs, you should check the following article. <ulink type="block"
-	url="http://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
-      </sidebar>
     </section>
     <section id="sect.dns-config">
       <title>Configuring</title>
@@ -1441,6 +1434,49 @@ if_prefix=eth0
       this domain, and a <literal>168.192.in-addr.arpa</literal> zone for
       reverse mapping of IP addresses in the local networks.</para>
 
+      <para>The following configuration excerpts, taken from the Falcot
+      files, can serve as starting points to configure a DNS server:</para>
+      <indexterm><primary><filename>named.conf</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/bind/named.conf</filename></primary></indexterm>
+
+      <example id="example.bind-named.conf.local">
+        <title>Excerpt of <filename>/etc/bind/named.conf.local</filename></title>
+
+        <programlisting>
+zone "falcot.com" {
+        type master;
+        file "/etc/bind/db.falcot.com";
+        allow-query { any; };
+        allow-transfer {
+                195.20.105.149/32 ; // ns0.xname.org
+                193.23.158.13/32 ; // ns1.xname.org
+        };
+};
+
+zone "internal.falcot.com" {
+        type master;
+        file "/etc/bind/db.internal.falcot.com";
+        allow-query { 192.168.0.0/16; };
+};
+
+zone "168.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/db.192.168";
+        allow-query { 192.168.0.0/16; };
+};
+</programlisting>
+      </example>
+
+      <sidebar>
+        <title><emphasis>CULTURE</emphasis> DNSSEC</title>
+        <indexterm><primary>DNSSEC</primary></indexterm>
+
+	<para>The DNSSEC norm is quite complex; this partly explains why
+	it is not in widespread usage yet (even if it perfectly coexists
+	with DNS servers unaware of DNSSEC). To understand all the ins and
+	outs, you should check the following article. <ulink type="block"
+	url="http://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
+      </sidebar>
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Names of reverse zones</title>
         <indexterm><primary>zone</primary><secondary>reverse</secondary></indexterm>
@@ -1475,39 +1511,6 @@ if_prefix=eth0
 	the reverse resolution.</para>
 	<indexterm><primary><command>host</command></primary></indexterm>
       </sidebar>
-
-      <para>The following configuration excerpts, taken from the Falcot
-      files, can serve as starting points to configure a DNS server:</para>
-      <indexterm><primary><filename>named.conf</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/bind/named.conf</filename></primary></indexterm>
-
-      <example id="example.bind-named.conf.local">
-        <title>Excerpt of <filename>/etc/bind/named.conf.local</filename></title>
-
-        <programlisting>
-zone "falcot.com" {
-        type master;
-        file "/etc/bind/db.falcot.com";
-        allow-query { any; };
-        allow-transfer {
-                195.20.105.149/32 ; // ns0.xname.org
-                193.23.158.13/32 ; // ns1.xname.org
-        };
-};
-
-zone "internal.falcot.com" {
-        type master;
-        file "/etc/bind/db.internal.falcot.com";
-        allow-query { 192.168.0.0/16; };
-};
-
-zone "168.192.in-addr.arpa" {
-        type master;
-        file "/etc/bind/db.192.168";
-        allow-query { 192.168.0.0/16; };
-};
-</programlisting>
-      </example>
 
       <example id="example.bind-db.falcot.com">
         <title>Excerpt of <filename>/etc/bind/db.falcot.com</filename></title>
@@ -1555,6 +1558,8 @@ dns     IN      CNAME   ns
 	a syntax such as <literal>machine.otherdomain.com.</literal> (with
 	the final dot).</para>
       </sidebar>
+
+      <?latex \pagebreak ?>
 
       <example id="example.bind-db.192.168">
         <title>Excerpt of <filename>/etc/bind/db.192.168</filename></title>
@@ -1619,6 +1624,8 @@ $TTL    604800
       <literal>192.168.0.1</literal> serving as the gateway. Available IP
       addresses are in the range <literal>192.168.0.128</literal> to
       <literal>192.168.0.254</literal>.</para>
+
+      <?latex \pagebreak ?>
 
       <example id="example.dhcp-dhcpd.conf">
         <title>Excerpt of <filename>/etc/dhcp/dhcpd.conf</filename></title>
@@ -1766,8 +1773,6 @@ allow-update { 127.0.0.1 192.168.0.1 212.94.201.10 !any };
       administrators practically acquired <command>netstat -tupan</command>
       as a reflex. Typical results, on a lightly loaded machine, may look
       like the following:</para>
-
-      <?latex \pagebreak ?>
 
       <screen role="scale">
 <computeroutput># </computeroutput><userinput>netstat -tupan</userinput>
