@@ -914,6 +914,8 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 	<filename>vg_normal</filename>, will also include slower
 	elements.</para>
 
+	<?latex \pagebreak ?>
+
         <screen id="screen.vgcreate"><computeroutput># </computeroutput><userinput>vgdisplay</userinput>
 <computeroutput>  No volume groups found
 # </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>
@@ -1033,6 +1035,8 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 	  <command>pvmove</command> command.</para>
         </sidebar>
 
+	<?latex \pagebreak ?>
+
 	<para>Logical volumes, once created, end up as block device files
 	in <filename>/dev/mapper/</filename>:</para>
 
@@ -1048,25 +1052,6 @@ brw-rw---- 1 root disk 253, 1 Jun 10 17:05 /dev/dm-1
 brw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2
 </computeroutput>
 </screen>
-
-        <sidebar>
-          <title><emphasis>NOTE</emphasis> Autodetecting LVM volumes</title>
-
-          <para>When the computer boots, the <filename>lvm2-activation</filename>
-          systemd service unit executes <command>vgchange -aay</command>
-          to “activate” the volume groups: it scans the available
-	  devices; those that have been initialized as physical volumes for
-	  LVM are registered into the LVM subsystem, those that belong to
-	  volume groups are assembled, and the relevant logical volumes are
-	  started and made available. There is therefore no need to edit
-	  configuration files when creating or modifying LVM
-	  volumes.</para>
-
-	  <para>Note, however, that the layout of the LVM elements
-	  (physical and logical volumes, and volume groups) is backed up in
-	  <filename>/etc/lvm/backup</filename>, which can be useful in case
-	  of a problem (or just to sneak a peek under the hood).</para>
-        </sidebar>
 
 	<para>To make things easier, convenience symbolic links are also
 	created in directories matching the VGs:</para>
@@ -1107,6 +1092,25 @@ Writing superblocks and filesystem accounting information: done
 	<para>From the applications' point of view, the myriad small
 	partitions have now been abstracted into one large 12 GB volume,
 	with a friendlier name.</para>
+        <sidebar>
+          <title><emphasis>NOTE</emphasis> Autodetecting LVM volumes</title>
+
+          <para>When the computer boots, the <filename>lvm2-activation</filename>
+          systemd service unit executes <command>vgchange -aay</command>
+          to “activate” the volume groups: it scans the available
+	  devices; those that have been initialized as physical volumes for
+	  LVM are registered into the LVM subsystem, those that belong to
+	  volume groups are assembled, and the relevant logical volumes are
+	  started and made available. There is therefore no need to edit
+	  configuration files when creating or modifying LVM
+	  volumes.</para>
+
+	  <para>Note, however, that the layout of the LVM elements
+	  (physical and logical volumes, and volume groups) is backed up in
+	  <filename>/etc/lvm/backup</filename>, which can be useful in case
+	  of a problem (or just to sneak a peek under the hood).</para>
+        </sidebar>
+
       </section>
       <section id="sect.lvm-over-time">
         <title>LVM Over Time</title>
@@ -1207,6 +1211,8 @@ The filesystem on /dev/vg_critical/lv_files is now 1835008 (4k) blocks long.
 <computeroutput>Filesystem                       Size  Used Avail Use% Mounted on
 /dev/mapper/vg_critical-lv_base  2.0G  854M  1.1G  45% /srv/base</computeroutput>
 </screen>
+
+        <?latex \pagebreak ?>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Advanced LVM</title>
@@ -1544,13 +1550,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	url="http://wiki.xenproject.org/wiki/Xen_Kernel_Feature_Matrix"/></para>
       </sidebar>
 
-      <sidebar>
-        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
-
-        <para>Xen is currently only available for the i386, amd64, arm64
-        and armhf architectures.</para>
-      </sidebar>
-
       <para>Let's spend some time on terms. The hypervisor is the lowest
       layer, that runs directly on the hardware, even below the kernel.
       This hypervisor can split the rest of the software across several
@@ -1563,6 +1562,13 @@ Device    Boot     Start       End   Sectors Size Id Type
       view, the <emphasis>dom0</emphasis> matches the “host” of other
       virtualization systems, while a <emphasis>domU</emphasis> can be seen
       as a “guest”.</para>
+
+      <sidebar>
+        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
+
+        <para>Xen is currently only available for the i386, amd64, arm64
+        and armhf architectures.</para>
+      </sidebar>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and non-Linux kernels</title>
@@ -2208,33 +2214,6 @@ root       266  0.0  0.1  12656  1840 ?        Ss   17:39   0:00 /sbin/agetty --
 root       267  0.0  0.1  12656  1928 ?        Ss   17:39   0:00 /sbin/agetty --noclear tty6 linux
 root@testlxc:~# </computeroutput></screen>
 
-	<para>We are now in the container; our access to the processes
-	is restricted to only those started from the container itself,
-	and our access to the filesystem is similarly restricted to
-	the dedicated subset of the full filesystem
-	(<filename>/var/lib/lxc/testlxc/rootfs</filename>). We can
-	exit the console with <keycombo action="simul"><keycap>Control</keycap>
-	<keycap>a</keycap></keycombo> <keycombo><keycap>q</keycap></keycombo>.</para>
-
-	<para>Note that we ran the container as a background process,
-	thanks to the <option>--daemon</option> option of
-	<command>lxc-start</command>. We can interrupt the
-	container with a command such as <command>lxc-stop
-	--name=testlxc</command>.</para>
-
-	<para>The <emphasis role="pkg">lxc</emphasis> package contains an
-	initialization script that can automatically start one or several
-        containers when the host boots (it relies on
-        <command>lxc-autostart</command> which starts containers whose
-        <literal>lxc.start.auto</literal> option is set to 1). Finer-grained
-        control of the startup order is possible with
-        <literal>lxc.start.order</literal> and <literal>lxc.group</literal>:
-        by default, the initialization script first starts containers which are
-        part of the <literal>onboot</literal> group and then the containers
-        which are not part of any group. In both cases, the order within a group
-        is defined by the <literal>lxc.start.order</literal> option.
-        </para>
-
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Mass virtualization</title>
 
@@ -2266,6 +2245,34 @@ root@testlxc:~# </computeroutput></screen>
 	  <manvolnum>5</manvolnum></citerefentry> manual pages and the ones
 	  they reference.</para>
         </sidebar>
+
+	<para>We are now in the container; our access to the processes
+	is restricted to only those started from the container itself,
+	and our access to the filesystem is similarly restricted to
+	the dedicated subset of the full filesystem
+	(<filename>/var/lib/lxc/testlxc/rootfs</filename>). We can
+	exit the console with <keycombo action="simul"><keycap>Control</keycap>
+	<keycap>a</keycap></keycombo> <keycombo><keycap>q</keycap></keycombo>.</para>
+
+	<para>Note that we ran the container as a background process,
+	thanks to the <option>--daemon</option> option of
+	<command>lxc-start</command>. We can interrupt the
+	container with a command such as <command>lxc-stop
+	--name=testlxc</command>.</para>
+
+	<para>The <emphasis role="pkg">lxc</emphasis> package contains an
+	initialization script that can automatically start one or several
+        containers when the host boots (it relies on
+        <command>lxc-autostart</command> which starts containers whose
+        <literal>lxc.start.auto</literal> option is set to 1). Finer-grained
+        control of the startup order is possible with
+        <literal>lxc.start.order</literal> and <literal>lxc.group</literal>:
+        by default, the initialization script first starts containers which are
+        part of the <literal>onboot</literal> group and then the containers
+        which are not part of any group. In both cases, the order within a group
+        is defined by the <literal>lxc.start.order</literal> option.
+        </para>
+
       </section>
     </section>
     <section>
