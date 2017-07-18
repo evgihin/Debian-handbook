@@ -1608,33 +1608,6 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
       automatically switch roles. Such changes can only happen if they are
       explicitly allowed in the SELinux policy.</para>
 
-      <para>Obviously the rights do not apply to all
-      <emphasis>objects</emphasis> (files, directories, sockets, devices,
-      etc.). They can vary from object to object. To achieve this, each
-      object is associated to a <emphasis>type</emphasis> (this is known as
-      labeling). Domains' rights are thus expressed with sets of
-      (dis)allowed operations on those types (and, indirectly, on all
-      objects which are labeled with the given type).</para>
-
-      <sidebar>
-        <title><emphasis>EXTRA</emphasis> Domains and types are equivalent</title>
-
-	<para>Internally, a domain is just a type, but a type that only
-	applies to processes. That's why domains are suffixed with
-	<literal>_t</literal> just like objects' types.</para>
-      </sidebar>
-
-      <para>By default, a program inherits its domain from the user who
-      started it, but the standard SELinux policies expect many important
-      programs to run in dedicated domains. To achieve this, those
-      executables are labeled with a dedicated type (for example
-      <command>ssh</command> is labeled with
-      <literal>ssh_exec_t</literal>, and when the program starts, it
-      automatically switches to the <literal>ssh_t</literal> domain). This
-      automatic domain transition mechanism makes it possible to grant only
-      the rights required by each program. It is a fundamental principle of
-      SELinux.</para>
-
       <figure>
         <title>Automatic transitions between domains</title>
         <mediaobject>
@@ -1688,6 +1661,34 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
 	sake of uniformity, all objects get assigned a complete security
 	context.</para>
       </sidebar>
+
+      <para>Obviously the rights do not apply to all
+      <emphasis>objects</emphasis> (files, directories, sockets, devices,
+      etc.). They can vary from object to object. To achieve this, each
+      object is associated to a <emphasis>type</emphasis> (this is known as
+      labeling). Domains' rights are thus expressed with sets of
+      (dis)allowed operations on those types (and, indirectly, on all
+      objects which are labeled with the given type).</para>
+
+      <para>By default, a program inherits its domain from the user who
+      started it, but the standard SELinux policies expect many important
+      programs to run in dedicated domains. To achieve this, those
+      executables are labeled with a dedicated type (for example
+      <command>ssh</command> is labeled with
+      <literal>ssh_exec_t</literal>, and when the program starts, it
+      automatically switches to the <literal>ssh_t</literal> domain). This
+      automatic domain transition mechanism makes it possible to grant only
+      the rights required by each program. It is a fundamental principle of
+      SELinux.</para>
+
+      <sidebar>
+        <title><emphasis>EXTRA</emphasis> Domains and types are equivalent</title>
+
+	<para>Internally, a domain is just a type, but a type that only
+	applies to processes. That's why domains are suffixed with
+	<literal>_t</literal> just like objects' types.</para>
+      </sidebar>
+
     </section>
     <section id="sect.selinux-setup">
       <title>Setting Up SELinux</title>
