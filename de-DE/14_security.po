@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
 "POT-Creation-Date: 2015-10-06 16:10+0200\n"
-"PO-Revision-Date: 2018-04-23 21:47+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2018-04-24 02:48+0000\n"
+"Last-Translator: Carsten Bachert <caba@bachert.info>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/debian-handbook/14_security/de/>\n"
 "Language: de-DE\n"
 "MIME-Version: 1.0\n"
@@ -513,7 +513,7 @@ msgid "<command>dpkg --verify</command> is useful in detecting changes to files 
 msgstr "<command>dpkg --verify</command> ist nützlich zur Entdeckung von Änderungen an Dateien, die aus einem Debian-Paket stammen. Jedoch ist es nutzlos, falls das Paket selbst beschädigt ist, weil zum Beispiel der Debian-Spiegelserver kompromittiert wurde. Um sich gegen diese Art von Angriffen zu schützen, ist es erforderlich, APTs Verifikationssystem für digitale Signaturen zu benutzen (siehe <xref linkend=\"sect.package-authentication\" />) und darauf zu achten, nur Pakete zertifizierten Ursprungs zu installieren."
 
 msgid "<command>dpkg --verify</command> (or <command>dpkg -V</command>) is an interesting tool since it allows finding what installed files have been modified (potentially by an attacker), but this should be taken with a grain of salt. To do its job it relies on checksums stored in dpkg's own database which is stored on the hard disk (they can be found in <filename>/var/lib/dpkg/info/<replaceable>package</replaceable>.md5sums</filename>); a thorough attacker will therefore update these files so they contain the new checksums for the subverted files."
-msgstr ""
+msgstr "<command>dpkg --verify</command> (oder <command>dpkg -V</command>) ist ein interessantes Tool, weil es herausfindet welche installierten Dateien (möglicherweise von einem Angreifer) modifiziert wurden aber dies sollte man nicht für bare Münze nehmen. Um seine Arbeit zu verrichten bezieht es sich auf Prüfsummen i der dpkg eigenen Datenbank welche auf der lokalen Festplatte liegt (man findet sie unter <filename>/var/lib/dpkg/info/<replaceable>package</replaceable>.md5sums</filename>).  Ein gründlicher Angreifer wird diese Dateien also mit den neuen Prüfsummen der manipulierten Dateien aktualisieren."
 
 msgid "<emphasis>BACK TO BASICS</emphasis> File fingerprint"
 msgstr "<emphasis>ZURÜCK ZU DEN GRUNDLAGEN</emphasis> Dateifingerabdruck"
@@ -563,10 +563,8 @@ msgstr "<primary><command>debsums</command></primary>"
 msgid "<command>debsums</command> is the ancestor of <command>dpkg -V</command> and is thus mostly obsolete. It suffers from the same limitations than dpkg. Fortunately, some of the limitations can be worked-around (whereas dpkg does not offer similar work-arounds)."
 msgstr "<command>debsums</command> ist der Vorgänger von <command>dpkg -V</command> und damit meist veraltet. Es hat die gleichen Einschränkungen wie dpkg. Glücklicherweise können einige der Einschränkungen umgangen werden (während dpkg keine ähnlichen Workarounds bietet)."
 
-#, fuzzy
-#| msgid "The other problem can be avoided in a similar fashion: the check must simply be based on a pristine <filename>.deb</filename> file. Since this implies having all the <filename>.deb</filename> files for all the installed packages, and being sure of their integrity, the simplest way is to grab them from a Debian mirror. This operation can be slow and tedious, and should therefore not be considered a proactive technique to be used on a regular basis."
 msgid "Since the data on the disk cannot be trusted, <command>debsums</command> offers to do its checks based on <filename>.deb</filename> files instead of relying on dpkg's database. To download trusted <filename>.deb</filename> files of all the packages installed, we can rely on APT's authenticated downloads. This operation can be slow and tedious, and should therefore not be considered a proactive technique to be used on a regular basis."
-msgstr "Das andere Problem kann in ähnlicher Weise vermieden werden: die Überprüfung muss einfach auf einer tadellosen <filename>.deb</filename>-Datei beruhen. Da dies voraussetzt, dass man über alle <filename>.deb</filename>-Dateien für alle installierten Pakete verfügt und ihrer Unversehrtheit sicher ist, besteht der einfachste Weg darin, sie sich von einem Debian-Spiegelserver zu beschaffen. Dieser Vorgang kann langsam und mühsam sein und sollte daher nicht als eine regelmäßig zu nutzende proaktive Vorgehensweise angesehen werden."
+msgstr "Weil man den Daten auf der Festplatte nicht trauen kann, ermöglicht <command>debsums</command> Prüfungen basierend auf <filename>.deb</filename> Dateien anstatt sich auf die dpkg Datenbank zu verlassen. Um gesicherte <filename>.deb</filename> Dateien für alle installierten Pakete herunterzuladen können wir uns auf die von APT beglaubigten Downloads verlassen. Diese Aktion kann sehr langsam und langwierig sein und sollte daher als proaktive Technik in Betracht gezogen werden und nicht regelmäßig verwendet werden."
 
 msgid ""
 "\n"
@@ -657,10 +655,8 @@ msgstr "Ein „Denial-of-Service“-Angriff hat nur ein Ziel: einen Dienst nicht
 msgid "Such an attack is sometimes “distributed”; this usually involves overloading the server with large numbers of queries coming from many different sources so that the server becomes unable to answer the legitimate queries. These types of attacks have gained well-known acronyms: <acronym>DDoS</acronym> and <acronym>DoS</acronym> (depending on whether the denial of service attack is distributed or not)."
 msgstr "Solch ein Angriff erfolgt manchmal „verteilt“; dazu gehört es normalerweise, den Server mit einer großen Anzahl von Anfragen, die von vielen verschiedenen Quellen kommen, zu überlasten, so dass der Server nicht mehr imstande ist, die seriösen Anfragen zu beantworten. Diese Art von Angriffen hat bekannte Abkürzungen erhalten: <acronym>DDoS</acronym> und <acronym>DoS</acronym> (je nachdem, ob der Denial-of-Service-Angriff verteilt ist oder nicht)."
 
-#, fuzzy
-#| msgid "<command>snort</command> (in the Debian package of the same name) is a NIDS — a <emphasis>Network Intrusion Detection System</emphasis>. Its function is to listen to the network and try to detect infiltration attempts and/or hostile acts (including denial of service attacks). All these events are logged, and a daily email is sent to the administrator with a summary of the past 24 hours."
 msgid "<command>suricata</command> (in the Debian package of the same name) is a NIDS — a <emphasis>Network Intrusion Detection System</emphasis>. Its function is to listen to the network and try to detect infiltration attempts and/or hostile acts (including denial of service attacks). All these events are logged in multiple files in <filename>/var/log/suricata</filename>. There are third party tools (Kibana/logstash) to better browse all the data collected. <ulink type=\"block\" url=\"http://suricata-ids.org\" /> <ulink type=\"block\" url=\"https://www.elastic.co/products/kibana\" />"
-msgstr "<command>snort</command> (im gleichnamigen Debian-Paket) ist ein NIDS - ein <emphasis>Network Intrusion Detection System</emphasis>. Seine Funktion besteht darin, das Netzwerk abzuhören und zu versuchen, Eindringversuche oder feindliche Handlungen (einschließlich eines Denial-of-Service-Angriffs) zu entdecken. Alle diese Vorgänge werden protokolliert und eine tägliche E-Mail mit einer Zusammenfassung der vergangenen 24 Stunden an den Administrator geschickt."
+msgstr "<command>suricata</command> (im gleichnamigen Debian-Paket) ist ein NIDS - ein <emphasis>Network Intrusion Detection System</emphasis>. Seine Funktion besteht darin, das Netzwerk abzuhören und zu versuchen, Eindringversuche oder feindliche Handlungen (einschließlich eines Denial-of-Service-Angriffs) zu entdecken. Alle diese Vorgänge werden in verschiedenen Dateien unter <filename>/var/log/suricata</filename> protokolliert. Es gibt Tools von Drittanbietern (Kibana/logstash) mit denen man die gesammelten Daten besser durchsuchen kann. <ulink type=\"block\" url=\"http://suricata-ids.org\" /><ulink type=\"block\" url=\"https://www.elastic.co/products/kibana\" />"
 
 msgid "<primary><command>snort</command></primary>"
 msgstr "<primary><command>snort</command></primary>"
@@ -681,10 +677,10 @@ msgid "On top of this, you should also edit <filename>/etc/default/suricata</fil
 msgstr "Außerdem sollten Sie <filename>/etc/default/suricata</filename> bearbeiten, um die Netzwerkschnittstelle für die Überwachung zu definieren und das Initskript zu aktivieren (durch Setzen von <literal>RUN=yes</literal>). Sie können auch <literal>LISTENMODE=pcap</literal> setzen, da die Standardeinstellung <literal>LISTENMODE=nfqueue</literal> eine weitere Konfiguration erfordert, um korrekt zu funktionieren (die netfilter-Firewall muss so konfiguriert sein, dass sie Pakete an eine von Suricata verwaltete User Space-Warteschlange über das <literal>NFQUEUE</literal> Ziel durchreicht)."
 
 msgid "To detect bad behaviour, <command>suricata</command> needs a set of monitoring rules: you can find such rules in the <emphasis role=\"pkg\">snort-rules-default</emphasis> package. <command>snort</command> is the historical reference in the IDS ecosystem and <command>suricata</command> is able to reuse rules written for it. Unfortunately that package is missing from <emphasis role=\"distribution\">Debian Jessie</emphasis> and should be retrieved from another Debian release like <emphasis role=\"distribution\">Testing</emphasis> or <emphasis role=\"distribution\">Unstable</emphasis>."
-msgstr ""
+msgstr "<command>Suricata</command> muss einen Satz an Monitoring-Regeln erstellen um bösartiges Verhalten zu entdecken: Man findet solche Regeln im <emphasis role=\"pkg\">snort-rules-default</emphasis> Paket. <command>Snort</command> ist historisch die Referenz im IDS Ökosystem und <command>suricata</command> kann die Regelsätze die für Snort geschrieben wurden weiterverwenden. Leider findet man das Paket nicht unter <emphasis role=\"distribution\">Debian Jessie</emphasis> und muss daher aus einem anderen Debian Release wie etwa  <emphasis role=\"distribution\">Testing</emphasis> oder <emphasis role=\"distribution\">Unstable</emphasis> bezogen werden."
 
 msgid "Alternatively, <command>oinkmaster</command> (in the package of the same name) can be used to download Snort rulesets from external sources."
-msgstr ""
+msgstr "Wahlweise kann auch <command>oinkmaster</command> (im Paket selben Namens) genutzt werden um Snort Regelsätze von externen Quellen zu beziehen."
 
 msgid "<emphasis>GOING FURTHER</emphasis> Integration with <command>prelude</command>"
 msgstr "<emphasis>WEITERE SCHRITTE</emphasis> Integration mit <command>prelude</command>"
@@ -707,10 +703,8 @@ msgstr "<primary>AppArmor</primary>"
 msgid "Principles"
 msgstr "Prinzipien"
 
-#, fuzzy
-#| msgid "SELinux (<emphasis>Security Enhanced Linux</emphasis>) is a <emphasis>Mandatory Access Control</emphasis> system built on Linux's LSM (<emphasis>Linux Security Modules</emphasis>) interface. In practice, the kernel queries SELinux before each system call to know whether the process is authorized to do the given operation."
 msgid "AppArmor is a <emphasis>Mandatory Access Control</emphasis> (MAC) system built on Linux's LSM (<emphasis>Linux Security Modules</emphasis>) interface. In practice, the kernel queries AppArmor before each system call to know whether the process is authorized to do the given operation. Through this mechanism, AppArmor confines programs to a limited set of resources."
-msgstr "SELinux (<emphasis>Security Enhanced Linux</emphasis>) ist ein System mit <emphasis>Mandatory Access Control</emphasis>, das auf der LSM-Schnittstelle (<emphasis>Linux Security Modules</emphasis>) von Linux aufbaut. In der Praxis befragt der Kernel SELinux vor jedem Systemaufruf, um herauszufinden, ob der Prozess autorisiert ist, den jeweiligen Vorgang auszuführen."
+msgstr "AppArmor ist  ein <emphasis>Mandatory Access Control</emphasis> System (MAC), das auf der LSM-Schnittstelle (<emphasis>Linux Security Modules</emphasis>) von Linux aufbaut. In der Praxis befragt der Kernel AppAmor vor jedem Systemaufruf, um herauszufinden, ob der Prozess autorisiert ist, den jeweiligen Vorgang auszuführen."
 
 msgid "<primary><emphasis>Mandatory Access Control</emphasis></primary>"
 msgstr "<primary><emphasis>Mandatory Access Control</emphasis></primary>"
