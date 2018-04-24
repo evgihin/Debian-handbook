@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
 "POT-Creation-Date: 2015-10-06 16:10+0200\n"
-"PO-Revision-Date: 2018-04-24 02:48+0000\n"
-"Last-Translator: Carsten Bachert <caba@bachert.info>\n"
+"PO-Revision-Date: 2018-04-24 15:38+0000\n"
+"Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/debian-handbook/14_security/de/>\n"
 "Language: de-DE\n"
 "MIME-Version: 1.0\n"
@@ -713,16 +713,16 @@ msgid "<primary><emphasis>Linux Security Modules</emphasis></primary>"
 msgstr "<primary><emphasis>Linux Security Modules</emphasis></primary>"
 
 msgid "AppArmor applies a set of rules (known as “profile”) on each program. The profile applied by the kernel depends on the installation path of the program being executed. Contrary to SELinux (discussed in <xref linkend=\"sect.selinux\" />), the rules applied do not depend on the user. All users face the same set of rules when they are executing the same program (but traditional user permissions still apply and might result in different behaviour!)."
-msgstr ""
+msgstr "AppArmor wendet eine Reihe von Regeln (bekannt als \"Profil\") auf jedes Programm an. Das vom Kernel verwendete Profil hängt vom Installationspfad des ausgeführten Programms ab. Im Gegensatz zu SELinux (beschrieben in <xref linkend=\"sect.selinux\" />) sind die angewandten Regeln nicht vom Benutzer abhängig. Alle Benutzer haben die gleichen Regeln, wenn sie das gleiche Programm ausführen (aber die traditionellen Benutzerberechtigungen gelten weiterhin und können zu unterschiedlichem Verhalten führen!)."
 
 msgid "AppArmor profiles are stored in <filename>/etc/apparmor.d/</filename> and they contain a list of access control rules on resources that each program can make use of. The profiles are compiled and loaded into the kernel by the <command>apparmor_parser</command> command. Each profile can be loaded either in enforcing or complaining mode. The former enforces the policy and reports violation attempts, while the latter does not enforce the policy but still logs the system calls that would have been denied."
-msgstr ""
+msgstr "AppArmor-Profile werden in <filename>/etc/apparmor.d/</filename> gespeichert und enthalten eine Liste von Zugriffskontrollregeln für Ressourcen, die jedes Programm verwenden kann. Die Profile werden mit dem Befehl <command>apparmor_parser</command> in den Kernel geladen. Jedes Profil kann entweder im Erzwingungs- oder im Beschwerdemodus geladen werden. Ersterer setzt die Richtlinie durch und meldet Verstöße, während Letzterer die Richtlinie nicht durchsetzt, aber dennoch die Systemaufrufe protokolliert, die abgelehnt worden wären."
 
 msgid "Enabling AppArmor and managing AppArmor profiles"
 msgstr "AppArmor Profile einschalten und verwalten"
 
 msgid "AppArmor support is built into the standard kernels provided by Debian. Enabling AppArmor is thus just a matter of installing a few packages and adding some parameters to the kernel command line:"
-msgstr ""
+msgstr "AppArmor-Unterstützung ist in die von Debian bereitgestellten Standardkernel integriert. Das Aktivieren von AppArmor ist also nur eine Frage der Installation einiger Pakete und des Hinzufügens einiger Parameter zur Kernel-Befehlszeile:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>apt install apparmor apparmor-profiles apparmor-utils\n"
@@ -738,7 +738,7 @@ msgstr ""
 "</userinput>"
 
 msgid "After a reboot, AppArmor is now functional and <command>aa-status</command> will confirm it quickly:"
-msgstr ""
+msgstr "Nach einem Neustart ist AppArmor nun funktionsfähig und <command>aa-status</command> bestätigt das schnell:"
 
 msgid ""
 "\n"
@@ -783,10 +783,10 @@ msgid "<emphasis>NOTE</emphasis> More AppArmor profiles"
 msgstr "<emphasis>HINWEIS</emphasis>Wetere AppArmor-Profile"
 
 msgid "The <emphasis role=\"pkg\">apparmor-profiles</emphasis> package contains profiles managed by the upstream AppArmor community. To get even more profiles you can install <emphasis role=\"pkg\">apparmor-profiles-extra</emphasis> which contains profiles developed by Ubuntu and Debian."
-msgstr ""
+msgstr "Das Paket <emphasis role=\"pkg\">apparmor-profiles</emphasis> enthält Profile, die von der vorgelagerten AppArmor-Community verwaltet werden. Um noch mehr Profile zu erhalten, können Sie <emphasis role=\"pkg\">apparmor-profiles-extra</emphasis> installieren, das von Ubuntu und Debian entwickelte Profile enthält."
 
 msgid "The state of each profile can be switched between enforcing and complaining with calls to <command>aa-enforce</command> and <command>aa-complain</command> giving as parameter either the path of the executable or the path to the policy file. Additionaly a profile can be entirely disabled with <command>aa-disable</command> or put in audit mode (to log accepted system calls too) with <command>aa-audit</command>."
-msgstr ""
+msgstr "Der Zustand jedes Profils kann zwischen Erzwingen und Beschweren mit Aufrufen von <command>aa-enforce</command> und <command>aa-complain</command> umgeschaltet werden, wobei als Parameter entweder der Pfad der ausführbaren Datei oder der Pfad zur Policy-Datei angegeben wird. Zusätzlich kann ein Profil mit <command>aa-disable</command> vollständig deaktiviert werden oder mit <command>aa-audit</command> in den Audit-Modus versetzt werden (um auch akzeptierte Systemaufrufe zu protokollieren)."
 
 msgid ""
 "\n"
@@ -807,10 +807,10 @@ msgid "Creating a new profile"
 msgstr "Ein neues Profil erstellen"
 
 msgid "Even though creating an AppArmor profile is rather easy, most programs do not have one. This section will show you how to create a new profile from scratch just by using the target program and letting AppArmor monitor the system call it makes and the resources it accesses."
-msgstr ""
+msgstr "Obwohl die Erstellung eines AppArmor-Profils recht einfach ist, haben die meisten Programme keins. Dieser Abschnitt zeigt Ihnen, wie Sie ein neues Profil von Grund auf neu erstellen, indem Sie das Zielprogramm verwenden und AppArmor den Systemaufruf und die Ressourcen, auf die es zugreift, überwachen lassen."
 
 msgid "The most important programs that need to be confined are the network facing programs as those are the most likely targets of remote attackers. That is why AppArmor conveniently provides an <command>aa-unconfined</command> command to list the programs which have no associated profile and which expose an open network socket. With the <literal>--paranoid</literal> option you get all unconfined processes that have at least one active network connection."
-msgstr ""
+msgstr "Die wichtigsten Programme, die eingeschränkt werden sollen, sind die Programme, die mit dem Netzwerk verbunden sind, da diese die wahrscheinlichsten Ziele von entfernten Angreifern sind. Das ist der Grund, warum AppArmor bequem einen Befehl <command>aa-unconfined</command> zur Verfügung stellt, um die Programme aufzulisten, die kein zugehöriges Profil haben und einen offenen Netzwerk-Socket anbieten. Mit der Option <literal>--paranoid</literal> erhalten Sie alle unbeschränkten Prozesse, die mindestens eine aktive Netzwerkverbindung haben."
 
 msgid ""
 "\n"
@@ -842,7 +842,7 @@ msgstr ""
 "      "
 
 msgid "In the following example, we will thus try to create a profile for <command>/sbin/dhclient</command>. For this we will use <command>aa-genprof dhclient</command>. It will invite you to use the application in another window and when done to come back to <command>aa-genprof</command> to scan for AppArmor events in the system logs and convert those logs into access rules. For each logged event, it will make one or more rule suggestions that you can either approve or further edit in multiple ways:"
-msgstr ""
+msgstr "Im folgenden Beispiel wird also versucht, ein Profil für <command>/sbin/dhclient</command> zu erstellen. Dazu verwenden wir <command>aa-genprof dhclient</command>. Es wird Sie einladen, die Anwendung in einem anderen Fenster zu benutzen, und wenn es fertig ist, zu <command>aa-genprof</command> zurückzukehren, um nach AppArmor-Ereignissen in den Systemprotokollen zu suchen und diese Protokolle in Zugriffsregeln umzuwandeln. Für jedes protokollierte Ereignis macht es einen oder mehrere Regelvorschläge, die Sie entweder genehmigen oder auf mehrere Arten weiter bearbeiten können:"
 
 msgid ""
 "\n"
@@ -1148,34 +1148,34 @@ msgstr ""
 "Finished generating profile for /sbin/dhclient.</computeroutput>"
 
 msgid "Note that the program does not display back the control characters that you type but for the clarity of the explanation I have included them in the previous transcript."
-msgstr ""
+msgstr "Beachten Sie, dass das Programm die von Ihnen eingegebenen Steuerzeichen nicht wiedergibt, aber zur besseren Übersichtlichkeit der Erklärung habe ich sie in die Abschrift oben aufgenommen."
 
 msgid "The first event detected is the execution of another program. In that case, you have multiple choices: you can run the program with the profile of the parent process (the “Inherit” choice), you can run it with its own dedicated profile (the “Profile” and the “Named” choices, differing only by the possibility to use an arbitrary profile name), you can run it with a sub-profile of the parent process (the “Child” choice), you can run it without any profile (the “Unconfined” choice) or you can decide to not run it at all (the “Deny” choice)."
-msgstr ""
+msgstr "Das erste erkannte Ereignis ist die Ausführung eines anderen Programms. In diesem Fall haben Sie mehrere Möglichkeiten: Sie können das Programm mit dem Profil des übergeordneten Prozesses ausführen (Auswahl \"Vererben\"), Sie können es mit einem eigenen Profil ausführen (Auswahl \"Profil\" und \"Benannt\", die sich nur durch die Möglichkeit unterscheiden, einen beliebigen Profilnamen zu verwenden), Sie können es mit einem Unterprofil des übergeordneten Prozesses ausführen (Auswahl \"Kind\"), Sie können es ohne Profil ausführen (Auswahl \"Unbegrenzt\") oder Sie können entscheiden, es überhaupt nicht auszuführen (Auswahl \"Verweigern\")."
 
 msgid "Note that when you opt to run it under a dedicated profile that doesn't exist yet, the tool will create the missing profile for you and will make rule suggestions for that profile in the same run."
-msgstr ""
+msgstr "Beachten Sie, dass das Tool, wenn Sie es unter einem speziellen, not nicht existierenden Profil ausführen, das fehlende Profil für Sie erstellt und Regelvorschläge für dieses Profil im selben Lauf macht."
 
 msgid "At the kernel level, the special powers of the root user have been split in “capabilities”. When a system call requires a specific capability, AppArmor will verify whether the profile allows the program to make use of this capability."
-msgstr ""
+msgstr "Auf der Kernel-Ebene wurden die speziellen Befugnisse des root-Benutzers in \"Fähigkeiten\" aufgeteilt. Wenn ein Systemaufruf eine bestimmte Fähigkeit erfordert, prüft AppArmor, ob das Profil dem Programm erlaubt, diese Fähigkeit zu nutzen."
 
 msgid "Here the program seeks read permissions for <filename>/etc/nsswitch.conf</filename>. <command>aa-genprof</command> detected that this permission was also granted by multiple “abstractions” and offers them as alternative choices. An abstraction provides a reusable set of access rules grouping together multiple resources that are commonly used together. In this specific case, the file is generally accessed through the nameservice related functions of the C library and we type “3” to first select the “#include &lt;abstractions/nameservice&gt;” choice and then “A” to allow it."
-msgstr ""
+msgstr "Hier sucht das Programm Leserechte für <filename>/etc/nsswitch.conf</filename>. <command>aa-genprof</command> hat festgestellt, dass diese Erlaubnis auch von mehreren \"Abstraktionen\" erteilt wurde und bietet sie als Alternative an. Eine Abstraktion bietet einen wiederverwendbaren Satz von Zugriffsregeln, die mehrere gemeinsam genutzte Ressourcen zusammenfassen. In diesem speziellen Fall wird die Datei im Allgemeinen über die Nameservice-bezogenen Funktionen der C-Bibliothek aufgerufen, und wir geben \"3\" ein, um zuerst die Option \"#include &lt;abstractions/nameservice&gt;\" und dann \"A\" auszuwählen, um sie zuzulassen."
 
 msgid "The program wants to create the <filename>/run/dhclient-eth0.pid</filename> file. If we allow the creation of this specific file only, the program will not work when the user will use it on another network interface. Thus we select “New” to replace the filename with the more generic “/run/dhclient*.pid” before recording the rule with “Allow”."
-msgstr ""
+msgstr "Das Programm möchte die Datei <filename>/run/dhclient-eth0.pid</filename> erstellen. Wenn wir nur die Erstellung dieser speziellen Datei zulassen, wird das Programm nicht funktionieren, wenn der Benutzer sie auf einer anderen Netzwerkschnittstelle verwendet. Daher wählen wir \"Neu\", um den Dateinamen durch die allgemeinere \"/run/dhclient*.pid\" zu ersetzen, bevor wir die Regel mit \"Zulassen\" aufnehmen."
 
 msgid "Notice that this access request is not part of the dhclient profile but of the new profile that we created when we allowed <filename>/usr/lib/NetworkManager/nm-dhcp-helper</filename> to run with its own profile."
-msgstr ""
+msgstr "Beachten Sie, dass diese Zugriffsanforderung nicht Teil des dhclient-Profils ist, sondern des neuen Profils, das wir erstellt haben, als wir <filename>/usr/lib/NetworkManager/nm-dhcp-helper</filename> mit seinem eigenen Profil laufen ließen."
 
 msgid "After having gone through all the logged events, the program offers to save all the profiles that were created during the run. In this case, we have two profiles that we save at once with “Save” (but you can save them individually too) before leaving the program with “Finish”."
-msgstr ""
+msgstr "Nach Durchlaufen aller protokollierten Ereignisse bietet das Programm an, alle während des Laufs erstellten Profile zu speichern. In diesem Fall haben wir zwei Profile, die wir mit \"Speichern\" auf einmal speichern (Sie können sie aber auch einzeln speichern), bevor wir das Programm mit \"Beenden\" verlassen."
 
 msgid "<command>aa-genprof</command> is in fact only a smart wrapper around <command>aa-logprof</command>: it creates an empty profile, loads it in complain mode and then run <command>aa-logprof</command> which is a tool to update a profile based on the profile violations that have been logged. So you can re-run that tool later to improve the profile that you just created."
-msgstr ""
+msgstr "<command>aa-genprof</command> ist eigentlich nur ein intelligenter Wrapper um <command>aa-logprof</command>: er erstellt ein leeres Profil, lädt es im Beschwerdemodus und führt dann <command>aa-logprof</command> aus, das ein Werkzeug ist, um ein Profil basierend auf den protokollierten Profilverletzungen zu aktualisieren. So können Sie dieses Tool später erneut ausführen, um das gerade erstellte Profil zu verbessern."
 
 msgid "If you want the generated profile to be complete, you should use the program in all the ways that it is legitimately used. In the case of dhclient, it means running it via Network Manager, running it via ifupdown, running it manually, etc. In the end, you might get a <filename>/etc/apparmor.d/sbin.dhclient</filename> close to this:"
-msgstr ""
+msgstr "Wenn Sie möchten, dass das generierte Profil vollständig ist, sollten Sie das Programm so verwenden, wie es berechtigterweise verwendet wird. Im Falle von dhclient bedeutet dies, dass es über den Netzwerk-Manager, über ifupdown, manuell usw. ausgeführt wird. Am Ende könnte <filename>/etc/apparmor.d/sbin.dhclient</filename> in der Nähe stehen von:"
 
 msgid ""
 "\n"
@@ -1353,16 +1353,14 @@ msgstr "Die Unterstützung von SELinux ist in den von Debian bereitgestellten St
 msgid "The <command>apt install selinux-basics selinux-policy-default</command> command will automatically install the packages required to configure an SELinux system."
 msgstr "Der Befehl <command>apt install selinux-basics selinux-policy-default</command> installiert selbstständig die zur Konfigurierung eines SELinux-Systems erforderlichen Pakete."
 
-#, fuzzy
-#| msgid "<emphasis>CAUTION</emphasis> Range of action"
 msgid "<emphasis>CAUTION</emphasis> Reference policy not in jessie"
-msgstr "<emphasis>VORSICHT</emphasis> Wirkungsbereich"
+msgstr "<emphasis>VORSICHT</emphasis> Referenzrichtlinie nicht in jessie"
 
 msgid "Unfortunately the maintainers of the <emphasis role=\"pkg\">refpolicy</emphasis> source package did not handle release critical bugs on their package and the package got removed from jessie. This means that the <emphasis role=\"pkg\">selinux-policy-*</emphasis> packages are currently not installable in jessie and need to be fetched from another place. Hopefully they will come back in one of the point releases or in jessie-backports. In the meantime, you can grab them from unstable."
-msgstr ""
+msgstr "Leider haben die Betreuer des <emphasis role=\"pkg\">refpolicy</emphasis> Quellpaketes kritische Fehler in ihrem Paket nicht behandelt und das Paket wurde von jessie entfernt. Das bedeutet, dass die <emphasis role=\"pkg\">selinux-policy-*</emphasis> Pakete derzeit nicht in jessie installiert werden können und von einem anderen Ort geholt werden müssen. Hoffentlich kommen sie in einem der Point-Releases oder in Jessie-Backports wieder. In der Zwischenzeit können Sie sie aus der unstable holen."
 
 msgid "This sad situation at least proves that SELinux is not very popular in the set of users/developers who are running the development versions of Debian. Thus, if you opt to use SELinux, you should expect the default policy to not work perfectly and you will have to invest quite some time to make it suitable to your specific needs."
-msgstr ""
+msgstr "Diese traurige Situation beweist zumindest, dass SELinux in der Menge der Benutzer/Entwickler, die die Entwicklungsversionen von Debian ausführen, nicht sehr beliebt ist. Wenn Sie sich also für SELinux entscheiden, sollten Sie davon ausgehen, dass die Standardrichtlinie nicht einwandfrei funktioniert und Sie einige Zeit investieren müssen, um sie an Ihre speziellen Bedürfnisse anzupassen."
 
 msgid "The <emphasis role=\"pkg\">selinux-policy-default</emphasis> package contains a set of standard rules. By default, this policy only restricts access for a few widely exposed services. The user sessions are not restricted and it is thus unlikely that SELinux would block legitimate user operations. However, this does enhance the security of system services running on the machine. To setup a policy equivalent to the old “strict” rules, you just have to disable the <literal>unconfined</literal> module (modules management is detailed further in this section)."
 msgstr "Das Paket <emphasis role=\"pkg\">selinux-policy-default</emphasis> enthält einen Satz von Standardregeln. Standardmäßig beschränkt dieses Regelwerk nur den Zugang für einige besonders gefährdete Dienste. Die Nutzersitzungen sind nicht eingeschränkt, und es ist daher unwahrscheinlich, dass SELinux legitime Nutzeraktionen blockieren würde. Dieses erhöht jedoch die Sicherheit von Systemdiensten, die auf dem Rechner laufen. Um ein Regelwerk einzurichten, das den alten „strengen“ Regeln entspricht, müssen Sie nur das Modul <literal>unconfined</literal> deaktivieren (die Modulverwaltung wird in diesem Kapitel ausführlich beschrieben)."
@@ -1406,10 +1404,8 @@ msgstr "SELinux-Module verwalten"
 msgid "Available SELinux modules are stored in the <filename>/usr/share/selinux/default/</filename> directory. To enable one of these modules in the current configuration, you should use <command>semodule -i <replaceable>module.pp.bz2</replaceable></command>. The <emphasis>pp.bz2</emphasis> extension stands for <emphasis>policy package</emphasis> (compressed with bzip2)."
 msgstr "Verfügbare SELinux-Module sind im Verzeichnis <filename>/usr/share/selinux/default/</filename> gespeichert. Um eines dieser Module in der aktuellen Konfiguration zu aktivieren, sollten Sie den Befehl <command>semodule -i <replaceable>Modul.pp.bz2</replaceable></command> benutzen. Die Erweiterung <emphasis>pp.bz2</emphasis> steht für <emphasis>policy package</emphasis> (komprimiert mit bzip2)."
 
-#, fuzzy
-#| msgid "Removing a module from the current configuration is done with <command>semodule -r <replaceable>module</replaceable></command>. Finally, the <command>semodule -l</command> command lists the modules which are currently enabled. It also outputs their version numbers."
 msgid "Removing a module from the current configuration is done with <command>semodule -r <replaceable>module</replaceable></command>. Finally, the <command>semodule -l</command> command lists the modules which are currently installed. It also outputs their version numbers. Modules can be selectively enabled with <command>semodule -e</command> and disabled with <command>semodule -d</command>."
-msgstr "Das Entfernen eines Moduls aus der aktuellen Konfiguration geschieht mit dem Befehl <command>semodule -r <replaceable>modul</replaceable></command>. Schließlich listet der Befehl <command>semodule -l</command> die zur Zeit aktivierten Module auf. Er gibt außerdem ihre Versionsnummern an."
+msgstr "Das Entfernen eines Moduls aus der aktuellen Konfiguration erfolgt mit <command>semodule -r <replaceable>module</replaceable></command>. Letztendlich listet der Befehl <command>semodule -l</command> die aktuell installierten Module auf. Es gibt auch deren Versionsnummern aus. Module können selektiv mit <command>semodul -e</command> aktiviert und mit <command>semodul -d</command> deaktiviert werden."
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>semodule -i /usr/share/selinux/default/abrt.pp.bz2</userinput>\n"
@@ -1491,22 +1487,6 @@ msgstr ""
 msgid "<command>semanage user -l</command> lists the mapping between SELinux user identities and allowed roles. Adding a new identity requires to define both the corresponding roles and a labeling prefix which is used to assign a type to personal files (<filename>/home/<replaceable>user</replaceable>/*</filename>). The prefix must be picked among <literal>user</literal>, <literal>staff</literal>, and <literal>sysadm</literal>. The “<literal>staff</literal>” prefix results in files of type “<literal>staff_home_dir_t</literal>”. Creating a new SELinux user identity is done with <command>semanage user -a -R <replaceable>roles</replaceable> -P <replaceable>prefix</replaceable> <replaceable>identity</replaceable></command>. Finally, you can remove an SELinux user identity with <command>semanage user -d <replaceable>identity</replaceable></command>."
 msgstr "<command>semanage user -l</command> führt die Zuordnungen zwischen den SELinux-Benutzeridentitäten und den erlaubten Rollen auf. Um eine neue Identität hinzuzufügen, ist es erforderlich, sowohl die entsprechenden Rollen als auch ein kennzeichnendes Präfix festzulegen, das dazu benutzt wird, einem Typ persönliche Dateien (<filename>/home/<replaceable>benutzer</replaceable>/*</filename>) zuzuordnen. Als Präfix muss <literal>user</literal>, <literal>staff</literal> oder <literal>sysadm</literal> gewählt werden. Das Präfix „<literal>staff</literal>“ ergibt Dateien des Typs „<literal>staff_home_dir_t</literal>“. Das Erstellen einer neuen SELinux-Benutzeridentität geschieht mit dem Befehl <command>semanage user -a -R <replaceable>rollen</replaceable> -P <replaceable>präfix</replaceable> <replaceable>identität</replaceable></command>. Schließlich kann eine SELinux-Benutzeridentität mit dem Befehl <command>semanage user -d <replaceable>identität</replaceable></command> entfernt werden."
 
-#, fuzzy
-#| msgid ""
-#| "<computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u</userinput>\n"
-#| "<computeroutput># </computeroutput><userinput>semanage user -l</userinput>\n"
-#| "<computeroutput>\n"
-#| "                Labeling   MLS/       MLS/\n"
-#| "SELinux User    Prefix     MCS Level  MCS Range        SELinux Roles\n"
-#| "\n"
-#| "root            sysadm     s0         s0-s0:c0.c1023   staff_r sysadm_r system_r\n"
-#| "staff_u         staff      s0         s0-s0:c0.c1023   staff_r sysadm_r\n"
-#| "sysadm_u        sysadm     s0         s0-s0:c0.c1023   sysadm_r\n"
-#| "system_u        user       s0         s0-s0:c0.c1023   system_r\n"
-#| "test_u          staff      s0         s0               staff_r user_r\n"
-#| "unconfined_u    unconfined s0         s0-s0:c0.c1023   system_r unconfined_r\n"
-#| "user_u          user       s0         s0               user_r\n"
-#| "# </computeroutput><userinput>semanage user -d test_u</userinput>"
 msgid ""
 "<computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semanage user -l</userinput>\n"
@@ -1526,17 +1506,17 @@ msgstr ""
 "<computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semanage user -l</userinput>\n"
 "<computeroutput>\n"
-"                Labeling   MLS/       MLS/\n"
-"SELinux User    Prefix     MCS Level  MCS Range        SELinux Roles\n"
+"                Labeling   MLS/       MLS/                          \n"
+"SELinux User    Prefix     MCS Level  MCS Range             SELinux Roles\n"
 "\n"
-"root            sysadm     s0         s0-s0:c0.c1023   staff_r sysadm_r system_r\n"
-"staff_u         staff      s0         s0-s0:c0.c1023   staff_r sysadm_r\n"
-"sysadm_u        sysadm     s0         s0-s0:c0.c1023   sysadm_r\n"
-"system_u        user       s0         s0-s0:c0.c1023   system_r\n"
-"test_u          staff      s0         s0               staff_r user_r\n"
-"unconfined_u    unconfined s0         s0-s0:c0.c1023   system_r unconfined_r\n"
-"user_u          user       s0         s0               user_r\n"
-"# </computeroutput><userinput>semanage user -d test_u</userinput>\n"
+"root            sysadm     SystemLow  SystemLow-SystemHigh  staff_r sysadm_r system_r\n"
+"staff_u         staff      SystemLow  SystemLow-SystemHigh  staff_r sysadm_r\n"
+"sysadm_u        sysadm     SystemLow  SystemLow-SystemHigh  sysadm_r\n"
+"system_u        user       SystemLow  SystemLow-SystemHigh  system_r\n"
+"test_u          staff      SystemLow  SystemLow             staff_r user_r\n"
+"unconfined_u    unconfined SystemLow  SystemLow-SystemHigh  system_r unconfined_r\n"
+"user_u          user       SystemLow  SystemLow             user_r\n"
+"# </computeroutput><userinput>semanage user -d test_u</userinput>"
 
 msgid "Managing File Contexts, Ports and Booleans"
 msgstr "Dateikontexte, Ports und Boolesche Optionen verwalten"
@@ -1583,8 +1563,6 @@ msgstr ""
 "<computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.if ./</userinput>\n"
 "<computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.te ./</userinput>"
 
-#, fuzzy
-#| msgid "The <filename>.te</filename> file is the most important one. It defines the rules. The <filename>.fc</filename> file defines the “file contexts”, that is the types assigned to files related to this module. The data within the <filename>.fc</filename> file are used during the file labeling step. Finally, the <filename>.if</filename> file defines the interface of the module: it's a set of “public functions” that other modules can use to properly interact with the module that you're creating."
 msgid "The <filename>.te</filename> file is the most important one. It defines the rules. The <filename>.fc</filename> file defines the “file contexts”, that is the types assigned to files related to this module. The data within the <filename>.fc</filename> file are used during the file labeling step. Finally, the <filename>.if</filename> file defines the interface of the module: it is a set of “public functions” that other modules can use to properly interact with the module that you're creating."
 msgstr "Die Datei <filename>.te</filename> ist die wichtigste. Sie legt die Regeln fest. Die Datei <filename>.fc</filename> bestimmt die „Dateikontexte“, das heißt, die Typen, die den auf diese Module bezogenen Dateien zugeordnet sind. Die in der Datei <filename>.fc</filename> befindlichen Daten werden während des Dateikennzeichnungsschrittes benutzt. Schließlich legt die Datei <filename>.if</filename> die Schnittstelle der Module fest: es ist ein Satz „öffentlicher Funktionen“, die andere Module verwenden können, um ordnungsgemäß mit dem Modul, das Sie erstellen, zu interagieren."
 
@@ -1878,7 +1856,7 @@ msgid "<computeroutput>name=\"xconsole\"</computeroutput>"
 msgstr "<computeroutput>name=\"xconsole\"</computeroutput>"
 
 msgid "The target object was named <literal>xconsole</literal>. Sometimes you can also have a “path” variable — with the full path — instead."
-msgstr ""
+msgstr "Das Zielobjekt wurde <literal>xconsole</literal> genannt. Manchmal kann man stattdessen eine \"path\"-Variable - mit dem vollen Pfad - haben."
 
 msgid "<computeroutput>dev=tmpfs</computeroutput>"
 msgstr "<computeroutput>dev=tmpfs</computeroutput>"
@@ -1916,15 +1894,11 @@ msgstr "Durch Betrachtung dieses Protokolleintrags ist es möglich, eine Regel z
 msgid "<emphasis>COMPLEMENTS</emphasis> No roles in policy rules"
 msgstr "<emphasis>ERGÄNZUNGEN</emphasis> Keine Rollen in den Richtlinien"
 
-#, fuzzy
-#| msgid "<primary>monitoring</primary>"
 msgid "<primary>Type Enforcement</primary>"
-msgstr "<primary>Monitoring</primary>"
+msgstr "<primary>Typerzwingung</primary>"
 
-#, fuzzy
-#| msgid "<primary>monitoring</primary>"
 msgid "<primary>Enforcement, Type Enforcement</primary>"
-msgstr "<primary>Monitoring</primary>"
+msgstr "<primary>Erzwingung, Typerzwingung</primary>"
 
 msgid "It might seem weird that roles do not appear at all when creating new rules. SELinux uses only the domains to find out which operations are allowed. The role intervenes only indirectly by allowing the user to switch to another domain. SELinux is based on a theory known as <emphasis>Type Enforcement</emphasis> and the type is the only element that matters when granting rights."
 msgstr "Es mag seltsam erscheinen, dass bei der Erstellung neuer Regeln Rollen überhaupt nicht auftreten. SELinux verwendet nur die Domains um herauszufinden, welche Vorgänge erlaubt sind. Die Rolle kommt nur indirekt zum Tragen, indem sie es dem Benutzer erlaubt, zu einer anderen Domain zu wechseln. SELinux basiert auf einer Theorie, die <emphasis>Type Enforcement</emphasis> heißt, und der Typ ist das einzige Element, das bei der Gewährung von Berechtigungen zählt."
@@ -1974,10 +1948,8 @@ msgstr "Apache 2 enthält Module, die das Filtern ankommender HTTP-Anfragen erm�
 msgid "Setting up these checks can be a long and cumbersome task, but it can pay off when the web application to be deployed has a dubious track record where security is concerned."
 msgstr "Das Einrichten dieser Überprüfungen kann eine lange und mühsame Aufgabe sein, sie kann sich aber auszahlen, wenn die Web-Anwendung, die eingesetzt werden soll, in Sicherheitsfragen eine zweifelhafte Erfolgsbilanz hat."
 
-#, fuzzy
-#| msgid "<emphasis>mod-security</emphasis> (in the <emphasis role=\"pkg\">libapache-mod-security</emphasis> package) is the main such module."
 msgid "<emphasis>mod-security2</emphasis> (in the <emphasis role=\"pkg\">libapache2-mod-security2</emphasis> package) is the main such module. It even comes with many ready-to-use rules of its own (in the <emphasis role=\"pkg\">modsecurity-crs</emphasis> package) that you can easily enable."
-msgstr "<emphasis>mod-security</emphasis> (im Paket <emphasis role=\"pkg\">libapache-mod-security</emphasis>) ist das wichtigste derartige Modul."
+msgstr "<emphasis>mod-security2</emphasis> (im Paket <emphasis role=\"pkg\">libapache2-mod-security2</emphasis>) ist das wichtigste derartige Modul. Es kommt sogar mit vielen eigenen, gebrauchsfertigen Regeln (im <emphasis role=\"pkg\">mod-crs</emphasis> Paket), die Sie leicht aktivieren können."
 
 msgid "<primary><emphasis role=\"pkg\">libapache-mod-security</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">libapache-mod-security</emphasis></primary>"
