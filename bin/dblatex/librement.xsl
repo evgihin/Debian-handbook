@@ -21,7 +21,6 @@
 
 <xsl:template name="user.params.set">
   <xsl:text>% dblatex template user.params.set starts here.&#10;</xsl:text>
-  <xsl:apply-imports />
   <xsl:text>\widowpenalty=10000&#10;</xsl:text>
   <xsl:text>\clubpenalty=10000&#10;</xsl:text>
   <xsl:if test="$figure.emptypage">
@@ -114,7 +113,6 @@
 
 <xsl:template name="user.params.set2">
   <xsl:text>% dblatex template user.params.set2 starts here.&#10;</xsl:text>
-  <xsl:apply-imports />
 
   <xsl:text>\renewcommand\examplename{</xsl:text>
   <xsl:call-template name="gentext">
