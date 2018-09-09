@@ -32,7 +32,12 @@ echo "RUN: dblatex -c dblatex/librement.conf $OPT_opts debian-handbook.xml"
 if dblatex -c dblatex/librement.conf $OPT_opts debian-handbook.xml; then
     targetdir="$topdir/publish/$OPT_lang/Debian/$version/pdf/debian-handbook"
     mkdir -p $targetdir
+    if ! pdfinfo debian-handbook.pdf > /dev/null;
+    then
+        mutool clean debian-handbook.pdf debian-handbook.pdf
+    fi
     cp debian-handbook.pdf $targetdir/
+    pdfinfo $targetdir/debian-handbook.pdf
     echo "SUCCESS: $targetdir/debian-handbook.pdf"
 else
     echo "ERROR: Failed to build PDF version for $OPT_lang"
