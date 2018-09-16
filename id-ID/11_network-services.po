@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-11-17 12:22+0100\nPO-Revision-Date: 2018-09-15 08:49+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/11_network-services/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-11-17 12:22+0100\nPO-Revision-Date: 2018-09-16 17:51+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/11_network-services/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.2-dev\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -1009,16 +1009,17 @@ msgid "Installing Apache"
 msgstr "Memasang Apache"
 
 msgid "Installing the <emphasis role=\"pkg\">apache2</emphasis> package is all that is needed. It contains all the modules, including the <emphasis>Multi-Processing Modules</emphasis> (MPMs) that affect how Apache handles parallel processing of many requests (those used to be provided in separate <emphasis role=\"pkg\">apache2-mpm-*</emphasis> packages). It will also pull <emphasis role=\"pkg\">apache2-utils</emphasis> containing the command line utilities that we will discover later."
-msgstr ""
+msgstr "Memasang paket <emphasis role=\"pkg\">apache2</emphasis> adalah semua yang diperlukan. Ini berisi semua modul, termasuk <emphasis>Multi-Processing Modules</emphasis> (MPM) yang mempengaruhi bagaimana Apache menangani pemrosesan paralel dari banyak permintaan (yang biasanya disediakan dalam paket terpisah <emphasis role=\"pkg\">apache2-mpm-*</emphasis>). Ini juga akan menarik <emphasis role=\"pkg\">apache2-utils</emphasis> yang mengandung utilitas baris perintah yang kita akan temui nanti."
 
+#, fuzzy
 msgid "The MPM in use affects significantly the way Apache will handle concurrent requests. With the <emphasis>worker</emphasis> MPM, it uses <emphasis>threads</emphasis> (lightweight processes), whereas with the <emphasis>prefork</emphasis> MPM it uses a pool of processes created in advance. With the <emphasis>event</emphasis> MPM it also uses threads, but the inactive connections (notably those kept open by the HTTP <emphasis>keep-alive</emphasis> feature) are handed back to a dedicated management thread."
-msgstr ""
+msgstr "MPM digunakan secara signifikan mempengaruhi cara Apache akan menangani permintaan bersamaan. Dengan MPM <emphasis>worker</emphasis>, menggunakan <emphasis>thread</emphasis> (proses ringan), sedangkan dengan MPM <emphasis>prefork</emphasis> itu menggunakan kumpulan proses dibuat terlebih dahulu. Dengan MPM <emphasis>event</emphasis> ini juga menggunakan thread, tapi koneksi tidak aktif (terutama yang terus dibuat terbuka dengan fitur HTTP <emphasis>keep-alive</emphasis>) diserahkan kembali ke thread manajemen yang terdedikasi."
 
 msgid "The Falcot administrators also install <emphasis role=\"pkg\">libapache2-mod-php5</emphasis> so as to include the PHP support in Apache. This causes the default <emphasis>event</emphasis> MPM to be disabled, and <emphasis>prefork</emphasis> to be used instead, since PHP only works under that particular MPM."
-msgstr ""
+msgstr "Para administrator Falcot juga memasang <emphasis role=\"pkg\">libapache2-mod-php5</emphasis> untuk menyertakan dukungan PHP di Apache. Hal ini menyebabkan MPM <emphasis>event</emphasis> baku  dinonaktifkan, dan <emphasis>prefork</emphasis> digunakan sebagai pengganti, karena PHP hanya bekerja di bawah MPM tertentu itu."
 
 msgid "<emphasis>SECURITY</emphasis> Execution under the <literal>www-data</literal> user"
-msgstr ""
+msgstr "<emphasis>KEAMANAN</emphasis> Eksekusi di bawah pengguna <literal>www-data</literal>"
 
 msgid "<primary><literal>www-data</literal></primary>"
 msgstr "<primary><literal>www-data</literal></primary>"
@@ -1026,23 +1027,25 @@ msgstr "<primary><literal>www-data</literal></primary>"
 msgid "<primary>suexec</primary>"
 msgstr "<primary>suexec</primary>"
 
+#, fuzzy
 msgid "By default, Apache handles incoming requests under the identity of the <literal>www-data</literal> user. This means that a security vulnerability in a CGI script executed by Apache (for a dynamic page) won't compromise the whole system, but only the files owned by this particular user."
-msgstr ""
+msgstr "Secara baku, Apache menangani permintaan masuk di bawah identitas pengguna <literal>www-data</literal>. Ini berarti bahwa kerentanan keamanan di skrip CGI yang dijalankan oleh Apache (untuk halaman dinamis) tidak akan mengkompromi seluruh sistem, tetapi hanya berkas yang dimiliki oleh pengguna tertentu ini."
 
 msgid "Using the <emphasis>suexec</emphasis> modules allows bypassing this rule so that some CGI scripts are executed under the identity of another user. This is configured with a <literal>SuexecUserGroup <replaceable>user</replaceable><replaceable>group</replaceable></literal> directive in the Apache configuration."
-msgstr ""
+msgstr "Menggunakan modul <emphasis>suexec</emphasis> memungkinkan melewati aturan ini sehingga beberapa skrip CGI dijalankan di bawah identitas pengguna lain. Ini dikonfigurasi dengan direktif <literal><replaceable>pengguna</replaceable> SuexecUserGroup <replaceable>kelompok</replaceable></literal> dalam konfigurasi Apache."
 
 msgid "<primary><emphasis role=\"pkg\">libapache2-mpm-itk</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis role=\"pkg\">libapache2-mpm-itk</emphasis></primary>"
 
+#, fuzzy
 msgid "Another possibility is to use a dedicated MPM, such as the one provided by <emphasis role=\"pkg\">libapache2-mpm-itk</emphasis>. This particular one has a slightly different behavior: it allows “isolating” virtual hosts (actually, sets of pages) so that they each run as a different user. A vulnerability in one website therefore cannot compromise files belonging to the owner of another website."
-msgstr ""
+msgstr "Kemungkinan lain adalah dengan menggunakan MPM khusus, seperti yang disediakan oleh <emphasis role=\"pkg\">libapache2-mpm-itk</emphasis>. Yang satu ini memiliki perilaku yang sedikit berbeda: hal ini memungkinkan \"mengisolasi\" virtual host (sebenarnya, set halaman) sehingga mereka masing-masing berjalan sebagai pengguna yang berbeda. Kerentanan di satu situs web karena itu tidak bisa mengkompromi berkas milik pemilik situs web lain."
 
 msgid "<emphasis>QUICK LOOK</emphasis> List of modules"
-msgstr ""
+msgstr "<emphasis>LIHAT SEKILAS</emphasis> Daftar modul"
 
 msgid "The full list of Apache standard modules can be found online. <ulink type=\"block\" url=\"http://httpd.apache.org/docs/2.4/mod/index.html\" />"
-msgstr ""
+msgstr "Daftar lengkap modul standar Apache dapat ditemukan daring. <ulink type=\"block\" url=\"http://httpd.apache.org/docs/2.4/mod/index.html\" />"
 
 msgid "Apache is a modular server, and many features are implemented by external modules that the main program loads during its initialization. The default configuration only enables the most common modules, but enabling new modules is a simple matter of running <command>a2enmod <replaceable>module</replaceable></command>; to disable a module, the command is <command>a2dismod <replaceable>module</replaceable></command>. These programs actually only create (or delete) symbolic links in <filename>/etc/apache2/mods-enabled/</filename>, pointing at the actual files (stored in <filename>/etc/apache2/mods-available/</filename>)."
 msgstr ""
