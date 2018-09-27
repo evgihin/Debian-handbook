@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2018-06-23 11:50+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.1-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2018-10-13 11:50+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.2.1\n"
 
 msgid "RAID"
 msgstr "RAID"
@@ -13,8 +13,9 @@ msgstr "LVM"
 msgid "FAI"
 msgstr "FAI"
 
+#, fuzzy
 msgid "Preseeding"
-msgstr ""
+msgstr "Preseeding"
 
 msgid "Monitoring"
 msgstr "Pemantauan"
@@ -58,10 +59,8 @@ msgstr "Pada kedua kasus RAID dan LVM, kernel menyediakan suatu berkas perangkat
 msgid "Software RAID"
 msgstr "RAID Perangkat Lunak"
 
-#, fuzzy
-#| msgid "<primary>KVM</primary>"
 msgid "<primary>RAID</primary>"
-msgstr "<primary>KVM</primary>"
+msgstr "<primary>RAID</primary>"
 
 #, fuzzy
 #| msgid "RAID <indexterm><primary>RAID</primary></indexterm> means <emphasis>Redundant Array of Independent Disks</emphasis>. The goal of this system is to prevent data loss in case of hard disk failure. The general principle is quite simple: data are stored on several physical disks instead of only one, with a configurable level of redundancy. Depending on this amount of redundancy, and even in the event of an unexpected disk failure, data can be losslessly reconstructed from the remaining disks."
@@ -360,29 +359,31 @@ msgstr "Seperti digambarkan oleh contoh kami, peranti RAID dapat dibangun dari p
 msgid "A few remarks are in order. First, <command>mdadm</command> notices that the physical elements have different sizes; since this implies that some space will be lost on the bigger element, a confirmation is required."
 msgstr "Beberapa komentar adalah dalam rangka. Pertama, <command>mdadm</command> pemberitahuan bahwa unsur-unsur ragawi memiliki ukuran yang berbeda; karena hal ini menyiratkan bahwa beberapa ruang akan hilang pada elemen yang lebih besar, konfirmasi diperlukan."
 
+#, fuzzy
 msgid "More importantly, note the state of the mirror. The normal state of a RAID mirror is that both disks have exactly the same contents. However, nothing guarantees this is the case when the volume is first created. The RAID subsystem will therefore provide that guarantee itself, and there will be a synchronization phase as soon as the RAID device is created. After some time (the exact amount will depend on the actual size of the disks…), the RAID array switches to the “active” or “clean” state. Note that during this reconstruction phase, the mirror is in a degraded mode, and redundancy isn't assured. A disk failing during that risk window could lead to losing all the data. Large amounts of critical data, however, are rarely stored on a freshly created RAID array before its initial synchronization. Note that even in degraded mode, the <filename>/dev/md1</filename> is usable, and a filesystem can be created on it, as well as some data copied on it."
-msgstr ""
+msgstr "Lebih penting lagi, perhatikan keadaan cermin. Keadaan normal RAID cermin adalah bahwa disk kedua memiliki isi yang sama. Namun, tidak ada jaminan ini adalah kasus ketika volume pertama kali dibuat. Subsistem RAID akan karena itu memberikan yang menjamin itu sendiri, dan akan ada tahap sinkronisasi segera setelah perangkat RAID dibuat. Setelah beberapa waktu (jumlah persis yang akan tergantung pada ukuran sebenarnya dari disk...), switch array RAID untuk \"aktif\" atau \"bersih\" negara. Perhatikan bahwa selama fase rekonstruksi ini, cermin adalah dalam mode rusak, dan redundansi tidak meyakinkan. Disk gagal selama jendela risiko yang bisa mengakibatkan kehilangan semua data. Namun, sejumlah besar data penting, jarang disimpan pada sebuah array RAID baru dibuat sebelum sinkronisasi awal nya. Catatan bahwa bahkan dalam modus rusak, <filename>md1/dev/md1</filename> dapat digunakan, dan sebuah filesystem dapat dibuat di atasnya, serta beberapa data disalin di atasnya."
 
 msgid "<emphasis>TIP</emphasis> Starting a mirror in degraded mode"
-msgstr ""
+msgstr "<emphasis>TIPS</emphasis> Memulai mirror dalam mode terdegradasi"
 
+#, fuzzy
 msgid "Sometimes two disks are not immediately available when one wants to start a RAID-1 mirror, for instance because one of the disks one plans to include is already used to store the data one wants to move to the array. In such circumstances, it is possible to deliberately create a degraded RAID-1 array by passing <filename>missing</filename> instead of a device file as one of the arguments to <command>mdadm</command>. Once the data have been copied to the “mirror”, the old disk can be added to the array. A synchronization will then take place, giving us the redundancy that was wanted in the first place."
-msgstr ""
+msgstr "Kadang-kadang dua disk tidak tersedia segera ketika seseorang ingin memulai RAID 1 cermin, untuk contoh karena salah satu disk satu rencana untuk menyertakan sudah digunakan untuk menyimpan data yang ingin pindah ke array. Dalam keadaan seperti itu, dimungkinkan untuk sengaja menciptakan array RAID-1 yang rusak oleh lewat <filename>hilang</filename> bukan file perangkat sebagai salah satu argumen untuk <command>mdadm</command>. Setelah data telah disalin ke \"cermin\", disk lama dapat ditambahkan ke array. Sinkronisasi kemudian akan mengambil tempat, memberikan kita redundansi yang diinginkan di tempat pertama."
 
 msgid "<emphasis>TIP</emphasis> Setting up a mirror without synchronization"
-msgstr ""
+msgstr "<emphasis>TIPS</emphasis> Menyiapkan cermin tanpa sinkronisasi"
 
 msgid "RAID-1 volumes are often created to be used as a new disk, often considered blank. The actual initial contents of the disk is therefore not very relevant, since one only needs to know that the data written after the creation of the volume, in particular the filesystem, can be accessed later."
-msgstr ""
+msgstr "Volume RAID-1 sering dibuat untuk digunakan sebagai disk baru, sering dianggap kosong. Isi awal sebenarnya dari disk ini karena itu tidak sangat relevan, karena hanya perlu diketahui bahwa data setelah penciptaan volume, khususnya sistem berkas, dapat diakses setelahnya."
 
 msgid "One might therefore wonder about the point of synchronizing both disks at creation time. Why care whether the contents are identical on zones of the volume that we know will only be read after we have written to them?"
-msgstr ""
+msgstr "Karena itu orang mungkin bertanya-tanya tentang titik sinkronisasi kedua disk pada waktu penciptaan. Mengapa peduli apakah isi identik pada zona volume yang kita ketahui hanya dapat dibaca setelah kita telah menulis?"
 
 msgid "Fortunately, this synchronization phase can be avoided by passing the <literal>--assume-clean</literal> option to <command>mdadm</command>. However, this option can lead to surprises in cases where the initial data will be read (for instance if a filesystem is already present on the physical disks), which is why it isn't enabled by default."
-msgstr ""
+msgstr "Untungnya, tahap sinkronisasi ini dapat dihindari dengan memberikan opsi <literal>--assume-clean</literal> untuk <command>mdadm</command>. Namun, pilihan ini dapat menyebabkan kejutan dalam kasus-kasus di mana data awal akan dibaca (misalnya jika sistem berkas tersebut sudah hadir pada disk fisik), itulah sebabnya itu tidak diaktifkan secara default."
 
 msgid "Now let's see what happens when one of the elements of the RAID-1 array fails. <command>mdadm</command>, in particular its <literal>--fail</literal> option, allows simulating such a disk failure:"
-msgstr ""
+msgstr "Sekarang mari kita lihat apa yang terjadi ketika salah satu elemen array RAID-1 gagal. <command>mdadm</command>, khususnya opsi <literal>--fail</literal>, memungkinkan simulasi suatu kegagalan disk:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --fail /dev/sde</userinput>\n"
@@ -406,10 +407,10 @@ msgid ""
 "       2       0        0        2      removed\n"
 "\n"
 "       1       8       64        -      faulty   /dev/sde</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --fail /dev/sde</userinput>\n<computeroutput>mdadm: set /dev/sde faulty in /dev/md1\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n    Update Time : Wed May  6 09:39:39 2015\n          State : clean, degraded \n Active Devices : 1\nWorking Devices : 1\n Failed Devices : 1\n  Spare Devices : 0\n\n           Name : mirwiz:1  (local to host mirwiz)\n           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464\n         Events : 19\n\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       0        0        2      removed\n\n       1       8       64        -      faulty   /dev/sde</computeroutput>"
 
 msgid "The contents of the volume are still accessible (and, if it is mounted, the applications don't notice a thing), but the data safety isn't assured anymore: should the <filename>sdd</filename> disk fail in turn, the data would be lost. We want to avoid that risk, so we'll replace the failed disk with a new one, <filename>sdf</filename>:"
-msgstr ""
+msgstr "Isi dari volume masih dapat diakses (dan, jika dipasang, aplikasi tidak menyadari apapun), tapi keselamatan data tidak dijamin lagi: seandainya <filename>sdd</filename> disk gagal bergantian, data akan hilang. Kami ingin menghindari risiko, jadi kami akan mengganti disk yang gagal dengan yang baru, <filename>sdf</filename>:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --add /dev/sdf</userinput>\n"
@@ -460,10 +461,10 @@ msgid ""
 "       2       8       80        1      active sync   /dev/sdf\n"
 "\n"
 "       1       8       64        -      faulty   /dev/sde</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --add /dev/sdf</userinput>\n<computeroutput>mdadm: added /dev/sdf\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n   Raid Devices : 2\n  Total Devices : 3\n    Persistence : Superblock is persistent\n\n    Update Time : Wed May  6 09:48:49 2015\n          State : clean, degraded, recovering \n Active Devices : 1\nWorking Devices : 2\n Failed Devices : 1\n  Spare Devices : 1\n\n Rebuild Status : 28% complete\n\n           Name : mirwiz:1  (local to host mirwiz)\n           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464\n         Events : 26\n\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       8       80        1      spare rebuilding   /dev/sdf\n\n       1       8       64        -      faulty   /dev/sde\n# </computeroutput><userinput>[...]</userinput>\n<computeroutput>[...]\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n    Update Time : Wed May  6 09:49:08 2015\n          State : clean \n Active Devices : 2\nWorking Devices : 2\n Failed Devices : 1\n  Spare Devices : 0\n\n           Name : mirwiz:1  (local to host mirwiz)\n           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464\n         Events : 41\n\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       8       80        1      active sync   /dev/sdf\n\n       1       8       64        -      faulty   /dev/sde</computeroutput>"
 
 msgid "Here again, the kernel automatically triggers a reconstruction phase during which the volume, although still accessible, is in a degraded mode. Once the reconstruction is over, the RAID array is back to a normal state. One can then tell the system that the <filename>sde</filename> disk is about to be removed from the array, so as to end up with a classical RAID mirror on two disks:"
-msgstr ""
+msgstr "Di sini lagi, kernel secara otomatis memicu tahap rekonstruksi yang ketika berlangsung, meskipun volume masih dapat diakses, berada dalam mode terdegradasi. Setelah rekonstruksi berakhir, array RAID  kembali ke keadaan normal. Kita kemudian dapat memberitahu ke sistem bahwa disk <filename>sde</filename> akan dihapus dari array, sehingga berakhir dengan RAID mirror klasik pada dua disk:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --remove /dev/sde</userinput>\n"
@@ -474,22 +475,24 @@ msgid ""
 "    Number   Major   Minor   RaidDevice State\n"
 "       0       8       50        0      active sync   /dev/sdd2\n"
 "       2       8       80        1      active sync   /dev/sdf</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --remove /dev/sde</userinput>\n<computeroutput>mdadm: hot removed /dev/sde from /dev/md1\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       8       80        1      active sync   /dev/sdf</computeroutput>"
 
 msgid "From then on, the drive can be physically removed when the server is next switched off, or even hot-removed when the hardware configuration allows hot-swap. Such configurations include some SCSI controllers, most SATA disks, and external drives operating on USB or Firewire."
-msgstr ""
+msgstr "Selanjutnya drive dapat secara fisik dicabut saat server berikutnya dimatikan, atau bahkan dicabut saat menyala ketika konfigurasi hardware mengizinkan hot-swap. Konfigurasi tersebut termasuk beberapa pengendali SCSI, kebanyakan disk SATA, dan drive eksternal yang beroperasi pada USB atau Firewire."
 
 msgid "Backing up the Configuration"
 msgstr "Mem-back up Konfigurasi"
 
+#, fuzzy
 msgid "Most of the meta-data concerning RAID volumes are saved directly on the disks that make up these arrays, so that the kernel can detect the arrays and their components and assemble them automatically when the system starts up. However, backing up this configuration is encouraged, because this detection isn't fail-proof, and it is only expected that it will fail precisely in sensitive circumstances. In our example, if the <filename>sde</filename> disk failure had been real (instead of simulated) and the system had been restarted without removing this <filename>sde</filename> disk, this disk could start working again due to having been probed during the reboot. The kernel would then have three physical elements, each claiming to contain half of the same RAID volume. Another source of confusion can come when RAID volumes from two servers are consolidated onto one server only. If these arrays were running normally before the disks were moved, the kernel would be able to detect and reassemble the pairs properly; but if the moved disks had been aggregated into an <filename>md1</filename> on the old server, and the new server already has an <filename>md1</filename>, one of the mirrors would be renamed."
-msgstr ""
+msgstr "Kebanyakan meta-data tentang volume RAID disimpan secara langsung pada disk yang membuat array ini, sehingga kernel dapat mendeteksi array dan komponen mereka dan mengumpulkan mereka secara otomatis saat sistem Start. Namun, back up konfigurasi ini didorong, karena deteksi ini bukan bukti gagal-, dan hanya diharapkan bahwa itu akan gagal tepat dalam keadaan yang sensitif. Dalam contoh kita, jika <filename>sde</filename> disk kegagalan telah nyata (bukan simulasi) dan sistem sudah direstart tanpa menghapus ini <filename>sde</filename> disk, disk ini bisa mulai bekerja lagi karena telah diselidiki selama reboot. Kernel kemudian akan memiliki tiga elemen fisik, masing-masing mengklaim mengandung setengah dari volume serangan yang sama. Sumber kebingungan lain dapat datang ketika PENYERBUAN volume dari dua server konsolidasi ke satu server hanya. Jika array ini sedang berjalan biasanya sebelum disk dipindahkan, kernel akan mampu mendeteksi dan berkumpul kembali pasangan dengan benar; tetapi jika disk pindah telah dikumpulkan ke dalam <filename>md1</filename> pada server lama, dan server baru telah <filename>md1</filename>, salah satu cermin akan diganti."
 
+#, fuzzy
 msgid "Backing up the configuration is therefore important, if only for reference. The standard way to do it is by editing the <filename>/etc/mdadm/mdadm.conf</filename> file, an example of which is listed here:"
-msgstr ""
+msgstr "Back up konfigurasi penting oleh karena itu, walaupun hanya untuk referensi. Cara standar untuk melakukannya adalah dengan menyunting berkas <filename>/etc/mdadm/mdadm.conf</filename>, contohnya tercantum di sini:"
 
 msgid "<command>mdadm</command> configuration file"
-msgstr ""
+msgstr "berkas konfigurasi <command>mdadm</command>"
 
 msgid ""
 "# mdadm.conf\n"
@@ -517,25 +520,26 @@ msgid ""
 "\n"
 "# This configuration was auto-generated on Thu, 17 Jan 2013 16:21:01 +0100\n"
 "# by mkconf 3.2.5-3"
-msgstr ""
+msgstr "# mdadm.conf\n#\n# Please refer to mdadm.conf(5) for information about this file.\n#\n\n# by default (built-in), scan all partitions (/proc/partitions) and all\n# containers for MD superblocks. alternatively, specify devices to scan, using\n# wildcards if desired.\nDEVICE /dev/sd*\n\n# auto-create devices with Debian standard permissions\nCREATE owner=root group=disk mode=0660 auto=yes\n\n# automatically tag new arrays as belonging to the local system\nHOMEHOST &lt;system&gt;\n\n# instruct the monitoring daemon where to send mail alerts\nMAILADDR root\n\n# definitions of existing MD arrays\nARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb\nARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464\n\n# This configuration was auto-generated on Thu, 17 Jan 2013 16:21:01 +0100\n# by mkconf 3.2.5-3"
 
+#, fuzzy
 msgid "One of the most useful details is the <literal>DEVICE</literal> option, which lists the devices where the system will automatically look for components of RAID volumes at start-up time. In our example, we replaced the default value, <literal>partitions containers</literal>, with an explicit list of device files, since we chose to use entire disks and not only partitions, for some volumes."
-msgstr ""
+msgstr "Salah satu rincian paling berguna adalah pilihan <literal>DEVICE</literal>, yang berisi daftar perangkat yang mana sistem akan secara otomatis mencari komponen volume RAID saat start-up. Dalam contoh kita, kita menggantikan nilai default, <literal>partitions containers</literal>, dengan daftar eksplisit berkas-berkas divais, karena kami memilih untuk menggunakan seluruh disk dan tidak hanya partisi, untuk beberapa volume."
 
 msgid "The last two lines in our example are those allowing the kernel to safely pick which volume number to assign to which array. The metadata stored on the disks themselves are enough to re-assemble the volumes, but not to determine the volume number (and the matching <filename>/dev/md*</filename> device name)."
-msgstr ""
+msgstr "Dua baris terakhir dalam contoh kita adalah yang memungkinkan kernel untuk secara aman memilih nomor volume yang ditetapkan ke array mana. Metadata yang tersimpan pada disk itu sendiri cukup untuk membangun kembali volume, tetapi tidak untuk menentukan nomor volume (dan nama perangkat <filename>/dev/md*</filename> yang cocok)."
 
 msgid "Fortunately, these lines can be generated automatically:"
-msgstr ""
+msgstr "Untungnya, baris-baris ini dapat dihasilkan secara otomatis:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>mdadm --misc --detail --brief /dev/md?</userinput>\n"
 "<computeroutput>ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb\n"
 "ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm --misc --detail --brief /dev/md?</userinput>\n<computeroutput>ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb\nARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464</computeroutput>"
 
 msgid "The contents of these last two lines doesn't depend on the list of disks included in the volume. It is therefore not necessary to regenerate these lines when replacing a failed disk with a new one. On the other hand, care must be taken to update the file when creating or deleting a RAID array."
-msgstr ""
+msgstr "Isi dari dua baris terakhir ini tidak tergantung pada daftar disk yang disertakan dalam volume. Maka tidak diperlukan untuk meregenerasi baris-baris ini ketika menggantikan disk gagal dengan yang baru. Di sisi lain, perawatan harus diambil untuk memperbarui berkas ketika membuat atau menghapus sebuah array RAID."
 
 #, fuzzy
 #| msgid "<primary>KVM</primary>"
@@ -548,61 +552,62 @@ msgid "<primary>Logical Volume Manager</primary>"
 msgstr "<primary>deployment</primary>"
 
 msgid "LVM, the <emphasis>Logical Volume Manager</emphasis>, is another approach to abstracting logical volumes from their physical supports, which focuses on increasing flexibility rather than increasing reliability. LVM allows changing a logical volume transparently as far as the applications are concerned; for instance, it is possible to add new disks, migrate the data to them, and remove the old disks, without unmounting the volume."
-msgstr ""
+msgstr "LVM, <emphasis>Logical Volume Manager</emphasis>, adalah pendekatan lain untuk mengabstrakkan volume logis dari dukungan fisik mereka, yang berfokus pada peningkatan fleksibilitas daripada meningkatkan kehandalan. LVM dapat mengubah volume logis secara transparan bagi aplikasi; sebagai contoh, sangat mungkin untuk menambahkan disk baru, memigrasi data ke mereka, dan menghapus disk lama, tanpa melepas kait volume."
 
 msgid "LVM Concepts"
 msgstr "Konsep LVM"
 
 msgid "This flexibility is attained by a level of abstraction involving three concepts."
-msgstr ""
+msgstr "Fleksibilitas ini dicapai dengan tingkat abstraksi yang melibatkan tiga konsep."
 
 msgid "First, the PV (<emphasis>Physical Volume</emphasis>) is the entity closest to the hardware: it can be partitions on a disk, or a full disk, or even any other block device (including, for instance, a RAID array). Note that when a physical element is set up to be a PV for LVM, it should only be accessed via LVM, otherwise the system will get confused."
-msgstr ""
+msgstr "Pertama, PV (<emphasis>Physical Volume</emphasis>) adalah entitas terdekat dengan perangkat keras: itu bisa berupa partisi pada disk atau seluruh disk, atau bahkan perangkat blok lain (termasuk, sebagai contoh, sebuah array RAID). Perhatikan bahwa ketika sebuah elemen fisik diatur hingga menjadi PV untuk LVM, itu mesti hanya diakses melalui LVM, jika tidak sistem akan bingung."
 
 msgid "A number of PVs can be clustered in a VG (<emphasis>Volume Group</emphasis>), which can be compared to disks both virtual and extensible. VGs are abstract, and don't appear in a device file in the <filename>/dev</filename> hierarchy, so there's no risk of using them directly."
-msgstr ""
+msgstr "Sejumlah PV dapat dikumpulkan dalam VG (<emphasis>Volume Group</emphasis>), yang dapat dibandingkan dengan disk virtual dan extensible. VG abstrak, dan tidak muncul dalam perangkat berkas di hirarki <filename>/dev</filename>, sehingga tidak ada risiko menggunakan mereka secara langsung."
 
 msgid "The third kind of object is the LV (<emphasis>Logical Volume</emphasis>), which is a chunk of a VG; if we keep the VG-as-disk analogy, the LV compares to a partition. The LV appears as a block device with an entry in <filename>/dev</filename>, and it can be used as any other physical partition can be (most commonly, to host a filesystem or swap space)."
-msgstr ""
+msgstr "Jenis ke tiga objek adalah LV (<emphasis>Logical Volume</emphasis>), yang berupa potongan dari suatu VG; jika kita memakai analogi VG-sebagai-disk, LV setara dengan partisi. LV muncul sebagai perangkat blok dengan entri di <filename>/dev</filename>, dan dapat digunakan seperti setiap partisi fisik lainnya dapat (paling sering, mewadahi sebuah sistem berkas atau ruang swap)."
 
+#, fuzzy
 msgid "The important thing is that the splitting of a VG into LVs is entirely independent of its physical components (the PVs). A VG with only a single physical component (a disk for instance) can be split into a dozen logical volumes; similarly, a VG can use several physical disks and appear as a single large logical volume. The only constraint, obviously, is that the total size allocated to LVs can't be bigger than the total capacity of the PVs in the volume group."
-msgstr ""
+msgstr "Yang penting adalah bahwa pemisahan VG ke LVs sepenuhnya independen komponen fisik (PVs). VG dengan hanya satu komponen fisik (disk misalnya) dapat dipisah menjadi selusin volume Logis; demikian pula, VG dapat menggunakan beberapa disk fisik dan muncul sebagai satu besar volume logis. Satu-satunya kendala, jelas, adalah bahwa ukuran total dialokasikan untuk LVs tidak dapat lebih besar dari total kapasitas dari PVs dalam kelompok volume."
 
 msgid "It often makes sense, however, to have some kind of homogeneity among the physical components of a VG, and to split the VG into logical volumes that will have similar usage patterns. For instance, if the available hardware includes fast disks and slower disks, the fast ones could be clustered into one VG and the slower ones into another; chunks of the first one can then be assigned to applications requiring fast data access, while the second one will be kept for less demanding tasks."
-msgstr ""
+msgstr "Namun sering masuk akal untuk memiliki semacam keseragaman antara komponen fisik VG, dan untuk membagi VG menjadi volume logis yang akan memiliki pola penggunaan serupa. Misalnya, jika perangkat keras yang tersedia termasuk disk cepat dan disk lambat, yang cepat dapat dikelompokkan ke satu VG dan yang lambat ke lain; potongan pertama dapat kemudian ditugaskan untuk aplikasi yang membutuhkan akses data yang cepat, sementara yang kedua akan disimpan untuk tugas-tugas yang kurang menuntut."
 
 msgid "In any case, keep in mind that an LV isn't particularly attached to any one PV. It is possible to influence where the data from an LV are physically stored, but this possibility isn't required for day-to-day use. On the contrary: when the set of physical components of a VG evolves, the physical storage locations corresponding to a particular LV can be migrated across disks (while staying within the PVs assigned to the VG, of course)."
-msgstr ""
+msgstr "Dalam kasus apapun, perlu diingat bahwa LV tidak perlu melekat ke PV manapun. Dimungkinkan untuk mempengaruhi mana data dari LV secara fisik disimpan, tapi kemungkinan ini tidak diperlukan untuk penggunaan sehari-hari. Sebaliknya: ketika set komponen fisik VG berkembang, lokasi penyimpanan fisik yang sesuai dengan LV tertentu dapat bermigrasi di seluruh disk (dan tentu saja tetap di dalam PVs yang ditugaskan untuk VG)."
 
 msgid "Setting up LVM"
-msgstr ""
+msgstr "Menyiapkan LVM"
 
 msgid "Let us now follow, step by step, the process of setting up LVM for a typical use case: we want to simplify a complex storage situation. Such a situation usually happens after some long and convoluted history of accumulated temporary measures. For the purposes of illustration, we'll consider a server where the storage needs have changed over time, ending up in a maze of available partitions split over several partially used disks. In more concrete terms, the following partitions are available:"
-msgstr ""
+msgstr "Mari kita sekarang ikuti, langkah demi langkah, proses pengaturan LVM untuk kasus penggunaan yang khas: kami ingin menyederhanakan situasi kompleks penyimpanan. Situasi seperti ini biasanya terjadi setelah beberapa sejarah yang panjang dan berbelit dari akumulasi langkah-langkah sementara. Untuk tujuan ilustrasi, kami akan mempertimbangkan server yang kebutuhan penyimpanannya telah berubah dari waktu ke waktu, berakhir dalam labirin dari partisi-partisi yang terpecah ke beberapa disk yang terpakai sebagian. Secara lebih konkret, partisi berikut tersedia:"
 
 msgid "on the <filename>sdb</filename> disk, a <filename>sdb2</filename> partition, 4 GB;"
-msgstr ""
+msgstr "pada disk <filename>sdb</filename>, sebuah partisi <filename>sdb2</filename>, 4 GB;"
 
 msgid "on the <filename>sdc</filename> disk, a <filename>sdc3</filename> partition, 3 GB;"
-msgstr ""
+msgstr "pada disk <filename>sdc</filename>, sebuah partisi <filename>sdc3</filename>, 3 GB;"
 
 msgid "the <filename>sdd</filename> disk, 4 GB, is fully available;"
-msgstr ""
+msgstr "disk <filename>sdd</filename>, 4 GB, sepenuhnya tersedia;"
 
 msgid "on the <filename>sdf</filename> disk, a <filename>sdf1</filename> partition, 4 GB; and a <filename>sdf2</filename> partition, 5 GB."
-msgstr ""
+msgstr "pada disk <filename>sdf</filename>, partisi <filename>sdf1</filename>, 4 GB; dan partisi <filename>sdf2</filename>, 5 GB."
 
 msgid "In addition, let's assume that disks <filename>sdb</filename> and <filename>sdf</filename> are faster than the other two."
-msgstr ""
+msgstr "Selain itu, mari kita asumsikan bahwa disk <filename>sdb</filename> dan <filename>sdf</filename> adalah lebih cepat daripada dua lainnya."
 
 msgid "Our goal is to set up three logical volumes for three different applications: a file server requiring 5 GB of storage space, a database (1 GB) and some space for back-ups (12 GB). The first two need good performance, but back-ups are less critical in terms of access speed. All these constraints prevent the use of partitions on their own; using LVM can abstract the physical size of the devices, so the only limit is the total available space."
-msgstr ""
+msgstr "Tujuan kami adalah untuk mengatur tiga volume logis untuk tiga aplikasi yang berbeda: server berkas memerlukan ruang penyimpanan 5 GB, sebuah basis data (1 GB) dan ruang untuk back-up (12 GB). Dua yang pertama perlu kinerja yang baik, tapi back-up kurang kritis dalam hal kecepatan akses. Semua kendala ini mencegah penggunaan partisi sendirian; menggunakan LVM dapat mengabstraksi ukuran fisik dari perangkat, sehingga satu-satunya batas adalah jumlah ruang yang tersedia."
 
 msgid "The required tools are in the <emphasis role=\"pkg\">lvm2</emphasis> package and its dependencies. When they're installed, setting up LVM takes three steps, matching the three levels of concepts."
-msgstr ""
+msgstr "Alat-alat yang diperlukan ada dalam paket <emphasis role=\"pkg\">lvm2</emphasis> dan dependensinya. Ketika mereka sedang diinstal, pengaturan LVM mengambil tiga langkah, cocok dengan konsep tiga tingkat."
 
 msgid "First, we prepare the physical volumes using <command>pvcreate</command>:"
-msgstr ""
+msgstr "Pertama, kami siapkan volume fisik menggunakan <command>pvcreate</command>:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>pvdisplay</userinput>\n"
@@ -1022,25 +1027,25 @@ msgid "Xen is currently only available for the i386, amd64, arm64 and armhf arch
 msgstr ""
 
 msgid "<emphasis>CULTURE</emphasis> Xen and non-Linux kernels"
-msgstr ""
+msgstr "<emphasis>BUDAYA</emphasis> Xen dan kernel bukan Linux"
 
 msgid "Xen requires modifications to all the operating systems one wants to run on it; not all kernels have the same level of maturity in this regard. Many are fully-functional, both as dom0 and domU: Linux 3.0 and later, NetBSD 4.0 and later, and OpenSolaris. Others only work as a domU. You can check the status of each operating system in the Xen wiki: <ulink type=\"block\" url=\"http://wiki.xenproject.org/wiki/Dom0_Kernels_for_Xen\" /> <ulink type=\"block\" url=\"http://wiki.xenproject.org/wiki/DomU_Support_for_Xen\" />"
-msgstr ""
+msgstr "Xen memerlukan modifikasi ke semua sistem operasi yang ingin berjalan di atasnya; tidak semua kernel memiliki tingkat kedewasaan yang sama dalam hal ini. Banyak yang fungsional-penuh, baik sebagai dom0 maupun domU: Linux 3.0 dan setelahnya, NetBSD 4.0 dan setelahnya, dan OpenSolaris. Yang lain hanya bekerja sebagai domU. Anda dapat memeriksa status dari setiap sistem operasi di wiki Xen: <ulink type=\"block\" url=\"http://wiki.xenproject.org/wiki/Dom0_Kernels_for_Xen\" /> <ulink type=\"block\" url=\"http://wiki.xenproject.org/wiki/DomU_Support_for_Xen\" />"
 
 msgid "However, if Xen can rely on the hardware functions dedicated to virtualization (which are only present in more recent processors), even non-modified operating systems can run as domU (including Windows)."
-msgstr ""
+msgstr "Namun, jika Xen dapat bergantung pada fungsi perangkat keras yang didedikasikan untuk virtualisasi (yang hanya hadir dalam prosesor yang lebih baru), bahkan sistem operasi tanpa modifikasi dapat berjalan sebagai domU (termasuk Windows)."
 
 msgid "Using Xen under Debian requires three components:"
-msgstr ""
+msgstr "Menggunakan Xen di bawah Debian memerlukan tiga komponen:"
 
 msgid "The hypervisor itself. According to the available hardware, the appropriate package will be either <emphasis role=\"pkg\">xen-hypervisor-4.4-amd64</emphasis>, <emphasis role=\"pkg\">xen-hypervisor-4.4-armhf</emphasis>, or <emphasis role=\"pkg\">xen-hypervisor-4.4-arm64</emphasis>."
-msgstr ""
+msgstr "Hypervisor itu sendiri. Tergantung dari perangkat keras yang tersedia, paket yang tepat adalah <emphasis role=\"pkg\">xen-hypervisor-4.4-amd64</emphasis>, <emphasis role=\"pkg\">xen-hypervisor-4.4-armhf</emphasis>, atau <emphasis role=\"pkg\">xen-hypervisor-4.4-arm64</emphasis>."
 
 msgid "A kernel that runs on that hypervisor. Any kernel more recent than 3.0 will do, including the 3.16 version present in <emphasis role=\"distribution\">Jessie</emphasis>."
-msgstr ""
+msgstr "Sebuah kernel yang berjalan pada hypervisor itu. Setiap kernel yang lebih baru daripada 3.0 bisa, termasuk versi 3.16 yang ada dalam <emphasis role=\"distribution\">Jessie</emphasis>."
 
 msgid "The i386 architecture also requires a standard library with the appropriate patches taking advantage of Xen; this is in the <emphasis role=\"pkg\">libc6-xen</emphasis> package."
-msgstr ""
+msgstr "Arsitektur i386 juga memerlukan pustaka standar dengan patch yang sesuai yang mengambil keuntungan dari Xen; ini ada dalam paket <emphasis role=\"pkg\">libc6-xen</emphasis>."
 
 msgid "In order to avoid the hassle of selecting these components by hand, a few convenience packages (such as <emphasis role=\"pkg\">xen-linux-system-amd64</emphasis>) have been made available; they all pull in a known-good combination of the appropriate hypervisor and kernel packages. The hypervisor also brings <emphasis role=\"pkg\">xen-utils-4.4</emphasis>, which contains tools to control the hypervisor from the dom0. This in turn brings the appropriate standard library. During the installation of all that, configuration scripts also create a new entry in the Grub bootloader menu, so as to start the chosen kernel in a Xen dom0. Note however that this entry is not usually set to be the first one in the list, and will therefore not be selected by default. If that is not the desired behavior, the following commands will change it:"
 msgstr ""
@@ -2052,7 +2057,7 @@ msgid "Unlike Munin, Nagios does not necessarily require installing anything on 
 msgstr ""
 
 msgid "Installing"
-msgstr ""
+msgstr "Memasang"
 
 msgid "The first step in setting up Nagios is to install the <emphasis role=\"pkg\">nagios3</emphasis>, <emphasis role=\"pkg\">nagios-plugins</emphasis> and <emphasis role=\"pkg\">nagios3-doc</emphasis> packages. Installing the packages configures the web interface and creates a first <literal>nagiosadmin</literal> user (for which it asks for a password). Adding other users is a simple matter of inserting them in the <filename>/etc/nagios3/htpasswd.users</filename> file with Apache's <command>htpasswd</command> command. If no Debconf question was displayed during installation, <command>dpkg-reconfigure nagios3-cgi</command> can be used to define the <literal>nagiosadmin</literal> password."
 msgstr ""
