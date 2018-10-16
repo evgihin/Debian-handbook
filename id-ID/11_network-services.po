@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-11-17 12:22+0100\nPO-Revision-Date: 2018-10-15 09:51+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/11_network-services/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.2.1\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-11-17 12:22+0100\nPO-Revision-Date: 2018-10-20 03:49+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/11_network-services/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.2.1\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -662,9 +662,8 @@ msgstr "<primary>greylisting</primary>"
 msgid "“Greylisting” is a filtering technique according to which a message is initially rejected with a temporary error code, and only accepted on a further try after some delay. This filtering is particularly efficient against spam sent by the many machines infected by worms and viruses, since this software rarely acts as a full SMTP agent (by checking the error code and retrying failed messages later), especially since many of the harvested addresses are really invalid and retrying would only mean losing time."
 msgstr "\"Greylisting\" adalah teknik penyaringan yang pesan awalnya ditolak dengan kode kesalahan sementara, dan hanya diterima pada percobaan lebih lanjut setelah penundaan. Hal ini sangat efisien terhadap spam yang dikirim oleh banyak mesin yang terinfeksi oleh virus dan worm karena software ini jarang bertindak sebagai agen SMTP penuh (dengan memeriksa kode kesalahan dan mencoba kembali pesan gagal kemudian), terutama karena banyak dari alamat yang dipanen sebenarnya tidak sah dan mencoba kembali berarti kehilangan waktu."
 
-#, fuzzy
 msgid "Postfix doesn't provide greylisting natively, but there is a feature by which the decision to accept or reject a given message can be delegated to an external program. The <emphasis role=\"pkg\">postgrey</emphasis> package contains just such a program, designed to interface with this access policy delegation service."
-msgstr "Postfix tidak memberikan daftar abu-abu Native, tapi ada fitur yang keputusan untuk menerima atau menolak pesan tertentu dapat diserahkan ke program eksternal. <emphasis role=\"pkg\"> postgrey</emphasis> paket berisi program seperti itu, dirancang untuk antarmuka dengan layanan delegasi kebijakan akses ini."
+msgstr "Postfix tidak menyediakan greylist secara native, tapi ada fitur dimana keputusan untuk menerima atau menolak pesan tertentu dapat diserahkan ke program eksternal. Paket <emphasis role=\"pkg\">postgrey</emphasis> memuat program seperti itu, dirancang untuk berinteraksi dengan layanan delegasi kebijakan akses ini."
 
 msgid "Once <emphasis role=\"pkg\">postgrey</emphasis> is installed, it runs as a daemon and listens on port 10023. Postfix can then be configured to use it, by adding the <literal>check_policy_service</literal> parameter as an extra restriction:"
 msgstr "Setelah <emphasis role=\"pkg\">postgrey</emphasis> terinstal, itu berjalan sebagai daemon dan mendengarkan pada port 10023. Postfix kemudian dapat dikonfigurasi untuk menggunakannya, dengan menambahkan parameter <literal>check_policy_service</literal> sebagai pembatasan tambahan:"
@@ -679,53 +678,42 @@ msgstr "\nsmtpd_recipient_restrictions = permit_mynetworks,\n    [...]\n    chec
 msgid "Each time Postfix reaches this rule in the ruleset, it will connect to the <command>postgrey</command> daemon and send it information concerning the relevant message. On its side, Postgrey considers the IP address/sender/recipient triplet and checks in its database whether that same triplet has been seen recently. If so, Postgrey replies that the message should be accepted; if not, the reply indicates that the message should be temporarily rejected, and the triplet gets recorded in the database."
 msgstr "Setiap kali Postfix mencapai aturan ini dalam set aturan, itu akan menyambung ke daemon <command>postgrey</command> dan mengirim informasi mengenai pesan yang relevan. Pada sisinya, Postgrey mempertimbangkan triplet alamat IP/pengirim/penerima triplet dan memeriksa basis data apakah triplet yang sama telah terlihat baru-baru ini. Jika demikian, Postgrey menjawab bahwa pesan harus diterima; jika tidak, jawaban menunjukkan bahwa pesan harus ditolak untuk sementara, dan triplet dicatat dalam basis data."
 
-#, fuzzy
 msgid "The main disadvantage of greylisting is that legitimate messages get delayed, which is not always acceptable. It also increases the burden on servers that send many legitimate emails."
-msgstr "Kelemahan utama dari daftar abu-abu adalah bahwa pesan yang sah mendapatkan tertunda, yang ini tidak selalu diterima. Hal ini juga meningkatkan beban pada server yang mengirim banyak email yang sah."
+msgstr "Kelemahan utama dari greylist adalah bahwa pesan yang sah tertunda, yang tidak selalu bisa diterima. Hal ini juga meningkatkan beban pada server yang mengirim banyak surel yang sah."
 
 msgid "<emphasis>IN PRACTICE</emphasis> Shortcomings of greylisting"
 msgstr "<emphasis>DALAM PRAKTEK</emphasis> Kekurangan dari greylisting"
 
-#, fuzzy
 msgid "Theoretically, greylisting should only delay the first mail from a given sender to a given recipient, and the typical delay is in the order of minutes. Reality, however, can differ slightly. Some large ISPs use clusters of SMTP servers, and when a message is initially rejected, the server that retries the transmission may not be the same as the initial one. When that happens, the second server gets a temporary error message due to greylisting too, and so on; it may take several hours until transmission is attempted by a server that has already been involved, since SMTP servers usually increase the delay between retries at each failure."
-msgstr "Secara teoritis, daftar abu-abu hanya harus menunda Surat pertama dari pengirim yang diberikan kepada penerima tertentu, dan keterlambatan khas adalah dalam menit. Kenyataannya, bagaimanapun, dapat sedikit berbeda. Beberapa ISP besar menggunakan cluster server SMTP, dan ketika pesan awalnya ditolak, server yang retries transmisi mungkin tidak akan sama seperti yang pertama. Ketika itu terjadi, kedua server mendapat pesan kesalahan sementara karena daftar abu-abu, dan seterusnya; mungkin butuh beberapa jam sampai transmisi ini dicoba oleh server yang sudah telah terlibat, karena server SMTP biasanya meningkatkan penundaan antara pengulangan di setiap kegagalan."
+msgstr "Secara teori, greylist hanya harus menunda surat pertama dari pengirim yang diberikan kepada penerima tertentu, dan penundaan umumnya dalam orde menit. Kenyataannya, bagaimanapun, dapat sedikit berbeda. Beberapa ISP besar menggunakan cluster server SMTP, dan ketika pesan awalnya ditolak, server yang mencoba ulang transmisi mungkin tidak akan sama seperti yang pertama. Ketika itu terjadi, kedua server mendapat pesan kesalahan sementara karena greylist, dan seterusnya; mungkin butuh beberapa jam sampai transmisi ini dicoba oleh server yang sudah telah terlibat, karena server SMTP biasanya meningkatkan penundaan antara pengulangan di setiap kegagalan."
 
-#, fuzzy
 msgid "As a consequence, the incoming IP address may vary in time even for a single sender. But it goes further: even the sender address can change. For instance, many mailing-list servers encode extra information in the sender address so as to be able to handle error messages (known as <emphasis>bounces</emphasis>). Each new message sent to a mailing-list may then need to go through greylisting, which means it has to be stored (temporarily) on the sender's server. For very large mailing-lists (with tens of thousands of subscribers), this can soon become a problem."
-msgstr "Sebagai akibatnya, alamat IP yang masuk dapat bervariasi dalam waktu bahkan untuk pengirim tunggal. Tetapi pergi lebih lanjut: bahkan alamat pengirim dapat mengubah. Sebagai contoh, banyak milis server menyandikan tambahan informasi dalam alamat pengirim untuk dapat menangani pesan kesalahan (dikenal sebagai <emphasis>memantul</emphasis>). Setiap pesan baru yang dikirim ke milis yang kemudian mungkin perlu pergi melalui daftar abu-abu, yang berarti itu harus disimpan (sementara) pada server pengirim. Sangat besar-milis (dengan puluhan ribu pelanggan), ini dapat segera menjadi masalah."
+msgstr "Sebagai akibatnya, alamat IP yang masuk dapat bervariasi dengan berjalannya waktu bahkan untuk pengirim tunggal. Tapi lebih jauh lagi: bahkan alamat pengirim dapat berubah. Sebagai contoh, banyak milis server menyandikan tambahan informasi dalam alamat pengirim untuk dapat menangani pesan kesalahan (dikenal sebagai <emphasis>bounces</emphasis>). Setiap pesan baru yang dikirim ke milis kemudian mungkin perlu pergi melalui greylist, yang berarti itu harus disimpan (secara sementara) pada server pengirim. Untuk milis yang sangat besar (dengan puluhan ribu pelanggan), ini dapat segera menjadi masalah."
 
-#, fuzzy
 msgid "To mitigate these drawbacks, Postgrey manages a whitelist of such sites, and messages emanating from them are immediately accepted without going through greylisting. This list can easily be adapted to local needs, since it is stored in the <filename>/etc/postgrey/whitelist_clients</filename> file."
-msgstr "Untuk mengurangi kelemahan ini, Postgrey mengelola daftar putih dari situs tersebut, dan pesan yang berasal dari mereka segera diterima tanpa melalui daftar abu-abu. Daftar ini dengan mudah dapat disesuaikan dengan kebutuhan lokal, karena disimpan dalam <filename>file/etc/postgrey/whitelist_clients</filename>."
+msgstr "Untuk memitigasi kelemahan ini, Postgrey mengelola daftar putih dari situs-situs seperti itu, dan pesan yang berasal dari mereka segera diterima tanpa melalui greulist. Daftar ini dengan mudah dapat disesuaikan dengan kebutuhan lokal, karena disimpan dalam berkas <filename>/etc/postgrey/whitelist_clients</filename>."
 
 msgid "<emphasis>GOING FURTHER</emphasis> Selective greylisting with <emphasis role=\"pkg\">milter-greylist</emphasis>"
 msgstr "<emphasis>LEBIH LANJUT</emphasis> Greylisting selektif dengan <emphasis role=\"pkg\">milter-greylist</emphasis>"
 
-#, fuzzy
 msgid "The drawbacks of greylisting can be mitigated by only using greylisting on the subset of clients that are already considered as probable sources of spam (because they are listed in a DNS blacklist). This is not possible with <emphasis role=\"pkg\">postgrey</emphasis> but <emphasis role=\"pkg\">milter-greylist</emphasis> can be used in such a way."
-msgstr "Kelemahan dari daftar abu-abu dapat dikurangi dengan hanya menggunakan daftar abu-abu pada subset dari klien yang sudah dianggap sebagai kemungkinan sumber spam (karena mereka tercantum dalam daftar hitam DNS). Hal ini tidak mungkin dengan <emphasis role=\"pkg\"> postgrey</emphasis> tapi <emphasis role=\"pkg\"> ikan-greylist</emphasis> dapat digunakan sedemikian rupa."
+msgstr "Kelemahan dari greylist dapat dimitigsai dengan hanya menggunakan greylist pada subset dari klien yang sudah dianggap sebagai kemungkinan sumber spam (karena mereka tercantum dalam daftar hitam DNS). Hal ini tidak mungkin dengan <emphasis role=\"pkg\">postgrey</emphasis> tapi <emphasis role=\"pkg\">milter-greylist</emphasis> dapat digunakan dengan cara itu."
 
-#, fuzzy
 msgid "In that scenario, since DNS blacklists never triggers a definitive rejection, it becomes reasonable to use aggressive blacklists, including those listing all dynamic IP addresses from ISP clients (such as <literal>pbl.spamhaus.org</literal> or <literal>dul.dnsbl.sorbs.net</literal>)."
-msgstr "Dalam skenario itu, karena DNS blacklists tidak pernah memicu penolakan definitif, menjadi masuk akal untuk menggunakan blacklist agresif, termasuk daftar semua alamat IP dinamis dari ISP klien (seperti <literal>pbl.spamhaus.org</literal> atau <literal> dul.dnsbl.Sorbs.net</literal>)."
+msgstr "Dalam skenario itu, karena blacklist DNS tidak pernah memicu penolakan definitif, menjadi masuk akal untuk menggunakan blacklist agresif, termasuk daftar semua alamat IP dinamis dari klien ISP (seperti <literal>pbl.spamhaus.org</literal> atau <literal>dul.dnsbl.Sorbs.net</literal>)."
 
-#, fuzzy
 msgid "Since milter-greylist uses Sendmail's milter interface, the postfix side of its configuration is limited to “<literal>smtpd_milters = unix:/var/run/milter-greylist/milter-greylist.sock</literal>”. The <citerefentry><refentrytitle>greylist.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry> manual page documents <filename>/etc/milter-greylist/greylist.conf</filename> and the numerous ways to configure milter-greylist. You will also have to edit <filename>/etc/default/milter-greylist</filename> to actually enable the service."
-msgstr "Karena milter-greylist menggunakan antarmuka milter Sendmail, sisi postfix konfigurasinya dibatasi untuk \"<literal>smtpd_milters = unix:/var/run/milter-greylist/milter-greylist.sock</literal>\". Halaman manual <citerefentry><refentrytitle>greylist.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> dokumen <filename>/etc/milter-greylist/greylist.conf</filename> dan banyak cara untuk mengkonfigurasi milter-greylist. Anda juga harus mengedit <filename>/ etc/default/milter-greylist</filename> untuk benar-benar mengaktifkan layanan."
+msgstr "Karena milter-greylist menggunakan antarmuka milter Sendmail, konfigurasi sisi postfix-nya terbatas ke \"<literal>smtpd_milters = unix:/var/run/milter-greylist/milter-greylist.sock</literal>\". Halaman manual <citerefentry><refentrytitle>greylist.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry> mendokumentasikan <filename>/etc/milter-greylist/greylist.conf</filename> dan banyak cara untuk mengkonfigurasi milter-greylist. Anda juga harus menyunting <filename>/etc/default/milter-greylist</filename> untuk benar-benar mengaktifkan layanan."
 
-#, fuzzy
 msgid "Customizing Filters Based On the Recipient"
-msgstr "Mengubah filter berdasarkan Penerima"
+msgstr "Mengubah Filter Berdasarkan Penerima"
 
-#, fuzzy
 msgid "<xref linkend=\"sect.restrictions-for-receiving-and-sending\" /> and <xref linkend=\"sect.setting-up-greylisting\" /> reviewed many of the possible restrictions. They all have their use in limiting the amount of received spam, but they also all have their drawbacks. It is therefore more and more common to customize the set of filters depending on the recipient. At Falcot Corp, greylisting is interesting for most users, but it hinders the work of some users who need low latency in their emails (such as the technical support service). Similarly, the commercial service sometimes has problems receiving emails from some Asian providers who may be listed in blacklists; this service asked for a non-filtered address so as to be able to correspond."
-msgstr "<xref linkend=\"sect.restrictions-for-receiving-and-sending\" /> dan <xref linkend=\"sect.setting-up-greylisting\" /> ditinjau banyak kemungkinan pembatasan. Mereka semua memiliki penggunaannya dalam membatasi jumlah spam yang diterima, tetapi mereka juga semua memiliki kelemahan mereka. Hal ini karena itu semakin umum untuk menyesuaikan set filter tergantung pada penerima. Pada Falcot Corp, daftar abu-abu menarik bagi sebagian pengguna, tapi menghalangi karya beberapa pengguna yang membutuhkan latency rendah dalam email mereka (seperti layanan dukungan teknis). Demikian pula, Layanan komersial kadang-kadang memiliki masalah menerima email dari beberapa penyedia Asia yang mungkin tercantum di blacklist; Layanan ini diminta untuk alamat non-disaring untuk dapat sesuai."
+msgstr "<xref linkend=\"sect.restrictions-for-receiving-and-sending\" /> dan <xref linkend=\"sect.setting-up-greylisting\" /> meninjau banyak kemungkinan pembatasan. Mereka semua memiliki kegunaan dalam membatasi jumlah spam yang diterima, tetapi mereka semua juga memiliki kelemahan. Maka semakin umum untuk menyesuaikan set filter tergantung pada penerima. Pada Falcot Corp, greylist menarik bagi sebagian pengguna, tapi mengganggu pekerjaan beberapa pengguna yang membutuhkan latensi rendah dalam surel mereka (seperti layanan dukungan teknis). Demikian pula, layanan komersial kadang-kadang memiliki masalah menerima surel dari beberapa penyedia Asia yang mungkin tercantum di daftar hitam; layanan ini meminta alamat tak tersaring untuk bisa berkorespondensi."
 
-#, fuzzy
 msgid "Postfix provides such a customization of filters with a “restriction class” concept. The classes are declared in the <literal>smtpd_restriction_classes</literal> parameter, and defined the same way as <literal>smtpd_recipient_restrictions</literal>. The <literal>check_recipient_access</literal> directive then defines a table mapping a given recipient to the appropriate set of restrictions."
-msgstr "Postfix menyediakan kustomisasi filter dengan konsep \"pembatasan kelas\". Kelas yang dideklarasikan dalam <literal>smtpd_restriction_classes</literal> parameter, dan didefinisikan dengan cara yang sama sebagai <literal>smtpd_recipient_restrictions</literal>. Direktif <literal>check_recipient_access</literal> kemudian mendefinisikan tabel pemetaan Penerima tertentu untuk seperangkat batasan."
+msgstr "Postfix menyediakan kustomisasi filter dengan konsep \"kelas pembatasan\". Kelas dideklarasikan dalam parameter <literal>smtpd_restriction_classes</literal>, dan didefinisikan dengan cara yang sama sebagai <literal>smtpd_recipient_restrictions</literal>. Direktif <literal>check_recipient_access</literal> kemudian mendefinisikan tabel pemetaan penerima tertentu untuk seperangkat batasan."
 
-#, fuzzy
 msgid "Defining restriction classes in <filename>main.cf</filename>"
 msgstr "Mendefinisikan kelas pembatasan dalam <filename>main.cf</filename>"
 
@@ -768,9 +756,8 @@ msgstr "Mengintegrasikan Antivirus"
 msgid "<primary>antivirus</primary>"
 msgstr "<primary>anti virus</primary>"
 
-#, fuzzy
 msgid "The many viruses circulating as attachments to emails make it important to set up an antivirus at the entry point of the company network, since despite an awareness campaign, some users will still open attachments from obviously shady messages."
-msgstr "Banyak virus yang beredar sebagai lampiran email membuatnya penting untuk mengatur antivirus di titik entri jaringan perusahaan, sejak meskipun kampanye kesadaran, beberapa pengguna akan masih buka lampiran dari pesan yang jelas teduh."
+msgstr "Banyak virus yang beredar sebagai lampiran surel membuat penting untuk mengatur antivirus di titik entri jaringan perusahaan, karena meskipun sudah ada kampanye kesadaran, beberapa pengguna masih akan membuka lampiran dari pesan yang jelas-jelas mencurigakan."
 
 msgid "The Falcot administrators selected <command>clamav</command> for their free antivirus. The main package is <emphasis role=\"pkg\">clamav</emphasis>, but they also installed a few extra packages such as <emphasis role=\"pkg\">arj</emphasis>, <emphasis role=\"pkg\">unzoo</emphasis>, <emphasis role=\"pkg\">unrar</emphasis> and <emphasis role=\"pkg\">lha</emphasis>, since they are required for the antivirus to analyze attachments archived in one of these formats."
 msgstr "Para administrator Falcot memilih <command>clamav</command> untuk antivirus gratis mereka. Paket utama adalah <emphasis role=\"pkg\">clamav</emphasis>, tetapi mereka juga memasang beberapa paket tambahan seperti <emphasis role=\"pkg\">arj</emphasis>, <emphasis role=\"pkg\">unzoo</emphasis>, <emphasis role=\"pkg\">unrar</emphasis>, dan <emphasis role=\"pkg\">lha</emphasis>, karena mereka diperlukan oleh antivirus untuk menganalisis lampiran yang diarsipkan dalam salah satu format ini."
@@ -781,9 +768,8 @@ msgstr "<primary><command>clamav</command></primary>"
 msgid "<primary><command>clamav-milter</command></primary>"
 msgstr "<primary><command>clamav-milter</command></primary>"
 
-#, fuzzy
 msgid "The task of interfacing between antivirus and the email server goes to <command>clamav-milter</command>. A <emphasis>milter</emphasis> (short for <emphasis>mail filter</emphasis>) is a filtering program specially designed to interface with email servers. A milter uses a standard application programming interface (API) that provides much better performance than filters external to the email servers. Milters were initially introduced by <emphasis>Sendmail</emphasis>, but <emphasis>Postfix</emphasis> soon followed suit."
-msgstr "Tugas antarmuka antara antivirus dan email server menuju <command>clamav-ikan</command>. <emphasis>Ikan</emphasis> (singkat untuk <emphasis>filter email</emphasis>) adalah sebuah program penyaringan yang dirancang khusus untuk antarmuka dengan email server. Ikan menggunakan standar antarmuka pemrograman aplikasi (API) yang memberikan kinerja lebih baik daripada filter eksternal ke server email. Milters awalnya diperkenalkan oleh <emphasis>Sendmail</emphasis>, tetapi <emphasis>Postfix</emphasis> segera mengikutinya."
+msgstr "Tugas antarmuka antara antivirus dan server surel jatuh ke <command>clamav-milter</command>. <emphasis>milter</emphasis> (singkatan dari <emphasis>mail filter</emphasis>) adalah sebuah program penyaringan yang dirancang khusus untuk menyambung dengan server surel. Suatu milter menggunakan standar antarmuka pemrograman aplikasi (API) yang memberikan kinerja lebih baik daripada filter eksternal ke server surel. Milters awalnya diperkenalkan oleh <emphasis>Sendmail</emphasis>, tetapi <emphasis>Postfix</emphasis> segera mengikutinya."
 
 msgid "<emphasis>QUICK LOOK</emphasis> A milter for Spamassassin"
 msgstr "<emphasis>LIHAT SEKILAS</emphasis> Milter untuk Spamassassin"
@@ -791,28 +777,23 @@ msgstr "<emphasis>LIHAT SEKILAS</emphasis> Milter untuk Spamassassin"
 msgid "<primary><emphasis role=\"pkg\">spamass-milter</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">spamass-milter</emphasis></primary>"
 
-#, fuzzy
 msgid "The <emphasis role=\"pkg\">spamass-milter</emphasis> package provides a milter based on <emphasis>SpamAssassin</emphasis>, the famous unsolicited email detector. It can be used to flag messages as probable spams (by adding an extra header) and/or to reject the messages altogether if their “spamminess” score goes beyond a given threshold."
-msgstr "Menyediakan paket <emphasis role=\"pkg\">spamass-milter</emphasis> ikan berdasarkan <emphasis>SpamAssassin</emphasis>, detektor terkenal email yang tidak diminta. Dapat digunakan untuk menandai pesan sebagai spam mungkin (dengan menambahkan sebuah header tambahan) dan/atau menolak pesan sama sekali jika nilai \"spamminess\" mereka melampaui ambang batas tertentu."
+msgstr "Paket <emphasis role=\"pkg\">spamass-milter</emphasis> menyediakan sebuah milter berbasis <emphasis>SpamAssassin</emphasis>, detektor spam terkenal. Dapat digunakan untuk menandai pesan sebagai mungkin spam (dengan menambahkan sebuah header tambahan) dan/atau menolak pesan sama sekali jika nilai \"spamminess\" mereka melampaui ambang batas tertentu."
 
-#, fuzzy
 msgid "Once the <emphasis role=\"pkg\">clamav-milter</emphasis> package is installed, the milter should be reconfigured to run on a TCP port rather than on the default named socket. This can be achieved with <command>dpkg-reconfigure clamav-milter</command>. When prompted for the “Communication interface with Sendmail”, answer “<literal>inet:10002@127.0.0.1</literal>”."
-msgstr "Setelah diinstal paket <emphasis role=\"pkg\">clamav-milter</emphasis>, milter harus ulang untuk berjalan pada TCP port daripada default bernama soket. Hal ini dapat dicapai dengan <command>dpkg-reconfigure clamav-milter</command>. Ketika diminta untuk \"komunikasi antarmuka dengan Sendmail\", menjawab \"<literal>inet:10002@127.0.0.1</literal>\"."
+msgstr "Setelah paket <emphasis role=\"pkg\">clamav-milter</emphasis> diinstal, milter harus ditata ulang untuk berjalan pada sebuah port TCP bukan pada named socket yang default. Hal ini dapat dicapai dengan <command>dpkg-reconfigure clamav-milter</command>. Ketika diminta untuk \"Antarmuka komunikasi dengan Sendmail\", jawablah \"<literal>inet:10002@127.0.0.1</literal>\"."
 
 msgid "<emphasis>NOTE</emphasis> Real TCP port vs named socket"
 msgstr "<emphasis>CATATAN</emphasis> Port TCP nyata vs soket bernama"
 
-#, fuzzy
 msgid "The reason why we use a real TCP port rather than the named socket is that the postfix daemons often run chrooted and do not have access to the directory hosting the named socket. You could also decide to keep using a named socket and pick a location within the chroot (<filename>/var/spool/postfix/</filename>)."
-msgstr "Alasan mengapa kita menggunakan port TCP nyata daripada soket bernama adalah bahwa daemon postfix sering menjalankan terchroot dan tidak memiliki akses ke direktori hosting soket bernama. Anda juga dapat memutuskan untuk tetap menggunakan soket bernama dan memilih lokasi chroot (<filename>/ var/spool/postfix /</filename>)."
+msgstr "Alasan mengapa kita menggunakan port TCP nyata daripada soket bernama adalah bahwa daemon postfix sering dijalankan dengan mode chroot dan tidak memiliki akses ke direktori tempat soket bernama. Anda juga dapat memutuskan untuk tetap menggunakan soket bernama dan memilih lokasi chroot (<filename>/var/spool/postfix/</filename>)."
 
-#, fuzzy
 msgid "The standard ClamAV configuration fits most situations, but some important parameters can still be customized with <command>dpkg-reconfigure clamav-base</command>."
-msgstr "Konfigurasi ClamAV standar cocok kebanyakan situasi, tetapi masih beberapa parameter penting dapat disesuaikan dengan <command>mengkonfigurasi dpkg clamav-base</command>."
+msgstr "Konfigurasi ClamAV standar cocok untuk kebanyakan situasi, tetapi beberapa parameter penting masih dapat disesuaikan dengan <command>dpkg-reconfigure clamav-base</command>."
 
-#, fuzzy
 msgid "The last step involves telling Postfix to use the recently-configured filter. This is a simple matter of adding the following directive to <filename>/etc/postfix/main.cf</filename>:"
-msgstr "Langkah terakhir melibatkan mengatakan Postfix menggunakan filter baru-baru ini dikonfigurasi. Ini adalah masalah sederhana untuk menambahkan direktif berikut untuk <filename>/etc/postfix/main.cf</filename>:"
+msgstr "Langkah terakhir melibatkan meemberitahu Postfix untuk menggunakan filter yang baru-baru ini dikonfigurasi. Ini bisa dilakukan sekedar dengan menambahkan direktif berikut untuk <filename>/etc/postfix/main.cf</filename>:"
 
 msgid ""
 "\n"
@@ -820,20 +801,17 @@ msgid ""
 "smtpd_milters = inet:[127.0.0.1]:10002"
 msgstr "\n# Virus check with clamav-milter\nsmtpd_milters = inet:[127.0.0.1]:10002"
 
-#, fuzzy
 msgid "If the antivirus causes problems, this line can be commented out, and <command>service postfix reload</command> should be run so that this change is taken into account."
-msgstr "Jika antivirus yang menyebabkan masalah, baris ini dapat terkomentari dan <command>Layanan postfix reload</command> harus menjalankan sehingga perubahan ini diperhitungkan."
+msgstr "Jika antivirus yang menyebabkan masalah, baris ini dapat dijadikan komentar dan <command>service postfix reload</command> harus dijalankan sehingga perubahan ini diperhitungkan."
 
 msgid "<emphasis>IN PRACTICE</emphasis> Testing the antivirus"
 msgstr "<emphasis>DALAM PRAKTEK</emphasis> Menguji antivirus"
 
-#, fuzzy
 msgid "Once the antivirus is set up, its correct behavior should be tested. The simplest way to do that is to send a test email with an attachment containing the <filename>eicar.com</filename> (or <filename>eicar.com.zip</filename>) file, which can be downloaded online: <ulink type=\"block\" url=\"http://www.eicar.org/86-0-Intended-use.html\" />"
-msgstr "Setelah antivirus yang sudah diatur, perilaku yang benar harus diuji. Cara termudah untuk melakukannya adalah untuk kirim email percobaan dengan lampiran yang berisi file <filename>eicar.com</filename> (atau <filename>eicar.com.zip</filename>), yang dapat didownload secara online: <ulink type=\"block\" url=\"http://www.eicar.org/86-0-Intended-use.html\" />"
+msgstr "Setelah antivirus disiapkan, perilaku yang benar harus diuji. Cara termudah untuk melakukannya adalah dengan mengirim surel percobaan dengan lampiran yang berisi berkas <filename>eicar.com</filename> (atau <filename>eicar.com.zip</filename>), yang dapat diunduh secara daring: <ulink type=\"block\" url=\"http://www.eicar.org/86-0-Intended-use.html\" />"
 
-#, fuzzy
 msgid "This file is not a true virus, but a test file that all antivirus software on the market diagnose as a virus to allow checking installations."
-msgstr "File ini adalah tidak benar virus, tetapi file tes yang semua perangkat lunak antivirus pada pasar mendiagnosa sebagai virus agar memeriksa instalasi."
+msgstr "Berkas ini bukan virus yang benar, tetapi berkas uji yang didiagnosa sebagai sebuah virus oleh semua perangkat lunak antivirus di pasar agar memungkinkan memeriksa instalasi."
 
 msgid "All messages handled by Postfix now go through the antivirus filter."
 msgstr "Semua pesan yang ditangani oleh Postfix sekarang pergi melalui saringan antivirus."
@@ -841,13 +819,11 @@ msgstr "Semua pesan yang ditangani oleh Postfix sekarang pergi melalui saringan 
 msgid "Authenticated SMTP"
 msgstr "SMTP Terotentikasi"
 
-#, fuzzy
 msgid "Being able to send emails requires an SMTP server to be reachable; it also requires said SMTP server to send emails through it. For roaming users, this may need regularly changing the configuration of the SMTP client, since Falcot's SMTP server rejects messages coming from IP addresses apparently not belonging to the company. Two solutions exist: either the roaming user installs an SMTP server on their computer, or they still use the company server with some means of authenticating as an employee. The former solution is not recommended since the computer won't be permanently connected, and it won't be able to retry sending messages in case of problems; we will focus on the latter solution."
-msgstr "Mampu mengirim email memerlukan server SMTP untuk menjadi terjangkau; ini juga memerlukan kata server SMTP untuk mengirim email melalui itu. Roaming pengguna, ini mungkin perlu secara teratur mengubah konfigurasi klien SMTP, karena server SMTP Falcot's menolak pesan yang datang dari alamat IP yang tampaknya tidak milik perusahaan. Ada dua solusi: roaming pengguna menginstal SMTP server pada komputer mereka atau mereka masih menggunakan server perusahaan dengan beberapa cara untuk otentikasi sebagai karyawan. Solusi mantan tidak dianjurkan karena komputer tidak akan dihubungkan secara permanen, dan tidak akan dapat ulangi pengiriman pesan jika terjadi masalah; kita akan fokus pada solusi yang terakhir."
+msgstr "Mampu mengirim surel memerlukan server SMTP yang dapat dijangkau; ini juga memerlukan server SMTP untuk mengirim surel melalui itu. Untuk pengguna roaming, ini mungkin memerlukan secara teratur mengubah konfigurasi klien SMTP, karena server SMTP Falcot's menolak pesan yang datang dari alamat IP yang tampaknya bukan milik perusahaan. Ada dua solusi: pengguna roaming menginstal server SMTP pada komputer mereka atau mereka masih menggunakan server perusahaan dengan beberapa cara untuk otentikasi sebagai karyawan. Solusi pertama tidak dianjurkan karena komputer tidak akan dihubungkan secara permanen, dan tidak akan dapat mengulangi pengiriman pesan jika terjadi masalah; kita akan fokus pada solusi yang terakhir."
 
-#, fuzzy
 msgid "SMTP authentication in Postfix relies on SASL (<emphasis>Simple Authentication and Security Layer</emphasis>). It requires installing the <emphasis role=\"pkg\">libsasl2-modules</emphasis> and <emphasis role=\"pkg\">sasl2-bin</emphasis> packages, then registering a password in the SASL database for each user that needs authenticating on the SMTP server. This is done with the <command>saslpasswd2</command> command, which takes several parameters. The <literal>-u</literal> option defines the authentication domain, which must match the <literal>smtpd_sasl_local_domain</literal> parameter in the Postfix configuration. The <literal>-c</literal> option allows creating a user, and <literal>-f</literal> allows specifying the file to use if the SASL database needs to be stored at a different location than the default (<filename>/etc/sasldb2</filename>)."
-msgstr "Otentikasi SMTP di Postfix mengandalkan SASL (<emphasis>Simple Authentication and Security Layer</emphasis>). Hal ini membutuhkan instalasi paket <emphasis role=\"pkg\"> libsasl2-modul</emphasis> dan <emphasis role=\"pkg\"> sasl2-bin</emphasis>, kemudian mendaftarkan password di SASL database untuk setiap pengguna yang memerlukan otentikasi pada SMTP server. Hal ini dilakukan dengan perintah <command>saslpasswd2</command>, yang mengambil beberapa parameter. <literal>-U</literal> pilihan mendefinisikan otentikasi domain, yang harus cocok dengan parameter <literal>smtpd_sasl_local_domain</literal> dalam konfigurasi Postfix. <literal>-C</literal> pilihan memungkinkan membuat pengguna, dan <literal>-f</literal> menetapkan file menggunakan jika SASL database perlu disimpan di lokasi yang berbeda dari default (<filename>sasldb2/etc/sasldb2</filename>) memungkinkan."
+msgstr "Otentikasi SMTP di Postfix mengandalkan SASL (<emphasis>Simple Authentication and Security Layer</emphasis>). Hal ini membutuhkan instalasi paket <emphasis role=\"pkg\">libsasl2-modules</emphasis> dan <emphasis role=\"pkg\">sasl2-bin</emphasis>, kemudian mendaftarkan suatu kata sandi di basis data SASL untuk setiap pengguna yang memerlukan otentikasi pada server SMTP. Hal ini dilakukan dengan perintah <command>saslpasswd2</command>, yang memerlukan beberapa parameter. Opsi <literal>-U</literal> mendefinisikan domain otentikasi, yang harus cocok dengan parameter <literal>smtpd_sasl_local_domain</literal> dalam konfigurasi Postfix. Opsi <literal>-C</literal> memungkinkan membuat pengguna, dan <literal>-f</literal> menetapkan berkas yang akan dipakai jika basis data SASL perlu disimpan di lokasi yang berbeda dari default (<filename>/etc/sasldb2</filename>)."
 
 msgid ""
 "\n"
@@ -855,13 +831,11 @@ msgid ""
 "<computeroutput>[... type jean's password twice ...]</computeroutput>"
 msgstr "\n<computeroutput># </computeroutput><userinput>saslpasswd2 -u `postconf -h myhostname` -f /var/spool/postfix/etc/sasldb2 -c jean</userinput>\n<computeroutput>[... ketikkan kata sandi jean dua kali ...]</computeroutput>"
 
-#, fuzzy
 msgid "Note that the SASL database was created in Postfix's directory. In order to ensure consistency, we also turn <filename>/etc/sasldb2</filename> into a symbolic link pointing at the database used by Postfix, with the <command>ln -sf /var/spool/postfix/etc/sasldb2 /etc/sasldb2</command> command."
-msgstr "Catat bahwa SASL database dibuat dalam direktori Postfix's. Untuk memastikan konsistensi, kita juga <filename>mengubah/etc/sasldb2</filename> menjadi link simbolik menunjuk pada database yang digunakan oleh Postfix, dengan perintah <command>ln -sf /var/spool/postfix/etc/sasldb2 /etc/sasldb2</command>."
+msgstr "Perhatikan bahwa basis data SASL dibuat dalam direktori milik Postfix. Untuk memastikan konsistensi, kita juga mengubah <filename>/etc/sasldb2</filename> menjadi link simbolik menunjuk pada basis data yang digunakan oleh Postfix, dengan perintah <command>ln -sf /var/spool/postfix/etc/sasldb2 /etc/sasldb2</command>."
 
-#, fuzzy
 msgid "Now we need to configure Postfix to use SASL. First the <literal>postfix</literal> user needs to be added to the <literal>sasl</literal> group, so that it can access the SASL account database. A few new parameters are also needed to enable SASL, and the <literal>smtpd_recipient_restrictions</literal> parameter needs to be configured to allow SASL-authenticated clients to send emails freely."
-msgstr "Sekarang kita perlu mengkonfigurasi Postfix menggunakan SASL. Pertama <literal>postfix</literal> pengguna perlu ditambahkan ke grup <literal>sasl</literal>, sehingga dapat mengakses database rekening SASL. Beberapa parameter baru juga diperlukan untuk mengaktifkan SASL, dan <literal>smtpd_recipient_restrictions</literal> parameter perlu dikonfigurasi untuk memungkinkan dikonfirmasi SASL klien untuk mengirim email dengan bebas."
+msgstr "Sekarang kita perlu mengkonfigurasi Postfix agar menggunakan SASL. Pertama pengguna <literal>postfix</literal> perlu ditambahkan ke grup <literal>sasl</literal>, sehingga dapat mengakses basis data akun SASL. Beberapa parameter baru juga diperlukan untuk mengaktifkan SASL, dan parameter <literal>smtpd_recipient_restrictions</literal> perlu dikonfigurasi untuk memungkinkan kilen terotentikasi-SASL untuk mengirim surel dengan bebas."
 
 msgid "Enabling SASL in <filename>/etc/postfix/main.cf</filename>"
 msgstr "Memfungsikan SASL di <filename>/etc/postfix/main.cf</filename>"
@@ -884,9 +858,8 @@ msgstr "\n# Memfungsikan otentikasi SASL\nsmtpd_sasl_auth_enable = yes\n# Define
 msgid "<emphasis>EXTRA</emphasis> Authenticated SMTP client"
 msgstr "<emphasis>EKSTRA</emphasis> Klien SMTP terotentikasi"
 
-#, fuzzy
 msgid "Most email clients are able to authenticate to an SMTP server before sending outgoing messages, and using that feature is a simple matter of configuring the appropriate parameters. If the client in use does not provide that feature, the workaround is to use a local Postfix server and configure it to relay email via the remote SMTP server. In this case, the local Postfix itself will be the client that authenticates with SASL. Here are the required parameters:"
-msgstr "Kebanyakan klien email dapat untuk melakukan otentikasi ke SMTP server sebelum mengirim pesan keluar, dan menggunakan fitur itu adalah masalah sederhana mengkonfigurasi parameter yang tepat. Jika klien digunakan tidak menyediakan fitur itu, solusi adalah untuk menggunakan server Postfix lokal dan mengkonfigurasi dengan relay email melalui remote SMTP server. Dalam kasus ini, Postfix lokal itu sendiri akan klien yang mengotentikasi dengan SASL. Berikut adalah parameter yang diperlukan:"
+msgstr "Kebanyakan klien surel dapat untuk melakukan otentikasi ke server SMTP sebelum mengirim pesan keluar, dan menggunakan fitur itu cukup dengan sekedar mengkonfigurasi parameter yang tepat. Jika klien yang digunakan tidak menyediakan fitur itu, solusinya adalah untuk menggunakan server Postfix lokal dan mengkonfigurasi dengan relay surel melalui server SMTP remote. Dalam kasus ini, Postfix lokal itu sendiri adalah klien yang mengotentikasi dengan SASL. Berikut adalah parameter yang diperlukan:"
 
 msgid ""
 "\n"
@@ -895,9 +868,8 @@ msgid ""
 "relay_host = [mail.falcot.com]"
 msgstr "\nsmtp_sasl_auth_enable = yes\nsmtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd\nrelay_host = [mail.falcot.com]"
 
-#, fuzzy
 msgid "The <filename>/etc/postfix/sasl_passwd</filename> file needs to contain the username and password to use for authenticating on the <literal>mail.falcot.com</literal> server. Here is an example:"
-msgstr "Berkas <filename>/etc/postfix/sasl_passwd</filename> perlu berisi username dan password untuk menggunakan otentikasi pada <literal>mail.falcot.com</literal> server. Berikut adalah contoh:"
+msgstr "Berkas <filename>/etc/postfix/sasl_passwd</filename> perlu berisi nama pengguna dan kata sandi yangdigunakan untuk otentikasi pada server <literal>mail.falcot.com</literal>. Berikut adalah contoh:"
 
 msgid ""
 "\n"
@@ -906,16 +878,14 @@ msgstr ""
 "\n"
 "[mail.falcot.com]   joe:LyinIsji"
 
-#, fuzzy
 msgid "As for all Postfix maps, this file must be turned into <filename>/etc/postfix/sasl_passwd.db</filename> with the <command>postmap</command> command."
-msgstr "Untuk semua Postfix peta file ini harus berubah menjadi <filename>/etc/postfix/sasl_passwd.db</filename> dengan perintah <command>postmap</command>."
+msgstr "Seperti semua pemetaan Postfix, berkas ini harus diubah menjadi <filename>/etc/postfix/sasl_passwd.db</filename> dengan perintah <command>postmap</command>."
 
 msgid "Web Server (HTTP)"
 msgstr "Server Web (HTTP)"
 
-#, fuzzy
 msgid "The Falcot Corp administrators decided to use the Apache HTTP server, included in Debian <emphasis role=\"distribution\">Jessie</emphasis> at version 2.4.10."
-msgstr "Falcot Corp administrator memutuskan untuk menggunakan Apache HTTP server, termasuk dalam Debian <emphasis role=\"distribution\">Jessie</emphasis> pada versi 2.4.10."
+msgstr "Administrator Falcot Corp memutuskan untuk menggunakan server HTTP Apache, yang ada dalam Debian <emphasis role=\"distribution\">Jessie</emphasis> adalah versi 2.4.10."
 
 msgid "<primary><command>apache</command></primary>"
 msgstr "<primary><command>apache</command></primary>"
@@ -935,9 +905,8 @@ msgstr "<primary>HTTP</primary><secondary>server</secondary>"
 msgid "<emphasis>ALTERNATIVE</emphasis> Other web servers"
 msgstr "<emphasis>ALTERNATIF</emphasis> Server web lain"
 
-#, fuzzy
 msgid "Apache is merely the most widely-known (and widely-used) web server, but there are others; they can offer better performance under certain workloads, but this has its counterpart in the smaller number of available features and modules. However, when the prospective web server is built to serve static files or to act as a proxy, the alternatives, such as <emphasis role=\"pkg\">nginx</emphasis> and <emphasis role=\"pkg\">lighttpd</emphasis>, are worth investigating."
-msgstr "Apache hanya paling banyak (dan digunakan secara luas) web server, tetapi ada orang lain; mereka dapat menawarkan kinerja yang lebih baik di bawah beban kerja tertentu, tetapi ini telah mitranya dalam jumlah kecil tersedia fitur dan modul. Namun, ketika calon web server ini dibangun untuk melayani file statis atau untuk bertindak sebagai proxy, alternatif, seperti <emphasis role=\"pkg\"> nginx</emphasis> dan <emphasis role=\"pkg\"> lighttpd</emphasis>, yang pantas diselidiki."
+msgstr "Apache adalah sekedar server web yang paling dikenal (dan digunakan secara luas) tetapi ada juga yang lain; mereka dapat menawarkan kinerja yang lebih baik di bawah beban kerja tertentu, tetapi lebih sedikit fitur dan modul. Namun, ketika calon web server ini dibangun untuk melayani berkas statis atau untuk bertindak sebagai proksi, alternatif seperti <emphasis role=\"pkg\">nginx</emphasis> dan <emphasis role=\"pkg\">lighttpd</emphasis>, pantas diselidiki."
 
 msgid "<primary><emphasis role=\"pkg\">nginx</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">nginx</emphasis></primary>"
@@ -951,9 +920,8 @@ msgstr "Memasang Apache"
 msgid "Installing the <emphasis role=\"pkg\">apache2</emphasis> package is all that is needed. It contains all the modules, including the <emphasis>Multi-Processing Modules</emphasis> (MPMs) that affect how Apache handles parallel processing of many requests (those used to be provided in separate <emphasis role=\"pkg\">apache2-mpm-*</emphasis> packages). It will also pull <emphasis role=\"pkg\">apache2-utils</emphasis> containing the command line utilities that we will discover later."
 msgstr "Memasang paket <emphasis role=\"pkg\">apache2</emphasis> adalah semua yang diperlukan. Ini berisi semua modul, termasuk <emphasis>Multi-Processing Modules</emphasis> (MPM) yang mempengaruhi bagaimana Apache menangani pemrosesan paralel dari banyak permintaan (yang biasanya disediakan dalam paket terpisah <emphasis role=\"pkg\">apache2-mpm-*</emphasis>). Ini juga akan menarik <emphasis role=\"pkg\">apache2-utils</emphasis> yang mengandung utilitas baris perintah yang kita akan temui nanti."
 
-#, fuzzy
 msgid "The MPM in use affects significantly the way Apache will handle concurrent requests. With the <emphasis>worker</emphasis> MPM, it uses <emphasis>threads</emphasis> (lightweight processes), whereas with the <emphasis>prefork</emphasis> MPM it uses a pool of processes created in advance. With the <emphasis>event</emphasis> MPM it also uses threads, but the inactive connections (notably those kept open by the HTTP <emphasis>keep-alive</emphasis> feature) are handed back to a dedicated management thread."
-msgstr "MPM digunakan secara signifikan mempengaruhi cara Apache akan menangani permintaan bersamaan. Dengan MPM <emphasis>worker</emphasis>, menggunakan <emphasis>thread</emphasis> (proses ringan), sedangkan dengan MPM <emphasis>prefork</emphasis> itu menggunakan kumpulan proses dibuat terlebih dahulu. Dengan MPM <emphasis>event</emphasis> ini juga menggunakan thread, tapi koneksi tidak aktif (terutama yang terus dibuat terbuka dengan fitur HTTP <emphasis>keep-alive</emphasis>) diserahkan kembali ke thread manajemen yang terdedikasi."
+msgstr "MPM yang digunakan secara signifikan mempengaruhi cara Apache menangani permintaan bersamaan. Dengan MPM <emphasis>worker</emphasis>, itu menggunakan <emphasis>thread</emphasis> (proses ringan), sedangkan dengan MPM <emphasis>prefork</emphasis> itu menggunakan kumpulan proses yang dibuat terlebih dahulu. Dengan MPM <emphasis>event</emphasis> ini juga menggunakan thread, tapi koneksi yang tidak aktif (terutama yang terus dibuat terbuka dengan fitur HTTP <emphasis>keep-alive</emphasis>) diserahkan kembali ke manajemen thread yang terdedikasi."
 
 msgid "The Falcot administrators also install <emphasis role=\"pkg\">libapache2-mod-php5</emphasis> so as to include the PHP support in Apache. This causes the default <emphasis>event</emphasis> MPM to be disabled, and <emphasis>prefork</emphasis> to be used instead, since PHP only works under that particular MPM."
 msgstr "Para administrator Falcot juga memasang <emphasis role=\"pkg\">libapache2-mod-php5</emphasis> untuk menyertakan dukungan PHP di Apache. Hal ini menyebabkan MPM <emphasis>event</emphasis> baku  dinonaktifkan, dan <emphasis>prefork</emphasis> digunakan sebagai pengganti, karena PHP hanya bekerja di bawah MPM tertentu itu."
@@ -967,7 +935,6 @@ msgstr "<primary><literal>www-data</literal></primary>"
 msgid "<primary>suexec</primary>"
 msgstr "<primary>suexec</primary>"
 
-#, fuzzy
 msgid "By default, Apache handles incoming requests under the identity of the <literal>www-data</literal> user. This means that a security vulnerability in a CGI script executed by Apache (for a dynamic page) won't compromise the whole system, but only the files owned by this particular user."
 msgstr "Secara baku, Apache menangani permintaan masuk di bawah identitas pengguna <literal>www-data</literal>. Ini berarti bahwa kerentanan keamanan di skrip CGI yang dijalankan oleh Apache (untuk halaman dinamis) tidak akan mengkompromi seluruh sistem, tetapi hanya berkas yang dimiliki oleh pengguna tertentu ini."
 
@@ -977,9 +944,8 @@ msgstr "Menggunakan modul <emphasis>suexec</emphasis> memungkinkan melewati atur
 msgid "<primary><emphasis role=\"pkg\">libapache2-mpm-itk</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">libapache2-mpm-itk</emphasis></primary>"
 
-#, fuzzy
 msgid "Another possibility is to use a dedicated MPM, such as the one provided by <emphasis role=\"pkg\">libapache2-mpm-itk</emphasis>. This particular one has a slightly different behavior: it allows “isolating” virtual hosts (actually, sets of pages) so that they each run as a different user. A vulnerability in one website therefore cannot compromise files belonging to the owner of another website."
-msgstr "Kemungkinan lain adalah dengan menggunakan MPM khusus, seperti yang disediakan oleh <emphasis role=\"pkg\">libapache2-mpm-itk</emphasis>. Yang satu ini memiliki perilaku yang sedikit berbeda: hal ini memungkinkan \"mengisolasi\" virtual host (sebenarnya, set halaman) sehingga mereka masing-masing berjalan sebagai pengguna yang berbeda. Kerentanan di satu situs web karena itu tidak bisa mengkompromi berkas milik pemilik situs web lain."
+msgstr "Kemungkinan lain adalah dengan menggunakan MPM terdedikasi, seperti yang disediakan oleh <emphasis role=\"pkg\">libapache2-mpm-itk</emphasis>. Yang satu ini memiliki perilaku yang sedikit berbeda: ini memungkinkan \"mengisolasi\" host virtual (sebenarnya set halaman) sehingga mereka masing-masing berjalan sebagai pengguna yang berbeda. Kerentanan di satu situs web karena itu tidak bisa mengkompromi berkas milik pemilik situs web lain."
 
 msgid "<emphasis>QUICK LOOK</emphasis> List of modules"
 msgstr "<emphasis>LIHAT SEKILAS</emphasis> Daftar modul"
@@ -987,9 +953,8 @@ msgstr "<emphasis>LIHAT SEKILAS</emphasis> Daftar modul"
 msgid "The full list of Apache standard modules can be found online. <ulink type=\"block\" url=\"http://httpd.apache.org/docs/2.4/mod/index.html\" />"
 msgstr "Daftar lengkap modul standar Apache dapat ditemukan daring. <ulink type=\"block\" url=\"http://httpd.apache.org/docs/2.4/mod/index.html\" />"
 
-#, fuzzy
 msgid "Apache is a modular server, and many features are implemented by external modules that the main program loads during its initialization. The default configuration only enables the most common modules, but enabling new modules is a simple matter of running <command>a2enmod <replaceable>module</replaceable></command>; to disable a module, the command is <command>a2dismod <replaceable>module</replaceable></command>. These programs actually only create (or delete) symbolic links in <filename>/etc/apache2/mods-enabled/</filename>, pointing at the actual files (stored in <filename>/etc/apache2/mods-available/</filename>)."
-msgstr "Apache adalah modular server, dan banyak fitur dilaksanakan oleh modul eksternal yang utama program beban selama inisialisasi nya. Konfigurasi standar hanya memungkinkan modul yang paling umum, tetapi memungkinkan modul baru adalah masalah sederhana menjalankan <command>a2enmod <replaceable>modul</replaceable></command>; untuk menonaktifkan modul, perintah adalah <command>a2dismod <replaceable>modul</replaceable></command>. Program ini benar-benar hanya membuat (atau menghapus) link simbolik di <filename>/etc/apache2/mods-enabled/</filename> menunjuk pada file yang sebenarnya (disimpan dalam <filename>/etc/apache2/mods-available/</filename>)."
+msgstr "Apache adalah server yang modular, dan banyak fitur dilaksanakan oleh modul eksternal yang dimuat oleh program utama saat inisialisasinya. Konfigurasi standar hanya memfungsikan modul-modul yang paling umum, tetapi memfungsikan modul cukup dengan menjalankan <command>a2enmod <replaceable>modul</replaceable></command>; untuk menonaktifkan modul, perintahnya adalah <command>a2dismod <replaceable>modul</replaceable></command>. Program ini benar-benar hanya membuat (atau menghapus) link simbolik di <filename>/etc/apache2/mods-enabled/</filename> menunjuk pada file yang sebenarnya (yang disimpan dalam <filename>/etc/apache2/mods-available/</filename>)."
 
 msgid "With its default configuration, the web server listens on port 80 (as configured in <filename>/etc/apache2/ports.conf</filename>), and serves pages from the <filename>/var/www/html/</filename> directory (as configured in <filename>/etc/apache2/sites-enabled/000-default.conf</filename>)."
 msgstr "Dengan konfigurasi bakunya, server web mendengarkan pada port 80 (seperti yang dikonfigurasi di <filename>/etc/apache2/ports.conf</filename>), dan menyajikan halaman dari direktori <filename>/var/www/html/</filename> (seperti yang dikonfigurasi di <filename>/etc/apache2/sites-enabled/000-default.conf</filename>)."
@@ -1021,16 +986,14 @@ msgstr "Suatu host virtual adalah identitas tambahan untuk server web."
 msgid "<primary>virtual host</primary>"
 msgstr "<primary>host virtual</primary>"
 
-#, fuzzy
 msgid "Apache considers two different kinds of virtual hosts: those that are based on the IP address (or the port), and those that rely on the domain name of the web server. The first method requires allocating a different IP address (or port) for each site, whereas the second one can work on a single IP address (and port), and the sites are differentiated by the hostname sent by the HTTP client (which only works in version 1.1 of the HTTP protocol — fortunately that version is old enough that all clients use it already)."
-msgstr "Apache menganggap dua macam virtual host: mereka yang didasarkan pada alamat IP (atau pelabuhan), dan mereka yang mengandalkan nama domain dari web server. Metode pertama memerlukan mengalokasikan alamat IP yang berbeda (atau port) untuk setiap situs, sedangkan yang kedua dapat bekerja pada satu IP alamat (dan port), dan situs dibedakan oleh nama host yang dikirim oleh klien HTTP (yang hanya bekerja di versi 1.1 dari HTTP prot ocol — Untungnya versi yang sudah tua cukup bahwa semua klien menggunakannya sudah)."
+msgstr "Apache menganggap dua macam host virtual: yang didasarkan pada alamat IP (atau port), dan yang mengandalkan nama domain dari server web. Metode pertama memerlukan mengalokasikan alamat IP yang berbeda (atau port) untuk setiap situs, sedangkan yang kedua dapat bekerja pada satu alamat IP (dan port), dan situs dibedakan oleh nama host yang dikirim oleh klien HTTP (yang hanya bekerja di versi 1.1 dari protokol HTTP — untungnya versi tersebut sudah cukup tua sehingga semua klien sudah menggunakannya)."
 
 msgid "The (increasing) scarcity of IPv4 addresses usually favors the second method; however, it is made more complex if the virtual hosts need to provide HTTPS too, since the SSL protocol hasn't always provided for name-based virtual hosting; the SNI extension (<emphasis>Server Name Indication</emphasis>) that allows such a combination is not handled by all browsers. When several HTTPS sites need to run on the same server, they will usually be differentiated either by running on a different port or on a different IP address (IPv6 can help there)."
 msgstr "(Semakin) langkanya alamat IPv4 biasanya lebih mengarah ke metode kedua; namun, itu dibuat lebih kompleks jika host virtual perlu menyediakan HTTPS juga, karena protokol SSL tidak selalu disediakan untuk berbasis nama virtual hosting; ekstensi SNI (<emphasis>Server Name Indication</emphasis>) yang memungkinkan kombinasi tersebut tidak ditangani oleh semua browser. Ketika beberapa situs HTTPS perlu menjalankan pada server yang sama, mereka akan biasanya dibedakan baik dengan berjalan pada port lain atau pada alamat IP yang berbeda (IPv6 dapat membantu di sana)."
 
-#, fuzzy
 msgid "The default configuration for Apache 2 enables name-based virtual hosts. In addition, a default virtual host is defined in the <literal>/etc/apache2/sites-enabled/000-default.conf</literal> file; this virtual host will be used if no host matching the request sent by the client is found."
-msgstr "Konfigurasi default untuk Apache 2 memungkinkan berbasis nama virtual host. Selain itu, dengan default virtual host didefinisikan dalam <literal>/etc/apache2/sites-enabled/000-default.conf</literal> file; host virtual ini akan digunakan jika host tidak cocok dengan permintaan yang dikirim oleh klien yang ditemukan."
+msgstr "Konfigurasi default untuk Apache 2 memfungsikan host virtual berbasis nama. Selain itu, sebuah host virtual default didefinisikan dalam berkas <literal>/etc/apache2/sites-enabled/000-default.conf</literal>; host virtual ini akan digunakan jika tidak ditemukan host yang cocok dengan permintaan yang dikirim oleh klien."
 
 msgid "<emphasis>CAUTION</emphasis> First virtual host"
 msgstr "<emphasis>HATI-HATI</emphasis> Host virtual pertama"
@@ -1053,13 +1016,11 @@ msgstr "Sebelum SNI, Apache akan selalu menggunakan sertifikat yang didefinisika
 msgid "The Apache package provided in Debian is built with support for SNI; no particular configuration is therefore needed."
 msgstr "Paket Apache yang tersedia di Debian dibangun dengan dukungan untuk SNI; maka tidak ada konfigurasi tertentu yang diperlukan."
 
-#, fuzzy
 msgid "Care should also be taken to ensure that the configuration for the first virtual host (the one used by default) does enable TLSv1, since Apache uses the parameters of this first virtual host to establish secure connections, and they had better allow them!"
-msgstr "Perawatan harus diambil untuk memastikan bahwa konfigurasi untuk host virtual pertama (yang digunakan secara default) mengaktifkan TLSv1, karena Apache menggunakan parameter host virtual pertama ini untuk membangun koneksi yang aman, dan mereka telah lebih baik memungkinkan mereka!"
+msgstr "Perhatian harus diberikan untuk memastikan bahwa konfigurasi untuk host virtual pertama (yang digunakan secara default) mengaktifkan TLSv1, karena Apache menggunakan parameter host virtual pertama ini untuk membangun koneksi yang aman, dan lebih baik itu difungsikan!"
 
-#, fuzzy
 msgid "Each extra virtual host is then described by a file stored in <filename>/etc/apache2/sites-available/</filename>. Setting up a website for the <literal>falcot.org</literal> domain is therefore a simple matter of creating the following file, then enabling the virtual host with <command>a2ensite www.falcot.org</command>."
-msgstr "Masing-masing ekstra virtual host ini kemudian digambarkan oleh sebuah berkas disimpan dalam <filename>/etc/apache2/situs-tersedia /</filename>. Pengaturan sebuah situs web untuk <literal>falcot.org</literal> domain adalah masalah sederhana membuat berkas berikut, kemudian memungkinkan host virtual dengan <command>a2ensite www.falcot.org</command>."
+msgstr "Masing-masing host virtual ekstra ini kemudian digambarkan oleh sebuah berkas yang disimpan dalam <filename>/etc/apache2/situs-available/</filename>. Maka menyiapkan sebuah situs web untuk domain <literal>falcot.org</literal> adalah cukup dengan sekedar membuat berkas berikut, kemudian memfungsikan host virtual dengan <command>a2ensite www.falcot.org</command>."
 
 msgid "The <filename>/etc/apache2/sites-available/www.falcot.org.conf</filename> file"
 msgstr "Berkas <filename>/etc/apache2/sites-available/www.falcot.org.conf</filename>"
@@ -1392,27 +1353,23 @@ msgstr "FTP (<emphasis>File Transfer Protocol</emphasis>) adalah salah satu prot
 msgid "This protocol allows both file uploads and file downloads; for this reason, it is still widely used to deploy updates to a website hosted by one's Internet service provider (or any other entity hosting websites). In these cases, secure access is enforced with a user identifier and password; on successful authentication, the FTP server grants read-write access to that user's home directory."
 msgstr "Protokol ini memungkinkan pengunggahan berkas dan pengunduhan berkas; untuk alasan ini, masih banyak digunakan untuk menyebarkan pembaruan ke sebuah situs web yang diselenggarakan oleh salah satu penyedia layanan Internet (atau entitas lain yang mewadahi situs web). Dalam kasus ini, akses aman dipaksakan dengan pengidentifikasi pengguna dan kata sandi; saat otentikasi sukses, server FTP memberikan akses baca-tulis ke direktori home pengguna."
 
-#, fuzzy
 msgid "Other FTP servers are mainly used to distribute files for public downloading; Debian packages are a good example. The contents of these servers is fetched from other, geographically remote, servers; it is then made available to less distant users. This means that client authentication is not required; as a consequence, this operating mode is known as “anonymous FTP”. To be perfectly correct, the clients do authenticate with the <literal>anonymous</literal> username; the password is often, by convention, the user's email address, but the server ignores it."
-msgstr "Server FTP lain terutama digunakan untuk mendistribusikan file untuk diunduh publik; Paket-paket Debian adalah contoh yang baik. Isi dari server tersebut diambil dari server lain, geografis remote, ini kemudian dibuat tersedia untuk pengguna yang lebih jauh. Ini berarti bahwa klien otentikasi tidak diperlukan; sebagai akibatnya, modus operasi ini dikenal sebagai \"anonymous FTP\". Sempurna benar, klien mengotentikasi dengan username <literal>anonim</literal>; password adalah sering, oleh Konvensi, alamat email pengguna, tetapi server mengabaikannya."
+msgstr "Server FTP lain terutama digunakan untuk mendistribusikan berkas untuk diunduh publik; paket-paket Debian adalah contoh yang baik. Isi dari server tersebut diambil dari server lain, remote secara geografis, ini kemudian menjadi tersedia untuk pengguna yang lebih dekat. Ini berarti bahwa otentikasi klien tidak diperlukan; sebagai akibatnya, modus operasi ini dikenal sebagai \"anonymous FTP\". Agar sepenuhnya sempurna, klien mengotentikasi dengan nama pengguna <literal>anonim</literal>; kata sandi sering kali, oleh konvensi, adalah alamat surel pengguna, tetapi server mengabaikannya."
 
-#, fuzzy
 msgid "Many FTP servers are available in Debian (<emphasis role=\"pkg\">ftpd</emphasis>, <emphasis role=\"pkg\">proftpd-basic</emphasis>, <emphasis role=\"pkg\">pyftpd</emphasis> and so on). The Falcot Corp administrators picked <emphasis role=\"pkg\">vsftpd</emphasis> because they only use the FTP server to distribute a few files (including a Debian package repository); since they don't need advanced features, they chose to focus on the security aspects."
-msgstr "Banyak FTP server tersedia di Debian (<emphasis role=\"pkg\"> ftpd</emphasis>, <emphasis role=\"pkg\"> proftpd-dasar</emphasis>, <emphasis role=\"pkg\"> pyftpd</emphasis> dan seterusnya). Falcot Corp administrator memilih <emphasis role=\"pkg\"> vsftpd</emphasis> karena mereka hanya menggunakan FTP server untuk mendistribusikan beberapa file (termasuk sebuah paket Debian repositori); karena mereka tidak memerlukan fitur-fitur canggih, mereka memilih untuk fokus pada aspek keamanan."
+msgstr "Banyak server FTP tersedia di Debian (<emphasis role=\"pkg\">ftpd</emphasis>, <emphasis role=\"pkg\">proftpd-basic</emphasis>, <emphasis role=\"pkg\">pyftpd</emphasis> dan sebagainya). Administrator Falcot Corp memilih <emphasis role=\"pkg\">vsftpd</emphasis> karena mereka hanya menggunakan server FTP untuk mendistribusikan beberapa berkas (termasuk sebuah repositori paket Debian); karena mereka tidak memerlukan fitur-fitur canggih, mereka memilih untuk fokus pada aspek keamanan."
 
 msgid "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 
-#, fuzzy
 msgid "Installing the package creates an <literal>ftp</literal> system user. This account is always used for anonymous FTP connections, and its home directory (<filename>/srv/ftp/</filename>) is the root of the tree made available to users connecting to this service. The default configuration (in <filename>/etc/vsftpd.conf</filename>) requires some changes to cater to the simple need of making big files available for public downloads: anonymous access needs to be enabled (<literal>anonymous_enable=YES</literal>) and read-only access of local users needs to be disabled (<literal>local_enable=NO</literal>). The latter is particularly important since the FTP protocol doesn't use any form of encryption and the user password could be intercepted over the wire."
-msgstr "Memasang paket menciptakan pengguna sistem <literal>ftp</literal>. Rekening ini selalu digunakan untuk koneksi FTP anonim, dan direktori home nya (<filename>/srv/ftp/</filename>) adalah akar dari pohon yang dibuat tersedia untuk pengguna yang tersambung ke layanan ini. Konfigurasi default (dalam <filename>/etc/vsftpd.conf</filename>) memerlukan beberapa perubahan untuk memenuhi kebutuhan sederhana untuk membuat file-file besar tersedia untuk download umum: akses anonim perlu diaktifkan (<literal>anonymous_enable = YES</literal>) dan akses hanya-baca lokal pengguna perlu dinonaktifkan (<literal>local_enable = tidak ada</literal>). Yang kedua sangat penting karena protokol FTP tidak menggunakan bentuk enkripsi dan password pengguna bisa dicegat melalui kawat."
+msgstr "Memasang paket menciptakan pengguna sistem <literal>ftp</literal>. Akun ini selalu digunakan untuk koneksi FTP anonim, dan direktori home-nya (<filename>/srv/ftp/</filename>) adalah akar dari pohon yang dibuat tersedia untuk pengguna yang tersambung ke layanan ini. Konfigurasi default (dalam <filename>/etc/vsftpd.conf</filename>) memerlukan beberapa perubahan untuk memenuhi kebutuhan sederhana yang membuat berkas-berkas besar tersedia untuk diunduh oleh publik: akses anonim perlu diaktifkan (<literal>anonymous_enable=YES</literal>) dan akses hanya-baca dari pengguna lokal perlu dinonaktifkan (<literal>local_enable=NO</literal>). Yang kedua sangat penting karena protokol FTP tidak menggunakan bentuk enkripsi apapun dan kata sandi pengguna bisa disadap saat lewat kabel."
 
 msgid "NFS File Server"
 msgstr "Server Berkas NFS"
 
-#, fuzzy
 msgid "NFS (<emphasis>Network File System</emphasis>) is a protocol allowing remote access to a filesystem through the network. All Unix systems can work with this protocol; when Windows systems are involved, Samba must be used instead."
-msgstr "NFS (<emphasis>File sistem jaringan</emphasis>) merupakan sebuah protokol yang memungkinkan akses remote ke filesistem melalui jaringan. Semua sistem Unix dapat bekerja dengan protokol ini; Ketika sistem Windows yang terlibat, Samba harus digunakan sebagai gantinya."
+msgstr "NFS (<emphasis>Network File System</emphasis>) merupakan sebuah protokol yang memungkinkan akses remote ke sistem berkas melalui jaringan. Semua sistem Unix dapat bekerja dengan protokol ini; ketika sistem Windows yang terlibat, Samba harus digunakan sebagai gantinya."
 
 msgid "<primary>NFS</primary>"
 msgstr "<primary>NFS</primary>"
@@ -1429,13 +1386,11 @@ msgstr "<primary>berkas</primary><secondary>server</secondary>"
 msgid "<primary>server</primary><secondary>file</secondary>"
 msgstr "<primary>server</primary><secondary>berkas</secondary>"
 
-#, fuzzy
 msgid "NFS is a very useful tool but, historically, it has suffered from many limitations, most of which have been addressed with version 4 of the protocol. The downside is that the latest version of NFS is harder to configure when you want to make use of basic security features such as authentication and encryption since it relies on Kerberos for those parts. And without those, the NFS protocol must be restricted to a trusted local network since data goes over the network unencrypted (a <emphasis>sniffer</emphasis> can intercept it) and access rights are granted based on the client's IP address (which can be spoofed)."
-msgstr "NFS adalah alat yang sangat berguna tetapi, secara historis, telah menderita dari banyak keterbatasan, yang sebagian besar telah ditangani dengan versi 4 protokol. The downside adalah bahwa versi terbaru dari NFS lebih sulit untuk mengkonfigurasi bila Anda ingin membuat menggunakan fitur keamanan dasar seperti otentikasi dan enkripsi karena hal itu bergantung pada Kerberos untuk bagian-bagian. Dan tanpa mereka, protokol NFS harus dibatasi pada jaringan lokal yang terpercaya sejak data pergi melalui jaringan tidak terenkripsi (<emphasis>sniffer</emphasis> bisa mencegat itu) dan hak akses diberikan didasarkan pada alamat IP klien (yang dapat palsu)."
+msgstr "NFS adalah alat yang sangat berguna, tetapi secara historis menderita karena banyak keterbatasan, yang sebagian besar telah diperbaiki pada protokol versi 4. Kekurangannya adalah bahwa versi terbaru dari NFS lebih sulit untuk dikonfigurasi bila Anda ingin menggunakan fitur keamanan dasar seperti otentikasi dan enkripsi karena hal itu bergantung pada Kerberos. Dan tanpa mereka, protokol NFS harus dibatasi pada jaringan lokal yang terpercaya karena data pergi melalui jaringan tidak terenkripsi (<emphasis>sniffer</emphasis> bisa mencegat itu) dan hak akses diberikan didasarkan pada alamat IP klien (yang dapat dipalsukan)."
 
-#, fuzzy
 msgid "<emphasis>DOCUMENTATION</emphasis> NFS HOWTO"
-msgstr "<emphasis>Dokumentasi</emphasis> NFS HOWTO"
+msgstr "<emphasis>DOKUMENTASI</emphasis> NFS HOWTO"
 
 msgid "Good documentation to deploy NFSv4 is rather scarce. Here are some pointers with content of varying quality but that should at least give some hints on what should be done. <ulink type=\"block\" url=\"https://help.ubuntu.com/community/NFSv4Howto\" /> <ulink type=\"block\" url=\"http://wiki.linux-nfs.org/wiki/index.php/Nfsv4_configuration\" />"
 msgstr "Dokumentasi yang baik untuk menggelar NFSv4 jarang ditemui. Berikut adalah beberapa petunjuk dengan konten dari berbagai kualitas yang setidaknya memberikan beberapa petunjuk tentang apa yang harus dilakukan. <ulink type=\"block\" url=\"https://help.ubuntu.com/community/NFSv4Howto\" /> <ulink type=\"block\" url=\"http://wiki.linux-nfs.org/wiki/index.php/Nfsv4_configuration\" />"
@@ -1446,16 +1401,14 @@ msgstr "Mengamankan NFS"
 msgid "<primary>NFS</primary><secondary>security</secondary>"
 msgstr "<primary>NFS</primary><secondary>keamanan</secondary>"
 
-#, fuzzy
 msgid "If you don't use the Kerberos-based security features, it is vital to ensure that only the machines allowed to use NFS can connect to the various required RPC servers, because the basic protocol trusts the data received from the network. The firewall must also block <emphasis>IP spoofing</emphasis> so as to prevent an outside machine from acting as an inside one, and access to the appropriate ports must be restricted to the machines meant to access the NFS shares."
-msgstr "Jika Anda tidak menggunakan fitur keamanan berbasis Kerberos, sangat penting untuk memastikan bahwa hanya mesin-mesin yang diizinkan untuk menggunakan NFS dapat terhubung ke server RPC berbagai diperlukan, karena protokol dasar percaya data yang diterima dari jaringan. Firewall juga harus memblokir <emphasis>IP spoofing</emphasis> untuk mencegah mesin di luar dari bertindak sebagai dalam satu, dan akses ke pelabuhan sesuai harus dibatasi untuk mesin-mesin yang dimaksudkan untuk mengakses saham NFS."
+msgstr "Jika Anda tidak menggunakan fitur keamanan berbasis Kerberos, sangat penting untuk memastikan bahwa hanya mesin-mesin yang diizinkan untuk menggunakan NFS dapat terhubung ke berbagai server RPC yang diperlukan, karena protokol dasar mempercayai data yang diterima dari jaringan. Firewall juga harus memblokir <emphasis>IP spoofing</emphasis> untuk mencegah mesin di luar dari bertindak sebagai seolah di dalam, dan akses ke port yang sesuai harus dibatasi hanya untuk mesin-mesin yang memang akan mengakses share NFS."
 
 msgid "<emphasis>BACK TO BASICS</emphasis> RPC"
 msgstr "<emphasis>KEMBALI KE DASAR</emphasis> RPC"
 
-#, fuzzy
 msgid "RPC (<emphasis>Remote Procedure Call</emphasis>) is a Unix standard for remote services. NFS is one such service."
-msgstr "RPC (<emphasis>Panggilan prosedur jauh</emphasis>) adalah standar Unix untuk layanan jauh. NFS adalah salah satu layanan tersebut."
+msgstr "RPC (<emphasis>Remote Procedure Call</emphasis>) adalah standar Unix untuk layanan remote. NFS adalah salah satu layanan tersebut."
 
 msgid "<primary>RPC</primary>"
 msgstr "<primary>RPC</primary>"
@@ -1463,13 +1416,11 @@ msgstr "<primary>RPC</primary>"
 msgid "<primary><emphasis>Remote Procedure Call</emphasis></primary>"
 msgstr "<primary><emphasis>Remote Procedure Call</emphasis></primary>"
 
-#, fuzzy
 msgid "RPC services register to a directory known as the <emphasis>portmapper</emphasis>. A client wishing to perform an NFS query first addresses the <emphasis>portmapper</emphasis> (on port 111, either TCP or UDP), and asks for the NFS server; the reply usually mentions port 2049 (the default for NFS). Not all RPC services necessarily use a fixed port."
-msgstr "RPC Layanan mendaftar ke direktori yang dikenal sebagai <emphasis>portmapper</emphasis>. Seorang klien yang ingin melakukan query NFS pertama alamat <emphasis>portmapper</emphasis> (pada port 111, TCP atau UDP), dan meminta NFS server; Jawabannya biasanya menyebutkan port 2049 (default untuk NFS). Tidak semua RPC layanan harus menggunakan port tetap."
+msgstr "Layanan RPC mendaftar ke direktori yang dikenal sebagai <emphasis>portmapper</emphasis>. Suatu klien yang ingin melakukan query NFS pertama menghubungi <emphasis>portmapper</emphasis> (pada port 111, TCP atau UDP), dan meminta server NFS; jawabannya biasanya menyebutkan port 2049 (default untuk NFS). Tidak semua layanan RPC harus menggunakan port tetap."
 
-#, fuzzy
 msgid "Older versions of the protocol required other RPC services which used dynamically assigned ports. Fortunately, with NFS version 4, only port 2049 (for NFS) and 111 (for the portmapper) are needed and they are thus easy to firewall."
-msgstr "Versi protokol diperlukan RPC Layanan lainnya yang digunakan secara dinamis ditugaskan Port. Untungnya, dengan NFS versi 4 hanya port 2049 (untuk NFS) dan 111 (untuk portmapper) diperlukan dan mereka tidak mudah untuk firewall."
+msgstr "Versi protokol lebih tua memerlukan layanan RPC lainnya yang menggunakan port dinamis. Untungnya, dengan NFS versi 4 hanya port 2049 (untuk NFS) dan 111 (untuk portmapper) yang diperlukan dan sehingga mereka mudah untuk firewall."
 
 msgid "<primary><command>portmapper</command></primary>"
 msgstr "<primary><command>portmapper</command></primary>"
@@ -1477,9 +1428,8 @@ msgstr "<primary><command>portmapper</command></primary>"
 msgid "NFS Server"
 msgstr "Server NFS"
 
-#, fuzzy
 msgid "The NFS server is part of the Linux kernel; in kernels provided by Debian it is built as a kernel module. If the NFS server is to be run automatically on boot, the <emphasis role=\"pkg\">nfs-kernel-server</emphasis> package should be installed; it contains the relevant start-up scripts."
-msgstr "NFS server adalah bagian dari Linux kernel; di kernel yang disediakan oleh Debian itu dibangun sebagai modul kernel. Jika NFS server akan dijalankan secara otomatis pada boot, paket <emphasis role=\"pkg\"> nfs-kernel-server</emphasis> harus diinstal; ini berisi script yang relevan start-up."
+msgstr "Server NFS adalah bagian dari kernel Linux; di kernel yang disediakan oleh Debian itu dibangun sebagai modul kernel. Jika server NFS akan dijalankan secara otomatis pada saat boot, paket <emphasis role=\"pkg\">nfs-kernel-server</emphasis> harus diinstal; ini berisi skrip startup yang relevan."
 
 msgid "The NFS server configuration file, <filename>/etc/exports</filename>, lists the directories that are made available over the network (<emphasis>exported</emphasis>). For each NFS share, only the given list of machines is granted access. More fine-grained access control can be obtained with a few options. The syntax for this file is quite simple:"
 msgstr "Berkas konfigurasi server NFS, <filename>/etc/exsports</filename>, menampung daftar direktori yang dibuat tersedia melalui jaringan (<emphasis>diekspor</emphasis>). Untuk setiap share NFS, hanya mesin yang terdaftar yang diberi akses. Lebih banyak kontrol akses halus dapat diperoleh dengan beberapa pilihan. Sintaks berkas ini cukup sederhana:"
@@ -1495,43 +1445,35 @@ msgid ""
 "/directory/to/share machine1(option1,option2,...) machine2(...) ..."
 msgstr "\n/direktori/yang/akan/di-share mesin1(opsi1,opsi2,...) mesin2(...) ..."
 
-#, fuzzy
 msgid "Note that with NFSv4, all exported directories must be part of a single hierarchy and that the root directory of that hierarchy must be exported and identified with the option <literal>fsid=0</literal> or <literal>fsid=root</literal>."
-msgstr "Catatan bahwa dengan NFSv4, semua diekspor direktori harus menjadi bagian dari hirarki tunggal dan bahwa direktori root dari hirarki yang harus diekspor dan diidentifikasi dengan pilihan <literal>fsid = 0</literal> atau <literal>fsid = akar</literal>."
+msgstr "Catatan bahwa dengan NFSv4, semua direktori yang diekspor harus menjadi bagian dari hirarki tunggal dan bahwa direktori root dari hirarki itu harus diekspor dan diidentifikasi dengan pilihan <literal>fsid=0</literal> atau <literal>fsid=root</literal>."
 
-#, fuzzy
 msgid "Each machine can be identified either by its DNS name or its IP address. Whole sets of machines can also be specified using either a syntax such as <literal>*.falcot.com</literal> or an IP address range such as <literal>192.168.0.0/255.255.255.0</literal> or <literal>192.168.0.0/24</literal>."
-msgstr "Setiap mesin dapat diidentifikasi dengan nama DNS atau alamat IP-nya. Seluruh set mesin juga dapat ditentukan dengan menggunakan sintaks yang baik seperti <literal>*. falcot.com</literal> atau kisaran alamat IP seperti <literal>192.168.0.0/255.255.255.0</literal> atau <literal>192.168.0.0/24</literal>."
+msgstr "Setiap mesin dapat diidentifikasi dengan nama DNS atau alamat IP-nya. Seluruh set mesin juga dapat ditentukan dengan menggunakan sintaks seperti <literal>*. falcot.com</literal> atau kisaran alamat IP seperti <literal>192.168.0.0/255.255.255.0</literal> atau <literal>192.168.0.0/24</literal>."
 
-#, fuzzy
 msgid "Directories are made available as read-only by default (or with the <literal>ro</literal> option). The <literal>rw</literal> option allows read-write access. NFS clients typically connect from a port restricted to root (in other words, below 1024); this restriction can be lifted by the <literal>insecure</literal> option (the <literal>secure</literal> option is implicit, but it can be made explicit if needed for clarity)."
-msgstr "Direktori yang dibuat tersedia sebagai baca-saja secara default (atau dengan opsi <literal>ro</literal>). Opsi <literal>rw</literal> memungkinkan akses baca-tulis. Klien NFS biasanya terhubung dari pelabuhan dibatasi ke akar (dengan kata lain, di bawah 1024); pembatasan ini dapat diangkat dengan pilihan <literal>tidak aman</literal> (pilihan yang <literal>aman</literal> implisit, tetapi dapat dibuat eksplisit jika diperlukan untuk kejelasan)."
+msgstr "Direktori disediakan sebagai baca-saja secara default (atau dengan opsi <literal>ro</literal>). Opsi <literal>rw</literal> memungkinkan akses baca-tulis. Klien NFS biasanya terhubung dari port yang terbatas hanya untuk root (dengan kata lain, di bawah 1024); pembatasan ini dapat dicabut dengan pilihan <literal>insecure</literal> (opsi <literal>secure</literal> adalah implisit, tetapi dapat dibuat eksplisit jika diperlukan untuk kejelasan)."
 
 msgid "<primary>NFS</primary><secondary>options</secondary>"
 msgstr "<primary>NFS</primary><secondary>opsi</secondary>"
 
-#, fuzzy
 msgid "By default, the server only answers an NFS query when the current disk operation is complete (<literal>sync</literal> option); this can be disabled with the <literal>async</literal> option. Asynchronous writes increase performance a bit, but they decrease reliability since there is a data loss risk in case of the server crashing between the acknowledgment of the write and the actual write on disk. Since the default value changed recently (as compared to the historical value of NFS), an explicit setting is recommended."
-msgstr "Secara default, jawabannya hanya server query NFS ketika arus disk operasi lengkap (<literal>sync</literal> pilihan); ini dapat dinonaktifkan dengan pilihan <literal>async</literal>. Menulis asinkron meningkatkan kinerja sedikit, tetapi mereka mengurangi keandalan karena ada risiko kehilangan data dalam server yang menabrak antara pengakuan yang menulis dan menulis sebenarnya pada disk. Karena nilai default berubah baru-baru ini (dibandingkan dengan nilai historis NFS), suasana eksplisit dianjurkan."
+msgstr "Secara default, server hanya menjawab query NFS ketika operasi disk saat ini telah selesai (opsi <literal>sync</literal>); ini dapat dinonaktifkan dengan opsi <literal>async</literal>. Menulis asinkron meningkatkan kinerja sedikit, tetapi mereka mengurangi keandalan karena ada risiko kehilangan data ketika server crash antara konfirmasi atas penulisan dan menulis sebenarnya pada disk. Karena nilai default berubah baru-baru ini (dibandingkan dengan nilai historis NFS), setelan eksplisit dianjurkan."
 
-#, fuzzy
 msgid "In order to not give root access to the filesystem to any NFS client, all queries appearing to come from a root user are considered by the server as coming from the <literal>nobody</literal> user. This behavior corresponds to the <literal>root_squash</literal> option, and is enabled by default. The <literal>no_root_squash</literal> option, which disables this behavior, is risky and should only be used in controlled environments. The <literal>anonuid=<replaceable>uid</replaceable></literal> and <literal>anongid=<replaceable>gid</replaceable></literal> options allow specifying another fake user to be used instead of UID/GID 65534 (which corresponds to user <literal>nobody</literal> and group <literal>nogroup</literal>)."
-msgstr "Untuk memberikan akses root ke filesystem untuk klien NFS, Semua pertanyaan muncul datang dari root user dianggap oleh server sebagai datang dari pengguna <literal>tidak ada</literal>. Perilaku ini sesuai dengan pilihan <literal>root_squash</literal>, dan diaktifkan secara default. Pilihan <literal>no_root_squash</literal>, yang menonaktifkan perilaku ini, berisiko dan hanya boleh digunakan dalam lingkungan yang terkendali. <literal>Anonuid = <replaceable>uid</replaceable></literal> dan <literal>anongid = <replaceable>gid</replaceable></literal> pilihan memungkinkan menentukan pengguna palsu lain untuk digunakan sebagai pengganti UID GID 65534 (yang berhubungan dengan pengguna <literal>tidak ada </literal> dan kelompok <literal>nogroup</literal>)."
+msgstr "Untuk tidak memberikan akses root ke sistem berkas bagi klien NFS, semua pertanyaan yang muncul datang dari pengguna root dianggap oleh server sebagai datang dari pengguna <literal>nobody</literal>. Perilaku ini sesuai dengan opsi <literal>root_squash</literal>, dan diaktifkan secara default. Opsi <literal>no_root_squash</literal>, yang menonaktifkan perilaku ini, berisiko dan hanya boleh digunakan dalam lingkungan yang terkendali. Opsi <literal>anonuid=<replaceable>uid</replaceable></literal> dan <literal>anongid=<replaceable>gid</replaceable></literal> memungkinkan menentukan pengguna palsu lain untuk digunakan sebagai pengganti UID/GID 65534 (milik pengguna <literal>nobody</literal> dan grup <literal>nogroup</literal>)."
 
-#, fuzzy
 msgid "With NFSv4, you can add a <literal>sec</literal> option to indicate the security level that you want: <literal>sec=sys</literal> is the default with no special security features, <literal>sec=krb5</literal> enables authentication only, <literal>sec=krb5i</literal> adds integrity protection, and <literal>sec=krb5p</literal> is the most complete level which includes privacy protection (with data encryption). For this to work you need a working Kerberos setup (that service is not covered by this book)."
-msgstr "Dengan NFSv4, Anda dapat menambahkan pilihan <literal>sec</literal> untuk menunjukkan tingkat keamanan yang Anda inginkan: <literal>sec = sys</literal> adalah default dengan fitur keamanan khusus tidak, <literal>sec = krb5</literal> memungkinkan otentikasi hanya, <literal>sec = krb5i </literal> menambahkan perlindungan integritas, dan <literal>sec = krb5p</literal> tingkat yang paling lengkap yang mencakup perlindungan privasi (dengan data enkripsi). Untuk bekerja Anda memerlukan kerja Kerberos setup (bahwa layanan tidak tercakup oleh buku ini)."
+msgstr "Dengan NFSv4, Anda dapat menambahkan opsi <literal>sec</literal> untuk menunjukkan tingkat keamanan yang Anda inginkan: <literal>sec=sys</literal> adalah default tanpa fitur keamanan khusus, <literal>sec=krb5</literal> hanya memfungsikan otentikasi, <literal>sec=krb5i </literal> menambahkan perlindungan integritas, dan <literal>sec=krb5p</literal> tingkat yang paling lengkap yang mencakup perlindungan privasi (dengan data enkripsi). Agar ini bekerja Anda memerlukan berjalannya Kerberos yang telah disiapkan (layanan itu tidak dibahas dalam buku ini)."
 
-#, fuzzy
 msgid "Other options are available; they are documented in the <citerefentry><refentrytitle>exports</refentrytitle> <manvolnum>5</manvolnum></citerefentry> manual page."
-msgstr "Pilihan lain tersedia; mereka didokumentasikan dalam <citerefentry><refentrytitle>ekspor</refentrytitle> <manvolnum>5</manvolnum></citerefentry> halaman manual."
+msgstr "Opsi-opsi lain tersedia; mereka didokumentasikan dalam halaman manual <citerefentry><refentrytitle>exports</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 
 msgid "<emphasis>CAUTION</emphasis> First installation"
 msgstr "<emphasis>HATI-HATI</emphasis> Instalasi pertama"
 
-#, fuzzy
 msgid "The <filename>/etc/init.d/nfs-kernel-server</filename> boot script only starts the server if the <filename>/etc/exports</filename> lists one or more valid NFS shares. On initial configuration, once this file has been edited to contain valid entries, the NFS server must therefore be started with the following command:"
-msgstr "<filename>/etc/init.d/nfs-kernel-server</filename> boot script hanya dimulai server jika <filename>ekspor/etc/ekspor</filename> daftar satu atau lebih berlaku NFS saham. Pada konfigurasi awal, setelah file ini telah diedit berisi entri yang valid, NFS server harus karena itu dimulai dengan perintah berikut:"
+msgstr "Skrip boot <filename>/etc/init.d/nfs-kernel-server</filename> hanya memulai server jika <filename>/etc/exports</filename> mencantumkan satu atau lebih share NFS yang valid. Pada konfigurasi awal, setelah berkas ini telah disunting agar berisi entri yang valid, make server NFS karena itu harus dimulai dengan perintah berikut:"
 
 msgid ""
 "\n"
@@ -1549,13 +1491,11 @@ msgstr "<primary>klien</primary><secondary>NFS</secondary>"
 msgid "<primary>NFS</primary><secondary>client</secondary>"
 msgstr "<primary>NFS</primary><secondary>klien</secondary>"
 
-#, fuzzy
 msgid "As with other filesystems, integrating an NFS share into the system hierarchy requires mounting. Since this filesystem has its peculiarities, a few adjustments were required in the syntaxes of the <command>mount</command> command and the <filename>/etc/fstab</filename> file."
-msgstr "Seperti dengan filesystem lainnya, mengintegrasikan NFS berbagi dalam hirarki sistem memerlukan pemasangan. Karena file sistem ini memiliki kekhasan yang, beberapa penyesuaian yang diperlukan dalam syntaxes perintah <command>Gunung</command> <filename>dan/etc/fstab</filename> file."
+msgstr "Seperti dengan sistem berkas lain, mengintegrasikan share NFS ke dalam hirarki sistem memerlukan pengaitan. Karena sistem berkas ini memiliki kekhasan, beberapa penyesuaian diperlukan dalam sintaks perintah <command>mount</command> dan berkas <filename>/etc/fstab</filename>."
 
-#, fuzzy
 msgid "Manually mounting with the <command>mount</command> command"
-msgstr "Secara manual me-mount dengan perintah <command>Gunung</command>"
+msgstr "Secara manual mengait dengan perintah <command>mount</command>"
 
 msgid ""
 "\n"
@@ -1574,24 +1514,20 @@ msgstr ""
 "\n"
 "arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0"
 
-#, fuzzy
 msgid "The entry described above mounts, at system startup, the <filename>/shared/</filename> NFS directory from the <literal>arrakis</literal> server into the local <filename>/srv/shared/</filename> directory. Read-write access is requested (hence the <literal>rw</literal> parameter). The <literal>nosuid</literal> option is a protection measure that wipes any <literal>setuid</literal> or <literal>setgid</literal> bit from programs stored on the share. If the NFS share is only meant to store documents, another recommended option is <literal>noexec</literal>, which prevents executing programs stored on the share. Note that on the server, the <filename>shared</filename> directory is below the NFSv4 root export (for example <filename>/export/shared</filename>), it is not a top-level directory."
-msgstr "Entri yang dijelaskan di atas gunung, di sistem startup, <filename>/shared/</filename> NFS direktori dari server <literal>arrakis</literal> ke dalam lokal <filename>/srv/berbagi/</filename> direktori. Akses baca-tulis diminta (maka <literal>rw</literal> parameter). Opsi <literal>nosuid</literal> adalah ukuran perlindungan yang menyeka setiap <literal>setuid</literal> atau <literal>setgid</literal> bit dari program-program yang disimpan di saham. Jika saham NFS hanya dimaksudkan untuk menyimpan dokumen, lain dianjurkan pilihan adalah <literal>noexec</literal>, yang mencegah mengeksekusi program-program yang disimpan di saham. Diketahui bahwa pada server, direktori <filename>bersama</filename> di bawah NFSv4 akar ekspor (misalnya <filename>shared/ekspor/bersama</filename>), ianya tidak tingkat atas direktori."
+msgstr "Entri menjelaskan pengaitan di atas, saat sistem startup, direktori NFS <filename>/shared/</filename> dari server <literal>arrakis</literal> ke dalam direktori <filename>/srv/shared/</filename> lokal. Akses baca-tulis diminta (maka parameter <literal>rw</literal>). Opsi <literal>nosuid</literal> adalah upaya perlindungan yang menghapus setiap bit <literal>setuid</literal> atau <literal>setgid</literal> dari program-program yang disimpan di share. Jika share NFS hanya dimaksudkan untuk menyimpan dokumen, opsi lain yang dianjurkan adalah <literal>noexec</literal>, yang mencegah mengeksekusi program-program yang disimpan di share. Perhatikan bahwa pada server, direktori <filename>shared</filename> ada di bawah NFSv4 ekspor root (misalnya <filename>/export/shared</filename>), itu bukan direktori aras puncak."
 
-#, fuzzy
 msgid "The <citerefentry><refentrytitle>nfs</refentrytitle> <manvolnum>5</manvolnum></citerefentry> manual page describes all the options in some detail."
-msgstr "Halaman manual <citerefentry><refentrytitle>nfs</refentrytitle> <manvolnum>5</manvolnum></citerefentry> menjelaskan semua pilihan dalam beberapa detail."
+msgstr "Halaman manual <citerefentry><refentrytitle>nfs</refentrytitle> <manvolnum>5</manvolnum></citerefentry> menjelaskan semua opsi secara agak mendetail."
 
-#, fuzzy
 msgid "Setting Up Windows Shares with Samba"
 msgstr "Menyiapkan Share Windows dengan Samba"
 
 msgid "Samba is a suite of tools handling the SMB protocol (also known as “CIFS”) on Linux. This protocol is used by Windows for network shares and shared printers."
 msgstr "Samba adalah keluarga alat penanganan protokol SMB (juga dikenal sebagai \"CIFS\") di Linux. Protokol ini digunakan oleh Windows untuk share jaringan dan pencetak bersama."
 
-#, fuzzy
 msgid "<primary>Windows share</primary>"
-msgstr "<primary>share Windows</primary>"
+msgstr "<primary>Share Windows</primary>"
 
 msgid "<primary>Samba</primary>"
 msgstr "<primary>Samba</primary>"
@@ -1620,9 +1556,8 @@ msgstr "<primary><command>nmbd</command></primary>"
 msgid "<emphasis>DOCUMENTATION</emphasis> Going further"
 msgstr "<emphasis>DOKUMENTASI</emphasis> Lebih lanjut"
 
-#, fuzzy
 msgid "The Samba server is extremely configurable and versatile, and can address a great many different use cases matching very different requirements and network architectures. This book only focuses on the use case where Samba is used as a standalone server, but it can also be a NT4 Domain Controller or a full Active Directory Domain Controller, or a simple member of an existing domain (which could be a managed by a Windows server)."
-msgstr "Samba server sangat dapat dikonfigurasi dan serbaguna, dan dapat mengatasi besar banyak kasus penggunaan yang berbeda sesuai kebutuhan yang sangat berbeda dan arsitektur jaringan. Buku ini hanya berfokus pada kasus penggunaan mana Samba digunakan sebagai server mandiri, tetapi juga dapat kontroler Domain NT4 atau pengendali Domain direktori aktif penuh, atau anggota sederhana dari domain yang ada (yang bisa dikelola oleh Windows server)."
+msgstr "Samba server sangat dapat dikonfigurasi dan serbaguna, dan dapat menjawab banyak macam kasus yang berbeda sesuai kebutuhan dan arsitektur jaringan yang sangat beraneka. Buku ini hanya berfokus pada kasus penggunaan ketika Samba digunakan sebagai server mandiri, tetapi juga bisa menjadi Domain Controller NT4 atau Active Directory Domain Controller penuh, atau sekedar anggota dari domain yang ada (yang bisa dikelola oleh server Windows)."
 
 msgid "<primary>domain controller</primary>"
 msgstr "<primary>pengontrol domain</primary>"
@@ -1636,9 +1571,8 @@ msgstr "Paket <emphasis role=\"pkg\">samba-doc</emphasis> berisi banyak berkas c
 msgid "<emphasis>TOOL</emphasis> Authenticating with a Windows Server"
 msgstr "<emphasis>ALAT</emphasis> Mengotentikasi dengan sebuah Server Windows"
 
-#, fuzzy
 msgid "Winbind gives system administrators the option of using a Windows server as an authentication server. Winbind also integrates cleanly with PAM and NSS. This allows setting up Linux machines where all users of a Windows domain automatically get an account."
-msgstr "Winbind memberikan administrator sistem pilihan untuk menggunakan Windows server sebagai server otentikasi. Winbind juga terintegrasi bersih dengan PAM dan NSS. Hal ini memungkinkan pengaturan Mesin Linux di mana semua pengguna Windows domain secara otomatis mendapatkan account."
+msgstr "Winbind memberikan administrator sistem pilihan untuk menggunakan server Windows sebagai server otentikasi. Winbind juga terintegrasi secara bersih dengan PAM dan NSS. Hal ini memungkinkan menyiapkan mesin-mesin Linux di mana semua pengguna domain Windows secara otomatis mendapatkan akun."
 
 msgid "<primary>Winbind</primary>"
 msgstr "<primary>Winbind</primary>"
@@ -1652,9 +1586,8 @@ msgstr "Menata konfigurasi dengan <command>debconf</command>"
 msgid "The package sets up a minimal configuration during the initial installation but you should really run <command>dpkg-reconfigure samba-common</command> to adapt it:"
 msgstr "Paket menyiapkan sebuah konfigurasi minimal selama instalasi awal tetapi Anda mestinya menjalankan <command>dpkg-reconfigure samba-common</command> untuk mengadaptasinya:"
 
-#, fuzzy
 msgid "The first piece of required information is the name of the workgroup where the Samba server will belong (the answer is <literal>FALCOTNET</literal> in our case)."
-msgstr "Bagian pertama dari informasi yang diperlukan adalah nama workgroup mana Samba server akan menjadi milik (jawabannya adalah <literal>FALCOTNET</literal> dalam kasus kami)."
+msgstr "Bagian pertama dari informasi yang diperlukan adalah nama workgroup yang akan diikuti oleh server Samba (jawabannya adalah <literal>FALCOTNET</literal> dalam kasus kami)."
 
 msgid "The package also proposes identifying the WINS server from the information provided by the DHCP daemon. The Falcot Corp administrators rejected this option, since they intend to use the Samba server itself as the WINS server."
 msgstr "Paket juga mengusulkan mengidentifikasi server WINS dari informasi yang diberikan oleh daemon DHCP. Para administrator Falcot Corp menolak pilihan ini, karena mereka berniat untuk menggunakan server Samba itu sendiri sebagai server WINS."
@@ -1741,9 +1674,8 @@ msgstr ""
 msgid "Indicates that Samba should act as a Netbios name server (WINS) for the local network."
 msgstr "Menunjukkan bahwa Samba harus bertindak sebagai server nama Netbios (WINS) untuk jaringan lokal."
 
-#, fuzzy
 msgid "This is the default value for this parameter; however, since it is central to the Samba configuration, filling it explicitly is recommended. Each user must authenticate before accessing any share."
-msgstr "Ini adalah nilai default untuk parameter ini; Namun, karena itu pusat untuk konfigurasi Samba, mengisinya secara eksplisit direkomendasikan. Setiap pengguna harus mengotentikasi sebelum mengakses berbagi apapun."
+msgstr "Ini adalah nilai default untuk parameter ini; namun karena itu pusat bagi konfigurasi Samba, mengisinya secara eksplisit direkomendasikan. Setiap pengguna harus mengotentikasi sebelum mengakses share apapun."
 
 msgid "Adding Users"
 msgstr "Menambahkan Pengguna"
@@ -1754,16 +1686,14 @@ msgstr "Setiap pengguna Samba perlu sebuah akun di server; akun Unix harus dibua
 msgid "Adding an existing user to the Samba database is a matter of running the <command>smbpasswd -a <replaceable>user</replaceable></command> command; this command asks for the password interactively."
 msgstr "Menambahkan pengguna ke basis data Samba adalah sekedar menjalankan perintah <command>smbpasswd -a <replaceable>pengguna</replaceable></command>; perintah ini meminta kata sandi secara interaktif."
 
-#, fuzzy
 msgid "A user can be deleted with the <command>smbpasswd -x <replaceable>user</replaceable></command> command. A Samba account can also be temporarily disabled (with <command>smbpasswd -d <replaceable>user</replaceable></command>) and re-enabled later (with <command>smbpasswd -e <replaceable>user</replaceable></command>)."
-msgstr "Pengguna dapat dihapus dengan <command>smbpasswd - x <replaceable>pengguna</replaceable></command> perintah. Rekening Samba juga menjadi sementara dinonaktifkan (dengan <command>smbpasswd -d <replaceable>pengguna</replaceable></command>) dan diaktifkan kembali kemudian (dengan <command>smbpasswd -e <replaceable>pengguna</replaceable></command>)."
+msgstr "Pengguna dapat dihapus dengan perintah <command>smbpasswd - x <replaceable>pengguna</replaceable></command>. Akun Samba juga dapat sementara dinonaktifkan (dengan <command>smbpasswd -d <replaceable>pengguna</replaceable></command>) dan diaktifkan kembali kemudian (dengan <command>smbpasswd -e <replaceable>pengguna</replaceable></command>)."
 
 msgid "Samba Client"
 msgstr "Klien Samba"
 
-#, fuzzy
 msgid "The client features in Samba allow a Linux machine to access Windows shares and shared printers. The required programs are available in the <emphasis role=\"pkg\">cifs-utils</emphasis> and <emphasis role=\"pkg\">smbclient</emphasis> packages."
-msgstr "Fitur klien di Samba memungkinkan mesin Linux untuk mengakses Windows saham dan printer yang dibagi. Program yang diperlukan tersedia dalam paket yang <emphasis role=\"pkg\"> cifs-utils</emphasis> dan <emphasis role=\"pkg\"> smbclient</emphasis>."
+msgstr "Fitur klien di Samba memungkinkan mesin Linux untuk mengakses share Windows dan pencetak bersama. Program yang diperlukan tersedia dalam paket yang <emphasis role=\"pkg\">cifs-utils</emphasis> dan <emphasis role=\"pkg\">smbclient</emphasis>."
 
 msgid "<primary><emphasis>smbclient</emphasis></primary>"
 msgstr "<primary><emphasis>smbclient</emphasis></primary>"
@@ -1774,26 +1704,21 @@ msgstr "<primary><emphasis>cifs-utils</emphasis></primary>"
 msgid "The <command>smbclient</command> Program"
 msgstr "Program <command>smbclient</command>"
 
-#, fuzzy
 msgid "The <command>smbclient</command> program queries SMB servers. It accepts a <literal>-U <replaceable>user</replaceable></literal> option, for connecting to the server under a specific identity. <command>smbclient //<replaceable>server</replaceable>/<replaceable>share</replaceable></command> accesses the share in an interactive way similar to the command-line FTP client. <command>smbclient -L <replaceable>server</replaceable></command> lists all available (and visible) shares on a server."
-msgstr "<command>Smbclient</command> program query SMB server. Menerima <literal>-U <replaceable>pengguna</replaceable></literal> pilihan, untuk menghubungkan ke server di bawah identitas tertentu. <command>smbclient / / <replaceable>server</replaceable> / <replaceable>berbagi</replaceable></command> mengakses saham dalam cara interaktif yang mirip dengan FTP klien baris perintah. <command>smbclient -L <replaceable>server</replaceable></command> daftar seluruh saham yang tersedia (dan terlihat) pada server."
+msgstr "Program <command>smbclient</command> meng-query server SMB. Menerima opsi <literal>-U <replaceable>pengguna</replaceable></literal>, untuk menghubungkan ke server di bawah identitas tertentu. <command>smbclient //<replaceable>server</replaceable>/<replaceable>share</replaceable></command> mengakses share dengan cara interaktif yang mirip dengan baris perintah klien FTP. <command>smbclient -L <replaceable>server</replaceable></command> menampilkan daftar seluruh share yang tersedia (dan terlihat) pada server."
 
-#, fuzzy
 msgid "Mounting Windows Shares"
 msgstr "Mengait Share Windows"
 
-#, fuzzy
 msgid "The <command>mount</command> command allows mounting a Windows share into the Linux filesystem hierarchy (with the help of <command>mount.cifs</command> provided by <emphasis role=\"pkg\">cifs-utils</emphasis>)."
-msgstr "Perintah <command>Gunung</command> memungkinkan Mount jendela berbagi ke dalam hirarki filesystem Linux (dengan bantuan dari <command>mount.cifs</command> disediakan oleh <emphasis role=\"pkg\"> cifs-utils</emphasis>)."
+msgstr "Perintah <command>mount</command> memungkinkan mengait share Windows ke dalam hirarki sistem berkas Linux (dengan bantuan dari <command>mount.cifs</command> yang disediakan oleh <emphasis role=\"pkg\">cifs-utils</emphasis>)."
 
 msgid "<primary><command>mount.cifs</command></primary>"
 msgstr "<primary><command>mount.cifs</command></primary>"
 
-#, fuzzy
 msgid "<primary>Windows share, mounting</primary>"
-msgstr "<primary>share Windows, mengait</primary>"
+msgstr "<primary>Share Windows, mengait</primary>"
 
-#, fuzzy
 msgid "Mounting a Windows share"
 msgstr "Mengait suatu share Windows"
 
@@ -1812,29 +1737,25 @@ msgid ""
 "password = <replaceable>password</replaceable>"
 msgstr "\nusername = <replaceable>pengguna</replaceable>\npassword = <replaceable>kata sandi</replaceable>"
 
-#, fuzzy
 msgid "Other options can be specified on the command-line; their full list is available in the <citerefentry><refentrytitle>mount.cifs</refentrytitle> <manvolnum>1</manvolnum></citerefentry> manual page. Two options in particular can be interesting: <literal>uid</literal> and <literal>gid</literal> allow forcing the owner and group of files available on the mount, so as not to restrict access to root."
-msgstr "Pilihan bersantap lainnya dapat ditentukan pada baris perintah; Daftar lengkap mereka tersedia di halaman manual <citerefentry><refentrytitle>mount.cifs</refentrytitle> <manvolnum>1</manvolnum></citerefentry>. Dua pilihan khususnya dapat menarik: <literal>uid</literal> dan <literal>gid</literal> memungkinkan memaksa pemilik dan kelompok file yang tersedia di bukit, sehingga tidak untuk membatasi akses ke akar."
+msgstr "Opsi lain dapat dinyatakan pada baris perintah; daftar lengkap mereka tersedia di halaman manual <citerefentry><refentrytitle>mount.cifs</refentrytitle> <manvolnum>1</manvolnum></citerefentry>. Dua opsi secara khusus bisa menarik: <literal>uid</literal> dan <literal>gid</literal> memungkinkan memaksa pemilik dan kelompok berkas yang tersedia saat mount, agar tidak membatasi akses ke root."
 
-#, fuzzy
 msgid "A mount of a Windows share can also be configured in <filename>/etc/fstab</filename>:"
-msgstr "Mount jendela berbagi juga dapat dikonfigurasi <filename>di/etc/fstab</filename>:"
+msgstr "Mount share Windows juga dapat dikonfigurasi di <filename>/etc/fstab</filename>:"
 
 msgid ""
 "\n"
 "//<replaceable>server</replaceable>/shared /shared cifs credentials=/etc/smb-credentials"
 msgstr "\n//<replaceable>server</replaceable>/shared /shared cifs credentials=/etc/smb-credentials"
 
-#, fuzzy
 msgid "Unmounting a SMB/CIFS share is done with the standard <command>umount</command> command."
-msgstr "Unmounting SMB CIFS saham dilakukan dengan perintah standar <command>umount</command>."
+msgstr "Melepas kait share SMB/CIFS dilakukan dengan perintah standar <command>umount</command>."
 
 msgid "Printing on a Shared Printer"
 msgstr "Pencetakan pada Pencetak Bersama"
 
-#, fuzzy
 msgid "CUPS is an elegant solution for printing from a Linux workstation to a printer shared by a Windows machine. When the <emphasis role=\"pkg\">smbclient</emphasis> is installed, CUPS allows installing Windows shared printers automatically."
-msgstr "CUPS adalah solusi elegan untuk mencetak dari workstation Linux ke pencetak bersama oleh mesin Windows. Ketika <emphasis role=\"pkg\">smbclient</emphasis> dipasang, CUPS memungkinkan instalasi pencetak bersama Windows secara otomatis."
+msgstr "CUPS adalah solusi elegan untuk mencetak dari workstation Linux ke pencetak yang dibagikan oleh mesin Windows. Ketika <emphasis role=\"pkg\">smbclient</emphasis> dipasang, CUPS memungkinkan instalasi pencetak bersama Windows secara otomatis."
 
 msgid "<primary>printing</primary><secondary>network</secondary>"
 msgstr "<primary>pencetakan</primary><secondary>jaringan</secondary>"
@@ -2145,9 +2066,8 @@ msgstr "Perhatikan juga penggunaan opsi <literal>-c</literal> untuk perintah <co
 msgid "Managing Accounts with LDAP"
 msgstr "Mengelola akun dengan LDAP"
 
-#, fuzzy
 msgid "Now the LDAP database contains some useful information, the time has come to make use of this data. This section focuses on how to configure a Linux system so that the various system directories use the LDAP database."
-msgstr "Sekarang LDAP database berisi beberapa informasi yang berguna, waktunya telah tiba untuk membuat penggunaan data ini. Bagian ini berfokus pada bagaimana mengkonfigurasi sistem Linux sehingga berbagai sistem direktori menggunakan LDAP database."
+msgstr "Sekarang basis data LDAP berisi beberapa informasi yang berguna, waktunya telah tiba untuk memakai data ini. Bagian ini berfokus pada bagaimana mengkonfigurasi sistem Linux sehingga berbagai sistem direktori memanfaatkan basis data LDAP."
 
 msgid "Configuring NSS"
 msgstr "Mengkonfigurasi NSS"
@@ -2321,9 +2241,8 @@ msgstr "Mengamankan Pertukaran Data LDAP"
 msgid "<primary>LDAP</primary><secondary>secure</secondary>"
 msgstr "<primary>LDAP</primary><secondary>aman</secondary>"
 
-#, fuzzy
 msgid "By default, the LDAP protocol transits on the network as cleartext; this includes the (encrypted) passwords. Since the encrypted passwords can be extracted from the network, they can be vulnerable to dictionary-type attacks. This can be avoided by using an extra encryption layer; enabling this layer is the topic of this section."
-msgstr "Secara default, protokol LDAP transit pada jaringan sebagai cleartext; ini termasuk sandi (dienkripsi). Karena password terenkripsi dapat diekstrak dari jaringan, mereka dapat rentan terhadap serangan Kamus-jenis. Ini dapat dihindari dengan menggunakan lapisan tambahan enkripsi; memungkinkan lapisan ini adalah topik bagian ini."
+msgstr "Secara default, protokol LDAP transit pada jaringan sebagai teks polos; ini termasuk kata sandi (yang dienkripsi). Karena kata sandi terenkripsi dapat diekstrak dari jaringan, mereka dapat rentan terhadap serangan bertipe dictionary-attack. Ini dapat dihindari dengan menggunakan lapisan tambahan enkripsi; memfungsikan lapisan ini adalah topik bagian ini."
 
 msgid "Configuring the Server"
 msgstr "Menata Server"
@@ -2334,16 +2253,14 @@ msgstr "<primary><foreignphrase>OpenSSL</foreignphrase></primary><secondary>memb
 msgid "<primary>key pair</primary>"
 msgstr "<primary>pasangan kunci</primary>"
 
-#, fuzzy
 msgid "The first step is to create a key pair (comprising a public key and a private key) for the LDAP server. The Falcot administrators reuse <emphasis>easy-rsa</emphasis> to generate it (see <xref linkend=\"sect.easy-rsa\" />). Running <command>./build-key-server ldap.falcot.com</command> asks a few mundane questions (location, organization name and so on). The answer to the “common name” question <emphasis>must</emphasis> be the fully-qualified hostname for the LDAP server; in our case, <literal>ldap.falcot.com</literal>."
-msgstr "Langkah pertama adalah untuk menciptakan sepasang kunci (terdiri dari kunci publik dan kunci pribadi) untuk LDAP server. Para administrator Falcot kembali <emphasis>mudah-rsa</emphasis> untuk menghasilkan ini (Lihat <xref linkend=\"sect.easy-rsa\" />). Menjalankan <command>. / membangun-kunci-server ldap.falcot.com</command> mengajukan beberapa pertanyaan-pertanyaan biasa (lokasi, nama organisasi dan seterusnya). Jawaban untuk \"nama umum\" pertanyaan <emphasis>harus</emphasis> menjadi nama host kualifikasi untuk LDAP server; dalam kasus kami, <literal>ldap.falcot.com</literal>."
+msgstr "Langkah pertama adalah untuk membuat pasangan kunci (terdiri dari kunci publik dan kunci privat) untuk server LDAP. Para administrator Falcot kembali memakai <emphasis>easy-rsa</emphasis> untuk menghasilkan ini (lihat <xref linkend=\"sect.easy-rsa\" />). Menjalankan <command>. /build-key-server ldap.falcot.com</command> mengajukan beberapa pertanyaan biasa (lokasi, nama organisasi, dan seterusnya). Jawaban untuk pertanyaan \"common name\" <emphasis>harus</emphasis> berupa fully-qualified hostname untuk server LDAP; dalam kasus kami, <literal>ldap.falcot.com</literal>."
 
 msgid "This command creates a certificate in the <filename>keys/ldap.falcot.com.crt</filename> file; the corresponding private key is stored in <filename>keys/ldap.falcot.com.key</filename>."
 msgstr "Perintah ini akan membuat sertifikat dalam berkas <filename>keys/ldap.falcot.com.crt</filename>; kunci privat disimpan dalam <filename>keys/ldap.falcot.com.key</filename>."
 
-#, fuzzy
 msgid "Now these keys have to be installed in their standard location, and we must make sure that the private file is readable by the LDAP server which runs under the <literal>openldap</literal> user identity:"
-msgstr "Sekarang kunci ini harus dipasang di lokasi standar mereka, dan kita harus memastikan bahwa file pribadi tersebut dapat dibaca oleh server LDAP yang berjalan di bawah identitas pengguna <literal>pengguna openldap</literal>:"
+msgstr "Sekarang kunci ini harus dipasang di lokasi standar mereka, dan kita harus memastikan bahwa berkasi pribadi tersebut dapat dibaca oleh server LDAP yang berjalan di bawah identitas pengguna <literal>openldap</literal>:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>adduser openldap ssl-cert\n"
@@ -2388,13 +2305,11 @@ msgstr "<emphasis>ALAT</emphasis> <command>ldapvi</command> untuk menyunting dir
 msgid "<primary><command>ldapvi</command></primary>"
 msgstr "<primary><command>ldapvi</command></primary>"
 
-#, fuzzy
 msgid "With <command>ldapvi</command>, you can display an LDIF output of any part of the LDAP directory, make some changes in the text editor, and let the tool do the corresponding LDAP operations for you."
-msgstr "Dengan <command>ldapvi</command>, Anda dapat menampilkan LDIF output dari setiap bagian dari direktori LDAP, membuat beberapa perubahan dalam teks editor, dan membiarkan alat melakukan operasi LDAP sesuai untuk Anda."
+msgstr "Dengan <command>ldapvi</command>, Anda dapat menampilkan keluaran LDIF dari bagian manapun dari direktori LDAP, membuat beberapa perubahan dalam penyunting teks, dan membiarkan alat melakukan operasi LDAP yang sesuai untuk Anda."
 
-#, fuzzy
 msgid "It is thus a convenient way to update the configuration of the LDAP server, simply by editing the <literal>cn=config</literal> hierarchy."
-msgstr "Ianya cara mudah untuk memperbarui konfigurasi LDAP server, cukup dengan mengedit <literal>cn = konfigurasi</literal> hierarki."
+msgstr "Jadi itu adalah cara mudah untuk memperbarui konfigurasi server LDAP, cukup dengan menyunting hirarki <literal>cn=config</literal>."
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>ldapvi -Y EXTERNAL -h ldapi:/// -b cn=config\n"
@@ -2504,9 +2419,8 @@ msgstr "#\n#  Default LDAP\n#\n\n# Lihat ldap.conf(5) untuk rincian\n# Berkas in
 msgid "Real-Time Communication Services"
 msgstr "Layanan Komunikasi Real-Time"
 
-#, fuzzy
 msgid "Real-Time Communication (RTC) services include voice, video/webcam, instant messaging (IM) and desktop sharing. This chapter gives a brief introduction to three of the services required to operate RTC, including a TURN server, SIP server and XMPP server. Comprehensive details of how to plan, install and manage these services are available in the Real-Time Communications Quick Start Guide which includes examples specific to Debian. <ulink type=\"block\" url=\"http://rtcquickstart.org\" />"
-msgstr "Real-Time komunikasi (RTC) Layanan meliputi voice, video webcam, pesan instan (IM) dan berbagi pakai desktop. Bab ini memberikan pengantar singkat tiga layanan yang diperlukan untuk mengoperasikan RTC, termasuk TURN server, SIP server dan XMPP server. Komprehensif rincian tentang bagaimana untuk merencanakan, memasang dan mengelola layanan ini tersedia dalam Real-Time komunikasi Panduan Ringkas termasuk contoh spesifik untuk Debian. <ulink type=\"block\" url=\"http://rtcquickstart.org\" />"
+msgstr "Layanan Real-Time komunikasi (RTC) meliputi suara, video/webcam, pesan instan (IM), dan berbagi pakai desktop. Bab ini memberikan pengantar singkat tiga layanan yang diperlukan untuk mengoperasikan RTC, termasuk server TURN, server SIP, dan server XMPP. Rincian komprehensif tentang bagaimana untuk merencanakan, memasang, dan mengelola layanan ini tersedia dalam  Panduan Ringkas Komunikasi Real-Time termasuk contoh spesifik untuk Debian. <ulink type=\"block\" url=\"http://rtcquickstart.org\" />"
 
 msgid "<primary>VoIP</primary><secondary>server</secondary>"
 msgstr "<primary>VoIP</primary><secondary>server</secondary>"
@@ -2529,16 +2443,14 @@ msgstr "<primary>SIP</primary>"
 msgid "<primary>XMPP</primary>"
 msgstr "<primary>XMPP</primary>"
 
-#, fuzzy
 msgid "These services rely on X.509 certificates both for authentication and confidentiality purposes. See <xref linkend=\"sect.easy-rsa\" /> for details on how to create them. Alternatively the <emphasis>Real-Time Communications Quick Start Guide</emphasis> also has some useful explanations: <ulink type=\"block\" url=\"http://rtcquickstart.org/guide/multi/tls.html\" />"
-msgstr "Layanan ini bergantung pada sertifikat X.509 baik untuk otentikasi dan kerahasiaan. Lihat <xref linkend=\"sect.easy-rsa\" /> untuk rincian tentang bagaimana untuk menciptakan mereka. Atau <emphasis>Real-Time komunikasi Panduan Ringkas</emphasis> juga memiliki beberapa penjelasan yang berguna: <ulink type=\"block\" url=\"http://rtcquickstart.org/guide/multi/tls.html\" />"
+msgstr "Layanan-layanan ini bergantung pada sertifikat X.509 untuk otentikasi dan kerahasiaan. Lihat <xref linkend=\"sect.easy-rsa\" /> untuk rincian tentang bagaimana untuk menciptakan mereka. <emphasis> Panduan Ringkas Komunikasi Real-Time</emphasis> juga memiliki beberapa penjelasan yang berguna: <ulink type=\"block\" url=\"http://rtcquickstart.org/guide/multi/tls.html\" />"
 
 msgid "DNS settings for RTC services"
 msgstr "Pengaturan DNS untuk layanan RTC"
 
-#, fuzzy
 msgid "RTC services require DNS SRV and NAPTR records. A sample configuration that can be placed in the zone file for <literal>falcot.com</literal>:"
-msgstr "RTC Layanan memerlukan DNS SRV dan NAPTR records. Sampel konfigurasi yang dapat ditempatkan dalam file zona untuk <literal>falcot.com</literal>:"
+msgstr "Layanan RTC memerlukan record DNS SRV dan NAPTR. Suatu contoh konfigurasi yang dapat ditempatkan dalam berkas zona untuk <literal>falcot.com</literal>:"
 
 msgid "<primary>DNS</primary><secondary>SRV record</secondary>"
 msgstr "<primary>DNS</primary><secondary>record SRV</secondary>"
@@ -2580,14 +2492,12 @@ msgstr "\n; server tempat semua akan dijalankan\nserver1            IN     A    
 msgid "TURN Server"
 msgstr "Server TURN"
 
-#, fuzzy
 msgid "TURN is a service that helps clients behind NAT routers and firewalls to discover the most efficient way to communicate with other clients and to relay the media streams if no direct media path can be found. It is highly recommended that the TURN server is installed before any of the other RTC services are offered to end users."
-msgstr "TURN adalah layanan yang membantu klien di belakang NAT router dan firewall untuk menemukan cara yang paling efisien untuk berkomunikasi dengan klien lain dan relay media Stream jika tidak ada jalan langsung media dapat ditemukan. Sangat dianjurkan bahwa server TURN diinstal sebelum salah satu layanan RTC lainnya yang ditawarkan kepada pengguna akhir."
+msgstr "TURN adalah layanan yang membantu klien di belakang firewall dan router NAT untuk menemukan cara yang paling efisien untuk berkomunikasi dengan klien lain dan me-relay stream media jika tidak ditemukan path media yang langsung. Sangat dianjurkan untuk memasang server TURN sebelum salah satu layanan RTC lain ditawarkan kepada pengguna akhir."
 
 msgid "<primary>TURN</primary><secondary>server</secondary>"
 msgstr "<primary>TURN</primary><secondary>server</secondary>"
 
-#, fuzzy
 msgid "TURN and the related ICE protocol are open standards. To benefit from these protocols, maximizing connectivity and minimizing user frustration, it is important to ensure that all client software supports ICE and TURN."
 msgstr "TURN dan protokol ICE yang terkait adalah standar terbuka. Untuk memperoleh manfaat dari protokol-protokol ini, memaksimalkan konektivitas dan meminimalkan frustrasi, itu penting untuk memastikan bahwa semua perangkat lunak klien mendukung ICE dan TURN."
 

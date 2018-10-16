@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2018-10-13 11:50+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.2.1\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2018-10-29 15:51+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.3-dev\n"
 
 msgid "RAID"
 msgstr "RAID"
@@ -639,13 +639,13 @@ msgid ""
 "  /dev/sdf1       lvm2 ---  4.10g 4.10g\n"
 "  /dev/sdf2       lvm2 ---  5.22g 5.22g\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>pvdisplay</userinput>\n<computeroutput># </computeroutput><userinput>pvcreate /dev/sdb2</userinput>\n<computeroutput>  Physical volume \"/dev/sdb2\" successfully created\n# </computeroutput><userinput>pvdisplay</userinput>\n<computeroutput>  \"/dev/sdb2\" is a new physical volume of \"4.00 GiB\"\n  --- NEW Physical volume ---\n  PV Name               /dev/sdb2\n  VG Name               \n  PV Size               4.00 GiB\n  Allocatable           NO\n  PE Size               0   \n  Total PE              0\n  Free PE               0\n  Allocated PE          0\n  PV UUID               0zuiQQ-j1Oe-P593-4tsN-9FGy-TY0d-Quz31I\n\n# </computeroutput><userinput>for i in sdc3 sdd sdf1 sdf2 ; do pvcreate /dev/$i ; done</userinput>\n<computeroutput>  Physical volume \"/dev/sdc3\" successfully created\n  Physical volume \"/dev/sdd\" successfully created\n  Physical volume \"/dev/sdf1\" successfully created\n  Physical volume \"/dev/sdf2\" successfully created\n# </computeroutput><userinput>pvdisplay -C</userinput>\n<computeroutput>  PV         VG   Fmt  Attr PSize PFree\n  /dev/sdb2       lvm2 ---  4.00g 4.00g\n  /dev/sdc3       lvm2 ---  3.09g 3.09g\n  /dev/sdd        lvm2 ---  4.00g 4.00g\n  /dev/sdf1       lvm2 ---  4.10g 4.10g\n  /dev/sdf2       lvm2 ---  5.22g 5.22g\n</computeroutput>"
 
 msgid "So far, so good; note that a PV can be set up on a full disk as well as on individual partitions of it. As shown above, the <command>pvdisplay</command> command lists the existing PVs, with two possible output formats."
-msgstr ""
+msgstr "Sejauh ini, masih baik; perhatikan bahwa PV dapat disiapkan pada seluruh disk maupun pada partisi individunya. Seperti yang ditunjukkan di atas, perintah <command>pvdisplay</command> menampilkan daftar PVs yang ada, dengan dua format keluaran mungkin."
 
 msgid "Now let's assemble these physical elements into VGs using <command>vgcreate</command>. We'll gather only PVs from the fast disks into a <filename>vg_critical</filename> VG; the other VG, <filename>vg_normal</filename>, will also include slower elements."
-msgstr ""
+msgstr "Sekarang mari kita merakit elemen-elemen fisik ini menjadi VG menggunakan <command>vgcreate</command>. Kita akan mengumpulkan hanya PV-PV dari disk cepat ke VG <filename>vg_critical</filename>; VG lain, <filename>vg_normal</filename>, juga akan memuat elemen-elemen yang lebih lambat."
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>vgdisplay</userinput>\n"
@@ -681,13 +681,14 @@ msgid ""
 "  vg_critical   2   0   0 wz--n-  8.09g  8.09g\n"
 "  vg_normal     3   0   0 wz--n- 12.30g 12.30g\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>vgdisplay</userinput>\n<computeroutput>  No volume groups found\n# </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>\n<computeroutput>  Volume group \"vg_critical\" successfully created\n# </computeroutput><userinput>vgdisplay</userinput>\n<computeroutput>  --- Volume group ---\n  VG Name               vg_critical\n  System ID             \n  Format                lvm2\n  Metadata Areas        2\n  Metadata Sequence No  1\n  VG Access             read/write\n  VG Status             resizable\n  MAX LV                0\n  Cur LV                0\n  Open LV               0\n  Max PV                0\n  Cur PV                2\n  Act PV                2\n  VG Size               8.09 GiB\n  PE Size               4.00 MiB\n  Total PE              2071\n  Alloc PE / Size       0 / 0   \n  Free  PE / Size       2071 / 8.09 GiB\n  VG UUID               bpq7zO-PzPD-R7HW-V8eN-c10c-S32h-f6rKqp\n\n# </computeroutput><userinput>vgcreate vg_normal /dev/sdc3 /dev/sdd /dev/sdf2</userinput>\n<computeroutput>  Volume group \"vg_normal\" successfully created\n# </computeroutput><userinput>vgdisplay -C</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize  VFree \n  vg_critical   2   0   0 wz--n-  8.09g  8.09g\n  vg_normal     3   0   0 wz--n- 12.30g 12.30g\n</computeroutput>"
 
+#, fuzzy
 msgid "Here again, commands are rather straightforward (and <command>vgdisplay</command> proposes two output formats). Note that it is quite possible to use two partitions of the same physical disk into two different VGs. Note also that we used a <filename>vg_</filename> prefix to name our VGs, but it is nothing more than a convention."
-msgstr ""
+msgstr "Di sini lagi, perintah agak sederhana (dan <command>vgdisplay</command> mengusulkan dua format output). Perhatikan bahwa sangat mungkin untuk menggunakan dua partisi dari disk fisik yang sama ke dua berbeda VGs. Perhatikan juga bahwa kami menggunakan awalan <filename>vg_</filename> untuk nama VGs kami, tapi itu tidak lebih dari sebuah konvensi."
 
 msgid "We now have two “virtual disks”, sized about 8 GB and 12 GB, respectively. Let's now carve them up into “virtual partitions” (LVs). This involves the <command>lvcreate</command> command, and a slightly more complex syntax:"
-msgstr ""
+msgstr "Kita sekarang memiliki dua \"disk virtual\", masing-masing berukuran sekitar 8 GB dan 12 GB. Mari kita sekarang mengukir mereka ke dalam \"partisi virtual\" (LV). Ini melibatkan perintah <command>lvcreate</command>, dan sintaks yang agak lebih kompleks:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>lvdisplay</userinput>\n"
@@ -720,25 +721,26 @@ msgid ""
 "  lv_base    vg_critical -wi-a---  1.00g                                           \n"
 "  lv_files   vg_critical -wi-a---  5.00g                                           \n"
 "  lv_backups vg_normal   -wi-a--- 12.00g</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>lvdisplay</userinput>\n<computeroutput># </computeroutput><userinput>lvcreate -n lv_files -L 5G vg_critical</userinput>\n<computeroutput>  Logical volume \"lv_files\" created\n# </computeroutput><userinput>lvdisplay</userinput>\n<computeroutput>  --- Logical volume ---\n  LV Path                /dev/vg_critical/lv_files\n  LV Name                lv_files\n  VG Name                vg_critical\n  LV UUID                J3V0oE-cBYO-KyDe-5e0m-3f70-nv0S-kCWbpT\n  LV Write Access        read/write\n  LV Creation host, time mirwiz, 2015-06-10 06:10:50 -0400\n  LV Status              available\n  # open                 0\n  LV Size                5.00 GiB\n  Current LE             1280\n  Segments               2\n  Allocation             inherit\n  Read ahead sectors     auto\n  - currently set to     256\n  Block device           253:0\n\n# </computeroutput><userinput>lvcreate -n lv_base -L 1G vg_critical</userinput>\n<computeroutput>  Logical volume \"lv_base\" created\n# </computeroutput><userinput>lvcreate -n lv_backups -L 12G vg_normal</userinput>\n<computeroutput>  Logical volume \"lv_backups\" created\n# </computeroutput><userinput>lvdisplay -C</userinput>\n<computeroutput>  LV         VG          Attr     LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert\n  lv_base    vg_critical -wi-a---  1.00g                                           \n  lv_files   vg_critical -wi-a---  5.00g                                           \n  lv_backups vg_normal   -wi-a--- 12.00g</computeroutput>"
 
 msgid "Two parameters are required when creating logical volumes; they must be passed to the <command>lvcreate</command> as options. The name of the LV to be created is specified with the <literal>-n</literal> option, and its size is generally given using the <literal>-L</literal> option. We also need to tell the command what VG to operate on, of course, hence the last parameter on the command line."
-msgstr ""
+msgstr "Dua parameter diperlukan ketika membuat volume logis; mereka harus diberikan ke <command>lvcreate</command> sebagai opsi. Nama LV yang akan dibuat ditetapkan dengan opsi <literal>-n</literal>, dan ukurannya biasanya diberikan menggunakan opsi <literal>-L</literal>. Tentu saja kita juga perlu memberitahu ke perintah, VG mana yang dikenai operasi, maka diberikanlah parameter terakhir pada baris perintah."
 
 msgid "<emphasis>GOING FURTHER</emphasis> <command>lvcreate</command> options"
-msgstr ""
+msgstr "<emphasis>LEBIH JAUH</emphasis> opsi-opsi <command>lvcreate</command>"
 
+#, fuzzy
 msgid "The <command>lvcreate</command> command has several options to allow tweaking how the LV is created."
-msgstr ""
+msgstr "Perintah <command>lvcreate</command> memiliki beberapa opsi untuk memungkinkan men-tweak atas bagaimaian cara LV dibuat."
 
 msgid "Let's first describe the <literal>-l</literal> option, with which the LV's size can be given as a number of blocks (as opposed to the “human” units we used above). These blocks (called PEs, <emphasis>physical extents</emphasis>, in LVM terms) are contiguous units of storage space in PVs, and they can't be split across LVs. When one wants to define storage space for an LV with some precision, for instance to use the full available space, the <literal>-l</literal> option will probably be preferred over <literal>-L</literal>."
-msgstr ""
+msgstr "Mari kita pertama menjelaskan opsi <literal>-l</literal>, dengannya ukuran LV dapat diberikan sebagai cacah blok (sebagai lawan dari unit \"manusia\" yang kita digunakan di atas). Blok-blok ini (disebut PE, <emphasis>physical extents</emphasis> dalam istilah LVM) adalah unit-unit ruang penyimpanan yang bersebelahan di PV, dan mereka tidak dapat dipecah di LV. Ketika seseorang ingin menentukan ruang penyimpanan untuk LV secara cukup presisi, misalnya menggunakan seluruh ruang yang tersedia, opsi <literal>-l</literal> mungkin akan lebih disukai daripada <literal>-L</literal>."
 
 msgid "It's also possible to hint at the physical location of an LV, so that its extents are stored on a particular PV (while staying within the ones assigned to the VG, of course). Since we know that <filename>sdb</filename> is faster than <filename>sdf</filename>, we may want to store the <filename>lv_base</filename> there if we want to give an advantage to the database server compared to the file server. The command line becomes: <command>lvcreate -n lv_base -L 1G vg_critical /dev/sdb2</command>. Note that this command can fail if the PV doesn't have enough free extents. In our example, we would probably have to create <filename>lv_base</filename> before <filename>lv_files</filename> to avoid this situation – or free up some space on <filename>sdb2</filename> with the <command>pvmove</command> command."
-msgstr ""
+msgstr "Memungkinkan juga untuk menunjuk pada lokasi fisik LV, sehingga extent disimpan pada PV tertentu (tentu saja masih tetap ada di dalam yang ditugaskan untuk VG). Karena kita tahu bahwa <filename>sdb</filename> lebih cepat daripada <filename>sdf</filename>, kita mungkin ingin menyimpan <filename>lv_base</filename> di sana jika kita ingin memberikan keuntungan kepada server basis data dibandingkan dengan server berkas. Baris perintah menjadi: <command>lvcreate -n lv_base -L 1G vg_critical /dev/sdb2</command>. Perhatikan bahwa perintah ini bisa gagal jika PV tidak memiliki cukup extent bebas. Dalam contoh kita, kita mungkin harus membuat <filename>lv_base</filename> sebelum <filename>lv_files</filename> untuk menghindari situasi ini - atau membebaskan sebagian ruang di <filename>sdb2</filename> dengan perintah <command>pvmove</command>."
 
 msgid "Logical volumes, once created, end up as block device files in <filename>/dev/mapper/</filename>:"
-msgstr ""
+msgstr "Volume logis, sekali dibuat, akan menjadi berkas perangkat blok dalam <filename>/dev/mapper/</filename>:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>ls -l /dev/mapper</userinput>\n"
@@ -752,19 +754,19 @@ msgid ""
 "brw-rw---- 1 root disk 253, 1 Jun 10 17:05 /dev/dm-1\n"
 "brw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>ls -l /dev/mapper</userinput>\n<computeroutput>total 0\ncrw------- 1 root root 10, 236 Jun 10 16:52 control\nlrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_base -&gt; ../dm-1\nlrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_files -&gt; ../dm-0\nlrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_normal-lv_backups -&gt; ../dm-2\n# </computeroutput><userinput>ls -l /dev/dm-*</userinput>\n<computeroutput>brw-rw---T 1 root disk 253, 0 Jun 10 17:05 /dev/dm-0\nbrw-rw---- 1 root disk 253, 1 Jun 10 17:05 /dev/dm-1\nbrw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2\n</computeroutput>"
 
 msgid "<emphasis>NOTE</emphasis> Autodetecting LVM volumes"
-msgstr ""
+msgstr "<emphasis>CATATAN</emphasis> Mendeteksi otomatis volume LVM"
 
 msgid "When the computer boots, the <filename>lvm2-activation</filename> systemd service unit executes <command>vgchange -aay</command> to “activate” the volume groups: it scans the available devices; those that have been initialized as physical volumes for LVM are registered into the LVM subsystem, those that belong to volume groups are assembled, and the relevant logical volumes are started and made available. There is therefore no need to edit configuration files when creating or modifying LVM volumes."
-msgstr ""
+msgstr "Ketika komputer boot, unit layanan systemd <filename>lvm2-activation</filename> mengeksekusi <command>vgchange -aay</command> untuk \"mengaktifkan\" kelompok volume: memindai perangkat yang tersedia; yang telah diinisialisasi sebagai fisik untuk LVM didaftarkan ke subsistem LVM, yang berasal dari kelompok-kelompok volume dirakit, dan volume logis yang relevan dimulai dan dibuat tersedia. Karena itu tidak perlu menyunting berkas konfigurasi ketika membuat atau memodifikasi volume-volume LVM."
 
 msgid "Note, however, that the layout of the LVM elements (physical and logical volumes, and volume groups) is backed up in <filename>/etc/lvm/backup</filename>, which can be useful in case of a problem (or just to sneak a peek under the hood)."
-msgstr ""
+msgstr "Namun, perlu diketahui bahwa tata letak elemen LVM (volume fisik dan logis, dan kelompok-kelompok volume) direkam cadang dalam <filename>/etc/lvm/backup</filename>, yang dapat berguna dalam hal ada masalah (atau hanya untuk sekedar mengintip di balik layar)."
 
 msgid "To make things easier, convenience symbolic links are also created in directories matching the VGs:"
-msgstr ""
+msgstr "Untuk membuat semua lebih mudah, taut simbolik juga dibuat dalam direktori-direktori yang cocok dengan VG:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>ls -l /dev/vg_critical</userinput>\n"
@@ -774,10 +776,10 @@ msgid ""
 "# </computeroutput><userinput>ls -l /dev/vg_normal</userinput>\n"
 "<computeroutput>total 0\n"
 "lrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_backups -&gt; ../dm-2</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>ls -l /dev/vg_critical</userinput>\n<computeroutput>total 0\nlrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_base -&gt; ../dm-1\nlrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_files -&gt; ../dm-0\n# </computeroutput><userinput>ls -l /dev/vg_normal</userinput>\n<computeroutput>total 0\nlrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_backups -&gt; ../dm-2</computeroutput>"
 
 msgid "The LVs can then be used exactly like standard partitions:"
-msgstr ""
+msgstr "LV kemudian dapat digunakan persis seperti partisi standar:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>mkfs.ext4 /dev/vg_normal/lv_backups</userinput>\n"
@@ -799,16 +801,16 @@ msgid ""
 "/dev/vg_critical/lv_base    /srv/base       ext4 defaults 0 2\n"
 "/dev/vg_critical/lv_files   /srv/files      ext4 defaults 0 2\n"
 "/dev/vg_normal/lv_backups   /srv/backups    ext4 defaults 0 2</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mkfs.ext4 /dev/vg_normal/lv_backups</userinput>\n<computeroutput>mke2fs 1.42.12 (29-Aug-2014)\nCreating filesystem with 3145728 4k blocks and 786432 inodes\nFilesystem UUID: b5236976-e0e2-462e-81f5-0ae835ddab1d\n[...]\nCreating journal (32768 blocks): done\nWriting superblocks and filesystem accounting information: done \n# </computeroutput><userinput>mkdir /srv/backups</userinput>\n<computeroutput># </computeroutput><userinput>mount /dev/vg_normal/lv_backups /srv/backups</userinput>\n<computeroutput># </computeroutput><userinput>df -h /srv/backups</userinput>\n<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n/dev/mapper/vg_normal-lv_backups   12G   30M   12G   1% /srv/backups\n# </computeroutput><userinput>[...]</userinput>\n<computeroutput>[...]\n# </computeroutput><userinput>cat /etc/fstab</userinput>\n<computeroutput>[...]\n/dev/vg_critical/lv_base    /srv/base       ext4 defaults 0 2\n/dev/vg_critical/lv_files   /srv/files      ext4 defaults 0 2\n/dev/vg_normal/lv_backups   /srv/backups    ext4 defaults 0 2</computeroutput>"
 
 msgid "From the applications' point of view, the myriad small partitions have now been abstracted into one large 12 GB volume, with a friendlier name."
-msgstr ""
+msgstr "Dari sudut pandang aplikasi, berbagai partisi kecil sekarang telah diabstrakkan ke dalam satu volume 12 GB besar, dengan nama yang lebih mudah."
 
 msgid "LVM Over Time"
-msgstr ""
+msgstr "LVM Dari Waktu Ke Waktu"
 
 msgid "Even though the ability to aggregate partitions or physical disks is convenient, this is not the main advantage brought by LVM. The flexibility it brings is especially noticed as time passes, when needs evolve. In our example, let's assume that new large files must be stored, and that the LV dedicated to the file server is too small to contain them. Since we haven't used the whole space available in <filename>vg_critical</filename>, we can grow <filename>lv_files</filename>. For that purpose, we'll use the <command>lvresize</command> command, then <command>resize2fs</command> to adapt the filesystem accordingly:"
-msgstr ""
+msgstr "Meskipun kemampuan untuk mengagregasi partisi atau disk fisik itu nyaman, ini bukanlah keuntungan utama yang dibawa oleh LVM. Fleksibilitas yang dibawanya terutama teramati seiring berjalannya waktu, ketika kebutuhan berevolusi. Dalam contoh kita, mari kita asumsikan bahwa berkas besar baru harus disimpan, dan bahwa LV yang didedikasikan untuk server berkas terlalu kecil untuk menampung mereka. Karena kita belum menggunakan seluruh ruang yang tersedia di <filename>vg_critical</filename>, kita bisa perbesar <filename>lv_files</filename>. Untuk tujuan tersebut, kita akan menggunakan perintah <command>lvresize</command>, lalu <command>resize2fs</command> untuk mengadaptasi sistem berkas:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>df -h /srv/files/</userinput>\n"
@@ -835,19 +837,19 @@ msgid ""
 "# </computeroutput><userinput>df -h /srv/files/</userinput>\n"
 "<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n"
 "/dev/mapper/vg_critical-lv_files  6.9G  4.6G  2.1G  70% /srv/files</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>df -h /srv/files/</userinput>\n<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_files  5.0G  4.6G  146M  97% /srv/files\n# </computeroutput><userinput>lvdisplay -C vg_critical/lv_files</userinput>\n<computeroutput>  LV       VG          Attr     LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert\n  lv_files vg_critical -wi-ao-- 5.00g\n# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree\n  vg_critical   2   2   0 wz--n- 8.09g 2.09g\n# </computeroutput><userinput>lvresize -L 7G vg_critical/lv_files</userinput>\n<computeroutput>  Size of logical volume vg_critical/lv_files changed from 5.00 GiB (1280 extents) to 7.00 GiB (1792 extents).\n  Logical volume lv_files successfully resized\n# </computeroutput><userinput>lvdisplay -C vg_critical/lv_files</userinput>\n<computeroutput>  LV       VG          Attr     LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert\n  lv_files vg_critical -wi-ao-- 7.00g\n# </computeroutput><userinput>resize2fs /dev/vg_critical/lv_files</userinput>\n<computeroutput>resize2fs 1.42.12 (29-Aug-2014)\nFilesystem at /dev/vg_critical/lv_files is mounted on /srv/files; on-line resizing required\nold_desc_blocks = 1, new_desc_blocks = 1\nThe filesystem on /dev/vg_critical/lv_files is now 1835008 (4k) blocks long.\n\n# </computeroutput><userinput>df -h /srv/files/</userinput>\n<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_files  6.9G  4.6G  2.1G  70% /srv/files</computeroutput>"
 
 msgid "<emphasis>CAUTION</emphasis> Resizing filesystems"
-msgstr ""
+msgstr "<emphasis>HATI-HATI</emphasis> Mengubah ukuran sistem berkas"
 
 msgid "Not all filesystems can be resized online; resizing a volume can therefore require unmounting the filesystem first and remounting it afterwards. Of course, if one wants to shrink the space allocated to an LV, the filesystem must be shrunk first; the order is reversed when the resizing goes in the other direction: the logical volume must be grown before the filesystem on it. It's rather straightforward, since at no time must the filesystem size be larger than the block device where it resides (whether that device is a physical partition or a logical volume)."
-msgstr ""
+msgstr "Tidak semua sistem berkas dapat diubah ukurannya secara daring; mengubah ukuran volume oleh karena itu mungkin pertama memerlukan melepas kait sistem berkas dan mengait ulang setelah itu. Tentu saja, jika seseorang ingin mengecilkan ruang yang dialokasikan untuk LV, sistem berkas harus diperkecil dulu; urutan dibalik ketika perubahan ukuran untuk arah lain: volume logis harus diperbesar sebelum sistem berkas di atasnya. Hal ini cukup sederhana, karena kapanpun ukuran sistem tidak boleh lebih besar dari perangkat blok tempat dia berada (apakah perangkat berupa partisi fisik atau volume logis)."
 
 msgid "The ext3, ext4 and xfs filesystems can be grown online, without unmounting; shrinking requires an unmount. The reiserfs filesystem allows online resizing in both directions. The venerable ext2 allows neither, and always requires unmounting."
-msgstr ""
+msgstr "Sistem berkas ext3, ext4, dan xfs dapat diperbesar secara daring, tanpa melepas kain; menyusutkan memerlukan melepas kait. Sistem berkas reiserfs memungkinkan perubahan ukuran secara daring di kedua arah. ext2 tidak memungkinkan keduanya, dan selalu membutuhkan melepas kait."
 
 msgid "We could proceed in a similar fashion to extend the volume hosting the database, only we've reached the VG's available space limit:"
-msgstr ""
+msgstr "Kita bisa melanjutkan dengan cara yang sama untuk memperbesar volume yang mewadai basis data, tapi kita telah mencapai batas ruang VG yang tersedia:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>df -h /srv/base/</userinput>\n"
@@ -856,7 +858,7 @@ msgid ""
 "# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n"
 "<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree \n"
 "  vg_critical   2   2   0 wz--n- 8.09g 92.00m</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>df -h /srv/base/</userinput>\n<computeroutput>Filesystem                       Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_base 1008M  854M  104M  90% /srv/base\n# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree \n  vg_critical   2   2   0 wz--n- 8.09g 92.00m</computeroutput>"
 
 msgid "No matter, since LVM allows adding physical volumes to existing volume groups. For instance, maybe we've noticed that the <filename>sdb1</filename> partition, which was so far used outside of LVM, only contained archives that could be moved to <filename>lv_backups</filename>. We can now recycle it and integrate it to the volume group, and thereby reclaim some available space. This is the purpose of the <command>vgextend</command> command. Of course, the partition must be prepared as a physical volume beforehand. Once the VG has been extended, we can use similar commands as previously to grow the logical volume then the filesystem:"
 msgstr ""
