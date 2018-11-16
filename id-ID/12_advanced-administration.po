@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2018-10-29 15:51+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.3-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2018-11-16 06:49+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.3-dev\n"
 
 msgid "RAID"
 msgstr "RAID"
@@ -861,7 +861,7 @@ msgid ""
 msgstr "<computeroutput># </computeroutput><userinput>df -h /srv/base/</userinput>\n<computeroutput>Filesystem                       Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_base 1008M  854M  104M  90% /srv/base\n# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree \n  vg_critical   2   2   0 wz--n- 8.09g 92.00m</computeroutput>"
 
 msgid "No matter, since LVM allows adding physical volumes to existing volume groups. For instance, maybe we've noticed that the <filename>sdb1</filename> partition, which was so far used outside of LVM, only contained archives that could be moved to <filename>lv_backups</filename>. We can now recycle it and integrate it to the volume group, and thereby reclaim some available space. This is the purpose of the <command>vgextend</command> command. Of course, the partition must be prepared as a physical volume beforehand. Once the VG has been extended, we can use similar commands as previously to grow the logical volume then the filesystem:"
-msgstr ""
+msgstr "Tidak masalah, karena LVM memungkinkan menambahkan volume fisik ke grup volume yang ada. Misalnya, mungkin kita telah memperhatikan bahwa partisi <filename>sdb1</filename>, yang sejauh ini digunakan di luar LVM, hanya berisi arsip yang dapat dipindahkan ke <filename>lv_backups</filename>. Kita sekarang dapat mendaur ulang itu dan mengintegrasikannya ke grup volume, dan dengan demikian memperoleh kembali ruang bebas. Ini adalah tujuan dari perintah <command>vgextend</command>. Tentu saja, partisi harus disiapkan sebagai sebuah volume fisik terlebih dahulu. Setelah VG telah diperbesar, kita dapat menggunakan perintah sejenis seperti yang sebelumnya untuk menumbuhkan volume logis kemudian sistem berkasnya:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>pvcreate /dev/sdb1</userinput>\n"
@@ -876,19 +876,20 @@ msgid ""
 "# </computeroutput><userinput>df -h /srv/base/</userinput>\n"
 "<computeroutput>Filesystem                       Size  Used Avail Use% Mounted on\n"
 "/dev/mapper/vg_critical-lv_base  2.0G  854M  1.1G  45% /srv/base</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>pvcreate /dev/sdb1</userinput>\n<computeroutput>  Physical volume \"/dev/sdb1\" successfully created\n# </computeroutput><userinput>vgextend vg_critical /dev/sdb1</userinput>\n<computeroutput>  Volume group \"vg_critical\" successfully extended\n# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree\n  vg_critical   3   2   0 wz--n- 9.09g 1.09g\n# </computeroutput><userinput>[...]</userinput>\n<computeroutput>[...]\n# </computeroutput><userinput>df -h /srv/base/</userinput>\n<computeroutput>Filesystem                       Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_base  2.0G  854M  1.1G  45% /srv/base</computeroutput>"
 
 msgid "<emphasis>GOING FURTHER</emphasis> Advanced LVM"
-msgstr ""
+msgstr "<emphasis>LEBIH JAUH</emphasis> LVM tingkat lanjut"
 
+#, fuzzy
 msgid "LVM also caters for more advanced uses, where many details can be specified by hand. For instance, an administrator can tweak the size of the blocks that make up physical and logical volumes, as well as their physical layout. It is also possible to move blocks across PVs, for instance to fine-tune performance or, in a more mundane way, to free a PV when one needs to extract the corresponding physical disk from the VG (whether to affect it to another VG or to remove it from LVM altogether). The manual pages describing the commands are generally clear and detailed. A good entry point is the <citerefentry><refentrytitle>lvm</refentrytitle> <manvolnum>8</manvolnum></citerefentry> manual page."
-msgstr ""
+msgstr "LVM juga melayani untuk kegunaan yang lebih maju, dimana banyak rincian dapat ditentukan dengan tangan. Misalnya, administrator dapat men-tweak ukuran blok yang membuat volume fisik dan logis, serta letak fisik mereka. Hal ini juga mungkin untuk memindahkan blok di PVs, misalnya untuk menyempurnakan kinerja atau, dalam cara yang lebih biasa, untuk membebaskan PV ketika salah satu kebutuhan untuk mengekstrak disk fisik yang sesuai dari VG (baik untuk mempengaruhi untuk VG lain atau menghapusnya dari LVM sama sekali). Halaman manual yang menggambarkan perintah umumnya jelas dan rinci. Titik entri yang baik adalah <citerefentry><refentrytitle>lvm</refentrytitle> <manvolnum>8</manvolnum></citerefentry> halaman manual."
 
 msgid "RAID or LVM?"
-msgstr ""
+msgstr "RAID atau LVM?"
 
 msgid "RAID and LVM both bring indisputable advantages as soon as one leaves the simple case of a desktop computer with a single hard disk where the usage pattern doesn't change over time. However, RAID and LVM go in two different directions, with diverging goals, and it is legitimate to wonder which one should be adopted. The most appropriate answer will of course depend on current and foreseeable requirements."
-msgstr ""
+msgstr "RAID dan LVM keduanya membawa keuntungan tak terbantahkan bila kita abaikan kasus sederhana komputer desktop dengan satu hard disk dengan pola penggunaan tidak berubah dari waktu ke waktu. Namun, RAID dan LVM mengambil arah yang berbeda, dengan tujuan divergen, dan sah-sah saja bertanya-tanya mana yang harus diambil. Jawaban paling tepat akan tentu saja tergantung pada kebutuhan saat ini dan masa mendatang."
 
 msgid "There are a few simple cases where the question doesn't really arise. If the requirement is to safeguard data against hardware failures, then obviously RAID will be set up on a redundant array of disks, since LVM doesn't really address this problem. If, on the other hand, the need is for a flexible storage scheme where the volumes are made independent of the physical layout of the disks, RAID doesn't help much and LVM will be the natural choice."
 msgstr ""
