@@ -29,3 +29,22 @@ rm -f public/*/images/cover.png  # Cover picture (only used in PDF/ePub)
 rm -f public/*/images/*.dia      # Sources of diagrams
 
 jdupes --recurse --linksoft --paramorder public/en-US $(ls -d public/*-*|grep -v en-US)
+
+cat >public/index.html <<EOF
+<html>
+<body>
+<h1>Automated builds of the Debian Administrator's Handbook</h1>
+<p>The following languages are auto-built out of the $CI_COMMIT_REF_NAME
+branch. At the time of the build, the branch was pointing
+to commit $CI_COMMIT_SHA.</p>
+<ul>
+EOF
+for dir in public/*-*; do
+    lang=$(basename $dir)
+    echo "<li><a href='$lang'>$lang</a></li>" >>public/index.html
+done
+cat >>public/index.html <<EOF
+</ul>
+</body>
+</html>
+EOF
