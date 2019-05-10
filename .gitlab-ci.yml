@@ -1,8 +1,14 @@
 image: 'debian:buster'
+variables:
+  # Languages to build for the website (we're limited to 100Mb so we must
+  # build only a subset of the available languages).
+  LANGS: 'ar-MA cs-CZ de-DE en-US es-ES fa-IR fr-FR id-ID it-IT ja-JP nb-NO pt-BR ru-RU zh-CN zh-TW'
+  # Not very active: nl-NL pl-PL sv-SE vi-VN
+  # Never really started: da-DK el-GR hr-HR ko-KR ro-RO
 
 before_script:
   - apt-get update
-  - apt-get -y install publican rdfind
+  - apt-get -y install publican jdupes
 
 ensure_build:
   stage: test

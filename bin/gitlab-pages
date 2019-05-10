@@ -4,7 +4,9 @@
 
 check_cwd
 
-LANGS=[a-z][a-z]-[A-Z][A-Z]
+if [ -z "$LANGS" ]; then
+    LANGS=[a-z][a-z]-[A-Z][A-Z]
+fi
 
 for lang in $LANGS; do
     mkdir -p public/$lang
@@ -26,5 +28,4 @@ rm -f public/*/images/chap-*.png # Chapter pictures only used in PDF
 rm -f public/*/images/cover.png  # Cover picture (only used in PDF/ePub)
 rm -f public/*/images/*.dia      # Sources of diagrams
 
-# XXX: The symlinks are absolute, they are not working for gitlab pages
-#rdfind -makesymlinks true -makeresultsfile false public/en-US public
+jdupes --recurse --linksoft --paramorder public/en-US $(ls -d public/*-*|grep -v en-US)
