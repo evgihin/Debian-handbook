@@ -1,0 +1,28 @@
+#!/bin/sh
+
+. $(dirname $0)/common.sh
+
+check_cwd
+
+LANGS=[a-z][a-z]-[A-Z][A-Z]
+
+for lang in $LANGS; do
+    mkdir -p public/$lang
+    publish_dir=$(get_publish_directory "$lang" "html")
+    tempfile=$(mktemp build-log-$lang-XXXXXX)
+    echo "Building HTML version for lang=$lang"
+    if ./bin/build-html --lang=$lang >$tempfile 2>&1; then
+	mv $publish_dir/debian-handbook/* public/$lang/
+	echo "SUCCESS."
+    else
+	echo "ERROR: Build failed. Last 200 lines of the build log:"
+	tail -n 200 $tempfile
+    fi
+    mv $tempfile public/$lang/build-log.txt
+done
+
+# Some cleanups to save space
+rm -f public/*/images/chap-*.png # Chapter pictures only used in PDF
+rm -f public/*/images/cover.png  # Cover picture (only used in PDF/ePub)
+rm -f public/*/images/*.dia      # Sources of diagrams
+rdfind -makesymlinks true -makeresultsfile false public/en-US public

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+. $(dirname $0)/common.sh
+
+check_cwd
+
+LANGS=[a-z][a-z]-[A-Z][A-Z]
+ret=0
+
+for lang in $LANGS; do
+    tempfile=$(mktemp build-log-$lang-XXXXXX)
+    echo "Building TXT version for lang=$lang"
+    if publican build --formats=txt --langs=$lang >$tempfile 2>&1; then
+	echo "SUCCESS."
+    else
+	echo "ERROR: Build failed. Here's the build log:"
+	cat $tempfile
+	ret=1
+    fi
+    rm -f $tempfile
+done
+
+exit $ret

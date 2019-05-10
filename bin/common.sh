@@ -36,6 +36,13 @@ get_release() {
     echo "$release"
 }
 
+get_publish_directory() {
+    local lang="${1:-en-US}"
+    local format="${2:-html}"
+    local version=$(get_product_version)
+    echo "publish/$lang/Debian/$version/$format"
+}
+
 parse_options() {
     local temp
     temp=$(getopt -o l:so: -l lang:,skip,opts: -- "$@")

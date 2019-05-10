@@ -1,0 +1,22 @@
+image: 'debian:buster'
+
+before_script:
+  - apt-get update
+  - apt-get -y publican rdfind
+
+ensure_build:
+  stage: test
+  script:
+    - bin/gitlab-check
+  except:
+    - buster/master
+
+pages:
+  stage: deploy
+  script:
+    - bin/gitlab-pages
+  artifacts:
+    paths:
+      - public
+  only:
+    - buster/master
