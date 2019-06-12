@@ -44,17 +44,18 @@
   <indexterm><primary>installer</primary></indexterm>
   <indexterm><primary><command>debian-installer</command></primary></indexterm>
 
+  <!-- MAYCHANGE: hardware requirements -->
   <para>Installation requires 128 MB of RAM (Random Access Memory) and at
   least 2 GB of hard drive space. All Falcot computers meet these
   criteria. Note, however, that these figures apply to the installation of
-  a very limited system without a graphical desktop. A minimum of 512 MB
+  a very limited system without a graphical desktop. A minimum of 1 GB
   of RAM and 10 GB of hard drive space are really recommended for a basic
   office desktop workstation.</para>
 
   <sidebar>
-    <title><emphasis>BEWARE</emphasis> Upgrading from Jessie</title>
+    <title><emphasis>BEWARE</emphasis> Upgrading from Stretch</title>
 
-    <para>If you already have Debian Jessie installed on your computer, this
+    <para>If you already have Debian Stretch installed on your computer, this
     chapter is not for you! Unlike other distributions, Debian allows
     updating a system from one version to the next without having to
     reinstall the system. Reinstalling, in addition to being unnecessary,
@@ -100,7 +101,7 @@
       about 150 to 280 MB (depending on architecture).
       On the other hand, the complete set offers all packages and
       allows for installation on a computer that has no Internet access;
-      it requires around 14 DVD-ROMs (or 3 Blu-ray disks). There is no
+      it requires around 16 DVD-ROMs (or 4 Blu-ray disks). There is no
       more official CD-ROMs set as they were really huge, rarely used and
       now most of the computers use DVD-ROMs as well as CD-ROMs. But the
       programs are divided among the disks
@@ -138,7 +139,7 @@
       <indexterm><primary>DVD-ROM</primary><secondary>installation DVD-ROM</secondary></indexterm>
       <indexterm><primary>DVD-ROM</primary><secondary><emphasis>netinst DVD-ROM</emphasis></secondary></indexterm>
 
-      <para>To acquire Debian CD-ROM images, you may of course download
+      <para>To acquire Debian CD-ROM images, you may, of course, download
       them and burn them to disk. You may also purchase them, and, thus,
       provide the project with a little financial support. Check the
       website to see the list of DVD-ROM image vendors and download sites.
@@ -162,9 +163,9 @@
       (ex: <literal>/dev/sdb</literal>); the simplest means to do this
       is to check the messages issued by the kernel using the
       <command>dmesg</command> command. Then you must copy the
-      previously downloaded ISO image (for example
-      debian-9.0.0-amd64-netinst.iso) with the command
-      <command>cat debian-9.0.0-amd64-netinst.iso &gt;/dev/sdb;
+      previously downloaded ISO image (for example,
+      debian-10.0.0-amd64-netinst.iso) with the command
+      <command>cat debian-10.0.0-amd64-netinst.iso &gt;/dev/sdb;
       sync</command>.  This command requires administrator rights,
       since it accesses the USB key directly and blindly erases its
       content.</para>
@@ -240,7 +241,7 @@
       (<emphasis>amd64</emphasis>) and the installation of the 32 bit
       variant remains available in a dedicated sub-menu (“32-bit install
       options”). If you have a 32 bit processor, you don't get a choice
-      and the menu entries install the 32 bit variant
+      and the menu entries install the 32-bit variant
       (<emphasis>i386</emphasis>).
       </para>
 
@@ -250,7 +251,7 @@
         <indexterm><primary>Physical Address Extension</primary></indexterm>
         <indexterm><primary>32/64 bits, choice</primary></indexterm>
 
-	<para>The fundamental difference between 32 and 64 bit systems is
+	<para>The fundamental difference between 32- and 64-bit systems is
 	the size of memory addresses. In theory, a 32 bit system can not
 	work with more than 4 GB of RAM (2<superscript>32</superscript>
 	bytes). In practice, it is possible to work around this limitation
@@ -262,9 +263,9 @@
 
 	<para>For an office computer (where a few percent difference in
 	performance is negligible), you must keep in mind that some
-	proprietary programs are not available in 64 bit versions (such as
-        Skype, for example). It is technically possible to make them work
-        on 64 bit systems, but you have to install the 32 bit versions of
+	proprietary programs are not available in 64 bit versions.
+        It is technically possible to make them work
+        on 64-bit systems, but you have to install the 32-bit versions of
         all the necessary libraries (see <xref linkend="sect.multi-arch" />),
         and sometimes to use <command>setarch</command> or
         <command>linux32</command> (in the <emphasis
@@ -293,9 +294,9 @@
 	will download a light Debian installer and set it up on the hard
 	disk. You then only need to reboot the computer and choose between
 	normal Windows boot or booting the installation program. You can
-	also find it on a dedicated website with a rather explicit name…
+	also find it on a dedicated website with a rather explicit title…
 	<ulink type="block" url="http://ftp.debian.org/debian/tools/win32-loader/stable/"/>
-        <ulink type="block" url="http://www.goodbye-microsoft.com/"/>
+        <ulink type="block" url="https://people.debian.org/~rmh/goodbye-microsoft/"/>
         </para>
       </sidebar>
 
@@ -343,8 +344,8 @@
       <para>Once booted, the installation program guides you step by
       step throughout the process. This section presents each of these
       steps in detail. Here we follow the process of an installation
-      from an amd64 DVD-ROM (more specifically, the rc3 version
-      of the installer for Stretch); <emphasis>netinst</emphasis>
+      from an amd64 DVD-ROM (more specifically, the rc1 version
+      of the installer for Buster); <emphasis>netinst</emphasis>
       installations, as well as the final release of the installer,
       may look slightly different. We will also address installation
       in graphical mode, but the only difference from “classic”
@@ -451,7 +452,7 @@
       <para>The installer can work with the vast majority of drives,
       especially standard ATAPI peripherals (sometimes called IDE and
       EIDE). However, if detection of the CD-ROM reader fails, the
-      installer offers the choice to load a kernel module (for instance
+      installer offers the choice to load a kernel module (for instance,
       from a USB key) corresponding to the CD-ROM driver.</para>
     </section>
     <section id="sect.install-load-components">
@@ -640,8 +641,8 @@
       systems, setting one drive for each is also a solution that can
       facilitate partitioning. In both of these cases, the next screen
       offers to choose the disk where Linux will be installed by selecting
-      the corresponding entry (for example, “SCSI3 (0,0,0) (sda) - 17.2
-      GB ATA VBOX HARDDISK”). You then start guided partitioning.</para>
+      the corresponding entry (for example, “SCSI1 (0,0,0) (sda) - 21.5
+      GB ATA QEMU HARDDISK”). You then start guided partitioning.</para>
 
       <figure>
         <title>Disk to use for guided partitioning</title>
@@ -683,7 +684,7 @@
 	first will house the complete system, the second the virtual memory
 	(swap).</para>
 
-	<para>The second method, “Separate <filename>/home/</filename>
+	<para>The second method, “Separate <filename>/home</filename>
 	partition”, is similar, but splits the file hierarchy in two: one
 	partition contains the Linux system (<filename>/</filename>), and
 	the second contains “home directories” (meaning user data, in
