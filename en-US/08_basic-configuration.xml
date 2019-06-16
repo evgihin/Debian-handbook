@@ -414,7 +414,6 @@ $ </computeroutput><userinput>ls travail/</userinput>
     connection and have no specific requirements). If a configuration is required
     (for example for a WiFi interface), then it will create the appropriate
     file in <filename>/etc/NetworkManager/system-connections/</filename>.</para>
-      
     <para>If Network Manager is not installed, then the installer
     will configure <emphasis role="pkg">ifupdown</emphasis> by creating
     the <filename>/etc/network/interfaces</filename> file. A line starting with
@@ -1555,24 +1554,24 @@ nameserver 8.8.8.8
 
     <para>Printer configuration used to cause a great many headaches for
     administrators and users alike. These headaches are now mostly a thing
-    of the past, thanks to <emphasis
-    role="pkg">cups</emphasis>, the free print server using the IPP
-    protocol (Internet Printing Protocol).</para>
+    of the past, thanks to CUPS, the free print server using the IPP
+    (Internet Printing Protocol).</para>
     <indexterm><primary>IPP</primary></indexterm>
     <indexterm><primary>Internet Printing Protocol</primary></indexterm>
-    <indexterm><primary><command>cups</command></primary></indexterm>
+    <indexterm><primary>CUPS</primary></indexterm>
 
-    <para>This program is divided over several Debian packages: <emphasis
-    role="pkg">cups</emphasis> is the central print server; <emphasis
-    role="pkg">cups-bsd</emphasis> is a compatibility layer allowing use of
-    commands from the traditional BSD printing system
-    (<command>lpd</command> daemon, <command>lpr</command> and
-    <command>lpq</command> commands, etc.); <emphasis
-    role="pkg">cups-client</emphasis> contains a group of programs to
-    interact with the server (block or unblock a printer, view or delete
-    print jobs in progress, etc.); and finally, <emphasis
-    role="pkg">printer-driver-gutenprint</emphasis> contains a collection of
-    additional printer drivers for <command>cups</command>.</para>
+    <para>Debian distributes CUPS divided between several packages. The heart
+    of the system is the scheduler, cupsd, which is in the
+    <emphasis role="pkg">cups-daemon</emphasis>
+    package. <emphasis role="pkg">cups-client</emphasis> contains utility
+    programs to interact with the server, cupsd. lpadmin is probably the most
+    important utility, as it is crucial for setting up a printer, but there are
+    also facilities to disable or enable a printer queue, view or delete print
+    jobs and display or set printer options. The CUPS framework is based on the
+    System V printing system, but there is a compatibility package, <emphasis
+    role="pkg">cups-bsd</emphasis>, allowing use of commands such as
+    <command>lpr</command>, <command>lpq</command> and <command>lprm</command>
+    from the traditional BSD printing system.</para>
     <indexterm><primary><command>lpr</command></primary></indexterm>
     <indexterm><primary><command>lpd</command></primary></indexterm>
     <indexterm><primary><command>lpq</command></primary></indexterm>
@@ -1582,35 +1581,56 @@ nameserver 8.8.8.8
       <indexterm><primary>CUPS</primary></indexterm>
       <indexterm><primary>Common Unix Printing System</primary></indexterm>
 
-      <para>CUPS (Common Unix Printing System) is a project (and a trademark)
-      managed by Apple, Inc.
-      <ulink type="block" url="http://www.cups.org/"/></para>
+      <para>CUPS is a project and a trademark owned and managed by Apple, Inc.
+      Prior to its acquisition by Apple it was known as the Commmon Unix
+      Printing System.
+      <ulink type="block" url="https://www.cups.org/"/></para>
     </sidebar>
 
-    <para>After installation of these different packages,
-    <command>cups</command> is administered easily through a web
-    interface accessible at the local address:
-    <literal>http://localhost:631/</literal>. There you can add
-    printers (including network printers), remove, and administer
-    them.  You can also administer <command>cups</command> with the
-    graphical interface provided by the desktop environment.  Finally,
-    there is also the <command>system-config-printer</command>
-    graphical interface (from the Debian package of the same
-    name).</para>
+    <para>The scheduler manages print jobs and these jobs traverse a filtering
+    system to produce a file that the printer will understand and print.
+    The filtering system is provided by the <emphasis
+        role="pkg">cups-filters</emphasis> (<ulink
+        url="https://salsa.debian.org/printing-team/cups-filters" />)
+    package in conjuction with <emphasis
+        role="pkg">printer-driver-*</emphasis> packages. CUPS in
+    combination with <emphasis role="pkg">cups-filters</emphasis> and
+    <emphasis role="pkg">printer-driver-*</emphasis> is the basis for the
+    Debian printing system.</para>
+
+    <para>Modern printers manufactured and sold within the last ten years are
+        nearly always AirPrint-capable, and CUPS and cups-filters on Debian
+        Buster have everything which is needed to take advantage of this
+        facility on the network. In essence, these printers are IPP printers and
+        an excellent fit for a driverless printing system, reducing the system
+        to CUPS plus cups-filters. A printer-driver package can be dispensed with,
+        and non-free printing software from vendors like Canon and Brother is no
+        longer required. A USB-connected printer can take advantage of a modern
+        printer with the <emphasis role="pkg">ippusbxd</emphasis> package.</para>
+
+    <para>The command <command>apt install cups</command> will install CUPS and
+        cups-filters. It will also install the
+        recommended <emphasis role="pkg">printer-driver-gutenprint</emphasis>
+        to provide a driver for a wide range of printers, but, unless the
+        printer is being operated driverlessly, an alternative printer-driver
+        might be needed for the particular device.</para>
+
+    <para>As a package recommended by <emphasis
+            role="pkg">cups-daemon</emphasis>, <emphasis
+            role="pkg">cups-browsed</emphasis> will be on the system and
+        networked print queues, and modern printers can be automatically
+        discovered and set up from their DNS-SD broadcasts (Bonjour). USB
+        printers will have to be set up manually as described in the next
+        paragraph.</para>
+
+    <para>The printing system is administered easily through a web interface
+        accessible at the local address <literal>http://localhost:631/</literal>.
+        There you can add and remove USB and network printers and administer
+        most aspects of their behaviour. Similar administration tasks can also
+        be carried out via the graphical interface provided by a desktop
+        environment or the <command>system-config-printer</command> graphical
+        interface (from the homonym Debian package).</para>
     <indexterm><primary><command>cups</command></primary><secondary>administration</secondary></indexterm>
-
-    <sidebar>
-      <title><emphasis>NOTE</emphasis> Obsolescence of <filename>/etc/printcap</filename></title>
-
-      <para><emphasis>cups</emphasis> no longer uses the
-      <filename>/etc/printcap</filename> file, which is now obsolete.
-      Programs that rely upon this file to get a list of available printers
-      will, thus, fail. To avoid this problem, delete this file and make it
-      a symbolic link (see sidebar <xref linkend="sidebar.symbolic-link"/>)
-      to <filename>/run/cups/printcap</filename>, which is maintained
-      by <emphasis>cups</emphasis> to ensure compatibility.</para>
-      <indexterm><primary><filename>printcap</filename></primary></indexterm>
-    </sidebar>
   </section>
   <section id="sect.config-bootloader">
     <title>Configuring the Bootloader</title>
@@ -2548,7 +2568,7 @@ arrakis:/shared /shared         nfs     defaults        0       0
 	proper Debian packages, the recommended way to build such packages
 	was to use <command>make-kpkg</command> from the
 	<emphasis role="pkg">kernel-package</emphasis> package.</para>
-	
+
       </sidebar>
 
     </section>
