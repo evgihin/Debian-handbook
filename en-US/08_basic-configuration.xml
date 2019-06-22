@@ -335,13 +335,12 @@ $ </computeroutput><userinput>ls travail/</userinput>
       <para>Most modern local networks use the Ethernet protocol, where
       data is split into small blocks called frames and transmitted on the
       wire one frame at a time. Data speeds vary from 10 Mb/s for older
-      Ethernet cards to 10 Gb/s in the newest cards (with the most common
-      rate currently growing from 100 Mb/s to 1 Gb/s). The most widely
-      used cables are called 10BASE-T, 100BASE-T, 1000BASE-T or 10GBASE-T
-      depending on the throughput they can reliably provide (the T stands
-      for “twisted pair”); those cables end in an RJ45 connector. There
-      are other cable types, used mostly for speeds of
-      1 Gb/s and above.</para>
+      Ethernet cards to 100 Gb/s in the newest cards (with the most common
+      rate currently growing from 100 Mb/s to 10 Gb/s). The most widely
+      used cables are called 10BASE-T, 100BASE-T, 1000BASE-T, 10GBASE-T and
+      40GBASE-T, depending on the throughput they can reliably provide (the T
+      stands for “twisted pair”); those cables end in an RJ45 connector. There
+      are other cable types, used mostly for speeds of 10 Gb/s and above.</para>
 
       <indexterm><primary>address, IP address</primary></indexterm>
       <indexterm><primary>IP address</primary></indexterm>
@@ -412,7 +411,7 @@ $ </computeroutput><userinput>ls travail/</userinput>
     for full desktop installations), then it might be that no configuration
     is actually required (for example, if you rely on DHCP on a wired
     connection and have no specific requirements). If a configuration is required
-    (for example for a WiFi interface), then it will create the appropriate
+    (for example, for a WiFi interface), then it will create the appropriate
     file in <filename>/etc/NetworkManager/system-connections/</filename>.</para>
     <para>If Network Manager is not installed, then the installer
     will configure <emphasis role="pkg">ifupdown</emphasis> by creating
@@ -448,7 +447,7 @@ $ </computeroutput><userinput>ls travail/</userinput>
       <filename>/etc/network/interfaces</filename> if you want
       Network Manager to handle them.
       <ulink type="block" url="https://wiki.gnome.org/Projects/NetworkManager/SystemSettings"/>
-      <ulink type="block" url="https://developer.gnome.org/NetworkManager/1.6/ref-settings.html"/>
+      <ulink type="block" url="https://developer.gnome.org/NetworkManager/1.14/ref-settings.html"/>
       </para>
     </sidebar>
 
@@ -803,7 +802,7 @@ adsl:2345:respawn:/usr/sbin/pppd call dsl-provider
 	  cable, and the reason it is used.</para>
 
           <para>Note that this distinction has become almost
-          irrelevant over time, as modern network cards are able do
+          irrelevant over time, as modern network cards are able to
           detect the type of cable present and adapt accordingly, so
           it won't be unusual that both kinds of cable will work in a
           given location.</para>
@@ -1035,7 +1034,7 @@ nameserver 8.8.8.8
 
     <para>The list of users is usually stored in the
     <filename>/etc/passwd</filename> file, while the
-    <filename>/etc/shadow</filename> file stores encrypted passwords. Both
+    <filename>/etc/shadow</filename> file stores hashed passwords. Both
     are text files, in a relatively simple format, which can be read and
     modified with a text editor. Each user is listed there on a line with
     several fields separated with a colon
@@ -1171,7 +1170,7 @@ nameserver 8.8.8.8
 
 	<para><filename>/etc/shadow</filename>, unlike its alter-ego,
 	<filename>/etc/passwd</filename>, cannot be read by regular users.
-	Any encrypted password stored in <filename>/etc/passwd</filename>
+	Any hashed password stored in <filename>/etc/passwd</filename>
 	is readable by anybody; a cracker could try to “break” (or
 	reveal) a password by one of several “brute force” methods
 	which, simply put, guess at commonly used combinations of
@@ -1874,9 +1873,13 @@ other=/dev/sda1
 	the first disk thus detected, <literal>(hd1)</literal> the
 	second, etc.  In most cases, this order corresponds exactly to
 	the usual order of disks under Linux, but problems can occur
-	when you associate SCSI and IDE disks. GRUB stores
+	when you associate SCSI and IDE disks. GRUB used to store the
 	correspondences that it detects in the file
-	<filename>/boot/grub/device.map</filename>. If you find errors
+    <filename>/boot/grub/device.map</filename>, GRUB avoids this problem
+    nowadays by using UUIDs or file system labels when generating
+    <filename>grub.cfg</filename>. However, the device map file is not obsolete
+    yet, since it can be used to override when the current environment is
+    different from the one on boot. If you find errors
 	there (because you know that your BIOS detects drives in a
 	different order), correct them manually and run
 	<command>grub-install</command> again.
@@ -1911,65 +1914,6 @@ other=/dev/sda1
       <filename>20_linux_xen</filename> takes into account Xen virtual systems,
       and <filename>30_os-prober</filename> lists other operating systems
       (Windows, OS X, Hurd).</para>
-    </section>
-    <!-- TODO: Get rid of the yaboot section -->
-    <section id="sect.config-yaboot">
-      <title>For Macintosh Computers (PowerPC): Configuring Yaboot</title>
-      <indexterm><primary><command>yaboot</command></primary></indexterm>
-
-      <para>Yaboot is the bootloader used by old Macintosh computers using
-      PowerPC processors. They do not boot like PCs, but rely on a
-      “bootstrap” partition, from which the BIOS (or OpenFirmware)
-      executes the loader, and on which the <command>ybin</command> program
-      installs <command>yaboot</command> and its configuration file. You
-      will only need to run this command again if the
-      <filename>/etc/yaboot.conf</filename> is modified (it is duplicated
-      on the bootstrap partition, and <command>yaboot</command> knows how
-      to find the position of the kernels on the disks).</para>
-
-      <para>Before executing <command>ybin</command>, you must first have a
-      valid <filename>/etc/yaboot.conf</filename>. The following is an
-      example of a minimal configuration.
-      <indexterm><primary><command>ybin</command></primary></indexterm></para>
-
-      <example id="example.yaboot.conf">
-        <title>Yaboot configuration file</title>
-
-        <programlisting>
-# bootstrap partition
-boot=/dev/sda2
-# the disk
-device=hd:
-# the Linux partition
-partition=3
-root=/dev/sda3
-# boot after 3 seconds of inactivity
-# (timeout is in tenths of seconds)
-timeout=30
-
-install=/usr/lib/yaboot/yaboot
-magicboot=/usr/lib/yaboot/ofboot
-enablecdboot
-
-# last kernel installed
-image=/vmlinux
-        label=linux
-        initrd=/initrd.img
-        read-only
-
-# old kernel
-image=/vmlinux.old
-        label=old
-        initrd=/initrd.img.old
-        read-only
-
-# only for Linux/Mac OSX dual-boot
-macosx=/dev/sda5
-
-# bsd=/dev/sdaX and macos=/dev/sdaX
-# are also possible
-</programlisting>
-      </example>
     </section>
   </section>
   <section id="sect.config-misc">
@@ -2528,7 +2472,7 @@ arrakis:/shared /shared         nfs     defaults        0       0
       <title><emphasis>GOING FURTHER</emphasis> The Debian Kernel Handbook</title>
       <indexterm><primary><emphasis role="pkg">debian-kernel-handbook</emphasis></primary></indexterm>
 
-      <para>The Debian kernel teams maintains the “Debian Kernel Handbook”
+      <para>The Debian kernel team maintains the “Debian Kernel Handbook”
       (also available in the <emphasis
       role="pkg">debian-kernel-handbook</emphasis> package) with
       comprehensive documentation about most kernel related tasks and about how
@@ -2559,7 +2503,6 @@ arrakis:/shared /shared         nfs     defaults        0       0
       <emphasis role="pkg">fakeroot</emphasis> package will enable creation of the
       Debian package without using administrator's rights.</para>
 
-      <!-- TODO -->
       <sidebar>
         <title><emphasis>CULTURE</emphasis> The good old days of <emphasis role="pkg">kernel-package</emphasis></title>
         <indexterm><primary><emphasis role="pkg">kernel-package</emphasis></primary></indexterm>
@@ -2597,14 +2540,14 @@ arrakis:/shared /shared         nfs     defaults        0       0
       kernel versions, new features not yet (entirely) merged in the upstream
       Linux tree, and sometimes even Debian specific changes.</para>
 
-      <para>The remainder of this section focuses on the 4.9 version of
+      <para>The remainder of this section focuses on the 4.19 version of
       the Linux kernel, but the examples can, of course, be adapted to the
       particular version of the kernel that you want.</para>
 
       <para>We assume the <emphasis
-      role="pkg">linux-source-4.9</emphasis> package has been installed.
+      role="pkg">linux-source-4.19</emphasis> package has been installed.
       It contains
-      <filename>/usr/src/linux-source-4.9.tar.xz</filename>, a
+      <filename>/usr/src/linux-source-4.19.tar.xz</filename>, a
       compressed archive of the kernel sources. You must extract these
       files in a new directory (not directly under
       <filename>/usr/src/</filename>, since there is no need for special
@@ -2613,7 +2556,7 @@ arrakis:/shared /shared         nfs     defaults        0       0
 
       <screen>
 <computeroutput>$ </computeroutput><userinput>mkdir ~/kernel; cd ~/kernel</userinput>
-<computeroutput>$ </computeroutput><userinput>tar -xaf /usr/src/linux-source-4.9.tar.xz</userinput>
+<computeroutput>$ </computeroutput><userinput>tar -xaf /usr/src/linux-source-4.19.tar.xz</userinput>
 </screen>
 
       <sidebar>
@@ -2654,7 +2597,7 @@ arrakis:/shared /shared         nfs     defaults        0       0
       kernel sources.</para>
 
       <screen>
-<computeroutput>$ </computeroutput><userinput>cp /boot/config-4.9.0-3-amd64 ~/kernel/linux-source-4.9/.config</userinput>
+<computeroutput>$ </computeroutput><userinput>cp /boot/config-4.19.0-5-amd64 ~/kernel/linux-source-4.19/.config</userinput>
 </screen>
 
       <para>Unless you need to change the configuration, you can stop here
@@ -2721,7 +2664,7 @@ arrakis:/shared /shared         nfs     defaults        0       0
         <title><emphasis>NOTE</emphasis> Clean up before rebuilding</title>
 
 	<para>If you have already compiled once in the directory and wish
-	to rebuild everything from scratch (for example because you substantially
+	to rebuild everything from scratch (for example, because you substantially
 	changed the kernel configuration), you will have to run
 	<command>make clean</command> to remove the compiled files.
 	<command>make distclean</command> removes even more generated files,
@@ -2758,10 +2701,9 @@ arrakis:/shared /shared         nfs     defaults        0       0
       <screen><computeroutput>$ </computeroutput><userinput>make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
 </userinput><computeroutput>[...]
 $ </computeroutput><userinput>ls ../*.deb
-</userinput><computeroutput>../linux-headers-4.9.30-ckt4-falcot_4.9.30-1_amd64.deb
-../linux-image-4.9.30-ckt4-falcot_4.9.30-1_amd64.deb
-../linux-image-4.9.30-ckt4-falcot-dbg_4.9.30-1_amd64.deb
-../linux-libc-dev_4.9.30-1_amd64.deb
+</userinput><computeroutput>../linux-headers-4.19.37-falcot_4.19.37-1_amd64.deb
+../linux-image-4.19.37-falcot_4.19.37-1_amd64.deb
+../linux-libc-dev_4.19.37-1_amd64.deb
 </computeroutput></screen>
     </section>
     <section id="sect.modules-build">
@@ -2774,26 +2716,27 @@ $ </computeroutput><userinput>ls ../*.deb
       kernel. To use them, they must be compiled alongside the
       matching kernel. A number of common third party modules are
       provided by Debian in dedicated packages, such as <emphasis
-      role="pkg">xtables-addons-source</emphasis> (extra modules for
-      iptables) or <emphasis role="pkg">oss4-source</emphasis> (Open
-      Sound System, some alternative audio drivers).</para>
+      role="pkg">vpb-driver-source</emphasis> (extra modules for
+      Voicetronix telefony hardware) or <emphasis
+      role="pkg">leds-alix-source</emphasis> (driver of PCEngines ALIX 2/3
+      boards).</para>
 
-      <para>These external packages are many and varied and we won't list
-      them all here; the <command>apt-cache search source$</command>
-      command can narrow down the search field. However, a complete list
+      <para>These packages are many and varied,
+      <command>apt-cache rdepends module-assistant$</command>
+      can show the list provided by Debian. However, a complete list
       isn't particularly useful since there is no particular reason for
       compiling external modules except when you know you need it. In such
       cases, the device's documentation will typically detail the specific
       module(s) it needs to function under Linux.</para>
 
       <para>For example, let's look at the <emphasis
-      role="pkg">xtables-addons-source</emphasis> package: after installation, a
+      role="pkg">dahdi-source</emphasis> package: after installation, a
       <filename>.tar.bz2</filename> of the module's sources is stored in
       <filename>/usr/src/</filename>. While we could manually extract
       the tarball and build the module, in practice we prefer to automate
       all this using DKMS. Most modules offer the required DKMS integration
       in a package ending with a <literal>-dkms</literal> suffix. In our case,
-      installing <emphasis role="pkg">xtables-addons-dkms</emphasis> is all that is
+      installing <emphasis role="pkg">dahdi-dkms</emphasis> is all that is
       needed to compile the kernel module for the current kernel provided that
       we have the <emphasis role="pkg">linux-headers-*</emphasis> package
       matching the installed kernel. For instance, if you use
@@ -2801,31 +2744,30 @@ $ </computeroutput><userinput>ls ../*.deb
       also install <emphasis role="pkg">linux-headers-amd64</emphasis>.</para>
 
       <screen>
-<computeroutput>$ </computeroutput><userinput>sudo apt install xtables-addons-dkms</userinput>
+<computeroutput>$ </computeroutput><userinput>sudo apt install dahdi-dkms</userinput>
 <computeroutput>
 [...]
 Setting up xtables-addons-dkms (2.12-0.1) ...
 Loading new xtables-addons-2.12 DKMS files...
-Building for 4.9.0-3-amd64
-Building initial module for 4.9.0-3-amd64
+Building for 4.19.0-5-amd64
+Building initial module for 4.19.0-5-amd64
 Done.
 
-xt_ACCOUNT:
+dahdi_dummy.ko:
 Running module version sanity check.
  - Original module
    - No original module exists within this kernel
  - Installation
-   - Installing to /lib/modules/4.9.0-3-amd64/updates/dkms/
+   - Installing to /lib/modules/4.19.0-5-amd64/updates/dkms/
 [...]
 DKMS: install completed.
 $ </computeroutput><userinput>sudo dkms status</userinput>
-<computeroutput>xtables-addons, 2.12, 4.9.0-3-amd64, x86_64: installed
-$ </computeroutput><userinput>sudo modinfo xt_ACCOUNT</userinput>
-<computeroutput>filename:       /lib/modules/4.9.0-3-amd64/updates/dkms/xt_ACCOUNT.ko
-license:        GPL
-alias:          ipt_ACCOUNT
-author:         Intra2net AG &lt;opensource@intra2net.com&gt;
-description:    Xtables: per-IP accounting for large prefixes
+<computeroutput>dahdi, DEB_VERSION, 4.19.0-5-amd64, x86_64: installed
+$ </computeroutput><userinput>sudo modinfo dahdi_dummy</userinput>
+<computeroutput>filename:       /lib/modules/4.19.0-5-amd64/updates/dkms/dahdi_dummy.ko
+license:        GPL v2
+author:         Robert Pleh &lt;robert.pleh@hermes.si&gt;
+description:    Timing-Only Driver
 [...]
 </computeroutput>
 </screen>
@@ -2839,8 +2781,8 @@ description:    Xtables: per-IP accounting for large prefixes
 	solution to build and deploy kernel modules. It can still be
 	used, in particular for packages lacking DKMS integration:
 	with a simple command like <command>module-assistant
-	auto-install xtables-addons</command> (or <command>m-a a-i
-	xtables-addons</command> for short), the modules are compiled
+	auto-install dadhi</command> (or <command>m-a a-i
+	dahdi</command> for short), the modules are compiled
 	for the current kernel, put in a new Debian package, and that
 	package gets installed on the fly.
 	</para>
@@ -2942,7 +2884,7 @@ description:    Xtables: per-IP accounting for large prefixes
       where <literal><replaceable>package</replaceable>.deb</literal> is
       the name of a <emphasis role="pkg">linux-image</emphasis> package
       such as
-      <filename>linux-image-4.9.30-ckt4-falcot_1_amd64.deb</filename>.</para>
+      <filename>linux-image-4.19.37-falcot_1_amd64.deb</filename>.</para>
 
       <para>The configuration steps described in this chapter are basic and
       can lead both to a server system or a workstation, and it can be
