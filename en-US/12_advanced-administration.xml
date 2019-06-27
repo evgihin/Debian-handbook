@@ -56,13 +56,10 @@
 
       <para>While LVM and RAID are two distinct kernel subsystems that
       come between the disk block devices and their filesystems,
-      <emphasis>btrfs</emphasis> is a new filesystem, initially
+      <emphasis>btrfs</emphasis> is a filesystem, initially
       developed at Oracle, that purports to combine the featuresets of
-      LVM and RAID and much more. It is mostly functional, and
-      although it is still tagged “experimental” because its
-      development is incomplete (some features aren't implemented
-      yet), it has already seen some use in production environments.
-      <ulink type="block" url="http://btrfs.wiki.kernel.org/"/></para>
+      LVM and RAID and much more.
+      <ulink type="block" url="https://btrfs.wiki.kernel.org/index.php/Main_Page"/></para>
 
       <para>Among the noteworthy features are the ability to take a
       snapshot of a filesystem tree at any point in time. This snapshot
@@ -385,46 +382,50 @@ mdadm: array /dev/md0 started.
 <computeroutput>/dev/md0: 8.00GiB raid0 2 devices, 0 spares. Use mdadm --detail for more detail.
 # </computeroutput><userinput>mdadm --detail /dev/md0</userinput>
 <computeroutput>/dev/md0:
-        Version : 1.2
-  Creation Time : Wed May  6 09:24:34 2015
-     Raid Level : raid0
-     Array Size : 8387584 (8.00 GiB 8.59 GB)
-   Raid Devices : 2
-  Total Devices : 2
-    Persistence : Superblock is persistent
+           Version : 1.2
+     Creation Time : Tue Jun 25 08:47:49 2019
+        Raid Level : raid0
+        Array Size : 8378368 (7.99 GiB 8.58 GB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
 
-    Update Time : Wed May  6 09:24:34 2015
-          State : clean 
- Active Devices : 2
-Working Devices : 2
- Failed Devices : 0
-  Spare Devices : 0
+       Update Time : Tue Jun 25 08:47:49 2019
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
 
-     Chunk Size : 512K
+        Chunk Size : 512K
 
-           Name : mirwiz:0  (local to host mirwiz)
-           UUID : bb085b35:28e821bd:20d697c9:650152bb
-         Events : 0
+Consistency Policy : none
+
+              Name : mirwiz:0  (local to host debian)
+              UUID : 146e104f:66ccc06d:71c262d7:9af1fbc7
+            Events : 0
 
     Number   Major   Minor   RaidDevice State
-       0       8       16        0      active sync   /dev/sdb
-       1       8       32        1      active sync   /dev/sdc
+       0       8       32        0      active sync   /dev/sdb
+       1       8       48        1      active sync   /dev/sdc
 # </computeroutput><userinput>mkfs.ext4 /dev/md0</userinput>
-<computeroutput>mke2fs 1.42.12 (29-Aug-2014)
-Creating filesystem with 2095104 4k blocks and 524288 inodes
-Filesystem UUID: fff08295-bede-41a9-9c6a-8c7580e520a6
+<computeroutput>mke2fs 1.44.5 (15-Dec-2018)
+Discarding device blocks: done                            
+Creating filesystem with 2094592 4k blocks and 524288 inodes
+Filesystem UUID: 413c3dff-ab5e-44e7-ad34-cf1a029cfe98
 Superblock backups stored on blocks: 
-        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
 
 Allocating group tables: done                            
 Writing inode tables: done                            
-Creating journal (32768 blocks): done
+Creating journal (16384 blocks): done
 Writing superblocks and filesystem accounting information: done 
+
 # </computeroutput><userinput>mkdir /srv/raid-0</userinput>
 <computeroutput># </computeroutput><userinput>mount /dev/md0 /srv/raid-0</userinput>
 <computeroutput># </computeroutput><userinput>df -h /srv/raid-0</userinput>
 <computeroutput>Filesystem      Size  Used Avail Use% Mounted on
-/dev/md0        7.9G   18M  7.4G   1% /srv/raid-0
+/dev/md0        7.9G   36M  7.4G   1% /srv/raid-0
 </computeroutput>
 </screen>
 
@@ -462,29 +463,33 @@ mdadm: array /dev/md1 started.
 <computeroutput>/dev/md1: 4.00GiB raid1 2 devices, 0 spares. Use mdadm --detail for more detail.
 # </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
 <computeroutput>/dev/md1:
-        Version : 1.2
-  Creation Time : Wed May  6 09:30:19 2015
-     Raid Level : raid1
-     Array Size : 4192192 (4.00 GiB 4.29 GB)
-  Used Dev Size : 4192192 (4.00 GiB 4.29 GB)
-   Raid Devices : 2
-  Total Devices : 2
-    Persistence : Superblock is persistent
+           Version : 1.2
+     Creation Time : Tue Jun 25 10:21:22 2019
+        Raid Level : raid1
+        Array Size : 4189184 (4.00 GiB 4.29 GB)
+     Used Dev Size : 4189184 (4.00 GiB 4.29 GB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
 
-    Update Time : Wed May  6 09:30:40 2015
-          State : clean, resyncing (PENDING) 
- Active Devices : 2
-Working Devices : 2
- Failed Devices : 0
-  Spare Devices : 0
+       Update Time : Tue Jun 25 10:22:03 2019
+             State : clean, resyncing 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
 
-           Name : mirwiz:1  (local to host mirwiz)
-           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464
-         Events : 0
+Consistency Policy : resync
+
+     Resync Status : 93% complete
+
+              Name : mirwiz:1  (local to host debian)
+              UUID : 7d123734:9677b7d6:72194f7d:9050771c
+            Events : 16
 
     Number   Major   Minor   RaidDevice State
-       0       8       50        0      active sync   /dev/sdd2
-       1       8       64        1      active sync   /dev/sde
+       0       8       64        0      active sync   /dev/sdd2
+       1       8       80        1      active sync   /dev/sde
 # </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
 <computeroutput>/dev/md1:
 [...]
@@ -569,22 +574,24 @@ Working Devices : 2
 # </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
 <computeroutput>/dev/md1:
 [...]
-    Update Time : Wed May  6 09:39:39 2015
-          State : clean, degraded 
- Active Devices : 1
-Working Devices : 1
- Failed Devices : 1
-  Spare Devices : 0
+       Update Time : Tue Jun 25 11:03:44 2019
+             State : clean, degraded 
+    Active Devices : 1
+   Working Devices : 1
+    Failed Devices : 1
+     Spare Devices : 0
 
-           Name : mirwiz:1  (local to host mirwiz)
-           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464
-         Events : 19
+Consistency Policy : resync
+
+              Name : mirwiz:1  (local to host debian)
+              UUID : 7d123734:9677b7d6:72194f7d:9050771c
+            Events : 20
 
     Number   Major   Minor   RaidDevice State
-       0       8       50        0      active sync   /dev/sdd2
-       2       0        0        2      removed
+       -       0        0        0      removed
+       1       8       80        1      active sync   /dev/sdd2
 
-       1       8       64        -      faulty   /dev/sde</computeroutput>
+       0       8       64        -      faulty   /dev/sde</computeroutput>
 </screen>
 
 	<para>The contents of the volume are still accessible (and, if it is
@@ -599,49 +606,53 @@ Working Devices : 1
 # </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
 <computeroutput>/dev/md1:
 [...]
-   Raid Devices : 2
-  Total Devices : 3
-    Persistence : Superblock is persistent
+      Raid Devices : 2
+     Total Devices : 3
+       Persistence : Superblock is persistent
 
-    Update Time : Wed May  6 09:48:49 2015
-          State : clean, degraded, recovering 
- Active Devices : 1
-Working Devices : 2
- Failed Devices : 1
-  Spare Devices : 1
+       Update Time : Tue Jun 25 11:09:42 2019
+             State : clean, degraded, recovering 
+    Active Devices : 1
+   Working Devices : 2
+    Failed Devices : 1
+     Spare Devices : 1
 
- Rebuild Status : 28% complete
+Consistency Policy : resync
 
-           Name : mirwiz:1  (local to host mirwiz)
-           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464
-         Events : 26
+    Rebuild Status : 27% complete
+
+              Name : mirwiz:1  (local to host debian)
+              UUID : 7d123734:9677b7d6:72194f7d:9050771c
+            Events : 26
 
     Number   Major   Minor   RaidDevice State
-       0       8       50        0      active sync   /dev/sdd2
-       2       8       80        1      spare rebuilding   /dev/sdf
+       2       8       96        0      spare rebuilding   /dev/sdf
+       1       8       80        1      active sync   /dev/sdd2
 
-       1       8       64        -      faulty   /dev/sde
+       0       8       64        -      faulty   /dev/sde
 # </computeroutput><userinput>[...]</userinput>
 <computeroutput>[...]
 # </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
 <computeroutput>/dev/md1:
 [...]
-    Update Time : Wed May  6 09:49:08 2015
-          State : clean 
- Active Devices : 2
-Working Devices : 2
- Failed Devices : 1
-  Spare Devices : 0
+       Update Time : Tue Jun 25 11:10:47 2019
+             State : clean 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 1
+     Spare Devices : 0
 
-           Name : mirwiz:1  (local to host mirwiz)
-           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464
-         Events : 41
+Consistency Policy : resync
+
+              Name : mirwiz:1  (local to host debian)
+              UUID : 7d123734:9677b7d6:72194f7d:9050771c
+            Events : 39
 
     Number   Major   Minor   RaidDevice State
-       0       8       50        0      active sync   /dev/sdd2
-       2       8       80        1      active sync   /dev/sdf
+       2       8       96        0      active sync   /dev/sdd2
+       1       8       80        1      active sync   /dev/sdf
 
-       1       8       64        -      faulty   /dev/sde</computeroutput>
+       0       8       64        -      faulty   /dev/sde</computeroutput>
 </screen>
 
 	<para>Here again, the kernel automatically triggers a
@@ -658,8 +669,8 @@ Working Devices : 2
 <computeroutput>/dev/md1:
 [...]
     Number   Major   Minor   RaidDevice State
-       0       8       50        0      active sync   /dev/sdd2
-       2       8       80        1      active sync   /dev/sdf</computeroutput>
+       2       8       96        0      active sync   /dev/sdd2
+       1       8       80        1      active sync   /dev/sdf</computeroutput>
 </screen>
 
 	<para>From then on, the drive can be physically removed when the
@@ -702,6 +713,9 @@ Working Devices : 2
 
           <programlisting># mdadm.conf
 #
+# !NB! Run update-initramfs -u after updating this file.
+# !NB! This will ensure that initramfs has an uptodate copy.
+#
 # Please refer to mdadm.conf(5) for information about this file.
 #
 
@@ -720,11 +734,10 @@ HOMEHOST &lt;system&gt;
 MAILADDR root
 
 # definitions of existing MD arrays
-ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb
-ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464
+ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=146e104f:66ccc06d:71c262d7:9af1fbc7
+ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:9050771c
 
-# This configuration was auto-generated on Thu, 17 Jan 2013 16:21:01 +0100
-# by mkconf 3.2.5-3
+# This configuration was auto-generated on Tue, 25 Jun 2019 07:54:35 -0400 by mkconf
 </programlisting>
         </example>
 
@@ -747,8 +760,8 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 	automatically:</para>
 
         <screen><computeroutput># </computeroutput><userinput>mdadm --misc --detail --brief /dev/md?</userinput>
-<computeroutput>ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb
-ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464</computeroutput>
+<computeroutput>ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=146e104f:66ccc06d:71c262d7:9af1fbc7
+ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:9050771c</computeroutput>
 </screen>
 
 	<para>The contents of these last two lines doesn't depend on the
@@ -877,7 +890,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 
         <screen id="screen.pvcreate"><computeroutput># </computeroutput><userinput>pvdisplay</userinput>
 <computeroutput># </computeroutput><userinput>pvcreate /dev/sdb2</userinput>
-<computeroutput>  Physical volume "/dev/sdb2" successfully created
+<computeroutput>  Physical volume "/dev/sdb2" successfully created.
 # </computeroutput><userinput>pvdisplay</userinput>
 <computeroutput>  "/dev/sdb2" is a new physical volume of "4.00 GiB"
   --- NEW Physical volume ---
@@ -889,20 +902,20 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
   Total PE              0
   Free PE               0
   Allocated PE          0
-  PV UUID               0zuiQQ-j1Oe-P593-4tsN-9FGy-TY0d-Quz31I
+  PV UUID               X66yQI-Q0Jk-3wOV-xmLa-wpqo-km9c-PmNOCW
 
 # </computeroutput><userinput>for i in sdc3 sdd sdf1 sdf2 ; do pvcreate /dev/$i ; done</userinput>
-<computeroutput>  Physical volume "/dev/sdc3" successfully created
-  Physical volume "/dev/sdd" successfully created
-  Physical volume "/dev/sdf1" successfully created
-  Physical volume "/dev/sdf2" successfully created
+<computeroutput>  Physical volume "/dev/sdc3" successfully created.
+  Physical volume "/dev/sdd" successfully created.
+  Physical volume "/dev/sdf1" successfully created.
+  Physical volume "/dev/sdf2" successfully created.
 # </computeroutput><userinput>pvdisplay -C</userinput>
-<computeroutput>  PV         VG   Fmt  Attr PSize PFree
-  /dev/sdb2       lvm2 ---  4.00g 4.00g
-  /dev/sdc3       lvm2 ---  3.09g 3.09g
-  /dev/sdd        lvm2 ---  4.00g 4.00g
-  /dev/sdf1       lvm2 ---  4.10g 4.10g
-  /dev/sdf2       lvm2 ---  5.22g 5.22g
+<computeroutput>  PV         VG Fmt  Attr PSize PFree
+  /dev/sdb2     lvm2 ---  4.00g 4.00g
+  /dev/sdc3     lvm2 ---  3.00g 3.00g
+  /dev/sdd      lvm2 ---  4.00g 4.00g
+  /dev/sdf1     lvm2 ---  4.00g 4.00g
+  /dev/sdf2     lvm2 ---  5.00g 5.00g
 </computeroutput>
 </screen>
 
@@ -936,19 +949,19 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
   Max PV                0
   Cur PV                2
   Act PV                2
-  VG Size               8.09 GiB
+  VG Size               7.99 GiB
   PE Size               4.00 MiB
-  Total PE              2071
+  Total PE              2046
   Alloc PE / Size       0 / 0   
-  Free  PE / Size       2071 / 8.09 GiB
-  VG UUID               bpq7zO-PzPD-R7HW-V8eN-c10c-S32h-f6rKqp
+  Free  PE / Size       2046 / 7.99 GiB
+  VG UUID               CcVj0Q-GbJA-2k9u-W6lC-7fZc-jHgk-qzKdX8
 
 # </computeroutput><userinput>vgcreate vg_normal /dev/sdc3 /dev/sdd /dev/sdf2</userinput>
 <computeroutput>  Volume group "vg_normal" successfully created
 # </computeroutput><userinput>vgdisplay -C</userinput>
-<computeroutput>  VG          #PV #LV #SN Attr   VSize  VFree 
-  vg_critical   2   0   0 wz--n-  8.09g  8.09g
-  vg_normal     3   0   0 wz--n- 12.30g 12.30g
+<computeroutput>  VG          #PV #LV #SN Attr   VSize   VFree  
+  vg_critical   2   0   0 wz--n-   7.99g   7.99g
+  vg_normal     3   0   0 wz--n- &lt;10.99g &lt;10.99g
 </computeroutput>
 </screen>
 
@@ -966,15 +979,15 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
 
         <screen id="screen.lvcreate"><computeroutput># </computeroutput><userinput>lvdisplay</userinput>
 <computeroutput># </computeroutput><userinput>lvcreate -n lv_files -L 5G vg_critical</userinput>
-<computeroutput>  Logical volume "lv_files" created
+<computeroutput>  Logical volume "lv_files" created.
 # </computeroutput><userinput>lvdisplay</userinput>
 <computeroutput>  --- Logical volume ---
   LV Path                /dev/vg_critical/lv_files
   LV Name                lv_files
   VG Name                vg_critical
-  LV UUID                J3V0oE-cBYO-KyDe-5e0m-3f70-nv0S-kCWbpT
+  LV UUID                njyynD-gMQx-4VD1-4dYV-GaKd-4HSp-ypRFKV
   LV Write Access        read/write
-  LV Creation host, time mirwiz, 2015-06-10 06:10:50 -0400
+  LV Creation host, time mirwiz, 2019-06-25 12:49:09 -0400
   LV Status              available
   # open                 0
   LV Size                5.00 GiB
@@ -986,14 +999,14 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f674
   Block device           253:0
 
 # </computeroutput><userinput>lvcreate -n lv_base -L 1G vg_critical</userinput>
-<computeroutput>  Logical volume "lv_base" created
-# </computeroutput><userinput>lvcreate -n lv_backups -L 12G vg_normal</userinput>
-<computeroutput>  Logical volume "lv_backups" created
+<computeroutput>  Logical volume "lv_base" created.
+# </computeroutput><userinput>lvcreate -n lv_backups -L 11.99G vg_normal</userinput>
+<computeroutput>  Logical volume "lv_backups" created.
 # </computeroutput><userinput>lvdisplay -C</userinput>
 <computeroutput>  LV         VG          Attr     LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert
   lv_base    vg_critical -wi-a---  1.00g                                           
   lv_files   vg_critical -wi-a---  5.00g                                           
-  lv_backups vg_normal   -wi-a--- 12.00g</computeroutput>
+  lv_backups vg_normal   -wi-a--- 11.99g</computeroutput>
 </screen>
 
 	<para>Two parameters are required when creating logical volumes;
@@ -1087,17 +1100,23 @@ lrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_backups -&gt; ../dm-2</computeroutput>
 	partitions:</para>
 
         <screen><computeroutput># </computeroutput><userinput>mkfs.ext4 /dev/vg_normal/lv_backups</userinput>
-<computeroutput>mke2fs 1.42.12 (29-Aug-2014)
+<computeroutput>mke2fs 1.44.5 (15-Dec-2018)
+Discarding device blocks: done                            
 Creating filesystem with 3145728 4k blocks and 786432 inodes
-Filesystem UUID: b5236976-e0e2-462e-81f5-0ae835ddab1d
-[...]
-Creating journal (32768 blocks): done
+Filesystem UUID: bae1f819-1f74-4518-80f0-53e30b8ae88d
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (16384 blocks): done
 Writing superblocks and filesystem accounting information: done 
+
 # </computeroutput><userinput>mkdir /srv/backups</userinput>
 <computeroutput># </computeroutput><userinput>mount /dev/vg_normal/lv_backups /srv/backups</userinput>
 <computeroutput># </computeroutput><userinput>df -h /srv/backups</userinput>
 <computeroutput>Filesystem                        Size  Used Avail Use% Mounted on
-/dev/mapper/vg_normal-lv_backups   12G   30M   12G   1% /srv/backups
+/dev/mapper/vg_normal-lv_backups   12G   41M   12G   1% /srv/backups
 # </computeroutput><userinput>[...]</userinput>
 <computeroutput>[...]
 # </computeroutput><userinput>cat /etc/fstab</userinput>
@@ -1128,28 +1147,28 @@ Writing superblocks and filesystem accounting information: done
 
         <screen><computeroutput># </computeroutput><userinput>df -h /srv/files/</userinput>
 <computeroutput>Filesystem                        Size  Used Avail Use% Mounted on
-/dev/mapper/vg_critical-lv_files  5.0G  4.6G  146M  97% /srv/files
+/dev/mapper/vg_critical-lv_files  4.9G   20M  4.6G   1% /srv/files
 # </computeroutput><userinput>lvdisplay -C vg_critical/lv_files</userinput>
 <computeroutput>  LV       VG          Attr     LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert
   lv_files vg_critical -wi-ao-- 5.00g
 # </computeroutput><userinput>vgdisplay -C vg_critical</userinput>
 <computeroutput>  VG          #PV #LV #SN Attr   VSize VFree
-  vg_critical   2   2   0 wz--n- 8.09g 2.09g
-# </computeroutput><userinput>lvresize -L 7G vg_critical/lv_files</userinput>
-<computeroutput>  Size of logical volume vg_critical/lv_files changed from 5.00 GiB (1280 extents) to 7.00 GiB (1792 extents).
-  Logical volume lv_files successfully resized
+  vg_critical   2   2   0 wz--n- 7.99g 1.99g
+# </computeroutput><userinput>lvresize -L 6G vg_critical/lv_files</userinput>
+<computeroutput>  Size of logical volume vg_critical/lv_files changed from 5.00 GiB (1280 extents) to 6.00 GiB (1536 extents).
+  Logical volume vg_critical/lv_files successfully resized.
 # </computeroutput><userinput>lvdisplay -C vg_critical/lv_files</userinput>
-<computeroutput>  LV       VG          Attr     LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert
-  lv_files vg_critical -wi-ao-- 7.00g
+<computeroutput>  LV       VG          Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv_files vg_critical -wi-ao---- 6.00g
 # </computeroutput><userinput>resize2fs /dev/vg_critical/lv_files</userinput>
-<computeroutput>resize2fs 1.42.12 (29-Aug-2014)
+<computeroutput>resize2fs 1.44.5 (15-Dec-2018)
 Filesystem at /dev/vg_critical/lv_files is mounted on /srv/files; on-line resizing required
 old_desc_blocks = 1, new_desc_blocks = 1
-The filesystem on /dev/vg_critical/lv_files is now 1835008 (4k) blocks long.
+The filesystem on /dev/vg_critical/lv_files is now 1572864 (4k) blocks long.
 
 # </computeroutput><userinput>df -h /srv/files/</userinput>
 <computeroutput>Filesystem                        Size  Used Avail Use% Mounted on
-/dev/mapper/vg_critical-lv_files  6.9G  4.6G  2.1G  70% /srv/files</computeroutput>
+/dev/mapper/vg_critical-lv_files  5.9G   20M  5.6G   1% /srv/files</computeroutput>
 </screen>
 
         <sidebar>
@@ -1179,10 +1198,10 @@ The filesystem on /dev/vg_critical/lv_files is now 1835008 (4k) blocks long.
 
         <screen><computeroutput># </computeroutput><userinput>df -h /srv/base/</userinput>
 <computeroutput>Filesystem                       Size  Used Avail Use% Mounted on
-/dev/mapper/vg_critical-lv_base 1008M  854M  104M  90% /srv/base
+/dev/mapper/vg_critical-lv_base  976M  2.6M  907M   1% /srv/base
 # </computeroutput><userinput>vgdisplay -C vg_critical</userinput>
-<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree 
-  vg_critical   2   2   0 wz--n- 8.09g 92.00m</computeroutput>
+<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree   
+  vg_critical   2   2   0 wz--n- 7.99g 92.00m</computeroutput>
 </screen>
 
 	<para>No matter, since LVM allows adding physical volumes to
@@ -1198,7 +1217,7 @@ The filesystem on /dev/vg_critical/lv_files is now 1835008 (4k) blocks long.
 	logical volume then the filesystem:</para>
 
         <screen><computeroutput># </computeroutput><userinput>pvcreate /dev/sdb1</userinput>
-<computeroutput>  Physical volume "/dev/sdb1" successfully created
+<computeroutput>  Physical volume "/dev/sdb1" successfully created.
 # </computeroutput><userinput>vgextend vg_critical /dev/sdb1</userinput>
 <computeroutput>  Volume group "vg_critical" successfully extended
 # </computeroutput><userinput>vgdisplay -C vg_critical</userinput>
@@ -1218,7 +1237,7 @@ The filesystem on /dev/vg_critical/lv_files is now 1835008 (4k) blocks long.
 	  can be specified by hand. For instance, an administrator can
 	  tweak the size of the blocks that make up physical and logical
 	  volumes, as well as their physical layout. It is also possible to
-	  move blocks across PVs, for instance to fine-tune performance or,
+	  move blocks across PVs, for instance, to fine-tune performance or,
 	  in a more mundane way, to free a PV when one needs to extract the
 	  corresponding physical disk from the VG (whether to affect it to
 	  another VG or to remove it from LVM altogether). The manual pages
@@ -1380,9 +1399,7 @@ Device    Boot     Start       End   Sectors Size Id Type
       allocated in parallel on both disks, which allows higher read or
       write speeds for large files.</para>
 
-      <!-- XXX: Separate /usr partition is no longer a good idea and thus the
-           example here should be possibly modified... -->
-      <para>We will therefore create the <filename>lv_usr</filename>,
+      <para>We will therefore create the
       <filename>lv_var</filename> and <filename>lv_home</filename> LVs on
       <filename>vg_raid</filename>, to host the matching filesystems;
       another large LV, <filename>lv_movies</filename>, will be used to
@@ -1398,9 +1415,7 @@ Device    Boot     Start       End   Sectors Size Id Type
 
       <para>We now have both some redundancy for important data and much
       flexibility in how the available space is split across the
-      applications. Should new software be installed later on (for editing
-      audio clips, for instance), the LV hosting <filename>/usr/</filename>
-      can be grown painlessly.</para>
+      applications.</para>
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> Why three RAID-1 volumes?</title>
@@ -1474,7 +1489,7 @@ Device    Boot     Start       End   Sectors Size Id Type
 	emulated hardware. It also allows emulating a different hardware
 	architecture: for instance, an <emphasis>amd64</emphasis> system can
 	emulate an <emphasis>arm</emphasis> computer. QEMU is free
-	software. <ulink type="block" url="http://www.qemu.org/"/></para>
+	software. <ulink type="block" url="https://www.qemu.org/"/></para>
       </listitem>
       <listitem>
 	<para>Bochs is another free virtual machine, but it only
@@ -1485,7 +1500,7 @@ Device    Boot     Start       End   Sectors Size Id Type
 	oldest out there, it is also one of the most widely-known. It works
 	on principles similar to QEMU. VMWare proposes advanced features
 	such as snapshotting a running virtual machine. <ulink type="block"
-	url="http://www.vmware.com/"/></para>
+	url="https://www.vmware.com/"/></para>
       </listitem>
       <listitem>
         <para>VirtualBox is a virtual machine that is mostly free software
@@ -1499,7 +1514,7 @@ Device    Boot     Start       End   Sectors Size Id Type
           younger than VMWare and restricted to the i386 and amd64
           architectures, it still includes some snapshotting and other
           interesting features.
-          <ulink type="block" url="http://www.virtualbox.org/"/>
+          <ulink type="block" url="https://www.virtualbox.org/"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -1551,7 +1566,7 @@ Device    Boot     Start       End   Sectors Size Id Type
 	paravirt_ops interface, the patches were only progressively merged
 	into the official kernel. The merge was completed in Linux 3.0.
 	<ulink type="block"
-	url="http://wiki.xenproject.org/wiki/XenParavirtOps"/></para>
+	url="https://wiki.xenproject.org/wiki/XenParavirtOps"/></para>
 
 	<para>Since <emphasis role="distribution">Jessie</emphasis> is
 	based on version 3.16 of the Linux kernel, the standard
@@ -1561,7 +1576,7 @@ Device    Boot     Start       End   Sectors Size Id Type
 	patching that was required for <emphasis
 	role="distribution">Squeeze</emphasis> and earlier versions of
 	Debian is no more. <ulink type="block"
-	url="http://wiki.xenproject.org/wiki/Xen_Kernel_Feature_Matrix"/></para>
+	url="https://wiki.xenproject.org/wiki/Xen_Kernel_Feature_Matrix"/></para>
       </sidebar>
 
       <sidebar>
@@ -1580,8 +1595,8 @@ Device    Boot     Start       End   Sectors Size Id Type
 	dom0 and domU: Linux 3.0 and later, NetBSD 4.0 and later, and
         OpenSolaris. Others only work as a domU. You can check the status
         of each operating system in the Xen wiki:
-        <ulink type="block" url="http://wiki.xenproject.org/wiki/Dom0_Kernels_for_Xen"/>
-        <ulink type="block" url="http://wiki.xenproject.org/wiki/DomU_Support_for_Xen"/>
+        <ulink type="block" url="https://wiki.xenproject.org/wiki/Dom0_Kernels_for_Xen"/>
+        <ulink type="block" url="https://wiki.xenproject.org/wiki/DomU_Support_for_Xen"/>
 	</para>
 
 	<para>However, if Xen can rely on the hardware functions dedicated
@@ -1595,14 +1610,14 @@ Device    Boot     Start       End   Sectors Size Id Type
         <listitem>
 	  <para>The hypervisor itself. According to the available hardware,
           the appropriate package will be either
-          <emphasis role="pkg">xen-hypervisor-4.4-amd64</emphasis>,
-          <emphasis role="pkg">xen-hypervisor-4.4-armhf</emphasis>,
-          or <emphasis role="pkg">xen-hypervisor-4.4-arm64</emphasis>.</para>
+          <emphasis role="pkg">xen-hypervisor-4.11-amd64</emphasis>,
+          <emphasis role="pkg">xen-hypervisor-4.11-armhf</emphasis>,
+          or <emphasis role="pkg">xen-hypervisor-4.11-arm64</emphasis>.</para>
         </listitem>
         <listitem>
 	  <para>A kernel that runs on that hypervisor. Any kernel more
-	  recent than 3.0 will do, including the 3.16 version present
-	  in <emphasis role="distribution">Jessie</emphasis>.</para>
+	  recent than 3.0 will do, including the 4.19 version present
+	  in <emphasis role="distribution">Buster</emphasis>.</para>
         </listitem>
         <listitem>
 	  <para>The i386 architecture also requires a standard library with
@@ -1611,25 +1626,15 @@ Device    Boot     Start       End   Sectors Size Id Type
         </listitem>
       </itemizedlist>
 
-      <para>In order to avoid the hassle of selecting these components
-      by hand, a few convenience packages (such as <emphasis
-      role="pkg">xen-linux-system-amd64</emphasis>) have been made
-      available; they all pull in a known-good combination of the
-      appropriate hypervisor and kernel packages. The hypervisor also
-      brings <emphasis role="pkg">xen-utils-4.4</emphasis>, which
+      <para>The hypervisor also
+      brings <emphasis role="pkg">xen-utils-4.11</emphasis>, which
       contains tools to control the hypervisor from the dom0. This in
       turn brings the appropriate standard library. During the
       installation of all that, configuration scripts also create a
-      new entry in the Grub bootloader menu, so as to start the chosen
+      new entry in the GRUB bootloader menu, so as to start the chosen
       kernel in a Xen dom0. Note, however, that this entry is not
-      usually set to be the first one in the list, and will therefore
-      not be selected by default. If that is not the desired behavior,
-      the following commands will change it:</para>
-
-      <screen><computeroutput># </computeroutput><userinput>mv /etc/grub.d/20_linux_xen /etc/grub.d/09_linux_xen
-</userinput><computeroutput># </computeroutput><userinput>update-grub
-</userinput>
-</screen>
+      usually set to be the first one in the list, but it will 
+      be selected by default.</para>
 
       <para>Once these prerequisites are installed, the next step is to
       test the behavior of the dom0 by itself; this involves a reboot to
@@ -1661,11 +1666,12 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  domU;</para>
         </listitem>
         <listitem>
-	  <para><literal>--debootstrap</literal>, to cause the new system
-	  to be installed with <command>debootstrap</command>; in that
+	  <para><literal>--debootstrap-cmd</literal>, to specify the
+          which debootstrap command is used. The default is <command>debootstrap</command>
+          if debootstrap and cdebootstrap are installed. In that
 	  case, the <literal>--dist</literal> option will also most often
 	  be used (with a distribution name such as <emphasis
-	  role="distribution">jessie</emphasis>).</para>
+	  role="distribution">buster</emphasis>).</para>
 
           <sidebar>
             <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
@@ -1709,20 +1715,20 @@ Device    Boot     Start       End   Sectors Size Id Type
       <para>Once these choices are made, we can create the image for our
       future Xen domU:</para>
 
-      <screen><computeroutput># </computeroutput><userinput>xen-create-image --hostname testxen --dhcp --dir /srv/testxen --size=2G --dist=jessie --role=udev</userinput>
+      <screen><computeroutput># </computeroutput><userinput>xen-create-image --hostname testxen --dhcp --dir /srv/testxen --size=2G --dist=buster --role=udev</userinput>
 <computeroutput>
 [...]
-General Information
+eneral Information
 --------------------
 Hostname       :  testxen
-Distribution   :  jessie
-Mirror         :  http://ftp.debian.org/debian/
-Partitions     :  swap            128Mb (swap)
-                  /               2G    (ext3)
+Distribution   :  buster
+Mirror         :  http://deb.debian.org/debian
+Partitions     :  swap            512M  (swap)
+                  /               2G    (ext4)
 Image type     :  sparse
-Memory size    :  128Mb
-Kernel path    :  /boot/vmlinuz-3.16.0-4-amd64
-Initrd path    :  /boot/initrd.img-3.16.0-4-amd64
+Memory size    :  256M
+Kernel path    :  /boot/vmlinuz-4.19.0-5-amd64
+Initrd path    :  /boot/initrd.img-4.19.0-5-amd64
 [...]
 Logfile produced at:
          /var/log/xen-tools/testxen.log
@@ -1730,11 +1736,14 @@ Logfile produced at:
 Installation Summary
 ---------------------
 Hostname        :  testxen
-Distribution    :  jessie
-MAC Address     :  00:16:3E:8E:67:5C
-IP-Address(es)  :  dynamic
-RSA Fingerprint :  0a:6e:71:98:95:46:64:ec:80:37:63:18:73:04:dd:2b
-Root Password   :  adaX2jyRHNuWm8BDJS7PcEJ
+Distribution    :  buster
+MAC Address     :  00:16:3E:0C:74:2F
+IP Address(es)  :  dynamic
+SSH Fingerprint :  SHA256:PuAGX4/4S07Xzh1u0Cl2tL04EL5udf9ajvvbufBrfvU (DSA)
+SSH Fingerprint :  SHA256:ajFTX54eakzolyzmZku/ihq/BK6KYsz5MewJ98BM5co (ECDSA)
+SSH Fingerprint :  SHA256:/sFov86b+rD/bRSJoHKbiMqzGFiwgZulEwpzsiw6aSc (ED25519)
+SSH Fingerprint :  SHA256:/NJg/CcoVj+OLE/cL3yyJINStnla7YkHKe3/xEdVGqc (RSA)
+Root Password   :  EwmQMHtywY9zsRBpqQuxZTb
 </computeroutput>
 </screen>
 
@@ -1790,7 +1799,7 @@ Root Password   :  adaX2jyRHNuWm8BDJS7PcEJ
       exist). We must therefore set up a bridge in
       <filename>/etc/network/interfaces</filename> (which requires
       installing the <emphasis role="pkg">bridge-utils</emphasis> package,
-      which is why the <emphasis role="pkg">xen-utils-4.4</emphasis> package
+      which is why the <emphasis role="pkg">xen-utils-4.11</emphasis> package
       recommends it) to replace the existing eth0 entry:</para>
 
       <programlisting>auto xenbr0
@@ -1803,17 +1812,20 @@ iface xenbr0 inet dhcp
       created, we can now start the domU with the Xen control tools, in
       particular the <command>xl</command> command. This command allows
       different manipulations on the domains, including listing them and,
-      starting/stopping them.</para>
+      starting/stopping them. You might need to increase the default memory
+      by editing the variable memory from configuration file (in this case,
+      <filename>/etc/xen/testxen.cfg</filename>). Here we have set it to
+      1024 (megabytes).</para>
 
       <screen><computeroutput># </computeroutput><userinput>xl list</userinput>
-<computeroutput>Name                                        ID   Mem VCPUs      State   Time(s)
-Domain-0                                     0   463     1     r-----      9.8
+<computeroutput>Name                                        ID   Mem VCPUs	State	Time(s)
+Domain-0                                     0  1894     2     r-----      63.5
 # </computeroutput><userinput>xl create /etc/xen/testxen.cfg</userinput>
 <computeroutput>Parsing config from /etc/xen/testxen.cfg
 # </computeroutput><userinput>xl list</userinput>
-<computeroutput>Name                                        ID   Mem VCPUs      State   Time(s)
-Domain-0                                     0   366     1     r-----     11.4
-testxen                                      1   128     1     -b----      1.1</computeroutput>
+<computeroutput>Name                                        ID   Mem VCPUs	State	Time(s)
+Domain-0                                     0  1505     2     r-----     100.0
+testxen                                     13  1024     0     --p---       0.0</computeroutput>
 </screen>
 
       <sidebar>
@@ -1863,7 +1875,7 @@ testxen                                      1   128     1     -b----      1.1</
       <screen><computeroutput># </computeroutput><userinput>xl console testxen</userinput>
 <computeroutput>[...]
 
-Debian GNU/Linux 8 testxen hvc0
+Debian GNU/Linux 10 testxen hvc0
 
 testxen login: </computeroutput>
 </screen>
@@ -1939,7 +1951,7 @@ testxen login: </computeroutput>
 	without losing its network connections! For all these advanced
 	aspects, the primary source of information is the official Xen
 	documentation. <ulink type="block"
-	url="http://www.xen.org/support/documentation.html"/></para>
+	url="https://xenproject.org/help/documentation/"/></para>
       </sidebar>
     </section>
     <section id="sect.lxc">
@@ -2030,7 +2042,7 @@ testxen login: </computeroutput>
         <title>Network Configuration</title>
 
 	<para>The goal of installing LXC is to set up virtual machines;
-	while we could of course keep them isolated from the network, and
+	while we could, of course, keep them isolated from the network, and
 	only communicate with them via the filesystem, most use cases
 	involve giving at least minimal network access to the containers.
 	In the typical case, each container will get a virtual network
@@ -2044,7 +2056,7 @@ testxen login: </computeroutput>
 
 	<para>The simple case is just a matter of editing
 	<filename>/etc/network/interfaces</filename>, moving the
-	configuration for the physical interface (for instance
+	configuration for the physical interface (for instance,
 	<literal>eth0</literal>) to a bridge interface (usually
 	<literal>br0</literal>), and configuring the link between them. For
 	instance, if the network interface configuration file initially
@@ -2071,7 +2083,7 @@ iface br0 inet dhcp
 	well as the interfaces defined for the containers.</para>
 
 	<para>In cases where this configuration cannot be used (for
-	instance if no public IP addresses can be assigned to the
+	instance, if no public IP addresses can be assigned to the
 	containers), a virtual <emphasis>tap</emphasis> interface will be
 	created and connected to the bridge. The equivalent network
 	topology then becomes that of a host with a second network card
@@ -2124,7 +2136,7 @@ iface br0 inet static
 
         <screen><computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-create -n testlxc -t debian
 </userinput><computeroutput>debootstrap is /usr/sbin/debootstrap
-Checking cache download in /var/cache/lxc/debian/rootfs-jessie-amd64 ... 
+Checking cache download in /var/cache/lxc/debian/rootfs-stable-amd64 ... 
 Downloading debian minimal ...
 I: Retrieving Release 
 I: Retrieving Release.gpg 
@@ -2132,7 +2144,6 @@ I: Retrieving Release.gpg
 Download complete.
 Copying rootfs to /var/lib/lxc/testlxc/rootfs...
 [...]
-Root password is 'sSiKhMzI', please change !
 root@mirwiz:~# </computeroutput>
         </screen>
 
@@ -2141,7 +2152,7 @@ root@mirwiz:~# </computeroutput>
 	directory. This allows creating identical containers much more
 	quickly, since only copying is then required.</para>
 
-	<para>Note that the debian template creation script accepts
+	<para>Note that the Debian template creation script accepts
 	an <option>--arch</option> option to specify the architecture
 	of the system to be installed and a <option>--release</option>
 	option if you want to install something else than the current
@@ -2155,10 +2166,10 @@ root@mirwiz:~# </computeroutput>
 	(<filename>/var/lib/lxc/testlxc/config</filename>) and add a
 	few <literal>lxc.network.*</literal> entries:</para>
 
-        <programlisting>lxc.network.type = veth
-lxc.network.flags = up
-lxc.network.link = br0
-lxc.network.hwaddr = 4a:49:43:49:79:20
+        <programlisting>lxc.net.0.type = veth
+lxc.net.0.flags = up
+lxc.net.0.link = br0
+lxc.net.0.hwaddr = 4a:49:43:49:79:20
 </programlisting>
 
 	<para>These entries mean, respectively, that a virtual interface
@@ -2172,7 +2183,7 @@ lxc.network.hwaddr = 4a:49:43:49:79:20
 	<para>Another useful entry in that file is the setting of the
 	hostname:</para>
 
-<programlisting>lxc.utsname = testlxc
+<programlisting>lxc.uts.name = testlxc
 </programlisting>
 
       </section>
@@ -2180,15 +2191,16 @@ lxc.network.hwaddr = 4a:49:43:49:79:20
         <title>Starting the Container</title>
 
 	<para>Now that our virtual machine image is ready, let's start the
-	container:</para>
-
-        <screen width="94" role="scale"><computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-start --daemon --name=testlxc
-</userinput><computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-console -n testlxc
-</userinput><computeroutput>Debian GNU/Linux 8 testlxc tty1
+	container with <command>lxc-start --daemon --name=testlxc</command>.</para>
+        <para>In LXC releases following 2.0.8, root passwords are not set by default.
+        We can set one running <command>lxc-attach -n testlxc <replaceable>passwd</replaceable>.</command>
+        Now we can login:</para>
+<screen width="94" role="scale"><computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-console -n testlxc
+</userinput><computeroutput>Debian GNU/Linux 9 testlxc console	
 
 testlxc login: </computeroutput><userinput>root</userinput><computeroutput>
 Password: 
-Linux testlxc 3.16.0-4-amd64 #1 SMP Debian 3.16.7-ckt11-1 (2015-05-24) x86_64
+Linux testlxc 4.19.0-5-amd64 #1 SMP Debian 4.19.37-5 (2019-06-19) x86_64
 
 The programs included with the Debian GNU/Linux system are free software;
 the exact distribution terms for each program are described in the
@@ -2198,19 +2210,12 @@ Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
 root@testlxc:~# </computeroutput><userinput>ps auxwf</userinput>
 <computeroutput>USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root         1  0.0  0.2  28164  4432 ?        Ss   17:33   0:00 /sbin/init
-root        20  0.0  0.1  32960  3160 ?        Ss   17:33   0:00 /lib/systemd/systemd-journald
-root        82  0.0  0.3  55164  5456 ?        Ss   17:34   0:00 /usr/sbin/sshd -D
-root        87  0.0  0.1  12656  1924 tty2     Ss+  17:34   0:00 /sbin/agetty --noclear tty2 linux
-root        88  0.0  0.1  12656  1764 tty3     Ss+  17:34   0:00 /sbin/agetty --noclear tty3 linux
-root        89  0.0  0.1  12656  1908 tty4     Ss+  17:34   0:00 /sbin/agetty --noclear tty4 linux
-root        90  0.0  0.1  63300  2944 tty1     Ss   17:34   0:00 /bin/login --     
-root       117  0.0  0.2  21828  3668 tty1     S    17:35   0:00  \_ -bash
-root       268  0.0  0.1  19088  2572 tty1     R+   17:39   0:00      \_ ps auxfw
-root        91  0.0  0.1  14228  2356 console  Ss+  17:34   0:00 /sbin/agetty --noclear --keep-baud console 115200 38400 9600 vt102
-root       197  0.0  0.4  25384  7640 ?        Ss   17:38   0:00 dhclient -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.e
-root       266  0.0  0.1  12656  1840 ?        Ss   17:39   0:00 /sbin/agetty --noclear tty5 linux
-root       267  0.0  0.1  12656  1928 ?        Ss   17:39   0:00 /sbin/agetty --noclear tty6 linux
+root         1  0.0  0.2  56736  6608 ?        Ss   09:28   0:00 /sbin/init
+root        32  0.0  0.1  46096  4680 ?        Ss   09:28   0:00 /lib/systemd/systemd-journald
+root        75  0.0  0.1  67068  3328 console  Ss   09:28   0:00 /bin/login --
+root        82  0.0  0.1  19812  3664 console  S    09:30   0:00  \_ -bash
+root        88  0.0  0.1  38308  3176 console  R+   09:31   0:00      \_ ps auxwf
+root        76  0.0  0.1  69956  5636 ?        Ss   09:28   0:00 /usr/sbin/sshd -D
 root@testlxc:~# </computeroutput></screen>
 
 	<para>We are now in the container; our access to the processes
@@ -2323,14 +2328,15 @@ root@testlxc:~# </computeroutput></screen>
         <indexterm><primary><emphasis role="pkg">virtinst</emphasis></primary></indexterm>
 
 	<para>We first install the required packages, with <command>apt-get
-	install qemu-kvm libvirt-bin virtinst virt-manager
-	virt-viewer</command>. <emphasis role="pkg">libvirt-bin</emphasis>
+	install libvirt-clients libvirt-daemon-system qemu-kvm virtinst 
+	virt-manager virt-viewer</command>.
+	<emphasis role="pkg">libvirt-daemon-system</emphasis>
 	provides the <command>libvirtd</command> daemon, which allows
 	(potentially remote) management of the virtual machines running of
-	the host, and starts the required VMs when the host boots. In
-	addition, this package provides the <command>virsh</command>
-	command-line tool, which allows controlling the
-	<command>libvirtd</command>-managed machines.</para>
+	the host, and starts the required VMs when the host boots.
+	<emphasis role="pkg">libvirt-clients</emphasis> provides the
+	<command>virsh</command> command-line tool, which allows controlling
+	the <command>libvirtd</command>-managed machines.</para>
 
 	<para>The <emphasis role="pkg">virtinst</emphasis> package provides
 	<command>virt-install</command>, which allows creating virtual
@@ -2402,18 +2408,16 @@ root@mirwiz:~# </computeroutput></screen>
         <screen><computeroutput># </computeroutput><userinput>virt-install --connect qemu:///system  <co id="virtinst.connect"/>
                --virt-type kvm           <co id="virtinst.type"/>
                --name testkvm            <co id="virtinst.name"/>
-               --ram 1024                <co id="virtinst.ram"/>
+               --memory 1024                <co id="virtinst.ram"/>
                --disk /srv/kvm/testkvm.qcow,format=qcow2,size=10 <co id="virtinst.disk"/>
-               --cdrom /srv/isos/debian-8.1.0-amd64-netinst.iso  <co id="virtinst.cdrom"/>
-               --network bridge=br0      <co id="virtinst.network"/>
-               --vnc                     <co id="virtinst.vnc"/>
+               --cdrom /srv/isos/debian-9.9.0-amd64-netinst.iso  <co id="virtinst.cdrom"/>
+               --network bridge=virbr0      <co id="virtinst.network"/>
+               --graphics vnc                     <co id="virtinst.vnc"/>
                --os-type linux           <co id="virtinst.os"/>
-               --os-variant debianwheezy
+               --os-variant debian9
 </userinput><computeroutput>
 Starting install...
 Allocating 'testkvm.qcow'             |  10 GB     00:00
-Creating domain...                    |    0 B     00:00
-Guest installation complete... restarting guest.
 </computeroutput>
 </screen>
         <calloutlist>
@@ -2441,7 +2445,7 @@ Guest installation complete... restarting guest.
 	    name for the virtual machine.</para>
           </callout>
           <callout arearefs="virtinst.ram">
-	    <para>The <literal>--ram</literal> option allows specifying the
+	    <para>The <literal>--memory</literal> option allows specifying the
 	    amount of RAM (in MB) to allocate for the virtual
 	    machine.</para>
           </callout>
@@ -2452,9 +2456,7 @@ Guest installation complete... restarting guest.
 	    specified by the <literal>size</literal> parameter. The
 	    <literal>format</literal> parameter allows choosing among
 	    several ways of storing the image file. The default format
-	    (<literal>raw</literal>) is a single file exactly matching the
-	    disk's size and contents. We picked a more advanced format
-	    here, that is specific to QEMU and allows starting with a small
+	    (<literal>qcow2</literal>) allows starting with a small
 	    file that only grows when the virtual machine starts actually
 	    using space.</para>
           </callout>
@@ -2475,16 +2477,16 @@ Guest installation complete... restarting guest.
 	    address in a private subnet range (192.168.122.0/24).</para>
           </callout>
           <callout arearefs="virtinst.vnc">
-	    <para><literal>--vnc</literal> states that the graphical
+	    <para><literal>--graphics vnc</literal> states that the graphical
 	    console should be made available using VNC. The default
 	    behavior for the associated VNC server is to only listen on
 	    the local interface; if the VNC client is to be run on a
 	    different host, establishing the connection will require
 	    setting up an SSH tunnel (see <xref
-	    linkend="sect.ssh-port-forwarding"/>). Alternatively, the
-	    <literal>--vnclisten=0.0.0.0</literal> can be used so that the
-	    VNC server is accessible from all interfaces; note that if you
-	    do that, you really should design your firewall
+	    linkend="sect.ssh-port-forwarding"/>). Alternatively,
+	    <literal>--graphics vnc,listen=0.0.0.0</literal> can be used 
+            so that the VNC server is accessible from all interfaces; 
+            note that if you do that, you really should design your firewall
 	    accordingly.</para>
           </callout>
           <callout arearefs="virtinst.os">
@@ -2524,7 +2526,7 @@ root@server's password: </computeroutput>
         <screen><computeroutput># </computeroutput><userinput>virsh -c qemu:///system list --all
  Id Name                 State
 ----------------------------------
-  - testkvm              shut off
+  8 testkvm              shut off
 </userinput>
 </screen>
 
@@ -2539,7 +2541,7 @@ root@server's password: </computeroutput>
 	to <command>vncviewer</command>):</para>
 
         <screen><computeroutput># </computeroutput><userinput>virsh -c qemu:///system vncdisplay testkvm
-</userinput><computeroutput>:0</computeroutput>
+</userinput><computeroutput>127.0.0.1:0</computeroutput>
 </screen>
 
 	<para>Other available <command>virsh</command> subcommands
@@ -2598,11 +2600,11 @@ root@server's password: </computeroutput>
         <screen><computeroutput># </computeroutput><userinput>rootdir="/srv/centos"
 </userinput><computeroutput># </computeroutput><userinput>mkdir -p "$rootdir" /etc/rpm
 </userinput><computeroutput># </computeroutput><userinput>echo "%_dbpath /var/lib/rpm" &gt; /etc/rpm/macros.dbpath
-</userinput><computeroutput># </computeroutput><userinput>wget http://mirror.centos.org/centos/7/os/x86_64/Packages/centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm
-</userinput><computeroutput># </computeroutput><userinput>rpm --nodeps --root "$rootdir" -i centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm
+</userinput><computeroutput># </computeroutput><userinput>wget http://mirror.centos.org/centos/7/os/x86_64/Packages/centos-release-7-6.1810.2.el7.centos.x86_64.rpm
+</userinput><computeroutput># </computeroutput><userinput>rpm --nodeps --root "$rootdir" -i centos-release-7-6.1810.2.el7.centos.x86_64.rpm
 </userinput><computeroutput>rpm: RPM should not be used directly install RPM packages, use Alien instead!
 rpm: However assuming you know what you are doing...
-warning: centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+warning: centos-release-7-6.1810.2.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
 # </computeroutput><userinput>sed -i -e "s,gpgkey=file:///etc/,gpgkey=file://${rootdir}/etc/,g" $rootdir/etc/yum.repos.d/*.repo
 </userinput><computeroutput># </computeroutput><userinput>yum --assumeyes --installroot $rootdir groupinstall core
 </userinput><computeroutput>[...]
@@ -2694,7 +2696,7 @@ warning: centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm: Header V3 RSA/SHA256
       directory.</para>
 
       <para>Once the profiles are defined, the <command>fai-setup</command>
-      command generates the elements required to start an FAI installation;
+      command generates the elements required to start a FAI installation;
       this mostly means preparing or updating a minimal system (NFS-root)
       used during installation. An alternative is to generate a dedicated
       boot CD with <command>fai-cd</command>.</para>
@@ -2888,9 +2890,9 @@ warning: centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm: Header V3 RSA/SHA256
 	  documentation on the use of a preseed file in an appendix. It
 	  also includes a detailed and commented sample file, which can
 	  serve as a base for local customizations. <ulink type="block"
-	  url="https://www.debian.org/releases/jessie/amd64/apb.html"/>
+	  url="https://www.debian.org/releases/buster/amd64/apb.html"/>
 	  <ulink type="block"
-	  url="https://www.debian.org/releases/jessie/example-preseed.txt"/></para>
+	  url="https://www.debian.org/releases/buster/example-preseed.txt"/></para>
         </sidebar>
       </section>
       <section>
@@ -2910,7 +2912,7 @@ warning: centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm: Header V3 RSA/SHA256
 	  <filename>/tftpboot/pxelinux.cfg/default</filename> configuration
 	  file. Setting up network boot is a prerequisite; see the
 	  Installation Guide for details. <ulink type="block"
-	  url="https://www.debian.org/releases/jessie/amd64/ch04s05.html"/></para>
+	  url="https://www.debian.org/releases/buster/amd64/ch04s05.html"/></para>
         </section>
         <section>
           <title>Preparing a Bootable USB Key</title>
@@ -3132,7 +3134,7 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
 	profiles, the remaining step is to invoke <command>build-simple-cdd
 	--conf simple-cdd.conf</command>. After a few minutes, we get the
 	required image in
-	<filename>images/debian-8.0-amd64-CD-1.iso</filename>.</para>
+	<filename>images/debian-10-amd64-CD-1.iso</filename>.</para>
       </section>
     </section>
   </section>
@@ -3173,7 +3175,7 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
       to have a web interface. On the hosts to monitor you would install
       <emphasis role="pkg">zabbix-agent</emphasis> feeding data back to the
       server.
-      <ulink type="block" url="http://www.zabbix.com/"/></para>
+      <ulink type="block" url="https://www.zabbix.com/"/></para>
     </sidebar>
 
     <sidebar>
@@ -3185,7 +3187,7 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
       developers forked Nagios and use Icinga as their new name. Icinga is
       still compatible — so far — with Nagios configurations and
       plugins, but it also adds extra features.
-      <ulink type="block" url="http://www.icinga.org/"/></para>
+      <ulink type="block" url="https://www.icinga.org/"/></para>
     </sidebar>
     <section id="sect.munin">
       <title>Setting Up Munin</title>
@@ -3237,15 +3239,15 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
 	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
 	and only allows access to the local host. An administrator will
 	usually add a similar line containing the IP address of the grapher
-	host, then restart the daemon with <command>service munin-node
-	restart</command>.</para>
+	host, then restart the daemon with <command>systemctl restart 
+	munin-node</command>.</para>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Creating local plugins</title>
 
 	  <para>Munin does include detailed documentation on how plugins
 	  should behave, and how to develop new plugins. <ulink
-	  type="block" url="http://munin-monitoring.org/wiki/plugins"/></para>
+	  type="block" url="http://guide.munin-monitoring.org/en/latest/plugin/writing.html"/></para>
 
 	  <para>A plugin is best tested when run in the same conditions as
 	  it would be when triggered by munin-node; this can be simulated
