@@ -81,9 +81,11 @@
       role="pkg">devscripts</emphasis> package) fetches the
       <filename>*.dsc</filename> file at the given address, then analyzes
       its contents, and automatically fetches the file or files referenced
-      within. Once everything has been downloaded, it extracts the source
-      package (unless the <literal>-d</literal> or
-      <literal>--download-only</literal> option is used).</para>
+      within. Once everything has been downloaded, it verifies the integrity
+      of the downloaded source packages using <command>dscverify</command>, and
+      it extracts the source package (unless the <literal>-d</literal> or
+      <literal>--download-only</literal> option is used). The Debian keyring is
+      needed, unless the option <literal>-u</literal> is supplied.</para>
     </section>
     <section>
       <title>Making Changes</title>
@@ -160,7 +162,7 @@
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Installing <literal>Build-Depends</literal></title>
-        <indexterm><primary><literal>Build-Depends</literal>, control field</primary></indexterm> 
+        <indexterm><primary><literal>Build-Depends</literal>, control field</primary></indexterm>
 	<para><command>apt-get</command> allows
 	installing all packages mentioned in the
 	<literal>Build-Depends</literal> fields of a source package
@@ -316,7 +318,7 @@ Depends: libxml2 (&gt;= 2.7.4)
 Architecture: all
 Description: Fake package - module manually installed in site_perl
  This is a fake package to let the packaging system
- believe that this Debian package is installed. 
+ believe that this Debian package is installed.
  .
  In fact, the package is not installed since a newer version
  of the module has been manually compiled &amp; installed in the
@@ -354,28 +356,28 @@ Description: Fake package - module manually installed in site_perl
 <computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>
 <computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>
 <computeroutput>
-Type of package: single binary, indep binary, multiple binary, library, kernel module, kernel patch?
- [s/i/m/l/k/n] </computeroutput><userinput>i</userinput>
+Type of package: (single, indep, library, python)
+[s/i/l/p]? </computeroutput><userinput>i</userinput>
 <computeroutput>
-Maintainer name : Raphael Hertzog
-Email-Address   : hertzog@debian.org
-Date            : Fri, 04 Sep 2015 12:09:39 -0400
-Package Name    : falcot-data
-Version         : 1.0
-License         : gpl3
-Type of Package : Independent
-Hit &lt;enter&gt; to confirm:
-Currently there is no top level Makefile. This may require additional tuning.
-Done. Please edit the files in the debian/ subdirectory now. You should also
-check that the falcot-data Makefiles install into $DESTDIR and not in / .
+Maintainer Name     : Raphael Hertzog
+Email-Address       : hertzog@debian.org
+Date                : Fri, 04 Sep 2015 12:09:39 -0400
+Package Name        : falcot-data
+Version             : 1.0
+License             : gpl3
+Package Type        : indep
+Are the details correct? [Y/n/q]
+Currently there is not top level Makefile. This may require additional tuning
+Done. Please edit the files in the debian/ subdirectory now.
+
 $</computeroutput>
 </screen>
 
-      <para>The selected type of package (<emphasis>indep
-      binary</emphasis>) indicates that this source package will generate a
+      <para>The selected type of package (<emphasis>indep</emphasis>)
+      indicates that this source package will generate a
       single binary package that can be shared across all architectures
-      (<literal>Architecture: all</literal>). <emphasis>single
-      binary</emphasis> acts as a counterpart, and leads to a single binary
+      (<literal>Architecture: all</literal>). <emphasis>single</emphasis>
+      acts as a counterpart, and leads to a single binary
       package that is dependent on the target architecture
       (<literal>Architecture: any</literal>). In this case, the former
       choice is more relevant since the package only contains documents and
@@ -385,12 +387,9 @@ $</computeroutput>
       <indexterm><primary>package types</primary></indexterm>
       <indexterm><primary>package</primary><secondary>types</secondary></indexterm>
 
-      <para>The <emphasis>multiple binary</emphasis> type corresponds to a
-      source package leading to several binary packages. A particular case,
-      <emphasis>library</emphasis>, is useful for shared libraries, since
-      they need to follow strict packaging rules. In a similar fashion,
-      <emphasis>kernel module</emphasis> or <emphasis>kernel patch</emphasis>
-      should be restricted to packages containing kernel modules.
+      <para>The <emphasis>library</emphasis> type corresponds to a
+      source package leading to several binary packages. It is useful for
+      shared libraries, since they need to follow strict packaging rules.
       </para>
 
       <sidebar>
@@ -439,7 +438,7 @@ export DEBFULLNAME="Raphael Hertzog"
       <literal>Homepage</literal>, <literal>Vcs-Git</literal> and
       <literal>Vcs-Browser</literal> fields were removed. The
       <literal>Depends</literal> fields was completed with
-      <literal>iceweasel | www-browser</literal> so as to ensure the
+      <literal>firefox-esr | www-browser</literal> so as to ensure the
       availability of a web browser able to display the documents in the
       package.</para>
 
@@ -451,12 +450,12 @@ Source: falcot-data
 Section: misc
 Priority: optional
 Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;
-Build-Depends: debhelper (&gt;= 9)
-Standards-Version: 3.9.5
+Build-Depends: debhelper (&gt;= 10)
+Standards-Version: 4.1.2
 
 Package: falcot-data
 Architecture: all
-Depends: iceweasel | www-browser, ${misc:Depends}
+Depends: firefox-esr | www-browser, ${misc:Depends}
 Description: Internal Falcot Corp Documentation
  This package provides several documents describing the internal
  structure at Falcot Corp.  This includes:
@@ -492,7 +491,7 @@ Upstream-Name: falcot-data
 
 Files: *
 Copyright: 2004-2015 Falcot Corp
-License: 
+License:
  All rights reserved.
 </programlisting>
       </example>
@@ -775,7 +774,7 @@ release_label = Internal Packages
 	There is no requirement to know them by heart, but rather to know
 	they exist and to refer to them whenever a choice presents a
 	non-trivial alternative. Every Debian maintainer has made mistakes
-	by not knowing about a rule, but this is not a huge problem as long 
+	by not knowing about a rule, but this is not a huge problem as long
 	as the error gets fixed when a user reports it as a bug report (which
         tends to happen fairly soon thanks to advanced users).
         <ulink type="block" url="https://www.debian.org/doc/debian-policy/"/></para>
