@@ -330,13 +330,12 @@ net.ipv4.tcp_syncookies = 1
 </screen>
 
 	<para>They then store the required parameters into the
-	<filename>vars</filename> file, especially those named with a
-	<literal>KEY_</literal> prefix; these variables are then integrated
-	into the environment:</para>
+	<filename>vars</filename> file, which can be uncommented
+	and edited:</para>
 
         <screen>
 <computeroutput>$ </computeroutput><userinput>vim vars
-</userinput><computeroutput>$ </computeroutput><userinput>grep KEY_ vars
+</userinput><computeroutput>$ </computeroutput><userinput>grep EASYRSA vars
 </userinput><computeroutput>export KEY_CONFIG=`$EASY_RSA/whichopensslcnf $EASY_RSA`
 export KEY_DIR="$EASY_RSA/keys"
 echo NOTE: If you run ./clean-all, I will be doing a rm -rf on $KEY_DIR
@@ -351,10 +350,7 @@ export KEY_OU="Certificate authority"
 export KEY_NAME="Certificate authority for Falcot Corp"
 # If you'd like to sign all keys with the same Common Name, uncomment the KEY_CN export below
 # export KEY_CN="CommonName"
-$ </computeroutput><userinput>. ./vars
-</userinput><computeroutput>NOTE: If you run ./clean-all, I will be doing a rm -rf on /home/roland/pki-falcot/keys
-$ </computeroutput><userinput>./clean-all
-</userinput>
+$ </computeroutput>
 </screen>
 
 	<para>The next step is the creation of the CA's key pair itself
@@ -362,13 +358,23 @@ $ </computeroutput><userinput>./clean-all
 	<filename>keys/ca.crt</filename> and
 	<filename>keys/ca.key</filename> during this step):</para>
 
+	<para>The next step is the creation of the CA's key pair itself
+	(the two parts of the key pair will be stored under
+	<filename>pki/ca.crt</filename> and
+	<filename>pki/private/ca.key</filename> during this step). We can
+	add the option <literal>nopass</literal> to avoid entering a password each
+	time the private key is used:</para>
+
         <screen>
-<computeroutput>$ </computeroutput><userinput>./build-ca</userinput>
-<computeroutput>Generating a 2048 bit RSA private key
-...................................................................+++
-...+++
-writing new private key to 'ca.key'
------
+<computeroutput>$ </computeroutput><userinput>./easyrsa build-ca nopass</userinput>
+<computeroutput>
+Note: using Easy-RSA configuration from: ./vars
+
+Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+Generating RSA private key, 2048 bit long modulus (2 primes)
+......................................................................................+++++
+......................+++++
+e is 65537 (0x010001)
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
 What you are about to enter is what is called a Distinguished Name or a DN.
@@ -376,14 +382,12 @@ There are quite a few fields but you can leave some blank
 For some fields there will be a default value,
 If you enter '.', the field will be left blank.
 -----
-Country Name (2 letter code) [FR]:
-State or Province Name (full name) [Loire]:
-Locality Name (eg, city) [Saint-Étienne]:
-Organization Name (eg, company) [Falcot Corp]:
-Organizational Unit Name (eg, section) [Certificate authority]:
-Common Name (eg, your name or your server's hostname) [Falcot Corp CA]:
-Name [Certificate authority for Falcot Corp]:
-Email Address [admin@falcot.com]:
+Common Name (eg: your user, host, or server name) [Easy-RSA CA]:
+
+CA creation complete and you may now import and sign cert requests.
+Your new CA certificate file for publishing is at:
+/home/roland/pki-falcot/pki/ca.crt
+
 </computeroutput>
 </screen>
 
@@ -397,11 +401,14 @@ Email Address [admin@falcot.com]:
 	private key):</para>
 
         <screen>
-<computeroutput>$ </computeroutput><userinput>./build-key-server vpn.falcot.com
-</userinput><computeroutput>Generating a 2048 bit RSA private key
-.....................................................................................................................+++
-...........+++
-writing new private key to 'vpn.falcot.com.key'
+<computeroutput>$ </computeroutput><userinput>./easyrsa gen-req vpn.falcot.com nopass
+</userinput><computeroutput>Note: using Easy-RSA configuration from: ./vars
+
+Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+Generating a RSA private key
+.................................................................................+++++
+........+++++
+writing new private key to '/home/roland/pki-falcot/pki/private/vpn.falcot.com.key.E5c3RGJBUd'
 -----
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
@@ -410,42 +417,54 @@ There are quite a few fields but you can leave some blank
 For some fields there will be a default value,
 If you enter '.', the field will be left blank.
 -----
-Country Name (2 letter code) [FR]:
-State or Province Name (full name) [Loire]:
-Locality Name (eg, city) [Saint-Étienne]:
-Organization Name (eg, company) [Falcot Corp]:
-Organizational Unit Name (eg, section) [Certificate authority]:
-Common Name (eg, your name or your server's hostname) [vpn.falcot.com]:
-Name [Certificate authority for Falcot Corp]:
-Email Address [admin@falcot.com]:
+Common Name (eg: your user, host, or server name) [vpn.falcot.com]:
 
-Please enter the following 'extra' attributes
-to be sent with your certificate request
-A challenge password []:
-An optional company name []:
-Using configuration from /home/roland/pki-falcot/openssl-1.0.0.cnf
+Keypair and certificate request completed. Your files are:
+req: /home/roland/pki-falcot/pki/reqs/vpn.falcot.com.req
+key: /home/roland/pki-falcot/pki/private/vpn.falcot.com.key
+
+$ </computeroutput><userinput>./easyrsa sign-req server vpn.falcot.com
+</userinput><computeroutput>
+Note: using Easy-RSA configuration from: ./vars
+
+Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+
+
+You are about to sign the following certificate.
+Please check over the details shown below for accuracy. Note that this request
+has not been cryptographically verified. Please be sure it came from a trusted
+source or that you have verified the request checksum with the sender.
+
+Request subject, to be signed as a server certificate for 1080 days:
+
+subject=
+    commonName                = vpn.falcot.com
+
+
+Type the word 'yes' to continue, or any other input to abort.
+  Confirm request details: <userinput>yes
+</userinput>Using configuration from /home/roland/pki-falcot/pki/safessl-easyrsa.cnf
 Check that the request matches the signature
 Signature ok
 The Subject's Distinguished Name is as follows
-countryName           :PRINTABLE:'FR'
-stateOrProvinceName   :PRINTABLE:'Loire'
-localityName          :T61STRING:'Saint-\0xFFFFFFC3\0xFFFFFF89tienne'
-organizationName      :PRINTABLE:'Falcot Corp'
-organizationalUnitName:PRINTABLE:'Certificate authority'
-commonName            :PRINTABLE:'vpn.falcot.com'
-name                  :PRINTABLE:'Certificate authority for Falcot Corp'
-emailAddress          :IA5STRING:'admin@falcot.com'
-Certificate is to be certified until Mar  6 14:54:56 2025 GMT (3650 days)
-Sign the certificate? [y/n]:</computeroutput><userinput>y
-</userinput><computeroutput>
+commonName            :ASN.1 12:'vpn.falcot.com'
+Certificate is to be certified until Jun 14 10:44:44 2022 GMT (1080 days)
 
-1 out of 1 certificate requests certified, commit? [y/n]</computeroutput><userinput>y
-</userinput><computeroutput>Write out database with 1 new entries
+Write out database with 1 new entries
 Data Base Updated
-$ </computeroutput><userinput>./build-dh
-</userinput><computeroutput>Generating DH parameters, 2048 bit long safe prime, generator 2
+
+Certificate created at: /home/roland/pki-falcot/pki/issued/vpn.falcot.com.crt
+
+$ </computeroutput><userinput>./easyrsa gen-dh
+</userinput><computeroutput>
+Note: using Easy-RSA configuration from: ./vars
+
+Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+Generating DH parameters, 2048 bit long safe prime, generator 2
 This is going to take a long time
 […]
+DH parameters of size 2048 created at /home/roland/pki-falcot/pki/dh.pem
+
 </computeroutput>
 </screen>
 
@@ -455,10 +474,14 @@ This is going to take a long time
 
         <screen>
 <computeroutput>$ </computeroutput><userinput>./build-key JoeSmith
-</userinput><computeroutput>Generating a 2048 bit RSA private key
-................................+++
-..............................................+++
-writing new private key to 'JoeSmith.key'
+</userinput><computeroutput>
+Note: using Easy-RSA configuration from: ./vars
+
+Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+Generating a RSA private key
+....+++++
+..............................+++++
+writing new private key to '/home/roland/pki-falcot/pki/private/JoeSmith.key.mY21iP8ysv'
 -----
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
@@ -467,28 +490,27 @@ There are quite a few fields but you can leave some blank
 For some fields there will be a default value,
 If you enter '.', the field will be left blank.
 -----
-Country Name (2 letter code) [FR]:
-State or Province Name (full name) [Loire]:
-Locality Name (eg, city) [Saint-Étienne]:
-Organization Name (eg, company) [Falcot Corp]:
-Organizational Unit Name (eg, section) [Certificate authority]:</computeroutput><userinput>Development unit
-</userinput><computeroutput>Common Name (eg, your name or your server's hostname) [JoeSmith]:</computeroutput><userinput>Joe Smith
-</userinput><computeroutput>[…]</computeroutput></screen>
+Common Name (eg: your user, host, or server name) [JoeSmith]:
+
+Keypair and certificate request completed. Your files are:
+req: /home/roland/pki-falcot/pki/reqs/JoeSmith.req
+key: /home/roland/pki-falcot/pki/private/JoeSmith.key
+</computeroutput></screen>
 
 	<para>Now all certificates have been created, they need to be
 	copied where appropriate: the root certificate's public key
-	(<filename>keys/ca.crt</filename>) will be stored on all machines
+	(<filename>pki/ca.crt</filename>) will be stored on all machines
 	(both server and clients) as
 	<filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
 	certificate is installed only on the server
-	(<filename>keys/vpn.falcot.com.crt</filename> goes to
+	(<filename>pki/issued/vpn.falcot.com.crt</filename> goes to
 	<filename>/etc/ssl/vpn.falcot.com.crt</filename>, and
-	<filename>keys/vpn.falcot.com.key</filename> goes to
+	<filename>pki/private/vpn.falcot.com.key</filename> goes to
 	<filename>/etc/ssl/private/vpn.falcot.com.key</filename> with
 	restricted permissions so that only the administrator can read it),
 	with the corresponding Diffie-Hellman parameters
-	(<filename>keys/dh2048.pem</filename>) installed to
-	<filename>/etc/openvpn/dh2048.pem</filename>. Client certificates
+	(<filename>pki/dh.pem</filename>) installed to
+	<filename>/etc/openvpn/dh.pem</filename>. Client certificates
 	are installed on the corresponding VPN client in a similar
 	fashion.</para>
       </section>
@@ -508,7 +530,7 @@ Organizational Unit Name (eg, section) [Certificate authority]:</computeroutput>
 	<literal>/etc/ssl/certs/Falcot_CA.crt</literal>,
 	<literal>/etc/ssl/vpn.falcot.com.crt</literal>,
 	<literal>/etc/ssl/private/vpn.falcot.com.key</literal> and
-	<literal>/etc/openvpn/dh2048.pem</literal>). The <literal>server
+	<literal>/etc/openvpn/dh.pem</literal>). The <literal>server
 	10.8.0.0 255.255.255.0</literal> directive defines the subnet to be
 	used by the VPN; the server uses the first IP address in that range
 	(<literal>10.8.0.1</literal>) and the rest of the addresses are
@@ -564,8 +586,8 @@ Organizational Unit Name (eg, section) [Certificate authority]:</computeroutput>
 	<literal>none</literal> in the
 	<filename>/etc/default/openvpn</filename> file. Starting or
 	stopping a given VPN connection is always possible with the
-        commands <command>service openvpn@<replaceable>name</replaceable> start</command> and
-        <command>service openvpn@<replaceable>name</replaceable> stop</command> (where the connection
+	commands <command>systemctl start openvpn@<replaceable>name</replaceable></command> and
+	<command>systemctl stop openvpn@<replaceable>name</replaceable></command> (where the connection
 	<replaceable>name</replaceable> matches the one defined in
 	<filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename>).</para>
 
@@ -750,7 +772,7 @@ ipparam falcot
 # Create the route to the Falcot network
 if [ "$6" = "falcot" ]; then
   # 192.168.0.0/24 is the (remote) Falcot network
-  route add -net 192.168.0.0 netmask 255.255.255.0 dev $1
+  ip route add 192.168.0.0/24 dev $1
 fi
 </programlisting>
         </example>
@@ -762,7 +784,7 @@ fi
 # Delete the route to the Falcot network
 if [ "$6" = "falcot" ]; then
   # 192.168.0.0/24 is the (remote) Falcot network
-  route del -net 192.168.0.0 netmask 255.255.255.0 dev $1
+  ip route del 192.168.0.0/24 dev $1
 fi
 </programlisting>
         </example>
@@ -1112,9 +1134,12 @@ iptables -t mangle -A PREROUTING -p tcp --dport ssh -j TOS --set-tos Minimize-De
 
       <para>In the Linux kernel, a route links a network device to a set of
       machines that can be reached through this device. The
-      <command>route</command> command defines new routes and displays
-      existing ones.</para>
+      <command>ip</command> command, when <literal>route</literal> is used
+      as the first argument, defines new routes and displays existing ones.
+      The <command>route</command> command was used for that purpose, but
+      it is deprecated in favour of <command>ip</command>.</para>
       <indexterm><primary><command>route</command></primary></indexterm>
+      <indexterm><primary><command>ip route</command></primary></indexterm>
     </sidebar>
 
     <para>Quagga is a set of daemons cooperating to define the routing
@@ -1124,29 +1149,26 @@ iptables -t mangle -A PREROUTING -p tcp --dport ssh -j TOS --set-tos Minimize-De
     and handles static routing tables accordingly. The other daemons are
     known as <command>bgpd</command>, <command>ospfd</command>,
     <command>ospf6d</command>, <command>ripd</command>, 
-    <command>ripngd</command>, <command>isisd</command>, and
-    <command>babeld</command>.</para>
+    <command>ripngd</command>, and <command>isisd</command>.</para>
     <indexterm><primary>OSPF</primary></indexterm>
     <indexterm><primary>BGP</primary></indexterm>
     <indexterm><primary>RIP</primary></indexterm>
     <indexterm><primary>IS-IS</primary></indexterm>
-    <indexterm><primary>BABEL wireless mesh routing</primary></indexterm>
     <indexterm><primary><command>bgpd</command></primary></indexterm>
     <indexterm><primary><command>ospfd</command></primary></indexterm>
     <indexterm><primary><command>ospf6d</command></primary></indexterm>
     <indexterm><primary><command>ripd</command></primary></indexterm>
     <indexterm><primary><command>ripngd</command></primary></indexterm>
     <indexterm><primary><command>isisd</command></primary></indexterm>
-    <indexterm><primary><command>babeld</command></primary></indexterm>
 
-    <para>Daemons are enabled by editing the
-    <filename>/etc/quagga/daemons</filename> file and creating the
-    appropriate configuration file in <filename>/etc/quagga/</filename>;
-    this configuration file must be named after the daemon, with a
-    <filename>.conf</filename> extension, and belong to the
-    <literal>quagga</literal> user and the <literal>quaggavty</literal>
-    group, in order for the <filename>/etc/init.d/quagga</filename> script
-    to invoke the daemon.</para>
+    <para>Daemons are enabled by create the
+    <filename>/etc/quagga/<replaceable>daemon</replaceable>.conf</filename>
+    config file, daemon being the name of the daemon to use;
+    this file must belong to the <literal>quagga</literal> user and group
+    in order for the <filename>/etc/init.d/zebra</filename> script
+    to invoke the daemon. The package <emphasis role="pkg">quagga-core</emphasis>
+    provides configuration examples under
+    <filename>/usr/share/doc/quagga-core/examples/</filename></para>
 
     <para>The configuration of each of these daemons requires knowledge of
     the routing protocol in question. These protocols cannot be described
@@ -1202,8 +1224,7 @@ iptables -t mangle -A PREROUTING -p tcp --dport ssh -j TOS --set-tos Minimize-De
 
       <programlisting>
 iface eth0 inet6 static
-    address 2001:db8:1234:5::1:1
-    netmask 64
+    address 2001:db8:1234:5::1:1/64
     # Disabling auto-configuration
     # autoconf 0
     # The router is auto-configured and has no fixed address
@@ -1254,7 +1275,7 @@ iface eth0 inet6 auto
       yet, you can ask for help on the <emphasis>debian-ipv6</emphasis>
       mailing-list. They might know about an IPv6-aware replacement
       and could file a bug to get the issue properly tracked.
-      <ulink type="block" url="http://lists.debian.org/debian-ipv6/"/></para>
+      <ulink type="block" url="https://lists.debian.org/debian-ipv6/"/></para>
     </sidebar>
 
     <indexterm><primary>IPv6 firewall</primary></indexterm>
@@ -1280,35 +1301,18 @@ iface eth0 inet6 auto
       </sidebar>
 
       <para>If a native IPv6 connection is not available, the fallback method
-      is to use a tunnel over IPv4. Gogo6 is one (free) provider of such
-      tunnels: <ulink type="block" url="http://www.gogo6.com/freenet6/tunnelbroker"/></para>
-      <indexterm><primary>Freenet6</primary></indexterm>
-      <indexterm><primary>Gogo6</primary></indexterm>
+      is to use a tunnel over IPv4. Hurricane Electric is one (free) provider of such
+      tunnels: <ulink type="block" url="https://tunnelbroker.net"/></para>
+      <indexterm><primary>Hurricane Electric</primary></indexterm>
+      <indexterm><primary>tunnel broker</primary></indexterm>
 
-      <para>To use a Freenet6 tunnel, you need to register for a Freenet6
-      Pro account on the website, then install the <emphasis
-      role="pkg">gogoc</emphasis> package and configure the tunnel. This
-      requires editing the <filename>/etc/gogoc/gogoc.conf</filename>
-      file: <literal>userid</literal> and <literal>password</literal>
-      lines received by e-mail should be added, and
-      <literal>server</literal> should be replaced with
-      <literal>authenticated.freenet6.net</literal>.</para>
+      <para>To use a Hurricane Electric tunnel, you need to register an
+      account, login, select a free tunnel and edit the file
+      <filename>/etc/network/interfaces</filename> with the generated code.</para>
 
-      <para>IPv6 connectivity is proposed to all machines on a local network
-      by adding the three following directives to the
-      <filename>/etc/gogoc/gogoc.conf</filename> file (assuming the local
-      network is connected to the eth0 interface):</para>
-
-      <programlisting>
-host_type=router
-prefixlen=56
-if_prefix=eth0
-</programlisting>
-
-      <para>The machine then becomes the access router for a subnet with a
-      56-bit prefix. Once the tunnel is aware of this change, the local
-      network must be told about it; this implies installing the
-      <command>radvd</command> daemon (from the similarly-named package).
+      <para>You can install and configure the
+      <command>radvd</command> daemon (from the similarly-named package) if you
+      want to use the configured computer as a router for a local network.
       This IPv6 configuration daemon has a role similar to
       <command>dhcpd</command> in the IPv4 world.</para>
 
@@ -1316,14 +1320,13 @@ if_prefix=eth0
       then be created (see
       <filename>/usr/share/doc/radvd/examples/simple-radvd.conf</filename> as
       a starting point). In our case, the only required change is the prefix,
-      which needs to be replaced with the one provided by Freenet6; it can be
-      found in the output of the <command>ifconfig</command> command, in the
-      block concerning the <literal>tun</literal> interface.</para>
+      which needs to be replaced with the one provided by Hurricane Electric; it can be
+      found in the output of the <command>ip a</command> command, in the
+      block concerning the <literal>he-ipv6</literal> interface.</para>
       <indexterm><primary><command>radvd</command></primary></indexterm>
 
-      <para>Then run <command>service gogoc restart</command> and
-      <command>service radvd start</command>, and the IPv6 network should
-      work.</para>
+      <para>Then run <command>systemctl start radvd</command>. The IPv6
+      network should now work.</para>
     </section>
 
   </section>
@@ -1338,7 +1341,7 @@ if_prefix=eth0
       fundamental component of the Internet: it maps host names to IP
       addresses (and vice-versa), which allows the use of
       <literal>www.debian.org</literal> instead of
-      <literal>5.153.231.4</literal> or <literal>2001:41c8:1000:21::21:4</literal>.</para>
+      <literal>149.20.4.15</literal> or <literal>2001:4f8:1:c::15</literal>.</para>
 
       <para>DNS records are organized in zones; each zone matches either a
       domain (or a subdomain) or an IP address range (since IP addresses
@@ -1350,7 +1353,7 @@ if_prefix=eth0
       <indexterm><primary>DNS</primary><secondary>zone</secondary></indexterm>
 
       <para>Each zone can contain records of various kinds
-      (<emphasis>Resource Records</emphasis>):</para>
+      (<emphasis>Resource Records</emphasis>), these are some of most common:</para>
       <itemizedlist>
         <listitem>
 	  <para><literal>A</literal>: IPv4 address. <indexterm><primary>A,
@@ -1427,7 +1430,7 @@ if_prefix=eth0
 	it is not in widespread usage yet (even if it perfectly coexists
 	with DNS servers unaware of DNSSEC). To understand all the ins and
 	outs, you should check the following article. <ulink type="block"
-	url="http://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
+	url="https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
       </sidebar>
     </section>
     <section id="sect.dns-config">
@@ -1608,7 +1611,8 @@ $TTL    604800
       <title>Configuring</title>
 
       <para>The first elements that need to be edited in the DHCP server
-      configuration file (<filename>/etc/dhcp/dhcpd.conf</filename>) are
+      configuration files (<filename>/etc/dhcp/dhcpd.conf</filename>, and
+      <filename>/etc/dhcp/dhcpd6.conf</filename> for IPv6) are
       the domain name and the DNS servers. If this server is alone on the
       local network (as defined by the broadcast propagation), the
       <literal>authoritative</literal> directive must also be enabled (or
@@ -1697,8 +1701,7 @@ allow-update { 127.0.0.1 192.168.0.1 212.94.201.10 !any };
       <para>The DHCP server configuration excerpt above already includes
       the directives required for DNS zone updates: they are the
       <literal>ddns-update-style interim;</literal> and
-      <literal>ddns-domain-name "internal.falcot.com";</literal> lines in
-      the block describing the subnet.</para>
+      <literal>ddns-domain-name "internal.falcot.com";</literal> lines.</para>
     </section>
   </section>
   <section id="sect.network-diagnosis-tools">
@@ -1835,7 +1838,7 @@ udp6       0      0 :::5353                 :::*                                
       <screen width="80" role="scale">
 <computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>
 <computeroutput>
-Starting Nmap 6.47 ( http://nmap.org ) at 2015-03-09 16:46 CET
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:05 CET
 Nmap scan report for mirtuel (192.168.1.242)
 Host is up (0.000013s latency).
 rDNS record for 192.168.1.242: mirtuel.internal.placard.fr.eu.org
@@ -1847,33 +1850,36 @@ PORT    STATE SERVICE
 Nmap done: 1 IP address (1 host up) scanned in 2.41 seconds
 # </computeroutput><userinput>nmap -A localhost</userinput>
 <computeroutput>
-Starting Nmap 6.47 ( http://nmap.org ) at 2015-03-09 16:46 CET
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:17 CEST
 Nmap scan report for localhost (127.0.0.1)
-Host is up (0.000013s latency).
-Other addresses for localhost (not scanned): 127.0.0.1
+Host is up (0.000039s latency).
+Other addresses for localhost (not scanned): ::1
 Not shown: 997 closed ports
 PORT    STATE SERVICE VERSION
-22/tcp  open  ssh     OpenSSH 6.7p1 Debian 3 (protocol 2.0)
-|_ssh-hostkey: ERROR: Script execution failed (use -d to debug)
-25/tcp  open  smtp    Exim smtpd 4.84
-| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, HELP, 
-|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA NOOP QUIT RSET HELP 
-111/tcp open  rpcbind 2-4 (RPC #100000)
-| rpcinfo: 
-|   program version   port/proto  service
-|   100000  2,3,4        111/tcp  rpcbind
-|   100000  2,3,4        111/udp  rpcbind
-|   100024  1          36568/tcp  status
-|_  100024  1          39172/udp  status
+22/tcp  open  ssh     OpenSSH 7.9p1 Debian 10 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 33:a1:d8:b1:e5:5b:b2:0d:15:1b:8e:76:7f:e4:d7:3d (RSA)
+|   256 8f:83:cf:fa:b3:58:54:9a:1d:1b:4c:db:b1:e2:58:76 (ECDSA)
+|_  256 fa:3d:58:62:49:92:93:90:52:fe:f4:26:ca:dc:4c:40 (ED25519)
+25/tcp  open  smtp    Exim smtpd 4.92
+| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, CHUNKING, PRDR, HELP, 
+|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA BDAT NOOP QUIT RSET HELP 
+631/tcp open  ipp     CUPS 2.2
+| http-methods: 
+|_  Potentially risky methods: PUT
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-server-header: CUPS/2.2 IPP/2.1
+|_http-title: Home - CUPS 2.2.10
 Device type: general purpose
 Running: Linux 3.X
 OS CPE: cpe:/o:linux:linux_kernel:3
-OS details: Linux 3.7 - 3.15
+OS details: Linux 3.7 - 3.10
 Network Distance: 0 hops
-Service Info: Host: mirtuel; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+Service Info: Host: debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-OS and Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 11.54 seconds
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds
 </computeroutput>
 </screen>
 
@@ -1925,7 +1931,8 @@ Nmap done: 1 IP address (1 host up) scanned in 11.54 seconds
 
       <para>In our example, the packets traveling over SSH are filtered
       out (with the <literal>!tcp.port == 22</literal> filter). The packet
-      currently displayed was developed at the HTTP layer.</para>
+      currently displayed was developed at the transport layer of the
+      SSHv2 protocol.</para>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> <command>wireshark</command> with no graphical interface: <command>tshark</command></title>
