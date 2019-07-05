@@ -525,7 +525,7 @@
           </listitem>
         </itemizedlist>
 
-	<para>The <literal>DNAT</literal> action 
+	<para>The <literal>DNAT</literal> action
 	provides the <literal>--to-destination
 	<replaceable>address</replaceable>:<replaceable>port</replaceable></literal>
 	option to indicate the new destination IP address and/or port.
@@ -852,7 +852,7 @@ iface eth0 inet static
 	  <indexterm><primary>fingerprint</primary></indexterm>
 	  <indexterm><primary>control sum</primary></indexterm>
 	  <indexterm><primary>MD5</primary></indexterm>
-	  <indexterm><primary>SHA1</primary></indexterm> 
+	  <indexterm><primary>SHA1</primary></indexterm>
           <para>As a reminder: a
           fingerprint is a value, often a number (even though in hexadecimal
           notation), that contains a kind of signature for the contents of a
@@ -1148,7 +1148,7 @@ iface eth0 inet static
         program. The profile applied by the kernel depends on the
         installation path of the program being executed.
         Contrary to SELinux (discussed in <xref linkend="sect.selinux" />),
-        the rules applied do not depend on the user. All users 
+        the rules applied do not depend on the user. All users
         face the same set of rules when they are executing the same
         program (but traditional user permissions still apply and
         might result in different behaviour!).
@@ -1168,36 +1168,34 @@ iface eth0 inet static
     <section id="sect.apparmor-setup">
       <title>Enabling AppArmor and managing AppArmor profiles</title>
       <para>
-        AppArmor support is built into the standard kernels provided by Debian.
-        Enabling AppArmor is thus just a matter of installing a few
-        packages and adding some parameters to the kernel command line:
+        AppArmor support is built into the standard kernels provided
+        by Debian. Enabling AppArmor is thus just a matter of
+        installing some packages by executing
+        <command>apt install apparmor apparmor-profiles apparmor-utils</command>
+        with root privileges.
       </para>
-      <screen><computeroutput># </computeroutput><userinput>apt install apparmor apparmor-profiles apparmor-utils
-</userinput><computeroutput>[...]
-# </computeroutput><userinput>perl -pi -e 's,GRUB_CMDLINE_LINUX="(.*)"$,GRUB_CMDLINE_LINUX="$1 apparmor=1 security=apparmor",' /etc/default/grub
-</userinput><computeroutput># </computeroutput><userinput>update-grub
-</userinput></screen>
       <para>
-        After a reboot, AppArmor is now functional and <command>aa-status</command>
+        AppArmor is functional after the installation, and <command>aa-status</command>
         will confirm it quickly:
       </para>
       <screen>
 <computeroutput># </computeroutput><userinput>aa-status</userinput>
 <computeroutput>apparmor module is loaded.
-44 profiles are loaded.
-9 profiles are in enforce mode.
-   /usr/bin/lxc-start
-   /usr/lib/chromium-browser/chromium-browser//browser_java
+40 profiles are loaded.
+23 profiles are in enforce mode.
+   /usr/bin/evince
+   /usr/bin/evince-previewer
 [...]
-35 profiles are in complain mode.
-   /sbin/klogd
+17 profiles are in complain mode.
+   /usr/sbin/dnsmasq
 [...]
-3 processes have profiles defined.
-1 processes are in enforce mode.
-   /usr/sbin/libvirtd (1295) 
+14 processes have profiles defined.
+12 processes are in enforce mode.
+   /usr/bin/evince (3462)
+[...]
 2 processes are in complain mode.
-   /usr/sbin/avahi-daemon (941) 
-   /usr/sbin/avahi-daemon (1000) 
+   /usr/sbin/avahi-daemon (429) avahi-daemon
+   /usr/sbin/avahi-daemon (511) avahi-daemon
 0 processes are unconfined but have a profile defined.</computeroutput>
 </screen>
       <sidebar>
@@ -1220,10 +1218,10 @@ iface eth0 inet static
         accepted system calls too) with <command>aa-audit</command>.
       </para>
       <screen>
-<computeroutput># </computeroutput><userinput>aa-enforce /usr/sbin/avahi-daemon</userinput>
-<computeroutput>Setting /usr/sbin/avahi-daemon to enforce mode.</computeroutput>
-<computeroutput># </computeroutput><userinput>aa-complain /etc/apparmor.d/usr.bin.lxc-start</userinput>
-<computeroutput>Setting /etc/apparmor.d/usr.bin.lxc-start to complain mode.</computeroutput>
+<computeroutput># </computeroutput><userinput>aa-enforce /usr/bin/pidgin</userinput>
+<computeroutput>Setting /usr/bin/pidgin to enforce mode.</computeroutput>
+<computeroutput># </computeroutput><userinput>aa-complain /usr/sbin/dnsmasq</userinput>
+<computeroutput>Setting /usr/sbin/dnsmasq to complain mode.</computeroutput>
       </screen>
     </section>
     <section id="sect.apparmor-new-profile">
@@ -1248,20 +1246,35 @@ iface eth0 inet static
       <screen>
 <computeroutput># </computeroutput><userinput>aa-unconfined</userinput>
 <computeroutput>801 /sbin/dhclient not confined
-890 /sbin/rpcbind not confined
-899 /sbin/rpc.statd not confined
-929 /usr/sbin/sshd not confined
-941 /usr/sbin/avahi-daemon confined by '/usr/sbin/avahi-daemon (complain)'
-988 /usr/sbin/minissdpd not confined
-1276 /usr/sbin/exim4 not confined
-1485 /usr/lib/erlang/erts-6.2/bin/epmd not confined
-1751 /usr/lib/erlang/erts-6.2/bin/beam.smp not confined
-19592 /usr/lib/dleyna-renderer/dleyna-renderer-service not confined</computeroutput>
+409 /usr/sbin/NetworkManager not confined
+411 /usr/sbin/cupsd confined by '/usr/sbin/cupsd (enforce)'
+429 /usr/sbin/avahi-daemon confined by 'avahi-daemon (enforce)'
+516 /usr/sbin/cups-browsed confined by '/usr/sbin/cups-browsed (enforce)'
+538 /usr/sbin/zebra not confined
+591 /usr/sbin/named not confined
+847 /usr/sbin/mysqld not confined
+849 /usr/sbin/sshd not confined
+1013 /usr/sbin/dhclient (/sbin/dhclient) not confined
+1276 /usr/sbin/apache2 not confined
+1322 /usr/sbin/apache2 not confined
+1323 /usr/sbin/apache2 not confined
+1324 /usr/sbin/apache2 not confined
+1325 /usr/sbin/apache2 not confined
+1327 /usr/sbin/apache2 not confined
+1829 /usr/lib/ipsec/charon confined by '/usr/lib/ipsec/charon (enforce)'
+2132 /usr/sbin/exim4 not confined
+12865 /usr/bin/python3.7 (/usr/bin/python3) not confined
+12873 /usr/bin/python3.7 (/usr/bin/python3) not confined</computeroutput>
       </screen>
       <para>
         In the following example, we will thus try to create a
         profile for <command>/sbin/dhclient</command>. For this
-        we will use <command>aa-genprof dhclient</command>. It
+        we will use <command>aa-genprof dhclient</command>. On Debian
+        Buster, there is a known bug (<ulink url="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=928160"/>)
+        that makes the previous command may fail with the following error:
+	<computeroutput>ERROR: Include file /etc/apparmor.d/local/usr.lib.dovecot.deliver not found</computeroutput>.
+        To fix it create the missing files with
+        <command>touch <replaceable>file</replaceable></command>. It
         will invite you to use the application in another window
         and when done to come back to <command>aa-genprof</command>
         to scan for AppArmor events in the system logs and
@@ -1271,32 +1284,33 @@ iface eth0 inet static
       </para>
       <screen>
 <computeroutput># </computeroutput><userinput>aa-genprof dhclient</userinput>
-<computeroutput>Writing updated profile for /sbin/dhclient.
-Setting /sbin/dhclient to complain mode.
+<computeroutput>Writing updated profile for /usr/sbin/dhclient.
+Setting /usr/sbin/dhclient to complain mode.
 
 Before you begin, you may wish to check if a
 profile already exists for the application you
 wish to confine. See the following wiki page for
 more information:
-http://wiki.apparmor.net/index.php/Profiles
+https://gitlab.com/apparmor/apparmor/wikis/Profiles
+
+Profiling: /usr/sbin/dhclient
 
 Please start the application to be profiled in
 another window and exercise its functionality now.
 
-Once completed, select the "Scan" option below in 
-order to scan the system logs for AppArmor events. 
+Once completed, select the "Scan" option below in
+order to scan the system logs for AppArmor events.
 
-For each AppArmor event, you will be given the 
-opportunity to choose whether the access should be 
+For each AppArmor event, you will be given the
+opportunity to choose whether the access should be
 allowed or denied.
 
-Profiling: /sbin/dhclient
-
 [(S)can system log for AppArmor events] / (F)inish
-Reading log entries from /var/log/audit/audit.log.
+Reading log entries from /var/log/syslog.
+Updating AppArmor profiles in /etc/apparmor.d.
 
-Profile:  /sbin/dhclient <co id="aa-genprof-execute"/>
-Execute:  /usr/lib/NetworkManager/nm-dhcp-helper
+Profile:  /usr/sbin/dhclient <co id="aa-genprof-execute"/>
+Execute:  /usr/sbin/dhclient-script
 Severity: unknown
 
 (I)nherit / (C)hild / (P)rofile / (N)amed / (U)nconfined / (X) ix On / (D)eny / Abo(r)t / (F)inish
@@ -1310,115 +1324,97 @@ of LD_PRELOAD or LD_LIBRARY_PATH.
 
 (Y)es / [(N)o]
 <userinput>Y</userinput>
-Writing updated profile for /usr/lib/NetworkManager/nm-dhcp-helper.
+Writing updated profile for /usr/sbin/dhclient-script.
 Complain-mode changes:
-WARN: unknown capability: CAP_net_raw
 
-Profile:    /sbin/dhclient <co id="aa-genprof-capability"/>
+Profile:    /usr/sbin/dhclient <co id="aa-genprof-capability"/>
 Capability: net_raw
-Severity:   unknown
+Severity:   8
 
+ [1 - capability net_raw,]
 [(A)llow] / (D)eny / (I)gnore / Audi(t) / Abo(r)t / (F)inish
 <userinput>A</userinput>
 Adding capability net_raw to profile.
 
-Profile:  /sbin/dhclient <co id="aa-genprof-read"/>
-Path:     /etc/nsswitch.conf
-Mode:     r
-Severity: unknown
-
-  1 - #include &lt;abstractions/apache2-common&gt; 
-  2 - #include &lt;abstractions/libvirt-qemu&gt; 
-  3 - #include &lt;abstractions/nameservice&gt; 
-  4 - #include &lt;abstractions/totem&gt; 
- [5 - /etc/nsswitch.conf]
-[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore
-<userinput>3</userinput>
-
 Profile:  /sbin/dhclient
-Path:     /etc/nsswitch.conf
-Mode:     r
-Severity: unknown
+Capability: net_bind_service
+Severity:   8
 
-  1 - #include &lt;abstractions/apache2-common&gt; 
-  2 - #include &lt;abstractions/libvirt-qemu&gt; 
- [3 - #include &lt;abstractions/nameservice&gt;]
-  4 - #include &lt;abstractions/totem&gt; 
-  5 - /etc/nsswitch.conf 
+ [1 - #include &lt;abstractions/nis&gt; ]
+  2 - capability net_bind_service,
+(A)llow / [(D)eny] / (I)gnore / Audi(t) / Abo(r)t / (F)inish
+<userinput>A</userinput>
+Adding #include &lt;abstractions/nis&gt; to profile.
+
+Profile:  /usr/sbin/dhclient <co id="aa-genprof-read"/>
+Path:     /etc/ssl/openssl.cnf
+New Mode: owner r
+Severity: 2
+
+ [1 - #include &lt;abstractions/lightdm&gt;]
+  2 - #include &lt;abstractions/openssl&gt;
+  3 - #include &lt;abstractions/ssl_keys&gt;
+  4 - owner /etc/ssl/openssl.cnf r,
+(A)llow / [(D)eny] / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Audi(t) / (O)wner permissions off / Abo(r)t / (F)inish
+<userinput>2</userinput>
+
+Profile:  /usr/sbin/dhclient
+Path:     /etc/ssl/openssl.cnf
+New Mode: owner r
+Severity: 2
+
+  1 - #include &lt;abstractions/lightdm&gt;
+ [2 - #include &lt;abstractions/openssl&gt;]
+  3 - #include &lt;abstractions/ssl_keys&gt;
+  4 - owner /etc/ssl/openssl.cnf r,
 [(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore
 <userinput>A</userinput>
-Adding #include &lt;abstractions/nameservice&gt; to profile.
-
-Profile:  /sbin/dhclient
-Path:     /proc/7252/net/dev
-Mode:     r
-Severity: 6
-
-  1 - /proc/7252/net/dev 
- [2 - /proc/*/net/dev]
-[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore
-<userinput>A</userinput>
-Adding /proc/*/net/dev r to profile
-
 [...]
-Profile:  /sbin/dhclient <co id="aa-genprof-write"/>
-Path:     /run/dhclient-eth0.pid
-Mode:     w
+Profile:  /usr/sbin/dhclient-script <co id="aa-genprof-other-profile"/>
+Path:     /usr/bin/dash
+New Mode: owner r
 Severity: unknown
 
- [1 - /run/dhclient-eth0.pid]
-[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore
-<userinput>N</userinput>
-
-Enter new path: /run/dhclient*.pid
-
-Profile:  /sbin/dhclient
-Path:     /run/dhclient-eth0.pid
-Mode:     w
-Severity: unknown
-
-  1 - /run/dhclient-eth0.pid 
- [2 - /run/dhclient*.pid]
-[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore
+ [1 - #include &lt;abstractions/lightdm&gt;]
+  2 - #include &lt;abstractions/ubuntu-browsers.d/plugins-common&gt;
+  3 - owner /usr/bin/dash r,
+(A)llow / [(D)eny] / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Audi(t) / (O)wner permissions off / Abo(r)t / (F)inish
 <userinput>A</userinput>
-Adding /run/dhclient*.pid w to profile
-
-[...]
-Profile:  /usr/lib/NetworkManager/nm-dhcp-helper <co id="aa-genprof-other-profile"/>
-Path:     /proc/filesystems
-Mode:     r
-Severity: 6
-
- [1 - /proc/filesystems]
-[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore
-<userinput>A</userinput>
-Adding /proc/filesystems r to profile
+Adding #include &lt;abstractions/lightdm&gt; to profile.
+Deleted 2 previous matching profile entries.
 
 = Changed Local Profiles =
 
 The following local profiles were changed. Would you like to save them?
 
- [1 - /sbin/dhclient]
-  2 - /usr/lib/NetworkManager/nm-dhcp-helper 
+ [1 - /usr/sbin/dhclient]
+  2 - /usr/sbin/dhclient-script
 (S)ave Changes / Save Selec(t)ed Profile / [(V)iew Changes] / View Changes b/w (C)lean profiles / Abo(r)t
 <userinput>S</userinput>
-Writing updated profile for /sbin/dhclient.
-Writing updated profile for /usr/lib/NetworkManager/nm-dhcp-helper.
+Writing updated profile for /usr/sbin/dhclient.
+Writing updated profile for /usr/sbin/dhclient-script.
 
-Profiling: /sbin/dhclient
+Profiling: /usr/sbin/dhclient
+
+Please start the application to be profiled in
+another window and exercise its functionality now.
+
+Once completed, select the "Scan" option below in
+order to scan the system logs for AppArmor events.
+
+For each AppArmor event, you will be given the
+opportunity to choose whether the access should be
+allowed or denied.
 
 [(S)can system log for AppArmor events] / (F)inish
 <userinput>F</userinput>
-Setting /sbin/dhclient to enforce mode.
-Setting /usr/lib/NetworkManager/nm-dhcp-helper to enforce mode.
-
 Reloaded AppArmor profiles in enforce mode.
 
 Please consider contributing your new profile!
 See the following wiki page for more information:
-http://wiki.apparmor.net/index.php/Profiles
+https://gitlab.com/apparmor/apparmor/wikis/Profiles
 
-Finished generating profile for /sbin/dhclient.</computeroutput>
+Finished generating profile for /usr/sbin/dhclient.</computeroutput>
 </screen>
       <para>
         Note that the program does not display back the control
@@ -1456,32 +1452,23 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
         <callout arearefs="aa-genprof-read">
           <para>
             Here the program seeks read permissions for
-            <filename>/etc/nsswitch.conf</filename>. <command>aa-genprof</command>
+            <filename>/etc/ssl/openssl.cnf</filename>. <command>aa-genprof</command>
             detected that this permission was also granted by multiple
             “abstractions” and offers them as alternative choices. An
             abstraction provides a reusable set of access rules grouping
             together multiple resources that are commonly used together.
             In this specific case, the file is generally accessed through
             the nameservice related functions of the C library and we type
-            “3” to first select the “#include
-            &lt;abstractions/nameservice&gt;” choice and then “A” to allow
+            “2” to first select the “#include
+            &lt;abstractions/openssl&gt;” choice and then “A” to allow
             it.
-          </para>
-        </callout>
-        <callout arearefs="aa-genprof-write">
-          <para>
-            The program wants to create the <filename>/run/dhclient-eth0.pid</filename>
-            file. If we allow the creation of this specific file only, the program
-            will not work when the user will use it on another network interface.
-            Thus we select “New” to replace the filename with the more generic
-            “/run/dhclient*.pid” before recording the rule with “Allow”.
           </para>
         </callout>
         <callout arearefs="aa-genprof-other-profile">
           <para>
             Notice that this access request is not part of the dhclient
             profile but of the new profile that we created when we allowed
-            <filename>/usr/lib/NetworkManager/nm-dhcp-helper</filename> to
+            <filename>/usr/sbin/dhclient-script</filename> to
             run with its own profile.
           </para>
           <para>
@@ -1507,13 +1494,13 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
         program in all the ways that it is legitimately used. In the case
         of dhclient, it means running it via Network Manager, running it via
         ifupdown, running it manually, etc. In the end, you might get
-        a <filename>/etc/apparmor.d/sbin.dhclient</filename> close to this:
+        a <filename>/etc/apparmor.d/usr.sbin.dhclient</filename> close to this:
       </para>
       <programlisting>
-# Last Modified: Tue Sep  8 21:40:02 2015
+# Last Modified: Fri Jul  5 00:51:02 2019
 #include &lt;tunables/global&gt;
 
-/sbin/dhclient {
+/usr/sbin/dhclient {
   #include &lt;abstractions/base&gt;
   #include &lt;abstractions/nameservice&gt;
 
@@ -1536,21 +1523,25 @@ Finished generating profile for /sbin/dhclient.</computeroutput>
   /var/lib/NetworkManager/*.lease rw,
   /var/lib/dhcp/*.leases rw,
 
-  profile /sbin/dhclient-script flags=(complain) {
-    #include &lt;abstractions/base&gt;
-    #include &lt;abstractions/bash&gt;
-
-    /bin/dash rix,
-    /etc/dhcp/dhclient-enter-hooks.d/* r,
-    /etc/dhcp/dhclient-exit-hooks.d/* r,
-    /sbin/dhclient-script r,
-
-  }
+  owner /etc/** mrwk,
+  owner /var/** mrwk,
+  owner /{,var/}run/** mrwk,
 }
       </programlisting>
+      <para>And <filename>/etc/apparmor.d/usr.sbin.dhclient-script</filename>
+      might be similar to this:</para>
+<programlisting>
+# Last Modified: Fri Jul  5 00:51:55 2019
+#include &lt;tunables/global&gt;
+
+/usr/sbin/dhclient-script {
+  #include &lt;abstractions/base&gt;
+  #include &lt;abstractions/bash&gt;
+  #include &lt;abstractions/lightdm&gt;
+}
+</programlisting>
     </section>
   </section>
-
   <section id="sect.selinux">
     <title>Introduction to SELinux</title>
     <indexterm><primary>SELinux</primary></indexterm>
@@ -1871,7 +1862,7 @@ __default__          unconfined_u         SystemLow-SystemHigh *
 rhertzog             user_u               SystemLow            *
 root                 unconfined_u         SystemLow-SystemHigh *
 system_u             system_u             SystemLow-SystemHigh *
-# </computeroutput><userinput>semanage login -d rhertzog</userinput> 
+# </computeroutput><userinput>semanage login -d rhertzog</userinput>
 </screen>
 
 	<para><command>semanage user -l</command> lists the mapping between
@@ -1943,7 +1934,7 @@ user_u          user       SystemLow  SystemLow             user_r
         <screen><computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>
 <computeroutput>httpd_enable_homedirs --&gt; off
 # </computeroutput><userinput>setsebool -P httpd_enable_homedirs on</userinput>
-<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput> 
+<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>
 <computeroutput>httpd_enable_homedirs --&gt; on</computeroutput>
 </screen>
       </section>
