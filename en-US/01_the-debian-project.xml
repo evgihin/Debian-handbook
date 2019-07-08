@@ -1044,17 +1044,24 @@
       problems. Others go even further and submit ideas for
       improvements, by filing a bug report with a severity level of
       “wishlist”, or even submit corrections to the source code,
-      called “patches” (see sidebar <xref
-      linkend="sidebar.patch"/>).</para>
-
-      <sidebar id="sidebar.bts">
-        <title><emphasis>TOOL</emphasis> Bug tracking system</title>
+      called “patches” (see <xref
+      linkend="sect.patch"/>).</para>
+      <section id="sect.bts">
+        <title>Reporting bugs</title>
         <indexterm><primary>system</primary><secondary>Bug Tracking System</secondary></indexterm>
         <indexterm><primary>BTS</primary></indexterm>
         <indexterm><primary>Bug Tracking System</primary></indexterm>
         <indexterm><primary><literal>bugs.debian.org</literal></primary></indexterm>
-
-	<para>The Debian Bug Tracking System (Debian BTS) is used by
+        <para>The fundamental tool for submitting bugs in Debian is the
+        Debian Bug Tracking System (Debian BTS), which is used by
+        large parts of the project. The public part (the web interface)
+        allows users to view all bugs reported, with the option to
+        display a sorted list of bugs selected according to various
+        criteria, such as: affected package, severity, status, address
+        of the reporter, address of the maintainer in charge of it, tag,
+        etc. It is also possible to browse the complete historical listing
+        of all discussions regarding each of the bugs.</para>
+        <para>The Debian Bug Tracking System (Debian BTS) is used by
 	large parts of the
 	project. The public part (the web interface) allows users to view
 	all bugs reported, with the option to display a sorted list of bugs
@@ -1081,25 +1088,47 @@
 	<para>The Debian BTS has other functional features, as well, such as
 	the use of tags for labeling bugs. For more information, see <ulink
 	type="block" url="https://www.debian.org/Bugs/"/></para>
-      </sidebar>
 
-      <sidebar>
-        <title><emphasis>VOCABULARY</emphasis> Severity of a bug</title>
-        <indexterm><primary>severity</primary></indexterm>
-        <indexterm><primary>bug</primary><secondary>severity</secondary></indexterm>
+        <sidebar>
+          <title><emphasis>VOCABULARY</emphasis> Severity of a bug</title>
+          <indexterm><primary>severity</primary></indexterm>
+          <indexterm><primary>bug</primary><secondary>severity</secondary></indexterm>
 
-	<para>The severity of a bug formally assigns a degree of
-	gravity to the reported problem. Effectively, not all bugs
-	have the same importance; for instance, a typo in a manual
-	page is not comparable to a security vulnerability in server
-	software.</para>
+	  <para>The severity of a bug formally assigns a degree of
+	  gravity to the reported problem. Effectively, not all bugs
+	  have the same importance; for instance, a typo in a manual
+	  page is not comparable to a security vulnerability in server
+	  software.</para>
 
-	<para>Debian uses an extended scale to describe the severity
-	of a bug. Each level is defined precisely in order to
-	facilitate the selection thereof. <ulink type="block"
-	url="https://www.debian.org/Bugs/Developer#severities"/></para>
-      </sidebar>
+	  <para>Debian uses an extended scale to describe the severity
+	  of a bug. Each level is defined precisely in order to
+	  facilitate the selection thereof. <ulink type="block"
+	  url="https://www.debian.org/Bugs/Developer#severities"/></para>
+        </sidebar>
 
+	<para>Users can also use the command line to send bug reports on a
+        Debian package with the <command>reportbug</command> tool. It helps
+        making sure the bug in question hasn't already been filed, thus
+        preventing redundancy in the system. It reminds the user of the
+        definitions of the severity levels, for the report to be as accurate
+        as possible (the developer can always fine-tune these parameters
+        later, if needed). It helps writing a complete bug report without
+        the user needing to know the precise syntax, by writing it and
+        allowing the user to edit it. This report will then be sent via an
+        e-mail server (by default, a remote one run by Debian, but
+        <command>reportbug</command> can also use a local server).</para>
+
+	<para>This tool first targets the development versions, which
+	is where the bugs will be fixed. Effectively, changes are not
+	welcome in a stable version of Debian, with very few exceptions
+	for security updates or other important updates (if, for example,
+	a package is not working at all). A correction of a minor bug in a
+	Debian package must, thus, wait for the next stable version.</para>
+    </section>
+    <section>
+      <title>Translation and documentation</title>
+      <indexterm><primary>documentation</primary></indexterm>
+      <indexterm><primary>translation</primary></indexterm>
       <para>Additionally, numerous satisfied users of the service offered
       by Debian like to make a contribution of their own to the project. As
       not everyone has appropriate levels of expertise in programming, they
@@ -1134,13 +1163,22 @@
 	<para>In summary, internationalization prepares the software for
 	translation, which is then executed by localization.</para>
       </sidebar>
-
-      <sidebar id="sidebar.patch">
-        <title><emphasis>BACK TO BASICS</emphasis> Patch, the way to send a fix</title>
+    </section>
+    <section id="sect.patch">
+      <title>Sending fixes</title>
         <indexterm><primary><command>patch</command></primary></indexterm>
         <indexterm><primary>patch</primary></indexterm>
         <indexterm><primary><command>diff</command></primary></indexterm>
 
+      <para>More advanced users might be able to provide a fix to a program
+      sending a patch.</para>
+
+      <para>A patch is a file describing changes to be made to one or
+	more reference files. Specifically, it will contain a list of lines
+	to be removed or added to the code, as well as (sometimes) lines
+	taken from the reference text, replacing the modifications in
+	context (they allow identification of the placement of the changes
+	if the line numbers have changed).</para>
 	<para>A patch is a file describing changes to be made to one or
 	more reference files. Specifically, it will contain a list of lines
 	to be removed or added to the code, as well as (sometimes) lines
@@ -1168,34 +1206,66 @@
 
 	<para>The file, <filename>file.old</filename>, is now identical to
 	<filename>file.new</filename>.</para>
-      </sidebar>
 
-      <sidebar>
-        <title><emphasis>TOOL</emphasis> Report a bug with <command>reportbug</command></title>
-        <indexterm><primary><command>reportbug</command></primary></indexterm>
-        <indexterm><primary>bug</primary><secondary>report a bug</secondary></indexterm>
-        <indexterm><primary>report a bug</primary></indexterm>
+        <sidebar>
+          <title><emphasis>TOOL</emphasis> Git, the preferred way to send patches</title>
+          <indexterm><primary><command>git</command></primary></indexterm>
+          <indexterm><primary>version control</primary></indexterm>
 
-	<para>The <command>reportbug</command> tool facilitates sending bug
-	reports on a Debian package. It helps making sure the bug in
-	question hasn't already been filed, thus preventing redundancy in the
-	system. It reminds the user of the definitions of the severity
-	levels, for the report to be as accurate as possible (the developer
-	can always fine-tune these parameters later, if needed). It helps
-	writing a complete bug report without the user needing to know the
-	precise syntax, by writing it and allowing the user to edit it.
-        This report will then be sent via an e-mail server (by default,
-        a remote one run by Debian, but <command>reportbug</command> can
-        also use a local server).</para>
+          <para>Git is a version-control system designed for coordinating work
+          among developers and track their changes. It was programmed by Linus Torvalds (the
+          creator of Linux) in 2005 to coordinate the development of the Linux kernel.</para>
 
-	<para>This tool first targets the development versions, which
-	is where the bugs will be fixed. Effectively, changes are not
-	welcome in a stable version of Debian, with very few exceptions
-	for security updates or other important updates (if, for example,
-	a package is not working at all). A correction of a minor bug in a
-	Debian package must, thus, wait for the next stable version.</para>
-      </sidebar>
+          <para>Nowadays, it is common to send patches using Git. Many Debian
+          projects using Git can be found on <ulink url="https://salsa.debian.org/"/>.</para>
 
+          <para>To send a patch using Git, you must download a copy of the repository,
+	  make the fixes, add them to the stage area, commit the changes, upload your
+          changes, and request the maintainer to accept your
+	  changes. It is beyond the scope of this book to provide a detailed explanation
+	  about Git, for that you can refer to the <citetitle>Pro Git</citetitle> book
+	  (<ulink url="https://git-scm.com/book/"/>).</para>
+	  <para>Below is an example of the commands
+          needed to submit a patch to this book. You can use GitLab's web interface to make the
+          pull request; another option is to use the command <command>git request-pull</command>
+          and send its output to the developers.</para>
+
+          <screen><computeroutput>$ </computeroutput><userinput>git clone https://salsa.debian.org/<replaceable>youruser</replaceable>/debian-handbook/</userinput>
+<computeroutput>Cloning into 'debian-handbook'...
+remote: Enumerating objects: 20838, done.
+remote: Counting objects: 100% (20838/20838), done.
+remote: Compressing objects: 100% (4510/4510), done.
+remote: Total 20838 (delta 16316), reused 20809 (delta 16307)
+Receiving objects: 100% (20838/20838), 139.41 MiB | 131.00 KiB/s, done.
+Resolving deltas: 100% (16316/16316), done.
+Checking out files: 100% (1351/1351), done.
+$ </computeroutput><userinput>editor <replaceable>file</replaceable></userinput>
+<computeroutput>$ </computeroutput><userinput>git add <replaceable>file</replaceable></userinput>
+<computeroutput>$ </computeroutput><userinput>git commit -m "Correct typo in chapter 3"</userinput>
+<computeroutput>[buster/master ca5a0039] Update chapter 1
+ 1 file changed, 98 insertions(+), 54 deletions(-)</computeroutput>
+<computeroutput>$ </computeroutput><userinput>git push</userinput>
+<computeroutput>Username for 'https://salsa.debian.org':</computeroutput> <userinput>youruser</userinput>
+<computeroutput>Password for 'https://youruser@salsa.debian.org':</computeroutput> <userinput>yourpasswd</userinput>
+<computeroutput>Enumerating objects: 96, done.
+Counting objects: 100% (96/96), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (80/80), done.
+Writing objects: 100% (80/80), 456.23 KiB | 3.83 MiB/s, done.
+Total 80 (delta 59), reused 2 (delta 0)
+To https://salsa.debian.org/youruser/debian-handbook.git/
+   18e0e26c..ca5a0039  buster/master -> buster/master</computeroutput>
+          </screen>
+
+          <para>It is a good practice to review the changes before executing <command>git add</command>.
+          You can execute <command>git diff</command> for that. It will open the default pager
+          (usually <command>less</command>) to display the differences. The lines starting
+          with <literal>-</literal> are the removed lines, whereas the lines starting
+          with <literal>+</literal> show added lines.</para>
+        </sidebar>
+    </section>
+    <section>
+      <title>Other ways of contributing</title>
       <para>All of these contribution mechanisms are made more
       efficient by users' behavior. Far from being a collection of
       isolated persons, users are a true community within which
@@ -1210,6 +1280,19 @@
       discuss the best ways to contribute to the Debian project and
       help it move forward — discussions that frequently result in
       suggestions for improvements.</para>
+
+      <sidebar>
+        <title><emphasis>TOOL</emphasis> how-can-i-help</title>
+	<indexterm><primary><command>how-can-i-help</command></primary></indexterm>
+        <indexterm><primary>orphaned packages</primary></indexterm>
+        <indexterm><primary>“newcomer” bugs</primary></indexterm>
+
+	<para>The <command>how-can-i-help</command> program shows
+	opportunities for contributing to Debian based on
+	the packages installed locally. After each APT invocation, it
+	displays necessary tasks, such as bugs tagged “newcomer”
+	or orphaned packages. The program can be executed directly as well.</para>
+      </sidebar>
 
       <para>Since Debian does not expend funds on any self-promoting
       marketing campaigns, its users play an essential role in its
@@ -1227,6 +1310,7 @@
       available to everyone, and which Debian provides freely on its
       website and on its wiki: <ulink type="block"
       url="https://www.debian.org/events/material"/></para>
+      </section>
     </section>
     <section>
       <title>Teams and Sub-Projects</title>
