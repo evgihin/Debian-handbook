@@ -203,6 +203,53 @@ net.ipv4.tcp_syncookies = 1
     linkend="security" xrefstyle="select: label quotedtitle nopage"/> (see
     <xref linkend="sect.firewall-packet-filtering"/>).</para>
   </section>
+  <section id="sect.x509-cert">
+    <title>X.509 certicates</title>
+    <indexterm><primary>certificates</primary></indexterm>
+    <indexterm><primary>SSL</primary></indexterm>
+    <indexterm><primary>TLS</primary></indexterm>
+    <indexterm><primary>X.509</primary><secondary>certificates</secondary></indexterm>
+
+    <para>Certificates are essential to provide communications security over
+    a computer network by means of cryptographic protocols.</para>
+    <para>The SSL protocol (<emphasis>Secure Socket Layer</emphasis>)
+    was invented by Netscape to secure connections to web servers. It
+    was later standardized by IETF under the acronym TLS
+    (<emphasis>Transport Layer Security</emphasis>). Since then TLS
+    continued to evolve and nowadays SSL is deprecated due to multiple
+    design flaws that have been discovered.</para>
+
+    <para>The TLS protocol aims primarily to provide privacy and data integrity
+    between two or more comunicating computer applications. The most common
+    case on the Internet is the communication between a client (e.g. a web browser)
+    and a server.</para>
+
+    <para>A certificate authority is needed to create a TLS certificate as
+    defined by the X.509 standard. They issue certificates that contain a public
+    key, which matches a private key, and the identity of the owner. The private
+    key must be kept secret, or else the security is compromised.</para>
+
+    <para>You can implement a security authority (as described in <xref
+    linkend="sect.easy-rsa"/>), but if you intend to use the certificate for a
+    website, you need to rely on a trusted certificate authority. The prices
+    vary significantly, but it is possible to implement great security spending
+    little to no money.</para>
+
+    <sidebar>
+      <title><emphasis>CULTURE</emphasis> Let's Encrypt</title>
+      <indexterm><primary>Let's Encrypt</primary></indexterm>
+
+      <para>The Let's Encrypt Project is a certificate authority which provides
+      free certificates. It is supported by the EFF and Linux Foundation. They have
+      an automated tool for acquiring and renewing certificates. This reduces the
+      amount of manual effort involved, especially if multiple sites and domains must
+      be managed. They can also be used for SIP, XMPP, WebSockets and TURN
+      servers.</para>
+
+      <para>The package <emphasis role="pkg">python3-certbot-apache</emphasis>
+      can be used to generate Let's Encrypt certificates.</para>
+    </sidebar>
+  </section>
   <section id="sect.virtual-private-network">
     <title>Virtual Private Network</title>
 
@@ -244,19 +291,6 @@ net.ipv4.tcp_syncookies = 1
       greater flexibility when faced with a growing number of roaming users
       accessing the VPN.</para>
 
-      <sidebar>
-        <title><emphasis>CULTURE</emphasis> SSL and TLS</title>
-        <indexterm><primary>SSL</primary></indexterm>
-        <indexterm><primary>TLS</primary></indexterm>
-
-	<para>The SSL protocol (<emphasis>Secure Socket Layer</emphasis>)
-	was invented by Netscape to secure connections to web servers. It
-	was later standardized by IETF under the acronym TLS
-        (<emphasis>Transport Layer Security</emphasis>). Since then TLS
-        continued to evolve and nowadays SSL is deprecated due to multiple
-        design flaws that have been discovered.
-	</para>
-      </sidebar>
       <section id="sect.easy-rsa">
         <title>Public Key Infrastructure: <emphasis>easy-rsa</emphasis></title>
         <indexterm><primary>PKI (Public Key Infrastructure)</primary></indexterm>
@@ -312,6 +346,23 @@ net.ipv4.tcp_syncookies = 1
           using the <command>make-cadir</command> command as documented
           here.</para>
         </sidebar>
+
+       <sidebar>
+         <title><emphasis>ALTERNATIVE</emphasis> GnuTLS</title>
+         <indexterm><primary>DTLS</primary></indexterm>
+         <indexterm><primary>GnuTLS</primary></indexterm>
+         <indexterm><primary>SSL</primary></indexterm>
+         <indexterm><primary>TLS</primary></indexterm>
+
+         <para>GnuTLS can also be used to generate a certificate authority,
+         and deal with other technologies arount the TLS, DTLS and SSL
+         protocols.</para>
+
+         <para>The package <emphasis role="pkg">gnutls-bin</emphasis> contains
+         the command-line utilities. It is also useful to install the
+         <emphasis role="pkg">gnutls-doc</emphasis> package, which
+         includes extensive documentation.</para>
+       </sidebar>
 
 	<para>The Falcot Corp administrators use this tool to create
 	the required certificates, both for the server and the
