@@ -1132,38 +1132,25 @@ iface eth0 inet dhcp
 	<para>Barring a specific QoS configuration, the Linux kernel uses
 	the <literal>pfifo_fast</literal> queue scheduler, which provides a
 	few interesting features by itself. The priority of each processed
-	IP packet is based on the ToS field (<emphasis>Type of
-	Service</emphasis>) of this packet; modifying this field is enough
-	to take advantage of the scheduling features. There are five
-	possible values:</para>
-        <itemizedlist>
-          <listitem>
-	    <para>Normal-Service (0);</para>
-          </listitem>
-          <listitem>
-	    <para>Minimize-Cost (2);</para>
-          </listitem>
-          <listitem>
-	    <para>Maximize-Reliability (4);</para>
-          </listitem>
-          <listitem>
-	    <para>Maximize-Throughput (8);</para>
-          </listitem>
-          <listitem>
-	    <para>Minimize-Delay (16).</para>
-          </listitem>
-        </itemizedlist>
-        <indexterm><primary>ToS</primary></indexterm>
-        <indexterm><primary>Type of Service</primary></indexterm>
+	IP packet is based on the DSCP field (<emphasis>Differentiated of
+	Services Code Point</emphasis>) of this packet; modifying this
+	6-bit field is enough to take advantage of the scheduling features.
+	Refer to
+	<ulink url="https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector"/>
+	for more information.</para>
+        <indexterm><primary>DSCP</primary></indexterm>
+        <indexterm><primary>Differentiated Services Code Point</primary></indexterm>
 
-	<para>The ToS field can be set by applications that generate IP
+	<para>The DSCP field can be set by applications that generate IP
 	packets, or modified on the fly by <emphasis>netfilter</emphasis>.
 	The following rules are sufficient to increase responsiveness for a
-	server's SSH service:</para>
+	server's SSH service, note that the DSCP field must be set in
+	hexadecimal:</para>
 
         <programlisting role="scale">
-iptables -t mangle -A PREROUTING -p tcp --sport ssh -j TOS --set-tos Minimize-Delay
-iptables -t mangle -A PREROUTING -p tcp --dport ssh -j TOS --set-tos Minimize-Delay
+nft add table ip mangle
+nft add rule ip mangle PREROUTING tcp sport 22 counter ip dscp set 0x04
+nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
 </programlisting>
       </section>
     </section>
