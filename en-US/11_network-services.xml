@@ -67,7 +67,6 @@
       <ulink type="block" url="http://www.exim.org/docs.html"/></para>
     </sidebar>
 
-    
     <section>
       <title>Installing Postfix</title>
 
@@ -530,7 +529,7 @@ smtpd_client_restrictions = permit_mynetworks,
 
         <example>
           <title>Restrictions on the name announced in <literal>EHLO</literal></title>
-          
+
           <programlisting>
 smtpd_helo_restrictions = permit_mynetworks,
     reject_invalid_hostname,
@@ -1826,14 +1825,14 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
         are some pointers with content of varying quality but that
         should at least give some hints on what should be done.
         <ulink type="block" url="https://help.ubuntu.com/community/NFSv4Howto"/> 
-        <ulink type="block" url="http://wiki.linux-nfs.org/wiki/index.php/Nfsv4_configuration"/> 
+        <ulink type="block" url="http://wiki.linux-nfs.org/wiki/index.php/Nfsv4_configuration"/>
       </para>
     </sidebar>
     <section>
       <title>Securing NFS</title>
       <indexterm><primary>NFS</primary><secondary>security</secondary></indexterm>
 
-      <para>If you don't use the Kerberos-based security features, 
+      <para>If you don't use the Kerberos-based security features,
       it is vital to ensure that only the machines allowed to use NFS can
       connect to the various required RPC servers, because the basic
       protocol trusts the data received from the network. The firewall
@@ -2258,7 +2257,7 @@ password = <replaceable>password</replaceable></programlisting>
           <listitem>
 	    <para>Enter the connection URI for the network printer. It should look like the
 	    following:</para>
-	   
+
 	    <para><literal>smb://<replaceable>user</replaceable>:<replaceable>password</replaceable>@<replaceable>server</replaceable>/<replaceable>printer</replaceable></literal>.</para>
           </listitem>
 	  <listitem>
@@ -2430,10 +2429,10 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid3/squidGuard.conf
 
       <para>
         Installing <emphasis role="pkg">slapd</emphasis> usually
-        asks very few questions and the resulting database is unlikely
-        to suit your needs. Fortunately a simple <command>dpkg-reconfigure
-        slapd</command> will let you reconfigure the LDAP database with
-        more details:
+        asks only for the administrator's password and the resulting
+        database is unlikely to suit your needs. Fortunately a
+        simple <command>dpkg-reconfigure slapd</command> will let
+        you reconfigure the LDAP database with more details:
       </para>
       <itemizedlist>
         <listitem>
@@ -2465,11 +2464,6 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid3/squidGuard.conf
 	  database, for instance if you run <command>dpkg-reconfigure
 	  slapd</command> right after the initial installation.</para>
         </listitem>
-        <listitem>
-	  <para>Allow LDAPv2 protocol? No, there is no point in that. All
-	  the tools we are going to use understand the LDAPv3
-	  protocol.</para>
-        </listitem>
       </itemizedlist>
 
       <sidebar>
@@ -2490,7 +2484,7 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid3/squidGuard.conf
 <computeroutput># extended LDIF
 #
 # LDAPv3
-# base &lt;dc=falcot,dc=com&gt; with scope sub
+# base &lt;dc=falcot,dc=com&gt; with scope subtree
 # filter: (objectclass=*)
 # requesting: ALL
 #
@@ -2558,7 +2552,7 @@ result: 0 Success
       questions about the LDAP database into which the data is to be
       migrated. <xref linkend="tab-migrate-all" xrefstyle="select: label
       nopage"/> summarizes the answers given in the Falcot use-case.</para>
- 
+
       <table colsep="1" id="tab-migrate-all">
         <title>Answers to questions asked by the <command>migrate_all_online.sh</command> script</title>
 	<tgroup cols="2"><colspec align="justify"/><colspec align="justify"/>
@@ -2650,7 +2644,7 @@ result: 0 Success
               <row>
                 <entry>LDAP server Uniform Resource Identifier</entry>
                 <entry>
-                  <literal>ldap://ldap.falcot.com</literal>
+                  <literal>ldapi://ldap.falcot.com</literal>
                 </entry>
               </row>
               <row>
@@ -2666,18 +2660,6 @@ result: 0 Success
                 </entry>
               </row>
               <row>
-                <entry>Does the LDAP database require login?</entry>
-                <entry>no</entry>
-              </row>
-	      <row>
-	        <entry>Special LDAP privileges for root</entry>
-		<entry>yes</entry>
-	      </row>
-	      <row>
-	        <entry>Make the configuration file readable/writeable by its owner only</entry>
-		<entry>no</entry>
-	      </row>
-              <row>
                 <entry>LDAP account for root</entry>
                 <entry>
                   <literal>cn=admin,dc=falcot,dc=com</literal>
@@ -2687,37 +2669,71 @@ result: 0 Success
                 <entry>LDAP root account password</entry>
                 <entry>the administrative password</entry>
               </row>
+              <row>
+                <entry>Allow LDAP admin account behave like local root?</entry>
+                <entry>
+                  <literal>yes</literal>
+                </entry>
+              </row>
+              <row>
+                <entry>Does the LDAP database require login?</entry>
+                <entry>no</entry>
+              </row>
             </tbody>
           </tgroup>
         </table>
 
 	<para>The <filename>/etc/nsswitch.conf</filename> file then needs
 	to be modified, so as to configure NSS to use the freshly-installed
-	<command>ldap</command> module.</para>
+	<command>ldap</command> module. You can use the example provided
+	in /usr/share/doc/libnss-ldap/examples/nsswitch.ldap or edit your
+	existing configuration.</para>
 
         <example>
           <title>The <filename>/etc/nsswitch.conf</filename> file</title>
 
           <programlisting>
-# /etc/nsswitch.conf
+#ident $Id: nsswitch.ldap,v 2.4 2003/10/02 02:36:25 lukeh Exp $
 #
-# Example configuration of GNU Name Service Switch functionality.
-# If you have the `glibc-doc' and `info' packages installed, try:
-# `info libc "Name Service Switch"' for information about this file.
+# An example file that could be copied over to /etc/nsswitch.conf; it
+# uses LDAP conjunction with files.
+#
+# "hosts:" and "services:" in this file are used only if the
+# /etc/netconfig file has a "-" for nametoaddr_libs of "inet" transports.
 
-passwd: ldap compat
-group: ldap compat
-shadow: ldap compat
+# the following lines obviate the "+" entry in /etc/passwd and /etc/group.
+passwd:		files ldap
+shadow:		files ldap
+group:		files ldap
 
-hosts: files dns ldap
-networks: ldap files
+# consult DNS first, we will need it to resolve the LDAP host. (If we
+# can't resolve it, we're in infinite recursion, because libldap calls
+# gethostbyname(). Careful!)
+hosts:		dns ldap
 
-protocols: ldap db files
-services: ldap db files
-ethers: ldap db files
-rpc: ldap db files
+# LDAP is nominally authoritative for the following maps.
+services:   ldap [NOTFOUND=return] files
+networks:   ldap [NOTFOUND=return] files
+protocols:  ldap [NOTFOUND=return] files
+rpc:        ldap [NOTFOUND=return] files
+ethers:     ldap [NOTFOUND=return] files
 
-netgroup: ldap files
+# no support for netmasks, bootparams, publickey yet.
+netmasks:   files
+bootparams: files
+publickey:  files
+automount:  files
+
+# I'm pretty sure nsswitch.conf is consulted directly by sendmail,
+# here, so we can't do much here. Instead, use bbense's LDAP
+# rules ofr sendmail.
+aliases:    files
+sendmailvars:   files
+
+# Note: there is no support for netgroups on Solaris (yet)
+netgroup:   ldap [NOTFOUND=return] files
+
+
 </programlisting>
         </example>
 
@@ -2846,16 +2862,15 @@ netgroup: ldap files
 	  key and a private key) for the LDAP server. The Falcot administrators
 	  reuse <emphasis>easy-rsa</emphasis> to generate it (see
 	  <xref linkend="sect.easy-rsa" />).
-	  Running <command>./build-key-server ldap.falcot.com</command> asks
-	  a few mundane questions (location, organization name and so on).
-	  The answer to the “common name” question
+	  Running <command>./easyrsa build-server-full ldap.falcot.com nopass</command>
+          will ask you about the “common name”. The answer to that question
 	  <emphasis>must</emphasis> be the fully-qualified hostname for the
 	  LDAP server; in our case,
 	  <literal>ldap.falcot.com</literal>.</para>
 
 	  <para>This command creates a certificate in the
-	  <filename>keys/ldap.falcot.com.crt</filename> file; the corresponding private
-	  key is stored in <filename>keys/ldap.falcot.com.key</filename>.</para>
+	  <filename>pki/issued/ldap.falcot.com.crt</filename> file; the corresponding private
+	  key is stored in <filename>pki/private/ldap.falcot.com.key</filename>.</para>
 
 	  <para>Now these keys have to be installed in their standard
 	  location, and we must make sure that the private file is readable
@@ -2866,10 +2881,21 @@ netgroup: ldap files
 </userinput><computeroutput>Adding user `openldap' to group `ssl-cert' ...
 Adding user openldap to group ssl-cert
 Done.
-# </computeroutput><userinput>mv keys/ldap.falcot.com.key /etc/ssl/private/ldap.falcot.com.key
+# </computeroutput><userinput>mv pki/private/ldap.falcot.com.key /etc/ssl/private/ldap.falcot.com.key
 </userinput><computeroutput># </computeroutput><userinput>chown root:ssl-cert /etc/ssl/private/ldap.falcot.com.key
 </userinput><computeroutput># </computeroutput><userinput>chmod 0640 /etc/ssl/private/ldap.falcot.com.key
-</userinput><computeroutput># </computeroutput><userinput>mv newcert.pem /etc/ssl/certs/ldap.falcot.com.pem
+</userinput><computeroutput># </computeroutput><userinput>./eassyrsa gen-dh
+</userinput><computeroutput>
+Note: using Easy-RSA configuration from: ./vars
+
+Using SSL: openssl OpenSSL 1.1.1c  28 May 2019
+Generating DH parameters, 2048 bit long safe prime, generator 2
+This is going to take a long time
+........................................................+..........................................................................+...............................................................................+............
+[...]
+DH parameters of size 2048 created at /home/roland/pki/dh.pem
+
+# </computeroutput><userinput>mv pki/dh.pem /etc/ssl/certs/ldap.falcot.com.pem
 </userinput></screen>
 
 	  <para>The <command>slapd</command> daemon also needs to be told
@@ -2971,6 +2997,7 @@ SLAPD_SENTINEL_FILE=/etc/ldap/noslapd
 
 # Additional options to pass to slapd
 SLAPD_OPTIONS=""
+
 </programlisting>
           </example>
         </section>
@@ -2991,11 +3018,12 @@ SLAPD_OPTIONS=""
 	  be done by putting the CA certificate in
 	  <filename>/usr/local/share/ca-certificates</filename> and
 	  running <command>update-ca-certificates</command>.</para>
-	  
-	  <screen><computeroutput># </computeroutput><userinput>cp keys/ca.crt /usr/local/share/ca-certificates/falcot.crt
+
+	  <screen><computeroutput># </computeroutput><userinput>cp pki/ca.crt /usr/local/share/ca-certificates/falcot.crt
 </userinput><computeroutput># </computeroutput><userinput>update-ca-certificates
 </userinput><computeroutput>Updating certificates in /etc/ssl/certs... 1 added, 0 removed; done.
 Running hooks in /etc/ca-certificates/update.d....
+
 Adding debian:falcot.pem
 done.
 done.
@@ -3049,7 +3077,7 @@ TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
     <indexterm><primary>Instant Messaging</primary><secondary>server</secondary></indexterm>
     <indexterm><primary>Chat</primary><secondary>server</secondary></indexterm>
 
-    <para>Both SIP and XMPP can provide the same functionality.  SIP
+    <para>Both SIP and XMPP can provide the same functionality. SIP
     is slightly more well known for voice and video while XMPP is
     traditionally regarded as an IM protocol. In fact, they can both
     be used for any of these purposes.  To maximize connectivity options,
@@ -3119,43 +3147,37 @@ _xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.falcot.com.
 
       <para>For the ICE algorithm to work effectively, the server must
       have two public IPv4 addresses.</para>
-      <section id="sect.turn-server-install">
-        <title>Install the TURN server</title>
-        <para>Install the <emphasis
-        role="pkg">resiprocate-turn-server</emphasis> package.</para>
 
-        <para>Edit the
-        <filename>/etc/reTurn/reTurnServer.config</filename>
-        configuration file. The most important thing to do is insert
-        the IP addresses of the server.</para>
+	<para>Install the <emphasis role="pkg">coturn</emphasis> package
+	and edit the <filename>/etc/turnserver.conf</filename>
+	configuration file. By default, a SQLite database is configured
+	in /var/db/turndb for user account settings, but PostgreSQL, MySQL
+	or Redis can be set up instead if preferred. The most important
+	thing to do is insert the IP addresses of the server.</para>
+        <indexterm><primary>coturn</primary></indexterm>
+
+        <para>The server can be started running
+        <command>/usr/bin/turnserver</command>. We want the server
+        to be an an automatically started system service,
+        so we edit the <filename>/etc/default/coturn</filename> file
+        like this:
+        </para>
 
 <programlisting>
-# your IP addresses go here:
-TurnAddress = 198.51.100.19
-TurnV6Address = 2001:DB8:1000:2000::19
-AltStunAddress = 198.51.100.20
-# your domain goes here, it must match the value used
-# to hash your passwords if they are already hashed
-# using the HA1 algorithm:
-AuthenticationRealm = myrealm
-
-UserDatabaseFile = /etc/reTurn/users.txt
-UserDatabaseHashedPasswords = true
+#
+# Uncomment it if you want to have the turnserver running as
+# an automatic system service daemon
+#
+TURNSERVER_ENABLED=1
 </programlisting>
 
-        <para>Restart the service.</para>
-      </section>
-      <section id="sect.turn-server-management">
-        <title>Managing the TURN users</title>
-        <para>Use the htdigest utility to manage the TURN server user list.
-        </para>
-<screen><computeroutput># </computeroutput><userinput>htdigest /etc/reTurn/users.txt myrealm joe</userinput>
+	<para>By default, the TURN server uses anonymous access. We have to
+	add the users we want to use:</para>
+<screen><computeroutput># </computeroutput><userinput>turnadmin -a -u roland -p <replaceable>secret_password</replaceable> -r falcot.com</userinput>
+<computeroutput># </computeroutput><userinput>turnadmin -A -u admin -p <replaceable>secret_password</replaceable></userinput>
 </screen>
-        <para>Use the HUP signal to make the server reload the
-        <filename>/etc/reTurn/users.txt</filename> file after changing it
-        or enable the automatic reload feature in
-        <filename>/etc/reTurn/reTurnServer.config</filename>.</para>
-      </section>
+        <para>We use the argument <literal>-a</literal> to add a normal
+        user and <literal>-A</literal> to add an admin user.</para>
     </section>
 
     <section id="sect.sip-server">
@@ -3177,109 +3199,63 @@ UserDatabaseHashedPasswords = true
 
       <section id="sect.sip-server-install">
         <title>Install the SIP proxy</title>
-        <para>Install the <emphasis role="pkg">repro</emphasis> package.
-          Using the package from <emphasis
-            role="distribution">jessie-backports</emphasis> is highly
-          recommended, as it has the latest improvements for maximizing
-          connectivity and resilience.
+        <para>Install the <emphasis role="pkg">kamailio</emphasis> and
+	  the package for the database backend, the Falcot administrators
+		chose MySQL, so they install <emphasis role="pkg">mariadb-server</emphasis>.
+          <filename>/etc/kamailio/kamctlrc</filename> is the configuration
+          file for the control tools <command>kamctl</command> and
+	  <command>kamdbctl</command>. You need to edit and set the
+	  <literal>SIP_DOMAIN</literal> to your SIP service domain and set
+	  the <literal>DBENGINE</literal> to MySQL, you can use other database
+	  backend.
         </para>
-        <indexterm><primary>repro</primary></indexterm>
-
-        <para>
-          Edit the <filename>/etc/repro/repro.config</filename>
-          configuration file. The most important thing to do is insert the
-          IP addresses of the server.  The example below demonstrates how
-          to setup both regular SIP and WebSockets/WebRTC, using TLS, IPv4
-          and IPv6:
-        </para>
-
 <programlisting>
-# Transport1 will be for SIP over TLS connections
-# We use port 5061 here but if you have clients connecting from
-# locations with firewalls you could change this to listen on port 443
-Transport1Interface = 198.51.100.19:5061
-Transport1Type = TLS
-Transport1TlsDomain = falcot.com
-Transport1TlsClientVerification = Optional
-Transport1RecordRouteUri = sip:falcot.com;transport=TLS
-Transport1TlsPrivateKey = /etc/ssl/private/falcot.com-key.pem
-Transport1TlsCertificate = /etc/ssl/public/falcot.com.pem
+...
+## your SIP domain
+SIP_DOMAIN=sip.falcot.comn
 
-# Transport2 is the IPv6 version of Transport1
-Transport2Interface = 2001:DB8:1000:2000::19:5061
-Transport2Type = TLS
-Transport2TlsDomain = falcot.com
-Transport2TlsClientVerification = Optional
-Transport2RecordRouteUri = sip:falcot.com;transport=TLS
-Transport2TlsPrivateKey = /etc/ssl/private/falcot.com-key.pem
-Transport2TlsCertificate = /etc/ssl/public/falcot.com.pem
+## chrooted directory
+# $CHROOT_DIR="/path/to/chrooted/directory"
 
-# Transport3 will be for SIP over WebSocket (WebRTC) connections
-# We use port 8443 here but you could use 443 instead
-Transport3Interface = 198.51.100.19:8443
-Transport3Type = WSS
-Transport3TlsDomain = falcot.com
-# This would require the browser to send a certificate, but browsers
-# don't currently appear to be able to, so leave it as None:
-Transport3TlsClientVerification = None
-Transport3RecordRouteUri = sip:falcot.com;transport=WSS
-Transport3TlsPrivateKey = /etc/ssl/private/falcot.com-key.pem
-Transport3TlsCertificate = /etc/ssl/public/falcot.com.pem
-
-# Transport4 is the IPv6 version of Transport3
-Transport4Interface = 2001:DB8:1000:2000::19:8443
-Transport4Type = WSS
-Transport4TlsDomain = falcot.com
-Transport4TlsClientVerification = None
-Transport4RecordRouteUri = sip:falcot.com;transport=WSS
-Transport4TlsPrivateKey = /etc/ssl/private/falcot.com-key.pem
-Transport4TlsCertificate = /etc/ssl/public/falcot.com.pem
-
-# Transport5: this could be for TCP connections to an Asterisk server
-# in your internal network.  Don't allow port 5060 through the external
-# firewall.
-Transport5Interface = 198.51.100.19:5060
-Transport5Type = TCP
-Transport5RecordRouteUri = sip:198.51.100.19:5060;transport=TCP
-
-HttpBindAddress = 198.51.100.19, 2001:DB8:1000:2000::19
-HttpAdminUserFile = /etc/repro/users.txt
-
-RecordRouteUri = sip:falcot.com;transport=tls
-ForceRecordRouting = true
-EnumSuffixes = e164.arpa, sip5060.net, e164.org
-DisableOutbound = false
-EnableFlowTokens = true
-EnableCertificateAuthenticator = True
+## database type: MYSQL, PGSQL, ORACLE, DB_BERKELEY, DBTEXT, or SQLITE
+# by default none is loaded
+#
+# If you want to setup a database with kamdbctl, you must at least specify
+# this parameter.
+DBENGINE=MYSQL
+...
 </programlisting>
+        <indexterm><primary>kamailio</primary></indexterm>
+	<para>Now we focus on the configuration file
+	<filename>/etc/kamailio/kamailio.cfg</filename>. Falcot needs
+	user authentication and persistent user location, so they
+	add the following <literal>#!define</literal> directives
+	at the top of the file:
+	</para>
+	<programlisting>
+#!KAMAILIO
+#
+# Kamailio (OpenSER) SIP Server v5.2 - default configuration script
+#     - web: https://www.kamailio.org
+#     - git: https://github.com/kamailio/kamailio
+#!define WITH_MYSQL
+#!define WITH_AUTH
+#!define WITH_USRLOCDB
+	</programlisting>
+	<para>Kamailio needs a database structure that we can create running
+	  <command>kamdbctl create</command> as root.
+	</para>
+	<para>Finally, we can add some users with <command>kamctl</command>.</para>
 
-        <para>
-          Use the <command>htdigest</command> utility to manage the
-          admin password for the web interface.  The username must be
-          <emphasis>admin</emphasis> and the realm name must match the
-          value specified in <filename>repro.config</filename>.
-        </para>
-
-<screen><computeroutput># </computeroutput><userinput>htdigest /etc/repro/users.txt repro admin</userinput>
+<screen><computeroutput># </computeroutput><userinput>kamctl add <replaceable>roland</replaceable> <replaceable>secret_password</replaceable></userinput>
 </screen>
 
-        <para>Restart the service to use the new configuration.</para>
-      </section>
-      <section id="sect.sip-server-management">
-        <title>Managing the SIP proxy</title>
-        <para>Go to the web interface at
-        <literal>http://sip-proxy.falcot.com:5080</literal> to
-        complete the configuration by adding domains, local users
-        and static routes.</para>
-
-        <para>The first step is to add the local domain.  The
-        process must be restarted after adding or removing domains
-        from the list.</para>
-
-        <para>The proxy knows how to route calls between local users
-        and full SIP address, the routing configuration is only necessary
-        for overriding default behavior, for example, to recognize phone
-        numbers, add a prefix and route them to a SIP provider.</para>
+        <para>Once everything is properly configured you can start
+	or restart the service with <command>systemctl restart kamailio</command>, you
+	can connect with a SIP client providing the ip address and the port (5090 is the
+	default port). The users have the following id:
+	<literal><replaceable>roland</replaceable>@<replaceable>sip.falcot.com</replaceable></literal>,
+	and they can login using a client (see <xref linkend="sect.rtc-clients"/>)</para>
       </section>
     </section>
 
