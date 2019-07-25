@@ -9,6 +9,7 @@
     <keywordset>
       <keyword>Firewall</keyword>
       <keyword>Netfilter</keyword>
+      <keyword>nftables</keyword>
       <keyword>IDS/NIDS</keyword>
     </keywordset>
   </chapterinfo>
@@ -170,6 +171,7 @@
     when going through the firewall is the only route for these
     packets.</para>
 
+    <!-- MAYCHANGE: fwbuilder nftables support (https://github.com/fwbuilder/fwbuilder/issues/17)
     <para>The lack of a standard configuration (and the “process, not
     product” motto) explains the lack of a turn-key solution. There are,
     however, tools that make it simpler to configure the
@@ -177,6 +179,7 @@
     representation of the filtering rules. <command>fwbuilder</command> is
     undoubtedly among the best of them.</para>
     <indexterm><primary><emphasis>netfilter</emphasis></primary></indexterm>
+    -->
 
     <sidebar>
       <title><emphasis>SPECIFIC CASE</emphasis> Local Firewall</title>
@@ -189,91 +192,111 @@
     </sidebar>
 
     <para>The Linux kernel embeds the <emphasis>netfilter</emphasis>
-    firewall. It can be controlled from user space with the
-    <command>iptables</command> and <command>ip6tables</command> commands.
-    The difference between these two commands is that the former acts on
-    the IPv4 network, whereas the latter acts on IPv6. Since both network
-    protocol stacks will probably be around for many years, both tools
-    will need to be used in parallel.</para>
+    firewall, which can be controlled from user space with the
+    <command>iptables</command>, <command>ip6tables</command>,
+    <command>arptables</command> and <command>ebtables</command> commands.</para>
     <indexterm><primary><command>iptables</command></primary></indexterm>
-    <indexterm><primary><command>ip6tables</command></primary></indexterm>
+
+    <para>However, Netfilter iptables commands are being replaced by nftables,
+    which avoids many of its problems. Its design involves less code duplication,
+    and it can be managed with just the <command>nft</command> command. Debian
+    Buster uses the nftables framework by default.</para>
+
+    <para>To enable a default firewall in Debian execute:</para>
+
+    <screen><computeroutput># </computeroutput><userinput>apt install -y nftables
+</userinput><computeroutput>Reading package lists... Done
+...
+# </computeroutput><userinput>systemctl enable nftables.service</userinput><computeroutput>
+Created symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /lib/systemd/system/nftables.service.
+</computeroutput></screen>
+
     <section id="sect.netfilter">
-      <title>Netfilter Behavior</title>
+      <title>nftables Behavior</title>
 
-      <para><emphasis>netfilter</emphasis> uses four distinct tables which
-      store rules regulating three kinds of operations on packets:</para>
-      <itemizedlist>
-        <listitem>
-	  <para><literal>filter</literal> concerns filtering rules
-	  (accepting, refusing or ignoring a packet);</para>
-        </listitem>
-        <listitem>
-	  <para><literal>nat</literal> concerns translation of source or
-	  destination addresses and ports of packages;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>mangle</literal> concerns other changes to the IP
-	  packets (including the ToS — <emphasis>Type of
-	  Service</emphasis> — field and options);</para>
-        </listitem>
-        <listitem>
-	  <para><literal>raw</literal> allows other manual modifications on
-	  packets before they reach the connection tracking system.</para>
-        </listitem>
-        <listitem>
-          <para><literal>security</literal> is used for Mandatory Access
-          Control networking rules, implemented by Linux Security Modules
-          such as SELinux.</para>
-        </listitem>
-      </itemizedlist>
+      <para>As the kernel is processing a network packet it pauses and allows
+      us to inspect the packet and decide what to do with that package.
+      For example, we might want to drop or discard certain incoming packages,
+      modify other packages in various ways, block certain outgoing packets
+      to control against malware or redirect some packets at the earliest
+      possible stage to bridge network interfaces or to spread the load of
+      incoming packets between systems.</para>
 
-      <para>Each table contains lists of rules called
-      <emphasis>chains</emphasis>. The firewall uses standard chains to
-      handle packets based on predefined circumstances. The administrator
-      can create other chains, which will only be used when referred to by
-      one of the standard chains (either directly or indirectly).</para>
+      <para>A good understanding of the layers 3, 4 and 5 of the OSI (Open
+      Systems Interconnection) model is essential to get the most from
+      netfilter.</para>
+
+    <sidebar>
+      <title><emphasis>CULTURE</emphasis> The OSI model</title>
+      <indexterm><primary>OSI</primary><secondary>model</secondary></indexterm>
+
+      <para>The OSI model is a conceptual model to implement networking
+      protocols without regard to its underlying internal
+      structure and technology. Its goal is the interoperability of diverse
+      communication systems with standard communication protocols.</para>
+
+      <para>This model was defined in the standard ISO/EIC 7498. The following
+      seven layers are described:</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Physical: transmission and reception of raw bit streams over
+          a physical medium</para>
+        </listitem>
+        <listitem>
+          <para>Data Link: reliable transmission of data frames between two
+          nodes connected by a connected by a physical layer</para>
+        </listitem>
+        <listitem>
+          <para>Network: structuring and managing a multi-node network,
+          including addressing, routing and traffic control</para>
+        </listitem>
+        <listitem>
+          <para>Transport: reliable transmission of data segments
+          between points on a network, including segmentation,
+          acknowledgement and multiplexing</para>
+        </listitem>
+        <listitem>
+          <para>Session: managing communication sessions, i.e. continuous exchange of information in the form of multiple back-and-forth transmissions between two nodes</para>
+        </listitem>
+        <listitem>
+          <para>Presentation: translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption</para>
+        </listitem>
+        <listitem>
+          <para>Application: High-level APIs, including resource sharing, remote file access.</para>
+        </listitem>
+      </orderedlist>
+      <para>More information can be found on Wikipedia: <ulink type="block" url="https://en.wikipedia.org/wiki/Osi_model"/></para>
+    </sidebar>
+
+    <para>The firewall is configured with <emphasis>tables</emphasis>, which
+      hold <emphasis>rules</emphasis> contained in <emphasis>chains</emphasis>.
+      Unlike iptables, <emphasis>nftables</emphasis> does not have
+      any default table. The user decides which and how many tables to
+      create. Every table must have only one of the following five
+      families assigned:
+      <literal>ip</literal>, <literal>ip6</literal>,
+      <literal>inet</literal>, <literal>arp</literal> and <literal>bridge</literal>.
+      <literal>ip</literal> is used if the family is not specified.</para>
+
+      <para>There are two types of chains: <emphasis>base chains</emphasis> and
+      <emphasis>regular chains</emphasis>. A base chain is an entry
+      point for packets from the networking stack, they are registered into
+      the Netfilter hooks, ie. these chains see packets flowing through
+      the TCP/IP stack. On the other hand, and a regular chain is not
+      attached to any hook, so they do not see any traffic, but it
+      may be used as a jump target for better organization.</para>
       <indexterm><primary>chain</primary></indexterm>
-      <indexterm><primary>filtering rule</primary></indexterm>
 
-      <para>The <literal>filter</literal> table has three standard
-      chains:</para>
-      <itemizedlist>
-        <listitem>
-	  <para><literal>INPUT</literal>: concerns packets whose
-	  destination is the firewall itself;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>OUTPUT</literal>: concerns packets emitted by the
-	  firewall;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>FORWARD</literal>: concerns packets transiting
-	  through the firewall (which is neither their source nor their
-	  destination).</para>
-        </listitem>
-      </itemizedlist>
+      <para>Rules are made of statements, which includes some expressions
+      to be matched and then a veredict statement, like
+      <literal>accept</literal>, <literal>drop</literal>,
+      <literal>queue</literal>, <literal>continue</literal>,
+      <literal>return</literal>, <literal>jump chain</literal> and
+      <literal>goto chain</literal>.</para>
+      <indexterm><primary>rule</primary></indexterm>
 
-      <para>The <literal>nat</literal> table also has three standard
-      chains:</para>
-      <itemizedlist>
-        <listitem>
-	  <para><literal>PREROUTING</literal>: to modify packets as soon as
-	  they arrive;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>POSTROUTING</literal>: to modify packets when they
-	  are ready to go on their way;</para>
-        </listitem>
-        <listitem>
-          <para><literal>INPUT</literal>: to modify packets destined for
-          local sockets;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>OUTPUT</literal>: to modify packets generated by
-	  the firewall itself.</para>
-        </listitem>
-      </itemizedlist>
-
+      <!-- TODO: Remove or replace this image
       <figure id="figure.chaines-netfilter">
         <title>How <emphasis>netfilter</emphasis> chains are called</title>
         <mediaobject>
@@ -282,17 +305,7 @@
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Each chain is a list of rules; each rule is a set of conditions
-      and an action to execute when the conditions are met. When processing
-      a packet, the firewall scans the appropriate chain, one rule after
-      another; when the conditions for one rule are met, it “jumps”
-      (hence the <literal>-j</literal> option in the commands) to the
-      specified action to continue processing. The most common behaviors
-      are standardized, and dedicated actions exist for them. Taking one of
-      these standard actions interrupts the processing of the chain, since
-      the packet's fate is already sealed (barring an exception mentioned
-      below):</para>
+      -->
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> ICMP</title>
@@ -332,228 +345,183 @@
 	Protocol</emphasis>). ICMPv6 is defined in RFC4443. <ulink
 	type="block" url="http://www.faqs.org/rfcs/rfc4443.html"/></para>
       </sidebar>
-
-      <para/>
-      <itemizedlist>
-        <listitem>
-	  <para><literal>ACCEPT</literal>: allow the packet to go on its
-	  way;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>REJECT</literal>: reject the packet with an ICMP
-	  error packet (the <literal>--reject-with
-	  <replaceable>type</replaceable></literal> option to
-	  <command>iptables</command> allows selecting the type of
-	  error);</para>
-        </listitem>
-        <listitem>
-	  <para><literal>DROP</literal>: delete (ignore) the packet;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>LOG</literal>: log (via
-	  <command>syslogd</command>) a message with a description of the
-	  packet; note that this action does not interrupt processing, and
-	  the execution of the chain continues at the next rule, which is
-	  why logging refused packets requires both a LOG and a REJECT/DROP
-	  rule;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>NFLOG</literal>: log a message via
-	  the loaded logging backend (usually nfnetlink_log),
-	  which can be better adapted and more
-	  efficient than <command>syslogd</command> for handling large
-	  numbers of messages; note that this action, like LOG, also
-	  returns processing to the next rule in the calling chain;</para>
-        </listitem>
-        <listitem>
-	  <para><replaceable>chain_name</replaceable>: jump to the given
-	  chain and evaluate its rules;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>RETURN</literal>: interrupt processing of the
-	  current chain, and return to the calling chain; in case the
-	  current chain is a standard one, there's no calling chain, so the
-	  default action (defined with the <literal>-P</literal> option to
-	  <command>iptables</command>) is executed instead;</para>
-        </listitem>
-        <listitem>
-	  <para><literal>SNAT</literal> (only in the
-	  <literal>nat</literal> table): apply
-	  <emphasis>Source NAT</emphasis> (extra options describe the
-	  exact changes to apply);</para>
-        </listitem>
-        <listitem>
-	  <para><literal>DNAT</literal> (only in the
-	  <literal>nat</literal> table): apply
-	  <emphasis>Destination NAT</emphasis> (extra options describe
-	  the exact changes to apply);</para>
-        </listitem>
-        <listitem>
-	  <para><literal>MASQUERADE</literal> (only in the
-	  <literal>nat</literal> table): apply
-	  <emphasis>masquerading</emphasis> (a special case of
-	  <emphasis>Source NAT</emphasis>);</para>
-        </listitem>
-        <listitem>
-	  <para><literal>REDIRECT</literal> (only in the
-	  <literal>nat</literal> table): redirect a
-	  packet to a given port of the firewall itself; this can be
-	  used to set up a transparent web proxy that works with no
-	  configuration on the client side, since the client thinks it
-	  connects to the recipient whereas the communications
-	  actually go through the proxy.</para>
-        </listitem>
-      </itemizedlist>
-
-      <para>Other actions, particularly those concerning the
-      <literal>mangle</literal> table, are outside the scope of this text.
-      The <citerefentry><refentrytitle>iptables</refentrytitle>
-      <manvolnum>8</manvolnum></citerefentry> and
-      <citerefentry><refentrytitle>ip6tables</refentrytitle>
-      <manvolnum>8</manvolnum></citerefentry> have a comprehensive
-      list.</para>
     </section>
-    <section id="sect.iptables">
-      <title>Syntax of <command>iptables</command> and <command>ip6tables</command></title>
+    <section>
+      <title>Moving from iptables to nftables</title>
+      <para>The <command>iptables-translate</command> and
+      <command>ip6tables-translate</command> commands can be used
+      to translate old iptables commands into the new nftables syntax. Whole
+      rulesets can also be translated, in this case we migrate the rules
+      configured in one computer which has Docker installed:</para>
 
-      <para>The <command>iptables</command> and
-      <command>ip6tables</command> commands allow manipulating tables,
-      chains and rules. Their <literal>-t
-      <replaceable>table</replaceable></literal> option indicates which
-      table to operate on (by default, <literal>filter</literal>).</para>
-      <indexterm><primary><command>iptables</command></primary></indexterm>
-      <indexterm><primary><command>ip6tables</command></primary></indexterm>
-      <section id="sect.iptables-command">
-        <title>Commands</title>
+  <screen><computeroutput># </computeroutput><userinput>iptables-save &gt; iptables-ruleset.txt
+</userinput><computeroutput># </computeroutput><userinput>iptables-restore-translate -f iptables-ruleset.txt
+</userinput><computeroutput>
+# Translated by iptables-restore-translate v1.8.2 on Thu Jul 18 10:39:33 2019
+add table ip filter
+add chain ip filter INPUT { type filter hook input priority 0; policy accept; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy drop; }
+add chain ip filter OUTPUT { type filter hook output priority 0; policy accept; }
+add chain ip filter DOCKER
+add chain ip filter DOCKER-ISOLATION-STAGE-1
+add chain ip filter DOCKER-ISOLATION-STAGE-2
+add chain ip filter DOCKER-USER
+add rule ip filter FORWARD counter jump DOCKER-USER
+add rule ip filter FORWARD counter jump DOCKER-ISOLATION-STAGE-1
+add rule ip filter FORWARD oifname "docker0" ct state related,established counter accept
+add rule ip filter FORWARD oifname "docker0" counter jump DOCKER
+add rule ip filter FORWARD iifname "docker0" oifname != "docker0" counter accept
+add rule ip filter FORWARD iifname "docker0" oifname "docker0" counter accept
+add rule ip filter DOCKER-ISOLATION-STAGE-1 iifname "docker0" oifname != "docker0" counter jump DOCKER-ISOLATION-STAGE-2
+add rule ip filter DOCKER-ISOLATION-STAGE-1 counter return
+add rule ip filter DOCKER-ISOLATION-STAGE-2 oifname "docker0" counter drop
+add rule ip filter DOCKER-ISOLATION-STAGE-2 counter return
+add rule ip filter DOCKER-USER counter return
+add table ip nat
+add chain ip nat PREROUTING { type nat hook prerouting priority -100; policy accept; }
+add chain ip nat INPUT { type nat hook input priority 100; policy accept; }
+add chain ip nat POSTROUTING { type nat hook postrouting priority 100; policy accept; }
+add chain ip nat OUTPUT { type nat hook output priority -100; policy accept; }
+add chain ip nat DOCKER
+add rule ip nat PREROUTING fib daddr type local counter jump DOCKER
+add rule ip nat POSTROUTING oifname != "docker0" ip saddr 172.17.0.0/16 counter masquerade
+add rule ip nat OUTPUT ip daddr != 127.0.0.0/8 fib daddr type local counter jump DOCKER
+add rule ip nat DOCKER iifname "docker0" counter return
+# Completed on Thu Jul 18 10:39:33 2019
+# </computeroutput><userinput>iptables-restore-translate -f iptables-ruleset.txt &gt; ruleset.nft
+</userinput><computeroutput># </computeroutput><userinput>nft -f ruleset.nft
+</userinput><computeroutput># </computeroutput><userinput>nft list ruleset</userinput><computeroutput>
+table ip filter {
+	chain INPUT {
+		type filter hook input priority 0; policy accept;
+	}
 
-	<para>The <literal>-N
-	<replaceable>chain</replaceable></literal> option creates a
-	new chain. The <literal>-X
-	<replaceable>chain</replaceable></literal> deletes an empty
-	and unused chain. The <literal>-A
-	<replaceable>chain</replaceable>
-	<replaceable>rule</replaceable></literal> adds a rule at the
-	end of the given chain. The <literal>-I
-	<replaceable>chain</replaceable>
-	<replaceable>rule_num</replaceable>
-	<replaceable>rule</replaceable></literal> option inserts a
-	rule before the rule number
-	<replaceable>rule_num</replaceable>. The <literal>-D
-	<replaceable>chain</replaceable>
-	<replaceable>rule_num</replaceable></literal> (or <literal>-D
-	<replaceable>chain</replaceable>
-	<replaceable>rule</replaceable></literal>) option deletes a
-	rule in a chain; the first syntax identifies the rule to be
-	deleted by its number, while the latter identifies it by its
-	contents. The <literal>-F
-	<replaceable>chain</replaceable></literal> option flushes a
-	chain (deletes all its rules); if no chain is mentioned, all
-	the rules in the table are deleted. The <literal>-L
-	<replaceable>chain</replaceable></literal> option lists the
-	rules in the chain; if no chain is mentioned, all chains are
-	listed. Finally, the <literal>-P
-	<replaceable>chain</replaceable>
-	<replaceable>action</replaceable></literal> option defines the
-	default action, or “policy”, for a given chain; note that only
-	standard chains can have such a policy.</para>
-      </section>
-      <section id="sect.iptables-rules">
-        <title>Rules</title>
-        <indexterm><primary>filtering rule</primary></indexterm>
+	chain FORWARD {
+		type filter hook forward priority 0; policy drop;
+		counter packets 0 bytes 0 jump DOCKER-USER
+		counter packets 0 bytes 0 jump DOCKER-ISOLATION-STAGE-1
+		oifname "docker0" ct state related,established counter packets 0 bytes 0 accept
+		oifname "docker0" counter packets 0 bytes 0 jump DOCKER
+		iifname "docker0" oifname != "docker0" counter packets 0 bytes 0 accept
+		iifname "docker0" oifname "docker0" counter packets 0 bytes 0 accept
+	}
 
-	<para>Each rule is expressed as
-	<literal><replaceable>conditions</replaceable> -j
-	<replaceable>action</replaceable>
-	<replaceable>action_options</replaceable></literal>.  If
-	several conditions are described in the same rule, then the
-	criterion is the conjunction (logical
-	<emphasis>and</emphasis>) of the conditions, which is at least
-	as restrictive as each individual condition.</para>
+	chain OUTPUT {
+		type filter hook output priority 0; policy accept;
+	}
 
-	<para>The <literal>-p <replaceable>protocol</replaceable></literal>
-	condition matches the protocol field of the IP packet. The most
-	common values are <literal>tcp</literal>, <literal>udp</literal>,
-	<literal>icmp</literal>, and <literal>icmpv6</literal>. Prefixing
-	the condition with an exclamation mark negates the condition, which
-	then becomes a match for “any packets with a different protocol
-	than the specified one”. This negation mechanism is not specific
-	to the <literal>-p</literal> option and it can be applied to all
-	other conditions too.</para>
+	chain DOCKER {
+	}
 
-	<para>The <literal>-s <replaceable>address</replaceable></literal>
-	or <literal>-s <replaceable>network/mask</replaceable></literal>
-	condition matches the source address of the packet.
-	Correspondingly, <literal>-d
-	<replaceable>address</replaceable></literal> or <literal>-d
-	<replaceable>network/mask</replaceable></literal> matches the
-	destination address.</para>
+	chain DOCKER-ISOLATION-STAGE-1 {
+		iifname "docker0" oifname != "docker0" counter packets 0 bytes 0 jump DOCKER-ISOLATION-STAGE-2
+		counter packets 0 bytes 0 return
+	}
 
-	<para>The <literal>-i
-	<replaceable>interface</replaceable></literal> condition selects
-	packets coming from the given network interface. <literal>-o
-	<replaceable>interface</replaceable></literal> selects packets
-	going out on a specific interface.</para>
+	chain DOCKER-ISOLATION-STAGE-2 {
+		oifname "docker0" counter packets 0 bytes 0 drop
+		counter packets 0 bytes 0 return
+	}
 
-	<para>There are more specific conditions, depending on the generic
-	conditions described above. For instance, the <literal>-p
-	tcp</literal> condition can be complemented with conditions on the
-	TCP ports, with clauses such as <literal>--source-port
-	<replaceable>port</replaceable></literal> and
-	<literal>--destination-port
-	<replaceable>port</replaceable></literal>.</para>
+	chain DOCKER-USER {
+		counter packets 0 bytes 0 return
+	}
+}
+table ip nat {
+	chain PREROUTING {
+		type nat hook prerouting priority -100; policy accept;
+		fib daddr type local counter packets 0 bytes 0 jump DOCKER
+	}
 
-	<para>The <literal>--state
-	<replaceable>state</replaceable></literal> condition matches the
-	state of a packet in a connection (this requires the
-	<command>ipt_conntrack</command> kernel module, for connection
-	tracking). The <literal>NEW</literal> state describes a packet
-	starting a new connection; <literal>ESTABLISHED</literal> matches
-	packets belonging to an already existing connection, and
-	<literal>RELATED</literal> matches packets initiating a new
-	connection related to an existing one (which is useful for the
-	<literal>ftp-data</literal> connections in the “active” mode of
-	the FTP protocol).</para>
+	chain INPUT {
+		type nat hook input priority 100; policy accept;
+	}
 
-	<para>The previous section lists available actions, but not their
-	respective options. The <literal>LOG</literal> action, for
-	instance, has the following options:</para>
-        <itemizedlist>
-          <listitem>
-	    <para><literal>--log-level</literal>, with default value
-	    <literal>warning</literal>, indicates the
-	    <command>syslog</command> severity level;</para>
-          </listitem>
-          <listitem>
-	    <para><literal>--log-prefix</literal> allows specifying a text
-	    prefix to differentiate between logged messages;</para>
-          </listitem>
-          <listitem>
-	    <para><literal>--log-tcp-sequence</literal>,
-	    <literal>--log-tcp-options</literal> and
-	    <literal>--log-ip-options</literal> indicate extra data to be
-	    integrated into the message: respectively, the TCP sequence
-	    number, TCP options, and IP options.</para>
-          </listitem>
-        </itemizedlist>
+	chain POSTROUTING {
+		type nat hook postrouting priority 100; policy accept;
+		oifname != "docker0" ip saddr 172.17.0.0/16 counter packets 0 bytes 0 masquerade
+	}
 
-	<para>The <literal>DNAT</literal> action
-	provides the <literal>--to-destination
-	<replaceable>address</replaceable>:<replaceable>port</replaceable></literal>
-	option to indicate the new destination IP address and/or port.
-	Similarly, <literal>SNAT</literal> provides <literal>--to-source
-	<replaceable>address</replaceable>:<replaceable>port</replaceable></literal>
-	to indicate the new source IP address and/or port.</para>
+	chain OUTPUT {
+		type nat hook output priority -100; policy accept;
+		ip daddr != 127.0.0.0/8 fib daddr type local counter packets 0 bytes 0 jump DOCKER
+	}
 
-	<para>The <literal>REDIRECT</literal> action (only available
-	if NAT is available) provides the <literal>--to-ports
-	<replaceable>port(s)</replaceable></literal> option to
-	indicate the port, or port range, where the packets should be
-	redirected.</para>
-      </section>
+	chain DOCKER {
+		iifname "docker0" counter packets 0 bytes 0 return
+	}
+}
+table ip mangle {
+	chain PREROUTING {
+		type filter hook prerouting priority -150; policy accept;
+	}
+
+	chain INPUT {
+		type filter hook input priority -150; policy accept;
+	}
+
+	chain FORWARD {
+		type filter hook forward priority -150; policy accept;
+	}
+
+	chain OUTPUT {
+		type route hook output priority -150; policy accept;
+	}
+
+	chain POSTROUTING {
+		type filter hook postrouting priority -150; policy accept;
+	}
+}
+</computeroutput>
+</screen>
+    <para>The tools <command>iptables-nft</command>, <command>ip6tables-nft</command>,
+    <command>arptables-nft</command>, <command>ebtables-nft</command> are versions
+    of iptables that use the nftables API, so users can keep using the old
+    iptables syntax with them, but that is not recommened; these tools
+    should only be used for backwards compatibility.</para>
     </section>
-    <section id="sect.creating-rules">
-      <title>Creating Rules</title>
 
+    <section id="sect.nftables">
+        <title>Syntax of <command>nft</command></title>
+
+      <para>The <command>nft</command> commands allow manipulating tables,
+	     chains and rules. The <literal>table</literal> option supports multiple
+	     operations: <literal>add</literal>, <literal>create</literal>, <literal>delete</literal>,
+	     <literal>list</literal> and <literal>flush</literal>. <command>nft add table ip6 mangle</command> adds a new table from the family <literal>ip6</literal>.</para>
+
+        <para>The syntax to add base chains is the following:
+        <literal>nft add chain [family] table-name chain-name { type &lt;type&gt; hook &lt;hook&gt; priority &lt;value&gt; \; [policy &lt;policy&gt;] }</literal>.
+        If you are using Bash, the semicolon must be escaped. To insert
+        a new base chain to the <literal>filter</literal> table execute:</para>
+
+    <screen><computeroutput># </computeroutput><userinput>nft add chain filter input { type filter hook input priority 0 \; }</userinput></screen>
+
+        <para>Rules are usually added with the following syntax:
+        <command>nft add rule [<replaceable>family</replaceable>] <replaceable>table</replaceable> <replaceable>chain</replaceable> handle <replaceable>handle</replaceable> statement</command>.</para>
+        <para><command>insert</command> is similar to the
+        <command>add</command> command, but the given rule is prepended to the
+        beginning of the chain or before the rule with the given handle instead
+        of at the end or after that rule. For example, the following command
+        inserts a rule before the rule with handler number 8:</para>
+
+<screen><computeroutput># </computeroutput><userinput>nft insert rule filter output position 8 ip daddr 127.0.0.8 drop
+</userinput></screen>
+
+        <para>The executed <command>nft</command> commands do not make
+        permanent changes to the configuration, so they are lost if they
+        are not saved. The firewall rules are located in
+        <filename>/etc/nftables.conf</filename>. A simple way to save
+        the current firewall configuration permanently is to execute
+        <command>nft list ruleset &gt; /etc/nftables.conf</command> as
+        root.</para>
+
+        <para>The <command>nft</command> allows many more operations,
+        refer to the manual page
+        <citerefentry><refentrytitle>nft</refentrytitle> <manvolnum>8</manvolnum></citerefentry>
+        for more information.</para>
+    </section>
+
+    <!-- MAYCHANGE: fwbuilder nftables support (https://github.com/fwbuilder/fwbuilder/issues/17)
       <para>Each rule creation requires one invocation of
       <command>iptables</command>/<command>ip6tables</command>. Typing
       these commands manually can be tedious, so the calls are usually
@@ -611,13 +579,19 @@
       scripts targeting different systems (<command>iptables</command> for
       Linux, <command>ipf</command> for FreeBSD and
       <command>pf</command> for OpenBSD).</para>
+    -->
 
-    </section>
     <section id="sect.install-rules-at-boot">
       <title>Installing the Rules at Each Boot</title>
 
+      <para>To enable a default firewall in Debian, you need to store the
+      rules in <filename>/etc/nftables.conf</filename> and execute
+      <command>systemctl enable nftables.service</command> as root. You
+      can stop the firewall executing <command>nft flush ruleset</command>
+      as root.</para>
+
       <para>In other cases, the recommended way is to register the
-      configuration script in an <literal>up</literal> directive of the
+      configuration script in <literal>up</literal> directive of the
       <filename>/etc/network/interfaces</filename> file. In the following
       example, the script is stored under
       <filename>/usr/local/etc/arrakis.fw</filename>.</para>
@@ -1820,9 +1794,9 @@ acct
 	<citerefentry><refentrytitle>semanage</refentrytitle><manvolnum>8</manvolnum></citerefentry>
 	manual page. All the managed concepts have their own manual
 	page; for instance,
-	<citerefentry><refentrytitle>semanage-login</refentrytitle><manvolnum>8</manvolnum></citerefentry>. 
+	<citerefentry><refentrytitle>semanage-login</refentrytitle><manvolnum>8</manvolnum></citerefentry>.
 	Even if the command's syntax tends to be similar for all the
-	concepts which are managed, it is recommended to read its 
+	concepts which are managed, it is recommended to read its
         manual page. You will find common options to
 	most sub-commands: <literal>-a</literal> to add,
 	<literal>-d</literal> to delete, <literal>-m</literal> to modify,
@@ -2303,7 +2277,7 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <section>
         <title>Compiling the Files</title>
 
-	<para>Once the 3 files (<filename>example.if</filename>,
+	<para>Once the 3 files (<filename>example.if</filename>,
 	<filename>example.fc</filename>, and
 	<filename>example.te</filename>) match your expectations for the
 	new rules, rename them to <filename>myapp.<replaceable>extension</replaceable></filename>
@@ -2367,7 +2341,7 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <sidebar>
         <title><emphasis>QUICK LOOK</emphasis> Filtering HTTP queries</title>
 
-	<para>Apache 2 includes modules allowing filtering incoming HTTP
+	<para>Apache 2 includes modules allowing filtering incoming HTTP
 	queries. This allows blocking some attack vectors. For instance,
 	limiting the length of parameters can prevent buffer overflows.
 	More generally, one can validate parameters before they are even
