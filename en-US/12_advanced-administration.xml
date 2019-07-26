@@ -3344,41 +3344,49 @@ load.info 5 minute load average
         <title>Installing</title>
 
 	<para>The first step in setting up Nagios is to install the
-	<emphasis role="pkg">nagios3</emphasis>, <emphasis
-	role="pkg">nagios-plugins</emphasis> and <emphasis
-	role="pkg">nagios3-doc</emphasis> packages. Installing the packages
-	configures the web interface and creates a first
-	<literal>nagiosadmin</literal> user (for which it asks for a
-	password). Adding other users is a simple matter of inserting them
-	in the <filename>/etc/nagios3/htpasswd.users</filename> file with
-	Apache's <command>htpasswd</command> command. If no Debconf
-	question was displayed during installation,
-	<command>dpkg-reconfigure nagios3-cgi</command> can be used to
-	define the <literal>nagiosadmin</literal> password.</para>
+	<emphasis role="pkg">nagios4</emphasis> and <emphasis
+	role="pkg">monitoring-plugins</emphasis> packages. Installing the packages
+	configures the web interface and the Apache server. The
+	<literal>authz_groupfile</literal> and <literal>auth_digest</literal> Apache modules
+	must be enabled, for that execute:</para>
+
+<screen><computeroutput># </computeroutput><userinput>a2enmod authz_groupfile</userinput>
+<computeroutput>Considering dependency authz_core for authz_groupfile:
+Module authz_core already enabled
+Enabling module authz_groupfile.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+# </computeroutput><userinput>a2enmod auth_digest
+Considering dependency authn_core for auth_digest:
+Module authn_core already enabled
+Enabling module auth_digest.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+</userinput><computeroutput># </computeroutput><userinput>systemctl restart apache2
+</userinput>
+</screen>
+
+	<para>Adding other users is a simple matter of inserting them
+	in the <filename>/etc/nagios4/hdigest.users</filename> file.</para>
 
 	<para>Pointing a browser at
-	<literal>http://<replaceable>server</replaceable>/nagios3/</literal>
+	<literal>http://<replaceable>server</replaceable>/nagios4/</literal>
 	displays the web interface; in particular, note that Nagios already
 	monitors some parameters of the machine where it runs. However,
 	some interactive features such as adding comments to a host do not
 	work. These features are disabled in the default configuration for
 	Nagios, which is very restrictive for security reasons.</para>
 
-	<para>As documented in
-	<filename>/usr/share/doc/nagios3/README.Debian</filename>, enabling
-	some features involves editing
-	<filename>/etc/nagios3/nagios.cfg</filename> and setting its
-	<literal>check_external_commands</literal> parameter to “1”. We
+	<para>Enabling some features involves editing
+	<filename>/etc/nagios4/nagios.cfg</filename>. We
 	also need to set up write permissions for the directory used by
 	Nagios, with commands such as the following:</para>
 
-        <screen><computeroutput># </computeroutput><userinput>service nagios3 stop</userinput>
-<computeroutput>[...]
-# </computeroutput><userinput>dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios3/rw
-</userinput><computeroutput># </computeroutput><userinput>dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3
-</userinput><computeroutput># </computeroutput><userinput>service nagios3 start</userinput>
-<computeroutput>[...]</computeroutput>
-</screen>
+        <screen><computeroutput># </computeroutput><userinput>systemctl stop nagios4
+</userinput><computeroutput># </computeroutput><userinput>dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios4/rw
+</userinput><computeroutput># </computeroutput><userinput>dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios4
+</userinput><computeroutput># </computeroutput><userinput>systemctl start nagios4
+</userinput></screen>
       </section>
       <section>
         <title>Configuring</title>
@@ -3387,7 +3395,7 @@ load.info 5 minute load average
 	allow configuration, nor can it be used to add monitored hosts and
 	services. The whole configuration is managed via files referenced
 	in the central configuration file,
-	<filename>/etc/nagios3/nagios.cfg</filename>.</para>
+	<filename>/etc/nagios4/nagios.cfg</filename>.</para>
 
 	<para>These files should not be dived into without some
 	understanding of the Nagios concepts. The configuration lists
@@ -3450,14 +3458,14 @@ load.info 5 minute load average
 	Moreover, the initial configuration includes a number of standard
 	objects; in many cases, defining new hosts, services and contacts
 	is a simple matter of deriving from the provided generic objects.
-	The files in <filename>/etc/nagios3/conf.d/</filename> are a good
+	The files in <filename>/etc/nagios4/conf.d/</filename> are a good
 	source of information on how they work.</para>
 
 	<para>The Falcot Corp administrators use the following
 	configuration:</para>
 
         <example>
-          <title><filename>/etc/nagios3/conf.d/falcot.cfg</filename> file</title>
+          <title><filename>/etc/nagios4/conf.d/falcot.cfg</filename> file</title>
 
           <programlisting>define contact{
     name                            generic-contact
@@ -3559,7 +3567,7 @@ define service{
 	interface also shows that the SSH service is monitored: this comes
 	from the hosts belonging to the <literal>ssh-servers</literal>
 	hostgroup. The matching standard service is defined in
-	<filename>/etc/nagios3/conf.d/services_nagios2.cfg</filename>.</para>
+	<filename>/etc/nagios4/conf.d/services_nagios2.cfg</filename>.</para>
 
 	<para>Note the use of inheritance: an object is made to inherit
 	from another object with the “use
@@ -3576,10 +3584,9 @@ define service{
 
 	  <para>A more in-depth understanding of the various ways in which
 	  Nagios can be configured can be obtained from the documentation
-	  provided by the <emphasis role="pkg">nagios3-doc</emphasis>
-	  package. This documentation is directly accessible from the web
-	  interface, with the “Documentation” link in the top left
-	  corner. It includes a list of all object types, with all the
+	  hosted on
+	  <ulink url="https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/index.html"/>.
+	  It includes a list of all object types, with all the
 	  properties they can have. It also explains how to create new
 	  plugins.</para>
         </sidebar>
@@ -3606,3 +3613,4 @@ define service{
     </section>
   </section>
 </chapter>
+
