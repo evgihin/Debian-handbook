@@ -951,87 +951,18 @@ deb http://localhost:9999/debian buster main contrib non-free
         linkend="sect.dealing-with-compromised-machine"/> details the necessary
         steps to take with a compromised system.</para>
 
-        <para>These commands will not restore the configuration files. For this
-        please see <xref linkend="sidebar.dpkg-confask-confmiss"/></para>
+        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confmiss</command></secondary></indexterm>
 
-      </sidebar>
-
-      <sidebar id="sidebar.dpkg-confask-confmiss">
-        <title><emphasis>TIP</emphasis> Restoring configuration files</title>
-        <indexterm><primary>restore configuration files</primary></indexterm>
-        <indexterm><primary><command>--force-confask</command></primary></indexterm>
-        <indexterm><primary><command>--force-confmiss</command></primary></indexterm>
-        <indexterm><primary><command>--force-confnew</command></primary></indexterm>
-        <indexterm><primary><literal>Dpkg::Options</literal></primary></indexterm>
-
-        <para>Configuration files are a bit different to restore. If you
-        deleted or misconfigured one by accident the commands shown in <xref
-        linkend="sidebar.apt-install-reinstall" /> won't recover it. Instead
-        <command>apt</command> (or <command>apt-get</command> or
-        <command>aptitude</command>) needs to be given some special
-        <citerefentry><refentrytitle>dpkg</refentrytitle><manvolnum>1</manvolnum></citerefentry>
-        options, which can enforce to ask or not, before changing or keeping
-        the current configuration, or to restore a deleted file. The following
-        command reinstalls a <replaceable>package</replaceable>, restores any
-        deleted configuration file, and shows a prompt, when the local and the
-        shipped configuration files differ, asking the user, how to
-        proceed.</para>
+        <para>These commands will not restore the configuration files. But as
+        you have learned in <xref linkend="sect.conffiles"/> (see also sidebar
+        <xref linkend="sidebar.questions-conffiles-bis"/>, you can use the
+        following command to be asked to install the unmodified version and
+        even restore any deleted configuration file as well.</para>
 
         <informalexample>
           <screen><computeroutput># </computeroutput><userinput>apt --reinstall -o Dpkg::Options::="--force-confask,confmiss" install <replaceable>package</replaceable></userinput></screen>
         </informalexample>
-
-        <para>Some of the options are explained below. For a complete list see
-        either
-        <citerefentry><refentrytitle>dpkg</refentrytitle><manvolnum>1</manvolnum></citerefentry>
-        or <command>dpkg --force-help</command>.</para>
-
-        <variablelist>
-          <varlistentry>
-            <term><command>--force-confask</command></term>
-            <listitem>
-              <para>If a configuration file has been modified or deleted, then
-              always show a prompt and offer to replace it by the version
-              shipped with the package. This is especially useful to check,
-              where the current configuration deviates from the default
-              (shipped) one. Depending on the chosen action the command behaves
-              like <literal>confmiss</literal>, <literal>confnew</literal> or
-              <literal>confold</literal>.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><command>--force-confdef</command></term>
-            <listitem>
-              <para>If a configuration file has been modified and the version
-              in the package did change, always choose the default action
-              without prompting. If there is no default action, then show a
-              prompt asking the user. This is the default behavior.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><command>--force-confmiss</command></term>
-            <listitem>
-              <para>Always restore a deleted configuration file without
-              prompting.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><command>--force-confnew</command></term>
-            <listitem>
-              <para>Always use the (new) configuration file from the package
-              without prompting. The local configuration is kept in a file with
-              the suffix <filename>.dpkg-old</filename>.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><command>--force-confold</command></term>
-            <listitem>
-              <para>Always use the local configuration file without prompting.
-              The (new) configuration shipped with the package is kept in a
-              file with the suffix <filename>.dpkg-dist</filename>.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
 
         <para>Some packages don't ship the configuration file found in
         <filename>/etc</filename> with the package. Instead they create it
@@ -1039,7 +970,6 @@ deb http://localhost:9999/debian buster main contrib non-free
         script. The file <filename>/etc/inputrc</filename> for example is a
         copy of <filename>/usr/share/readline/inputrc</filename>. In such cases
         the commands shown above won't work.</para>
-
       </sidebar>
 
       <para>If the file <filename>sources.list</filename> mentions several
@@ -1909,9 +1839,10 @@ apt-xapian-index: /usr/bin/axi-cache
       <command>dpkg -L <replaceable>package</replaceable></command> lists all
       files, but only for an installed package. To find the package, a local
       file belongs to, use <command>dpkg -S
-      <replaceable>file</replaceable></command>. To list all local files not
-      belonging to any installed package, you might want to take a look at the
-      <emphasis role="pkg">cruft</emphasis> or the <emphasis
+      <replaceable>file</replaceable></command> (see <xref
+      linkend="sect.dpkg-list"/>). To list all local files not belonging to any
+      installed package, you might want to take a look at the <emphasis
+      role="pkg">cruft</emphasis> or the <emphasis
       role="pkg">cruft-ng</emphasis> package.</para>
     </sidebar>
   </section>
@@ -2428,10 +2359,10 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
         <para>The <command>debsums</command> command can check if files on the
         local system, which are part of an installed package, have been
         altered. It uses a simple hashsum algorithm and the information in
-        <filename>/var/lib/dpkg/info/<replaceable>package</replaceable>.md5sums</filename>.
-        To find all altered configuration files use <command>debsums
-        -ec</command>. To check the whole system, use <command>debsums
-        -c</command>.</para>
+        <filename>/var/lib/dpkg/info/<replaceable>package</replaceable>.md5sums</filename>
+        (see <xref linkend="sect.conffiles"/>).  To find all altered
+        configuration files use <command>debsums -ec</command>. To check the
+        whole system, use <command>debsums -c</command>.</para>
       </sidebar>
 
       <para>Now for the upgrading itself. First, you need to change the
@@ -2608,7 +2539,7 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
         results for automatic removal, because this method can lead to false
         positives:</para>
 
-        <screen><computeroutput>$ </computeroutput><userinput>dpkg -l "*" | grep ^ii | grep -i -E "(transition|dummy)"</userinput></screen>
+        <screen><computeroutput>$ </computeroutput><userinput>dpkg -l | grep ^ii | grep -i -E "(transition|dummy)"</userinput></screen>
 
         <para>Because the new package is pulled in as a dependency of the
         transitional package, it is usually marked as automatically installed
@@ -2629,9 +2560,9 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
         <indexterm><primary>configuration files</primary><secondary><filename>.ucf-dist</filename></secondary></indexterm>
 
         <para>If the upgrade was successful there might be some configuration
-        file cruft, either from dpkg (see sidebar <xref
-        linkend="sidebar.dpkg-confask-confmiss"/>), ucf or from removed
-        packages. The latter can be purged by using <command>apt autoremove
+        file cruft, either from dpkg (see <xref linkend="sect.conffiles"/>),
+        ucf or from removed packages. The latter can be <link
+        linkend="sidebar.purge">purged</link> by using <command>apt autoremove
         --purge</command>.  The configuration files, that were handled by
         <emphasis role="pkg">dpkg</emphasis> or <emphasis
         role="pkg">ucf</emphasis> during the upgrade process, have left some
