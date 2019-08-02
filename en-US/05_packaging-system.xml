@@ -237,8 +237,12 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
 
       <para>This file uses a structure similar to email headers (as defined by
       <link linkend="sidebar.rfc">RFC 2822</link>) and is fully described in
-      the Debian Policy. <ulink type="block"
-      url="https://www.debian.org/doc/debian-policy/ch-controlfields.html"/>.</para>
+      the Debian Policy and the manual pages
+      <citerefentry><refentrytitle>deb-control</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+      and
+      <citerefentry><refentrytitle>deb822</refentrytitle><manvolnum>5</manvolnum></citerefentry>.
+      <ulink type="block"
+      url="https://www.debian.org/doc/debian-policy/ch-controlfields.html"/></para>
 
       <para>For example, for <emphasis role="pkg">apt</emphasis>, the
       <filename>control</filename> file looks like the following:</para>
@@ -974,10 +978,12 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
       <command>dpkg</command> will generate it dynamically at installation time
       (and store it in the dpkg database just like other control files).</para>
 
-      <para><filename>conffiles</filename> lists package files that must
-      be handled as configuration files. Configuration files can be
-      modified by the administrator, and <command>dpkg</command> will try
-      to preserve those changes during a package update.</para>
+      <para><filename>conffiles</filename> lists package files that must be
+      handled as configuration files (see also
+      <citerefentry><refentrytitle>deb-conffiles</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
+      Configuration files can be modified by the administrator, and
+      <command>dpkg</command> will try to preserve those changes during a
+      package update.</para>
 
       <para>In effect, in this situation, <command>dpkg</command> behaves
       as intelligently as possible: if the standard configuration file has
