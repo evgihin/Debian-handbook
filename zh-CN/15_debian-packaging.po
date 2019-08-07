@@ -1,17 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr ""
-"Project-Id-Version: 0\n"
-"POT-Creation-Date: 2015-10-06 16:10+0200\n"
-"PO-Revision-Date: 2017-09-30 01:44+0000\n"
-"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\n"
-"Language: zh-CN\n"
-"MIME-Version: 1.0\n"
-"Content-Type: application/x-publican; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.17-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2019-08-07 20:51+0000\nLast-Translator: Elizabeth Sherrock <lizzyd710@gmail.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.8-dev\n"
 
 msgid "Backport"
 msgstr "反向移植"
@@ -92,10 +81,10 @@ msgid ""
 "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n"
 "</userinput><computeroutput>[...]\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n</userinput><computeroutput>[…]\n</computeroutput>"
 
 msgid "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
-msgstr ""
+msgstr "<emphasis>工具</emphasis><command>fakeroot</command>"
 
 msgid "In essence, the package creation process is a simple matter of gathering in an archive a set of existing (or built) files; most of the files will end up being owned by <emphasis>root</emphasis> in the archive. However, building the whole package under this user would imply increased risks; fortunately, this can be avoided with the <command>fakeroot</command> command. This tool can be used to run a program and give it the impression that it runs as <emphasis>root</emphasis> and creates files with arbitrary ownership and permissions. When the program creates the archive that will become the Debian package, it is tricked into creating an archive containing files marked as belonging to arbitrary owners, including <emphasis>root</emphasis>. This setup is so convenient that <command>dpkg-buildpackage</command> uses <command>fakeroot</command> by default when building packages."
 msgstr ""
@@ -109,11 +98,12 @@ msgstr ""
 msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis>devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
 msgstr ""
 
+#, fuzzy
 msgid "<emphasis>QUICK LOOK</emphasis> <command>pbuilder</command>"
-msgstr ""
+msgstr "<emphasis>速览</emphasis> <command>pbuilder</command>"
 
 msgid "<primary><command>pbuilder</command></primary>"
-msgstr ""
+msgstr "<primary><command>pbuilder</command></primary>"
 
 msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
 msgstr ""
@@ -281,10 +271,10 @@ msgid ""
 msgstr ""
 
 msgid "<emphasis>BACK TO BASICS</emphasis> <filename>Makefile</filename> file"
-msgstr ""
+msgstr "<emphasis>基本知识</emphasis> <filename>Makefile</filename>文件"
 
 msgid "<primary><filename>Makefile</filename></primary>"
-msgstr ""
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 msgid "A <filename>Makefile</filename> file is a script used by the <command>make</command> program; it describes rules for how to build a set of files from each other in a tree of dependencies (for instance, a program can be built from a set of source files). The <filename>Makefile</filename> file describes these rules in the following format:"
 msgstr ""
@@ -317,7 +307,7 @@ msgid "At this point, the package can be created. We will however add a lick of 
 msgstr ""
 
 msgid "The <filename>falcot-data.desktop</filename> file"
-msgstr ""
+msgstr "<filename>falcot-data.desktop</filename>文件"
 
 msgid ""
 "\n"
@@ -364,7 +354,7 @@ msgid ""
 msgstr ""
 
 msgid "<primary><command>mini-dinstall</command></primary>"
-msgstr ""
+msgstr "<primary><command>mini-dinstall</command></primary>"
 
 msgid "The administrators therefore configure a virtual host on their internal HTTP server, with <filename>/srv/vhosts/packages/</filename> as the root of the associated web space. The management of the archive itself is delegated to the <command>mini-dinstall</command> command (in the similarly-named package). This tool keeps an eye on an <filename>incoming/</filename> directory (in our case, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>) and waits for new packages there; when a package is uploaded, it is installed into a Debian archive at <filename>/srv/vhosts/packages/</filename>. The <command>mini-dinstall</command> command reads the <filename>*.changes</filename> file created when the Debian package is generated. These files contain a list of all other files associated with the version of the package (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, or their equivalents with other compression tools), and these allow <command>mini-dinstall</command> to know which files to install. <filename>*.changes</filename> files also contain the name of the target distribution (often <literal>unstable</literal>) mentioned in the latest <filename>debian/changelog</filename> entry, and <command>mini-dinstall</command> uses this information to decide where the package should be installed. This is why administrators must always change this field before building a package, and set it to <literal>internal</literal> or <literal>updates</literal>, depending on the target location. <command>mini-dinstall</command> then generates the files required by APT, such as <filename>Packages.gz</filename>."
 msgstr ""
@@ -373,7 +363,7 @@ msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>"
 msgstr ""
 
 msgid "<primary><command>apt-ftparchive</command></primary>"
-msgstr ""
+msgstr "<primary><command>apt-ftparchive</command></primary>"
 
 msgid "If <command>mini-dinstall</command> seems too complex for your Debian archive needs, you can also use the <command>apt-ftparchive</command> command. This tool scans the contents of a directory and displays (on its standard output) a matching <filename>Packages</filename> file. In the Falcot Corp case, administrators could upload the packages directly into <filename>/srv/vhosts/packages/updates/</filename> or <filename>/srv/vhosts/packages/internal/</filename>, then run the following commands to create the <filename>Packages.gz</filename> files:"
 msgstr ""
@@ -468,7 +458,7 @@ msgid "The <command>lintian</command> Program"
 msgstr ""
 
 msgid "<primary><command>lintian</command></primary>"
-msgstr ""
+msgstr "<primary><command>lintian</command></primary>"
 
 msgid "This tool is one of the most important: it's the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
 msgstr ""
@@ -480,7 +470,7 @@ msgid "The <command>piuparts</command> Program"
 msgstr ""
 
 msgid "<primary><command>piuparts</command></primary>"
-msgstr ""
+msgstr "<primary><command>piuparts</command></primary>"
 
 msgid "This is another important tool: it automates the installation, upgrade, removal and purge of a package (in an isolated environment), and checks that none of these operations leads to an error. It can help in detecting missing dependencies, and it also detects when files are incorrectly left over after the package got purged."
 msgstr ""
@@ -492,19 +482,19 @@ msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
 msgstr ""
 
 msgid "<primary><command>debuild</command></primary>"
-msgstr ""
+msgstr "<primary><command>debuild</command></primary>"
 
 msgid "<primary><command>dch</command></primary>"
-msgstr ""
+msgstr "<primary><command>dch</command></primary>"
 
 msgid "<primary><command>uscan</command></primary>"
-msgstr ""
+msgstr "<primary><command>uscan</command></primary>"
 
 msgid "<primary><command>debi</command></primary>"
-msgstr ""
+msgstr "<primary><command>debi</command></primary>"
 
 msgid "<primary><command>debc</command></primary>"
-msgstr ""
+msgstr "<primary><command>debc</command></primary>"
 
 msgid "The <emphasis role=\"pkg\">devscripts</emphasis> package contains many programs helping with a wide array of a Debian developer's job:"
 msgstr ""
@@ -555,13 +545,13 @@ msgid "The <command>dh_make</command> script (in the <emphasis>dh-make</emphasis
 msgstr ""
 
 msgid "<command>dupload</command> and <command>dput</command>"
-msgstr ""
+msgstr "<command>dupload</command>和<command>dput</command>"
 
 msgid "<primary><command>dupload</command></primary>"
-msgstr ""
+msgstr "<primary><command>dupload</command></primary>"
 
 msgid "<primary><command>dput</command></primary>"
-msgstr ""
+msgstr "<primary><command>dput</command></primary>"
 
 msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>*.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
 msgstr ""
@@ -579,7 +569,7 @@ msgid "“Debian Maintainer” is another status that gives less privileges than
 msgstr ""
 
 msgid "<primary>Debian Maintainer</primary>"
-msgstr ""
+msgstr "<primary>Debian维护者</primary>"
 
 msgid "Prerequisites"
 msgstr ""
