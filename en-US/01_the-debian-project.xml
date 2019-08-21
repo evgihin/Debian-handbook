@@ -110,7 +110,7 @@
       there are 10 hardware architectures officially supported and also other
       kernels like FreeBSD (although the FreeBSD-based ports are not
       part of the set of officially supported architectures).
-      Furthermore, with more than 56,000 source packages, the available
+      Furthermore, with more than 28,000 source packages, the available
       software can meet almost any need that
       one could have, whether at home or in the enterprise.</para>
 
@@ -1061,8 +1061,7 @@
         of the reporter, address of the maintainer in charge of it, tag,
         etc. It is also possible to browse the complete historical listing
         of all discussions regarding each of the bugs.</para>
-        <para>The Debian Bug Tracking System (Debian BTS) is used by
-	large parts of the
+        <para>The Debian BTS is used by large parts of the
 	project. The public part (the web interface) allows users to view
 	all bugs reported, with the option to display a sorted list of bugs
 	selected according to various criteria, such as: affected package,
@@ -1170,16 +1169,10 @@
         <indexterm><primary>patch</primary></indexterm>
         <indexterm><primary><command>diff</command></primary></indexterm>
 
-      <para>More advanced users might be able to provide a fix to a program
-      sending a patch.</para>
+        <para>More advanced users might be able to provide a fix to a program
+        by sending a patch.</para>
 
-      <para>A patch is a file describing changes to be made to one or
-	more reference files. Specifically, it will contain a list of lines
-	to be removed or added to the code, as well as (sometimes) lines
-	taken from the reference text, replacing the modifications in
-	context (they allow identification of the placement of the changes
-	if the line numbers have changed).</para>
-	<para>A patch is a file describing changes to be made to one or
+        <para>A patch is a file describing changes to be made to one or
 	more reference files. Specifically, it will contain a list of lines
 	to be removed or added to the code, as well as (sometimes) lines
 	taken from the reference text, replacing the modifications in
@@ -1207,62 +1200,106 @@
 	<para>The file, <filename>file.old</filename>, is now identical to
 	<filename>file.new</filename>.</para>
 
-        <sidebar>
-          <title><emphasis>TOOL</emphasis> Git, the preferred way to send patches</title>
+        <para>In practice, most software is maintained in Git repositories
+        and contributors are thus more likely to use <command>git</command> to
+        retrieve the source code and propose changes. <command>git diff</command>
+        will generate a file in the same format as what <command>diff -u</command>
+        would do and <command>git apply</command> can do the same as
+        <command>patch</command>.</para>
+
+        <sidebar id="sidebar.git">
+          <title><emphasis>CULTURE</emphasis> Git</title>
+          <indexterm><primary>Git</primary></indexterm>
+          <indexterm><primary>configuration management</primary></indexterm>
+
+	  <para>Git is a tool for
+	  collaborative work on multiple files, while maintaining a history
+	  of modifications. The files in question are generally text files,
+	  such as a program's source code. If several people work together
+	  on the same file, <command>git</command> can only merge the
+	  alterations made if they were made to different portions of the
+	  file. Otherwise, these “conflicts” must be resolved by hand.
+	  </para>
+
+          <para>Git is a distributed system where each user has a repository
+          with the complete history of changes. Central repositories are
+          used to download the project (<command>git clone</command>)
+          and to share the work done with others (<command>git push</command>).
+          The repository can contain multiple versions of the files
+          but only one version can be worked on at a given time: it is
+          called the working copy (it can be changed to point to another
+          version with <command>git checkout</command>).
+          Git can show you the modifications made to the working copy
+          (<command>git diff</command>), can stage changes for inclusion
+          (<command>git add</command>)), and can create a new entry in the
+          versions history (<command>git commit</command>). It can also update the
+          working copy to include modifications made in parallel by other users
+          (<command>git pull</command>), and can record a particular
+          configuration in the history in order to be able to easily extract it
+          later on (<command>git tag</command>).
+          </para>
+
+	  <para>Git makes it easy to handle
+	  multiple concurrent versions of a project in development without
+	  them interfering with each other. These versions are called
+	  <emphasis>branches</emphasis>. This metaphor of a tree is fairly
+	  accurate, since a program is initially developed on a common
+	  trunk. When a milestone has been reached (such as version 1.0),
+	  development continues on two branches: the development branch
+	  prepares the next major release, and the maintenance branch
+	  manages updates and fixes for version 1.0.</para>
+
+          <indexterm><primary>Version Control System (VCS)</primary></indexterm>
+          <para>Git is, nowadays, the most popular version control system but
+          it is not the only one. Historically, CVS (Concurrent Versions System)
+          was the first widely used tool but its numerous limitations
+          contributed to the appearance of more modern free alternatives.
+          These include, especially, <command>subversion</command>
+	  (<command>svn</command>), <command>git</command>,
+	  <command>bazaar</command> (<command>bzr</command>), and
+          <command>mercurial</command> (<command>hg</command>).
+          <ulink type="block" url="https://www.nongnu.org/cvs/"/>
+          <ulink type="block" url="https://subversion.apache.org/"/>
+          <ulink type="block" url="https://git-scm.com/"/>
+          <ulink type="block" url="https://bazaar.canonical.com/"/>
+          <ulink type="block" url="http://mercurial.selenic.com/"/></para>
+          <indexterm><primary><command>subversion</command></primary></indexterm>
+          <indexterm><primary><command>svn</command></primary></indexterm>
           <indexterm><primary><command>git</command></primary></indexterm>
-          <indexterm><primary>version control</primary></indexterm>
+          <indexterm><primary><command>bzr</command></primary></indexterm>
+          <indexterm><primary><command>hg</command></primary></indexterm>
+          <indexterm><primary><command>mercurial</command></primary></indexterm>
+          <indexterm><primary><command>cvs</command></primary></indexterm>
 
-          <para>Git is a version-control system designed for coordinating work
-          among developers and track their changes. It was programmed by Linus Torvalds (the
-          creator of Linux) in 2005 to coordinate the development of the Linux kernel.</para>
-
-          <para>Nowadays, it is common to send patches using Git. Many Debian
-          projects using Git can be found on <ulink url="https://salsa.debian.org/"/>.</para>
-
-          <para>To send a patch using Git, you must download a copy of the repository,
-	  make the fixes, add them to the stage area, commit the changes, upload your
-          changes, and request the maintainer to accept your
-	  changes. It is beyond the scope of this book to provide a detailed explanation
+          <para>It is beyond the scope of this book to provide a detailed explanation
 	  about Git, for that you can refer to the <citetitle>Pro Git</citetitle> book
 	  (<ulink url="https://git-scm.com/book/"/>).</para>
-	  <para>Below is an example of the commands
-          needed to submit a patch to this book. You can use GitLab's web interface to make the
-          pull request; another option is to use the command <command>git request-pull</command>
-          and send its output to the developers.</para>
-
-          <screen><computeroutput>$ </computeroutput><userinput>git clone https://salsa.debian.org/<replaceable>youruser</replaceable>/debian-handbook/</userinput>
-<computeroutput>Cloning into 'debian-handbook'...
-remote: Enumerating objects: 20838, done.
-remote: Counting objects: 100% (20838/20838), done.
-remote: Compressing objects: 100% (4510/4510), done.
-remote: Total 20838 (delta 16316), reused 20809 (delta 16307)
-Receiving objects: 100% (20838/20838), 139.41 MiB | 131.00 KiB/s, done.
-Resolving deltas: 100% (16316/16316), done.
-Checking out files: 100% (1351/1351), done.
-$ </computeroutput><userinput>editor <replaceable>file</replaceable></userinput>
-<computeroutput>$ </computeroutput><userinput>git add <replaceable>file</replaceable></userinput>
-<computeroutput>$ </computeroutput><userinput>git commit -m "Correct typo in chapter 3"</userinput>
-<computeroutput>[buster/master ca5a0039] Update chapter 1
- 1 file changed, 98 insertions(+), 54 deletions(-)</computeroutput>
-<computeroutput>$ </computeroutput><userinput>git push</userinput>
-<computeroutput>Username for 'https://salsa.debian.org':</computeroutput> <userinput>youruser</userinput>
-<computeroutput>Password for 'https://youruser@salsa.debian.org':</computeroutput> <userinput>yourpasswd</userinput>
-<computeroutput>Enumerating objects: 96, done.
-Counting objects: 100% (96/96), done.
-Delta compression using up to 2 threads
-Compressing objects: 100% (80/80), done.
-Writing objects: 100% (80/80), 456.23 KiB | 3.83 MiB/s, done.
-Total 80 (delta 59), reused 2 (delta 0)
-To https://salsa.debian.org/youruser/debian-handbook.git/
-   18e0e26c..ca5a0039  buster/master -> buster/master</computeroutput>
-          </screen>
-
-          <para>It is a good practice to review the changes before executing <command>git add</command>.
-          You can execute <command>git diff</command> for that. It will open the default pager
-          (usually <command>less</command>) to display the differences. The lines starting
-          with <literal>-</literal> are the removed lines, whereas the lines starting
-          with <literal>+</literal> show added lines.</para>
         </sidebar>
+
+        <para>
+          While the output of <command>git diff</command> is a file than can be
+          shared with other developers, there are usually better ways to submit
+          changes. If the developers prefer to get patches by email, they usually
+          want patches generated with <command>git format-patch</command> so that
+          they can be directly integrated in the repository with
+          <command>git am</command>. This preserves commit meta-information and
+          makes it possible to share multiple commits at once.
+        </para>
+
+        <para>
+          This email-based workflow is still popular but it tends to be
+          replaced by the usage of <emphasis>merge requests</emphasis> (or
+          <emphasis>pull requests</emphasis>) whenever the software is hosted
+          in a platform like Github or GitLab — and Debian is using GitLab on
+          its salsa.debian.org server. On those systems, once you have created
+          an account, you <emphasis>fork</emphasis> the repository, effectively
+          creating a copy of the repository in your own account, and you can then
+          clone that repository and push your own changes in it. From there, the
+          web interface will suggest you to submit a merge request, notifying
+          the developers of your changes, making it easy for them to review
+          and accept your changes with a single click.
+        </para>
+
     </section>
     <section>
       <title>Other ways of contributing</title>
@@ -1287,11 +1324,13 @@ To https://salsa.debian.org/youruser/debian-handbook.git/
         <indexterm><primary>orphaned packages</primary></indexterm>
         <indexterm><primary>“newcomer” bugs</primary></indexterm>
 
-	<para>The <command>how-can-i-help</command> program shows
-	opportunities for contributing to Debian based on
-	the packages installed locally. After each APT invocation, it
-	displays necessary tasks, such as bugs tagged “newcomer”
-	or orphaned packages. The program can be executed directly as well.</para>
+	<para>The <command>how-can-i-help</command> program lists
+        opportunities for contributing to Debian packages that are
+        installed locally. After each APT invocation, it
+        shows ways to help, by highlighting bugs tagged “newcomer”
+        (which are easy entry-points for new contributors) or orphaned
+        packages that need a new maintainer. The program can be executed
+        directly as well.</para>
       </sidebar>
 
       <para>Since Debian does not expend funds on any self-promoting
@@ -1578,72 +1617,6 @@ To https://salsa.debian.org/youruser/debian-handbook.git/
 	software license, these tools make use of methods proven elsewhere
 	in the free software world.</para>
 
-        <sidebar id="sidebar.git">
-          <title><emphasis>CULTURE</emphasis> Git</title>
-          <indexterm><primary>Git</primary></indexterm>
-          <indexterm><primary>configuration management</primary></indexterm>
-
-	  <para>Git is a tool for
-	  collaborative work on multiple files, while maintaining a history
-	  of modifications. The files in question are generally text files,
-	  such as a program's source code. If several people work together
-	  on the same file, <command>git</command> can only merge the
-	  alterations made if they were made to different portions of the
-	  file. Otherwise, these “conflicts” must be resolved by hand.
-	  </para>
-
-          <para>Git is a distributed system where each user has a repository
-          with the complete history of changes. Central repositories are
-          used to download the project (<command>git clone</command>)
-          and to share the work done with others (<command>git push</command>).
-          The repository can contain multiple versions of the files
-          but only one version can be worked on at a given time: it is
-          called the working copy (it can be changed to point to another
-          version with <command>git checkout</command>).
-          Git can show you the modifications made to the working copy
-          (<command>git diff</command>), can add (<command>git
-          add</command>) the selected files for inclusion in a new entry in
-          the repository, with the added files it can create a new entry in the
-          versions history (<command>git commit</command>), it can update the
-          working copy to include modifications made in parallel by other users
-          (<command>git pull</command>), and can record a particular
-          configuration in the history in order to be able to easily extract it
-          later on (<command>git tag</command>).
-          </para>
-
-	  <para>Git makes it easy to handle
-	  multiple concurrent versions of a project in development without
-	  them interfering with each other. These versions are called
-	  <emphasis>branches</emphasis>. This metaphor of a tree is fairly
-	  accurate, since a program is initially developed on a common
-	  trunk. When a milestone has been reached (such as version 1.0),
-	  development continues on two branches: the development branch
-	  prepares the next major release, and the maintenance branch
-	  manages updates and fixes for version 1.0.</para>
-
-          <indexterm><primary>Version Control System (VCS)</primary></indexterm>
-          <para>Git is, nowadays, the most popular version control system but
-          it is not the only one. Historically, CVS (Concurrent Versions System)
-          was the first widely used tool but its numerous limitations
-          contributed to the appearance of more modern free alternatives.
-          These include, especially, <command>subversion</command>
-	  (<command>svn</command>), <command>git</command>,
-	  <command>bazaar</command> (<command>bzr</command>), and
-          <command>mercurial</command> (<command>hg</command>).
-          <ulink type="block" url="https://www.nongnu.org/cvs/"/>
-          <ulink type="block" url="https://subversion.apache.org/"/>
-          <ulink type="block" url="https://git-scm.com/"/>
-          <ulink type="block" url="https://bazaar.canonical.com/"/>
-          <ulink type="block" url="http://mercurial.selenic.com/"/></para>
-          <indexterm><primary><command>subversion</command></primary></indexterm>
-          <indexterm><primary><command>svn</command></primary></indexterm>
-          <indexterm><primary><command>git</command></primary></indexterm>
-          <indexterm><primary><command>bzr</command></primary></indexterm>
-          <indexterm><primary><command>hg</command></primary></indexterm>
-          <indexterm><primary><command>mercurial</command></primary></indexterm>
-          <indexterm><primary><command>cvs</command></primary></indexterm>
-        </sidebar>
-
 	<para>Debian has developed little software of its own, but certain
 	programs have assumed a starring role, and their fame has spread
 	beyond the scope of the project. Good examples are
@@ -1831,7 +1804,7 @@ To https://salsa.debian.org/youruser/debian-handbook.git/
 
       <!-- MAYCHANGE: number of source packages -->
       <para>Quantitatively, Debian is undeniably the leader in this
-      respect, with over 56,000 source packages. Qualitatively,
+      respect, with over 28,000 source packages. Qualitatively,
       Debian’s policy and long testing period prior to releasing a new
       stable version justify its reputation for stability and
       consistency. As far as availability, everything is available
@@ -2045,12 +2018,12 @@ To https://salsa.debian.org/youruser/debian-handbook.git/
 	solution.</para>
       </sidebar>
 
-      <sidebar>
+      <sidebar id="srm-team">
         <title><emphasis>COMMUNITY</emphasis> The Release Manager</title>
         <indexterm><primary>Release Manager</primary></indexterm>
         <indexterm><primary>Stable Release Manager</primary></indexterm>
 
-	<para id="srm-team">Release Manager is an important title, associated with heavy
+	<para>Release Manager is an important title, associated with heavy
 	responsibilities. The bearer of this title must, in effect, manage
 	the release of a new, stable version of Debian, and define the
 	process for development of <emphasis
