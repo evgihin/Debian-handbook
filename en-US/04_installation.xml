@@ -205,7 +205,7 @@
       <para>All the details of this method are available in the
       installation guide (“Preparing files for TFTP Net Booting”
       section).
-      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch05s01.en.html#boot-tftp"/>
+      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch05s01.en.html#boot-tftp-x86"/>
       <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch04s05.en.html"/>
       </para>
     </section>
@@ -236,11 +236,11 @@
       “Install” or “Graphical install” (with the arrow keys), then
       press the <keycap>Enter</keycap> key to initiate the remainder
       of the installation process. If the DVD-ROM is a “Multi-arch” disk,
-      and the machine has an Intel or AMD 64 bit processor, those menu
-      options enable the installation of the 64 bit variant
-      (<emphasis>amd64</emphasis>) and the installation of the 32 bit
+      and the machine has an Intel or AMD 64-bit processor, those menu
+      options enable the installation of the 64-bit variant
+      (<emphasis>amd64</emphasis>) and the installation of the 32-bit
       variant remains available in a dedicated sub-menu (“32-bit install
-      options”). If you have a 32 bit processor, you don't get a choice
+      options”). If you have a 32-bit processor, you don't get a choice
       and the menu entries install the 32-bit variant
       (<emphasis>i386</emphasis>).
       </para>
@@ -252,18 +252,18 @@
         <indexterm><primary>32/64 bits, choice</primary></indexterm>
 
 	<para>The fundamental difference between 32- and 64-bit systems is
-	the size of memory addresses. In theory, a 32 bit system can not
+	the size of memory addresses. In theory, a 32-bit system can not
 	work with more than 4 GB of RAM (2<superscript>32</superscript>
 	bytes). In practice, it is possible to work around this limitation
 	by using the <literal>686-pae</literal> kernel variant, so long
 	as the processor handles the PAE (Physical Address Extension)
 	functionality. Using it does have a notable influence on system
-	performance, however. This is why it is useful to use the 64 bit
+	performance, however. This is why it is useful to use the 64-bit
 	mode on a server with a large amount of RAM.</para>
 
 	<para>For an office computer (where a few percent difference in
 	performance is negligible), you must keep in mind that some
-	proprietary programs are not available in 64 bit versions.
+	proprietary programs are not available in 64-bit versions.
         It is technically possible to make them work
         on 64-bit systems, but you have to install the 32-bit versions of
         all the necessary libraries (see <xref linkend="sect.multi-arch" />),
@@ -526,7 +526,12 @@
       administrator, is automatically created during installation; this is
       why a password is requested. The installer also asks for a
       confirmation of the password to prevent any input error which would
-      later be difficult to amend.</para>
+      later be difficult to amend. Note that you can leave both fields empty
+      if you want the root account to be disabled. In that case, the first
+      regular user — that will be created by the installer in the next step —
+      will have administrative rights through <command>sudo</command>
+      (see <xref linkend="sect.sharing-admin-rights" />).
+      </para>
 
       <figure>
         <title>Administrator Password</title>
@@ -540,7 +545,7 @@
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Administrator password</title>
 
-	<para>The root user's password should be long (8 characters or
+	<para>The root user's password should be long (12 characters or
 	more) and impossible to guess. Indeed, any computer (and a fortiori
 	any server) connected to the Internet is regularly targeted by
 	automated connection attempts with the most obvious passwords.
@@ -833,7 +838,7 @@
           <indexterm><primary>swap partition</primary></indexterm>
 
 	  <para>Virtual memory allows the Linux kernel, when lacking
-	  sufficient memory (RAM), to free a bit of storage by storing the
+	  sufficient memory (RAM), to free a bit of memory by storing the
 	  parts of the RAM that have been inactive for some time on the
 	  swap partition of the hard disk.</para>
 
@@ -1201,22 +1206,44 @@
       install LILO (another bootloader); the installer will suggest it
       automatically.</para>
 
+      <para>It is worth nothing that grub is not a single bootloader,
+      it is more like a collection of bootloaders suited for different
+      cases. The numerous binary packages built out of the grub source
+      package reflect that: <emphasis role="pkg">grub-efi-amd64</emphasis>
+      is for 64-bit PC booting in UEFI mode, <emphasis role="pkg">grub-efi-ia32</emphasis>
+      is for 32-bit PC booting in UEFI mode, <emphasis role="pkg">grub-pc</emphasis>
+      is for PC booting in BIOS mode, <emphasis>grub-uboot</emphasis> for
+      ARM computers, etc.
+      </para>
+
       <para>For more information on configuring GRUB, please refer to <xref
       linkend="sect.config-grub"/>.</para>
 
       <sidebar>
-        <title><emphasis>BEWARE</emphasis> Bootloaders and architectures</title>
+        <title><emphasis>CULTURE</emphasis> Secure Boot and the shim bootloader</title>
 
-	<para>LILO and GRUB, which are mentioned in this chapter, are
-	bootloaders for <emphasis>i386</emphasis> and
-	<emphasis>amd64</emphasis> architectures. If you install Debian on
-	another architecture, you will need to use another bootloader.
-	Among others, we can cite <command>yaboot</command> or
-	<command>quik</command> for <emphasis>powerpc</emphasis>,
-	<command>silo</command> for <emphasis>sparc</emphasis>,
-	<command>aboot</command> for <emphasis>alpha</emphasis>,
-	<command>arcboot</command> for <emphasis>mips</emphasis>.
-	</para>
+        <para>Secure Boot is a technology ensuring that you run only software
+        validated by your operating system vendor. To accomplish its work
+        each element of the boot sequences validates the next software component
+        that it will execute. At the deepest level, the UEFI firmware embeds
+        cryptographic keys provided by Microsoft to check the bootloader's signature,
+        ensuring that it is safe to execute. Since getting a binary signed by
+        Microsoft is a lengthy process, Debian decided to not
+        sign grub directly. Instead it uses an intermediary bootloader called
+        <emphasis role="pkg">shim</emphasis>, which almost never needs to change,
+        and whose only role is to check Debian's provided signature on grub and
+        execute grub.</para>
+
+        <para>Down the stack, grub will do a similar check with the kernel, and then
+        the kernel might also check signatures on modules that get loaded. The
+        kernel might also forbid some operations that could alter the integrity
+        of the system.
+        </para>
+
+        <para>Debian 10 is the first release supporting Secure Boot. Before,
+        you had to disable that feature in the system setup screen offered
+        by the BIOS or the UEFI.
+        </para>
       </sidebar>
     </section>
     <section>
@@ -1290,17 +1317,6 @@
 	speakers of different languages. The appropriate task is
 	automatically selected if a non-English language was chosen during
 	installation.</para>
-      </sidebar>
-
-      <sidebar>
-        <title><emphasis>CULTURE</emphasis> <command>dselect</command>, the old interface to install packages</title>
-
-	<para>Before <command>aptitude</command>, the standard program to
-	select packages to be installed was <command>dselect</command>, the
-	old graphical interface associated with <command>dpkg</command>. Being a
-	difficult program for beginners to use, it is not
-	recommended.</para>
-        <indexterm><primary><command>dselect</command></primary></indexterm>
       </sidebar>
 
       <para>Of course, it is possible not to select any task to be
