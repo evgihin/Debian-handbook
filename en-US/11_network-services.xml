@@ -4010,18 +4010,18 @@ TURNSERVER_ENABLED=1
 
       <section id="sect.sip-server-install">
         <title>Install the SIP proxy</title>
-        <para>Install the <emphasis role="pkg">kamailio</emphasis> and
+        <para>Install the <emphasis role="pkg">kamailio</emphasis> package and
           the package for the database backend, the Falcot administrators
-                chose MySQL, so they install <emphasis role="pkg">mariadb-server</emphasis>.
+          chose MySQL, so they install <emphasis role="pkg">mariadb-server</emphasis>.
           <filename>/etc/kamailio/kamctlrc</filename> is the configuration
           file for the control tools <command>kamctl</command> and
           <command>kamdbctl</command>. You need to edit and set the
           <literal>SIP_DOMAIN</literal> to your SIP service domain and set
-          the <literal>DBENGINE</literal> to MySQL, you can use other database
-          backend.
+          the <literal>DBENGINE</literal> to MySQL, another database backend
+          can be used.
         </para>
 <programlisting>
-...
+[...]
 ## your SIP domain
 SIP_DOMAIN=sip.falcot.comn
 
@@ -4034,14 +4034,14 @@ SIP_DOMAIN=sip.falcot.comn
 # If you want to setup a database with kamdbctl, you must at least specify
 # this parameter.
 DBENGINE=MYSQL
-...
+[...]
 </programlisting>
-        <indexterm><primary>kamailio</primary></indexterm>
+        <indexterm><primary>Kamailio</primary></indexterm>
         <para>Now we focus on the configuration file
         <filename>/etc/kamailio/kamailio.cfg</filename>. Falcot needs
         user authentication and persistent user location, so they
         add the following <literal>#!define</literal> directives
-        at the top of the file:
+        at the top of that file file:
         </para>
         <programlisting>
 #!KAMAILIO
@@ -4052,6 +4052,7 @@ DBENGINE=MYSQL
 #!define WITH_MYSQL
 #!define WITH_AUTH
 #!define WITH_USRLOCDB
+[...]
         </programlisting>
         <para>Kamailio needs a database structure that we can create running
           <command>kamdbctl create</command> as root.
