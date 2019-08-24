@@ -308,12 +308,12 @@
 
 	<para>The bootloader is a low-level program that is
 	responsible for booting the Linux kernel just after the BIOS
-	passes off its control. To handle this task, it must be able
-	to locate the Linux kernel to boot on the disk. On the i386
-	and amd64 architectures, the two most used programs to perform
-	this task are LILO, the older of the two, and GRUB, its modern
-	replacement. Isolinux and Syslinux are alternatives frequently
-	used to boot from removable media.</para>
+	passes off its control. To handle this task, it must be able to
+	locate the Linux kernel to boot on the disk. On the i386 and
+	amd64 architectures, the two most used programs to perform this
+	task are <acronym>LILO</acronym>, the older of the two, and
+	<acronym>GRUB</acronym>, its modern replacement. Isolinux and Syslinux
+	are alternatives frequently used to boot from removable media.</para>
       </sidebar>
 
       <para>Each menu entry hides a specific boot command line, which can
@@ -1206,9 +1206,9 @@
       install LILO (another bootloader); the installer will suggest it
       automatically.</para>
 
-      <para>It is worth nothing that grub is not a single bootloader,
+      <para>It is worth nothing that GRUB is not a single bootloader,
       it is more like a collection of bootloaders suited for different
-      cases. The numerous binary packages built out of the grub source
+      cases. The numerous binary packages built out of the GRUB source
       package reflect that: <emphasis role="pkg">grub-efi-amd64</emphasis>
       is for 64-bit PC booting in UEFI mode, <emphasis role="pkg">grub-efi-ia32</emphasis>
       is for 32-bit PC booting in UEFI mode, <emphasis role="pkg">grub-pc</emphasis>
@@ -1221,6 +1221,8 @@
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Secure Boot and the shim bootloader</title>
+        <indexterm><primary>bootloader</primary><secondary>intermediary</secondary><tertiary>shim</tertiary></indexterm>
+        <indexterm><primary>shim</primary></indexterm>
 
         <para>Secure Boot is a technology ensuring that you run only software
         validated by your operating system vendor. To accomplish its work
@@ -1229,12 +1231,13 @@
         cryptographic keys provided by Microsoft to check the bootloader's signature,
         ensuring that it is safe to execute. Since getting a binary signed by
         Microsoft is a lengthy process, Debian decided to not
-        sign grub directly. Instead it uses an intermediary bootloader called
-        <emphasis role="pkg">shim</emphasis>, which almost never needs to change,
-        and whose only role is to check Debian's provided signature on grub and
-        execute grub.</para>
+        sign GRUB directly. Instead it uses an intermediary bootloader called
+        shim, which almost never needs to change, and whose only role is to
+        check Debian's provided signature on GRUB and execute GRUB. To enable
+        Secure Boot, you need to install the
+        <emphasis role="pkg">shim-signed</emphasis> package.</para>
 
-        <para>Down the stack, grub will do a similar check with the kernel, and then
+        <para>Down the stack, GRUB will do a similar check with the kernel, and then
         the kernel might also check signatures on modules that get loaded. The
         kernel might also forbid some operations that could alter the integrity
         of the system.
