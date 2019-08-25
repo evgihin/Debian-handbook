@@ -1145,8 +1145,8 @@ falcot.com             greylisting
         controversial. There is usually a gap between the release of some piece
         of malware and the addition of detection rules to the antivirus
         database. During this gap, there is no software-based protection.
-        Further the usage often requires to run additional software, for
-        example to uncompress archives and scan all kinds of executables, which
+        Further, the usage often requires to run additional software, for
+        example, to uncompress archives and scan all kinds of executables, which
         drastically increases the exploit potential of the antivirus software
         itself. Usage of such software solutions can therefor never replace
         awareness campaigns and simple behavioral rules (never open unsolicited
@@ -1221,7 +1221,7 @@ smtpd_milters = inet:[127.0.0.1]:10002
 </programlisting>
 
       <para>If the antivirus causes problems, this line can be commented
-      out, and <command>service postfix reload</command> should be run
+      out, and <command>systemctl reload postfix</command> should be run
       so that this change is taken into account.</para>
 
       <sidebar>
@@ -1263,16 +1263,16 @@ smtpd_milters = inet:[127.0.0.1]:10002
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Controversial Discussion</title>
 
-        <para>Like any other tool the following standards have limits and real
+        <para>Like any other tool, the following standards have limits and real
         effects if put to use. They can (and should) lead to emails being
         rejected or even just discarded. If that happens to some legitimate
-        emails (sometimes sent from a misconfigured SMTP server) it usually
-        causes anger and a lack of understanding by the user.  Therefor these
+        emails (sometimes sent from a misconfigured SMTP server), it usually
+        causes anger and a lack of understanding by the user. Therefor these
         rules are often applied as a "soft fail" or a "soft reject", which
         usually means, that failing the checks only leads to adding a (header)
-        mark to the affected email. There are people who think, that this
-        makes these standards "broken by design".  Decide for yourself and be
-        careful, how strict you choose to apply these standards.</para>
+        mark to the affected email. There are people who think that this
+        makes these standards "broken by design". Decide for yourself and be
+        careful about how strict you choose to apply these standards.</para>
       </sidebar>
 
       <section id="sect.spf">
@@ -1282,23 +1282,22 @@ smtpd_milters = inet:[127.0.0.1]:10002
         <indexterm><primary><emphasis role="pkg">postfix-policyd-spf-python</emphasis></primary></indexterm>
 
         <para>The Sender Policy Framework (<acronym>SPF</acronym>) is used to
-        validate, if a certain mail server is allowed to send emails for a
+        validate if a certain mail server is allowed to send emails for a
         given domain. It is mostly configured through DNS. The syntax for the
         entry to make is explained in Detail at:
         <ulink type="block"
-        url="https://web.archive.org/web/20190224184030/http://www.openspf.org/SPF_Record_Syntax">
-        http://www.openspf.org/SPF_Record_Syntax<footnote> <para>The
+        url="https://web.archive.org/web/20190224184030/http://www.openspf.org/SPF_Record_Syntax">http://www.openspf.org/SPF_Record_Syntax<footnote> <para>The
         <literal>openspf.org</literal> website disappeared in February 2019 for
         no obvious reason. The contents are still accessible at <ulink
         url="https://web.archive.org/web/20190224184030/http://www.openspf.org/SPF_Record_Syntax"/>.</para>
         </footnote></ulink>
         <ulink type="block" url="https://tools.ietf.org/html/rfc7208"/>
-        <ulink type="block" url="https://en.wikipedia.org/wiki/SPF"/>
+        <ulink type="block" url="https://en.wikipedia.org/wiki/Sender_Policy_Framework"/>
         </para>
 
-        <para>The following is a sample DNS entry which states, that all the
-        domain's Mail Exchange Resource Records (MX-RRs) are allowed to send
-        email for the current domain, and all others are prohibited. The DNS
+        <para>The following is a sample DNS entry which states that all the
+        domain's Mail Exchange Resource Records (MX-RRs) are allowed to email
+        the current domain, and all others are prohibited. The DNS
         entry does not need to be given a name. But to use the
         <literal>include</literal> directive it must have one.</para>
 
@@ -1438,14 +1437,14 @@ Data: "v=DKIM1; h=sha256; k=rsa; s=email; p=[...]"
         <literal>SOCKET</literal> must be accessible from
         <literal>postfix</literal> in its chrooted environment. The further
         configuration is done in <filename>/etc/opendkim.conf</filename>. The
-        following is a configuration excerpt, which makes sure, that the
-        <literal>Domain</literal> "falcot.com" and all sub-domains
+        following is a configuration excerpt, which makes sure that the
+        <literal>Domain</literal> "falcot.com" and all subdomains
         (<literal>SubDomain</literal>) are signed by the
         <literal>Selector</literal> "mail" and the single private key
         (<literal>KeyFile</literal>)
         <filename>/etc/dkimkeys/mail.private</filename>. The "relaxed"
         <literal>Canonicalization</literal> for both the header and the body
-        tolerates mild modification (by a mailing list software for example).
+        tolerates mild modification (by a mailing list software, for example).
         The filter runs both in signing ("s") and verification ("v")
         <literal>Mode</literal>. If a signature fails to validate
         (<literal>On-BadSignature</literal>), the mail should be quarantined
@@ -1501,7 +1500,7 @@ smtpd_milters = inet:localhost:12345
         <citerefentry><refentrytitle>opendkim.conf</refentrytitle>
         <manvolnum>5</manvolnum></citerefentry>.</para>
 
-        <para>Note, that <emphasis role="pkg">spamassassin</emphasis> contains a
+        <para>Note that <emphasis role="pkg">spamassassin</emphasis> contains a
         plugin to check the DKIM record.</para>
 
         <indexterm><primary>spamassassin</primary><secondary>DKIM</secondary></indexterm>
@@ -1534,7 +1533,7 @@ _dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:dmarc
         emails pretending to be sent from a Yahoo account but missing or
         failing DKIM and SPF checks. Google Mail (Gmail) propagates a very
         relaxed policy, in which such messages from the main domain should
-        still be accepted (<literal>p=none</literal>). For sub-domains they
+        still be accepted (<literal>p=none</literal>). For subdomains they
         should be marked as spam (<literal>sp=quarantine</literal>). The
         addresses given in the <literal>rua</literal> key can be used to send
         aggregated DMARC reports to. The full syntax is explained here:
@@ -1547,12 +1546,12 @@ _dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:dmarc
         contains the necessary milter. Similar to <emphasis
         role="pkg">opendkim</emphasis> <literal>SOCKET</literal> and
         <literal>RUNDIR</literal> must be chosen in
-        <filename>/etc/default/opendmarc</filename> (for unix sockets you must
+        <filename>/etc/default/opendmarc</filename> (for Unix sockets you must
         make sure, that they are inside the postfix chroot to be found). The
         configuration file <filename>/etc/opendmarc.conf</filename> contains
         detailed comments and is also explained in
         <citerefentry><refentrytitle>opendmarc.conf</refentrytitle>
-        <manvolnum>5</manvolnum></citerefentry>. By default emails failing the
+        <manvolnum>5</manvolnum></citerefentry>. By default, emails failing the
         DMARC validation are not rejected but flagged, by adding an appropriate
         header field. To change this, use <literal>RejectFailures
         true</literal>.</para>
@@ -2474,7 +2473,7 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
     <para>Many FTP servers are available in Debian (<emphasis
     role="pkg">ftpd</emphasis><footnote><para>The <emphasis
     role="pkg">ftpd</emphasis> package is not included in Debian <emphasis
-    role="distribution">Buster</emphasis> due to a bug, which could not been
+    role="distribution">Buster</emphasis> due to a bug, which could not be
     solved before the release.</para></footnote>, <emphasis
     role="pkg">proftpd-basic</emphasis>, <emphasis role="pkg">pyftpd</emphasis>
     and so on). The Falcot Corp administrators picked <emphasis
@@ -2517,10 +2516,10 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
       <para>When older or (so called) "Home" variants of Windows are involved,
       usually Samba (<xref linkend="sect.windows-file-server-with-samba"/>)
       must be used instead of NFS. Modern Windows Server and "Pro" or
-      "Enterprise" Desktop solutions however have built-in support. After
-      installation of the "Services for NFS" components NFS shares can be
-      accessed and temporarily or permanently mounted like any other network
-      share. Be aware of possible encoding issues in file names.</para>
+      "Enterprise" Desktop solutions however have built-in support for NFS.
+      After installation of the "Services for NFS" components NFS shares can
+      be accessed and temporarily or permanently mounted like any other
+      network share. Be aware of possible encoding issues in file names.</para>
 
       <para>As an alternative Debian can be installed on Windows 10 Pro and
       higher. It requires the installation of the Windows Subsystem for Linux
@@ -2690,7 +2689,7 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
         with the following command:</para>
 
         <screen>
-<computeroutput># </computeroutput><userinput>service nfs-kernel-server start</userinput>
+<computeroutput># </computeroutput><userinput>systemctl start nfs-kernel-server</userinput>
 </screen>
       </sidebar>
     </section>
@@ -2712,7 +2711,8 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
         <title>Manually mounting with the <command>mount</command> command</title>
 
         <screen>
-          <computeroutput># </computeroutput><userinput>mount -t nfs4 -o rw,nosuid arrakis.internal.falcot.com:/shared /srv/shared</userinput></screen>
+<computeroutput># </computeroutput><userinput>mount -t nfs4 -o rw,nosuid arrakis.internal.falcot.com:/shared /srv/shared</userinput>
+        </screen>
       </example>
 
       <example>
