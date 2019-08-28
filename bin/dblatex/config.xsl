@@ -155,6 +155,15 @@ SmallCapsFont  = {M+ 1m bold},
 \usepackage[AutoFallBack=true]{zxjatype}
 </xsl:text>
     </xsl:when>
+    <xsl:when test="/book[@lang='zh-CN']">
+     <xsl:text>
+% Chinese setting
+\setmainfont{AR PL UMing CN}
+\setsansfont[Scale=MatchLowercase]{WenQuanYi Micro Hei}
+\setmonofont[Scale=MatchLowercase]{WenQuanYi Zen Hei}
+\usepackage{xeCJK}
+     </xsl:text>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:text>% /book/@lang="</xsl:text>
       <xsl:value-of select="/book/@lang"/>
