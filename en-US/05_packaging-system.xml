@@ -1557,6 +1557,36 @@ Purging configuration files for debian-cd (3.1.25) ...
       </replaceable></literal> (or <literal>-I</literal>), which displays
       the headers of this Debian package.</para>
 
+      <sidebar>
+        <title><emphasis>CAUTION</emphasis> <command>dpkg --search</command> and merged <filename>/usr</filename></title>
+        <indexterm><primary>merged <filename>/usr</filename></primary></indexterm>
+        <indexterm><primary><filename>/usr</filename></primary></indexterm>
+        <para>
+          For <ulink url="https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/">various
+          reasons</ulink>, Debian now installs by default a few top-level directories
+          as symlinks to their counterparts below <filename>/usr</filename>. For instance,
+          <filename>/bin</filename>, <filename>/sbin</filename> and <filename>/lib</filename>
+          are now symlinks to, respectively, <filename>/usr/bin</filename>,
+          <filename>/usr/sbin</filename> and <filename>/usr/lib</filename>.
+        </para>
+        <para>
+          While this does provide desirable benefits, it can also be a source
+          of confusion. For example, when you query <command>dpkg</command> which
+          package is owning a given file, it will only be able to answer when you
+          ask for its original path:
+        </para>
+        <screen>
+$ <userinput>dpkg --search /bin/mount</userinput>
+mount: /bin/mount
+$ <userinput>dpkg --search /usr/bin/mount</userinput>
+dpkg-query: no path found matching pattern /usr/bin/mount
+$ <userinput>dpkg --search /bin/apt</userinput>
+dpkg-query: no path found matching pattern /bin/apt
+$ <userinput>dpkg --search /usr/bin/apt</userinput>
+apt: /usr/bin/apt
+        </screen>
+      </sidebar>
+
       <example>
         <title>Various queries with <command>dpkg</command></title>
 

@@ -192,15 +192,19 @@ Documents  Music      Public</computeroutput>
       <screen>
 <computeroutput>$ </computeroutput><userinput>free</userinput>
 <computeroutput>              total        used        free      shared  buff/cache   available
-Mem:        8072068      287204     7295196       10816      489668     7508276
-Swap:       8287228           0     8287228
+Mem:       16279260     5910248      523432      871036     9845580     9128964
+Swap:      16601084      240640    16360444
 $ </computeroutput><userinput>df</userinput>
-<computeroutput>Filesystem           1K-blocks      Used Available Use% Mounted on
-/dev/sda2              9614084   4737916   4387796  52% /
-tmpfs                   514208         0    514208   0% /lib/init/rw
-udev                     10240       100     10140   1% /dev
-tmpfs                   514208    269136    245072  53% /dev/shm
-/dev/sda5             44552904  36315896   7784380  83% /home
+<computeroutput>
+Filesystem                1K-blocks      Used Available Use% Mounted on
+udev                        8108516         0   8108516   0% /dev
+tmpfs                       1627928    161800   1466128  10% /run
+/dev/mapper/vg_main-root  466644576 451332520  12919912  98% /
+tmpfs                       8139628    146796   7992832   2% /dev/shm
+tmpfs                          5120         4      5116   1% /run/lock
+tmpfs                       8139628         0   8139628   0% /sys/fs/cgroup
+/dev/sda1                    523248      1676    521572   1% /boot/efi
+tmpfs                       1627924        88   1627836   1% /run/user/1000
 </computeroutput></screen>
 
       <para>The <command>id</command> command displays the identity of the
@@ -219,6 +223,24 @@ tmpfs                   514208    269136    245072  53% /dev/shm
     <indexterm><primary>Filesystem Hierarchy</primary></indexterm>
     <section>
       <title>The Root Directory</title>
+      <indexterm><primary><filename>/bin</filename></primary></indexterm>
+      <indexterm><primary><filename>/boot</filename></primary></indexterm>
+      <indexterm><primary><filename>/dev</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary></indexterm>
+      <indexterm><primary><filename>/home</filename></primary></indexterm>
+      <indexterm><primary><filename>/lib</filename></primary></indexterm>
+      <indexterm><primary><filename>/media</filename></primary></indexterm>
+      <indexterm><primary><filename>/mnt</filename></primary></indexterm>
+      <indexterm><primary><filename>/opt</filename></primary></indexterm>
+      <indexterm><primary><filename>/root</filename></primary></indexterm>
+      <indexterm><primary><filename>/run</filename></primary></indexterm>
+      <indexterm><primary><filename>/sbin</filename></primary></indexterm>
+      <indexterm><primary><filename>/srv</filename></primary></indexterm>
+      <indexterm><primary><filename>/tmp</filename></primary></indexterm>
+      <indexterm><primary><filename>/usr</filename></primary></indexterm>
+      <indexterm><primary><filename>/var</filename></primary></indexterm>
+      <indexterm><primary><filename>/proc</filename></primary></indexterm>
+      <indexterm><primary><filename>/sys</filename></primary></indexterm>
 
       <para>A Debian system is organized along the <emphasis>Filesystem Hierarchy
       Standard</emphasis> (FHS). This standard defines the purpose of each
@@ -300,6 +322,15 @@ tmpfs                   514208    269136    245072  53% /dev/shm
 	  concept).</para>
         </listitem>
       </itemizedlist>
+      <indexterm><primary>merged <filename>/usr</filename></primary></indexterm>
+      <para>
+        Note that many modern distributions, Debian included, are shipping
+        <filename>/bin</filename>, <filename>/sbin</filename> and <filename>/lib</filename>
+        as symlinks to the corresponding directories below <filename>/usr</filename>
+        so that all programs and libraries are available in a single tree.
+        It makes it easier to protect the integrity of the system files, and
+        to share those system files among multiple containers, etc.
+      </para>
     </section>
     <section>
       <title>The User's Home Directory</title>
@@ -323,7 +354,7 @@ tmpfs                   514208    269136    245072  53% /dev/shm
 
       <para>Some programs also use multiple configuration files
       organized in one directory (for instance,
-      <filename>~/.ssh/</filename>). Some applications (such as 
+      <filename>~/.ssh/</filename>). Some applications (such as
       Firefox) also use their directory to store a cache
       of downloaded data. This means that those directories can end up
       using a lot of disk space.</para>
@@ -346,7 +377,7 @@ tmpfs                   514208    269136    245072  53% /dev/shm
       <para>Graphical desktops usually display the contents of the
       <filename>~/Desktop/</filename> directory (or whatever the appropriate
       translation is for systems not configured in English) on the desktop
-      (ie, what is visible on screen once all applications are closed or
+      (i.e. what is visible on screen once all applications are closed or
       iconized).</para>
 
       <para>Finally, the email system sometimes stores incoming emails into
@@ -459,7 +490,8 @@ tmpfs                   514208    269136    245072  53% /dev/shm
 	<para>The BIOS/UEFI also contains a piece of software called Setup,
 	designed to allow configuring aspects of the computer. In
 	particular, it allows choosing which boot device is preferred (for
-	instance, the floppy disk or CD-ROM drive), setting the system
+        instance, you can select an USB key or a CD-ROM drive instead of
+        the default harddisk), setting the system
 	clock, and so on. Starting Setup usually involves pressing a key
 	very soon after the computer is powered on. This key is often
 	<keycap>Del</keycap> or <keycap>Esc</keycap>, sometimes
@@ -484,8 +516,8 @@ tmpfs                   514208    269136    245072  53% /dev/shm
         <indexterm><primary>UEFI</primary></indexterm>
         <indexterm><primary>Secure Boot</primary></indexterm>
 
-        <para>UEFI is a relatively recent development. Most new computers will
-        support UEFI booting, but usually they also support BIOS booting alongside
+        <para>Most new computers will boot in UEFI mode by default,
+        but usually they also support BIOS booting alongside
         for backwards compatibility with operating systems that are not ready
         to exploit UEFI.
         </para>
@@ -554,7 +586,7 @@ tmpfs                   514208    269136    245072  53% /dev/shm
       kernel translates the function calls of this interface into the
       actual hardware commands needed by the specific webcam in use.</para>
 
-     
+
       <para><indexterm><primary><command>lspci</command></primary></indexterm>
       <indexterm><primary><command>lsusb</command></primary></indexterm>
       <indexterm><primary><command>lsdev</command></primary></indexterm>
@@ -651,8 +683,8 @@ Bus 002 Device 004: ID 413c:8103 Dell Computer Corp. Wireless 350 Bluetooth
 
       <para>There are many filesystem formats, corresponding to many ways of
       physically storing data on disks. The most widely known are
-      <emphasis>ext2</emphasis>, <emphasis>ext3</emphasis> and
-      <emphasis>ext4</emphasis>, but others exist. For instance,
+      <emphasis>ext3</emphasis> and <emphasis>ext4</emphasis>, but others
+      exist. For instance,
       <emphasis>vfat</emphasis> is the system that was historically used by
       DOS and Windows operating systems, which allows using hard disks
       under Debian as well as under Windows. In any case, a filesystem must
@@ -812,7 +844,6 @@ Bus 002 Device 004: ID 413c:8103 Dell Computer Corp. Wireless 350 Bluetooth
     </section>
     <section id="sect.daemons">
       <title>Daemons</title>
-      <indexterm><primary>daemon</primary></indexterm>
       <indexterm><primary>daemon</primary></indexterm>
 
       <para>A “daemon” is a process started automatically by the boot
