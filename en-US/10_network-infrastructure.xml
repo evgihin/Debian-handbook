@@ -237,64 +237,53 @@ net.ipv4.tcp_syncookies = 1
     trusted CA. The prices vary significantly, but it is possible to implement
     great security spending little to no money.</para>
 
+    <section id="sect.trusted-certs">
+      <title>Creating gratis trusted certificates</title>
+      <para>Many programs create and use snakeoil certificates by default
+      (see sidebar <xref linkend="sidebar.snakeoil-certs"/>).
+      Fortunately the <emphasis role="pkg">certbot</emphasis> package brings
+      everything we need to create our own trusted certificates, provided by
+      the "Lets Encrypt" initiative (see sidebar <xref
+      linkend="sidebar.letsencrypt"/>), which can also be used for mail
+      transport agents (Postfix) and mail delivery agents (Dovecot, Cyrus,
+      etc.). The following command demonstrates the creation of a wildcard
+      certificate:</para>
+
+      <indexterm><primary><emphasis role="pkg">certbot</emphasis></primary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><emphasis role="pkg">certbot</emphasis></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>trusted certificates</secondary></indexterm>
+
+      <screen>
+<computeroutput># </computeroutput><userinput>certbot certonly --manual -d *.<replaceable>DOMAIN</replaceable>,<replaceable>DOMAIN</replaceable> --no-bootstrap --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory</userinput></screen>
+
+      <para>The <command>certbot</command> command interactively guides through
+      the process and asks at least once to deploy a DNS TXT record under the
+      name <literal>_acme-challenge</literal>. It might take some time for the
+      DNS system to distribute this entry after it has been created (check with
+      the command <command>host -t TXT
+      _acme-challenge.<replaceable>DOMAIN</replaceable></command>). If
+      everything works out, the resulting certificate can be found in
+      <filename>/etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/</filename>.</para>
+
+
     <sidebar id="sidebar.letsencrypt">
-      <title><emphasis>GOING FURTHER</emphasis> The Let's Encrypt Initiative</title>
+      <title><emphasis>CULTURE</emphasis> The Let's Encrypt Initiative</title>
 
       <para>The <ulink url="https://letsencrypt.org/">Let's Encrypt</ulink>
       initiative is a joint effort to create a free, automated, and open
       certificate authority (CA), run for the public's benefit. It is supported
-      by the EFF and the Linux Foundation. The initiative provide an automated
-      tool for acquiring and renewing certificates. This reduces the amount of
-      manual effort involved, especially if multiple sites and domains must be
-      managed. The certificates can also be used for SIP, XMPP, WebSockets and
-      TURN servers. Usage of the service requires control over the DNS
-      information of the domain in question (domain validation).  <ulink
-      type="block" url="https://letsencrypt.org/how-it-works/"/> </para>
+      by the <acronym>EFF</acronym> and the Linux Foundation. The initiative
+      provides an automated tool for acquiring and renewing certificates. This
+      reduces the amount of manual effort involved, especially if multiple
+      sites and domains must be managed. The certificates can also be used
+      for SIP, XMPP, WebSockets and TURN servers. Usage of the service
+      requires control over the DNS information of the domain in question
+      (domain validation).  <ulink
+      type="block" url="https://letsencrypt.org/how-it-works/"/></para>
 
       <indexterm><primary>Let's Encrypt</primary></indexterm>
     </sidebar>
-  </section>
-  <section id="sect.virtual-private-network">
-    <title>Virtual Private Network</title>
-
-    <para>A <emphasis>Virtual Private Network</emphasis> (VPN for short) is
-    a way to link two different local networks through the Internet by way
-    of a tunnel; the tunnel is usually encrypted for confidentiality. VPNs
-    are often used to integrate a remote machine within a company's local
-    network.</para>
-    <indexterm><primary>network</primary><secondary>virtual private</secondary></indexterm>
-    <indexterm><primary>VPN</primary></indexterm>
-    <indexterm><primary>virtual private network</primary></indexterm>
-
-    <para>Several tools provide this. OpenVPN is an efficient solution,
-    easy to deploy and maintain, based on SSL/TLS. Another possibility is
-    using IPsec to encrypt IP traffic between two machines; this encryption
-    is transparent, which means that applications running on these hosts
-    need not be modified to take the VPN into account. SSH can also be used
-    to provide a VPN, in addition to its more conventional features.
-    Finally, a VPN can be established using Microsoft's PPTP protocol.
-    Other solutions exist, but are beyond the focus of this book.</para>
-    <section id="sect.openvpn">
-      <title>OpenVPN</title>
-      <indexterm><primary>OpenVPN</primary></indexterm>
-
-      <para>OpenVPN is a piece of software dedicated to creating virtual
-      private networks. Its setup involves creating virtual network
-      interfaces on the VPN server and on the client(s); both
-      <literal>tun</literal> (for IP-level tunnels) and
-      <literal>tap</literal> (for Ethernet-level tunnels) interfaces are
-      supported. In practice, <literal>tun</literal> interfaces will most
-      often be used except when the VPN clients are meant to be integrated
-      into the server's local network by way of an Ethernet bridge.</para>
-
-      <para>OpenVPN relies on OpenSSL for all the SSL/TLS cryptography and
-      associated features (confidentiality, authentication, integrity,
-      non-repudiation). It can be configured either with a shared private
-      key or using X.509 certificates based on a public key infrastructure.
-      The latter configuration is strongly preferred since it allows
-      greater flexibility when faced with a growing number of roaming users
-      accessing the VPN.</para>
-
+    </section>
       <section id="sect.easy-rsa">
         <title>Public Key Infrastructure: <emphasis>easy-rsa</emphasis></title>
         <indexterm><primary>PKI (Public Key Infrastructure)</primary></indexterm>
@@ -305,7 +294,8 @@ net.ipv4.tcp_syncookies = 1
         <indexterm><primary>RSA (algorithm)</primary></indexterm>
         <indexterm><primary>key pair</primary></indexterm>
 
-	<para>The RSA algorithm is widely used in public-key cryptography.
+	<para>It is also possible to create our own CA, for that we will
+	use the RSA algorithm, widely used in public-key cryptography.
 	It involves a “key pair”, comprised of a private and a public
 	key. The two keys are closely linked to each other, and their
 	mathematical properties are such that a message encrypted with the
@@ -558,9 +548,57 @@ req: /home/roland/pki-falcot/pki/reqs/JoeSmith.req
 key: /home/roland/pki-falcot/pki/private/JoeSmith.key
 </computeroutput></screen>
 
-	<para>Now all certificates have been created, they need to be
-	copied where appropriate: the root certificate's public key
-	(<filename>pki/ca.crt</filename>) will be stored on all machines
+      </section>
+  </section>
+  <section id="sect.virtual-private-network">
+    <title>Virtual Private Network</title>
+
+    <para>A <emphasis>Virtual Private Network</emphasis> (VPN for short) is
+    a way to link two different local networks through the Internet by way
+    of a tunnel; the tunnel is usually encrypted for confidentiality. VPNs
+    are often used to integrate a remote machine within a company's local
+    network.</para>
+    <indexterm><primary>network</primary><secondary>virtual private</secondary></indexterm>
+    <indexterm><primary>VPN</primary></indexterm>
+    <indexterm><primary>virtual private network</primary></indexterm>
+
+    <para>Several tools provide this. OpenVPN is an efficient solution,
+    easy to deploy and maintain, based on SSL/TLS. Another possibility is
+    using IPsec to encrypt IP traffic between two machines; this encryption
+    is transparent, which means that applications running on these hosts
+    need not be modified to take the VPN into account. SSH can also be used
+    to provide a VPN, in addition to its more conventional features.
+    Finally, a VPN can be established using Microsoft's PPTP protocol.
+    Other solutions exist, but are beyond the focus of this book.</para>
+    <section id="sect.openvpn">
+      <title>OpenVPN</title>
+      <indexterm><primary>OpenVPN</primary></indexterm>
+
+      <para>OpenVPN is a piece of software dedicated to creating virtual
+      private networks. Its setup involves creating virtual network
+      interfaces on the VPN server and on the client(s); both
+      <literal>tun</literal> (for IP-level tunnels) and
+      <literal>tap</literal> (for Ethernet-level tunnels) interfaces are
+      supported. In practice, <literal>tun</literal> interfaces will most
+      often be used except when the VPN clients are meant to be integrated
+      into the server's local network by way of an Ethernet bridge.</para>
+
+      <para>OpenVPN relies on OpenSSL for all the SSL/TLS cryptography and
+      associated features (confidentiality, authentication, integrity,
+      non-repudiation). It can be configured either with a shared private
+      key or using X.509 certificates based on a public key infrastructure.
+      The latter configuration is strongly preferred since it allows
+      greater flexibility when faced with a growing number of roaming users
+      accessing the VPN.</para>
+
+      <section>
+        <title>Configuring the OpenVPN Server</title>
+
+	<para>After all certificates have been created
+	(follow the instructions from <xref linkend="sect.easy-rsa"/>),
+	they need to be copied where appropriate: the root certificate's
+	public key (<filename>pki/ca.crt</filename>) will be stored on
+	all machines (both server and clients) as
 	(both server and clients) as
 	<filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
 	certificate is installed only on the server

@@ -1868,32 +1868,10 @@ relay_host = [mail.falcot.com]
       <ulink type="block"
       url="https://httpd.apache.org/docs/2.4/mod/mod_ssl.html"/></para>
 
-      <para>The certificates created and used by default are snakeoil
-      certificates too (see sidebar <xref linkend="sidebar.snakeoil-certs"/>).
-      Fortunately the <emphasis role="pkg">certbot</emphasis> package brings
-      everything we need to create our own trusted certificates, provided by
-      the "Lets Encrypt" initiative (see sidebar <xref
-      linkend="sidebar.letsencrypt"/>), which can also be used for mail
-      transport agents (Postfix) and mail delivery agents (Dovecot, Cyrus,
-      etc.). The following command demonstrates the creation of a wildcard
-      certificate:</para>
+      <para>If you want to generate trusted certificates, you can follow section
+      <xref linkend="sect.trusted-certs"/> and then adjust the following
+      variables:</para>
 
-      <indexterm><primary><emphasis role="pkg">certbot</emphasis></primary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><emphasis role="pkg">certbot</emphasis></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary>trusted certificates</secondary></indexterm>
-
-      <screen>
-<computeroutput># </computeroutput><userinput>certbot certonly --manual -d *.<replaceable>DOMAIN</replaceable>,<replaceable>DOMAIN</replaceable> --no-bootstrap --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory</userinput></screen>
-
-      <para>The <command>certbot</command> command interactively guides through
-      the process and asks at least once to deploy a DNS TXT record under the
-      name <literal>_acme-challenge</literal>. It might take some time for the
-      DNS system to distribute this entry after it has been created (check with
-      the command <command>host -t TXT
-      _acme-challenge.<replaceable>DOMAIN</replaceable></command>). If
-      everything works out, the resulting certificate can be found in
-      <filename>/etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/</filename>
-      and used for Apache's SSL configuration:</para>
 
       <programlisting>
 SSLCertificateFile      /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/fullchain.pem
