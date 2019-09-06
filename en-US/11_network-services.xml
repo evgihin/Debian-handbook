@@ -368,7 +368,8 @@ contact@falcotsbrand.com    laure@falcot.com, sophie@falcot.com
 
         <para>After changing <filename>/etc/postfix/virtual</filename> the
         postfix table <filename>/etc/postfix/virtual.db</filename> needs to be
-        updated using <command>postmap /etc/postfix/virtual</command>.</para>
+        updated using <command>sudo postmap
+        /etc/postfix/virtual</command>.</para>
 
       </section>
 
@@ -558,12 +559,13 @@ smtpd_client_restrictions =
           <title><emphasis>TIP</emphasis> <emphasis>access</emphasis> tables</title>
 
           <para>The restriction criteria include administrator-modifiable
-          tables listing combinations of senders, IP addresses, and allowed
-          or forbidden hostnames. These tables can be created from an
+          tables listing combinations of senders, IP addresses, and allowed or
+          forbidden hostnames. These tables can be created using an
           uncompressed copy of the
-          <filename>/usr/share/doc/postfix/examples/access.gz</filename>
-          file. This model is self-documented in its comments, which means
-          each table describes its own syntax.</para>
+          <filename>/usr/share/doc/postfix/examples/access.gz</filename> file
+          shipped with the <emphasis role="pkg">postfix-doc</emphasis> package.
+          This model is self-documented in its comments, which means each table
+          describes its own syntax.</para>
 
           <para>The <filename>/etc/postfix/access_clientip</filename> table
           lists IP addresses and networks;
@@ -571,7 +573,7 @@ smtpd_client_restrictions =
           <filename>/etc/postfix/access_sender</filename> contains sender
           email addresses. All these files need to be turned into
           hash-tables (a format optimized for fast access) after each
-          change, with the <command>postmap
+          change, with the <command>sudo postmap
           /etc/postfix/<replaceable>file</replaceable></command>
           command.</para>
         </sidebar>
@@ -892,11 +894,13 @@ body_checks = regexp:/etc/postfix/body_checks
 
           <para>The file
           <filename>/usr/share/doc/postfix/examples/header_checks.gz</filename>
-          and
+          (from the <emphasis role="pkg">postfix-doc</emphasis> package) and
           <citerefentry><refentrytitle>header_checks</refentrytitle><manvolnum>5</manvolnum></citerefentry>
           contain many explanatory comments and can be used as a starting point
           for creating the <filename>/etc/postfix/header_checks</filename> and
           <filename>/etc/postfix/body_checks</filename> files.</para>
+
+          <indexterm><primary>Postfix</primary><secondary><literal>header_checks</literal></secondary></indexterm>
         </sidebar>
 
         <example>
@@ -1373,9 +1377,9 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
         <ulink type="block" url="http://dkim.org/"/>
         </para>
 
-        <para>
-        The necessary tools are shipped with the <emphasis
-        role="pkg">opendkim</emphasis> package.</para>
+        <para>The necessary tools are shipped with the <emphasis
+        role="pkg">opendkim</emphasis> and <emphasis
+        role="pkg">opendkim-tools</emphasis> packages.</para>
 
         <sidebar id="sidebar.dkim-mailing-list">
           <title><emphasis>CAUTION</emphasis> Mailing List Software and DKIM</title>
@@ -2133,6 +2137,14 @@ DirectoryIndex index.php index.html index.htm
           each request.</para>
           <indexterm><primary><literal>Includes</literal>, Apache directive</primary></indexterm>
           <indexterm><primary>Apache</primary><secondary><literal>Includes</literal></secondary></indexterm>
+        </listitem>
+        <listitem>
+          <para><literal>IncludesNOEXEC</literal> allows <emphasis>Server Side
+          Includes</emphasis> (<emphasis>SSI</emphasis>) but disables the
+          <literal>exec</literal> command and limits the
+          <literal>include</literal> directive to text/markup files.</para>
+          <indexterm><primary><literal>IncludesNOEXEC</literal>, Apache directive</primary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>IncludesNOEXEC</literal></secondary></indexterm>
         </listitem>
         <listitem>
           <para><literal>Indexes</literal> tells the server to list the
@@ -3198,9 +3210,16 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
         <para>The <emphasis role="pkg">e2guardian</emphasis> package, a
         DansGuardian fork, is an alternative to <emphasis
         role="pkg">squidguard</emphasis>. This software does not simply handle
-        a blacklist of forbidden URLs, but it can take advantage of the PICS
-        system (<emphasis>Platform for Internet Content Selection</emphasis>)
-        to decide whether a page is acceptable by dynamic analysis of its
+        a blacklist of forbidden URLs, but it can take advantage of the
+        <acronym>PICS</acronym><footnote><para><acronym>PICS</acronym> has been
+        superseded by the <emphasis>Protocol for Web Description
+        Resources</emphasis> (<acronym>POWDER</acronym> system: <ulink
+        url="https://www.w3.org/2009/08/pics_superseded.html"/>.
+        <indexterm><primary>POWDER</primary><see>Protocol for Web Description
+        Resources</see></indexterm> <indexterm><primary>Protocol for Web
+        Description Resources</primary></indexterm> </para></footnote>
+        (<emphasis>Platform for Internet Content Selection</emphasis>) to
+        decide whether a page is acceptable by dynamic analysis of its
         contents.</para>
 
         <indexterm><primary>PICS</primary><see>Platform for Internet Content Selection</see></indexterm>
