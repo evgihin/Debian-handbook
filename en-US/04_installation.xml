@@ -32,7 +32,8 @@
     linkend="short-remedial-course"/> before reading this chapter.</para>
   </sidebar>
 
-  <para>The installer for <emphasis role="distribution">Stretch</emphasis>
+  <!-- MAY CHANGE: stable code name -->
+  <para>The installer for <emphasis role="distribution">Buster</emphasis>
   is based on <command>debian-installer</command>. Its modular design
   enables it to work in various scenarios and allows it to evolve and adapt
   to changes. Despite the limitations implied by the need to support a
@@ -107,7 +108,7 @@
       programs are divided among the disks
       according to their popularity and importance; the first
       disk will be sufficient for most installations, since it
-      contains the most used softwares.</para>
+      contains the most used software.</para>
 
       <para>There is a last type of image, known as <filename>mini.iso</filename>,
       which is only available as a by-product of the installer. The image
@@ -175,7 +176,7 @@
       preparing a USB key that is more complex, but that allows to
       customize the installer's default options (those set in the kernel
       command line). <ulink type="block"
-      url="https://www.debian.org/releases/stable/amd64/ch04s03.en.html"/></para>
+      url="https://www.debian.org/releases/stable/amd64/ch04s03"/></para>
     </section>
     <section id="sect.install-net">
       <title>Installing through Network Booting</title>
@@ -205,8 +206,8 @@
       <para>All the details of this method are available in the
       installation guide (“Preparing files for TFTP Net Booting”
       section).
-      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch05s01.en.html#boot-tftp-x86"/>
-      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch04s05.en.html"/>
+      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch05s01#boot-tftp-x86"/>
+      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch04s05"/>
       </para>
     </section>
     <section id="sect.install-auto">
@@ -794,7 +795,11 @@
 	  <para>The Debian installer allows this operation when using the
 	  manual mode for partitioning. You only need to choose the Windows
 	  partition and enter its new size (this works the same with both
-	  FAT and NTFS partitions).</para>
+	  unencrypted FAT and NTFS partitions).</para>
+
+	  <para>If Windows is using BitLocker-encrypted partitions, the steps
+	  to resize them requires to use the BitLocker Management together
+	  with the Windows Disk Management tool.</para>
         </sidebar>
 
 	<para>The first screen displays the available disks, their
@@ -1178,11 +1183,13 @@
 	<para>In particular, if you install (or reinstall) Windows
 	thereafter, the bootloader will be erased. Debian will still be on
 	the hard drive, but will no longer be accessible from the boot
-	menu. You would then have to boot the Debian installation system in
+	menu (except for Windows 10, where it will still be accessible
+	through	the Windows recovery console). You would then have to
+	boot the Debian installation system in
 	<userinput>rescue</userinput> mode to set up a less exclusive
 	bootloader. This operation is described in detail in the
         installation manual.
-        <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch08s06.en.html"/>
+        <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch08s06"/>
         </para>
       </sidebar>
 
@@ -1206,7 +1213,7 @@
       install LILO (another bootloader); the installer will suggest it
       automatically.</para>
 
-      <para>It is worth nothing that GRUB is not a single bootloader,
+      <para>It is worth noting that GRUB is not a single bootloader,
       it is more like a collection of bootloaders suited for different
       cases. The numerous binary packages built out of the GRUB source
       package reflect that: <emphasis role="pkg">grub-efi-amd64</emphasis>
@@ -1233,8 +1240,8 @@
         Microsoft is a lengthy process, Debian decided to not
         sign GRUB directly. Instead it uses an intermediary bootloader called
         shim, which almost never needs to change, and whose only role is to
-        check Debian's provided signature on GRUB and execute GRUB. To enable
-        Secure Boot, you need to install the
+        check Debian's provided signature on GRUB and execute GRUB. To run Debian
+        on a machine having Secure Boot enabled, you need to install the
         <emphasis role="pkg">shim-signed</emphasis> package.</para>
 
         <para>Down the stack, GRUB will do a similar check with the kernel, and then
