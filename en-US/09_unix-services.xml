@@ -2741,51 +2741,45 @@ exclude:
 
       <screen><computeroutput># </computeroutput><userinput>udevadm info -a -n /dev/sdc</userinput>
 <computeroutput>[...]
-  looking at device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2/1-2.2:1.0/host9/target9:0:0/9:0:0:0/block/sdc':
+  looking at device '/devices/pci0000:00/0000:00:10.0/usb2/2-1/2-1:1.0/host4/target4:0:0/4:0:0:0/block/sdc':
     KERNEL=="sdc"
     SUBSYSTEM=="block"
     DRIVER==""
+    ATTR{hidden}=="0"
+    ATTR{events}=="media_change"
+    ATTR{ro}=="0"
+    ATTR{discard_alignment}=="0"
+    ATTR{removable}=="1"
+    ATTR{events_async}==""
+    ATTR{alignment_offset}=="0"
+    ATTR{capability}=="51"
+    ATTR{events_poll_msecs}=="-1"
+    ATTR{stat}=="     130        0     6328      435        0        0        0        0        0      252      252        0        0        0        0"
+    ATTR{size}=="15100224"
     ATTR{range}=="16"
     ATTR{ext_range}=="256"
-    ATTR{removable}=="1"
-    ATTR{ro}=="0"
-    ATTR{size}=="126976"
-    ATTR{alignment_offset}=="0"
-    ATTR{capability}=="53"
-    ATTR{stat}=="      51      100     1208      256        0        0        0        0        0      192      25        6"
     ATTR{inflight}=="       0        0"
 [...]
-  looking at parent device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2/1-2.2:1.0/host9/target9:0:0/9:0:0:0':
-    KERNELS=="9:0:0:0"
-    SUBSYSTEMS=="scsi"
-    DRIVERS=="sd"
-    ATTRS{device_blocked}=="0"
-    ATTRS{type}=="0"
-    ATTRS{scsi_level}=="3"
-    ATTRS{vendor}=="I0MEGA  "
-    ATTRS{model}=="UMni64MB*IOM2C4 "
-    ATTRS{rev}=="    "
-    ATTRS{state}=="running"
+
+  looking at parent device '/devices/pci0000:00/0000:00:10.0/usb2/2-1/2-1:1.0/host4/target4:0:0/4:0:0:0':
 [...]
     ATTRS{max_sectors}=="240"
 [...]
-  looking at parent device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2':
-    KERNELS=="9:0:0:0"
+  looking at parent device '/devices/pci0000:00/0000:00:10.0/usb2/2-1':
+    KERNELS=="2-1"
     SUBSYSTEMS=="usb"
     DRIVERS=="usb"
-    ATTRS{configuration}=="iCfg"
+    ATTRS{bDeviceProtocol}=="00"
     ATTRS{bNumInterfaces}==" 1"
-    ATTRS{bConfigurationValue}=="1"
-    ATTRS{bmAttributes}=="80"
-    ATTRS{bMaxPower}=="100mA"
-    ATTRS{urbnum}=="398"
-    ATTRS{idVendor}=="4146"
-    ATTRS{idProduct}=="4146"
-    ATTRS{bcdDevice}=="0100"
+    ATTRS{busnum}=="2"
+    ATTRS{quirks}=="0x0"
+    ATTRS{authorized}=="1"
+    ATTRS{ltm_capable}=="no"
+    ATTRS{speed}=="480"
+    ATTRS{product}=="TF10"
+    ATTRS{manufacturer}=="TDK LoR"
 [...]
-    ATTRS{manufacturer}=="USB Disk"
-    ATTRS{product}=="USB Mass Storage Device"
-    ATTRS{serial}=="M004021000001"
+    ATTRS{serial}=="07032998B60AB777"
 [...]
 </computeroutput>
 </screen>
@@ -2794,8 +2788,8 @@ exclude:
       variables, as well as those of one of the parent devices. The above
       case allows us to create two rules like these:</para>
 
-      <programlisting>KERNEL=="sd?", SUBSYSTEM=="block", ATTRS{serial}=="M004021000001", SYMLINK+="usb_key/disk"
-KERNEL=="sd?[0-9]", SUBSYSTEM=="block", ATTRS{serial}=="M004021000001", SYMLINK+="usb_key/part%n"
+      <programlisting>KERNEL=="sd?", SUBSYSTEM=="block", ATTRS{serial}=="07032998B60AB777", SYMLINK+="usb_key/disk"
+KERNEL=="sd?[0-9]", SUBSYSTEM=="block", ATTRS{serial}=="07032998B60AB777", SYMLINK+="usb_key/part%n"
 </programlisting>
 
       <para>Once these rules are set in a file, named for example
