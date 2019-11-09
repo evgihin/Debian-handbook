@@ -1427,8 +1427,7 @@ nameserver 8.8.8.8
       audio mixer.</para>
 
       <para>It should be noted that the combination of <emphasis
-      role="pkg">udev</emphasis>, <emphasis
-      role="pkg">consolekit</emphasis> and <emphasis
+      role="pkg">udev</emphasis> and <emphasis
       role="pkg">policykit</emphasis> can add additional permissions to
       allow users physically connected to the console (and not through the
       network) to access to certain devices.</para>
@@ -1498,6 +1497,9 @@ nameserver 8.8.8.8
       any file (in this case, the possible choices are
       <literal>install</literal>, <literal>remove</literal>,
       <literal>upgrade</literal>, etc.).</para>
+
+      <para>The package <emphasis role="pkg">bash-completion</emphasis>
+      contains completions for most common programs.</para>
     </sidebar>
 
     <sidebar>
@@ -1688,11 +1690,12 @@ nameserver 8.8.8.8
 
 	<para>Nowadays, the management of special files is entirely
 	dynamic and matches better the nature of hot-swappable computer
-	devices. The kernel cooperates with <emphasis>udev</emphasis> to
-	create and delete them as needed when the corresponding devices
-	appear and disappear.  For this reason, <filename>/dev/</filename>
-	doesn't need to be persistent and is thus a RAM-based filesystem
-	that starts empty and contains only the relevant entries.</para>
+	devices. The kernel cooperates with <emphasis>udev</emphasis>
+	(<xref linkend="sect.udev"/>) to create and delete them as
+	needed when the corresponding devices appear and disappear.  For
+	this reason, <filename>/dev/</filename> doesn't need to be
+	persistent and is thus a RAM-based filesystem that starts
+	empty and contains only the relevant entries.</para>
 
 	<para>The kernel communicates lots of information about any
 	newly added device and hands out a pair of major/minor numbers
@@ -2242,7 +2245,9 @@ other=/dev/sda1
 	<filename>/etc/fstab</filename> file.</para>
 
 	<para>The <command>mount</command> command can be used without
-	arguments (it then lists all mounted filesystems). The following
+	arguments to list all mounted filesystems; you can execute
+	<command>findmnt --fstab</command> to show only the filesystems
+	from <filename>/etc/fstab</filename>. The following
 	parameters are required to mount or unmount a device. For the
 	complete list, please refer to the corresponding man pages,
 	<citerefentry><refentrytitle>mount</refentrytitle>
@@ -2863,16 +2868,22 @@ description:    Timing-Only Driver
       (<filename>config-<replaceable>version</replaceable></filename>) and
       its symbols table
       (<filename>System.map-<replaceable>version</replaceable></filename>)
-      in <filename>/boot/</filename>. The symbols table helps
-      developers understand the meaning of a kernel error message; without
-      it, kernel “oopses” (an “oops” is the kernel equivalent
-      of a segmentation fault for user-space programs, in other
-      words messages generated following an invalid pointer dereference)
-      only contain numeric memory addresses, which is useless information
-      without the table mapping these addresses to symbols and function
-      names. The modules are installed in the
+      in <filename>/boot/</filename>. The modules are installed in the
       <filename>/lib/modules/<replaceable>version</replaceable>/</filename>
       directory.</para>
+
+      <sidebar>
+        <title><emphasis>CULTURE</emphasis> The symbols table</title>
+
+        <para>The symbols table helps
+        developers understand the meaning of a kernel error message; without
+        it, kernel “oopses” (an “oops” is the kernel equivalent
+        of a segmentation fault for user-space programs, in other
+        words messages generated following an invalid pointer dereference)
+        only contain numeric memory addresses, which is useless information
+        without the table mapping these addresses to symbols and function
+        names.</para>
+      </sidebar>
 
       <para>The package's configuration scripts automatically generate an
       initrd image, which is a mini-system designed to be loaded in memory
