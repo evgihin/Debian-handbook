@@ -147,6 +147,9 @@
       <indexterm><primary>locale</primary></indexterm>
       <indexterm><primary><varname>LANG</varname></primary></indexterm>
 
+      <para>The <emphasis role="pkg">locales-all</emphasis> package contains
+      the precompiled locale data for all supported locales.</para>
+
       <sidebar id="sidebar.intro-pam">
         <title><emphasis>BEHIND THE SCENES</emphasis> <filename>/etc/environment</filename> and <filename>/etc/default/locale</filename></title>
 
@@ -517,6 +520,13 @@ iface enp0s31f6 inet dhcp
           interfaces in the output of <command>ip addr</command>
           (or as filenames in <filename>/sys/class/net/</filename>).
         </para>
+        <para>
+          In some corner cases it might be necessary to disable the consistent
+          naming of network devices as described above. Besides changing the
+          default <emphasis role="pkg">udev</emphasis> rule it is also possible
+          to boot the system using the <command>net.ifnames=0</command> and
+          <command>biosdevname=0</command> kernel parameters to achieve that.
+        </para>
       </sidebar>
 
       <para>A “static” configuration must indicate network settings in
@@ -850,7 +860,8 @@ adsl:2345:respawn:/usr/sbin/pppd call dsl-provider
       connections (DHCP, manual configuration, local network), but only if
       the configuration is set with the program itself. This is why it will
       systematically ignore all network interfaces in
-      <filename>/etc/network/interfaces</filename> for which it is not
+      <filename>/etc/network/interfaces</filename> and
+      <filename>/etc/network/interfaces.d/</filename> for which it is not
       suited. Since Network Manager doesn't give details when no network
       connections are shown, the easy way is to delete from
       <filename>/etc/network/interfaces</filename> any configuration for
@@ -989,7 +1000,9 @@ nameserver 8.8.8.8
 	possible to establish a small table mapping IP addresses and
 	machine hostnames in the <filename>/etc/hosts</filename> file,
 	usually reserved for local network stations. The syntax of this
-	file is very simple: each line indicates a specific IP address
+	file as described in <citerefentry><refentrytitle>hosts</refentrytitle>
+	<manvolnum>5</manvolnum></citerefentry> is very simple:
+	each line indicates a specific IP address
 	followed by the list of any associated names (the first being
 	“completely qualified”, meaning it includes the domain
 	name).</para>
@@ -1595,7 +1608,7 @@ nameserver 8.8.8.8
     The filtering system is provided by the <emphasis
         role="pkg">cups-filters</emphasis> (<ulink
         url="https://salsa.debian.org/printing-team/cups-filters" />)
-    package in conjuction with <emphasis
+    package in conjunction with <emphasis
         role="pkg">printer-driver-*</emphasis> packages. CUPS in
     combination with <emphasis role="pkg">cups-filters</emphasis> and
     <emphasis role="pkg">printer-driver-*</emphasis> is the basis for the
@@ -1630,7 +1643,7 @@ nameserver 8.8.8.8
     <para>The printing system is administered easily through a web interface
         accessible at the local address <literal>http://localhost:631/</literal>.
         There you can add and remove USB and network printers and administer
-        most aspects of their behaviour. Similar administration tasks can also
+        most aspects of their behavior. Similar administration tasks can also
         be carried out via the graphical interface provided by a desktop
         environment or the <command>system-config-printer</command> graphical
         interface (from the homonym Debian package).</para>
