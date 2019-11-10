@@ -204,7 +204,7 @@ net.ipv4.tcp_syncookies = 1
     <xref linkend="sect.firewall-packet-filtering"/>).</para>
   </section>
   <section id="sect.x509-cert">
-    <title>X.509 certicates</title>
+    <title>X.509 certificates</title>
     <indexterm><primary>certificates</primary></indexterm>
     <indexterm><primary>SSL</primary></indexterm>
     <indexterm><primary>TLS</primary></indexterm>
@@ -222,7 +222,7 @@ net.ipv4.tcp_syncookies = 1
     design flaws that have been discovered.</para>
 
     <para>The TLS protocol aims primarily to provide privacy and data integrity
-    between two or more comunicating computer applications. The most common
+    between two or more communicating computer applications. The most common
     case on the Internet is the communication between a client (e.g. a web browser)
     and a server.</para>
 
@@ -283,6 +283,12 @@ net.ipv4.tcp_syncookies = 1
 
       <indexterm><primary>Let's Encrypt</primary></indexterm>
     </sidebar>
+
+    <para>The certificates created are so called short-life certificates,
+    which are valid for 90 days and must therefor be renewed every once in
+    three months using the <command>certbot renew</command> command. Make
+    sure to restart all services using these certificates.</para>
+
     </section>
       <section id="sect.easy-rsa">
         <title>Public Key Infrastructure: <emphasis>easy-rsa</emphasis></title>
@@ -349,7 +355,7 @@ net.ipv4.tcp_syncookies = 1
          <indexterm><primary>TLS</primary></indexterm>
 
          <para>GnuTLS can also be used to generate a CA, and deal with
-         other technologies arount the TLS, DTLS and SSL protocols.</para>
+         other technologies around the TLS, DTLS and SSL protocols.</para>
 
          <para>The package <emphasis role="pkg">gnutls-bin</emphasis> contains
          the command-line utilities. It is also useful to install the
@@ -563,7 +569,7 @@ key: /home/roland/pki-falcot/pki/private/JoeSmith.key
     <indexterm><primary>VPN</primary></indexterm>
     <indexterm><primary>virtual private network</primary></indexterm>
 
-    <para>Several tools provide this. OpenVPN is an efficient solution,
+    <para>Several tools provide this functionality. OpenVPN is an efficient solution,
     easy to deploy and maintain, based on SSL/TLS. Another possibility is
     using IPsec to encrypt IP traffic between two machines; this encryption
     is transparent, which means that applications running on these hosts
@@ -737,9 +743,9 @@ key: /home/roland/pki-falcot/pki/private/JoeSmith.key
       leads to problems, especially due to the way TCP adapts to network
       conditions by altering timeout delays. The following site describes
       the problem in more detail: <ulink type="block"
-      url="http://sites.inka.de/sites/bigred/devel/tcp-tcp.html"/> VPNs
-      over SSH should therefore be restricted to one-off tunnels with no
-      performance constraints.</para>
+      url="http://sites.inka.de/sites/bigred/devel/tcp-tcp.html"/></para>
+      <para>VPNs over SSH should therefore be restricted to one-off tunnels
+      with no performance constraints.</para>
     </section>
     <section id="sect.ipsec">
       <title>IPsec</title>
@@ -750,7 +756,7 @@ key: /home/roland/pki-falcot/pki/private/JoeSmith.key
       <para>IPsec, despite being the standard in IP VPNs, is rather more
       involved in its implementation. The IPsec engine itself is integrated
       in the Linux kernel; the required user-space parts, the control and
-      configuration tools, can provided by the <emphasis
+      configuration tools, are provided by the <emphasis
       role="pkg">libreswan</emphasis> package or the
       <emphasis role="pkg">strongswan</emphasis> package. Here we describe
       briefly the <emphasis role="pkg">libreswan</emphasis> option.</para>
@@ -1223,7 +1229,7 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
       <command>ip</command> command, when <literal>route</literal> is used
       as the first argument, defines new routes and displays existing ones.
       The <command>route</command> command was used for that purpose, but
-      it is deprecated in favour of <command>ip</command>.</para>
+      it is deprecated in favor of <command>ip</command>.</para>
       <indexterm><primary><command>route</command></primary></indexterm>
       <indexterm><primary><command>ip route</command></primary></indexterm>
     </sidebar>
@@ -1247,7 +1253,7 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
     <indexterm><primary><command>ripngd</command></primary></indexterm>
     <indexterm><primary><command>isisd</command></primary></indexterm>
 
-    <para>Daemons are enabled by create the
+    <para>Daemons are enabled by creating the
     <filename>/etc/quagga/<replaceable>daemon</replaceable>.conf</filename>
     config file, daemon being the name of the daemon to use;
     this file must belong to the <literal>quagga</literal> user and group
@@ -1258,7 +1264,7 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
 
     <para>The configuration of each of these daemons requires knowledge of
     the routing protocol in question. These protocols cannot be described
-    in detail here, but the <emphasis role="pkg">quagga-doc</emphasis>
+    in detail here, but <emphasis role="pkg">quagga-doc</emphasis>
     provides ample explanation in the form of an <command>info</command>
     file. The same contents may be more easily browsed as HTML on the
     Quagga website: <ulink type="block"
@@ -1439,7 +1445,7 @@ iface eth0 inet6 auto
       <indexterm><primary>DNS</primary><secondary>zone</secondary></indexterm>
 
       <para>Each zone can contain records of various kinds
-      (<emphasis>Resource Records</emphasis>), these are some of most common:</para>
+      (<emphasis>Resource Records</emphasis>), these are some of the most common:</para>
       <itemizedlist>
         <listitem>
 	  <para><literal>A</literal>: IPv4 address. <indexterm><primary>A,
