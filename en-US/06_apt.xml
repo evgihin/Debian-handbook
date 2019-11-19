@@ -327,7 +327,8 @@ deb-src https://deb.debian.org/debian buster-backports main contrib non-free
         <title>Stable Updates</title>
         <indexterm><primary>stable updates</primary></indexterm>
         <indexterm><primary><literal>stable-updates</literal></primary></indexterm>
-        <!-- TODO: add buster-updates? -->
+        <indexterm><primary><literal>buster-updates</literal></primary></indexterm>
+        <indexterm><primary>updates</primary><secondary>buster</secondary></indexterm>
         <indexterm><primary>updates</primary><secondary>stable</secondary></indexterm>
 
         <para>Stable updates are not security sensitive but are deemed
@@ -547,7 +548,8 @@ deb-src http://security.debian.org/ stable/updates main contrib non-free
 
       <indexterm><primary><literal>deb.debian.org</literal></primary><see>mirrors</see></indexterm>
       <indexterm><primary>mirrors</primary></indexterm>
-      <!-- TODO: indexterm CDN? -->
+      <indexterm><primary>CDN</primary><see>Content Delivery Networks</see></indexterm>
+      <indexterm><primary>Content Delivery Networks</primary></indexterm>
 
       <para>The <filename>sources.list</filename> examples in this chapter
       refer to package repositories hosted on <ulink
@@ -635,8 +637,6 @@ deb-src http://security.debian.org/ stable/updates main contrib non-free
       created by volunteers who have been co-opted and reviewed and who can
       seal their packages so that their origin and integrity can be
       checked.</para>
-
-      <!-- TODO: sidebar about source-uploads, reproducible builds?, etc. -->
 
       <para>In general, be wary of a package whose origin you don't know and
       which isn't hosted on one of the official Debian servers: evaluate the
@@ -1439,7 +1439,6 @@ Pin-Priority: 500
 
     </section>
 
-    <!-- TODO: Really mix stable with testing/unstable? Maybe rephrase to 'rare case'-->
     <section id="sect.apt-mix-distros">
       <title>Working with Several Distributions</title>
 
@@ -1726,7 +1725,6 @@ More tags: role::program interface::commandline works-with::software:package sui
     pkgnames</command> displays the list of all the packages which appear
     at least once in the cache.</para>
 
-    <!-- TODO: move to section pinning? -->
     <sidebar id="sidebar.apt-cache-policy">
       <title><emphasis>TIP</emphasis> <command>apt-cache policy</command></title>
 
@@ -2570,7 +2568,8 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
         are no longer of any use, they can be deleted.</para>
       </section>
 
-      <!-- TODO: make this a sidebar? - where would it be appropriate? -->
+      <!-- TODO: cruft/cruft-ng is also mentioned in chapter 03, but I don't
+      see how to improve here -->
       <section>
         <title>Files not owned by any Package</title>
         <indexterm><primary><emphasis role="pkg">cruft</emphasis></primary></indexterm>
@@ -2677,8 +2676,7 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
           <literal>APT::Periodic::Unattended-Upgrade</literal>
         </term>
         <listitem>
-          <indexterm><primary><emphasis
-          role="pkg">unattended-upgrades</emphasis></primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
+          <indexterm><primary><emphasis role="pkg">unattended-upgrades</emphasis></primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
           <indexterm><primary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></primary></indexterm>
           <para>When this option is enabled, the daily script will
           execute <command>unattended-upgrade</command> (from the
@@ -2705,16 +2703,14 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
     <!-- TODO: notifications are provided by gnome-software without gnome-packagekit -->
     <indexterm><primary><emphasis role="pkg">gnome-packagekit</emphasis></primary></indexterm>
 
-    <para>These tools work very well for servers, but desktop users
-    generally prefer a more interactive system. The package <emphasis
-    role="pkg">gnome-packagekit</emphasis> provides an icon in the
-    notification area of desktop environments when updates are available;
-    clicking on this icon then runs <command>gpk-update-viewer</command>,
-    a simplified interface to perform updates. You can browse through
-    available updates, read the short description of the relevant packages
-    and the corresponding <filename>changelog</filename> entries, and
-    select whether to apply the update or not on a case-by-case
-    basis.</para>
+    <para>These tools work very well for servers, but desktop users generally
+    prefer a more interactive system. The package <emphasis
+    role="pkg">gnome-software</emphasis> provides an icon in the notification
+    area of desktop environments when updates are available; clicking on this
+    icon then runs an interface to perform updates. You can browse through
+    available updates, read the short description of the relevant packages and
+    the corresponding <filename>changelog</filename> entries, and select
+    whether to apply the update or not on a case-by-case basis.</para>
 
     <figure>
       <title>Upgrading with <command>gpk-update-viewer</command></title>
