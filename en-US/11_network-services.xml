@@ -2820,17 +2820,21 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         <indexterm><primary>Samba</primary><secondary>configuration</secondary></indexterm>
 
         <para>The package sets up a minimal configuration during the initial
-        installation but you should really run <command>dpkg-reconfigure
-        samba-common</command> to adapt it:</para>
+        installation by plainly copying
+        <filename>/usr/share/samba/smb.conf</filename>. So you should really
+        run <command>dpkg-reconfigure samba-common</command> to adapt
+        it:</para>
 
-        <para>The first piece of required information is the name of the
-        workgroup where the Samba server will belong (the answer is
-        <literal>FALCOTNET</literal> in our case).</para>
+        <para>On first installation the only piece of required information is
+        the name of the workgroup where the Samba server will belong (the
+        answer is <literal>FALCOTNET</literal> in our case).</para>
 
-        <para>The package also proposes identifying the WINS server from
-        the information provided by the DHCP daemon. The Falcot Corp
-        administrators rejected this option, since they intend to use the
-        Samba server itself as the WINS server.</para>
+        <para>In case of a package update (from the old stable Debian version)
+        or if the SMB server has already been configured to use a WINS server
+        (<literal>wins server</literal>) the package also proposes identifying
+        the WINS server from the information provided by the DHCP daemon. The
+        Falcot Corp administrators rejected this option, since they intend to
+        use the Samba server itself as the WINS server.</para>
 
         <indexterm><primary>WINS</primary></indexterm>
       </section>
@@ -2852,6 +2856,8 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
           <indexterm><primary>Samba</primary><secondary><filename>smb.conf</filename></secondary></indexterm>
 
           <programlisting>
+[...]
+
 [global]
 
 ## Browsing/Identification ###
@@ -2870,13 +2876,17 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 # Server role. Defines in which mode Samba will operate. Possible
 # values are "standalone server", "member server", "classic primary
 # domain controller", "classic backup domain controller", "active
-# directory domain controller".
+# directory domain controller". 
 #
-# Most people will want "standalone sever" or "member server".
+# Most people will want "standalone server" or "member server".
 # Running as "active directory domain controller" will require first
 # running "samba-tool domain provision" to wipe databases and create a
 # new domain.
    server role = standalone server
+
+   obey pam restrictions = yes
+
+[...]
 
 # "security = user" is always a good idea. This will require a Unix account
 # in this server for every user accessing the server.
@@ -2886,8 +2896,11 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 </programlisting>
           <calloutlist>
             <callout arearefs="smb.conf.wins">
-              <para>Indicates that Samba should act as a Netbios name
-              server (WINS) for the local network.</para>
+              <para>Indicates that Samba should act as a Netbios name server
+              (WINS) for the local network. This option has been removed from
+              the default configuration in <emphasis
+              role="distribution">Buster</emphasis> and must be added manually
+              if desired.</para>
             </callout>
             <callout arearefs="smb.conf.security">
               <para>This is the default value for this parameter; however,
