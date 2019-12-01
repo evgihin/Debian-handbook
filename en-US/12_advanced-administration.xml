@@ -41,15 +41,15 @@
 
     <para>RAID and LVM are both techniques to abstract the mounted
     volumes from their physical counterparts (actual hard-disk drives
-    or partitions thereof); the former secures the data against
-    hardware failure by introducing redundancy, the latter makes
-    volume management more flexible and independent of the actual size
-    of the underlying disks. In both cases, the system ends up with
-    new block devices, which can be used to create filesystems or swap
-    space, without necessarily having them mapped to one physical
-    disk.  RAID and LVM come from quite different backgrounds, but
-    their functionality can overlap somewhat, which is why they are
-    often mentioned together.</para>
+    or partitions thereof); the former ensures the security and
+    availability of the data in case of hardware failure by introducing
+    redundancy, the latter makes volume management more flexible and
+    independent of the actual size of the underlying disks. In both cases,
+    the system ends up with new block devices, which can be used to create
+    filesystems or swap space, without necessarily having them mapped
+    to one physical disk. RAID and LVM come from quite different
+    backgrounds, but their functionality can overlap somewhat, which is
+    why they are often mentioned together.</para>
 
     <sidebar>
       <title><emphasis>PERSPECTIVE</emphasis> Btrfs combines LVM and RAID</title>
@@ -82,12 +82,13 @@
       <indexterm><primary>RAID</primary></indexterm>
 
       <para>RAID means <emphasis>Redundant Array of Independent
-      Disks</emphasis>. The goal of this system is to prevent data loss in
-      case of hard disk failure. The general principle is quite simple:
-      data are stored on several physical disks instead of only one, with a
-      configurable level of redundancy. Depending on this amount of
-      redundancy, and even in the event of an unexpected disk failure, data
-      can be losslessly reconstructed from the remaining disks.</para>
+      Disks</emphasis>. The goal of this system is to prevent data loss and
+      ensure availability in case of hard disk failure. The general principle
+      is quite simple: data are stored on several physical disks instead of
+      only one, with a configurable level of redundancy. Depending on this
+      amount of redundancy, and even in the event of an unexpected disk
+      failure, data can be losslessly reconstructed from the remaining
+      disks.</para>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> <foreignphrase>Independent</foreignphrase> or <foreignphrase>inexpensive</foreignphrase>?</title>
@@ -902,7 +903,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
   Total PE              0
   Free PE               0
   Allocated PE          0
-  PV UUID               X66yQI-Q0Jk-3wOV-xmLa-wpqo-km9c-PmNOCW
+  PV UUID               z4Clgk-T5a4-C27o-1P0E-lIAF-OeUM-e7EMwq
 
 # </computeroutput><userinput>for i in sdc3 sdd sdf1 sdf2 ; do pvcreate /dev/$i ; done</userinput>
 <computeroutput>  Physical volume "/dev/sdc3" successfully created.
@@ -911,11 +912,12 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
   Physical volume "/dev/sdf2" successfully created.
 # </computeroutput><userinput>pvdisplay -C</userinput>
 <computeroutput>  PV         VG Fmt  Attr PSize PFree
-  /dev/sdb2     lvm2 ---  4.00g 4.00g
-  /dev/sdc3     lvm2 ---  3.00g 3.00g
-  /dev/sdd      lvm2 ---  4.00g 4.00g
-  /dev/sdf1     lvm2 ---  4.00g 4.00g
-  /dev/sdf2     lvm2 ---  5.00g 5.00g
+  PV         VG Fmt  Attr PSize  PFree 
+  /dev/sdb2     lvm2 ---   4.00g  4.00g
+  /dev/sdc3     lvm2 ---   3.00g  3.00g
+  /dev/sdd      lvm2 ---   4.00g  4.00g
+  /dev/sdf1     lvm2 ---   4.00g  4.00g
+  /dev/sdf2     lvm2 ---  &lt;5.00g &lt;5.00g
 </computeroutput>
 </screen>
 
@@ -931,8 +933,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
 	elements.</para>
 
         <screen id="screen.vgcreate"><computeroutput># </computeroutput><userinput>vgdisplay</userinput>
-<computeroutput>  No volume groups found
-# </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>
+<computeroutput># </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>
 <computeroutput>  Volume group "vg_critical" successfully created
 # </computeroutput><userinput>vgdisplay</userinput>
 <computeroutput>  --- Volume group ---
@@ -954,14 +955,14 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
   Total PE              2046
   Alloc PE / Size       0 / 0   
   Free  PE / Size       2046 / 7.99 GiB
-  VG UUID               CcVj0Q-GbJA-2k9u-W6lC-7fZc-jHgk-qzKdX8
+  VG UUID               wAbBjx-d82B-q7St-0KFf-z40h-w5Mh-uAXkNZ
 
 # </computeroutput><userinput>vgcreate vg_normal /dev/sdc3 /dev/sdd /dev/sdf2</userinput>
 <computeroutput>  Volume group "vg_normal" successfully created
 # </computeroutput><userinput>vgdisplay -C</userinput>
 <computeroutput>  VG          #PV #LV #SN Attr   VSize   VFree  
   vg_critical   2   0   0 wz--n-   7.99g   7.99g
-  vg_normal     3   0   0 wz--n- &lt;10.99g &lt;10.99g
+  vg_normal     3   0   0 wz--n- &lt;11.99g &lt;11.99g
 </computeroutput>
 </screen>
 
@@ -973,7 +974,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
 	more than a convention.</para>
 
 	<para>We now have two “virtual disks”, sized about 8 GB and
-	12 GB, respectively. Let's now carve them up into “virtual
+	12 GB respectively. Let's now carve them up into “virtual
 	partitions” (LVs). This involves the <command>lvcreate</command>
 	command, and a slightly more complex syntax:</para>
 
@@ -985,9 +986,9 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
   LV Path                /dev/vg_critical/lv_files
   LV Name                lv_files
   VG Name                vg_critical
-  LV UUID                njyynD-gMQx-4VD1-4dYV-GaKd-4HSp-ypRFKV
+  LV UUID                W6XT08-iBBx-Nrw2-f8F2-r2y4-Ltds-UrKogV
   LV Write Access        read/write
-  LV Creation host, time mirwiz, 2019-06-25 12:49:09 -0400
+  LV Creation host, time debian, 2019-11-30 22:45:46 -0500
   LV Status              available
   # open                 0
   LV Size                5.00 GiB
@@ -996,17 +997,18 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
   Allocation             inherit
   Read ahead sectors     auto
   - currently set to     256
-  Block device           253:0
+  Block device           254:0
 
 # </computeroutput><userinput>lvcreate -n lv_base -L 1G vg_critical</userinput>
 <computeroutput>  Logical volume "lv_base" created.
-# </computeroutput><userinput>lvcreate -n lv_backups -L 11.99G vg_normal</userinput>
-<computeroutput>  Logical volume "lv_backups" created.
+# </computeroutput><userinput>lvcreate -n lv_backups -L 11.98G vg_normal</userinput>
+<computeroutput>  Rounding up size to full physical extent 11.98 GiB
+  Logical volume "lv_backups" created.
 # </computeroutput><userinput>lvdisplay -C</userinput>
 <computeroutput>  LV         VG          Attr     LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert
   lv_base    vg_critical -wi-a---  1.00g                                           
   lv_files   vg_critical -wi-a---  5.00g                                           
-  lv_backups vg_normal   -wi-a--- 11.99g</computeroutput>
+  lv_backups vg_normal   -wi-a--- 11.98g</computeroutput>
 </screen>
 
 	<para>Two parameters are required when creating logical volumes;
@@ -1102,8 +1104,8 @@ lrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_backups -&gt; ../dm-2</computeroutput>
         <screen><computeroutput># </computeroutput><userinput>mkfs.ext4 /dev/vg_normal/lv_backups</userinput>
 <computeroutput>mke2fs 1.44.5 (15-Dec-2018)
 Discarding device blocks: done                            
-Creating filesystem with 3145728 4k blocks and 786432 inodes
-Filesystem UUID: bae1f819-1f74-4518-80f0-53e30b8ae88d
+Creating filesystem with 3140608 4k blocks and 786432 inodes
+Filesystem UUID: b9e6ed2f-cb37-43e9-87d8-e77568446225
 Superblock backups stored on blocks: 
 	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208
 
@@ -1147,7 +1149,7 @@ Writing superblocks and filesystem accounting information: done
 
         <screen><computeroutput># </computeroutput><userinput>df -h /srv/files/</userinput>
 <computeroutput>Filesystem                        Size  Used Avail Use% Mounted on
-/dev/mapper/vg_critical-lv_files  4.9G   20M  4.6G   1% /srv/files
+/dev/mapper/vg_critical-lv_files  4.9G  4.2G  485M  90% /srv/files
 # </computeroutput><userinput>lvdisplay -C vg_critical/lv_files</userinput>
 <computeroutput>  LV       VG          Attr     LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert
   lv_files vg_critical -wi-ao-- 5.00g
@@ -1168,7 +1170,7 @@ The filesystem on /dev/vg_critical/lv_files is now 1572864 (4k) blocks long.
 
 # </computeroutput><userinput>df -h /srv/files/</userinput>
 <computeroutput>Filesystem                        Size  Used Avail Use% Mounted on
-/dev/mapper/vg_critical-lv_files  5.9G   20M  5.6G   1% /srv/files</computeroutput>
+/dev/mapper/vg_critical-lv_files  5.9G  4.2G  1.5G  75% /srv/files</computeroutput>
 </screen>
 
         <sidebar>
@@ -1198,10 +1200,10 @@ The filesystem on /dev/vg_critical/lv_files is now 1572864 (4k) blocks long.
 
         <screen><computeroutput># </computeroutput><userinput>df -h /srv/base/</userinput>
 <computeroutput>Filesystem                       Size  Used Avail Use% Mounted on
-/dev/mapper/vg_critical-lv_base  976M  2.6M  907M   1% /srv/base
+/dev/mapper/vg_critical-lv_base  976M  882M   28M  97% /srv/base
 # </computeroutput><userinput>vgdisplay -C vg_critical</userinput>
 <computeroutput>  VG          #PV #LV #SN Attr   VSize VFree   
-  vg_critical   2   2   0 wz--n- 7.99g 92.00m</computeroutput>
+  vg_critical   2   2   0 wz--n- 7.99g 1016.00m</computeroutput>
 </screen>
 
 	<para>No matter, since LVM allows adding physical volumes to
@@ -1221,13 +1223,13 @@ The filesystem on /dev/vg_critical/lv_files is now 1572864 (4k) blocks long.
 # </computeroutput><userinput>vgextend vg_critical /dev/sdb1</userinput>
 <computeroutput>  Volume group "vg_critical" successfully extended
 # </computeroutput><userinput>vgdisplay -C vg_critical</userinput>
-<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree
-  vg_critical   3   2   0 wz--n- 9.09g 1.09g
+<computeroutput>  VG          #PV #LV #SN Attr   VSize  VFree 
+  vg_critical   3   2   0 wz--n- &lt;9.99g &lt;1.99g
 # </computeroutput><userinput>[...]</userinput>
 <computeroutput>[...]
 # </computeroutput><userinput>df -h /srv/base/</userinput>
 <computeroutput>Filesystem                       Size  Used Avail Use% Mounted on
-/dev/mapper/vg_critical-lv_base  2.0G  854M  1.1G  45% /srv/base</computeroutput>
+/dev/mapper/vg_critical-lv_base  2.0G  882M  994M  48% /srv/base</computeroutput>
 </screen>
 
         <sidebar>
@@ -1518,6 +1520,27 @@ Device    Boot     Start       End   Sectors Size Id Type
         </para>
       </listitem>
     </itemizedlist>
+    <sidebar>
+      <title><emphasis>HARDWARE</emphasis> Virtualization support</title>
+      <para>Some computers might not have hardware virtualization
+      support; when they do, it should be enabled in the BIOS.</para>
+
+      <para>To know if you have virtualization support enabled, you can
+      check if the relevant flag is enabled with <command>grep</command>.
+      If the following command for your processor returns some text, you
+      already have virtualization support enabled:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>For Intel processors you can execute
+          <command>grep vmx /proc/cpuinfo</command></para>
+        </listitem>
+        <listitem>
+          <para>For AMD processors you can execute
+          <command>grep svm /proc/cpuinfo</command></para>
+        </listitem>
+      </itemizedlist>
+    </sidebar>
     <section id="sect.xen">
       <title>Xen</title>
 
@@ -2410,11 +2433,11 @@ root@mirwiz:~# </computeroutput></screen>
                --name testkvm            <co id="virtinst.name"/>
                --memory 1024                <co id="virtinst.ram"/>
                --disk /srv/kvm/testkvm.qcow,format=qcow2,size=10 <co id="virtinst.disk"/>
-               --cdrom /srv/isos/debian-9.9.0-amd64-netinst.iso  <co id="virtinst.cdrom"/>
+               --cdrom /srv/isos/debian-10.2.0-amd64-netinst.iso  <co id="virtinst.cdrom"/>
                --network bridge=virbr0      <co id="virtinst.network"/>
                --graphics vnc                     <co id="virtinst.vnc"/>
                --os-type linux           <co id="virtinst.os"/>
-               --os-variant debian9
+               --os-variant debian10
 </userinput><computeroutput>
 Starting install...
 Allocating 'testkvm.qcow'             |  10 GB     00:00
@@ -3215,7 +3238,8 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
 	configuration of the host. However, this autoconfiguration depends
 	on a feature that each plugin must provide, and it is usually a
         good idea to review and tweak the results by hand. Browsing
-        the <ulink url="http://gallery.munin-monitoring.org">Plugin Gallery</ulink>
+        the Plugin Gallery<footnote><para><ulink type="block"
+        url="http://gallery.munin-monitoring.org"/></para></footnote>
         can be interesting even though not all plugins have comprehensive
         documentation. However, all plugins are scripts and most are rather simple and
 	well-commented. Browsing <filename>/etc/munin/plugins/</filename>
