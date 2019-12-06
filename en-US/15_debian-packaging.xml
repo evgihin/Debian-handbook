@@ -90,30 +90,58 @@
     <section>
       <title>Making Changes</title>
 
+<para>Let us use the <emphasis role="pkg">samba</emphasis> package as an
+example.</para>
+
+<screen><computeroutput>$ </computeroutput><userinput>apt source samba
+</userinput><computeroutput>Reading package lists... Done
+NOTICE: 'samba' packaging is maintained in the 'Git' version control system at:
+https://salsa.debian.org/samba-team/samba.git
+Please use:
+git clone https://salsa.debian.org/samba-team/samba.git
+to retrieve the latest (possibly unreleased) updates to the package.
+Need to get 11.7 MB of source archives.
+Get:1 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (dsc) [4,316 B]
+Get:2 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (tar) [11.4 MB]
+Get:3 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (diff) [252 kB]
+Fetched 11.7 MB in 1s (9,505 kB/s)
+dpkg-source: info: extracting samba in samba-4.9.5+dfsg
+dpkg-source: info: unpacking samba_4.9.5+dfsg.orig.tar.xz
+dpkg-source: info: unpacking samba_4.9.5+dfsg-5+deb10u1.debian.tar.xz
+dpkg-source: info: using patch list from debian/patches/series
+dpkg-source: info: applying 07_private_lib
+dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
+[...]
+</computeroutput></screen>
+
       <para>The source of the package is now available in a directory named
-      after the source package and its version (for instance,
-      <emphasis>samba-4.1.17+dfsg</emphasis>); this is where we'll work on our
-      local changes.</para>
+      after the source package and its version
+      (<emphasis>samba-4.9.5+dfsg</emphasis>); this is where we'll work
+      on our local changes.</para>
 
       <para>The first thing to do is to change the package version number,
       so that the rebuilt packages can be distinguished from the original
       packages provided by Debian. Assuming the current version is
-      <literal>2:4.1.17+dfsg-2</literal>, we can create version
-      <literal>2:4.1.17+dfsg-2falcot1</literal>, which clearly indicates the
+      <literal>2:4.9.5+dfsg-5</literal>, we can create version
+      <literal>2:4.9.5+dfsg-5falcot1</literal>, which clearly indicates the
       origin of the package. This makes the package version number higher
       than the one provided by Debian, so that the package will easily
       install as an update to the original package. Such a change is best
       effected with the <command>dch</command> command (<emphasis>Debian
       CHangelog</emphasis>) from the <emphasis
-      role="pkg">devscripts</emphasis> package, with an command such as
-      <command>dch --local falcot</command>. This invokes a
-      text editor (<command>sensible-editor</command> — this should be
-      your favorite editor if it is mentioned in the
-      <varname>VISUAL</varname> or <varname>EDITOR</varname> environment
-      variables, and the default editor otherwise) to allow documenting the
-      differences brought by this rebuild. This editor shows us that
-      <command>dch</command> really did change the
-      <filename>debian/changelog</filename> file.</para>
+      role="pkg">devscripts</emphasis> package.
+
+<screen><computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg
+</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput></screen>
+
+      The last command invokes a text editor
+      (<command>sensible-editor</command> — this should be your favorite
+      editor if it is mentioned in the <varname>VISUAL</varname> or
+      <varname>EDITOR</varname> environment variables, and the default
+      editor otherwise) to allow documenting the differences brought by
+      this rebuild. This editor shows us that <command>dch</command>
+      really did change the <filename>debian/changelog</filename>
+      file.</para>
 
       <para>When a change in build options is required, the changes
       need to be made in <filename>debian/rules</filename>, which
@@ -239,8 +267,9 @@
       maintainers' task easier.</para>
 
       <sidebar>
-        <title><emphasis>QUICK LOOK</emphasis> <command>pbuilder</command></title>
+        <title><emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted</emphasis> environment</title>
         <indexterm><primary><command>pbuilder</command></primary></indexterm>
+        <indexterm><primary><command>schroot</command></primary></indexterm>
 
 	<para>The <command>pbuilder</command> program (in the similarly
 	named package) allows building a Debian package in a
@@ -262,6 +291,9 @@
 	a <command>pbuilder</command> running on the same machine can be
 	using <emphasis role="distribution">Unstable</emphasis> for package
 	builds.</para>
+
+        <para><command>schroot</command> allows running a command or a login
+        shell in a <emphasis>chrooted</emphasis> environment.</para>
       </sidebar>
     </section>
   </section>
@@ -309,10 +341,10 @@
         <programlisting>
 Section: perl
 Priority: optional
-Standards-Version: 3.9.6
+Standards-Version: 4.4.1
 
 Package: libxml-libxml-perl
-Version: 2.0116-1
+Version: 2.0134-1
 Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;
 Depends: libxml2 (&gt;= 2.7.4)
 Architecture: all
@@ -451,7 +483,7 @@ Section: misc
 Priority: optional
 Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;
 Build-Depends: debhelper (&gt;= 10)
-Standards-Version: 4.1.2
+Standards-Version: 4.4.1
 
 Package: falcot-data
 Architecture: all
@@ -486,11 +518,11 @@ falcot-data (1.0) internal; urgency=low
         <title>The <filename>copyright</filename> file</title>
 
         <programlisting>
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: falcot-data
 
 Files: *
-Copyright: 2004-2015 Falcot Corp
+Copyright: 2004-2019 Falcot Corp
 License:
  All rights reserved.
 </programlisting>
@@ -641,7 +673,7 @@ deb http://packages.falcot.com/ internal/
     <filename>Packages.gz</filename>.</para>
 
     <sidebar>
-      <title><emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command></title>
+      <title><emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command></title>
       <indexterm><primary><command>apt-ftparchive</command></primary></indexterm>
 
       <para>If <command>mini-dinstall</command> seems too complex for your
@@ -666,6 +698,14 @@ deb http://packages.falcot.com/ internal/
       <para>The <command>apt-ftparchive sources</command> command allows
       creating <filename>Sources.gz</filename> files in a similar
       fashion.</para>
+
+      <para><command>reprepro</command> is a more advanced tool for the same
+      purpose. It can produce, manage and syncronize a local repository of
+      packages. It stores packages and checksums in a Berkeley DB database
+      file, so no database server is needed. With <command>reprepro</command>
+      you can check signatures of mirrored repositories and create signatures
+      of the generated package indices.</para>
+
     </sidebar>
 
     <para>Configuring <command>mini-dinstall</command> requires setting up
@@ -776,7 +816,11 @@ release_label = Internal Packages
 	non-trivial alternative. Every Debian maintainer has made mistakes
 	by not knowing about a rule, but this is not a huge problem as long
 	as the error gets fixed when a user reports it as a bug report (which
-        tends to happen fairly soon thanks to advanced users).
+        tends to happen fairly soon thanks to advanced users). The
+        <literal>Standards-Version</literal> field in
+        <filename>debian/control</filename> specifies the version of the
+        Debian policy with which a package complies. Maintainers should
+        comply to the latest version of the Debian policy.
         <ulink type="block" url="https://www.debian.org/doc/debian-policy/"/></para>
       </section>
       <section>
@@ -917,6 +961,24 @@ release_label = Internal Packages
 	  the sources for a piece of software. As can be guessed from the
 	  name of the program, the generated files use debhelper by
 	  default.</para>
+        </section>
+        <section>
+          <title><emphasis role="pkg">autopkgtest</emphasis></title>
+          <indexterm><primary><emphasis>autopkgtest</emphasis></primary></indexterm>
+
+	  <para><command>autopkgtest</command> runs tests on binary packages,
+          using the tests supplied in the source package.</para>
+        </section>
+        <section>
+          <title><emphasis role="pkg">reprotest</emphasis></title>
+          <indexterm><primary><emphasis>reprotest</emphasis></primary></indexterm>
+
+	  <para><command>reprotest</command> builds the same source code
+          twice in different environments, and then checks the binaries
+          produced by each build for differences. If any are found, then
+          <command>diffoscope</command> (if unavailable,
+          <command>diff</command>) is used to display them in detail for later
+          analysis.</para>
         </section>
         <section>
           <title><command>dupload</command> and <command>dput</command></title>
