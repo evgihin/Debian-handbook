@@ -795,6 +795,88 @@ iface eth0 inet static
       </section>
     </section>
     <section>
+      <title>Avoiding Intrusion</title>
+
+      <para>Attackers try to get access to servers by guessing
+      passwords, which is why strong passwords must always be used.
+      Even then, you should also establish measures against
+      brute-force attacks. A brute-force attack is an attempt to
+      log in to an unauthorised software system by performing multiple
+      login attempts in a short period of time.</para>
+
+      <para>The best way to stop a brute-force atack is to limit the
+      number of login attempts coming from the same origin, usually
+      by temporarily banning an IP address.</para>
+
+      <para>Fail2Ban is an intrusion prevention software suite that can
+      be configured to monitor any service that writes login attemps to
+      a log file. It can be found in the package
+      <emphasis role="pkg">fail2ban</emphasis>.</para>
+
+      <para>Fail2Ban is configured through a simple protocol by
+      <command>fail2ban-client</command>, which also reads
+      configuration files and issues corresponding configuration
+      commands to the server, <command>fail2ban-server</command>. It has
+      four configuration file types, all stored in
+      <filename>/etc/fail2ban</filename>:</para>
+      <itemizedlist>
+        <listitem>
+	  <para><filename>fail2ban.conf</filename>. Global configuration (such as logging).</para>
+        </listitem>
+        <listitem>
+	  <para><filename>filter.d/*.conf</filename>. Filters specifying how to detect
+          authentication failures. The Debian package already contains filters for
+          many common programs.</para>
+        </listitem>
+        <listitem>
+	  <para><filename>action.d/*.conf</filename>. Actions defining the commands for
+          banning and unbanning of IP addresses.</para>
+        </listitem>
+        <listitem>
+	  <para><filename>jail.conf</filename>. It is where <emphasis>jails</emphasis>, the
+          combinations of filters and actions, are defined.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Let us have a look at the configuration of <command>sshd</command> in
+      <filename>/etc/fail2ban/jail.conf</filename> to better understand how
+      Fail2Ban works...</para>
+
+<programlisting>[...]
+[DEFAULT]
+[...]
+bantime  = 10m
+[...]
+maxretry = 5
+[...]
+[sshd]
+port    = ssh
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+</programlisting>
+
+      <para>Fail2Ban will check for failed login attepts for
+      <command>sshd</command> using Python regular expressions
+      defined in
+      <filename>/etc/fail2ban/filters.d/sshd.conf</filename>
+      against the log file of <command>sshd</command>, which is
+      defined in the variable <literal>sshd_log</literal> in the
+      file <filename>/etc/fail2ban/paths_common.conf</filename>.
+      If Fail2Ban detects five failed login attempts in a row,
+      it will ban the IP address where those attempts originated.</para>
+
+      <para>Fail2Ban is a very simple and effective way to protect
+      against the most common brute-force attacks, but it
+      cannot protect against distributed brute-force attacks, which
+      is when an attacker uses a large number of machines spread
+      around the Internet.</para>
+
+      <para>A good way to provide extra protection against distributed
+      brute force attacks is to artificially increase the login time
+      after each failed attempt.</para>
+    </section>
+
+    <section>
       <title>Detecting Changes</title>
 
       <para>Once the system is installed and configured, and barring
@@ -1005,6 +1087,11 @@ iface eth0 inet static
 	  of the machine. The tests are not 100% reliable, but they can
 	  usually draw the administrator's attention to potential
 	  problems.</para>
+
+          <para><emphasis role="pkg">rkhunter</emphasis> also performs
+          checks to see if commands have been modified, if the system
+          startup files have been modified, and various checks on the network
+          interfaces, including checks for listening applications.</para>
         </sidebar>
       </section>
     </section>
@@ -1092,11 +1179,7 @@ iface eth0 inet static
         <emphasis role="pkg">snort-rules-default</emphasis> package.
         <command>snort</command> is the historical reference in the IDS
         ecosystem and <command>suricata</command> is able to reuse rules
-        written for it.  Unfortunately that package is missing from
-        Debian <emphasis role="distribution">Jessie</emphasis> and should
-        be retrieved from another Debian release like <emphasis
-          role="distribution">Testing</emphasis> or <emphasis
-          role="distribution">Unstable</emphasis>.
+        written for it.
       </para>
       <para>
         Alternatively, <command>oinkmaster</command> (in the package of the same name)
@@ -1263,7 +1346,7 @@ iface eth0 inet static
         profile for <command>/sbin/dhclient</command>. For this
         we will use <command>aa-genprof dhclient</command>. In Debian
         <emphasis role="distribution">Buster</emphasis> there is a known
-        bug (<ulink url="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=928160"/>)
+        bug<footnote><para><ulink url="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=928160"/></para></footnote>
         that makes the previous command fail with the following error:
 	<computeroutput>ERROR: Include file /etc/apparmor.d/local/usr.lib.dovecot.deliver not found</computeroutput>.
         To fix it create the missing files with
@@ -2789,8 +2872,14 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
         software. In particular, the <emphasis role="pkg">sleuthkit</emphasis>
         package provides many tools to analyze a filesystem. Their use is
         made easier by the <emphasis>Autopsy Forensic Browser</emphasis>
-        graphical interface (in the <emphasis
-          role="pkg">autopsy</emphasis> package).
+        graphical interface (in the <emphasis role="pkg">autopsy</emphasis>
+        package). Some Linux distributions have a "live install" image and
+        contain many programs for forensic analysis, such as Kali Linux (see
+        <xref linkend="sect.kali"/>), with its <emphasis>forensic
+        mode</emphasis>, BlackArchLinux<footnote><para>
+        <ulink url="https://blackarch.org"/></para></footnote> and the
+        commercial Grml-Forensic, based on Grml (see
+        <xref linkend="sect.grml"/>).
       </para>
       <indexterm><primary>Autopsy Forensic Browser</primary></indexterm>
       <indexterm><primary>The Sleuth Kit</primary></indexterm>
