@@ -218,7 +218,7 @@ net.ipv4.tcp_syncookies = 1
     was invented by Netscape to secure connections to web servers. It
     was later standardized by IETF under the acronym TLS
     (<emphasis>Transport Layer Security</emphasis>). Since then TLS
-    continued to evolve and nowadays SSL is deprecated due to multiple
+    continued to evolve, and nowadays SSL is deprecated due to multiple
     design flaws that have been discovered.</para>
 
     <para>The TLS protocol aims primarily to provide privacy and data integrity
@@ -226,11 +226,18 @@ net.ipv4.tcp_syncookies = 1
     case on the Internet is the communication between a client (e.g. a web browser)
     and a server.</para>
 
-    <para>A <emphasis>certification authority</emphasis> (CA) is needed to create
-    a TLS certificate as defined by the X.509 standard. They issue certificates
-    that contain a public key, which matches a private key, and the identity of
-    the owner. The private key must be kept secret, otherwise the security is
-    compromised.</para>
+    <para>A key par is needed for the exchange of information, which involves
+    a public key that includes information about the identity of the owner
+    and matches a private key. The private key must be kept secret, otherwise
+    the security is compromised. However, anyone can create a key pair, store
+    any identity on it, and pretend to be the identity of their choice. One
+    solution involves the concept of a <emphasis>Certification Authority</emphasis>
+    (CA), formalized by the X.509 standard. This term covers an entity that holds
+    a trusted key pair known as a <emphasis>root certificate</emphasis>. This
+    certificate is only used to sign other certificates (key pairs), after
+    proper steps have been undertaken to check the identity stored on the key
+    pair. Applications using X.509 can then check the certificates presented
+    to them, if they know about the trusted root certificates.</para>
 
     <para>You can implement a CA (as described in <xref linkend="sect.easy-rsa"/>),
     but if you intend to use the certificate for a website, you need to rely on a
@@ -314,21 +321,10 @@ net.ipv4.tcp_syncookies = 1
 	SHA1, or a more recent variant), this leads to a signature
 	mechanism that can be applied to any message.</para>
 
-	<para>However, anyone can create a key pair, store any identity on
-	it, and pretend to be the identity of their choice. One solution
-	involves the concept of a <emphasis>Certification
-	Authority</emphasis> (CA), formalized by the X.509 standard. This
-	term covers an entity that holds a trusted key pair known as a
-	<emphasis>root certificate</emphasis>. This certificate is only
-	used to sign other certificates (key pairs), after proper steps
-	have been undertaken to check the identity stored on the key pair.
-	Applications using X.509 can then check the certificates presented
-	to them, if they know about the trusted root certificates.</para>
-
 	<para>Since public CAs only emit
 	certificates in exchange for a (hefty) fee, it is also
 	possible to create a private certification authority within
-	the company.  The <emphasis role="pkg">easy-rsa</emphasis>
+	the company. The <emphasis role="pkg">easy-rsa</emphasis>
 	package provides tools to serve as an X.509 certification
 	infrastructure, implemented as a set of scripts using the
 	<command>openssl</command> command.</para>
@@ -654,10 +650,11 @@ key: /home/roland/pki-falcot/pki/private/JoeSmith.key
 	<literal>vpn</literal> with type <literal>tun</literal>; this
 	command can easily be integrated in the firewall configuration
 	script, or in an <literal>up</literal> directive of the
-	<filename>/etc/network/interfaces</filename> file. The OpenVPN
-	configuration file must also be updated accordingly, with the
-	<literal>dev vpn</literal> and <literal>dev-type tun</literal>
-	directives.</para>
+	<filename>/etc/network/interfaces</filename> file, or a
+	<emphasis role="package">udev</emphasis> rule can be added to that
+	end. The OpenVPN configuration file must also be updated
+        accordingly, with the <literal>dev vpn</literal> and
+        <literal>dev-type tun</literal> directives.</para>
 
 	<para>Barring further action, VPN clients can only access the VPN
 	server itself by way of the <literal>10.8.0.1</literal> address.
@@ -1086,6 +1083,18 @@ FALCOT\\vpn     pptp    f@Lc3au     *
       <indexterm><primary>quality</primary><secondary>of service</secondary></indexterm>
       <indexterm><primary>service</primary><secondary>quality</secondary></indexterm>
 
+      <sidebar>
+        <title><emphasis>CULTURE</emphasis> Net neutrality and QoS</title>
+
+	<para>Network neutrality is achieved when Internet service providers treat all Internet
+        communications equally, that is, without any access limitation based on content, user,
+        website, destination address, etc.</para>
+        <para>Quality of service can be implemented in a net neutral Internet, but only
+        if Internet service providers can't charge a special fee for a higher-quality
+        service.</para>
+        <indexterm><primary>net neutrality</primary></indexterm>
+      </sidebar>
+
       <para>It is also possible to alter the priorities on traffic, which
       allows prioritizing packets related to interactive services (such as
       <command>ssh</command> and <command>telnet</command>) or to services
@@ -1278,9 +1287,12 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
     <sidebar>
       <title><emphasis>IN PRACTICE</emphasis> OSPF, BGP or RIP?</title>
 
-      <para>OSPF is generally the best protocol to use for dynamic routing
-      on private networks, but BGP is more common for Internet-wide
-      routing. RIP is rather ancient, and hardly used anymore.</para>
+      <para>OSPF (<acronym>Open Shortest Path First</acronym>) is
+      generally the best protocol to use for dynamic routing
+      on private networks, but BGP (<acronym>Border Gateway
+      Protocol</acronym>) is more common for Internet-wide
+      routing. RIP (<acronym>Routing Information Protocol</acronym>)
+      is rather ancient, and hardly used anymore.</para>
     </sidebar>
   </section>
   <section id="sect.ipv6">
@@ -1424,79 +1436,80 @@ iface eth0 inet6 auto
   </section>
   <section id="sect.domain-name-servers">
     <title>Domain Name Servers (DNS)</title>
-    <section id="sect.dns-principe">
-      <title>Principle and Mechanism</title>
-      <indexterm><primary>DNS</primary></indexterm>
-      <indexterm><primary>server</primary><secondary>name</secondary></indexterm>
+    <indexterm><primary>DNS</primary></indexterm>
+    <indexterm><primary>server</primary><secondary>name</secondary></indexterm>
 
-      <para>The <emphasis>Domain Name Service</emphasis> (DNS) is a
-      fundamental component of the Internet: it maps host names to IP
-      addresses (and vice-versa), which allows the use of
-      <literal>www.debian.org</literal> instead of
-      <literal>149.20.4.15</literal> or <literal>2001:4f8:1:c::15</literal>.</para>
+    <para>The <emphasis>Domain Name Service</emphasis> (DNS) is a
+    fundamental component of the Internet: it maps host names to IP
+    addresses (and vice-versa), which allows the use of
+    <literal>www.debian.org</literal> instead of
+    <literal>149.20.4.15</literal> or <literal>2001:4f8:1:c::15</literal>.</para>
 
-      <para>DNS records are organized in zones; each zone matches either a
-      domain (or a subdomain) or an IP address range (since IP addresses
-      are generally allocated in consecutive ranges). A primary server is
-      authoritative on the contents of a zone; secondary servers, usually
-      hosted on separate machines, provide regularly refreshed copies of
-      the primary zone.</para>
-      <indexterm><primary>zone</primary><secondary>DNS</secondary></indexterm>
-      <indexterm><primary>DNS</primary><secondary>zone</secondary></indexterm>
+    <para>DNS records are organized in zones; each zone matches either a
+    domain (or a subdomain) or an IP address range (since IP addresses
+    are generally allocated in consecutive ranges). A primary server is
+    authoritative on the contents of a zone; secondary servers, usually
+    hosted on separate machines, provide regularly refreshed copies of
+    the primary zone.</para>
+    <indexterm><primary>zone</primary><secondary>DNS</secondary></indexterm>
+    <indexterm><primary>DNS</primary><secondary>zone</secondary></indexterm>
 
-      <para>Each zone can contain records of various kinds
-      (<emphasis>Resource Records</emphasis>), these are some of the most common:</para>
-      <itemizedlist>
-        <listitem>
-	  <para><literal>A</literal>: IPv4 address. <indexterm><primary>A,
-	  DNS record</primary></indexterm></para>
-        </listitem>
-        <listitem>
-	  <para><literal>CNAME</literal>: alias (<emphasis>canonical
-	  name</emphasis>). <indexterm><primary>CNAME, DNS
-	  record</primary></indexterm></para>
-        </listitem>
-        <listitem>
-	  <para><literal>MX</literal>: <emphasis>mail exchange</emphasis>,
-	  an email server. This information is used by other email servers
-	  to find where to send email addressed to a given address. Each MX
-	  record has a priority. The highest-priority server (with the
-	  lowest number) is tried first (see sidebar <xref
-	  linkend="sidebar.smtp"/>); other servers are contacted in order
-	  of decreasing priority if the first one does not reply.
-	  <indexterm><primary>MX</primary><secondary>DNS
-	  record</secondary></indexterm></para>
-        </listitem>
-        <listitem>
-	  <para><literal>PTR</literal>: mapping of an IP address to a name.
-	  Such a record is stored in a “reverse DNS” zone named after
-	  the IP address range. For example,
-	  <literal>1.168.192.in-addr.arpa</literal> is the zone containing
-	  the reverse mapping for all addresses in the
-	  <literal>192.168.1.0/24</literal> range. <indexterm><primary>PTR,
-	  DNS record</primary></indexterm></para>
-        </listitem>
-        <listitem>
-	  <para><literal>AAAA</literal>: IPv6 address.
-	  <indexterm><primary>AAAA, DNS record</primary></indexterm></para>
-        </listitem>
-        <listitem>
-	  <para><literal>NS</literal>: maps a name to a name server. Each
-	  domain must have at least one NS record. These records point at a
-	  DNS server that can answer queries concerning this domain; they
-	  usually point at the primary and secondary servers for the
-	  domain. These records also allow DNS delegation; for instance,
-	  the <literal>falcot.com</literal> zone can include an NS record
-	  for <literal>internal.falcot.com</literal>, which means that the
-	  <literal>internal.falcot.com</literal> zone is handled by another
-	  server. Of course, this server must declare an
-	  <literal>internal.falcot.com</literal> zone.
-	  <indexterm><primary>NS, DNS record</primary></indexterm></para>
-        </listitem>
-      </itemizedlist>
+    <para>Each zone can contain records of various kinds
+    (<emphasis>Resource Records</emphasis>), these are some of the most common:</para>
+    <itemizedlist>
+      <listitem>
+        <para><literal>A</literal>: IPv4 address. <indexterm><primary>A,
+        DNS record</primary></indexterm></para>
+      </listitem>
+      <listitem>
+        <para><literal>CNAME</literal>: alias (<emphasis>canonical
+        name</emphasis>). <indexterm><primary>CNAME, DNS
+        record</primary></indexterm></para>
+      </listitem>
+      <listitem>
+        <para><literal>MX</literal>: <emphasis>mail exchange</emphasis>,
+        an email server. This information is used by other email servers
+        to find where to send email addressed to a given address. Each MX
+        record has a priority. The highest-priority server (with the
+        lowest number) is tried first (see sidebar <xref
+        linkend="sidebar.smtp"/>); other servers are contacted in order
+        of decreasing priority if the first one does not reply.
+        <indexterm><primary>MX</primary><secondary>DNS
+        record</secondary></indexterm></para>
+      </listitem>
+      <listitem>
+        <para><literal>PTR</literal>: mapping of an IP address to a name.
+        Such a record is stored in a “reverse DNS” zone named after
+        the IP address range. For example,
+        <literal>1.168.192.in-addr.arpa</literal> is the zone containing
+        the reverse mapping for all addresses in the
+        <literal>192.168.1.0/24</literal> range. <indexterm><primary>PTR,
+        DNS record</primary></indexterm></para>
+      </listitem>
+      <listitem>
+        <para><literal>AAAA</literal>: IPv6 address.
+        <indexterm><primary>AAAA, DNS record</primary></indexterm></para>
+      </listitem>
+      <listitem>
+        <para><literal>NS</literal>: maps a name to a name server. Each
+        domain must have at least one NS record. These records point at a
+        DNS server that can answer queries concerning this domain; they
+        usually point at the primary and secondary servers for the
+        domain. These records also allow DNS delegation; for instance,
+        the <literal>falcot.com</literal> zone can include an NS record
+        for <literal>internal.falcot.com</literal>, which means that the
+        <literal>internal.falcot.com</literal> zone is handled by another
+        server. Of course, this server must declare an
+        <literal>internal.falcot.com</literal> zone.
+        <indexterm><primary>NS, DNS record</primary></indexterm></para>
+      </listitem>
+    </itemizedlist>
+
+    <indexterm><primary>record</primary><secondary>DNS</secondary></indexterm>
+    <indexterm><primary>DNS record</primary></indexterm>
       
-      <indexterm><primary>record</primary><secondary>DNS</secondary></indexterm>
-      <indexterm><primary>DNS record</primary></indexterm>
+    <section id="sect.dns-software">
+      <title>DNS software</title>
 
       <para>The reference name server, Bind, was developed and is
       maintained by ISC (<emphasis>Internet Software
@@ -1526,7 +1539,7 @@ iface eth0 inet6 auto
       </sidebar>
     </section>
     <section id="sect.dns-config">
-      <title>Configuring</title>
+      <title>Configuring bind</title>
 
       <para>Configuration files for <command>bind</command>, irrespective
       of version, have the same structure.</para>
@@ -1768,7 +1781,8 @@ subnet 192.168.0.0 netmask 255.255.255.0 {
       server, and configuring the latter to submit updates for each
       registration.</para>
 
-      <para>In the <command>bind</command> case, the
+      <para>In the <command>bind</command> case (see
+      <xref linkend="sect.dns-software"/>), the
       <literal>allow-update</literal> directive needs to be added to each
       of the zones that the DHCP server is to edit (the one for the
       <literal>internal.falcot.com</literal> domain, and the reverse zone).
