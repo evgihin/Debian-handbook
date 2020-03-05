@@ -212,9 +212,12 @@ net.ipv4.tcp_syncookies = 1
     <indexterm><primary>CA</primary><see>Certificate Authority</see></indexterm>
     <indexterm><primary>Certificate Authority</primary></indexterm>
 
-    <para>Certificates are essential to provide communications security over
-    a computer network by means of cryptographic protocols.</para>
-    <para>The SSL protocol (<emphasis>Secure Socket Layer</emphasis>)
+    <para>Certificates are an important building block of many network services
+      built on cryptographic protocols, when they need some sort of
+      central authentication.
+    </para>
+
+    <para>Among those protocols, SSL (<emphasis>Secure Socket Layer</emphasis>)
     was invented by Netscape to secure connections to web servers. It
     was later standardized by IETF under the acronym TLS
     (<emphasis>Transport Layer Security</emphasis>). Since then TLS
@@ -259,6 +262,9 @@ net.ipv4.tcp_syncookies = 1
       <indexterm><primary><emphasis role="pkg">certbot</emphasis></primary></indexterm>
       <indexterm><primary>Apache</primary><secondary><emphasis role="pkg">certbot</emphasis></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary>trusted certificates</secondary></indexterm>
+
+      <!-- TODO: use a more common example based on the webroot (-w) and also
+      show the call to put into cron for renewal -->
 
       <screen>
 <computeroutput># </computeroutput><userinput>certbot certonly --manual -d *.<replaceable>DOMAIN</replaceable>,<replaceable>DOMAIN</replaceable> --no-bootstrap --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory</userinput></screen>
@@ -329,20 +335,6 @@ net.ipv4.tcp_syncookies = 1
 	infrastructure, implemented as a set of scripts using the
 	<command>openssl</command> command.</para>
 
-        <sidebar>
-          <title><emphasis>NOTE</emphasis> <emphasis>easy-rsa</emphasis> before <emphasis role="distribution">Jessie</emphasis></title>
-
-          <para>In versions of Debian up to <emphasis
-          role="distribution">Wheezy</emphasis>,
-          <emphasis>easy-rsa</emphasis> was distributed as part of the
-          <emphasis role="pkg">openvpn</emphasis> package, and its
-          scripts were to be found under
-          <filename>/usr/share/doc/openvpn/examples/easy-rsa/2.0/</filename>.
-          Setting up a CA involved copying that directory, instead of
-          using the <command>make-cadir</command> command as documented
-          here.</para>
-        </sidebar>
-
        <sidebar>
          <title><emphasis>ALTERNATIVE</emphasis> GnuTLS</title>
          <indexterm><primary>DTLS</primary></indexterm>
@@ -379,6 +371,9 @@ net.ipv4.tcp_syncookies = 1
 	<filename>vars</filename> file, which can be uncommented
 	and edited:</para>
 
+        <!-- TODO: the example below is not accurate, I see many lines
+        like "#setvar EASYRSA_FOO ..." and not anything like "export KEY_"
+        -->
         <screen>
 <computeroutput>$ </computeroutput><userinput>vim vars
 </userinput><computeroutput>$ </computeroutput><userinput>grep EASYRSA vars
@@ -417,6 +412,10 @@ Your newly created PKI dir is: /home/roland/pki-falcot/pki
 	<filename>pki/private/ca.key</filename> during this step). We can
 	add the option <literal>nopass</literal> to avoid entering a password each
 	time the private key is used:</para>
+
+        <!-- TODO: the following example contains a ./build-key call. That path
+        doesn't exist with the current version of easy-rsa. Maybe it should be
+        ./easyrsa build-client-full ? -->
 
         <screen>
 <computeroutput>$ </computeroutput><userinput>./easyrsa build-ca nopass</userinput>
@@ -602,7 +601,6 @@ key: /home/roland/pki-falcot/pki/private/JoeSmith.key
 	they need to be copied where appropriate: the root certificate's
 	public key (<filename>pki/ca.crt</filename>) will be stored on
 	all machines (both server and clients) as
-	(both server and clients) as
 	<filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
 	certificate is installed only on the server
 	(<filename>pki/issued/vpn.falcot.com.crt</filename> goes to
@@ -1386,13 +1384,10 @@ iface eth0 inet6 auto
     <indexterm><primary>firewall</primary><secondary>IPv6</secondary></indexterm>
     <indexterm><primary><command>ip6tables</command></primary></indexterm>
     <para>
-    IPv6 connections can be restricted, in the same fashion as for IPv4:
-    the standard Debian kernels include an adaptation of
-    <emphasis>netfilter</emphasis> for IPv6. This IPv6-enabled
-    <emphasis>netfilter</emphasis> is configured in a similar fashion to
-    its IPv4 counterpart, except the program to use is
-    <command>ip6tables</command> instead of
-    <command>iptables</command>.</para>
+      IPv6 connections can be restricted, in the same fashion as for IPv4.
+      <command>nft</command> can be used to create firewall rules for IPv4
+      and IPv6 (see <xref linkend="sect.nftables" />).
+    </para>
 
     <section id="sect.ipv6-tunneling">
       <title>Tunneling</title>
