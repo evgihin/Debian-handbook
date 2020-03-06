@@ -256,28 +256,98 @@ net.ipv4.tcp_syncookies = 1
       the "Lets Encrypt" initiative (see sidebar <xref
       linkend="sidebar.letsencrypt"/>), which can also be used for mail
       transport agents (Postfix) and mail delivery agents (Dovecot, Cyrus,
-      etc.). The following command demonstrates the creation of a wildcard
-      certificate:</para>
+      etc.).</para>
+
+      <para>The Falcot administrators just want to secure their main server,
+      which runs Apache. There is a convenient Apache plugin for
+      <emphasis role="pkg">certbot</emphasis> that automatically edits the
+      Apache configuration to serve the obtained certificate, so they make
+      use of it:</para>
 
       <indexterm><primary><emphasis role="pkg">certbot</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">python-certbot-apache</emphasis></primary></indexterm>
       <indexterm><primary>Apache</primary><secondary><emphasis role="pkg">certbot</emphasis></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary>trusted certificates</secondary></indexterm>
 
-      <!-- TODO: use a more common example based on the webroot (-w) and also
-      show the call to put into cron for renewal -->
+<screen>
+<computeroutput># </computeroutput><userinput>apt install python-certbot-apache
+</userinput><computeroutput>[...]
+# </computeroutput><userinput>certbot --apache
+</userinput><computeroutput>Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Plugins selected: Authenticator apache, Installer apache
+Enter email address (used for urgent renewal and security notices) (Enter 'c' to
+cancel): </computeroutput><userinput>admin@falcot.com
+</userinput><computeroutput>
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf. You must
+agree in order to register with the ACME server at
+https://acme-v02.api.letsencrypt.org/directory
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(A)gree/(C)ancel: </computeroutput><userinput>A
+</userinput><computeroutput>
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would you be willing to share your email address with the Electronic Frontier
+Foundation, a founding partner of the Let's Encrypt project and the non-profit
+organization that develops Certbot? We'd like to send you email about our work
+encrypting the web, EFF news, campaigns, and ways to support digital freedom.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: </computeroutput><userinput> N
+</userinput><computeroutput>
+No names were found in your configuration files. Please enter in your domain
+name(s) (comma and/or space separated)  (Enter 'c' to cancel): </computeroutput><userinput>falcot.com
+</userinput>
+<computeroutput>Obtaining a new certificate
+Performing the following challenges:
+http-01 challenge for falcot.com
+Enabled Apache rewrite module
+Waiting for verification...
+Cleaning up challenges
+Created an SSL vhost at /etc/apache2/sites-available/000-default-le-ssl.conf
+Enabled Apache socache_shmcb module
+Enabled Apache ssl module
+Deploying Certificate to VirtualHost /etc/apache2/sites-available/000-default-le-ssl.conf
+Enabling available site: /etc/apache2/sites-available/000-default-le-ssl.conf
 
-      <screen>
-<computeroutput># </computeroutput><userinput>certbot certonly --manual -d *.<replaceable>DOMAIN</replaceable>,<replaceable>DOMAIN</replaceable> --no-bootstrap --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory</userinput></screen>
+Please choose whether or not to redirect HTTP traffic to HTTPS, removing HTTP access.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1: No redirect - Make no further changes to the webserver configuration.
+2: Redirect - Make all requests redirect to secure HTTPS access. Choose this for
+new sites, or if you're confident your site works on HTTPS. You can undo this
+change by editing your web server's configuration.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Select the appropriate number [1-2] then [enter] (press 'c' to cancel):</computeroutput> <userinput>2
+</userinput><computeroutput>
+Enabled Apache rewrite module
+Redirecting vhost in /etc/apache2/sites-enabled/000-default.conf to ssl vhost in /etc/apache2/sites-available/000-default-le-ssl.conf
 
-      <para>The <command>certbot</command> command interactively guides through
-      the process and asks at least once to deploy a DNS TXT record under the
-      name <literal>_acme-challenge</literal>. It might take some time for the
-      DNS system to distribute this entry after it has been created (check with
-      the command <command>host -t TXT
-      _acme-challenge.<replaceable>DOMAIN</replaceable></command>). If
-      everything works out, the resulting certificate can be found in
-      <filename>/etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/</filename>.</para>
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Congratulations! You have successfully enabled https://falcot.com
 
+You should test your configuration at:
+https://www.ssllabs.com/ssltest/analyze.html?d=falcot.com
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/falcot.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/falcot.com/privkey.pem
+   Your cert will expire on 2020-06-04. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot again
+   with the "certonly" option. To non-interactively renew *all* of
+   your certificates, run "certbot renew"
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+</computeroutput>
+</screen>
 
     <sidebar id="sidebar.letsencrypt">
       <title><emphasis>CULTURE</emphasis> The Let's Encrypt Initiative</title>
@@ -297,10 +367,26 @@ net.ipv4.tcp_syncookies = 1
       <indexterm><primary>Let's Encrypt</primary></indexterm>
     </sidebar>
 
+    <para>If you would rather keep the server running during the
+    certificate creation, you can use the webroot plugin to get
+    the certificate with the arguments <command>certonly</command> and
+    <command>--webroot</command>. You would have to specify a
+    <command>--webroot-path</command> (abbreviated <command>-w</command>), which
+    should contain the files served. The command looks as follows:</para>
+
+<screen><computeroutput># </computeroutput><userinput>certbot certonly --webroot -w <replaceable>/var/www/html</replaceable> -d www.<replaceable>DOMAIN</replaceable>.com -d <replaceable>DOMAIN</replaceable>.com</userinput></screen>
+
+    <para>You need to restart all services using the certificates that
+    you have created.</para>
+
     <para>The certificates created are so called short-life certificates,
     which are valid for 90 days and must therefor be renewed every once in
-    three months using the <command>certbot renew</command> command. Make
-    sure to restart all services using these certificates.</para>
+    three months using the <command>certbot renew</command> command. However, we
+    shouldn't renew every certificate manually, but automatically. A basic
+    cron job is included by <emphasis role="pkg">certbot</emphasis> in
+    <filename>/etc/cron.d/certbot</filename>. To ensure that certificates can
+    be automatically renewed, you can execute
+    <command>certbot renew --dry-run</command>.</para>
 
     </section>
       <section id="sect.easy-rsa">
