@@ -463,20 +463,37 @@ IMPORTANT NOTES:
         <screen>
 <computeroutput>$ </computeroutput><userinput>vim vars
 </userinput><computeroutput>$ </computeroutput><userinput>grep EASYRSA vars
-</userinput><computeroutput>export KEY_CONFIG=`$EASY_RSA/whichopensslcnf $EASY_RSA`
-export KEY_DIR="$EASY_RSA/keys"
-echo NOTE: If you run ./clean-all, I will be doing a rm -rf on $KEY_DIR
-export KEY_SIZE=2048
-export KEY_EXPIRE=3650
-export KEY_COUNTRY="FR"
-export KEY_PROVINCE="Loire"
-export KEY_CITY="Saint-Étienne"
-export KEY_ORG="Falcot Corp"
-export KEY_EMAIL="admin@falcot.com"
-export KEY_OU="Certificate authority"
-export KEY_NAME="Certificate authority for Falcot Corp"
-# If you'd like to sign all keys with the same Common Name, uncomment the KEY_CN export below
-# export KEY_CN="CommonName"
+</userinput><computeroutput>if [ -z "$EASYRSA_CALLER" ]; then
+# easyrsa.  More specific variables for specific files (e.g., EASYRSA_SSL_CONF)
+#set_var EASYRSA	"${0%/*}"
+#set_var EASYRSA_OPENSSL	"openssl"
+#set_var EASYRSA_OPENSSL	"C:/Program Files/OpenSSL-Win32/bin/openssl.exe"
+#set_var EASYRSA_PKI		"$PWD/pki"
+#set_var EASYRSA_DN	"cn_only"
+#set_var EASYRSA_REQ_COUNTRY	"FR"
+#set_var EASYRSA_REQ_PROVINCE	"Loire"
+#set_var EASYRSA_REQ_CITY	"Saint-Étienne"
+#set_var EASYRSA_REQ_ORG	"Falcot Corp"
+#set_var EASYRSA_REQ_EMAIL	"admin@falcot.com"
+#set_var EASYRSA_REQ_OU		"Certificate authority"
+#set_var EASYRSA_KEY_SIZE	2048
+#set_var EASYRSA_ALGO		rsa
+#set_var EASYRSA_CURVE		secp384r1
+#set_var EASYRSA_CA_EXPIRE	3650
+#set_var EASYRSA_CERT_EXPIRE	1080
+#set_var EASYRSA_CERT_RENEW	30
+#set_var EASYRSA_CRL_DAYS	180
+#set_var EASYRSA_NS_SUPPORT	"no"
+#set_var EASYRSA_NS_COMMENT	"Easy-RSA Generated Certificate"
+#set_var EASYRSA_TEMP_FILE	"$EASYRSA_PKI/extensions.temp"
+# when undefined here, default behaviour is to look in $EASYRSA_PKI first, then
+# fallback to $EASYRSA for the 'x509-types' dir.  You may override this
+#set_var EASYRSA_EXT_DIR	"$EASYRSA/x509-types"
+# EASYRSA_PKI or EASYRSA dir (in that order.) NOTE that this file is Easy-RSA
+#set_var EASYRSA_SSL_CONF	"$EASYRSA/openssl-easyrsa.cnf"
+#set_var EASYRSA_REQ_CN		"ChangeMe"
+#set_var EASYRSA_DIGEST		"sha256"
+#set_var EASYRSA_BATCH		""
 $ </computeroutput>
 </screen>
 
@@ -612,28 +629,25 @@ DH parameters of size 2048 created at /home/roland/pki-falcot/pki/dh.pem
 	use the VPN:</para>
 
         <screen>
-<computeroutput>$ </computeroutput><userinput>./build-key JoeSmith
+<computeroutput>$ </computeroutput><userinput>./easyrsa build-client-full JoeSmith nopass
 </userinput><computeroutput>
 Note: using Easy-RSA configuration from: ./vars
 
-Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+Using SSL: openssl OpenSSL 1.1.1d  10 Sep 2019
 Generating a RSA private key
-....+++++
-..............................+++++
-writing new private key to '/home/roland/pki-falcot/pki/private/JoeSmith.key.mY21iP8ysv'
+.......................................................+++++
+...........................+++++
+writing new private key to '/root/pki-falcot/pki/private/JoeSmith.key.Tgr8kk0a6a'
 -----
-You are about to be asked to enter information that will be incorporated
-into your certificate request.
-What you are about to enter is what is called a Distinguished Name or a DN.
-There are quite a few fields but you can leave some blank
-For some fields there will be a default value,
-If you enter '.', the field will be left blank.
------
-Common Name (eg: your user, host, or server name) [JoeSmith]:
+Using configuration from /root/pki-falcot/pki/safessl-easyrsa.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName            :ASN.1 12:'JoeSmith'
+Certificate is to be certified until Feb 20 04:52:43 2023 GMT (1080 days)
 
-Keypair and certificate request completed. Your files are:
-req: /home/roland/pki-falcot/pki/reqs/JoeSmith.req
-key: /home/roland/pki-falcot/pki/private/JoeSmith.key
+Write out database with 1 new entries
+Data Base Updated
 </computeroutput></screen>
 
       </section>
@@ -690,7 +704,7 @@ key: /home/roland/pki-falcot/pki/private/JoeSmith.key
 	<filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
 	certificate is installed only on the server
 	(<filename>pki/issued/vpn.falcot.com.crt</filename> goes to
-	<filename>/etc/ssl/vpn.falcot.com.crt</filename>, and
+	<filename>/etc/ssl/certs/vpn.falcot.com.crt</filename>, and
 	<filename>pki/private/vpn.falcot.com.key</filename> goes to
 	<filename>/etc/ssl/private/vpn.falcot.com.key</filename> with
 	restricted permissions so that only the administrator can read it),
