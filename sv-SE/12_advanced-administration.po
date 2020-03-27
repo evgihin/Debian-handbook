@@ -1,38 +1,38 @@
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2019-10-17 14:51+0000\nLast-Translator: Mattias Münster <mattiasmun@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/sv/>\nLanguage: sv-SE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 3.9\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2020-03-30 09:09+0000\nLast-Translator: Luna Jernberg <droidbittin@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/sv/>\nLanguage: sv-SE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.0-dev\n"
 
 msgid "RAID"
-msgstr ""
+msgstr "RAID"
 
 msgid "LVM"
-msgstr ""
+msgstr "LVM"
 
 msgid "FAI"
-msgstr ""
+msgstr "FAI"
 
 msgid "Preseeding"
 msgstr ""
 
 msgid "Monitoring"
-msgstr ""
+msgstr "Övervakning"
 
 msgid "Virtualization"
-msgstr ""
+msgstr "Virtualisering"
 
 msgid "Xen"
-msgstr ""
+msgstr "Xen"
 
 msgid "LXC"
-msgstr ""
+msgstr "LXC"
 
 msgid "Advanced Administration"
-msgstr ""
+msgstr "Avancerad administration"
 
 msgid "This chapter revisits some aspects we already described, with a different perspective: instead of installing one single computer, we will study mass-deployment systems; instead of creating RAID or LVM volumes at install time, we'll learn to do it by hand so we can later revise our initial choices. Finally, we will discuss monitoring tools and virtualization techniques. As a consequence, this chapter is more particularly targeting professional administrators, and focuses somewhat less on individuals responsible for their home network."
 msgstr ""
 
 msgid "RAID and LVM"
-msgstr ""
+msgstr "RAID och LVM"
 
 msgid "<xref linkend=\"installation\" /> presented these technologies from the point of view of the installer, and how it integrated them to make their deployment easy from the start. After the initial installation, an administrator must be able to handle evolving storage space needs without having to resort to an expensive reinstallation. They must therefore understand the required tools for manipulating RAID and LVM volumes."
 msgstr ""
@@ -41,7 +41,7 @@ msgid "RAID and LVM are both techniques to abstract the mounted volumes from the
 msgstr ""
 
 msgid "<emphasis>PERSPECTIVE</emphasis> Btrfs combines LVM and RAID"
-msgstr ""
+msgstr "<emphasis>PERSPEKTIV</emphasis> Btrfs kombinerar LVM och RAID"
 
 msgid "While LVM and RAID are two distinct kernel subsystems that come between the disk block devices and their filesystems, <emphasis>btrfs</emphasis> is a new filesystem, initially developed at Oracle, that purports to combine the featuresets of LVM and RAID and much more. It is mostly functional, and although it is still tagged “experimental” because its development is incomplete (some features aren't implemented yet), it has already seen some use in production environments. <ulink type=\"block\" url=\"http://btrfs.wiki.kernel.org/\" />"
 msgstr ""
@@ -56,7 +56,7 @@ msgid "Software RAID"
 msgstr ""
 
 msgid "<primary>RAID</primary>"
-msgstr ""
+msgstr "<primary>RAID</primary>"
 
 msgid "RAID means <emphasis>Redundant Array of Independent Disks</emphasis>. The goal of this system is to prevent data loss in case of hard disk failure. The general principle is quite simple: data are stored on several physical disks instead of only one, with a configurable level of redundancy. Depending on this amount of redundancy, and even in the event of an unexpected disk failure, data can be losslessly reconstructed from the remaining disks."
 msgstr ""
@@ -77,19 +77,19 @@ msgid "We only focus on software RAID in this book."
 msgstr ""
 
 msgid "Different RAID Levels"
-msgstr ""
+msgstr "Olika RAID-nivåer"
 
 msgid "RAID is actually not a single system, but a range of systems identified by their levels; the levels differ by their layout and the amount of redundancy they provide. The more redundant, the more failure-proof, since the system will be able to keep working with more failed disks. The counterpart is that the usable space shrinks for a given set of disks; seen the other way, more disks will be needed to store a given amount of data."
 msgstr ""
 
 msgid "Linear RAID"
-msgstr ""
+msgstr "Linjär RAID"
 
 msgid "Even though the kernel's RAID subsystem allows creating “linear RAID”, this is not proper RAID, since this setup doesn't involve any redundancy. The kernel merely aggregates several disks end-to-end and provides the resulting aggregated volume as one virtual disk (one block device). That's about its only function. This setup is rarely used by itself (see later for the exceptions), especially since the lack of redundancy means that one disk failing makes the whole aggregate, and therefore all the data, unavailable."
 msgstr ""
 
 msgid "RAID-0"
-msgstr ""
+msgstr "RAID-0"
 
 msgid "This level doesn't provide any redundancy either, but disks aren't simply stuck on end one after another: they are divided in <emphasis>stripes</emphasis>, and the blocks on the virtual device are stored on stripes on alternating physical disks. In a two-disk RAID-0 setup, for instance, even-numbered blocks of the virtual device will be stored on the first physical disk, while odd-numbered blocks will end up on the second physical disk."
 msgstr ""
@@ -98,13 +98,13 @@ msgid "This system doesn't aim at increasing reliability, since (as in the linea
 msgstr ""
 
 msgid "RAID-1"
-msgstr ""
+msgstr "RAID-1"
 
 msgid "This level, also known as “RAID mirroring”, is both the simplest and the most widely used setup. In its standard form, it uses two physical disks of the same size, and provides a logical volume of the same size again. Data are stored identically on both disks, hence the “mirror” nickname. When one disk fails, the data is still available on the other. For really critical data, RAID-1 can of course be set up on more than two disks, with a direct impact on the ratio of hardware cost versus available payload space."
 msgstr ""
 
 msgid "<emphasis>NOTE</emphasis> Disks and cluster sizes"
-msgstr ""
+msgstr "<emphasis>OBS</emphasis> Diskar och kluster storlekar"
 
 msgid "If two disks of different sizes are set up in a mirror, the bigger one will not be fully used, since it will contain the same data as the smallest one and nothing more. The useful available space provided by a RAID-1 volume therefore matches the size of the smallest disk in the array. This still holds for RAID volumes with a higher RAID level, even though redundancy is stored differently."
 msgstr ""
@@ -125,7 +125,7 @@ msgid "This RAID level, although expensive (since only half of the physical stor
 msgstr ""
 
 msgid "RAID-4"
-msgstr ""
+msgstr "RAID-4"
 
 msgid "This RAID level, not widely used, uses N disks to store useful data, and an extra disk to store redundancy information. If that disk fails, the system can reconstruct its contents from the other N. If one of the N data disks fails, the remaining N-1 combined with the “parity” disk contain enough information to reconstruct the required data."
 msgstr ""
@@ -134,7 +134,7 @@ msgid "RAID-4 isn't too expensive since it only involves a one-in-N increase in 
 msgstr ""
 
 msgid "RAID-5"
-msgstr ""
+msgstr "RAID-5"
 
 msgid "RAID-5 addresses the asymmetry issue of RAID-4: parity blocks are spread over all of the N+1 disks, with no single disk having a particular role."
 msgstr ""
@@ -143,7 +143,7 @@ msgid "Read and write performance are identical to RAID-4. Here again, the syste
 msgstr ""
 
 msgid "RAID-6"
-msgstr ""
+msgstr "RAID-6"
 
 msgid "RAID-6 can be considered an extension of RAID-5, where each series of N blocks involves two redundancy blocks, and each such series of N+2 blocks is spread over N+2 disks."
 msgstr ""
@@ -152,7 +152,7 @@ msgid "This RAID level is slightly more expensive than the previous two, but it 
 msgstr ""
 
 msgid "RAID-1+0"
-msgstr ""
+msgstr "RAID-1+0"
 
 msgid "This isn't strictly speaking, a RAID level, but a stacking of two RAID groupings. Starting from 2×N disks, one first sets them up by pairs into N RAID-1 volumes; these N volumes are then aggregated into one, either by “linear RAID” or (increasingly) by LVM. This last case goes farther than pure RAID, but there's no problem with that."
 msgstr ""
@@ -161,7 +161,7 @@ msgid "RAID-1+0 can survive multiple disk failures: up to N in the 2×N array de
 msgstr ""
 
 msgid "<emphasis>GOING FURTHER</emphasis> RAID-10"
-msgstr ""
+msgstr "<emphasis>GÅ VIDARE</emphasis> RAID-10"
 
 msgid "RAID-10 is generally considered a synonym of RAID-1+0, but a Linux specificity makes it actually a generalization. This setup allows a system where each block is stored on two different disks, even with an odd number of disks, the copies being spread out along a configurable model."
 msgstr ""
@@ -176,7 +176,7 @@ msgid "Setting up RAID"
 msgstr ""
 
 msgid "<primary><emphasis role=\"pkg\">mdadm</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis role=\"pkg\">mdadm</emphasis></primary>"
 
 msgid "Setting up RAID volumes requires the <emphasis role=\"pkg\">mdadm</emphasis> package; it provides the <command>mdadm</command> command, which allows creating and manipulating RAID arrays, as well as scripts and tools integrating it to the rest of the system, including the monitoring system."
 msgstr ""
@@ -197,7 +197,7 @@ msgid "finally, a <filename>sde</filename> disk, still 4 GB, entirely available
 msgstr ""
 
 msgid "<emphasis>NOTE</emphasis> Identifying existing RAID volumes"
-msgstr ""
+msgstr "<emphasis>OBS</emphasis> Identifiera befintliga RAID-volymer"
 
 msgid "The <filename>/proc/mdstat</filename> file lists existing volumes and their states. When creating a new RAID volume, care should be taken not to name it the same as an existing volume."
 msgstr ""
@@ -254,7 +254,7 @@ msgid ""
 "<computeroutput>Filesystem      Size  Used Avail Use% Mounted on\n"
 "/dev/md0        7.9G   18M  7.4G   1% /srv/raid-0\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm --create /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc</userinput>\n<computeroutput>mdadm: Defaulting to version 1.2 metadata\nmdadm: array /dev/md0 started.\n# </computeroutput><userinput>mdadm --query /dev/md0</userinput>\n<computeroutput>/dev/md0: 8.00GiB raid0 2 devices, 0 spares. Use mdadm --detail for more detail.\n# </computeroutput><userinput>mdadm --detail /dev/md0</userinput>\n<computeroutput>/dev/md0:\n        Version : 1.2\n  Creation Time : Wed May  6 09:24:34 2015\n     Raid Level : raid0\n     Array Size : 8387584 (8.00 GiB 8.59 GB)\n   Raid Devices : 2\n  Total Devices : 2\n    Persistence : Superblock is persistent\n\n    Update Time : Wed May  6 09:24:34 2015\n          State : clean \n Active Devices : 2\nWorking Devices : 2\n Failed Devices : 0\n  Spare Devices : 0\n\n     Chunk Size : 512K\n\n           Name : mirwiz:0  (local to host mirwiz)\n           UUID : bb085b35:28e821bd:20d697c9:650152bb\n         Events : 0\n\n    Number   Major   Minor   RaidDevice State\n       0       8       16        0      active sync   /dev/sdb\n       1       8       32        1      active sync   /dev/sdc\n# </computeroutput><userinput>mkfs.ext4 /dev/md0</userinput>\n<computeroutput>mke2fs 1.42.12 (29-Aug-2014)\nCreating filesystem with 2095104 4k blocks and 524288 inodes\nFilesystem UUID: fff08295-bede-41a9-9c6a-8c7580e520a6\nSuperblock backups stored on blocks: \n        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632\n\nAllocating group tables: done                            \nWriting inode tables: done                            \nCreating journal (32768 blocks): done\nWriting superblocks and filesystem accounting information: done \n# </computeroutput><userinput>mkdir /srv/raid-0</userinput>\n<computeroutput># </computeroutput><userinput>mount /dev/md0 /srv/raid-0</userinput>\n<computeroutput># </computeroutput><userinput>df -h /srv/raid-0</userinput>\n<computeroutput>Filesystem      Size  Used Avail Use% Mounted on\n/dev/md0        7.9G   18M  7.4G   1% /srv/raid-0\n</computeroutput>"
 
 msgid "The <command>mdadm --create</command> command requires several parameters: the name of the volume to create (<filename>/dev/md*</filename>, with MD standing for <foreignphrase>Multiple Device</foreignphrase>), the RAID level, the number of disks (which is compulsory despite being mostly meaningful only with RAID-1 and above), and the physical drives to use. Once the device is created, we can use it like we'd use a normal partition, create a filesystem on it, mount that filesystem, and so on. Note that our creation of a RAID-0 volume on <filename>md0</filename> is nothing but coincidence, and the numbering of the array doesn't need to be correlated to the chosen amount of redundancy. It's also possible to create named RAID arrays, by giving <command>mdadm</command> parameters such as <filename>/dev/md/linear</filename> instead of <filename>/dev/md0</filename>."
 msgstr ""
@@ -306,10 +306,10 @@ msgid ""
 "          State : clean\n"
 "[...]\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm --create /dev/md1 --level=1 --raid-devices=2 /dev/sdd2 /dev/sde</userinput>\n<computeroutput>mdadm: Note: this array has metadata at the start and\n    may not be suitable as a boot device.  If you plan to\n    store '/boot' on this device please ensure that\n    your boot-loader understands md/v1.x metadata, or use\n    --metadata=0.90\nmdadm: largest drive (/dev/sdd2) exceeds size (4192192K) by more than 1%\nContinue creating array? </computeroutput><userinput>y</userinput>\n<computeroutput>mdadm: Defaulting to version 1.2 metadata\nmdadm: array /dev/md1 started.\n# </computeroutput><userinput>mdadm --query /dev/md1</userinput>\n<computeroutput>/dev/md1: 4.00GiB raid1 2 devices, 0 spares. Use mdadm --detail for more detail.\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n        Version : 1.2\n  Creation Time : Wed May  6 09:30:19 2015\n     Raid Level : raid1\n     Array Size : 4192192 (4.00 GiB 4.29 GB)\n  Used Dev Size : 4192192 (4.00 GiB 4.29 GB)\n   Raid Devices : 2\n  Total Devices : 2\n    Persistence : Superblock is persistent\n\n    Update Time : Wed May  6 09:30:40 2015\n          State : clean, resyncing (PENDING) \n Active Devices : 2\nWorking Devices : 2\n Failed Devices : 0\n  Spare Devices : 0\n\n           Name : mirwiz:1  (local to host mirwiz)\n           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464\n         Events : 0\n\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       1       8       64        1      active sync   /dev/sde\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n          State : clean\n[...]\n</computeroutput>"
 
 msgid "<emphasis>TIP</emphasis> RAID, disks and partitions"
-msgstr ""
+msgstr "<emphasis>TIPS</emphasis> RAID, diskar och partitioner"
 
 msgid "As illustrated by our example, RAID devices can be constructed out of disk partitions, and do not require full disks."
 msgstr ""
@@ -363,7 +363,7 @@ msgid ""
 "       2       0        0        2      removed\n"
 "\n"
 "       1       8       64        -      faulty   /dev/sde</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --fail /dev/sde</userinput>\n<computeroutput>mdadm: set /dev/sde faulty in /dev/md1\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n    Update Time : Wed May  6 09:39:39 2015\n          State : clean, degraded \n Active Devices : 1\nWorking Devices : 1\n Failed Devices : 1\n  Spare Devices : 0\n\n           Name : mirwiz:1  (local to host mirwiz)\n           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464\n         Events : 19\n\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       0        0        2      removed\n\n       1       8       64        -      faulty   /dev/sde</computeroutput>"
 
 msgid "The contents of the volume are still accessible (and, if it is mounted, the applications don't notice a thing), but the data safety isn't assured anymore: should the <filename>sdd</filename> disk fail in turn, the data would be lost. We want to avoid that risk, so we'll replace the failed disk with a new one, <filename>sdf</filename>:"
 msgstr ""
@@ -417,7 +417,7 @@ msgid ""
 "       2       8       80        1      active sync   /dev/sdf\n"
 "\n"
 "       1       8       64        -      faulty   /dev/sde</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --add /dev/sdf</userinput>\n<computeroutput>mdadm: added /dev/sdf\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n   Raid Devices : 2\n  Total Devices : 3\n    Persistence : Superblock is persistent\n\n    Update Time : Wed May  6 09:48:49 2015\n          State : clean, degraded, recovering \n Active Devices : 1\nWorking Devices : 2\n Failed Devices : 1\n  Spare Devices : 1\n\n Rebuild Status : 28% complete\n\n           Name : mirwiz:1  (local to host mirwiz)\n           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464\n         Events : 26\n\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       8       80        1      spare rebuilding   /dev/sdf\n\n       1       8       64        -      faulty   /dev/sde\n# </computeroutput><userinput>[...]</userinput>\n<computeroutput>[...]\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n    Update Time : Wed May  6 09:49:08 2015\n          State : clean \n Active Devices : 2\nWorking Devices : 2\n Failed Devices : 1\n  Spare Devices : 0\n\n           Name : mirwiz:1  (local to host mirwiz)\n           UUID : 6ec558ca:0c2c04a0:19bca283:95f67464\n         Events : 41\n\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       8       80        1      active sync   /dev/sdf\n\n       1       8       64        -      faulty   /dev/sde</computeroutput>"
 
 msgid "Here again, the kernel automatically triggers a reconstruction phase during which the volume, although still accessible, is in a degraded mode. Once the reconstruction is over, the RAID array is back to a normal state. One can then tell the system that the <filename>sde</filename> disk is about to be removed from the array, so as to end up with a classical RAID mirror on two disks:"
 msgstr ""
@@ -431,13 +431,13 @@ msgid ""
 "    Number   Major   Minor   RaidDevice State\n"
 "       0       8       50        0      active sync   /dev/sdd2\n"
 "       2       8       80        1      active sync   /dev/sdf</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm /dev/md1 --remove /dev/sde</userinput>\n<computeroutput>mdadm: hot removed /dev/sde from /dev/md1\n# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>\n<computeroutput>/dev/md1:\n[...]\n    Number   Major   Minor   RaidDevice State\n       0       8       50        0      active sync   /dev/sdd2\n       2       8       80        1      active sync   /dev/sdf</computeroutput>"
 
 msgid "From then on, the drive can be physically removed when the server is next switched off, or even hot-removed when the hardware configuration allows hot-swap. Such configurations include some SCSI controllers, most SATA disks, and external drives operating on USB or Firewire."
 msgstr ""
 
 msgid "Backing up the Configuration"
-msgstr ""
+msgstr "Säkerhetskopiera Konfigurationen"
 
 msgid "Most of the meta-data concerning RAID volumes are saved directly on the disks that make up these arrays, so that the kernel can detect the arrays and their components and assemble them automatically when the system starts up. However, backing up this configuration is encouraged, because this detection isn't fail-proof, and it is only expected that it will fail precisely in sensitive circumstances. In our example, if the <filename>sde</filename> disk failure had been real (instead of simulated) and the system had been restarted without removing this <filename>sde</filename> disk, this disk could start working again due to having been probed during the reboot. The kernel would then have three physical elements, each claiming to contain half of the same RAID volume. Another source of confusion can come when RAID volumes from two servers are consolidated onto one server only. If these arrays were running normally before the disks were moved, the kernel would be able to detect and reassemble the pairs properly; but if the moved disks had been aggregated into an <filename>md1</filename> on the old server, and the new server already has an <filename>md1</filename>, one of the mirrors would be renamed."
 msgstr ""
@@ -446,7 +446,7 @@ msgid "Backing up the configuration is therefore important, if only for referenc
 msgstr ""
 
 msgid "<command>mdadm</command> configuration file"
-msgstr ""
+msgstr "<command>mdadm</command> konfigurations fil"
 
 msgid ""
 "# mdadm.conf\n"
@@ -474,7 +474,7 @@ msgid ""
 "\n"
 "# This configuration was auto-generated on Thu, 17 Jan 2013 16:21:01 +0100\n"
 "# by mkconf 3.2.5-3"
-msgstr ""
+msgstr "# mdadm.conf\n#\n# Please refer to mdadm.conf(5) for information about this file.\n#\n\n# by default (built-in), scan all partitions (/proc/partitions) and all\n# containers for MD superblocks. alternatively, specify devices to scan, using\n# wildcards if desired.\nDEVICE /dev/sd*\n\n# auto-create devices with Debian standard permissions\nCREATE owner=root group=disk mode=0660 auto=yes\n\n# automatically tag new arrays as belonging to the local system\nHOMEHOST &lt;system&gt;\n\n# instruct the monitoring daemon where to send mail alerts\nMAILADDR root\n\n# definitions of existing MD arrays\nARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb\nARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464\n\n# This configuration was auto-generated on Thu, 17 Jan 2013 16:21:01 +0100\n# by mkconf 3.2.5-3"
 
 msgid "One of the most useful details is the <literal>DEVICE</literal> option, which lists the devices where the system will automatically look for components of RAID volumes at start-up time. In our example, we replaced the default value, <literal>partitions containers</literal>, with an explicit list of device files, since we chose to use entire disks and not only partitions, for some volumes."
 msgstr ""
@@ -489,13 +489,13 @@ msgid ""
 "<computeroutput># </computeroutput><userinput>mdadm --misc --detail --brief /dev/md?</userinput>\n"
 "<computeroutput>ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb\n"
 "ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mdadm --misc --detail --brief /dev/md?</userinput>\n<computeroutput>ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=bb085b35:28e821bd:20d697c9:650152bb\nARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=6ec558ca:0c2c04a0:19bca283:95f67464</computeroutput>"
 
 msgid "The contents of these last two lines doesn't depend on the list of disks included in the volume. It is therefore not necessary to regenerate these lines when replacing a failed disk with a new one. On the other hand, care must be taken to update the file when creating or deleting a RAID array."
 msgstr ""
 
 msgid "<primary>LVM</primary>"
-msgstr ""
+msgstr "<primary>LVM</primary>"
 
 msgid "<primary>Logical Volume Manager</primary>"
 msgstr ""
@@ -504,7 +504,7 @@ msgid "LVM, the <emphasis>Logical Volume Manager</emphasis>, is another approach
 msgstr ""
 
 msgid "LVM Concepts"
-msgstr ""
+msgstr "LVM-koncept"
 
 msgid "This flexibility is attained by a level of abstraction involving three concepts."
 msgstr ""
@@ -587,7 +587,7 @@ msgid ""
 "  /dev/sdf1       lvm2 ---  4.10g 4.10g\n"
 "  /dev/sdf2       lvm2 ---  5.22g 5.22g\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>pvdisplay</userinput>\n<computeroutput># </computeroutput><userinput>pvcreate /dev/sdb2</userinput>\n<computeroutput>  Physical volume \"/dev/sdb2\" successfully created\n# </computeroutput><userinput>pvdisplay</userinput>\n<computeroutput>  \"/dev/sdb2\" is a new physical volume of \"4.00 GiB\"\n  --- NEW Physical volume ---\n  PV Name               /dev/sdb2\n  VG Name               \n  PV Size               4.00 GiB\n  Allocatable           NO\n  PE Size               0   \n  Total PE              0\n  Free PE               0\n  Allocated PE          0\n  PV UUID               0zuiQQ-j1Oe-P593-4tsN-9FGy-TY0d-Quz31I\n\n# </computeroutput><userinput>for i in sdc3 sdd sdf1 sdf2 ; do pvcreate /dev/$i ; done</userinput>\n<computeroutput>  Physical volume \"/dev/sdc3\" successfully created\n  Physical volume \"/dev/sdd\" successfully created\n  Physical volume \"/dev/sdf1\" successfully created\n  Physical volume \"/dev/sdf2\" successfully created\n# </computeroutput><userinput>pvdisplay -C</userinput>\n<computeroutput>  PV         VG   Fmt  Attr PSize PFree\n  /dev/sdb2       lvm2 ---  4.00g 4.00g\n  /dev/sdc3       lvm2 ---  3.09g 3.09g\n  /dev/sdd        lvm2 ---  4.00g 4.00g\n  /dev/sdf1       lvm2 ---  4.10g 4.10g\n  /dev/sdf2       lvm2 ---  5.22g 5.22g\n</computeroutput>"
 
 msgid "So far, so good; note that a PV can be set up on a full disk as well as on individual partitions of it. As shown above, the <command>pvdisplay</command> command lists the existing PVs, with two possible output formats."
 msgstr ""
@@ -629,7 +629,7 @@ msgid ""
 "  vg_critical   2   0   0 wz--n-  8.09g  8.09g\n"
 "  vg_normal     3   0   0 wz--n- 12.30g 12.30g\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>vgdisplay</userinput>\n<computeroutput>  No volume groups found\n# </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>\n<computeroutput>  Volume group \"vg_critical\" successfully created\n# </computeroutput><userinput>vgdisplay</userinput>\n<computeroutput>  --- Volume group ---\n  VG Name               vg_critical\n  System ID             \n  Format                lvm2\n  Metadata Areas        2\n  Metadata Sequence No  1\n  VG Access             read/write\n  VG Status             resizable\n  MAX LV                0\n  Cur LV                0\n  Open LV               0\n  Max PV                0\n  Cur PV                2\n  Act PV                2\n  VG Size               8.09 GiB\n  PE Size               4.00 MiB\n  Total PE              2071\n  Alloc PE / Size       0 / 0   \n  Free  PE / Size       2071 / 8.09 GiB\n  VG UUID               bpq7zO-PzPD-R7HW-V8eN-c10c-S32h-f6rKqp\n\n# </computeroutput><userinput>vgcreate vg_normal /dev/sdc3 /dev/sdd /dev/sdf2</userinput>\n<computeroutput>  Volume group \"vg_normal\" successfully created\n# </computeroutput><userinput>vgdisplay -C</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize  VFree \n  vg_critical   2   0   0 wz--n-  8.09g  8.09g\n  vg_normal     3   0   0 wz--n- 12.30g 12.30g\n</computeroutput>"
 
 msgid "Here again, commands are rather straightforward (and <command>vgdisplay</command> proposes two output formats). Note that it is quite possible to use two partitions of the same physical disk into two different VGs. Note also that we used a <filename>vg_</filename> prefix to name our VGs, but it is nothing more than a convention."
 msgstr ""
@@ -668,7 +668,7 @@ msgid ""
 "  lv_base    vg_critical -wi-a---  1.00g                                           \n"
 "  lv_files   vg_critical -wi-a---  5.00g                                           \n"
 "  lv_backups vg_normal   -wi-a--- 12.00g</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>lvdisplay</userinput>\n<computeroutput># </computeroutput><userinput>lvcreate -n lv_files -L 5G vg_critical</userinput>\n<computeroutput>  Logical volume \"lv_files\" created\n# </computeroutput><userinput>lvdisplay</userinput>\n<computeroutput>  --- Logical volume ---\n  LV Path                /dev/vg_critical/lv_files\n  LV Name                lv_files\n  VG Name                vg_critical\n  LV UUID                J3V0oE-cBYO-KyDe-5e0m-3f70-nv0S-kCWbpT\n  LV Write Access        read/write\n  LV Creation host, time mirwiz, 2015-06-10 06:10:50 -0400\n  LV Status              available\n  # open                 0\n  LV Size                5.00 GiB\n  Current LE             1280\n  Segments               2\n  Allocation             inherit\n  Read ahead sectors     auto\n  - currently set to     256\n  Block device           253:0\n\n# </computeroutput><userinput>lvcreate -n lv_base -L 1G vg_critical</userinput>\n<computeroutput>  Logical volume \"lv_base\" created\n# </computeroutput><userinput>lvcreate -n lv_backups -L 12G vg_normal</userinput>\n<computeroutput>  Logical volume \"lv_backups\" created\n# </computeroutput><userinput>lvdisplay -C</userinput>\n<computeroutput>  LV         VG          Attr     LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert\n  lv_base    vg_critical -wi-a---  1.00g                                           \n  lv_files   vg_critical -wi-a---  5.00g                                           \n  lv_backups vg_normal   -wi-a--- 12.00g</computeroutput>"
 
 msgid "Two parameters are required when creating logical volumes; they must be passed to the <command>lvcreate</command> as options. The name of the LV to be created is specified with the <literal>-n</literal> option, and its size is generally given using the <literal>-L</literal> option. We also need to tell the command what VG to operate on, of course, hence the last parameter on the command line."
 msgstr ""
@@ -700,7 +700,7 @@ msgid ""
 "brw-rw---- 1 root disk 253, 1 Jun 10 17:05 /dev/dm-1\n"
 "brw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>ls -l /dev/mapper</userinput>\n<computeroutput>total 0\ncrw------- 1 root root 10, 236 Jun 10 16:52 control\nlrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_base -&gt; ../dm-1\nlrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_files -&gt; ../dm-0\nlrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_normal-lv_backups -&gt; ../dm-2\n# </computeroutput><userinput>ls -l /dev/dm-*</userinput>\n<computeroutput>brw-rw---T 1 root disk 253, 0 Jun 10 17:05 /dev/dm-0\nbrw-rw---- 1 root disk 253, 1 Jun 10 17:05 /dev/dm-1\nbrw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2\n</computeroutput>"
 
 msgid "<emphasis>NOTE</emphasis> Autodetecting LVM volumes"
 msgstr ""
@@ -722,7 +722,7 @@ msgid ""
 "# </computeroutput><userinput>ls -l /dev/vg_normal</userinput>\n"
 "<computeroutput>total 0\n"
 "lrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_backups -&gt; ../dm-2</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>ls -l /dev/vg_critical</userinput>\n<computeroutput>total 0\nlrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_base -&gt; ../dm-1\nlrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_files -&gt; ../dm-0\n# </computeroutput><userinput>ls -l /dev/vg_normal</userinput>\n<computeroutput>total 0\nlrwxrwxrwx 1 root root 7 Jun 10 17:05 lv_backups -&gt; ../dm-2</computeroutput>"
 
 msgid "The LVs can then be used exactly like standard partitions:"
 msgstr ""
@@ -747,7 +747,7 @@ msgid ""
 "/dev/vg_critical/lv_base    /srv/base       ext4 defaults 0 2\n"
 "/dev/vg_critical/lv_files   /srv/files      ext4 defaults 0 2\n"
 "/dev/vg_normal/lv_backups   /srv/backups    ext4 defaults 0 2</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mkfs.ext4 /dev/vg_normal/lv_backups</userinput>\n<computeroutput>mke2fs 1.42.12 (29-Aug-2014)\nCreating filesystem with 3145728 4k blocks and 786432 inodes\nFilesystem UUID: b5236976-e0e2-462e-81f5-0ae835ddab1d\n[...]\nCreating journal (32768 blocks): done\nWriting superblocks and filesystem accounting information: done \n# </computeroutput><userinput>mkdir /srv/backups</userinput>\n<computeroutput># </computeroutput><userinput>mount /dev/vg_normal/lv_backups /srv/backups</userinput>\n<computeroutput># </computeroutput><userinput>df -h /srv/backups</userinput>\n<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n/dev/mapper/vg_normal-lv_backups   12G   30M   12G   1% /srv/backups\n# </computeroutput><userinput>[...]</userinput>\n<computeroutput>[...]\n# </computeroutput><userinput>cat /etc/fstab</userinput>\n<computeroutput>[...]\n/dev/vg_critical/lv_base    /srv/base       ext4 defaults 0 2\n/dev/vg_critical/lv_files   /srv/files      ext4 defaults 0 2\n/dev/vg_normal/lv_backups   /srv/backups    ext4 defaults 0 2</computeroutput>"
 
 msgid "From the applications' point of view, the myriad small partitions have now been abstracted into one large 12 GB volume, with a friendlier name."
 msgstr ""
@@ -783,7 +783,7 @@ msgid ""
 "# </computeroutput><userinput>df -h /srv/files/</userinput>\n"
 "<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n"
 "/dev/mapper/vg_critical-lv_files  6.9G  4.6G  2.1G  70% /srv/files</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>df -h /srv/files/</userinput>\n<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_files  5.0G  4.6G  146M  97% /srv/files\n# </computeroutput><userinput>lvdisplay -C vg_critical/lv_files</userinput>\n<computeroutput>  LV       VG          Attr     LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert\n  lv_files vg_critical -wi-ao-- 5.00g\n# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree\n  vg_critical   2   2   0 wz--n- 8.09g 2.09g\n# </computeroutput><userinput>lvresize -L 7G vg_critical/lv_files</userinput>\n<computeroutput>  Size of logical volume vg_critical/lv_files changed from 5.00 GiB (1280 extents) to 7.00 GiB (1792 extents).\n  Logical volume lv_files successfully resized\n# </computeroutput><userinput>lvdisplay -C vg_critical/lv_files</userinput>\n<computeroutput>  LV       VG          Attr     LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync  Convert\n  lv_files vg_critical -wi-ao-- 7.00g\n# </computeroutput><userinput>resize2fs /dev/vg_critical/lv_files</userinput>\n<computeroutput>resize2fs 1.42.12 (29-Aug-2014)\nFilesystem at /dev/vg_critical/lv_files is mounted on /srv/files; on-line resizing required\nold_desc_blocks = 1, new_desc_blocks = 1\nThe filesystem on /dev/vg_critical/lv_files is now 1835008 (4k) blocks long.\n\n# </computeroutput><userinput>df -h /srv/files/</userinput>\n<computeroutput>Filesystem                        Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_files  6.9G  4.6G  2.1G  70% /srv/files</computeroutput>"
 
 msgid "<emphasis>CAUTION</emphasis> Resizing filesystems"
 msgstr ""
@@ -804,7 +804,7 @@ msgid ""
 "# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n"
 "<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree \n"
 "  vg_critical   2   2   0 wz--n- 8.09g 92.00m</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>df -h /srv/base/</userinput>\n<computeroutput>Filesystem                       Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_base 1008M  854M  104M  90% /srv/base\n# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree \n  vg_critical   2   2   0 wz--n- 8.09g 92.00m</computeroutput>"
 
 msgid "No matter, since LVM allows adding physical volumes to existing volume groups. For instance, maybe we've noticed that the <filename>sdb1</filename> partition, which was so far used outside of LVM, only contained archives that could be moved to <filename>lv_backups</filename>. We can now recycle it and integrate it to the volume group, and thereby reclaim some available space. This is the purpose of the <command>vgextend</command> command. Of course, the partition must be prepared as a physical volume beforehand. Once the VG has been extended, we can use similar commands as previously to grow the logical volume then the filesystem:"
 msgstr ""
@@ -822,16 +822,16 @@ msgid ""
 "# </computeroutput><userinput>df -h /srv/base/</userinput>\n"
 "<computeroutput>Filesystem                       Size  Used Avail Use% Mounted on\n"
 "/dev/mapper/vg_critical-lv_base  2.0G  854M  1.1G  45% /srv/base</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>pvcreate /dev/sdb1</userinput>\n<computeroutput>  Physical volume \"/dev/sdb1\" successfully created\n# </computeroutput><userinput>vgextend vg_critical /dev/sdb1</userinput>\n<computeroutput>  Volume group \"vg_critical\" successfully extended\n# </computeroutput><userinput>vgdisplay -C vg_critical</userinput>\n<computeroutput>  VG          #PV #LV #SN Attr   VSize VFree\n  vg_critical   3   2   0 wz--n- 9.09g 1.09g\n# </computeroutput><userinput>[...]</userinput>\n<computeroutput>[...]\n# </computeroutput><userinput>df -h /srv/base/</userinput>\n<computeroutput>Filesystem                       Size  Used Avail Use% Mounted on\n/dev/mapper/vg_critical-lv_base  2.0G  854M  1.1G  45% /srv/base</computeroutput>"
 
 msgid "<emphasis>GOING FURTHER</emphasis> Advanced LVM"
-msgstr ""
+msgstr "<emphasis>GÅ VIDARE</emphasis> Avancerad LVM"
 
 msgid "LVM also caters for more advanced uses, where many details can be specified by hand. For instance, an administrator can tweak the size of the blocks that make up physical and logical volumes, as well as their physical layout. It is also possible to move blocks across PVs, for instance to fine-tune performance or, in a more mundane way, to free a PV when one needs to extract the corresponding physical disk from the VG (whether to affect it to another VG or to remove it from LVM altogether). The manual pages describing the commands are generally clear and detailed. A good entry point is the <citerefentry><refentrytitle>lvm</refentrytitle> <manvolnum>8</manvolnum></citerefentry> manual page."
 msgstr ""
 
 msgid "RAID or LVM?"
-msgstr ""
+msgstr "RAID eller LVM?"
 
 msgid "RAID and LVM both bring indisputable advantages as soon as one leaves the simple case of a desktop computer with a single hard disk where the usage pattern doesn't change over time. However, RAID and LVM go in two different directions, with diverging goals, and it is legitimate to wonder which one should be adopted. The most appropriate answer will of course depend on current and foreseeable requirements."
 msgstr ""
@@ -874,7 +874,7 @@ msgid ""
 "/dev/sda5        4000185 203977305 199977120 102G fd Linux raid autodetect\n"
 "/dev/sda6      203977306 403970490 199993184 102G fd Linux raid autodetect\n"
 "/dev/sda7      403970491 586099395 182128904  93G 8e Linux LVM</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>fdisk -l /dev/sda</userinput>\n<computeroutput>\nDisk /dev/sda: 300 GB, 300090728448 bytes, 586114704 sectors\nUnits: sectors of 1 * 512 = 512 bytes\nSector size (logical/physical): 512 bytes / 512 bytes\nI/O size (minimum/optimal): 512 bytes / 512 bytes\nDisklabel type: dos\nDisk identifier: 0x00039a9f\n\nDevice    Boot     Start       End   Sectors Size Id Type\n/dev/sda1 *         2048   1992060   1990012 1.0G fd Linux raid autodetect\n/dev/sda2        1992061   3984120   1992059 1.0G 82 Linux swap / Solaris\n/dev/sda3        4000185 586099395 582099210 298G 5  Extended\n/dev/sda5        4000185 203977305 199977120 102G fd Linux raid autodetect\n/dev/sda6      203977306 403970490 199993184 102G fd Linux raid autodetect\n/dev/sda7      403970491 586099395 182128904  93G 8e Linux LVM</computeroutput>"
 
 msgid "The first partitions of both disks (about 1 GB) are assembled into a RAID-1 volume, <filename>md0</filename>. This mirror is directly used to store the root filesystem."
 msgstr ""
@@ -910,7 +910,7 @@ msgid "The rationale for the second split (<filename>md1</filename> vs. <filenam
 msgstr ""
 
 msgid "<primary>virtualization</primary>"
-msgstr ""
+msgstr "<primary>virtualisering</primary>"
 
 msgid "Virtualization is one of the most major advances in the recent years of computing. The term covers various abstractions and techniques simulating virtual computers with a variable degree of independence on the actual hardware. One physical server can then host several systems working at the same time and in isolation. Applications are many, and often derive from this isolation: test environments with varying configurations for instance, or separation of hosted services across different virtual machines for security."
 msgstr ""
@@ -919,22 +919,22 @@ msgid "There are multiple virtualization solutions, each with its own pros and c
 msgstr ""
 
 msgid "<primary><emphasis>VMWare</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>VMWare</emphasis></primary>"
 
 msgid "<primary><emphasis>Bochs</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>Bochs</emphasis></primary>"
 
 msgid "<primary><emphasis>QEMU</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>QEMU</emphasis></primary>"
 
 msgid "<primary><emphasis>VirtualBox</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>VirtualBox</emphasis></primary>"
 
 msgid "<primary><emphasis>KVM</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>KVM</emphasis></primary>"
 
 msgid "<primary><emphasis>LXC</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>LXC</emphasis></primary>"
 
 msgid "QEMU is a software emulator for a full computer; performances are far from the speed one could achieve running natively, but this allows running unmodified or experimental operating systems on the emulated hardware. It also allows emulating a different hardware architecture: for instance, an <emphasis>amd64</emphasis> system can emulate an <emphasis>arm</emphasis> computer. QEMU is free software. <ulink type=\"block\" url=\"http://www.qemu.org/\" />"
 msgstr ""
@@ -1000,7 +1000,7 @@ msgid ""
 "<computeroutput># </computeroutput><userinput>mv /etc/grub.d/20_linux_xen /etc/grub.d/09_linux_xen\n"
 "</userinput><computeroutput># </computeroutput><userinput>update-grub\n"
 "</userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>mv /etc/grub.d/20_linux_xen /etc/grub.d/09_linux_xen\n</userinput><computeroutput># </computeroutput><userinput>update-grub\n</userinput>"
 
 msgid "Once these prerequisites are installed, the next step is to test the behavior of the dom0 by itself; this involves a reboot to the hypervisor and the Xen kernel. The system should boot in its standard fashion, with a few extra messages on the console during the early initialization steps."
 msgstr ""
@@ -1066,7 +1066,7 @@ msgid ""
 "RSA Fingerprint :  0a:6e:71:98:95:46:64:ec:80:37:63:18:73:04:dd:2b\n"
 "Root Password   :  adaX2jyRHNuWm8BDJS7PcEJ\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>xen-create-image --hostname testxen --dhcp --dir /srv/testxen --size=2G --dist=jessie --role=udev</userinput>\n<computeroutput>\n[...]\nGeneral Information\n--------------------\nHostname       :  testxen\nDistribution   :  jessie\nMirror         :  http://ftp.debian.org/debian/\nPartitions     :  swap            128Mb (swap)\n                  /               2G    (ext3)\nImage type     :  sparse\nMemory size    :  128Mb\nKernel path    :  /boot/vmlinuz-3.16.0-4-amd64\nInitrd path    :  /boot/initrd.img-3.16.0-4-amd64\n[...]\nLogfile produced at:\n         /var/log/xen-tools/testxen.log\n\nInstallation Summary\n---------------------\nHostname        :  testxen\nDistribution    :  jessie\nMAC Address     :  00:16:3E:8E:67:5C\nIP-Address(es)  :  dynamic\nRSA Fingerprint :  0a:6e:71:98:95:46:64:ec:80:37:63:18:73:04:dd:2b\nRoot Password   :  adaX2jyRHNuWm8BDJS7PcEJ\n</computeroutput>"
 
 msgid "We now have a virtual machine, but it is currently not running (and therefore only using space on the dom0's hard disk). Of course, we can create more images, possibly with different parameters."
 msgstr ""
@@ -1095,7 +1095,7 @@ msgid ""
 "    bridge_ports eth0\n"
 "    bridge_maxwait 0\n"
 "    "
-msgstr ""
+msgstr "auto xenbr0\niface xenbr0 inet dhcp\n    bridge_ports eth0\n    bridge_maxwait 0\n    "
 
 msgid "After rebooting to make sure the bridge is automatically created, we can now start the domU with the Xen control tools, in particular the <command>xl</command> command. This command allows different manipulations on the domains, including listing them and, starting/stopping them."
 msgstr ""
@@ -1110,16 +1110,16 @@ msgid ""
 "<computeroutput>Name                                        ID   Mem VCPUs      State   Time(s)\n"
 "Domain-0                                     0   366     1     r-----     11.4\n"
 "testxen                                      1   128     1     -b----      1.1</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>xl list</userinput>\n<computeroutput>Name                                        ID   Mem VCPUs      State   Time(s)\nDomain-0                                     0   463     1     r-----      9.8\n# </computeroutput><userinput>xl create /etc/xen/testxen.cfg</userinput>\n<computeroutput>Parsing config from /etc/xen/testxen.cfg\n# </computeroutput><userinput>xl list</userinput>\n<computeroutput>Name                                        ID   Mem VCPUs      State   Time(s)\nDomain-0                                     0   366     1     r-----     11.4\ntestxen                                      1   128     1     -b----      1.1</computeroutput>"
 
 msgid "<emphasis>TOOL</emphasis> Choice of toolstacks to manage Xen VM"
 msgstr ""
 
 msgid "<primary><command>xm</command></primary>"
-msgstr ""
+msgstr "<primary><command>xm</command></primary>"
 
 msgid "<primary><command>xe</command></primary>"
-msgstr ""
+msgstr "<primary><command>xe</command></primary>"
 
 msgid "In Debian 7 and older releases, <command>xm</command> was the reference command line tool to use to manage Xen virtual machines. It has now been replaced by <command>xl</command> which is mostly backwards compatible. But those are not the only available tools: <command>virsh</command> of libvirt and <command>xe</command> of XenServer's XAPI (commercial offering of Xen) are alternative tools."
 msgstr ""
@@ -1143,7 +1143,7 @@ msgid ""
 "Debian GNU/Linux 8 testxen hvc0\n"
 "\n"
 "testxen login: </computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>xl console testxen</userinput>\n<computeroutput>[...]\n\nDebian GNU/Linux 8 testxen hvc0\n\ntestxen login: </computeroutput>"
 
 msgid "One can then open a session, just like one would do if sitting at the virtual machine's keyboard. Detaching from this console is achieved through the <keycombo action=\"simul\"><keycap>Control</keycap> <keycap>]</keycap></keycombo> key combination."
 msgstr ""
@@ -1155,7 +1155,7 @@ msgid "Sometimes one wishes to start a domU system and get to its console straig
 msgstr ""
 
 msgid "<emphasis>TOOL</emphasis> OpenXenManager"
-msgstr ""
+msgstr "<emphasis>VERKTYG</emphasis> OpenXenManager"
 
 msgid "OpenXenManager (in the <emphasis role=\"pkg\">openxenmanager</emphasis> package) is a graphical interface allowing remote management of Xen domains via Xen's API. It can thus control Xen domains remotely. It provides most of the features of the <command>xl</command> command."
 msgstr ""
@@ -1173,13 +1173,13 @@ msgid "Halting or rebooting a domU can be done either from within the domU (with
 msgstr ""
 
 msgid "<emphasis>GOING FURTHER</emphasis> Advanced Xen"
-msgstr ""
+msgstr "<emphasis>GÅ VIDARE</emphasis> Avancerad Xen"
 
 msgid "Xen has many more features than we can describe in these few paragraphs. In particular, the system is very dynamic, and many parameters for one domain (such as the amount of allocated memory, the visible hard drives, the behavior of the task scheduler, and so on) can be adjusted even when that domain is running. A domU can even be migrated across servers without being shut down, and without losing its network connections! For all these advanced aspects, the primary source of information is the official Xen documentation. <ulink type=\"block\" url=\"http://www.xen.org/support/documentation.html\" />"
 msgstr ""
 
 msgid "<primary>LXC</primary>"
-msgstr ""
+msgstr "<primary>LXC</primary>"
 
 msgid "Even though it is used to build “virtual machines”, LXC is not, strictly speaking, a virtualization system, but a system to isolate groups of processes from each other even though they all run on the same host. It takes advantage of a set of recent evolutions in the Linux kernel, collectively known as <emphasis>control groups</emphasis>, by which different sets of processes called “groups” have different views of certain aspects of the overall system. Most notable among these aspects are the process identifiers, the network configuration, and the mount points. Such a group of isolated processes will not have any access to the other processes in the system, and its accesses to the filesystem can be restricted to a specific subset. It can also have its own network interface and routing table, and it may be configured to only see a subset of the available devices present on the system."
 msgstr ""
@@ -1215,7 +1215,7 @@ msgid "LXC also requires the <emphasis>control groups</emphasis> configuration s
 msgstr ""
 
 msgid "Network Configuration"
-msgstr ""
+msgstr "Nätverkskonfiguration"
 
 msgid "The goal of installing LXC is to set up virtual machines; while we could of course keep them isolated from the network, and only communicate with them via the filesystem, most use cases involve giving at least minimal network access to the containers. In the typical case, each container will get a virtual network interface, connected to the real network through a bridge. This virtual interface can be plugged either directly onto the host's physical network interface (in which case the container is directly on the network), or onto another virtual interface defined on the host (and the host can then filter or route traffic). In both cases, the <emphasis role=\"pkg\">bridge-utils</emphasis> package will be required."
 msgstr ""
@@ -1225,7 +1225,7 @@ msgstr ""
 
 msgid "auto eth0\n"
 "iface eth0 inet dhcp"
-msgstr ""
+msgstr "auto eth0\niface eth0 inet dhcp"
 
 msgid "They should be disabled and replaced with the following:"
 msgstr ""
@@ -1237,7 +1237,7 @@ msgid ""
 "auto br0\n"
 "iface br0 inet dhcp\n"
 "  bridge-ports eth0"
-msgstr ""
+msgstr "#auto eth0\n#iface eth0 inet dhcp\n\nauto br0\niface br0 inet dhcp\n  bridge-ports eth0"
 
 msgid "The effect of this configuration will be similar to what would be obtained if the containers were machines plugged into the same physical network as the host. The “bridge” configuration manages the transit of Ethernet frames between all the bridged interfaces, which includes the physical <literal>eth0</literal> as well as the interfaces defined for the containers."
 msgstr ""
@@ -1264,13 +1264,13 @@ msgid ""
 "  bridge-ports tap0\n"
 "  address 10.0.0.1\n"
 "  netmask 255.255.255.0"
-msgstr ""
+msgstr "# Interface eth0 is unchanged\nauto eth0\niface eth0 inet dhcp\n\n# Virtual interface \nauto tap0\niface tap0 inet manual\n  vde2-switch -t tap0\n\n# Bridge for containers\nauto br0\niface br0 inet static\n  bridge-ports tap0\n  address 10.0.0.1\n  netmask 255.255.255.0"
 
 msgid "The network can then be set up either statically in the containers, or dynamically with DHCP server running on the host. Such a DHCP server will need to be configured to answer queries on the <literal>br0</literal> interface."
 msgstr ""
 
 msgid "Setting Up the System"
-msgstr ""
+msgstr "Ställa in systemet"
 
 msgid "Let us now set up the filesystem to be used by the container. Since this “virtual machine” will not run directly on the hardware, some tweaks are required when compared to a standard filesystem, especially as far as the kernel, devices and consoles are concerned. Fortunately, the <emphasis role=\"pkg\">lxc</emphasis> includes scripts that mostly automate this configuration. For instance, the following commands (which require the <emphasis role=\"pkg\">debootstrap</emphasis> and <emphasis role=\"pkg\">rsync</emphasis> packages) will install a Debian container:"
 msgstr ""
@@ -1289,7 +1289,7 @@ msgid ""
 "Root password is 'sSiKhMzI', please change !\n"
 "root@mirwiz:~# </computeroutput>\n"
 "        "
-msgstr ""
+msgstr "<computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-create -n testlxc -t debian\n</userinput><computeroutput>debootstrap is /usr/sbin/debootstrap\nChecking cache download in /var/cache/lxc/debian/rootfs-jessie-amd64 ... \nDownloading debian minimal ...\nI: Retrieving Release \nI: Retrieving Release.gpg \n[...]\nDownload complete.\nCopying rootfs to /var/lib/lxc/testlxc/rootfs...\n[...]\nRoot password is 'sSiKhMzI', please change !\nroot@mirwiz:~# </computeroutput>\n        "
 
 msgid "Note that the filesystem is initially created in <filename>/var/cache/lxc</filename>, then moved to its destination directory. This allows creating identical containers much more quickly, since only copying is then required."
 msgstr ""
@@ -1305,7 +1305,7 @@ msgid ""
 "lxc.network.flags = up\n"
 "lxc.network.link = br0\n"
 "lxc.network.hwaddr = 4a:49:43:49:79:20"
-msgstr ""
+msgstr "lxc.network.type = veth\nlxc.network.flags = up\nlxc.network.link = br0\nlxc.network.hwaddr = 4a:49:43:49:79:20"
 
 msgid "These entries mean, respectively, that a virtual interface will be created in the container; that it will automatically be brought up when said container is started; that it will automatically be connected to the <literal>br0</literal> bridge on the host; and that its MAC address will be as specified. Should this last entry be missing or disabled, a random MAC address will be generated."
 msgstr ""
@@ -1314,7 +1314,7 @@ msgid "Another useful entry in that file is the setting of the hostname:"
 msgstr ""
 
 msgid "lxc.utsname = testlxc"
-msgstr ""
+msgstr "lxc.utsname = testlxc"
 
 msgid "Starting the Container"
 msgstr ""
@@ -1353,7 +1353,7 @@ msgid ""
 "root       266  0.0  0.1  12656  1840 ?        Ss   17:39   0:00 /sbin/agetty --noclear tty5 linux\n"
 "root       267  0.0  0.1  12656  1928 ?        Ss   17:39   0:00 /sbin/agetty --noclear tty6 linux\n"
 "root@testlxc:~# </computeroutput>"
-msgstr ""
+msgstr "<computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-start --daemon --name=testlxc\n</userinput><computeroutput>root@mirwiz:~# </computeroutput><userinput>lxc-console -n testlxc\n</userinput><computeroutput>Debian GNU/Linux 8 testlxc tty1\n\ntestlxc login: </computeroutput><userinput>root</userinput><computeroutput>\nPassword: \nLinux testlxc 3.16.0-4-amd64 #1 SMP Debian 3.16.7-ckt11-1 (2015-05-24) x86_64\n\nThe programs included with the Debian GNU/Linux system are free software;\nthe exact distribution terms for each program are described in the\nindividual files in /usr/share/doc/*/copyright.\n\nDebian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent\npermitted by applicable law.\nroot@testlxc:~# </computeroutput><userinput>ps auxwf</userinput>\n<computeroutput>USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\nroot         1  0.0  0.2  28164  4432 ?        Ss   17:33   0:00 /sbin/init\nroot        20  0.0  0.1  32960  3160 ?        Ss   17:33   0:00 /lib/systemd/systemd-journald\nroot        82  0.0  0.3  55164  5456 ?        Ss   17:34   0:00 /usr/sbin/sshd -D\nroot        87  0.0  0.1  12656  1924 tty2     Ss+  17:34   0:00 /sbin/agetty --noclear tty2 linux\nroot        88  0.0  0.1  12656  1764 tty3     Ss+  17:34   0:00 /sbin/agetty --noclear tty3 linux\nroot        89  0.0  0.1  12656  1908 tty4     Ss+  17:34   0:00 /sbin/agetty --noclear tty4 linux\nroot        90  0.0  0.1  63300  2944 tty1     Ss   17:34   0:00 /bin/login --     \nroot       117  0.0  0.2  21828  3668 tty1     S    17:35   0:00  \\_ -bash\nroot       268  0.0  0.1  19088  2572 tty1     R+   17:39   0:00      \\_ ps auxfw\nroot        91  0.0  0.1  14228  2356 console  Ss+  17:34   0:00 /sbin/agetty --noclear --keep-baud console 115200 38400 9600 vt102\nroot       197  0.0  0.4  25384  7640 ?        Ss   17:38   0:00 dhclient -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.e\nroot       266  0.0  0.1  12656  1840 ?        Ss   17:39   0:00 /sbin/agetty --noclear tty5 linux\nroot       267  0.0  0.1  12656  1928 ?        Ss   17:39   0:00 /sbin/agetty --noclear tty6 linux\nroot@testlxc:~# </computeroutput>"
 
 msgid "We are now in the container; our access to the processes is restricted to only those started from the container itself, and our access to the filesystem is similarly restricted to the dedicated subset of the full filesystem (<filename>/var/lib/lxc/testlxc/rootfs</filename>). We can exit the console with <keycombo action=\"simul\"><keycap>Control</keycap> <keycap>a</keycap></keycombo> <keycombo><keycap>q</keycap></keycombo>."
 msgstr ""
@@ -1365,7 +1365,7 @@ msgid "The <emphasis role=\"pkg\">lxc</emphasis> package contains an initializat
 msgstr ""
 
 msgid "<emphasis>GOING FURTHER</emphasis> Mass virtualization"
-msgstr ""
+msgstr "<emphasis>GÅ VIDARE</emphasis> Massvirtualisering"
 
 msgid "Since LXC is a very lightweight isolation system, it can be particularly adapted to massive hosting of virtual servers. The network configuration will probably be a bit more advanced than what we described above, but the “rich” configuration using <literal>tap</literal> and <literal>veth</literal> interfaces should be enough in many cases."
 msgstr ""
@@ -1377,10 +1377,10 @@ msgid "We haven't described all the available options, of course; more comprehen
 msgstr ""
 
 msgid "Virtualization with KVM"
-msgstr ""
+msgstr "Virtualisering med KVM"
 
 msgid "<primary>KVM</primary>"
-msgstr ""
+msgstr "<primary>KVM</primary>"
 
 msgid "KVM, which stands for <emphasis>Kernel-based Virtual Machine</emphasis>, is first and foremost a kernel module providing most of the infrastructure that can be used by a virtualizer, but it is not a virtualizer by itself. Actual control for the virtualization is handled by a QEMU-based application. Don't worry if this section mentions <command>qemu-*</command> commands: it is still about KVM."
 msgstr ""
@@ -1392,22 +1392,22 @@ msgid "With Red Hat actively supporting its development, KVM has more or less b
 msgstr ""
 
 msgid "<primary><command>virt-install</command></primary>"
-msgstr ""
+msgstr "<primary><command>virt-install</command></primary>"
 
 msgid "Unlike such tools as VirtualBox, KVM itself doesn't include any user-interface for creating and managing virtual machines. The <emphasis role=\"pkg\">qemu-kvm</emphasis> package only provides an executable able to start a virtual machine, as well as an initialization script that loads the appropriate kernel modules."
 msgstr ""
 
 msgid "<primary>libvirt</primary>"
-msgstr ""
+msgstr "<primary>libvirt</primary>"
 
 msgid "<primary><emphasis role=\"pkg\">virt-manager</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis role=\"pkg\">virt-manager</emphasis></primary>"
 
 msgid "Fortunately, Red Hat also provides another set of tools to address that problem, by developing the <emphasis>libvirt</emphasis> library and the associated <emphasis>virtual machine manager</emphasis> tools. libvirt allows managing virtual machines in a uniform way, independently of the virtualization system involved behind the scenes (it currently supports QEMU, KVM, Xen, LXC, OpenVZ, VirtualBox, VMWare and UML). <command>virtual-manager</command> is a graphical interface that uses libvirt to create and manage virtual machines."
 msgstr ""
 
 msgid "<primary><emphasis role=\"pkg\">virtinst</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis role=\"pkg\">virtinst</emphasis></primary>"
 
 msgid "We first install the required packages, with <command>apt-get install qemu-kvm libvirt-bin virtinst virt-manager virt-viewer</command>. <emphasis role=\"pkg\">libvirt-bin</emphasis> provides the <command>libvirtd</command> daemon, which allows (potentially remote) management of the virtual machines running of the host, and starts the required VMs when the host boots. In addition, this package provides the <command>virsh</command> command-line tool, which allows controlling the <command>libvirtd</command>-managed machines."
 msgstr ""
@@ -1425,7 +1425,7 @@ msgid "The rest of this section assumes that the host has an <literal>eth0</lite
 msgstr ""
 
 msgid "Installation with <command>virt-install</command>"
-msgstr ""
+msgstr "Installation med <command>virt-install</command>"
 
 msgid "Creating a virtual machine is very similar to installing a normal system, except that the virtual machine's characteristics are described in a seemingly endless command line."
 msgstr ""
@@ -1442,10 +1442,10 @@ msgid ""
 "<computeroutput>Pool srv-kvm created\n"
 "\n"
 "root@mirwiz:~# </computeroutput>"
-msgstr ""
+msgstr "<computeroutput>root@mirwiz:~# </computeroutput><userinput>mkdir /srv/kvm</userinput>\n<computeroutput>root@mirwiz:~# </computeroutput><userinput>virsh pool-create-as srv-kvm dir --target /srv/kvm</userinput>\n<computeroutput>Pool srv-kvm created\n\nroot@mirwiz:~# </computeroutput>"
 
 msgid "<emphasis>TIP</emphasis> Add your user to the libvirt group"
-msgstr ""
+msgstr "<emphasis>TIPS</emphasis> Lägg till din användare till libvirt gruppen"
 
 msgid "All samples in this section assume that you are running commands as root. Effectively, if you want to control a local libvirt daemon, you need either to be root or to be a member of the <literal>libvirt</literal> group (which is not the case by default). Thus if you want to avoid using root rights too often, you can add yoursel to the <literal>libvirt</literal> group and run the various commands under your user identity."
 msgstr ""
@@ -1470,7 +1470,7 @@ msgid ""
 "Creating domain...                    |    0 B     00:00\n"
 "Guest installation complete... restarting guest.\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>virt-install --connect qemu:///system  <co id=\"virtinst.connect\"></co>\n               --virt-type kvm           <co id=\"virtinst.type\"></co>\n               --name testkvm            <co id=\"virtinst.name\"></co>\n               --ram 1024                <co id=\"virtinst.ram\"></co>\n               --disk /srv/kvm/testkvm.qcow,format=qcow2,size=10 <co id=\"virtinst.disk\"></co>\n               --cdrom /srv/isos/debian-8.1.0-amd64-netinst.iso  <co id=\"virtinst.cdrom\"></co>\n               --network bridge=br0      <co id=\"virtinst.network\"></co>\n               --vnc                     <co id=\"virtinst.vnc\"></co>\n               --os-type linux           <co id=\"virtinst.os\"></co>\n               --os-variant debianwheezy\n</userinput><computeroutput>\nStarting install...\nAllocating 'testkvm.qcow'             |  10 GB     00:00\nCreating domain...                    |    0 B     00:00\nGuest installation complete... restarting guest.\n</computeroutput>"
 
 msgid "The <literal>--connect</literal> option specifies the “hypervisor” to use. Its form is that of an URL containing a virtualization system (<literal>xen://</literal>, <literal>qemu://</literal>, <literal>lxc://</literal>, <literal>openvz://</literal>, <literal>vbox://</literal>, and so on) and the machine that should host the VM (this can be left empty in the case of the local host). In addition to that, and in the QEMU/KVM case, each user can manage virtual machines working with restricted permissions, and the URL path allows differentiating “system” machines (<literal>/system</literal>) from others (<literal>/session</literal>)."
 msgstr ""
@@ -1506,16 +1506,16 @@ msgid ""
 "<computeroutput>$ </computeroutput><userinput>virt-viewer --connect qemu+ssh://root@<replaceable>server</replaceable>/system testkvm\n"
 "</userinput><computeroutput>root@server's password: \n"
 "root@server's password: </computeroutput>"
-msgstr ""
+msgstr "<computeroutput>$ </computeroutput><userinput>virt-viewer --connect qemu+ssh://root@<replaceable>server</replaceable>/system testkvm\n</userinput><computeroutput>root@server's password: \nroot@server's password: </computeroutput>"
 
 msgid "When the installation process ends, the virtual machine is restarted, now ready for use."
 msgstr ""
 
 msgid "Managing Machines with <command>virsh</command>"
-msgstr ""
+msgstr "Hantera maskiner med <command>virsh</command>"
 
 msgid "<primary><command>virsh</command></primary>"
-msgstr ""
+msgstr "<primary><command>virsh</command></primary>"
 
 msgid "Now that the installation is done, let us see how to handle the available virtual machines. The first thing to try is to ask <command>libvirtd</command> for the list of the virtual machines it manages:"
 msgstr ""
@@ -1526,27 +1526,27 @@ msgid ""
 "----------------------------------\n"
 "  - testkvm              shut off\n"
 "</userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>virsh -c qemu:///system list --all\n Id Name                 State\n----------------------------------\n  - testkvm              shut off\n</userinput>"
 
 msgid "Let's start our test virtual machine:"
 msgstr ""
 
 msgid "<computeroutput># </computeroutput><userinput>virsh -c qemu:///system start testkvm\n"
 "</userinput><computeroutput>Domain testkvm started</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>virsh -c qemu:///system start testkvm\n</userinput><computeroutput>Domain testkvm started</computeroutput>"
 
 msgid "We can now get the connection instructions for the graphical console (the returned VNC display can be given as parameter to <command>vncviewer</command>):"
 msgstr ""
 
 msgid "<computeroutput># </computeroutput><userinput>virsh -c qemu:///system vncdisplay testkvm\n"
 "</userinput><computeroutput>:0</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>virsh -c qemu:///system vncdisplay testkvm\n</userinput><computeroutput>:0</computeroutput>"
 
 msgid "Other available <command>virsh</command> subcommands include:"
 msgstr ""
 
 msgid "<literal>reboot</literal> to restart a virtual machine;"
-msgstr ""
+msgstr "<literal>reboot</literal> för att starta om en virtuell maskin;"
 
 msgid "<literal>shutdown</literal> to trigger a clean shutdown;"
 msgstr ""
@@ -1555,7 +1555,7 @@ msgid "<literal>destroy</literal>, to stop it brutally;"
 msgstr ""
 
 msgid "<literal>suspend</literal> to pause it;"
-msgstr ""
+msgstr "<literal>suspend</literal> för att pausa den;"
 
 msgid "<literal>resume</literal> to unpause it;"
 msgstr ""
@@ -1570,7 +1570,7 @@ msgid "All these subcommands take a virtual machine identifier as a parameter."
 msgstr ""
 
 msgid "Installing an RPM based system in Debian with yum"
-msgstr ""
+msgstr "Installera ett RPM-baserat system i Debian med yum"
 
 msgid "If the virtual machine is meant to run a Debian (or one of its derivatives), the system can be initialized with <command>debootstrap</command>, as described above. But if the virtual machine is to be installed with an RPM-based system (such as Fedora, CentOS or Scientific Linux), the setup will need to be done using the <command>yum</command> utility (available in the package of the same name)."
 msgstr ""
@@ -1592,16 +1592,16 @@ msgid ""
 "</userinput><computeroutput>[...]\n"
 "# </computeroutput><userinput>sed -i -e \"s,gpgkey=file://${rootdir}/etc/,gpgkey=file:///etc/,g\" $rootdir/etc/yum.repos.d/*.repo\n"
 "</userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>rootdir=\"/srv/centos\"\n</userinput><computeroutput># </computeroutput><userinput>mkdir -p \"$rootdir\" /etc/rpm\n</userinput><computeroutput># </computeroutput><userinput>echo \"%_dbpath /var/lib/rpm\" &gt; /etc/rpm/macros.dbpath\n</userinput><computeroutput># </computeroutput><userinput>wget http://mirror.centos.org/centos/7/os/x86_64/Packages/centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm\n</userinput><computeroutput># </computeroutput><userinput>rpm --nodeps --root \"$rootdir\" -i centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm\n</userinput><computeroutput>rpm: RPM should not be used directly install RPM packages, use Alien instead!\nrpm: However assuming you know what you are doing...\nwarning: centos-release-7-1.1503.el7.centos.2.8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY\n# </computeroutput><userinput>sed -i -e \"s,gpgkey=file:///etc/,gpgkey=file://${rootdir}/etc/,g\" $rootdir/etc/yum.repos.d/*.repo\n</userinput><computeroutput># </computeroutput><userinput>yum --assumeyes --installroot $rootdir groupinstall core\n</userinput><computeroutput>[...]\n# </computeroutput><userinput>sed -i -e \"s,gpgkey=file://${rootdir}/etc/,gpgkey=file:///etc/,g\" $rootdir/etc/yum.repos.d/*.repo\n</userinput>"
 
 msgid "Automated Installation"
-msgstr ""
+msgstr "Automatiserad installation"
 
 msgid "<primary>deployment</primary>"
 msgstr ""
 
 msgid "<primary>installation</primary><secondary>automated installation</secondary>"
-msgstr ""
+msgstr "<primary>installation</primary><secondary>automatiserad installation</secondary>"
 
 msgid "The Falcot Corp administrators, like many administrators of large IT services, need tools to install (or reinstall) quickly, and automatically if possible, their new machines."
 msgstr ""
@@ -1619,7 +1619,7 @@ msgid "We will only give a rough overview of FAI, and skip SystemImager altogeth
 msgstr ""
 
 msgid "Fully Automatic Installer (FAI)"
-msgstr ""
+msgstr "Helautomatisk installation (FAI)"
 
 msgid "<primary>Fully Automatic Installer (FAI)</primary>"
 msgstr ""
@@ -1643,7 +1643,7 @@ msgid "fetching a kernel from the network, and booting it;"
 msgstr ""
 
 msgid "mounting the root filesystem from NFS;"
-msgstr ""
+msgstr "montera rotfilsystemet från NFS;"
 
 msgid "executing <command>/usr/sbin/fai</command>, which controls the rest of the process (the next steps are therefore initiated by this script);"
 msgstr ""
@@ -1664,7 +1664,7 @@ msgid "mounting said partitions;"
 msgstr ""
 
 msgid "installing the base system;"
-msgstr ""
+msgstr "Installation av bassystemet;"
 
 msgid "preseeding the Debconf database with <command>fai-debconf</command>;"
 msgstr ""
@@ -1688,13 +1688,13 @@ msgid "<primary>preseed</primary>"
 msgstr ""
 
 msgid "<primary>preconfiguration</primary>"
-msgstr ""
+msgstr "<primary>förkonfigurering</primary>"
 
 msgid "At the end of the day, the best tool to install Debian systems should logically be the official Debian installer. This is why, right from its inception, debian-installer has been designed for automated use, taking advantage of the infrastructure provided by <emphasis role=\"pkg\">debconf</emphasis>. The latter allows, on the one hand, to reduce the number of questions asked (hidden questions will use the provided default answer), and on the other hand, to provide the default answers separately, so that installation can be non-interactive. This last feature is known as <emphasis>preseeding</emphasis>."
 msgstr ""
 
 msgid "<emphasis>GOING FURTHER</emphasis> Debconf with a centralized database"
-msgstr ""
+msgstr "<emphasis>GÅ VIDARE</emphasis> Debconf med en centraliserad databas"
 
 msgid "<primary><command>debconf</command></primary>"
 msgstr "<primary><command>debconf</command></primary>"
@@ -1754,7 +1754,7 @@ msgid "Knowing where to store the preseed file is all very well, but the locatio
 msgstr ""
 
 msgid "Booting From the Network"
-msgstr ""
+msgstr "Starta från nätverket"
 
 msgid "When a computer is booted from the network, the server sending the initialization elements also defines the boot parameters. Thus, the change needs to be made in the PXE configuration for the boot server; more specifically, in its <filename>/tftpboot/pxelinux.cfg/default</filename> configuration file. Setting up network boot is a prerequisite; see the Installation Guide for details. <ulink type=\"block\" url=\"https://www.debian.org/releases/jessie/amd64/ch04s05.html\" />"
 msgstr ""
@@ -1776,13 +1776,13 @@ msgstr ""
 
 msgid "default vmlinuz\n"
 "append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=us country=US vga=788 initrd=initrd.gz  --"
-msgstr ""
+msgstr "default vmlinuz\nappend preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=us country=US vga=788 initrd=initrd.gz  --"
 
 msgid "Creating a CD-ROM Image"
 msgstr ""
 
 msgid "<primary>debian-cd</primary>"
-msgstr ""
+msgstr "<primary>debian-cd</primary>"
 
 msgid "A USB key is a read-write media, so it was easy for us to add a file there and change a few parameters. In the CD-ROM case, the operation is more complex, since we need to regenerate a full ISO image. This task is handled by <emphasis role=\"pkg\">debian-cd</emphasis>, but this tool is rather awkward to use: it needs a local mirror, and it requires an understanding of all the options provided by <filename>/usr/share/debian-cd/CONF.sh</filename>; even then, <command>make</command> must be invoked several times. <filename>/usr/share/debian-cd/README</filename> is therefore a very recommended read."
 msgstr ""
@@ -1794,7 +1794,7 @@ msgid "Simple-CDD: The All-In-One Solution"
 msgstr ""
 
 msgid "<primary>simple-cdd</primary>"
-msgstr ""
+msgstr "<primary>simple-cdd</primary>"
 
 msgid "Simply using a preseed file is not enough to fulfill all the requirements that may appear for large deployments. Even though it is possible to execute a few scripts at the end of the normal installation process, the selection of the set of packages to install is still not quite flexible (basically, only “tasks” can be selected); more important, this only allows installing official Debian packages, and precludes locally-generated ones."
 msgstr ""
@@ -1806,7 +1806,7 @@ msgid "The purpose of Simple-CDD is to allow anyone to easily create a distribut
 msgstr ""
 
 msgid "Creating Profiles"
-msgstr ""
+msgstr "Skapa Profiler"
 
 msgid "Simple-CDD defines “profiles” that match the FAI “classes” concept, and a machine can have several profiles (determined at installation time). A profile is defined by a set of <filename>profiles/<replaceable>profile</replaceable>.*</filename> files:"
 msgstr ""
@@ -1836,13 +1836,13 @@ msgid "Note also that the commands will need to be invoked from the parent direc
 msgstr ""
 
 msgid "Configuring and Using <command>build-simple-cdd</command>"
-msgstr ""
+msgstr "Konfigurera och använda <command>build-simple-cdd</command>"
 
 msgid "<primary><command>build-simple-cdd</command></primary>"
-msgstr ""
+msgstr "<primary><command>build-simple-cdd</command></primary>"
 
 msgid "<emphasis>QUICK LOOK</emphasis> Detailed configuration file"
-msgstr ""
+msgstr "<emphasis>SNABB TITT</emphasis> Detaljerad konfigurationsfil"
 
 msgid "An example of a Simple-CDD configuration file, with all possible parameters, is included in the package (<filename>/usr/share/doc/simple-cdd/examples/simple-cdd.conf.detailed.gz</filename>). This can be used as a starting point when creating a custom configuration file."
 msgstr ""
@@ -1893,7 +1893,7 @@ msgid "<emphasis>ALTERNATIVE</emphasis> Zabbix, an integrated monitoring tool"
 msgstr ""
 
 msgid "<primary>Zabbix</primary>"
-msgstr ""
+msgstr "<primary>Zabbix</primary>"
 
 msgid "Although Munin and Nagios are in very common use, they are not the only players in the monitoring field, and each of them only handles half of the task (graphing on one side, alerting on the other). Zabbix, on the other hand, integrates both parts of monitoring; it also has a web interface for configuring the most common aspects. It has grown by leaps and bounds during the last few years, and can now be considered a viable contender. On the monitoring server, you would install <emphasis role=\"pkg\">zabbix-server-pgsql</emphasis> (or <emphasis role=\"pkg\">zabbix-server-mysql</emphasis>), possibly together with <emphasis role=\"pkg\">zabbix-frontend-php</emphasis> to have a web interface. On the hosts to monitor you would install <emphasis role=\"pkg\">zabbix-agent</emphasis> feeding data back to the server. <ulink type=\"block\" url=\"http://www.zabbix.com/\" />"
 msgstr ""
@@ -1902,16 +1902,16 @@ msgid "<emphasis>ALTERNATIVE</emphasis> Icinga, a Nagios fork"
 msgstr ""
 
 msgid "<primary>Icinga</primary>"
-msgstr ""
+msgstr "<primary>Icinga</primary>"
 
 msgid "Spurred by divergences in opinions concerning the development model for Nagios (which is controlled by a company), a number of developers forked Nagios and use Icinga as their new name. Icinga is still compatible — so far — with Nagios configurations and plugins, but it also adds extra features. <ulink type=\"block\" url=\"http://www.icinga.org/\" />"
 msgstr ""
 
 msgid "Setting Up Munin"
-msgstr ""
+msgstr "Ställa in Munin"
 
 msgid "<primary>Munin</primary>"
-msgstr ""
+msgstr "<primary>Munin</primary>"
 
 msgid "The purpose of Munin is to monitor many machines; therefore, it quite naturally uses a client/server architecture. The central host — the grapher — collects data from all the monitored hosts, and generates historical graphs."
 msgstr ""
@@ -1951,7 +1951,7 @@ msgid ""
 "graph_info The load average of the machine describes how many processes are in the run-queue (scheduled to run \"immediately\").\n"
 "load.info 5 minute load average\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput>$ </computeroutput><userinput>sudo munin-run load config\n</userinput><computeroutput>graph_title Load average\ngraph_args --base 1000 -l 0\ngraph_vlabel load\ngraph_scale no\ngraph_category system\nload.label load\ngraph_info The load average of the machine describes how many processes are in the run-queue (scheduled to run \"immediately\").\nload.info 5 minute load average\n</computeroutput>"
 
 msgid "The various available fields are described by the “Plugin reference” available as part of the “Munin guide”. <ulink type=\"block\" url=\"http://munin.readthedocs.org/en/latest/reference/plugin.html\" />"
 msgstr ""
@@ -1975,7 +1975,7 @@ msgid ""
 "[ftp.falcot.com]\n"
 "    address 192.168.0.12\n"
 "    use_node_name yes"
-msgstr ""
+msgstr "[ftp.falcot.com]\n    address 192.168.0.12\n    use_node_name yes"
 
 msgid "Sections can be more complex, and describe extra graphs that could be created by combining data coming from several machines. The samples provided in the configuration file are good starting points for customization."
 msgstr ""
@@ -1984,16 +1984,16 @@ msgid "The last step is to publish the generated pages; this involves configurin
 msgstr ""
 
 msgid "Setting Up Nagios"
-msgstr ""
+msgstr "Ställa in Nagios"
 
 msgid "<primary>Nagios</primary>"
-msgstr ""
+msgstr "<primary>Nagios</primary>"
 
 msgid "Unlike Munin, Nagios does not necessarily require installing anything on the monitored hosts; most of the time, Nagios is used to check the availability of network services. For instance, Nagios can connect to a web server and check that a given web page can be obtained within a given time."
 msgstr ""
 
 msgid "Installing"
-msgstr ""
+msgstr "Installera"
 
 msgid "The first step in setting up Nagios is to install the <emphasis role=\"pkg\">nagios3</emphasis>, <emphasis role=\"pkg\">nagios-plugins</emphasis> and <emphasis role=\"pkg\">nagios3-doc</emphasis> packages. Installing the packages configures the web interface and creates a first <literal>nagiosadmin</literal> user (for which it asks for a password). Adding other users is a simple matter of inserting them in the <filename>/etc/nagios3/htpasswd.users</filename> file with Apache's <command>htpasswd</command> command. If no Debconf question was displayed during installation, <command>dpkg-reconfigure nagios3-cgi</command> can be used to define the <literal>nagiosadmin</literal> password."
 msgstr ""
@@ -2011,10 +2011,10 @@ msgid ""
 "</userinput><computeroutput># </computeroutput><userinput>dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3\n"
 "</userinput><computeroutput># </computeroutput><userinput>service nagios3 start</userinput>\n"
 "<computeroutput>[...]</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>service nagios3 stop</userinput>\n<computeroutput>[...]\n# </computeroutput><userinput>dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios3/rw\n</userinput><computeroutput># </computeroutput><userinput>dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3\n</userinput><computeroutput># </computeroutput><userinput>service nagios3 start</userinput>\n<computeroutput>[...]</computeroutput>"
 
 msgid "Configuring"
-msgstr ""
+msgstr "Konfigurera"
 
 msgid "The Nagios web interface is rather nice, but it does not allow configuration, nor can it be used to add monitored hosts and services. The whole configuration is managed via files referenced in the central configuration file, <filename>/etc/nagios3/nagios.cfg</filename>."
 msgstr ""
