@@ -1,5 +1,5 @@
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2018-11-10 13:53+0000\nLast-Translator: Sebastian Rasmussen <sebras@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/sv/>\nLanguage: sv-SE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 3.3-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-06 16:10+0200\nPO-Revision-Date: 2020-03-30 09:09+0000\nLast-Translator: Luna Jernberg <droidbittin@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/sv/>\nLanguage: sv-SE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.0-dev\n"
 
 msgid "Backport"
 msgstr "Bakportering"
@@ -80,10 +80,10 @@ msgid ""
 "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n"
 "</userinput><computeroutput>[...]\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n</userinput><computeroutput>[...]\n</computeroutput>"
 
 msgid "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
-msgstr ""
+msgstr "<emphasis>VERKTYG</emphasis> <command>fakeroot</command>"
 
 msgid "In essence, the package creation process is a simple matter of gathering in an archive a set of existing (or built) files; most of the files will end up being owned by <emphasis>root</emphasis> in the archive. However, building the whole package under this user would imply increased risks; fortunately, this can be avoided with the <command>fakeroot</command> command. This tool can be used to run a program and give it the impression that it runs as <emphasis>root</emphasis> and creates files with arbitrary ownership and permissions. When the program creates the archive that will become the Debian package, it is tricked into creating an archive containing files marked as belonging to arbitrary owners, including <emphasis>root</emphasis>. This setup is so convenient that <command>dpkg-buildpackage</command> uses <command>fakeroot</command> by default when building packages."
 msgstr ""
@@ -98,10 +98,10 @@ msgid "More often than not, Debian developers use a higher-level program such as
 msgstr ""
 
 msgid "<emphasis>QUICK LOOK</emphasis> <command>pbuilder</command>"
-msgstr ""
+msgstr "<emphasis>SNABB TITT</emphasis> <command>pbuilder</command>"
 
 msgid "<primary><command>pbuilder</command></primary>"
-msgstr ""
+msgstr "<primary><command>pbuilder</command></primary>"
 
 msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
 msgstr ""
@@ -110,10 +110,10 @@ msgid "This tool allows the build process to happen in an environment that is no
 msgstr ""
 
 msgid "Building your First Package"
-msgstr ""
+msgstr "Bygg ditt första paket"
 
 msgid "Meta-Packages or Fake Packages"
-msgstr ""
+msgstr "Meta-paket eller falska paket"
 
 msgid "Fake packages and meta-packages are similar, in that they are empty shells that only exist for the effects their meta-data have on the package handling stack."
 msgstr ""
@@ -148,7 +148,7 @@ msgid ""
 " In fact, the package is not installed since a newer version\n"
 " of the module has been manually compiled &amp; installed in the\n"
 " site_perl directory."
-msgstr ""
+msgstr "\nSection: perl\nPriority: optional\nStandards-Version: 3.9.6\n\nPackage: libxml-libxml-perl\nVersion: 2.0116-1\nMaintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\nDepends: libxml2 (&gt;= 2.7.4)\nArchitecture: all\nDescription: Fake package - module manually installed in site_perl\n This is a fake package to let the packaging system\n believe that this Debian package is installed. \n .\n In fact, the package is not installed since a newer version\n of the module has been manually compiled &amp; installed in the\n site_perl directory."
 
 msgid "The next step is to generate the Debian package with the <command>equivs-build <replaceable>file</replaceable></command> command. Voilà: the package is created in the current directory and it can be handled like any other Debian package would."
 msgstr ""
@@ -182,16 +182,16 @@ msgid ""
 "Done. Please edit the files in the debian/ subdirectory now. You should also\n"
 "check that the falcot-data Makefiles install into $DESTDIR and not in / .\n"
 "$</computeroutput>"
-msgstr ""
+msgstr "\n<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n<computeroutput>\nType of package: single binary, indep binary, multiple binary, library, kernel module, kernel patch?\n [s/i/m/l/k/n] </computeroutput><userinput>i</userinput>\n<computeroutput>\nMaintainer name : Raphael Hertzog\nEmail-Address   : hertzog@debian.org\nDate            : Fri, 04 Sep 2015 12:09:39 -0400\nPackage Name    : falcot-data\nVersion         : 1.0\nLicense         : gpl3\nType of Package : Independent\nHit &lt;enter&gt; to confirm:\nCurrently there is no top level Makefile. This may require additional tuning.\nDone. Please edit the files in the debian/ subdirectory now. You should also\ncheck that the falcot-data Makefiles install into $DESTDIR and not in / .\n$</computeroutput>"
 
 msgid "The selected type of package (<emphasis>indep binary</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single binary</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
 msgstr ""
 
 msgid "<primary>package types</primary>"
-msgstr ""
+msgstr "<primary>pakettyper</primary>"
 
 msgid "<primary>package</primary><secondary>types</secondary>"
-msgstr ""
+msgstr "<primary>paket</primary><secondary>typer</secondary>"
 
 msgid "The <emphasis>multiple binary</emphasis> type corresponds to a source package leading to several binary packages. A particular case, <emphasis>library</emphasis>, is useful for shared libraries, since they need to follow strict packaging rules. In a similar fashion, <emphasis>kernel module</emphasis> or <emphasis>kernel patch</emphasis> should be restricted to packages containing kernel modules."
 msgstr ""
@@ -206,7 +206,7 @@ msgid ""
 "\n"
 "export EMAIL=\"hertzog@debian.org\"\n"
 "export DEBFULLNAME=\"Raphael Hertzog\""
-msgstr ""
+msgstr "\nexport EMAIL=\"hertzog@debian.org\"\nexport DEBFULLNAME=\"Raphael Hertzog\""
 
 msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file should be kept, since it is required for the correct functioning of the <emphasis>debhelper</emphasis> suite of programs (all beginning with the <command>dh_</command> prefix) used at various stages of the package build process."
 msgstr ""
@@ -215,7 +215,7 @@ msgid "The <filename>copyright</filename> file must contain information about th
 msgstr ""
 
 msgid "The <filename>control</filename> file"
-msgstr ""
+msgstr "<filename>control</filename> filen"
 
 msgid ""
 "\n"
@@ -237,7 +237,7 @@ msgid ""
 " .\n"
 " These documents MUST NOT leave the company.\n"
 " Their use is INTERNAL ONLY."
-msgstr ""
+msgstr "\nSource: falcot-data\nSection: misc\nPriority: optional\nMaintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\nBuild-Depends: debhelper (&gt;= 9)\nStandards-Version: 3.9.5\n\nPackage: falcot-data\nArchitecture: all\nDepends: iceweasel | www-browser, ${misc:Depends}\nDescription: Internal Falcot Corp Documentation\n This package provides several documents describing the internal\n structure at Falcot Corp.  This includes:\n  - organization diagram\n  - contacts for each department.\n .\n These documents MUST NOT leave the company.\n Their use is INTERNAL ONLY."
 
 msgid "The <filename>changelog</filename> file"
 msgstr ""
@@ -252,10 +252,10 @@ msgid ""
 "    - contacts for each department.\n"
 "\n"
 " -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400"
-msgstr ""
+msgstr "\nfalcot-data (1.0) internal; urgency=low\n\n  * Initial Release.\n  * Let's start with few documents:\n    - internal company structure;\n    - contacts for each department.\n\n -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400"
 
 msgid "The <filename>copyright</filename> file"
-msgstr ""
+msgstr "<filename>copyright</filename> filen"
 
 msgid ""
 "\n"
@@ -266,13 +266,13 @@ msgid ""
 "Copyright: 2004-2015 Falcot Corp\n"
 "License: \n"
 " All rights reserved."
-msgstr ""
+msgstr "\nFormat: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\nUpstream-Name: falcot-data\n\nFiles: *\nCopyright: 2004-2015 Falcot Corp\nLicense: \n All rights reserved."
 
 msgid "<emphasis>BACK TO BASICS</emphasis> <filename>Makefile</filename> file"
 msgstr ""
 
 msgid "<primary><filename>Makefile</filename></primary>"
-msgstr ""
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 msgid "A <filename>Makefile</filename> file is a script used by the <command>make</command> program; it describes rules for how to build a set of files from each other in a tree of dependencies (for instance, a program can be built from a set of source files). The <filename>Makefile</filename> file describes these rules in the following format:"
 msgstr ""
@@ -299,13 +299,13 @@ msgstr ""
 msgid ""
 "\n"
 "data/* usr/share/falcot-data/"
-msgstr ""
+msgstr "\ndata/* usr/share/falcot-data/"
 
 msgid "At this point, the package can be created. We will however add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgstr ""
 
 msgid "The <filename>falcot-data.desktop</filename> file"
-msgstr ""
+msgstr "<filename>falcot-data.desktop</filename> fil"
 
 msgid ""
 "\n"
@@ -316,7 +316,7 @@ msgid ""
 "Terminal=false\n"
 "Type=Application\n"
 "Categories=Documentation;"
-msgstr ""
+msgstr "\n[Desktop Entry]\nName=Internal Falcot Corp Documentation\nComment=Starts a browser to read the documentation\nExec=x-www-browser /usr/share/falcot-data/index.html\nTerminal=false\nType=Application\nCategories=Documentation;"
 
 msgid "The updated <filename>debian/falcot-data.install</filename> looks like this:"
 msgstr ""
@@ -325,7 +325,7 @@ msgid ""
 "\n"
 "data/* usr/share/falcot-data/\n"
 "falcot-data.desktop usr/share/applications/"
-msgstr ""
+msgstr "\ndata/* usr/share/falcot-data/\nfalcot-data.desktop usr/share/applications/"
 
 msgid "Our source package is now ready. All that's left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
 msgstr ""
@@ -334,7 +334,7 @@ msgid "Creating a Package Repository for APT"
 msgstr ""
 
 msgid "<primary>package archive</primary>"
-msgstr ""
+msgstr "<primary>paket arkiv</primary>"
 
 msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary>"
 msgstr ""
@@ -349,19 +349,19 @@ msgid ""
 "\n"
 "deb http://packages.falcot.com/ updates/\n"
 "deb http://packages.falcot.com/ internal/"
-msgstr ""
+msgstr "\ndeb http://packages.falcot.com/ updates/\ndeb http://packages.falcot.com/ internal/"
 
 msgid "<primary><command>mini-dinstall</command></primary>"
-msgstr ""
+msgstr "<primary><command>mini-dinstall</command></primary>"
 
 msgid "The administrators therefore configure a virtual host on their internal HTTP server, with <filename>/srv/vhosts/packages/</filename> as the root of the associated web space. The management of the archive itself is delegated to the <command>mini-dinstall</command> command (in the similarly-named package). This tool keeps an eye on an <filename>incoming/</filename> directory (in our case, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>) and waits for new packages there; when a package is uploaded, it is installed into a Debian archive at <filename>/srv/vhosts/packages/</filename>. The <command>mini-dinstall</command> command reads the <filename>*.changes</filename> file created when the Debian package is generated. These files contain a list of all other files associated with the version of the package (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, or their equivalents with other compression tools), and these allow <command>mini-dinstall</command> to know which files to install. <filename>*.changes</filename> files also contain the name of the target distribution (often <literal>unstable</literal>) mentioned in the latest <filename>debian/changelog</filename> entry, and <command>mini-dinstall</command> uses this information to decide where the package should be installed. This is why administrators must always change this field before building a package, and set it to <literal>internal</literal> or <literal>updates</literal>, depending on the target location. <command>mini-dinstall</command> then generates the files required by APT, such as <filename>Packages.gz</filename>."
 msgstr ""
 
 msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>"
-msgstr ""
+msgstr "<emphasis>ALTERNATIV</emphasis> <command>apt-ftparchive</command>"
 
 msgid "<primary><command>apt-ftparchive</command></primary>"
-msgstr ""
+msgstr "<primary><command>apt-ftparchive</command></primary>"
 
 msgid "If <command>mini-dinstall</command> seems too complex for your Debian archive needs, you can also use the <command>apt-ftparchive</command> command. This tool scans the contents of a directory and displays (on its standard output) a matching <filename>Packages</filename> file. In the Falcot Corp case, administrators could upload the packages directly into <filename>/srv/vhosts/packages/updates/</filename> or <filename>/srv/vhosts/packages/internal/</filename>, then run the following commands to create the <filename>Packages.gz</filename> files:"
 msgstr ""
@@ -373,7 +373,7 @@ msgid ""
 "<computeroutput>$ </computeroutput><userinput>gzip updates/Packages</userinput>\n"
 "<computeroutput>$ </computeroutput><userinput>apt-ftparchive packages internal &gt;internal/Packages</userinput>\n"
 "<computeroutput>$ </computeroutput><userinput>gzip internal/Packages</userinput>"
-msgstr ""
+msgstr "\n<computeroutput>$ </computeroutput><userinput>cd /srv/vhosts/packages</userinput>\n<computeroutput>$ </computeroutput><userinput>apt-ftparchive packages updates &gt;updates/Packages</userinput>\n<computeroutput>$ </computeroutput><userinput>gzip updates/Packages</userinput>\n<computeroutput>$ </computeroutput><userinput>apt-ftparchive packages internal &gt;internal/Packages</userinput>\n<computeroutput>$ </computeroutput><userinput>gzip internal/Packages</userinput>"
 
 msgid "The <command>apt-ftparchive sources</command> command allows creating <filename>Sources.gz</filename> files in a similar fashion."
 msgstr ""
@@ -399,7 +399,7 @@ msgid ""
 "\n"
 "[internal]\n"
 "release_label = Internal Packages"
-msgstr ""
+msgstr "\n[DEFAULT]\narchive_style = flat\narchivedir = /srv/vhosts/packages\n\nverify_sigs = 0\nmail_to = admin@falcot.com\n\ngenerate_release = 1\nrelease_origin = Falcot Corp\nrelease_codename = stable\n\n[updates]\nrelease_label = Recompiled Debian Packages\n\n[internal]\nrelease_label = Internal Packages"
 
 msgid "One decision worth noting is the generation of <filename>Release</filename> files for each archive. This can help manage package installation priorities using the <filename>/etc/apt/preferences</filename> configuration file (see <xref linkend=\"sect.apt.priorities\" /> for details)."
 msgstr ""
@@ -414,7 +414,7 @@ msgid "Invoking <command>mini-dinstall</command> actually starts a daemon in the
 msgstr ""
 
 msgid "<emphasis>EXTRA</emphasis> Generating a signed archive"
-msgstr ""
+msgstr "<emphasis>EXTRA</emphasis> Generera ett signerat arkiv"
 
 msgid "The APT suite checks a chain of cryptographic signatures on the packages it handles before installing them, in order to ensure their authenticity (see <xref linkend=\"sect.package-authentication\" />). Private APT archives can then be a problem, since the machines using them will keep displaying warnings about unsigned packages. A diligent administrator will therefore integrate private archives with the secure APT mechanism."
 msgstr ""
@@ -432,7 +432,7 @@ msgid "Creating a quality Debian package is not always a simple task, and becomi
 msgstr ""
 
 msgid "Rules"
-msgstr ""
+msgstr "Regler"
 
 msgid "A Debian package must comply with the precise rules compiled in the Debian policy, and each package maintainer must know them. There is no requirement to know them by heart, but rather to know they exist and to refer to them whenever a choice presents a non-trivial alternative. Every Debian maintainer has made mistakes by not knowing about a rule, but this is not a huge problem as long as the error gets fixed when a user reports it as a bug report (which tends to happen fairly soon thanks to advanced users). <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
 msgstr ""
@@ -447,7 +447,7 @@ msgid "Debian is not a simple collection of individual packages. Everyone's pack
 msgstr ""
 
 msgid "Tools"
-msgstr ""
+msgstr "Verktyg"
 
 msgid "Many tools help package maintainers in their work. This section describes them quickly, but does not give the full details, since they all have comprehensive documentation of their own."
 msgstr ""
@@ -468,7 +468,7 @@ msgid "The <command>piuparts</command> Program"
 msgstr ""
 
 msgid "<primary><command>piuparts</command></primary>"
-msgstr ""
+msgstr "<primary><command>piuparts</command></primary>"
 
 msgid "This is another important tool: it automates the installation, upgrade, removal and purge of a package (in an isolated environment), and checks that none of these operations leads to an error. It can help in detecting missing dependencies, and it also detects when files are incorrectly left over after the package got purged."
 msgstr ""
@@ -480,19 +480,19 @@ msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
 msgstr ""
 
 msgid "<primary><command>debuild</command></primary>"
-msgstr ""
+msgstr "<primary><command>debuild</command></primary>"
 
 msgid "<primary><command>dch</command></primary>"
-msgstr ""
+msgstr "<primary><command>dch</command></primary>"
 
 msgid "<primary><command>uscan</command></primary>"
-msgstr ""
+msgstr "<primary><command>uscan</command></primary>"
 
 msgid "<primary><command>debi</command></primary>"
-msgstr ""
+msgstr "<primary><command>debi</command></primary>"
 
 msgid "<primary><command>debc</command></primary>"
-msgstr ""
+msgstr "<primary><command>debc</command></primary>"
 
 msgid "The <emphasis role=\"pkg\">devscripts</emphasis> package contains many programs helping with a wide array of a Debian developer's job:"
 msgstr ""
@@ -528,13 +528,13 @@ msgid "<command>uupdate</command> automates the creation of a new revision of a 
 msgstr ""
 
 msgid "<emphasis role=\"pkg\">debhelper</emphasis> and <emphasis role=\"pkg\">dh-make</emphasis>"
-msgstr ""
+msgstr "<emphasis role=\"pkg\">debhelper</emphasis> och <emphasis role=\"pkg\">dh-make</emphasis>"
 
 msgid "<primary><emphasis>debhelper</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>debhelper</emphasis></primary>"
 
 msgid "<primary><emphasis>dh-make</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
 msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix."
 msgstr ""
@@ -585,7 +585,7 @@ msgid "The first (real) step consists in finding a sponsor or advocate; this mea
 msgstr ""
 
 msgid "<primary>key pair</primary>"
-msgstr ""
+msgstr "<primary>nyckel par</primary>"
 
 msgid "At the same time, the candidate must generate a public/private RSA key pair with GnuPG, which should be signed by at least two official Debian developers. The signature authenticates the name on the key. Effectively, during a key signing party, each participant must show an official identification (usually an ID card or passport) together with their key identifiers. This step confirms the link between the human and the keys. This signature thus requires meeting in real life. If you have not yet met any Debian developers in a public free software conference, you can explicitly seek developers living nearby using the list on the following webpage as a starting point. <ulink type=\"block\" url=\"https://wiki.debian.org/Keysigning\" />"
 msgstr ""
