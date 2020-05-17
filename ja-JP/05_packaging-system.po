@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2019-02-03 09:00+0900\n"
+"POT-Creation-Date: 2020-05-17 17:54+0200\n"
 "PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/debian-handbook/tree/master/translation/ja_JP/push>\n"
@@ -29,6 +29,9 @@ msgstr "ソースパッケージ"
 msgid "dpkg"
 msgstr "dpkg"
 
+msgid "deb"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "dependencies"
 msgstr "依存関係"
@@ -46,7 +49,9 @@ msgid "As a Debian system administrator, you will routinely handle <filename>.de
 msgstr "Debian システム管理者は日常的に <filename>.deb</filename> パッケージを取り扱います。なぜなら、パッケージにはそのパッケージを使うために必要なすべての要素 (アプリケーション、文書など) が含まれており、パッケージによってこれらの要素のインストールとメンテナンスが楽になるからです。ゆえに、パッケージとはどのようなもので、パッケージはどのように取り扱われるべきものなのかを知っておくことは良い考えです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "This chapter describes the structure and contents of “binary” and “source” packages. The former are <filename>.deb</filename> files, directly usable by <command>dpkg</command>, while the latter contain the source code, as well as instructions for building binary packages."
+#, fuzzy
+#| msgid "This chapter describes the structure and contents of “binary” and “source” packages. The former are <filename>.deb</filename> files, directly usable by <command>dpkg</command>, while the latter contain the source code, as well as instructions for building binary packages."
+msgid "This chapter describes the structure and contents of “binary” and “source” packages. The former are files directly usable by <command>dpkg</command>, while the latter contain the source code, as well as instructions for building binary packages."
 msgstr "この章では、「バイナリパッケージ」と「ソースパッケージ」の構造と内容について説明します。バイナリパッケージとは <command>dpkg</command> が直接取り扱う <filename>.deb</filename> ファイルです。一方、ソースパッケージにはソースコードおよびバイナリパッケージをビルドするための説明が含まれています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -54,7 +59,9 @@ msgid "Structure of a Binary Package"
 msgstr "バイナリパッケージの構造"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>package</primary><secondary>binary package</secondary>"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>binary package</secondary>"
+msgid "<primary>package</primary><secondary>binary package</secondary><seealso><filename>.deb</filename></seealso>"
 msgstr "<primary>パッケージ</primary><secondary>バイナリパッケージ</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -62,31 +69,47 @@ msgid "<primary><command>ar</command></primary>"
 msgstr "<primary><command>ar</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The Debian package format is designed so that its content may be extracted on any Unix system that has the classic commands <command>ar</command>, <command>tar</command>, and <command>xz</command> (sometimes <command>gzip</command> or <command>bzip2</command>). This seemingly trivial property is important for portability and disaster recovery."
+msgid "<primary><command>dpkg</command></primary>"
+msgstr "<primary><command>dpkg</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "The Debian package format is designed so that its content may be extracted on any Unix system that has the classic commands <command>ar</command>, <command>tar</command>, and <command>xz</command> (sometimes <command>gzip</command> or <command>bzip2</command>). This seemingly trivial property is important for portability and disaster recovery."
+msgid "The Debian package format is designed so that its content may be extracted on any Unix system that has the classic commands <command>ar</command>, <command>tar</command>, and <command>xz</command> or sometimes <command>gzip</command> or <command>bzip2</command>. This seemingly trivial property is important for portability and disaster recovery."
 msgstr "Debian パッケージのフォーマットは伝統的なコマンドである <command>ar</command>、<command>tar</command>、<command>xz</command> (<command>gzip</command> や <command>bzip2</command> の場合もあります) を備える Unix システムで内容を展開できるように設計されました。この一見たわいもない特徴は可搬性と障害復旧を考えると重要です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Imagine, for example, that you mistakenly deleted the <command>dpkg</command> program, and that you could thus no longer install Debian packages. <command>dpkg</command> being a Debian package itself, it would seem your system would be done for... Fortunately, you know the format of a package and can therefore download the <filename>.deb</filename> file of the <emphasis role=\"pkg\">dpkg</emphasis> package and install it manually (see sidebar <xref linkend=\"sidebar.dpkg-apt-ar\" />). If by some misfortune one or more of the programs <command>ar</command>, <command>tar</command> or <command>gzip</command>/<command>xz</command>/<command>bzip2</command> have disappeared, you will only need to copy the missing program from another system (since each of these operates in a completely autonomous manner, without dependencies, a simple copy will suffice). If your system suffered some even more outrageous fortune, and even these don't work (maybe the deepest system libraries are missing?), you should try the static version of <command>busybox</command> (provided in the <emphasis role=\"pkg\">busybox-static</emphasis> package), which is even more self-contained, and provides subcommands such as <command>busybox ar</command>, <command>busybox tar</command> and <command>busybox xz</command>."
+#, fuzzy
+#| msgid "Imagine, for example, that you mistakenly deleted the <command>dpkg</command> program, and that you could thus no longer install Debian packages. <command>dpkg</command> being a Debian package itself, it would seem your system would be done for... Fortunately, you know the format of a package and can therefore download the <filename>.deb</filename> file of the <emphasis role=\"pkg\">dpkg</emphasis> package and install it manually (see sidebar <xref linkend=\"sidebar.dpkg-apt-ar\" />). If by some misfortune one or more of the programs <command>ar</command>, <command>tar</command> or <command>gzip</command>/<command>xz</command>/<command>bzip2</command> have disappeared, you will only need to copy the missing program from another system (since each of these operates in a completely autonomous manner, without dependencies, a simple copy will suffice). If your system suffered some even more outrageous fortune, and even these don't work (maybe the deepest system libraries are missing?), you should try the static version of <command>busybox</command> (provided in the <emphasis role=\"pkg\">busybox-static</emphasis> package), which is even more self-contained, and provides subcommands such as <command>busybox ar</command>, <command>busybox tar</command> and <command>busybox xz</command>."
+msgid "Imagine, for example, that you mistakenly deleted the <command>dpkg</command> program, and that you could thus no longer install Debian packages. <command>dpkg</command> being a Debian package itself, it would seem your system would be done for... Fortunately, you know the format of a package and can therefore <ulink url=\"https://www.debian.org/distrib/packages#search_packages\">download</ulink> the <filename>.deb</filename> file of the <emphasis role=\"pkg\">dpkg</emphasis> package and install it manually (see sidebar <xref linkend=\"sidebar.dpkg-apt-ar\" />). If by some misfortune one or more of the programs <command>ar</command>, <command>tar</command> or <command>gzip</command>/<command>xz</command>/<command>bzip2</command> have disappeared, you will only need to copy the missing program from another system (since each of these operates in a completely autonomous manner, without dependencies, a simple copy will suffice). If your system suffered some even more outrageous fortune, and even these don't work (maybe the deepest system libraries are missing?), you should try the static version of <command>busybox</command> (provided in the <emphasis role=\"pkg\">busybox-static</emphasis> package), which is even more self-contained, and provides subcommands such as <command>busybox ar</command>, <command>busybox tar</command> and <command>busybox xz</command>."
 msgstr "たとえば、誤って <command>dpkg</command> プログラムを削除して、Debian パッケージをインストールできなくなったとしましょう。<command>dpkg</command> は Debian パッケージなので、もはやシステムを回復することは不可能のように見えます... 幸いなことに、パッケージの構成を知っていれば、<emphasis role=\"pkg\">dpkg</emphasis> パッケージの <filename>.deb</filename> ファイルをダウンロードし、手作業でパッケージをインストールできます (補注<xref linkend=\"sidebar.dpkg-apt-ar\" />を参照してください)。もし不幸にも、<command>ar</command>、<command>tar</command>、<command>gzip</command>/<command>xz</command>/<command>bzip2</command> のうち 1 つでもなかったら、足りないプログラムを別のシステムからコピーするだけで十分です (各々のプログラムは、依存関係がなく、完全に独立して動くため、単純にコピーすれば十分です)。システムが最悪の状況に陥ってこれらのプログラムが動かない場合 (最も根源的なシステムライブラリが欠けている場合?)、静的リンクされた <command>busybox</command> (<emphasis role=\"pkg\">busybox-static</emphasis> パッケージに含まれます) を試してみるべきです。静的リンクされた <command>busybox</command> はさらに依存関係が少なく、<command>busybox ar</command>、<command>busybox tar</command>、<command>busybox xz</command> などのサブコマンドを備えています。"
+
+msgid "<emphasis>In case of a misfortune you better also have a backup of your system (see <xref linkend=\"sect.backup\" />).</emphasis>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>TOOLS</emphasis> <command>dpkg</command>, <command>APT</command> and <command>ar</command>"
 msgstr "<emphasis>TOOLS</emphasis> <command>dpkg</command>、<command>APT</command>、<command>ar</command>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><command>dpkg</command></primary>"
-msgstr "<primary><command>dpkg</command></primary>"
+#, fuzzy
+#| msgid "<primary>dpkg</primary><secondary>database</secondary>"
+msgid "<primary>APT</primary><secondary><command>apt</command></secondary>"
+msgstr "<primary>dpkg</primary><secondary>データベース</secondary>"
+
+msgid "<primary>Advanced Packaging Tools</primary><seealso>APT</seealso>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>APT</primary>"
-msgstr "<primary>APT</primary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<command>dpkg</command> is the program that handles <filename>.deb</filename> files, notably extracting, analyzing, and unpacking them."
+#, fuzzy
+#| msgid "<command>dpkg</command> is the program that handles <filename>.deb</filename> files, notably extracting, analyzing, and unpacking them."
+msgid "<command>dpkg</command> is the program that handles <filename>.deb</filename> files (binary packages), notably extracting, analyzing, and unpacking them."
 msgstr "<command>dpkg</command> は <filename>.deb</filename> ファイルを取り扱うプログラムで、特に <filename>.deb</filename> ファイルの抽出、分析、展開を担当しています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<command>APT</command> is a group of programs that allows the execution of higher-level modifications to the system: installing or removing a package (while keeping dependencies satisfied), updating the system, listing the available packages, etc."
+#, fuzzy
+#| msgid "<command>APT</command> is a group of programs that allows the execution of higher-level modifications to the system: installing or removing a package (while keeping dependencies satisfied), updating the system, listing the available packages, etc."
+msgid "<acronym>APT</acronym> (the abbreviation of \"Advanced Packaging Tool\") is a group of programs that allows the execution of higher-level modifications to the system: installing or removing a package (while keeping dependencies satisfied), updating and upgrading the system, listing the available packages, etc."
 msgstr "<command>APT</command> はシステムの変更操作をさらに手際よく行うプログラム群です。具体的に言えば、<command>APT</command> はパッケージのインストールや削除 (依存関係を破壊することなく)、システムの更新、利用できるパッケージの表示などを行います。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -94,9 +117,14 @@ msgid "As for the <command>ar</command> program, it allows handling files of the
 msgstr "<command>ar</command> プログラムは ar アーカイブファイルを取り扱います。たとえば <command>ar t <replaceable>archive</replaceable></command> はアーカイブに含まれるファイルのリストを表示、<command>ar x <replaceable>archive</replaceable></command> は現在の作業ディレクトリにアーカイブからファイルを抽出、<command>ar d <replaceable>archive</replaceable> <replaceable>file</replaceable></command> はアーカイブからファイルを削除などの作業を行います。これ以外の機能は man ページ (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>) を参照してください。<command>ar</command> はとても基本的なツールであり、Unix 管理者はめったにこれを使いません。対して、<command>tar</command> は日常的に使われる、進化したアーカイブとファイルの管理プログラムです。そんなわけで、<command>dpkg</command> を誤って削除した場合でも、簡単に元の状態に戻すことが可能です。Debian パッケージをダウンロードして、<filename>data.tar.xz</filename> アーカイブからシステムのルート (<filename>/</filename>) で内容を抽出するだけです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>ar x dpkg_1.18.24_amd64.deb</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>"
 msgid ""
 "\n"
-"<computeroutput># </computeroutput><userinput>ar x dpkg_1.18.24_amd64.deb</userinput>\n"
+"<computeroutput># </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n"
 "<computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>"
 msgstr ""
 "\n"
@@ -124,16 +152,52 @@ msgid "Have a look at the content of a <filename>.deb</filename> file:"
 msgstr "それでは <filename>.deb</filename> ファイルの内容を見てみましょう。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.18.24_amd64.deb</userinput>\n"
+#| "<computeroutput>debian-binary\n"
+#| "control.tar.gz\n"
+#| "data.tar.xz\n"
+#| "$ </computeroutput><userinput>ar x dpkg_1.18.24_amd64.deb</userinput>\n"
+#| "<computeroutput>$ </computeroutput><userinput>ls</userinput>\n"
+#| "<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.18.24_amd64.deb\n"
+#| "$ </computeroutput><userinput>tar tJf data.tar.xz | head -n 15</userinput>\n"
+#| "<computeroutput>./\n"
+#| "./etc/\n"
+#| "./etc/alternatives/\n"
+#| "./etc/alternatives/README\n"
+#| "./etc/cron.daily/\n"
+#| "./etc/cron.daily/dpkg\n"
+#| "./etc/dpkg/\n"
+#| "./etc/dpkg/dpkg.cfg\n"
+#| "./etc/dpkg/dpkg.cfg.d/\n"
+#| "./etc/logrotate.d/\n"
+#| "./etc/logrotate.d/dpkg\n"
+#| "./sbin/\n"
+#| "./sbin/start-stop-daemon\n"
+#| "./usr/\n"
+#| "./usr/bin/\n"
+#| "$ </computeroutput><userinput>tar tzf control.tar.gz</userinput>\n"
+#| "<computeroutput>./\n"
+#| "./conffiles\n"
+#| "./postinst\n"
+#| "./md5sums\n"
+#| "./prerm\n"
+#| "./control\n"
+#| "./postrm\n"
+#| "$ </computeroutput><userinput>cat debian-binary</userinput>\n"
+#| "<computeroutput>2.0</computeroutput>"
 msgid ""
-"<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.18.24_amd64.deb</userinput>\n"
+"<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.19.7_amd64.deb</userinput>\n"
 "<computeroutput>debian-binary\n"
 "control.tar.gz\n"
 "data.tar.xz\n"
-"$ </computeroutput><userinput>ar x dpkg_1.18.24_amd64.deb</userinput>\n"
+"$ </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n"
 "<computeroutput>$ </computeroutput><userinput>ls</userinput>\n"
-"<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.18.24_amd64.deb\n"
-"$ </computeroutput><userinput>tar tJf data.tar.xz | head -n 15</userinput>\n"
+"<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.19.7_amd64.deb\n"
+"$ </computeroutput><userinput>tar tJf data.tar.xz | head -n 16</userinput>\n"
 "<computeroutput>./\n"
+"./\n"
 "./etc/\n"
 "./etc/alternatives/\n"
 "./etc/alternatives/README\n"
@@ -143,18 +207,18 @@ msgid ""
 "./etc/dpkg/dpkg.cfg\n"
 "./etc/dpkg/dpkg.cfg.d/\n"
 "./etc/logrotate.d/\n"
+"./etc/logrotate.d/alternatives\n"
 "./etc/logrotate.d/dpkg\n"
 "./sbin/\n"
 "./sbin/start-stop-daemon\n"
 "./usr/\n"
 "./usr/bin/\n"
-"$ </computeroutput><userinput>tar tzf control.tar.gz</userinput>\n"
+"$ </computeroutput><userinput>tar tJf control.tar.xz</userinput>\n"
 "<computeroutput>./\n"
 "./conffiles\n"
-"./postinst\n"
-"./md5sums\n"
-"./prerm\n"
 "./control\n"
+"./md5sums\n"
+"./postinst\n"
 "./postrm\n"
 "$ </computeroutput><userinput>cat debian-binary</userinput>\n"
 "<computeroutput>2.0</computeroutput>"
@@ -198,15 +262,51 @@ msgid "As you can see, the <command>ar</command> archive of a Debian package is 
 msgstr "ご覧の通り、Debian パッケージの <command>ar</command> アーカイブは以下の 3 つのファイルから成り立っています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<filename>debian-binary</filename>. This is a text file which simply indicates the version of the <filename>.deb</filename> file used (in 2017: version 2.0)."
+#, fuzzy
+#| msgid "A <filename>.dsc</filename> file"
+msgid "<filename>debian-binary</filename>"
+msgstr "<filename>.dsc</filename> ファイルの一例"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<filename>debian-binary</filename>. This is a text file which simply indicates the version of the <filename>.deb</filename> file used (in 2017: version 2.0)."
+msgid "This is a text file which simply indicates the version of the <filename>.deb</filename> file package format version. In Debian <emphasis role=\"distribution\">Buster</emphasis> it is still version 2.0."
 msgstr "<filename>debian-binary</filename>。これは使われている <filename>.deb</filename> ファイルのバージョンを示す (2017 年の時点ではバージョン 2.0) テキストファイルです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<filename>control.tar.gz</filename>. This archive file contains all of the available meta-information, like the name and version of the package. Some of this meta-information allows package management tools to determine if it is possible to install or uninstall it, for example according to the list of packages already on the machine."
+#, fuzzy
+#| msgid "<primary><filename>control.tar.gz</filename></primary>"
+msgid "<filename>control.tar.xz</filename>"
+msgstr "<primary><filename>control.tar.gz</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<filename>control.tar.gz</filename>. This archive file contains all of the available meta-information, like the name and version of the package. Some of this meta-information allows package management tools to determine if it is possible to install or uninstall it, for example according to the list of packages already on the machine."
+msgid "This archive file contains all of the available meta-information, like the name and version of the package as well as some scripts to run before, during or after (un-)installation of it. Some of the meta-information allows package management tools to determine if it is possible to install or uninstall it, for example according to the list of packages already on the machine, and if files shipped have been modified locally."
 msgstr "<filename>control.tar.gz</filename>。このアーカイブファイルには、パッケージの名前やバージョンなど、利用できるすべてのメタ情報が含まれています。このメタ情報の一部と、たとえば、マシンにインストールされているパッケージのリストを照らし合わせて、パッケージ管理ツールはパッケージをインストールまたはアンインストールが可能かを決定します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<filename>data.tar.xz</filename>. This archive contains all of the files to be extracted from the package; this is where the executable files, documentation, etc., are all stored. Some packages may use other compression formats, in which case the file will be named differently (<filename>data.tar.bz2</filename> for bzip2, <filename>data.tar.gz</filename> for gzip)."
+#, fuzzy
+#| msgid "A <filename>.dsc</filename> file"
+msgid "<filename>data.tar.xz</filename>"
+msgstr "<filename>.dsc</filename> ファイルの一例"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "A <filename>.dsc</filename> file"
+msgid "<filename>data.tar.bz2</filename>"
+msgstr "<filename>.dsc</filename> ファイルの一例"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "A <filename>.dsc</filename> file"
+msgid "<filename>data.tar.gz</filename>"
+msgstr "<filename>.dsc</filename> ファイルの一例"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<filename>data.tar.xz</filename>. This archive contains all of the files to be extracted from the package; this is where the executable files, documentation, etc., are all stored. Some packages may use other compression formats, in which case the file will be named differently (<filename>data.tar.bz2</filename> for bzip2, <filename>data.tar.gz</filename> for gzip)."
+msgid "This archive contains all of the files to be extracted from the package; this is where the executable files, libraries, documentation, etc., are all stored. Packages may use different compression formats, in which case the file will be named differently for <command>xz</command>, <command>bzip2</command> or <command>gzip</command>."
 msgstr "<filename>data.tar.xz</filename>。このアーカイブには、パッケージから展開されるすべてのファイルが含まれています。つまり、実行ファイル、文書などすべてが保存されています。一部のパッケージでは異なる圧縮フォーマットが使われているかもしれません、このような場合、ファイルは別の名前が付けられています (bzip2 の場合 <filename>data.tar.bz2</filename>、gzip の場合 <filename>data.tar.gz</filename> です)。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -214,16 +314,32 @@ msgid "Package Meta-Information"
 msgstr "パッケージのメタ情報"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>package meta-information</primary>"
-msgstr "<primary sortas=\"メタジョウホウ\">メタ情報</primary><secondary>パッケージ</secondary>"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>meta-information</secondary>"
+msgid "<primary>package meta-information</primary><seealso>meta-information</seealso>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"メタジョウホウ\">メタ情報</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary>package</primary><secondary>meta-information</secondary>"
 msgstr "<primary>パッケージ</primary><secondary sortas=\"メタジョウホウ\">メタ情報</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>status</secondary>"
+msgid "<primary>package</primary><secondary>maintainer scripts</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"ジョウタイ\">状態</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>status</secondary>"
+msgid "<primary>package</primary><secondary>checksums</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"ジョウタイ\">状態</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: PTAL;
-msgid "The Debian package is not only an archive of files intended for installation. It is part of a larger whole, and it describes its relationship with other Debian packages (dependencies, conflicts, suggestions). It also provides scripts that enable the execution of commands at different stages in the package's lifecycle (installation, removal, upgrades). These data are used by the package management tools but are not part of the packaged software; they are, within the package, what is called its “meta-information” (information about other information)."
+#, fuzzy
+#| msgid "The Debian package is not only an archive of files intended for installation. It is part of a larger whole, and it describes its relationship with other Debian packages (dependencies, conflicts, suggestions). It also provides scripts that enable the execution of commands at different stages in the package's lifecycle (installation, removal, upgrades). These data are used by the package management tools but are not part of the packaged software; they are, within the package, what is called its “meta-information” (information about other information)."
+msgid "The Debian package is not only an archive of files intended for installation. It is part of a larger whole and describes its relationship with other Debian packages (requisites, dependencies, conflicts, suggestions). It also provides scripts that enable the execution of commands at different stages in the package's lifecycle (installation, upgrade, removal). These data are used by the package management tools but are not part of the packaged software; they are, within the package, what is called its “meta-information” (information about other information)."
 msgstr "Debian パッケージはインストールされるファイルのアーカイブというだけではありません。Debian パッケージには他の Debian パッケージとの関係性 (依存関係、衝突、提案) を表す情報が含まれています。さらに Debian パッケージにはスクリプトも含まれています。このスクリプトはパッケージライフサイクルのある時点 (インストール、削除、アップグレード) にコマンドを実行するためのものです。これらのデータはパッケージ管理ツールによって使われますが、パッケージングされたソフトウェアの一部ではありません。しかし、これらのデータはパッケージの「メタ情報」(ソフトウェア以外の情報のデータ) と呼ばれて、パッケージに含まれています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -231,27 +347,88 @@ msgid "Description: the <filename>control</filename> File"
 msgstr "説明、<filename>control</filename> ファイル"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><filename>control</filename></primary>"
-msgstr "<primary><filename>control</filename></primary>"
+msgid "<primary>package meta-information</primary>"
+msgstr "<primary sortas=\"メタジョウホウ\">メタ情報</primary><secondary>パッケージ</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "This file uses a structure similar to email headers (as defined by RFC 2822). For example, for <emphasis role=\"pkg\">apt</emphasis>, the <filename>control</filename> file looks like the following:"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>file list</secondary>"
+msgid "<primary>package</primary><secondary><filename>control</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary>ファイルリスト</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><filename>control</filename></primary>"
+msgid "<primary><filename>control</filename></primary><seealso>package meta-information</seealso>"
+msgstr "<primary><filename>control</filename></primary>"
+
+msgid "This file uses a structure similar to email headers (as defined by <link linkend=\"sidebar.rfc\">RFC 2822</link>) and is fully described in the Debian Policy and the manual pages <citerefentry><refentrytitle>deb-control</refentrytitle><manvolnum>5</manvolnum></citerefentry> and <citerefentry><refentrytitle>deb822</refentrytitle><manvolnum>5</manvolnum></citerefentry>. <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/ch-controlfields.html\" />"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "This file uses a structure similar to email headers (as defined by RFC 2822). For example, for <emphasis role=\"pkg\">apt</emphasis>, the <filename>control</filename> file looks like the following:"
+msgid "For example, for <emphasis role=\"pkg\">apt</emphasis>, the <filename>control</filename> file looks like the following:"
 msgstr "<filename>control</filename> ファイルは (RFC 2822 の定義する) 電子メールヘッダとよく似た構造を使っています。たとえば、<emphasis role=\"pkg\">apt</emphasis> の <filename>control</filename> ファイルは以下のような内容を持っています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>\n"
+#| "<computeroutput>Package: apt\n"
+#| "Version: 1.4.8\n"
+#| "Installed-Size: 3539\n"
+#| "Maintainer: APT Development Team &lt;deity@lists.debian.org&gt;\n"
+#| "Architecture: amd64\n"
+#| "Replaces: apt-utils (&lt;&lt; 1.3~exp2~)\n"
+#| "Depends: adduser, gpgv | gpgv2 | gpgv1, debian-archive-keyring, init-system-helpers (&gt;= 1.18~), libapt-pkg5.0 (&gt;= 1.3~rc2), libc6 (&gt;= 2.15), libgcc1 (&gt;= 1:3.0), libstdc++6 (&gt;= 5.2)\n"
+#| "Recommends: gnupg | gnupg2 | gnupg1\n"
+#| "Suggests: apt-doc, aptitude | synaptic | wajig, dpkg-dev (&gt;= 1.17.2), powermgmt-base, python-apt\n"
+#| "Breaks: apt-utils (&lt;&lt; 1.3~exp2~)\n"
+#| "Description-en: commandline package manager\n"
+#| " This package provides commandline tools for searching and\n"
+#| " managing as well as querying information about packages\n"
+#| " as a low-level access to all features of the libapt-pkg library.\n"
+#| " .\n"
+#| " These include:\n"
+#| "  * apt-get for retrieval of packages and information about them\n"
+#| "    from authenticated sources and for installation, upgrade and\n"
+#| "    removal of packages together with their dependencies\n"
+#| "  * apt-cache for querying available information about installed\n"
+#| "    as well as installable packages\n"
+#| "  * apt-cdrom to use removable media as a source for packages\n"
+#| "  * apt-config as an interface to the configuration settings\n"
+#| "  * apt-key as an interface to manage authentication keys\n"
+#| "Description-md5: 9fb97a88cb7383934ef963352b53b4a7\n"
+#| "Tag: admin::package-management, devel::lang:ruby, hardware::storage,\n"
+#| " hardware::storage:cd, implemented-in::c++, implemented-in::perl,\n"
+#| " implemented-in::ruby, interface::commandline, network::client,\n"
+#| " protocol::ftp, protocol::http, protocol::ipv6, role::program,\n"
+#| " scope::application, scope::utility, sound::player, suite::debian,\n"
+#| " use::downloading, use::organizing, use::searching, works-with::audio,\n"
+#| " works-with::software:package, works-with::text\n"
+#| "Section: admin\n"
+#| "Priority: important\n"
+#| "Filename: pool/main/a/apt/apt_1.4.8_amd64.deb\n"
+#| "Size: 1231676\n"
+#| "MD5sum: 4963240f23156b2dda3affc9c0d416a3\n"
+#| "SHA256: bc319a3abaf98d76e7e13ac97ab0ee7c238a48e2d4ab85524be8b10cfd23d50d</computeroutput>"
 msgid ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>\n"
-"<computeroutput>Package: apt\n"
-"Version: 1.4.8\n"
-"Installed-Size: 3539\n"
-"Maintainer: APT Development Team &lt;deity@lists.debian.org&gt;\n"
+"<computeroutput><![CDATA[\n"
+"Package: apt\n"
+"Version: 1.8.2\n"
+"Installed-Size: 4064\n"
+"Maintainer: APT Development Team <deity@lists.debian.org>\n"
 "Architecture: amd64\n"
-"Replaces: apt-utils (&lt;&lt; 1.3~exp2~)\n"
-"Depends: adduser, gpgv | gpgv2 | gpgv1, debian-archive-keyring, init-system-helpers (&gt;= 1.18~), libapt-pkg5.0 (&gt;= 1.3~rc2), libc6 (&gt;= 2.15), libgcc1 (&gt;= 1:3.0), libstdc++6 (&gt;= 5.2)\n"
-"Recommends: gnupg | gnupg2 | gnupg1\n"
-"Suggests: apt-doc, aptitude | synaptic | wajig, dpkg-dev (&gt;= 1.17.2), powermgmt-base, python-apt\n"
-"Breaks: apt-utils (&lt;&lt; 1.3~exp2~)\n"
+"Replaces: apt-transport-https (<< 1.5~alpha4~), apt-utils (<< 1.3~exp2~)\n"
+"Provides: apt-transport-https (= 1.8.2)\n"
+"Depends: adduser, gpgv | gpgv2 | gpgv1, debian-archive-keyring, libapt-pkg5.0 (>= 1.7.0~alpha3~), libc6 (>= 2.15), libgcc1 (>= 1:3.0), libgnutls30 (>= 3.6.6), libseccomp2 (>= 1.0.1), libstdc++6 (>= 5.2)\n"
+"Recommends: ca-certificates\n"
+"Suggests: apt-doc, aptitude | synaptic | wajig, dpkg-dev (>= 1.17.2), gnupg | gnupg2 | gnupg1, powermgmt-base\n"
+"Breaks: apt-transport-https (<< 1.5~alpha4~), apt-utils (<< 1.3~exp2~), aptitude (<< 0.8.10)\n"
 "Description-en: commandline package manager\n"
 " This package provides commandline tools for searching and\n"
 " managing as well as querying information about packages\n"
@@ -271,15 +448,16 @@ msgid ""
 " hardware::storage:cd, implemented-in::c++, implemented-in::perl,\n"
 " implemented-in::ruby, interface::commandline, network::client,\n"
 " protocol::ftp, protocol::http, protocol::ipv6, role::program,\n"
-" scope::application, scope::utility, sound::player, suite::debian,\n"
-" use::downloading, use::organizing, use::searching, works-with::audio,\n"
-" works-with::software:package, works-with::text\n"
+" scope::application, scope::utility, suite::debian, use::downloading,\n"
+" use::organizing, use::playing, use::searching, works-with-format::html,\n"
+" works-with::audio, works-with::software:package, works-with::text\n"
 "Section: admin\n"
-"Priority: important\n"
-"Filename: pool/main/a/apt/apt_1.4.8_amd64.deb\n"
-"Size: 1231676\n"
-"MD5sum: 4963240f23156b2dda3affc9c0d416a3\n"
-"SHA256: bc319a3abaf98d76e7e13ac97ab0ee7c238a48e2d4ab85524be8b10cfd23d50d</computeroutput>"
+"Priority: required\n"
+"Filename: pool/main/a/apt/apt_1.8.2_amd64.deb\n"
+"Size: 1418108\n"
+"MD5sum: 0e80dedab6ec1e66a8f6c15f1925d2d3\n"
+"SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e\n"
+"]]></computeroutput>"
 msgstr ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>\n"
@@ -331,11 +509,15 @@ msgid "<primary>RFC</primary>"
 msgstr "<primary>RFC</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>Request For Comments</primary>"
+#, fuzzy
+#| msgid "<primary>Request For Comments</primary>"
+msgid "<primary>Request For Comments</primary><seealso>RFC</seealso>"
 msgstr "<primary>Request For Comments</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "RFC is the abbreviation of “Request For Comments”. An RFC is generally a technical document that describes what will become an Internet standard. Before becoming standardized and frozen, these standards are submitted for public review (hence their name). The IETF (Internet Engineering Task Force) decides on the evolution of the status of these documents (proposed standard, draft standard, or standard)."
+#, fuzzy
+#| msgid "RFC is the abbreviation of “Request For Comments”. An RFC is generally a technical document that describes what will become an Internet standard. Before becoming standardized and frozen, these standards are submitted for public review (hence their name). The IETF (Internet Engineering Task Force) decides on the evolution of the status of these documents (proposed standard, draft standard, or standard)."
+msgid "<acronym>RFC</acronym> is the abbreviation of “Request For Comments”. An RFC is generally a technical document that describes what will become an Internet standard. Before becoming standardized and frozen, these standards are submitted for public review (hence their name). The <acronym>IETF</acronym> (Internet Engineering Task Force) decides on the evolution of the status of these documents (proposed standard, draft standard, or standard)."
 msgstr "RFC は「Request For Comments」の略称です。RFC は一般的にインターネット標準になり得る技術の仕様を説明した技術文書です。標準化と決定の前に、これらの文書は公開レビューされます (そんなわけでこの名前が付いています)。IETF (インターネット技術タスクフォース) はこれらの文書の状態の進化 (標準化への提唱、標準化への草稿、標準) を決定します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -351,15 +533,28 @@ msgid "<primary>dependency</primary>"
 msgstr "<primary sortas=\"イゾン\">依存関係</primary><secondary>パッケージ</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><literal>Depends</literal>, header field</primary>"
+#, fuzzy
+#| msgid "<primary><literal>Depends</literal>, header field</primary>"
+msgid "<primary><literal>Depends</literal>, header field</primary><seealso>APT</seealso>"
 msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Depends</literal></secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><filename>control</filename></primary>"
+msgid "<primary><filename>control</filename></primary><secondary>Depends</secondary>"
+msgstr "<primary><filename>control</filename></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary>package</primary><secondary>dependency</secondary>"
 msgstr "<primary>パッケージ</primary><secondary sortas=\"イゾンカンケイ\">依存関係</secondary>"
 
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Depends</literal></tertiary>"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The dependencies are defined in the <literal>Depends</literal> field in the package header. This is a list of conditions to be met for the package to work correctly — this information is used by tools such as <command>apt</command> in order to install the required libraries, in appropriate versions fulfilling the dependencies of the package to be installed. For each dependency, it is possible to restrict the range of versions that meet that condition. In other words, it is possible to express the fact that we need the package <emphasis role=\"pkg\">libc6</emphasis> in a version equal to or greater than “2.15” (written “<command>libc6 (&gt;= 2.15)</command>”). Version comparison operators are as follows:"
+#, fuzzy
+#| msgid "The dependencies are defined in the <literal>Depends</literal> field in the package header. This is a list of conditions to be met for the package to work correctly — this information is used by tools such as <command>apt</command> in order to install the required libraries, in appropriate versions fulfilling the dependencies of the package to be installed. For each dependency, it is possible to restrict the range of versions that meet that condition. In other words, it is possible to express the fact that we need the package <emphasis role=\"pkg\">libc6</emphasis> in a version equal to or greater than “2.15” (written “<command>libc6 (&gt;= 2.15)</command>”). Version comparison operators are as follows:"
+msgid "The dependencies are defined in the <literal>Depends</literal> field in the package header. It is a list of conditions to be met for the package to work correctly. This information is used by tools such as <command>apt</command> in order to install the required libraries, tools, drivers, etc. in appropriate versions fulfilling the dependencies of the package to be installed. For each dependency, it is possible to restrict the range of versions that meet that condition. In other words, it is possible to express the fact that we need the package <emphasis role=\"pkg\">libc6</emphasis> in a version equal to or greater than “2.15” (written “<command>libc6 (&gt;= 2.15)</command>”). Version comparison operators are as follows:"
 msgstr "依存関係はパッケージヘッダの <literal>Depends</literal> フィールドで定義されています。依存関係はパッケージを正しく動かすために必要な条件を定義しています。すなわち <command>apt</command> などのツールはこの情報を使ってインストールしたいパッケージの依存関係を満たすために必要なバージョンのライブラリをインストールします。それぞれの依存パッケージについて、要求を満たすパッケージのバージョン範囲を指定することが可能です。言い換えれば、バージョン「2.15」以上の <emphasis role=\"pkg\">libc6</emphasis> パッケージが必要という条件を表現する (「<command>libc6 (&gt;= 2.15)</command>」と表記する) ことが可能です。バージョン比較演算子は次の通りです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -408,8 +603,17 @@ msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
 msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Pre-Depends</literal></secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>dependency</secondary>"
+msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"イゾンカンケイ\">依存関係</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary>pre-dependency</primary>"
 msgstr "<primary sortas=\"センコウイゾン\">先行依存</primary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
@@ -432,16 +636,60 @@ msgid "<primary><literal>Suggests</literal>, header field</primary>"
 msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Suggests</literal></secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>replacement</secondary>"
+msgid "<primary>package</primary><secondary>recommendations</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"ファイルノオキカエ\">ファイルの置き換え</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>purge</secondary>"
+msgid "<primary>package</primary><secondary>suggestions</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"カンゼンサクジョ\">完全削除</secondary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Recommends</literal></tertiary>"
+msgstr ""
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Suggests</literal></tertiary>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The <literal>Recommends</literal> and <literal>Suggests</literal> fields describe dependencies that are not compulsory. The “recommended” dependencies, the most important, considerably improve the functionality offered by the package but are not indispensable to its operation. The “suggested” dependencies, of secondary importance, indicate that certain packages may complement and increase their respective utility, but it is perfectly reasonable to install one without the others."
 msgstr "<literal>Recommends</literal> (推奨) と <literal>Suggests</literal> (提案) フィールドは必須ではない依存関係を表すためのものです。最も重要な「推奨」依存関係のパッケージは、パッケージの提供する機能を大幅に改善するけれども、動作に必要不可欠ではないパッケージです。2 番目に重要な「提案」依存関係のパッケージは、そのユーティリティの機能を補完したり強化する可能性があり、他のパッケージではなくこのパッケージをインストールするのが極めて合理的であるようなパッケージです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "You should always install the “recommended” packages, unless you know exactly why you do not need them. Conversely, it is not necessary to install “suggested” packages unless you know why you need them."
-msgstr "「推奨」パッケージは、それを必要としない理由を理解している場合を除いて、常にインストールされるべきです。逆に「提案」パッケージは、それを必要とする理由を理解している場合を除いて、インストールしなくても構いません。"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>installation</secondary>"
+msgid "<primary>APT</primary><secondary><literal>APT::Install-Recommends</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary>インストール</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>installation</secondary>"
+msgid "<primary>APT</primary><secondary><literal>APT::Install-Suggests</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary>インストール</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>incompatibility</secondary>"
+msgid "<primary>APT</primary><secondary><literal>Aptitude::Recommends-Important</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"フテキゴウセイ\">不適合性</secondary>"
+
+msgid "You should always install the “recommended” packages, unless you know exactly why you do not need them. This is now also the default for APT unless configured otherwise. Conversely, it is not necessary to install “suggested” packages unless you know why you need them. The behavior of <command>apt</command> can be controlled by using the <literal>APT::Install-Recommends</literal> and <literal>APT::Install-Suggests</literal> configuration options or the corresponding command line options <literal>--[no-]install-recommends</literal> and <literal>--[no-]install-suggests</literal>."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary><literal>Enhances</literal>, header field</primary>"
 msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Enhances</literal></secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>replacement</secondary>"
+msgid "<primary>package</primary><secondary>enhancements</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"ファイルノオキカエ\">ファイルの置き換え</secondary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Enhances</literal></tertiary>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The <literal>Enhances</literal> field also describes a suggestion, but in a different context. It is indeed located in the suggested package, and not in the package that benefits from the suggestion. Its interest lies in that it is possible to add a suggestion without having to modify the package that is concerned. Thus, all add-ons, plug-ins, and other extensions of a program can then appear in the list of suggestions related to the software. Although it has existed for several years, this last field is still largely ignored by programs such as <command>apt</command> or <command>synaptic</command>. Its purpose is for a suggestion made by the <literal>Enhances</literal> field to appear to the user in addition to the traditional suggestions — found in the <literal>Suggests</literal> field."
@@ -463,8 +711,13 @@ msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Conflicts
 msgid "<primary>package</primary><secondary>conflict</secondary>"
 msgstr "<primary>パッケージ</primary><secondary sortas=\"ショウトツ\">衝突</secondary>"
 
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Conflicts</literal></tertiary>"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The <literal>Conflicts</literal> field indicates when a package cannot be installed simultaneously with another. The most common reasons for this are that both packages include a file of the same name, or provide the same service on the same TCP port, or would hinder each other's operation."
+#, fuzzy
+#| msgid "The <literal>Conflicts</literal> field indicates when a package cannot be installed simultaneously with another. The most common reasons for this are that both packages include a file of the same name, or provide the same service on the same TCP port, or would hinder each other's operation."
+msgid "The <literal>Conflicts</literal> field indicates when a package cannot be installed simultaneously with another. The most common reasons for this are that both packages include a file of the same name and path, or provide the same service on the same TCP port, or would hinder each other's operation."
 msgstr "<literal>Conflicts</literal> フィールドでは、同時にインストールできないパッケージを指定します。このフィールドが使われるケースで最も多いのは、両方のパッケージが同名のファイルを含む場合、同種のサービスを同じ TCP ポートで提供する場合、互いの動作を妨げる場合です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -487,6 +740,9 @@ msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Breaks</l
 msgid "<primary>package</primary><secondary>incompatibility</secondary>"
 msgstr "<primary>パッケージ</primary><secondary sortas=\"フテキゴウセイ\">不適合性</secondary>"
 
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Breaks</literal></tertiary>"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The <literal>Breaks</literal> field has an effect similar to that of the <literal>Conflicts</literal> field, but with a special meaning. It signals that the installation of a package will “break” another package (or particular versions of it). In general, this incompatibility between two packages is transitory, and the <literal>Breaks</literal> relationship specifically refers to the incompatible versions."
 msgstr "<literal>Breaks</literal> フィールドは <literal>Conflicts</literal> フィールドとよく似た効果を持っていますが、特別な意味があります。すなわち、<literal>Breaks</literal> フィールドを持つパッケージは <literal>Breaks</literal> フィールドに指定された他のパッケージ (または他のパッケージの特定バージョン) を「破壊する」という意味があります。一般的に、このような 2 つのパッケージの不適合性は一時的なもので、<literal>Breaks</literal> フィールドでは不適合性がある特定のバージョンだけを指定します。"
@@ -506,6 +762,9 @@ msgstr "提供されるアイテム、<literal>Provides</literal> フィール�
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary><literal>Provides</literal>, header field</primary>"
 msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Provides</literal></secondary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Provides</literal></tertiary>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: PTAL;
@@ -558,7 +817,9 @@ msgid "Interchangeability with Another Package"
 msgstr "他のパッケージとの互換性"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The <literal>Provides</literal> field is also interesting when the content of a package is included in a larger package. For example, the <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> Perl module was an optional module in Perl 5.6, and has been integrated as standard in Perl 5.8 (and later versions, such as 5.24 present in <emphasis role=\"distribution\">Stretch</emphasis>). As such, the package <emphasis role=\"pkg\">perl</emphasis> has since version 5.8 declared <literal>Provides: libdigest-md5-perl</literal> so that the dependencies on this package are met if the user has Perl 5.8 (or newer). The <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> package itself has eventually been deleted, since it no longer had any purpose when old Perl versions were removed."
+#, fuzzy
+#| msgid "The <literal>Provides</literal> field is also interesting when the content of a package is included in a larger package. For example, the <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> Perl module was an optional module in Perl 5.6, and has been integrated as standard in Perl 5.8 (and later versions, such as 5.24 present in <emphasis role=\"distribution\">Stretch</emphasis>). As such, the package <emphasis role=\"pkg\">perl</emphasis> has since version 5.8 declared <literal>Provides: libdigest-md5-perl</literal> so that the dependencies on this package are met if the user has Perl 5.8 (or newer). The <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> package itself has eventually been deleted, since it no longer had any purpose when old Perl versions were removed."
+msgid "The <literal>Provides</literal> field is also interesting when the content of a package is included in a larger package. For example, the <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> Perl module was an optional module in Perl 5.6, and has been integrated as standard in Perl 5.8 (and later versions, such as 5.28 present in <emphasis role=\"distribution\">Buster</emphasis>). As such, the package <emphasis role=\"pkg\">perl</emphasis> has since version 5.8 declared <literal>Provides: libdigest-md5-perl</literal> so that the dependencies on this package are met if the user has Perl 5.8 (or newer). The <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> package itself has eventually been deleted, since it no longer had any purpose when old Perl versions were removed."
 msgstr "パッケージの内容が巨大なパッケージに統合された場合に、<literal>Provides</literal> フィールドはさらに興味深い役割を果たします。たとえば、<emphasis role=\"pkg\">libdigest-md5-perl</emphasis> Perl モジュールは Perl 5.6 では任意選択モジュールでしたが、Perl 5.8 (および <emphasis role=\"distribution\">Stretch</emphasis> に含まれる 5.24 などのその後のバージョン) では標準モジュールに組み込まれました。このため、<emphasis role=\"pkg\">perl</emphasis> パッケージはバージョン 5.8 から <literal>Provides: libdigest-md5-perl</literal> を宣言しています。そうすれば、ユーザが Perl 5.8 (とそれより新しいバージョン) を持っている場合、<emphasis role=\"pkg\">libdigest-md5-perl</emphasis> に依存するパッケージの依存関係を満足させることができるからです。そして最終的に実体を持つ <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> パッケージは削除されました。なぜなら、古い Perl バージョンが削除されたことで実体を持つ <emphasis role=\"pkg\">libdigest-md5-perl</emphasis> パッケージはもはや存在意義がなくなったからです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -577,12 +838,19 @@ msgstr "<emphasis>BACK TO BASICS</emphasis> Perl、プログラミング言語"
 msgid "<primary>Perl</primary>"
 msgstr "<primary>Perl</primary>"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>CPAN</primary>"
-msgstr "<primary>CPAN</primary>"
+msgid "<primary>CPAN</primary><seealso>Comprehensive Perl Archive Network</seealso>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Perl (Practical Extraction and Report Language) is a very popular programming language. It has many ready-to-use modules that cover a vast spectrum of applications, and that are distributed by the CPAN (Comprehensive Perl Archive Network) servers, an exhaustive network of Perl packages. <ulink type=\"block\" url=\"http://www.perl.org/\" /> <ulink type=\"block\" url=\"http://www.cpan.org/\" />"
+#, fuzzy
+#| msgid "<primary>decompressing, source package</primary>"
+msgid "<primary>Comprehensive Perl Archive Network</primary>"
+msgstr "<primary>ソースパッケージ</primary><secondary sortas=\"テンカイ\">展開</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "Perl (Practical Extraction and Report Language) is a very popular programming language. It has many ready-to-use modules that cover a vast spectrum of applications, and that are distributed by the CPAN (Comprehensive Perl Archive Network) servers, an exhaustive network of Perl packages. <ulink type=\"block\" url=\"http://www.perl.org/\" /> <ulink type=\"block\" url=\"http://www.cpan.org/\" />"
+msgid "Perl (Practical Extraction and Report Language) is a very popular programming language. It has many ready-to-use modules that cover a vast spectrum of applications, and that are distributed by the <acronym>CPAN</acronym> (Comprehensive Perl Archive Network) servers, an exhaustive network of Perl packages. <ulink type=\"block\" url=\"https://www.perl.org/\" /> <ulink type=\"block\" url=\"https://www.cpan.org/\" />"
 msgstr "Perl (Practical Extraction and Report Language) はとても人気の高いプログラミング言語です。Perl にはすぐに使えるモジュールが数多くあります。これらのモジュールは非常に広い分野における応用をカバーし、Perl パッケージの包括的ネットワークである CPAN (Comprehensive Perl Archive Network) サーバで配布されています。<ulink type=\"block\" url=\"http://www.perl.org/\" /><ulink type=\"block\" url=\"http://www.cpan.org/\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -598,7 +866,9 @@ msgid "Virtual packages used to suffer from some limitations, the most significa
 msgstr "かつて仮想パッケージにはいくつかの制限がありました。最も重要な制限はバージョン番号がなかったことでした。先に挙げた例に戻ると、Perl 5.10 が存在する場合、<literal>Depends: libdigest-md5-perl (&gt;= 1.6)</literal> という依存関係は満足されています (正しく言えば、十中八九は満足されています)。しかしながら、パッケージシステムはこの依存関係が満足されていることに気が付きませんでした。そして、パッケージシステムは指定されたバージョンが一致しないと仮定して最もリスクの低いオプションを選んでいました。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "This limitation has been lifted in <emphasis role=\"pkg\">dpkg</emphasis> 1.17.11, and is no longer relevant in Stretch. Packages can assign a version to the virtual packages they provide with a dependency such as <literal>Provides: libdigest-md5-perl (= 1.8)</literal>."
+#, fuzzy
+#| msgid "This limitation has been lifted in <emphasis role=\"pkg\">dpkg</emphasis> 1.17.11, and is no longer relevant in Stretch. Packages can assign a version to the virtual packages they provide with a dependency such as <literal>Provides: libdigest-md5-perl (= 1.8)</literal>."
+msgid "This limitation has been lifted in <emphasis role=\"pkg\">dpkg</emphasis> 1.17.11, and is no longer relevant. Packages can assign a version to the virtual packages they provide with a dependency such as <literal>Provides: libdigest-md5-perl (= 1.8)</literal>."
 msgstr "この制限は <emphasis role=\"pkg\">dpkg</emphasis> 1.17.11 で撤廃され、Stretch ではもはや関係のない話です。パッケージは自分自身が提供する仮想パッケージにバージョン番号を付けることが可能です。これを行うには <literal>Provides: libdigest-md5-perl (= 1.8)</literal> などのようにします。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -617,6 +887,9 @@ msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Replaces<
 msgid "<primary>package</primary><secondary>replacement</secondary>"
 msgstr "<primary>パッケージ</primary><secondary sortas=\"ファイルノオキカエ\">ファイルの置き換え</secondary>"
 
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Replaces</literal></tertiary>"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The <literal>Replaces</literal> field indicates that the package contains files that are also present in another package, but that the package is legitimately entitled to replace them. Without this specification, <command>dpkg</command> fails, stating that it can not overwrite the files of another package (technically, it is possible to force it to do so with the <literal>--force-overwrite</literal> option, but that is not considered standard operation). This allows identification of potential problems and requires the maintainer to study the matter prior to choosing whether to add such a field."
 msgstr "<literal>Replaces</literal> フィールドは、<literal>Replaces</literal> フィールドを持つパッケージが <literal>Replaces</literal> フィールドに指定された他のパッケージからも提供されるファイルを含んでおり、合法的に <literal>Replaces</literal> フィールドに指定されたパッケージから提供されたファイルを置き換える権利を持っていることを示すためのものです。<literal>Replaces</literal> フィールドがなければ、<command>dpkg</command> は別パッケージから提供されたファイルをインストール中のパッケージに含まれるファイルで置き換えることはできません。すなわちこれは他のパッケージのファイルは上書きできないことを意味しています (技術的に言えば、<literal>--force-overwrite</literal> オプションを付けることで強制的に上書き可能ですが、これは一般に認められていません)。このような <command>dpkg</command> の挙動により潜在的な問題を識別できるようになりますし、メンテナはこのフィールドを追加する前に問題の原因を追及できるようになります。"
@@ -633,6 +906,15 @@ msgstr "インストール済みパッケージのすべてのファイルが置
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>GOING FURTHER</emphasis> The <literal>Tag</literal> field"
 msgstr "<emphasis>GOING FURTHER</emphasis> <literal>Tag</literal> フィールド"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Tag</literal></tertiary>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>APT</primary>"
+msgid "<primary></primary>"
+msgstr "<primary>APT</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "In the <emphasis role=\"pkg\">apt</emphasis> example above, we can see the presence of a field that we have not yet described, the <literal>Tag</literal> field. This field does not describe a relationship between packages, but is simply a way of categorizing a package in a thematic taxonomy. This classification of packages according to several criteria (type of interface, programming language, domain of application, etc.) has been available for a long time. Despite this, not all packages have accurate tags and it is not yet integrated in all Debian tools; <command>aptitude</command> displays these tags, and allows them to be used as search criteria. For those who are repelled by <command>aptitude</command>'s search criteria, the following website allows navigation of the tag database: <ulink type=\"block\" url=\"https://wiki.debian.org/Debtags\" />"
@@ -663,7 +945,9 @@ msgid "<primary><filename>control.tar.gz</filename></primary>"
 msgstr "<primary><filename>control.tar.gz</filename></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "In addition to the <filename>control</filename> file, the <filename>control.tar.gz</filename> archive for each Debian package may contain a number of scripts, called by <command>dpkg</command> at different stages in the processing of a package. The Debian Policy describes the possible cases in detail, specifying the scripts called and the arguments that they receive. These sequences may be complicated, since if one of the scripts fails, <command>dpkg</command> will try to return to a satisfactory state by canceling the installation or removal in progress (insofar as it is possible)."
+#, fuzzy
+#| msgid "In addition to the <filename>control</filename> file, the <filename>control.tar.gz</filename> archive for each Debian package may contain a number of scripts, called by <command>dpkg</command> at different stages in the processing of a package. The Debian Policy describes the possible cases in detail, specifying the scripts called and the arguments that they receive. These sequences may be complicated, since if one of the scripts fails, <command>dpkg</command> will try to return to a satisfactory state by canceling the installation or removal in progress (insofar as it is possible)."
+msgid "In addition to the <filename>control</filename> file, the <filename>control.tar.gz</filename> archive for each Debian package may contain a number of scripts, called by <command>dpkg</command> at different stages in the processing of a package. The Debian Policy describes the possible cases <ulink url=\"https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html\">in detail</ulink>, specifying the scripts called and the arguments that they receive. These sequences may be complicated, since if one of the scripts fails, <command>dpkg</command> will try to return to a satisfactory state by canceling the installation or removal in progress (insofar as it is possible)."
 msgstr "それぞれの Debian パッケージには <filename>control</filename> ファイルだけでなく <filename>control.tar.gz</filename> アーカイブが含まれており、<filename>control.tar.gz</filename> には <command>dpkg</command> がパッケージ処理の各段階で呼び出す多数のスクリプトが含まれているかもしれません。Debian ポリシーでは、呼び出されるスクリプトとスクリプトが受け取る引数を明記することで、スクリプトの使われ方が詳しく説明されています。スクリプトが呼び出される順番はわかりにくいかもしれません。なぜなら、スクリプトのうち 1 つでも失敗したら、<command>dpkg</command> はインストールを中止するか (可能ならば) 進行中の削除を中止することでシステムを整合性のある状態に戻そうとするからです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -687,7 +971,9 @@ msgid "The <filename>/var/lib/dpkg/status</filename> file contains a series of d
 msgstr "<filename>/var/lib/dpkg/status</filename> ファイルは (有名なメールヘッダ、RFC 2822、の形で) 一連のデータブロックを含んでおり、各データブロックは各パッケージの状態に対応します。この情報はインストール済みのパッケージの <filename>control</filename> ファイルから複製されています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "In general, the <filename>preinst</filename> script is executed prior to installation of the package, while the <filename>postinst</filename> follows it. Likewise, <filename>prerm</filename> is invoked before removal of a package and <filename>postrm</filename> afterwards. An update of a package is equivalent to removal of the previous version and installation of the new one. It is not possible to describe in detail all the possible scenarios here, but we will discuss the most common two: an installation/update and a removal."
+#, fuzzy
+#| msgid "In general, the <filename>preinst</filename> script is executed prior to installation of the package, while the <filename>postinst</filename> follows it. Likewise, <filename>prerm</filename> is invoked before removal of a package and <filename>postrm</filename> afterwards. An update of a package is equivalent to removal of the previous version and installation of the new one. It is not possible to describe in detail all the possible scenarios here, but we will discuss the most common two: an installation/update and a removal."
+msgid "In general, the <filename>preinst</filename> script is executed prior to installation of the package, while <filename>postinst</filename> follows it. Likewise, <filename>prerm</filename> is invoked before removal of a package and <filename>postrm</filename> afterwards. An update of a package is equivalent to removal of the previous version and installation of the new one. It is not possible to describe in detail all the possible scenarios here, but we will discuss the most common two: an installation/update and a removal."
 msgstr "一般的に言って、<filename>preinst</filename> スクリプトはパッケージのインストール前に実行され、<filename>postinst</filename> はインストール後に実行されます。同様に、<filename>prerm</filename> はパッケージの削除前に実行され、<filename>postrm</filename> は削除後に実行されます。パッケージの更新とは、パッケージの古いバージョンを削除して新しいバージョンをインストールすることと等価です。ここで起こりうるすべてのシナリオを詳細に説明することは不可能なので、最も一般的なケースを 2 種類だけ挙げます。具体的に言えば、インストール/更新と削除について説明します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -704,7 +990,9 @@ msgid "<emphasis>TIP</emphasis> State diagrams"
 msgstr "<emphasis>TIP</emphasis> 状態遷移図"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Manoj Srivastava made these diagrams explaining how the configuration scripts are called by <command>dpkg</command>. Similar diagrams have also been developed by the Debian Women project; they are a bit simpler to understand, but less complete. <ulink type=\"block\" url=\"https://people.debian.org/~srivasta/MaintainerScripts.html\" /> <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/#maintainer-script-flowcharts\" />"
+#, fuzzy
+#| msgid "Manoj Srivastava made these diagrams explaining how the configuration scripts are called by <command>dpkg</command>. Similar diagrams have also been developed by the Debian Women project; they are a bit simpler to understand, but less complete. <ulink type=\"block\" url=\"https://people.debian.org/~srivasta/MaintainerScripts.html\" /> <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/#maintainer-script-flowcharts\" />"
+msgid "Manoj Srivastava and Margarita Manterola made the following diagrams explaining how the configuration scripts are called by <command>dpkg</command>. <ulink type=\"block\" url=\"https://people.debian.org/~srivasta/MaintainerScripts.html\" /> <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/ap-flowcharts.html\" />"
 msgstr "<command>dpkg</command> がどのように設定スクリプトを呼び出すかを説明する図が Manoj Srivastava によって作成されました。同様の図は Debian Women プロジェクトによっても作成されましたが、Debian Women プロジェクトの作った図は理解しやすいように少し単純化されており、Manoj Srivastava の作った図に比べると正確ではありません。<ulink type=\"block\" url=\"https://people.debian.org/~srivasta/MaintainerScripts.html\" /><ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/#maintainer-script-flowcharts\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -714,6 +1002,10 @@ msgstr "パッケージのインストールとアップグレード"
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
 msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<primary>package</primary><secondary>installation</secondary>"
+msgstr "<primary>パッケージ</primary><secondary>インストール</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Here is what happens during an installation (or an update):"
@@ -752,6 +1044,10 @@ msgid "Package Removal"
 msgstr "パッケージの削除"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<primary>package</primary><secondary>removal</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"サクジョ\">削除</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Here is what happens during a package removal:"
 msgstr "以下にパッケージの削除中に何が起きるかを説明します。"
 
@@ -777,6 +1073,10 @@ msgstr "<emphasis>VOCABULARY</emphasis> Purge、完全削除"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary>purge of a package</primary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"カンゼンサクジョ\">完全削除</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<primary>package</primary><secondary>purge</secondary>"
 msgstr "<primary>パッケージ</primary><secondary sortas=\"カンゼンサクジョ\">完全削除</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -840,11 +1140,15 @@ msgid "<primary>configuration</primary><secondary>files</secondary>"
 msgstr "<primary sortas=\"セッテイ\">設定</primary><secondary>ファイル</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "In addition to the maintainer scripts and control data already mentioned in the previous sections, the <filename>control.tar.gz</filename> archive of a Debian package may contain other interesting files. The first, <filename>md5sums</filename>, contains the MD5 checksums for all of the package's files. Its main advantage is that it allows <command>dpkg --verify</command> (which we will study in <xref linkend=\"sect.dpkg-verify\" />) to check if these files have been modified since their installation. Note that when this file doesn't exist, <command>dpkg</command> will generate it dynamically at installation time (and store it in the dpkg database just like other control files)."
+#, fuzzy
+#| msgid "In addition to the maintainer scripts and control data already mentioned in the previous sections, the <filename>control.tar.gz</filename> archive of a Debian package may contain other interesting files. The first, <filename>md5sums</filename>, contains the MD5 checksums for all of the package's files. Its main advantage is that it allows <command>dpkg --verify</command> (which we will study in <xref linkend=\"sect.dpkg-verify\" />) to check if these files have been modified since their installation. Note that when this file doesn't exist, <command>dpkg</command> will generate it dynamically at installation time (and store it in the dpkg database just like other control files)."
+msgid "In addition to the maintainer scripts and control data already mentioned in the previous sections, the <filename>control.tar.gz</filename> archive of a Debian package may contain other interesting files. The first, <filename>md5sums</filename>, contains the MD5 checksums for all of the package's files. Its main advantage is that it allows <command>dpkg --verify</command> (which we will study in <xref linkend=\"sect.dpkg-verify\" />) and <command>debsums</command> (from the package of the same name; see <xref linkend=\"sect.debsums\" />) to check if these files have been modified since their installation. Note that when this file doesn't exist, <command>dpkg</command> will generate it dynamically at installation time (and store it in the dpkg database just like other control files)."
 msgstr "前の節で既に説明したメンテナスクリプトと管理情報に加えて、Debian パッケージの <filename>control.tar.gz</filename> アーカイブは興味深いファイルを含んでいる場合があります。1 つ目は <filename>md5sums</filename> です。<filename>md5sums</filename> にはパッケージに含まれる全ファイルの MD5 チェックサムが列挙されています。<filename>md5sums</filename> のおかげで <command>dpkg --verify</command> はインストール以降ファイルが変更されたか否かを判断できるようになります (詳しくは<xref linkend=\"sect.dpkg-verify\" />を参照してください)。パッケージが <filename>md5sums</filename> を提供しない場合、<command>dpkg</command> がインストール時に動的に <filename>md5sums</filename> を生成します (そして他の管理情報ファイルと同様に dpkg データベースに内容を保存します)。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<filename>conffiles</filename> lists package files that must be handled as configuration files. Configuration files can be modified by the administrator, and <command>dpkg</command> will try to preserve those changes during a package update."
+#, fuzzy
+#| msgid "<filename>conffiles</filename> lists package files that must be handled as configuration files. Configuration files can be modified by the administrator, and <command>dpkg</command> will try to preserve those changes during a package update."
+msgid "<filename>conffiles</filename> lists package files that must be handled as configuration files (see also <citerefentry><refentrytitle>deb-conffiles</refentrytitle><manvolnum>5</manvolnum></citerefentry>). Configuration files can be modified by the administrator, and <command>dpkg</command> will try to preserve those changes during a package update."
 msgstr "<filename>conffiles</filename> では、設定ファイルとして取り扱われるべきパッケージファイルが指定されています。管理者は設定ファイルを変更でき、<command>dpkg</command> はパッケージの更新中に設定ファイルの変更を保存しようとします。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -857,12 +1161,38 @@ msgid "<emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questi
 msgstr "<emphasis>GOING FURTHER</emphasis> 設定ファイルの更新に関連する質問を回避する"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confnew</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confold</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confdef</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: PTAL;
 msgid "<command>dpkg</command> handles configuration file updates, but, while doing so, regularly interrupts its work to ask for input from the administrator. This makes it less than enjoyable for those who wish to run updates in a non-interactive manner. This is why this program offers options that allow the system to respond automatically according to the same logic: <command>--force-confold</command> retains the old version of the file; <command>--force-confnew</command> will use the new version of the file (these choices are respected, even if the file has not been changed by the administrator, which only rarely has the desired effect). Adding the <command>--force-confdef</command> option tells <command>dpkg</command> to decide by itself when possible (in other words, when the original configuration file has not been touched), and only uses <command>--force-confnew</command> or <command>--force-confold</command> for other cases."
 msgstr "<command>dpkg</command> は設定ファイルの更新を担当しますが、更新中に管理者からの入力を要求するため、更新作業は定期的に中断されます。この状況は非対話的に更新作業を行いたいと思う管理者にとって都合がよいとは言えません。そのため、<command>dpkg</command> には設定ファイル更新処理規則を指定して自動的に処理を進めるオプションが用意されています。具体的に言えば、<command>--force-confold</command> を使った場合はいかなる状況でも常にシステムに現存する設定ファイルがパッケージ更新完了後の設定ファイルとして採用され、<command>--force-confnew</command> を使った場合はいかなる状況でも常に新しいバージョンのパッケージから提供される標準設定ファイルが採用されます (これらのオプションを単独で使った場合、システムに現存する設定ファイルおよび更新前後のバージョンのパッケージから提供される標準設定ファイルの互いの内容の違いは一切考慮されないので、期待通りの結果を得られないことが多いです)。上記オプションに加えて <command>--force-confdef</command> オプションを使うと、<command>dpkg</command> は設定ファイル更新処理時に管理者の判断を仰ぐ必要が生じた場合に限り (言い換えれば、システムに現存する設定ファイルの内容が更新前後のどちらのバージョンのパッケージから提供される標準設定ファイルの内容とも違う場合に限り) 管理者からの入力を待つ代わりに <command>--force-confnew</command> または <command>--force-confold</command> に従って設定ファイルを更新し、それ以外の場合はデフォルトの設定ファイル更新処理規則に従って設定ファイルを更新するようになります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "These options apply to <command>dpkg</command>, but most of the time the administrator will work directly with the <command>aptitude</command> or <command>apt-get</command> programs. It is, thus, necessary to know the syntax used to indicate the options to pass to the <command>dpkg</command> command (their command line interfaces are very similar)."
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>installation</secondary>"
+msgid "<primary>APT</primary><secondary><literal>Dpkg::Options</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary>インストール</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "These options apply to <command>dpkg</command>, but most of the time the administrator will work directly with the <command>aptitude</command> or <command>apt-get</command> programs. It is, thus, necessary to know the syntax used to indicate the options to pass to the <command>dpkg</command> command (their command line interfaces are very similar)."
+msgid "These options apply to <command>dpkg</command> and are explained in detail in <citerefentry><refentrytitle>dpkg</refentrytitle><manvolnum>1</manvolnum></citerefentry> or <command>dpkg --force-help</command>, but most of the time the administrator will work directly with the <command>aptitude</command> or <command>apt</command> programs. It is, thus, necessary to know the syntax used to indicate the options to pass to the <command>dpkg</command> command (their command line interfaces are very similar)."
 msgstr "<command>--force-confold</command>、<command>--force-confnew</command>、<command>--force-confdef</command> は <command>dpkg</command> のオプションです。しかしながらほとんどの場合、管理者は <command>aptitude</command> または <command>apt-get</command> プログラムを使って作業を行います。そのため、<command>aptitude</command> または <command>apt-get</command> プログラムから <command>dpkg</command> コマンドにオプションを渡すための構文を知らなければいけません (<command>aptitude</command> および <command>apt-get</command> プログラムのコマンドラインインターフェースはとてもよく似ています)。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -894,8 +1224,16 @@ msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file q
 msgstr "<emphasis>GOING FURTHER</emphasis> 設定ファイルの更新に関連する質問を強制する"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: PTAL;
-msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+#, fuzzy
+#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
 msgstr "<command>--force-confask</command> オプションを使うと、<command>dpkg</command> は通常は質問の必要がない場合でも設定ファイルの更新に関する質問を表示します。このため、<command>--force-confask</command> を付けてパッケージを再インストールすると、<command>dpkg</command> は管理者が修正したすべての設定ファイルの更新に関してもう一度質問します。特にこれはインストール済みパッケージの設定ファイルが削除され、コピーも残っていない状態でパッケージから提供される設定ファイルを再インストールしたい場合にとても便利です。つまり、通常の再インストールでは駄目な場合にこれを使います。なぜなら、<command>dpkg</command> は設定ファイルの削除を意味のある変更の一種とみなしており、<command>--force-confask</command> が使われていなければシステムに現存する設定ファイルの状態 (削除状態) を維持してパッケージから提供される設定ファイルをインストールしないからです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -919,6 +1257,12 @@ msgid "<primary>DSC file</primary>"
 msgstr "<primary>DSC ファイル</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><filename>diff.gz</filename> file</primary>"
+msgid "<primary><filename>dsc</filename> file</primary>"
+msgstr "<primary><filename>diff.gz</filename> ファイル</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary><filename>diff.gz</filename> file</primary>"
 msgstr "<primary><filename>diff.gz</filename> ファイル</primary>"
 
@@ -929,6 +1273,15 @@ msgstr "<primary><filename>debian.tar.gz</filename> ファイル</primary>"
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary><filename>orig.tar.gz</filename> file</primary>"
 msgstr "<primary><filename>orig.tar.gz</filename> ファイル</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><filename>md5sums</filename></primary>"
+msgid "<primary><filename>.dsc</filename></primary>"
+msgstr "<primary><filename>md5sums</filename></primary>"
+
+msgid "<primary>Debian Source Control</primary><see><filename>.dsc</filename></see>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "A source package is usually comprised of three files, a <filename>.dsc</filename>, a <filename>.orig.tar.gz</filename>, and a <filename>.debian.tar.xz</filename> (or <filename>.diff.gz</filename>). They allow creation of binary packages (<filename>.deb</filename> files described above) from the source code files of the program, which are written in a programming language."
@@ -943,8 +1296,50 @@ msgid "A <filename>.dsc</filename> file"
 msgstr "<filename>.dsc</filename> ファイルの一例"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "-----BEGIN PGP SIGNED MESSAGE-----\n"
+#| "Hash: SHA512\n"
+#| "\n"
+#| "Format: 3.0 (quilt)\n"
+#| "Source: zim\n"
+#| "Binary: zim\n"
+#| "Architecture: all\n"
+#| "Version: 0.65-4\n"
+#| "Maintainer: Emfox Zhou &lt;emfox@debian.org&gt;\n"
+#| "Uploaders: Raphaël Hertzog &lt;hertzog@debian.org&gt;\n"
+#| "Homepage: http://zim-wiki.org\n"
+#| "Standards-Version: 3.9.8\n"
+#| "Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/zim.git\n"
+#| "Vcs-Git: https://anonscm.debian.org/git/collab-maint/zim.git\n"
+#| "Build-Depends: debhelper (&gt;= 9), xdg-utils, python (&gt;= 2.6.6-3~), libgtk2.0-0 (&gt;= 2.6), python-gtk2, python-xdg, dh-python\n"
+#| "Package-List:\n"
+#| " zim deb x11 optional arch=all\n"
+#| "Checksums-Sha1:\n"
+#| " 4a9be85c98b7f4397800f6d301428d64241034ce 1899614 zim_0.65.orig.tar.gz\n"
+#| " 0ec38c990ec7662205dd0c843bf81f9033906a2e 10332 zim_0.65-4.debian.tar.xz\n"
+#| "Checksums-Sha256:\n"
+#| " 5442f3334395a2beafc5b9a2bbec2e53e38270d4bad696b5c4053dd51dc1ed96 1899614 zim_0.65.orig.tar.gz\n"
+#| " 78271df16aa166dce916b3ff4ecd705ed3a8832e49d3ef0bd8738a4fe8dd2b4f 10332 zim_0.65-4.debian.tar.xz\n"
+#| "Files:\n"
+#| " 63ab7a2070e6d1d3fb32700a851d7b8b 1899614 zim_0.65.orig.tar.gz\n"
+#| " 648559b38e04eaf4f6caa97563c057ff 10332 zim_0.65-4.debian.tar.xz\n"
+#| "\n"
+#| "-----BEGIN PGP SIGNATURE-----\n"
+#| "Comment: Signed by Raphael Hertzog\n"
+#| "\n"
+#| "iQEzBAEBCgAdFiEE1823g1EQnhJ1LsbSA4gdq+vCmrkFAlgzZXkACgkQA4gdq+vC\n"
+#| "mrnyXAf+M/PzZFjqk6Hvv1QSbocIDZ3bEqRjVpNLApubsPsEZZT6yw9vypzNE2hZ\n"
+#| "/BbLPa0Ntbhew4U+SJpuujV7VnLs9mZgOFuKRHKWYQBQ+oxw+gtM6iePwVj58aP/\n"
+#| "LW7K5gE428ohMdjIkf42Lz4Fve3dVPgPLIzQxRZ87N6OKqmS81M6/RRIF3TS/gJp\n"
+#| "CwpN1yifCfQs46gxL5/CgA4uhI8taz+g+8ZDd6fL5BQeFuNsgplY4QL1uGno3F7G\n"
+#| "VY7WZhM601Re2ePnv+6vjh8kDWMjZhfB4RJy0+hHezuoVGKljyaxc1O4P/fxvXus\n"
+#| "CEETju6cAE/HgDubDXDqExMwEd4odA==\n"
+#| "=HUvj\n"
+#| "-----END PGP SIGNATURE----- "
 msgid ""
-"\n"
+"<![CDATA[\n"
 "-----BEGIN PGP SIGNED MESSAGE-----\n"
 "Hash: SHA512\n"
 "\n"
@@ -952,38 +1347,39 @@ msgid ""
 "Source: zim\n"
 "Binary: zim\n"
 "Architecture: all\n"
-"Version: 0.65-4\n"
-"Maintainer: Emfox Zhou &lt;emfox@debian.org&gt;\n"
-"Uploaders: Raphaël Hertzog &lt;hertzog@debian.org&gt;\n"
+"Version: 0.68-1\n"
+"Maintainer: Zim Package Maintainers <zim@packages.debian.org>\n"
+"Uploaders: Raphaël Hertzog <hertzog@debian.org>\n"
 "Homepage: http://zim-wiki.org\n"
-"Standards-Version: 3.9.8\n"
-"Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/zim.git\n"
-"Vcs-Git: https://anonscm.debian.org/git/collab-maint/zim.git\n"
-"Build-Depends: debhelper (&gt;= 9), xdg-utils, python (&gt;= 2.6.6-3~), libgtk2.0-0 (&gt;= 2.6), python-gtk2, python-xdg, dh-python\n"
+"Standards-Version: 4.1.3\n"
+"Vcs-Browser: https://salsa.debian.org/debian/zim\n"
+"Vcs-Git: https://salsa.debian.org/debian/zim.git\n"
+"Build-Depends: debhelper (>= 11), xdg-utils, python (>= 2.6.6-3~), libgtk2.0-0 (>= 2.6), python-gtk2, python-xdg, dh-python\n"
 "Package-List:\n"
 " zim deb x11 optional arch=all\n"
 "Checksums-Sha1:\n"
-" 4a9be85c98b7f4397800f6d301428d64241034ce 1899614 zim_0.65.orig.tar.gz\n"
-" 0ec38c990ec7662205dd0c843bf81f9033906a2e 10332 zim_0.65-4.debian.tar.xz\n"
+" a3b50aa8e44126cc7edd2c1912adf9820f50ad58 2044224 zim_0.68.orig.tar.gz\n"
+" 4e13b37625789334da2d95b93e51e41ffd3b6b01 9300 zim_0.68-1.debian.tar.xz\n"
 "Checksums-Sha256:\n"
-" 5442f3334395a2beafc5b9a2bbec2e53e38270d4bad696b5c4053dd51dc1ed96 1899614 zim_0.65.orig.tar.gz\n"
-" 78271df16aa166dce916b3ff4ecd705ed3a8832e49d3ef0bd8738a4fe8dd2b4f 10332 zim_0.65-4.debian.tar.xz\n"
+" d91518e010f6a6e951a75314138b5545a4c51151fc99f513aa7768a18858df15 2044224 zim_0.68.orig.tar.gz\n"
+" 23f4ddc69af74509932acc3b5f0d4cd2af943016e4fd5740b9d98ec4d49fd8c2 9300 zim_0.68-1.debian.tar.xz\n"
 "Files:\n"
-" 63ab7a2070e6d1d3fb32700a851d7b8b 1899614 zim_0.65.orig.tar.gz\n"
-" 648559b38e04eaf4f6caa97563c057ff 10332 zim_0.65-4.debian.tar.xz\n"
+" 336041a16687abb66fd9f604b98407e8 2044224 zim_0.68.orig.tar.gz\n"
+" 1714f67b35ab69e709849ad707206ca8 9300 zim_0.68-1.debian.tar.xz\n"
 "\n"
 "-----BEGIN PGP SIGNATURE-----\n"
 "Comment: Signed by Raphael Hertzog\n"
 "\n"
-"iQEzBAEBCgAdFiEE1823g1EQnhJ1LsbSA4gdq+vCmrkFAlgzZXkACgkQA4gdq+vC\n"
-"mrnyXAf+M/PzZFjqk6Hvv1QSbocIDZ3bEqRjVpNLApubsPsEZZT6yw9vypzNE2hZ\n"
-"/BbLPa0Ntbhew4U+SJpuujV7VnLs9mZgOFuKRHKWYQBQ+oxw+gtM6iePwVj58aP/\n"
-"LW7K5gE428ohMdjIkf42Lz4Fve3dVPgPLIzQxRZ87N6OKqmS81M6/RRIF3TS/gJp\n"
-"CwpN1yifCfQs46gxL5/CgA4uhI8taz+g+8ZDd6fL5BQeFuNsgplY4QL1uGno3F7G\n"
-"VY7WZhM601Re2ePnv+6vjh8kDWMjZhfB4RJy0+hHezuoVGKljyaxc1O4P/fxvXus\n"
-"CEETju6cAE/HgDubDXDqExMwEd4odA==\n"
-"=HUvj\n"
-"-----END PGP SIGNATURE----- "
+"iQEzBAEBCgAdFiEE1823g1EQnhJ1LsbSA4gdq+vCmrkFAlqyOxkACgkQA4gdq+vC\n"
+"mrnCqAf/Ww9wg97VragtVhSFvehoVoJ0ZhoqNaSuCP/W1Fuf+P0YklzL2BlkVRXW\n"
+"X23c8Qs1v6VE2iRY3mEkdWwgBs1QwF0MX7H1jjQfPHCynGHKlH5dfo5fqLizgCeu\n"
+"c9Pug3ZisjF90CgsseO7SVDqHVmO6QsfAaGWpHAw92HDz/xwjrS/4Ejntqjy0b+r\n"
+"Gmw2AZuBdhp+7C6p7In/Gg6DHPBLQGMLCKypoZKQdl+L0fWjjeykOzMIbjry2sRH\n"
+"H0J4FLVGAGumh3zIZlm/t3ehGfP9Dg8FvzMaCNsf8OtYCSAEutrQEDBaskcTSIpq\n"
+"L0GQhKlViDuu8gzsqm7efPEhPcsF1A==\n"
+"=6jGR\n"
+"-----END PGP SIGNATURE-----\n"
+"]]>"
 msgstr ""
 "\n"
 "-----BEGIN PGP SIGNED MESSAGE-----\n"
@@ -1031,12 +1427,24 @@ msgid "<primary><literal>Build-Depends</literal>, header field</primary>"
 msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Build-Depends</literal></secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>dependency</secondary>"
+msgid "<primary>package</primary><secondary>build dependencies</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"イゾンカンケイ\">依存関係</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Note that the source package also has dependencies (<literal>Build-Depends</literal>) completely distinct from those of binary packages, since they indicate tools required to compile the software in question and construct its binary package."
 msgstr "バイナリパッケージと同様にソースパッケージにも依存関係 (<literal>Build-Depends</literal>) がある点に注意してください。依存関係の意味は、バイナリパッケージのそれとは全く異なり、このソフトウェアをコンパイルしてバイナリパッケージを作るのに必要なツールを表しています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>CAUTION</emphasis> Distinct namespaces"
 msgstr "<emphasis>CAUTION</emphasis> 別の名前空間"
+
+msgid "<primary>APT</primary><secondary><filename>.dsc</filename></secondary><tertiary><literal>Source</literal></tertiary>"
+msgstr ""
+
+msgid "<primary>APT</primary><secondary><filename>.dsc</filename></secondary><tertiary><literal>Binary</literal></tertiary>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "It is important to note here that there is no required correspondence between the name of the source package and that of the binary package(s) that it generates. It is easy enough to understand if you know that each source package may generate several binary packages. This is why the <filename>.dsc</filename> file has the <literal>Source</literal> and <literal>Binary</literal> fields to explicitly name the source package and store the list of binary packages that it generates."
@@ -1059,13 +1467,27 @@ msgid "<emphasis>PERSPECTIVE</emphasis> Different source package formats"
 msgstr "<emphasis>PERSPECTIVE</emphasis> ソースパッケージのさまざまなフォーマット"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>removal</secondary>"
+msgid "<primary>source package</primary><secondary>format</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"サクジョ\">削除</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><command>ar</command></primary>"
+msgid "<primary><command>quilt</command></primary>"
+msgstr "<primary><command>ar</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: https://raphaelhertzog.com/2010/10/21/the-secret-plan-behind-the-3-0-quilt-debian-source-package-format/;
 # Ref: man 1 dpkg-source;
 msgid "Originally there was only one source package format. This is the <literal>1.0</literal> format, which associates an <filename>.orig.tar.gz</filename> archive to a <filename>.diff.gz</filename> “debianization” patch (there is also a variant, consisting of a single <filename>.tar.gz</filename> archive, which is automatically used if no <filename>.orig.tar.gz</filename> is available)."
 msgstr "もともとソースパッケージのフォーマットは 1 種類だけでした。これが <literal>1.0</literal> フォーマットです。<literal>1.0</literal> フォーマットでは <filename>.orig.tar.gz</filename> アーカイブに <filename>.diff.gz</filename>「debianization」パッチを当てるようにしていました (<literal>1.0</literal> フォーマットには亜種があります。亜種には <filename>.tar.gz</filename> アーカイブだけが含まれており、<filename>.orig.tar.gz</filename> がなければ自動的に <filename>.tar.gz</filename> アーカイブが使われます)。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Since Debian <emphasis role=\"distribution\">Squeeze</emphasis>, Debian developers have the option to use new formats that correct many problems of the historical format. Format <literal>3.0 (quilt)</literal> can combine multiple upstream archives in the same source package: in addition to the usual <filename>.orig.tar.gz</filename>, supplementary <filename>.orig-<replaceable>component</replaceable>.tar.gz</filename> archives can be included. This is useful with software that is distributed in several upstream components but for which a single source package is desired. These archives can also be compressed with <command>xz</command> rather than <command>gzip</command>, which saves disk space and network resources. Finally, the monolithic patch, <filename>.diff.gz</filename> is replaced by a <filename>.debian.tar.xz</filename> archive containing the compiling instructions and a set of upstream patches contributed by the package maintainer. These last are recorded in a format compatible with <command>quilt</command> — a tool that facilitates the management of a series of patches."
+#, fuzzy
+#| msgid "Since Debian <emphasis role=\"distribution\">Squeeze</emphasis>, Debian developers have the option to use new formats that correct many problems of the historical format. Format <literal>3.0 (quilt)</literal> can combine multiple upstream archives in the same source package: in addition to the usual <filename>.orig.tar.gz</filename>, supplementary <filename>.orig-<replaceable>component</replaceable>.tar.gz</filename> archives can be included. This is useful with software that is distributed in several upstream components but for which a single source package is desired. These archives can also be compressed with <command>xz</command> rather than <command>gzip</command>, which saves disk space and network resources. Finally, the monolithic patch, <filename>.diff.gz</filename> is replaced by a <filename>.debian.tar.xz</filename> archive containing the compiling instructions and a set of upstream patches contributed by the package maintainer. These last are recorded in a format compatible with <command>quilt</command> — a tool that facilitates the management of a series of patches."
+msgid "Since Debian 6 <emphasis role=\"distribution\">Squeeze</emphasis>, Debian developers have the option to use new formats that correct many problems of the historical format. Format <literal>3.0 (quilt)</literal> can combine multiple upstream archives in the same source package: in addition to the usual <filename>.orig.tar.gz</filename>, supplementary <filename>.orig-<replaceable>component</replaceable>.tar.gz</filename> archives can be included. This is useful with software that is distributed in several upstream components but for which a single source package is desired. These archives can also be compressed with <command>xz</command> rather than <command>gzip</command>, which saves disk space and network resources. Finally, the monolithic patch, <filename>.diff.gz</filename> is replaced by a <filename>.debian.tar.xz</filename> archive containing the compiling instructions and a set of upstream patches contributed by the package maintainer. These last are recorded in a format compatible with <command>quilt</command> — a tool that facilitates the management of a series of patches."
 msgstr "Debian <emphasis role=\"distribution\">Squeeze</emphasis> 以降、Debian 開発者は新しいフォーマットを使うことができるようになりました。新しいフォーマットは昔使われていたフォーマットにあった多くの問題を修正しています。フォーマット <literal>3.0 (quilt)</literal> は複数の上流開発アーカイブを同じソースパッケージの中に混ぜ合わせることが可能になりました。つまり、いつもの <filename>.orig.tar.gz</filename> に加えて、補足用の <filename>.orig-<replaceable>component</replaceable>.tar.gz</filename> アーカイブを含めることが可能です。これは単独のソースパッケージが望まれるソフトウェアが複数の上流開発元によって配布されている場合に役に立ちます。これらのアーカイブは <command>gzip</command> の代わりに <command>xz</command> を使って圧縮できます。これらの圧縮方式はディスク領域とネットワークリソースを節約できます。最後に、単独のパッチ <filename>.diff.xz</filename> はコンパイル方法、パッケージメンテナが作った上流開発に対するパッチ群が収められた <filename>.debian.tar.gz</filename> アーカイブに置き換えられました。パッチはパッチ群を楽に管理するツール <command>quilt</command> と互換性のあるフォーマットで記録されます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1097,20 +1519,47 @@ msgid "<primary>unpacking</primary><secondary>source package</secondary>"
 msgstr "<primary sortas=\"テンカイ\">展開</primary><secondary>ソースパッケージ</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>unpacking</secondary>"
+msgid "<primary>source package</primary><secondary>unpacking</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"テンカイ\">展開</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "If you have a source package, you can use the <command>dpkg-source</command> command (from the <emphasis role=\"pkg\">dpkg-dev</emphasis> package) to decompress it:"
 msgstr "ソースパッケージを持っていれば、<command>dpkg-source</command> コマンド (<emphasis role=\"pkg\">dpkg-dev</emphasis> パッケージに含まれます) を使ってソースパッケージを展開できます。"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<computeroutput>$ </computeroutput><userinput>dpkg-source -x package_0.7-1.dsc</userinput>"
-msgstr "<computeroutput>$ </computeroutput><userinput>dpkg-source -x package_0.7-1.dsc</userinput>"
+msgid ""
+"<computeroutput>$ </computeroutput><userinput>dpkg-source -x zim_0.68-1.dsc</userinput>\n"
+"<computeroutput>dpkg-source: info: extracting zim in zim-0.68\n"
+"dpkg-source: info: unpacking zim_0.68.orig.tar.gz\n"
+"dpkg-source: info: unpacking zim_0.68-1.debian.tar.xz</computeroutput>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "You can also use <command>apt-get</command> to download a source package and unpack it right away. It requires that the appropriate <literal>deb-src</literal> lines be present in the <filename>/etc/apt/sources.list</filename> file, however (for further details, see <xref linkend=\"sect.apt-sources.list\" />). These are used to list the “sources” of source packages (meaning the servers on which a group of source packages are hosted)."
+#, fuzzy
+#| msgid "You can also use <command>apt-get</command> to download a source package and unpack it right away. It requires that the appropriate <literal>deb-src</literal> lines be present in the <filename>/etc/apt/sources.list</filename> file, however (for further details, see <xref linkend=\"sect.apt-sources.list\" />). These are used to list the “sources” of source packages (meaning the servers on which a group of source packages are hosted)."
+msgid "You can also use <command>apt</command> to download a source package and unpack it right away. It requires that the appropriate <literal>deb-src</literal> lines be present in the <filename>/etc/apt/sources.list</filename> file, however (for further details, see <xref linkend=\"sect.apt-sources.list\" />). These are used to list the “sources” of source packages (meaning the servers on which a group of source packages are hosted)."
 msgstr "<command>apt-get</command> を使えば、ソースパッケージをダウンロードしてすぐに展開することも可能です。しかしながら、これを行うには、適切な <literal>deb-src</literal> 行が <filename>/etc/apt/sources.list</filename> ファイルに書かれていなければいけません (より詳しい情報は<xref linkend=\"sect.apt-sources.list\" />を参照してください)。<literal>deb-src</literal> 行はソースパッケージの「ソース」(ソースパッケージがホストされているサーバ群) を表すために使われます。"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<computeroutput>$ </computeroutput><userinput>apt-get source <replaceable>package</replaceable></userinput>"
-msgstr "<computeroutput>$ </computeroutput><userinput>apt-get source <replaceable>package</replaceable></userinput>"
+msgid ""
+"<computeroutput>$ </computeroutput><userinput>apt source <replaceable>package</replaceable></userinput>\n"
+"<computeroutput><![CDATA[Reading package lists... Done\n"
+"Selected version '0.68-1' (stable) for zim\n"
+"NOTICE: 'zim' packaging is maintained in the 'Git' version control system at:\n"
+"https://salsa.debian.org/debian/zim.git\n"
+"Please use:\n"
+"git clone https://salsa.debian.org/debian/zim.git\n"
+"to retrieve the latest (possibly unreleased) updates to the package.\n"
+"Need to get 2055 kB of source archives.\n"
+"Get:1 https://cdn-aws.deb.debian.org/debian stable/main zim 0.68-1 (dsc) [1586 B]\n"
+"Get:2 https://cdn-aws.deb.debian.org/debian stable/main zim 0.68-1 (tar) [2044 kB]\n"
+"Get:3 https://cdn-aws.deb.debian.org/debian stable/main zim 0.68-1 (diff) [9300 B]\n"
+"Fetched 2055 kB in 1s (3356 kB/s)\n"
+"dpkg-source: info: extracting zim in zim-0.68\n"
+"dpkg-source: info: unpacking zim_0.68.orig.tar.gz\n"
+"dpkg-source: info: unpacking zim_0.68-1.debian.tar.xz\n"
+"]]></computeroutput>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Usage within Debian"
@@ -1121,15 +1570,28 @@ msgid "The source package is the foundation of everything in Debian. All Debian 
 msgstr "ソースパッケージは Debian のすべての基礎です。すべての Debian パッケージはソースパッケージから作られ、Debian パッケージに対する変更はソースパッケージを変更することで行われます。Debian メンテナはソースパッケージに対する作業の成果がどのようにバイナリパッケージに反映されるかを理解しているため、ソースパッケージに対して作業を行っています。そんなわけで、Debian メンテナの労苦の成果は Debian から入手できるソースパッケージの中にあります。すなわち、簡単にソースパッケージに戻り、すべてをソースパッケージから生成することも可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "When a new version of a package (source package and one or more binary packages) arrives on the Debian server, the source package is the most important. Indeed, it will then be used by a network of machines of different architectures for compilation on the various architectures supported by Debian. The fact that the developer also sends one or more binary packages for a given architecture (usually i386 or amd64) is relatively unimportant, since these could just as well have been automatically generated."
+#, fuzzy
+#| msgid "When a new version of a package (source package and one or more binary packages) arrives on the Debian server, the source package is the most important. Indeed, it will then be used by a network of machines of different architectures for compilation on the various architectures supported by Debian. The fact that the developer also sends one or more binary packages for a given architecture (usually i386 or amd64) is relatively unimportant, since these could just as well have been automatically generated."
+msgid "When a new version of a package (source package and one or more binary packages) arrives on the Debian server, the source package is the most important. Indeed, it will then be used by a network of machines of different architectures for compilation on the various architectures supported by Debian. The fact that the developer also sends one or more binary packages for a given architecture (usually i386 or amd64) is relatively unimportant, since these could just as well have been automatically generated. <ulink type=\"block\" url=\"https://buildd.debian.org/\" />"
 msgstr "パッケージの新バージョン (ソースパッケージと 1 つ以上のバイナリパッケージ) が Debian サーバにアップロードされた際に、最も重要なのがソースパッケージです。そして、異なるアーキテクチャのマシンのネットワークがソースパッケージを使い、Debian がサポートするさまざまなアーキテクチャ上でコンパイルを行います。開発者はソースパッケージだけでなく適当なアーキテクチャ (通常 i386 または amd64) 向けの 1 つ以上のバイナリパッケージを送信しますが、こちらはそれほど重要ではありません。なぜなら、送信されたバイナリパッケージと同じアーキテクチャ用のバイナリパッケージはビルドマシンによって自動的に生成されるからです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<emphasis>GOING FURTHER</emphasis> Comparison of versions"
+msgid "<emphasis>GOING FURTHER</emphasis> Source only maintainer uploads"
+msgstr "<emphasis>GOING FURTHER</emphasis> バージョンの比較"
+
+msgid "Right after the release of Debian 10 <emphasis role=\"distribution\">Buster</emphasis> the <link linkend=\"srm-team\">Release Team</link> announced that maintainer binary uploads will no longer be accepted for <literal>main</literal> and all binary packages in this component will be built automatically from mandatory source-only uploads."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Manipulating Packages with <command>dpkg</command>"
 msgstr "<command>dpkg</command> を用いたパッケージの操作"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<command>dpkg</command> is the base command for handling Debian packages on the system. If you have <filename>.deb</filename> packages, it is <command>dpkg</command> that allows installation or analysis of their contents. But this program only has a partial view of the Debian universe: it knows what is installed on the system, and whatever it is given on the command line, but knows nothing of the other available packages. As such, it will fail if a dependency is not met. Tools such as <command>apt</command>, on the contrary, will create a list of dependencies to install everything as automatically as possible."
+#, fuzzy
+#| msgid "<command>dpkg</command> is the base command for handling Debian packages on the system. If you have <filename>.deb</filename> packages, it is <command>dpkg</command> that allows installation or analysis of their contents. But this program only has a partial view of the Debian universe: it knows what is installed on the system, and whatever it is given on the command line, but knows nothing of the other available packages. As such, it will fail if a dependency is not met. Tools such as <command>apt</command>, on the contrary, will create a list of dependencies to install everything as automatically as possible."
+msgid "<command>dpkg</command> is the base command for handling Debian packages on the system. If you have <filename>.deb</filename> packages, it is <command>dpkg</command> that allows installation or analysis of their contents. But this program only has a partial view of the Debian universe: it knows what is installed on the system, and whatever it is given on the command line, but knows nothing of the other available packages. As such, it will fail if a dependency is not met. Tools such as <command>apt</command> and <command>aptitude</command>, on the contrary, will create a list of dependencies to install everything as automatically as possible."
 msgstr "<command>dpkg</command> はシステムの Debian パッケージを操作する基礎的なコマンドです。<filename>.deb</filename> パッケージがあれば、<command>dpkg</command> でパッケージ内容をインストールしたり解析したりすることが可能です。しかし <command>dpkg</command> は Debian 世界のある一部分だけを見ているに過ぎません。つまり、<command>dpkg</command> は、システムにインストール済みのパッケージとコマンドラインで与えられたパッケージについては理解していますが、他の利用できるパッケージについては理解していません。このため、<command>dpkg</command> は依存関係が満足されていなければパッケージを操作できません。これに対して、<command>apt</command> などのツールは、可能な限り自動的にすべてをインストールするために、依存関係のリストを作成します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1149,10 +1611,6 @@ msgid "<primary>installation</primary><secondary>package installation</secondary
 msgstr "<primary>インストール</primary><secondary sortas=\"パッケージノインストール\">パッケージのインストール</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>package</primary><secondary>installation</secondary>"
-msgstr "<primary>パッケージ</primary><secondary>インストール</secondary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<command>dpkg</command> is, above all, the tool for installing an already available Debian package (because it does not download anything). To do this, we use its <literal>-i</literal> or <literal>--install</literal> option."
 msgstr "<command>dpkg</command> は既に利用できる Debian パッケージのインストールを担当しているツールです (ダウンロード機能を持っていません)。<command>dpkg</command> を使ってパッケージをインストールするには、<literal>-i</literal> または <literal>--install</literal> オプションを使ってください。"
 
@@ -1161,15 +1619,25 @@ msgid "Installation of a package with <command>dpkg</command>"
 msgstr "<command>dpkg</command> を使ったパッケージのインストール"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>dpkg -i man-db_2.7.6.1-2_amd64.deb</userinput>\n"
+#| "<computeroutput>(Reading database ... 110431 files and directories currently installed.)\n"
+#| "Preparing to unpack man-db_2.7.6.1-2_amd64.deb ...\n"
+#| "Unpacking man-db (2.7.6.1-2) over (2.7.6.1-1) ...\n"
+#| "Setting up man-db (2.7.6.1-2) ...\n"
+#| "Updating database of manual pages ...\n"
+#| "Processing triggers for mime-support (3.60) ...</computeroutput>"
 msgid ""
 "\n"
-"<computeroutput># </computeroutput><userinput>dpkg -i man-db_2.7.6.1-2_amd64.deb</userinput>\n"
-"<computeroutput>(Reading database ... 110431 files and directories currently installed.)\n"
-"Preparing to unpack man-db_2.7.6.1-2_amd64.deb ...\n"
-"Unpacking man-db (2.7.6.1-2) over (2.7.6.1-1) ...\n"
-"Setting up man-db (2.7.6.1-2) ...\n"
+"<computeroutput># </computeroutput><userinput>dpkg -i man-db_2.8.5-2_amd64.deb</userinput>\n"
+"<computeroutput>(Reading database ... 14913 files and directories currently installed.)\n"
+"Preparing to unpack .../man-db_2.8.5-2_amd64.deb ...\n"
+"Unpacking man-db (2.8.5-2) over (2.8.5-2) ...\n"
+"Setting up man-db (2.8.5-2) ...\n"
 "Updating database of manual pages ...\n"
-"Processing triggers for mime-support (3.60) ...</computeroutput>"
+"Processing triggers for mime-support (3.62) ...</computeroutput>"
 msgstr ""
 "\n"
 "<computeroutput># </computeroutput><userinput>dpkg -i man-db_2.7.6.1-2_amd64.deb</userinput>\n"
@@ -1181,7 +1649,9 @@ msgstr ""
 "mime-support (3.60) のトリガを処理しています ...</computeroutput>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "We can see the different steps performed by <command>dpkg</command>; we know, thus, at what point any error may have occurred. The installation can also be effected in two stages: first unpacking, then configuration. <command>apt-get</command> takes advantage of this, limiting the number of calls to <command>dpkg</command> (since each call is costly, due to loading of the database in memory, especially the list of already installed files)."
+#, fuzzy
+#| msgid "We can see the different steps performed by <command>dpkg</command>; we know, thus, at what point any error may have occurred. The installation can also be effected in two stages: first unpacking, then configuration. <command>apt-get</command> takes advantage of this, limiting the number of calls to <command>dpkg</command> (since each call is costly, due to loading of the database in memory, especially the list of already installed files)."
+msgid "We can see the different steps performed by <command>dpkg</command>; we know, thus, at what point any error may have occurred. The installation can also be effected in two stages: first unpacking, then configuration. <command>apt</command> takes advantage of this, limiting the number of calls to <command>dpkg</command> (since each call is costly, due to loading of the database in memory, especially the list of already installed files)."
 msgstr "<command>dpkg</command> の実行する各作業段階が見て取れます。このため、どの時点でエラーが起きたかを識別できます。インストールを 2 段階に分けて実行することも可能です。具体的に言えば、最初が展開、その後に設定です。<command>apt-get</command> はこれをうまく利用して、<command>dpkg</command> を呼び出す回数を減らしています (なぜなら <command>dpkg</command> は呼び出される度にデータベース、特にインストール済みファイルのリスト、をメモリに読み込むため効率が悪いからです)。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1189,15 +1659,27 @@ msgid "Separate unpacking and configuration"
 msgstr "展開と設定を分けて実行"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>dpkg --unpack man-db_2.7.6.1-2_amd64.deb</userinput>\n"
+#| "<computeroutput>(Reading database ... 110431 files and directories currently installed.)\n"
+#| "Preparing to unpack man-db_2.7.6.1-2_amd64.deb ...\n"
+#| "Unpacking man-db (2.7.6.1-2) over (2.7.6.1-2) ...\n"
+#| "Processing triggers for mime-support (3.60) ...\n"
+#| "# </computeroutput><userinput>dpkg --configure man-db</userinput>\n"
+#| "<computeroutput>Setting up man-db (2.7.6.1-2) ...\n"
+#| "Updating database of manual pages ...\n"
+#| "</computeroutput>"
 msgid ""
 "\n"
-"<computeroutput># </computeroutput><userinput>dpkg --unpack man-db_2.7.6.1-2_amd64.deb</userinput>\n"
-"<computeroutput>(Reading database ... 110431 files and directories currently installed.)\n"
-"Preparing to unpack man-db_2.7.6.1-2_amd64.deb ...\n"
-"Unpacking man-db (2.7.6.1-2) over (2.7.6.1-2) ...\n"
-"Processing triggers for mime-support (3.60) ...\n"
+"<computeroutput># </computeroutput><userinput>dpkg --unpack man-db_2.8.5-2_amd64.deb</userinput>\n"
+"<computeroutput>(Reading database ... 14937 files and directories currently installed.)\n"
+"Preparing to unpack man-db_2.8.5-2_amd64.deb ...\n"
+"Unpacking man-db (2.8.5-2) over (2.8.5-2) ...\n"
+"Processing triggers for mime-support (3.62) ...\n"
 "# </computeroutput><userinput>dpkg --configure man-db</userinput>\n"
-"<computeroutput>Setting up man-db (2.7.6.1-2) ...\n"
+"<computeroutput>Setting up man-db (2.8.5-2) ...\n"
 "Updating database of manual pages ...\n"
 "</computeroutput>"
 msgstr ""
@@ -1279,7 +1761,9 @@ msgid "A courageous administrator who is certain of the correctness of their ana
 msgstr "自分の解析の正確さに自信を持っている勇気ある管理者なら、依存関係や衝突を無視して、対応する <literal>--force-*</literal> 系オプションを使うことを選ぶかもしれません。この場合に、管理者が <command>apt</command> や <command>aptitude</command> を使い続けたいと思うなら、管理者は無効にしたい依存関係や衝突を削除/変更するために <filename>/var/lib/dpkg/status</filename> を編集しなければいけません。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "This manipulation is an ugly hack, and should never be used, except in the most extreme case of necessity. Quite frequently, a more fitting solution is to recompile the package that's causing the problem (see <xref linkend=\"sect.rebuilding-package\" />) or use a new version (potentially corrected) from a repository such as the <literal>stable-backports</literal> one (see <xref linkend=\"sect.backports\" />)."
+#, fuzzy
+#| msgid "This manipulation is an ugly hack, and should never be used, except in the most extreme case of necessity. Quite frequently, a more fitting solution is to recompile the package that's causing the problem (see <xref linkend=\"sect.rebuilding-package\" />) or use a new version (potentially corrected) from a repository such as the <literal>stable-backports</literal> one (see <xref linkend=\"sect.backports\" />)."
+msgid "This manipulation is an ugly hack, and should never be used, except in the most extreme case of necessity. Quite frequently, a more fitting solution is to recompile the package that is causing the problem (see <xref linkend=\"sect.rebuilding-package\" />) or use a new version (potentially corrected) from a repository such as the <literal>stable-backports</literal> one (see <xref linkend=\"sect.apt-sources.list.stable.backports\" />)."
 msgstr "<filename>/var/lib/dpkg/status</filename> の編集は最悪の対応策であり、本当にどうしても必要な場合を除いて、絶対に使うべきではありません。ほとんどの場合、問題を生じさせているパッケージを再コンパイルしたり (<xref linkend=\"sect.rebuilding-package\" />をご覧ください)、<literal>stable-backports</literal> などのリポジトリから新しい (修正済みの可能性がある) バージョンを使ったり (<xref linkend=\"sect.backports\" />をご覧ください) するほうが適切な解決策です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1291,15 +1775,9 @@ msgid "<primary>purging a package</primary>"
 msgstr "<primary sortas=\"カンゼンサクジョ\">完全削除</primary><secondary>パッケージ</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>package</primary><secondary>removal</secondary>"
-msgstr "<primary>パッケージ</primary><secondary sortas=\"サクジョ\">削除</secondary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>package</primary><secondary>purge</secondary>"
-msgstr "<primary>パッケージ</primary><secondary sortas=\"カンゼンサクジョ\">完全削除</secondary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Invoking <command>dpkg</command> with the <literal>-r</literal> or <literal>--remove</literal> option, followed by the name of a package, removes that package. This removal is, however, not complete: all of the configuration files, maintainer scripts, log files (system logs) and other user data handled by the package remain. That way disabling the program is easily done by uninstalling it, and it's still possible to quickly reinstall it with the same configuration. To completely remove everything associated with a package, use the <literal>-P</literal> or <literal>--purge</literal> option, followed by the package name."
+#, fuzzy
+#| msgid "Invoking <command>dpkg</command> with the <literal>-r</literal> or <literal>--remove</literal> option, followed by the name of a package, removes that package. This removal is, however, not complete: all of the configuration files, maintainer scripts, log files (system logs) and other user data handled by the package remain. That way disabling the program is easily done by uninstalling it, and it's still possible to quickly reinstall it with the same configuration. To completely remove everything associated with a package, use the <literal>-P</literal> or <literal>--purge</literal> option, followed by the package name."
+msgid "Invoking <command>dpkg</command> with the <literal>-r</literal> or <literal>--remove</literal> option, followed by the name of a package, removes that package. This removal is, however, not complete: all of the configuration files, maintainer scripts, log files (system logs) and other user data handled by the package remain. That way disabling the program is easily done by uninstalling it, and it is still possible to quickly reinstall it with the same configuration. To completely remove everything associated with a package, use the <literal>-P</literal> or <literal>--purge</literal> option, followed by the package name."
 msgstr "<command>dpkg</command> に <literal>-r</literal> または <literal>--remove</literal> オプションを付け、さらにパッケージの名前を指定して実行すれば、指定したパッケージが削除されます。しかしながらこの削除は完璧ではありません。具体的に言えば、パッケージが取り扱うすべての設定ファイル、メンテナスクリプト、ログファイル (システムログ)、その他のユーザデータは残されたままです。プログラムを無効化するには、この方法でパッケージをアンインストールしてください。そうすれば、削除したパッケージを同じ設定で再インストールして素早く利用できる状態にすることもまだ可能です。パッケージに関連するすべてを完全に削除するには、<command>dpkg</command> に <literal>-P</literal> または <literal>--purge</literal> オプションを付け、さらにパッケージの名前を指定して実行してください。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1307,13 +1785,22 @@ msgid "Removal and purge of the <emphasis role=\"pkg\">debian-cd</emphasis> pack
 msgstr "<emphasis role=\"pkg\">debian-cd</emphasis> パッケージの削除と完全削除"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "<computeroutput># </computeroutput><userinput>dpkg -r debian-cd</userinput>\n"
+#| "<computeroutput>(Reading database ... 112188 files and directories currently installed.)\n"
+#| "Removing debian-cd (3.1.20) ...\n"
+#| "# </computeroutput><userinput>dpkg -P debian-cd</userinput>\n"
+#| "<computeroutput>(Reading database ... 111613 files and directories currently installed.)\n"
+#| "Purging configuration files for debian-cd (3.1.20) ...\n"
+#| "</computeroutput>"
 msgid ""
 "<computeroutput># </computeroutput><userinput>dpkg -r debian-cd</userinput>\n"
-"<computeroutput>(Reading database ... 112188 files and directories currently installed.)\n"
-"Removing debian-cd (3.1.20) ...\n"
+"<computeroutput>(Reading database ... 15915 files and directories currently installed.)\n"
+"Removing debian-cd (3.1.25) ...\n"
 "# </computeroutput><userinput>dpkg -P debian-cd</userinput>\n"
-"<computeroutput>(Reading database ... 111613 files and directories currently installed.)\n"
-"Purging configuration files for debian-cd (3.1.20) ...\n"
+"<computeroutput>(Reading database ... 15394 files and directories currently installed.)\n"
+"Purging configuration files for debian-cd (3.1.25) ...\n"
 "</computeroutput>"
 msgstr ""
 "<computeroutput># </computeroutput><userinput>dpkg -r debian-cd</userinput>\n"
@@ -1353,14 +1840,189 @@ msgid "Before concluding this section, we will study <command>dpkg</command> opt
 msgstr "この節を締め括る前に、内部データベースに問い合わせて情報を得る際に使う <command>dpkg</command> のオプションについて学びましょう。各オプションは最初に長いオプション、その後に対応する短いオプション (両者は同じ引数を取るのは明らかです) のように記載しています。<literal>--listfiles <replaceable>package</replaceable></literal> (または <literal>-L</literal>) は与えられたパッケージがインストールするファイルを表示します。<literal>--search <replaceable>file</replaceable></literal> (または <literal>-S</literal>) はファイルを含むパッケージを探します。<literal>--status <replaceable>package</replaceable></literal> (または <literal>-s</literal>) はインストールされたパッケージのヘッダを表示します。<literal>--list</literal> (または <literal>-l</literal>) はシステムが把握しているパッケージのリストとその状態を表示します。<literal>--contents <replaceable>file.deb</replaceable></literal> (または <literal>-c</literal>) は指定された Debian パッケージに含まれるファイルを表示します。<literal>--info <replaceable>file.deb</replaceable></literal> (または <literal>-I</literal>) は指定された Debian パッケージのヘッダを表示します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<emphasis>NOTE</emphasis> <command>dpkg</command> or <command>apt</command>?"
+msgid "<emphasis>CAUTION</emphasis> <command>dpkg --search</command> and merged <filename>/usr</filename>"
+msgstr "<emphasis>NOTE</emphasis> <command>dpkg</command> か <command>apt</command> か?"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><filename>postrm</filename></primary>"
+msgid "<primary>merged <filename>/usr</filename></primary>"
+msgstr "<primary><filename>postrm</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><filename>postrm</filename></primary>"
+msgid "<primary><filename>/usr</filename></primary>"
+msgstr "<primary><filename>postrm</filename></primary>"
+
+msgid "For <ulink url=\"https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/\">various reasons</ulink>, Debian now installs by default a few top-level directories as symlinks to their counterparts below <filename>/usr</filename>. For instance, <filename>/bin</filename>, <filename>/sbin</filename> and <filename>/lib</filename> are now symlinks to, respectively, <filename>/usr/bin</filename>, <filename>/usr/sbin</filename> and <filename>/usr/lib</filename>."
+msgstr ""
+
+msgid "While this does provide desirable benefits, it can also be a source of confusion. For example, when you query <command>dpkg</command> which package is owning a given file, it will only be able to answer when you ask for its original path:"
+msgstr ""
+
+msgid ""
+"\n"
+"$ <userinput>dpkg --search /bin/mount</userinput>\n"
+"mount: /bin/mount\n"
+"$ <userinput>dpkg --search /usr/bin/mount</userinput>\n"
+"dpkg-query: no path found matching pattern /usr/bin/mount\n"
+"$ <userinput>dpkg --search /bin/apt</userinput>\n"
+"dpkg-query: no path found matching pattern /bin/apt\n"
+"$ <userinput>dpkg --search /usr/bin/apt</userinput>\n"
+"apt: /usr/bin/apt\n"
+"        "
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Various queries with <command>dpkg</command>"
 msgstr "<command>dpkg</command> にさまざまな情報を問い合わせる"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput>$ </computeroutput><userinput>dpkg -L base-passwd</userinput>\n"
+#| "<computeroutput>/.\n"
+#| "/usr\n"
+#| "/usr/sbin\n"
+#| "/usr/sbin/update-passwd\n"
+#| "/usr/share\n"
+#| "/usr/share/base-passwd\n"
+#| "/usr/share/base-passwd/group.master\n"
+#| "/usr/share/base-passwd/passwd.master\n"
+#| "/usr/share/doc\n"
+#| "/usr/share/doc/base-passwd\n"
+#| "/usr/share/doc/base-passwd/README\n"
+#| "/usr/share/doc/base-passwd/changelog.gz\n"
+#| "/usr/share/doc/base-passwd/copyright\n"
+#| "/usr/share/doc/base-passwd/users-and-groups.html\n"
+#| "/usr/share/doc/base-passwd/users-and-groups.txt.gz\n"
+#| "/usr/share/doc-base\n"
+#| "/usr/share/doc-base/users-and-groups\n"
+#| "/usr/share/lintian\n"
+#| "/usr/share/lintian/overrides\n"
+#| "/usr/share/lintian/overrides/base-passwd\n"
+#| "/usr/share/man\n"
+#| "/usr/share/man/de\n"
+#| "/usr/share/man/de/man8\n"
+#| "/usr/share/man/de/man8/update-passwd.8.gz\n"
+#| "/usr/share/man/es\n"
+#| "/usr/share/man/es/man8\n"
+#| "/usr/share/man/es/man8/update-passwd.8.gz\n"
+#| "/usr/share/man/fr\n"
+#| "/usr/share/man/fr/man8\n"
+#| "/usr/share/man/fr/man8/update-passwd.8.gz\n"
+#| "/usr/share/man/ja\n"
+#| "/usr/share/man/ja/man8\n"
+#| "/usr/share/man/ja/man8/update-passwd.8.gz\n"
+#| "/usr/share/man/man8\n"
+#| "/usr/share/man/man8/update-passwd.8.gz\n"
+#| "/usr/share/man/pl\n"
+#| "/usr/share/man/pl/man8\n"
+#| "/usr/share/man/pl/man8/update-passwd.8.gz\n"
+#| "/usr/share/man/ru\n"
+#| "/usr/share/man/ru/man8\n"
+#| "/usr/share/man/ru/man8/update-passwd.8.gz\n"
+#| "$ </computeroutput><userinput>dpkg -S /bin/date</userinput>\n"
+#| "<computeroutput>coreutils: /bin/date\n"
+#| "$ </computeroutput><userinput>dpkg -s coreutils</userinput>\n"
+#| "<computeroutput>Package: coreutils\n"
+#| "Essential: yes\n"
+#| "Status: install ok installed\n"
+#| "Priority: required\n"
+#| "Section: utils\n"
+#| "Installed-Size: 15103\n"
+#| "Maintainer: Michael Stone &lt;mstone@debian.org&gt;\n"
+#| "Architecture: amd64\n"
+#| "Multi-Arch: foreign\n"
+#| "Version: 8.26-3\n"
+#| "Replaces: mktemp, realpath, timeout\n"
+#| "Pre-Depends: libacl1 (&gt;= 2.2.51-8), libattr1 (&gt;= 1:2.4.46-8), libc6 (&gt;= 2.17), libselinux1 (&gt;= 2.1.13)\n"
+#| "Conflicts: timeout\n"
+#| "Description: GNU core utilities\n"
+#| " This package contains the basic file, shell and text manipulation\n"
+#| " utilities which are expected to exist on every operating system.\n"
+#| " .\n"
+#| " Specifically, this package includes:\n"
+#| " arch base64 basename cat chcon chgrp chmod chown chroot cksum comm cp\n"
+#| " csplit cut date dd df dir dircolors dirname du echo env expand expr\n"
+#| " factor false flock fmt fold groups head hostid id install join link ln\n"
+#| " logname ls md5sum mkdir mkfifo mknod mktemp mv nice nl nohup nproc numfmt\n"
+#| " od paste pathchk pinky pr printenv printf ptx pwd readlink realpath rm\n"
+#| " rmdir runcon sha*sum seq shred sleep sort split stat stty sum sync tac\n"
+#| " tail tee test timeout touch tr true truncate tsort tty uname unexpand\n"
+#| " uniq unlink users vdir wc who whoami yes\n"
+#| "Homepage: http://gnu.org/software/coreutils\n"
+#| "$ </computeroutput><userinput>dpkg -l 'b*'</userinput>\n"
+#| "<computeroutput>Desired=Unknown/Install/Remove/Purge/Hold\n"
+#| "| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend\n"
+#| "|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n"
+#| "||/ Name                 Version         Architecture    Description\n"
+#| "+++-====================-===============-===============-=============================================\n"
+#| "un  backupninja          &lt;none&gt;          &lt;none&gt;          (no description available)\n"
+#| "un  backuppc             &lt;none&gt;          &lt;none&gt;          (no description available)\n"
+#| "un  baekmuk-ttf          &lt;none&gt;          &lt;none&gt;          (no description available)\n"
+#| "un  base                 &lt;none&gt;          &lt;none&gt;          (no description available)\n"
+#| "un  base-config          &lt;none&gt;          &lt;none&gt;          (no description available)\n"
+#| "ii  base-files           9.9+deb9u1      amd64           Debian base system miscellaneous files\n"
+#| "ii  base-passwd          3.5.43          amd64           Debian base system master password and group \n"
+#| "ii  bash                 4.4-5           amd64           GNU Bourne Again SHell\n"
+#| "[...]\n"
+#| "$ </computeroutput><userinput>dpkg -c /var/cache/apt/archives/gnupg_2.1.18-8~deb9u1_amd64.deb</userinput>\n"
+#| "<computeroutput>drwxr-xr-x root/root         0 2017-09-18 20:41 ./\n"
+#| "drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/\n"
+#| "drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/bin/\n"
+#| "-rwxr-xr-x root/root    996648 2017-09-18 20:41 ./usr/bin/gpg\n"
+#| "-rwxr-xr-x root/root      3444 2017-09-18 20:41 ./usr/bin/gpg-zip\n"
+#| "-rwxr-xr-x root/root    161192 2017-09-18 20:41 ./usr/bin/gpgconf\n"
+#| "-rwxr-xr-x root/root     26696 2017-09-18 20:41 ./usr/bin/gpgparsemail\n"
+#| "-rwxr-xr-x root/root     76112 2017-09-18 20:41 ./usr/bin/gpgsplit\n"
+#| "-rwxr-xr-x root/root    158344 2017-09-18 20:41 ./usr/bin/kbxutil\n"
+#| "-rwxr-xr-x root/root      1081 2014-06-25 16:17 ./usr/bin/lspgpot\n"
+#| "-rwxr-xr-x root/root      2194 2017-09-18 20:41 ./usr/bin/migrate-pubring-from-classic-gpg\n"
+#| "-rwxr-xr-x root/root     14328 2017-09-18 20:41 ./usr/bin/watchgnupg\n"
+#| "drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/sbin/\n"
+#| "-rwxr-xr-x root/root      3078 2017-09-18 20:41 ./usr/sbin/addgnupghome\n"
+#| "-rwxr-xr-x root/root      2219 2017-09-18 20:41 ./usr/sbin/applygnupgdefaults\n"
+#| "drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/share/\n"
+#| "drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/share/doc/\n"
+#| "drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/share/doc/gnupg/\n"
+#| "-rw-r--r-- root/root     18964 2017-01-23 18:39 ./usr/share/doc/gnupg/DETAILS.gz\n"
+#| "[...]\n"
+#| "$ </computeroutput><userinput>dpkg -I /var/cache/apt/archives/gnupg_2.1.18-8~deb9u1_amd64.deb</userinput>\n"
+#| "<computeroutput> new debian package, version 2.0.\n"
+#| " size 1124042 bytes: control archive=2221 bytes.\n"
+#| "    1388 bytes,    24 lines      control              \n"
+#| "    2764 bytes,    43 lines      md5sums              \n"
+#| " Package: gnupg\n"
+#| " Source: gnupg2\n"
+#| " Version: 2.1.18-8~deb9u1\n"
+#| " Architecture: amd64\n"
+#| " Maintainer: Debian GnuPG Maintainers &lt;pkg-gnupg-maint@lists.alioth.debian.org&gt;\n"
+#| " Installed-Size: 2088\n"
+#| " Depends: gnupg-agent (= 2.1.18-8~deb9u1), libassuan0 (&gt;= 2.0.1), libbz2-1.0, libc6 (&gt;= 2.15), libgcrypt20 (&gt;= 1.7.0), libgpg-error0 (&gt;= 1.14), libksba8 (&gt;= 1.3.4), libreadline7 (&gt;= 6.0), libsqlite3-0 (&gt;= 3.7.15), zlib1g (&gt;= 1:1.1.4)\n"
+#| " Recommends: dirmngr (= 2.1.18-8~deb9u1), gnupg-l10n (= 2.1.18-8~deb9u1)\n"
+#| " Suggests: parcimonie, xloadimage\n"
+#| " Breaks: debsig-verify (&lt;&lt; 0.15), dirmngr (&lt;&lt; 2.1.18-8~deb9u1), gnupg2 (&lt;&lt; 2.1.11-7+exp1), libgnupg-interface-perl (&lt;&lt; 0.52-3), libgnupg-perl (&lt;= 0.19-1), libmail-gnupg-perl (&lt;= 0.22-1), monkeysphere (&lt;&lt; 0.38~), php-crypt-gpg (&lt;= 1.4.1-1), python-apt (&lt;= 1.1.0~beta4), python-gnupg (&lt;&lt; 0.3.8-3), python3-apt (&lt;= 1.1.0~beta4)\n"
+#| " Replaces: gnupg2 (&lt;&lt; 2.1.11-7+exp1)\n"
+#| " Provides: gpg\n"
+#| " Section: utils\n"
+#| " Priority: optional\n"
+#| " Multi-Arch: foreign\n"
+#| " Homepage: https://www.gnupg.org/\n"
+#| " Description: GNU privacy guard - a free PGP replacement\n"
+#| "  GnuPG is GNU's tool for secure communication and data storage.\n"
+#| "  It can be used to encrypt data and to create digital signatures.\n"
+#| "  It includes an advanced key management facility and is compliant\n"
+#| "  with the proposed OpenPGP Internet standard as described in RFC4880.\n"
+#| "[...]</computeroutput>"
 msgid ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>dpkg -L base-passwd</userinput>\n"
-"<computeroutput>/.\n"
+"<computeroutput><![CDATA[/.\n"
 "/usr\n"
 "/usr/sbin\n"
 "/usr/sbin/update-passwd\n"
@@ -1400,23 +2062,21 @@ msgid ""
 "/usr/share/man/pl/man8/update-passwd.8.gz\n"
 "/usr/share/man/ru\n"
 "/usr/share/man/ru/man8\n"
-"/usr/share/man/ru/man8/update-passwd.8.gz\n"
+"/usr/share/man/ru/man8/update-passwd.8.gz]]>\n"
 "$ </computeroutput><userinput>dpkg -S /bin/date</userinput>\n"
 "<computeroutput>coreutils: /bin/date\n"
 "$ </computeroutput><userinput>dpkg -s coreutils</userinput>\n"
-"<computeroutput>Package: coreutils\n"
+"<computeroutput><![CDATA[Package: coreutils\n"
 "Essential: yes\n"
 "Status: install ok installed\n"
 "Priority: required\n"
 "Section: utils\n"
-"Installed-Size: 15103\n"
-"Maintainer: Michael Stone &lt;mstone@debian.org&gt;\n"
+"Installed-Size: 15719\n"
+"Maintainer: Michael Stone <mstone@debian.org>\n"
 "Architecture: amd64\n"
 "Multi-Arch: foreign\n"
-"Version: 8.26-3\n"
-"Replaces: mktemp, realpath, timeout\n"
-"Pre-Depends: libacl1 (&gt;= 2.2.51-8), libattr1 (&gt;= 1:2.4.46-8), libc6 (&gt;= 2.17), libselinux1 (&gt;= 2.1.13)\n"
-"Conflicts: timeout\n"
+"Version: 8.30-3\n"
+"Pre-Depends: libacl1 (>= 2.2.23), libattr1 (>= 1:2.4.44), libc6 (>= 2.28), libselinux1 (>= 2.1.13)\n"
 "Description: GNU core utilities\n"
 " This package contains the basic file, shell and text manipulation\n"
 " utilities which are expected to exist on every operating system.\n"
@@ -1430,70 +2090,80 @@ msgid ""
 " rmdir runcon sha*sum seq shred sleep sort split stat stty sum sync tac\n"
 " tail tee test timeout touch tr true truncate tsort tty uname unexpand\n"
 " uniq unlink users vdir wc who whoami yes\n"
-"Homepage: http://gnu.org/software/coreutils\n"
+"Homepage: http://gnu.org/software/coreutils]]>\n"
 "$ </computeroutput><userinput>dpkg -l 'b*'</userinput>\n"
-"<computeroutput>Desired=Unknown/Install/Remove/Purge/Hold\n"
+"<computeroutput><![CDATA[Desired=Unknown/Install/Remove/Purge/Hold\n"
 "| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend\n"
 "|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n"
-"||/ Name                 Version         Architecture    Description\n"
-"+++-====================-===============-===============-=============================================\n"
-"un  backupninja          &lt;none&gt;          &lt;none&gt;          (no description available)\n"
-"un  backuppc             &lt;none&gt;          &lt;none&gt;          (no description available)\n"
-"un  baekmuk-ttf          &lt;none&gt;          &lt;none&gt;          (no description available)\n"
-"un  base                 &lt;none&gt;          &lt;none&gt;          (no description available)\n"
-"un  base-config          &lt;none&gt;          &lt;none&gt;          (no description available)\n"
-"ii  base-files           9.9+deb9u1      amd64           Debian base system miscellaneous files\n"
-"ii  base-passwd          3.5.43          amd64           Debian base system master password and group \n"
-"ii  bash                 4.4-5           amd64           GNU Bourne Again SHell\n"
-"[...]\n"
-"$ </computeroutput><userinput>dpkg -c /var/cache/apt/archives/gnupg_2.1.18-8~deb9u1_amd64.deb</userinput>\n"
-"<computeroutput>drwxr-xr-x root/root         0 2017-09-18 20:41 ./\n"
-"drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/\n"
-"drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/bin/\n"
-"-rwxr-xr-x root/root    996648 2017-09-18 20:41 ./usr/bin/gpg\n"
-"-rwxr-xr-x root/root      3444 2017-09-18 20:41 ./usr/bin/gpg-zip\n"
-"-rwxr-xr-x root/root    161192 2017-09-18 20:41 ./usr/bin/gpgconf\n"
-"-rwxr-xr-x root/root     26696 2017-09-18 20:41 ./usr/bin/gpgparsemail\n"
-"-rwxr-xr-x root/root     76112 2017-09-18 20:41 ./usr/bin/gpgsplit\n"
-"-rwxr-xr-x root/root    158344 2017-09-18 20:41 ./usr/bin/kbxutil\n"
-"-rwxr-xr-x root/root      1081 2014-06-25 16:17 ./usr/bin/lspgpot\n"
-"-rwxr-xr-x root/root      2194 2017-09-18 20:41 ./usr/bin/migrate-pubring-from-classic-gpg\n"
-"-rwxr-xr-x root/root     14328 2017-09-18 20:41 ./usr/bin/watchgnupg\n"
-"drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/sbin/\n"
-"-rwxr-xr-x root/root      3078 2017-09-18 20:41 ./usr/sbin/addgnupghome\n"
-"-rwxr-xr-x root/root      2219 2017-09-18 20:41 ./usr/sbin/applygnupgdefaults\n"
-"drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/share/\n"
-"drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/share/doc/\n"
-"drwxr-xr-x root/root         0 2017-09-18 20:41 ./usr/share/doc/gnupg/\n"
-"-rw-r--r-- root/root     18964 2017-01-23 18:39 ./usr/share/doc/gnupg/DETAILS.gz\n"
-"[...]\n"
-"$ </computeroutput><userinput>dpkg -I /var/cache/apt/archives/gnupg_2.1.18-8~deb9u1_amd64.deb</userinput>\n"
-"<computeroutput> new debian package, version 2.0.\n"
-" size 1124042 bytes: control archive=2221 bytes.\n"
-"    1388 bytes,    24 lines      control              \n"
-"    2764 bytes,    43 lines      md5sums              \n"
-" Package: gnupg\n"
+"||/ Name                       Version              Architecture Description\n"
+"+++-====================-===============-===============-==================================================\n"
+"un  backupninja          <none>          <none>          (no description available)\n"
+"un  backuppc             <none>          <none>          (no description available)\n"
+"un  baobab               <none>          <node>          (no description available)\n"
+"un  base                 <none>          <none>          (no description available)\n"
+"un  base-config          <none>          <none>          (no description available)\n"
+"ii  base-files           11              amd64           Debian base system miscellaneous files\n"
+"ii  base-passwd          3.5.46          amd64           Debian base system master password and group files\n"
+"ii  bash                 5.0-4           amd64           GNU Bourne Again SHell\n"
+"[..]]]>\n"
+"$ </computeroutput><userinput>dpkg -c /var/cache/apt/archives/gnupg-utils_2.2.12-1_amd64.deb</userinput>\n"
+"<computeroutput><![CDATA[drwxr-xr-x root/root         0 2018-12-15 02:17 ./\n"
+"drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/\n"
+"drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/bin/\n"
+"-rwxr-xr-x root/root      3516 2018-12-15 02:17 ./usr/bin/gpg-zip\n"
+"-rwxr-xr-x root/root    866256 2018-12-15 02:17 ./usr/bin/gpgcompose\n"
+"-rwxr-xr-x root/root     30792 2018-12-15 02:17 ./usr/bin/gpgparsemail\n"
+"-rwxr-xr-x root/root     84432 2018-12-15 02:17 ./usr/bin/gpgsplit\n"
+"-rwxr-xr-x root/root    154952 2018-12-15 02:17 ./usr/bin/gpgtar\n"
+"-rwxr-xr-x root/root    166568 2018-12-15 02:17 ./usr/bin/kbxutil\n"
+"-rwxr-xr-x root/root      1081 2017-08-28 12:22 ./usr/bin/lspgpot\n"
+"-rwxr-xr-x root/root      2194 2018-11-18 23:37 ./usr/bin/migrate-pubring-from-classic-gpg\n"
+"-rwxr-xr-x root/root    121576 2018-12-15 02:17 ./usr/bin/symcryptrun\n"
+"-rwxr-xr-x root/root     18424 2018-12-15 02:17 ./usr/bin/watchgnupg\n"
+"drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/sbin/\n"
+"-rwxr-xr-x root/root      3075 2018-12-15 02:17 ./usr/sbin/addgnupghome\n"
+"-rwxr-xr-x root/root      2217 2018-12-15 02:17 ./usr/sbin/applygnupgdefaults\n"
+"drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/share/\n"
+"drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/share/doc/\n"
+"[...]]]>\n"
+"$ </computeroutput><userinput>dpkg -I /var/cache/apt/archives/gnupg-utils_2.2.12-1_amd64.deb</userinput>\n"
+"<computeroutput><![CDATA[ new Debian package, version 2.0.\n"
+" size 857408 bytes: control archive=1844 bytes.\n"
+"    1564 bytes,    32 lines      control              \n"
+"    1804 bytes,    28 lines      md5sums              \n"
+" Package: gnupg-utils\n"
 " Source: gnupg2\n"
-" Version: 2.1.18-8~deb9u1\n"
+" Version: 2.2.12-1\n"
 " Architecture: amd64\n"
-" Maintainer: Debian GnuPG Maintainers &lt;pkg-gnupg-maint@lists.alioth.debian.org&gt;\n"
-" Installed-Size: 2088\n"
-" Depends: gnupg-agent (= 2.1.18-8~deb9u1), libassuan0 (&gt;= 2.0.1), libbz2-1.0, libc6 (&gt;= 2.15), libgcrypt20 (&gt;= 1.7.0), libgpg-error0 (&gt;= 1.14), libksba8 (&gt;= 1.3.4), libreadline7 (&gt;= 6.0), libsqlite3-0 (&gt;= 3.7.15), zlib1g (&gt;= 1:1.1.4)\n"
-" Recommends: dirmngr (= 2.1.18-8~deb9u1), gnupg-l10n (= 2.1.18-8~deb9u1)\n"
-" Suggests: parcimonie, xloadimage\n"
-" Breaks: debsig-verify (&lt;&lt; 0.15), dirmngr (&lt;&lt; 2.1.18-8~deb9u1), gnupg2 (&lt;&lt; 2.1.11-7+exp1), libgnupg-interface-perl (&lt;&lt; 0.52-3), libgnupg-perl (&lt;= 0.19-1), libmail-gnupg-perl (&lt;= 0.22-1), monkeysphere (&lt;&lt; 0.38~), php-crypt-gpg (&lt;= 1.4.1-1), python-apt (&lt;= 1.1.0~beta4), python-gnupg (&lt;&lt; 0.3.8-3), python3-apt (&lt;= 1.1.0~beta4)\n"
-" Replaces: gnupg2 (&lt;&lt; 2.1.11-7+exp1)\n"
-" Provides: gpg\n"
+" Maintainer: Debian GnuPG Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>\n"
+" Installed-Size: 1845\n"
+" Depends: libassuan0 (>= 2.0.1), libbz2-1.0, libc6 (>= 2.25), libgcrypt20 (>= 1.8.0), libgpg-error0 (>= 1.26-2~), libksba8 (>= 1.3.4), libreadline7 (>= 6.0), zlib1g (>= 1:1.1.4)\n"
+" Recommends: gpg, gpg-agent, gpgconf, gpgsm\n"
+" Breaks: gnupg (<< 2.1.21-4), gnupg-agent (<< 2.1.21-4)\n"
+" Replaces: gnupg (<< 2.1.21-4), gnupg-agent (<< 2.1.21-4)\n"
 " Section: utils\n"
 " Priority: optional\n"
 " Multi-Arch: foreign\n"
 " Homepage: https://www.gnupg.org/\n"
-" Description: GNU privacy guard - a free PGP replacement\n"
+" Description: GNU privacy guard - utility programs\n"
 "  GnuPG is GNU's tool for secure communication and data storage.\n"
-"  It can be used to encrypt data and to create digital signatures.\n"
-"  It includes an advanced key management facility and is compliant\n"
-"  with the proposed OpenPGP Internet standard as described in RFC4880.\n"
-"[...]</computeroutput>"
+"  .\n"
+"  This package contains several useful utilities for manipulating\n"
+"  OpenPGP data and other related cryptographic elements.  It includes:\n"
+"  .\n"
+"   * addgnupghome -- create .gnupg home directories\n"
+"   * applygnupgdefaults -- run gpgconf --apply-defaults for all users\n"
+"   * gpgcompose -- an experimental tool for constructing arbitrary\n"
+"                   sequences of OpenPGP packets (e.g. for testing)\n"
+"   * gpgparsemail -- parse an e-mail message into annotated format\n"
+"   * gpgsplit -- split a sequence of OpenPGP packets into files\n"
+"   * gpgtar -- encrypt or sign files in an archive\n"
+"   * kbxutil -- list, export, import Keybox data\n"
+"   * lspgpot -- convert PGP ownertrust values to GnuPG\n"
+"   * migrate-pubring-from-classic-gpg -- use only \"modern\" formats\n"
+"   * symcryptrun -- use simple symmetric encryption tool in GnuPG framework\n"
+"   * watchgnupg -- watch socket-based logs\n"
+"[..]]]></computeroutput>"
 msgstr ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>dpkg -L base-passwd</userinput>\n"
@@ -1645,6 +2315,12 @@ msgid "<primary>comparison of versions</primary>"
 msgstr "<primary>バージョン</primary><secondary sortas=\"ヒカク\">比較</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>meta-information</secondary>"
+msgid "<primary>package</primary><secondary>version, comparison</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"メタジョウホウ\">メタ情報</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Since <command>dpkg</command> is the program for handling Debian packages, it also provides the reference implementation of the logic of comparing version numbers. This is why it has a <literal>--compare-versions</literal> option, usable by external programs (especially configuration scripts executed by <command>dpkg</command> itself). This option requires three parameters: a version number, a comparison operator, and a second version number. The different possible operators are <literal>lt</literal> (strictly less than), <literal>le</literal> (less than or equal to), <literal>eq</literal> (equal), <literal>ne</literal> (not equal), <literal>ge</literal> (greater than or equal to), and <literal>gt</literal> (strictly greater than). If the comparison is correct, <command>dpkg</command> returns 0 (success); if not, it gives a non-zero return value (indicating failure)."
 msgstr "<command>dpkg</command> は Debian パッケージを取り扱うプログラムですから、バージョン番号の比較ロジックのリファレンス実装も提供しています。<command>dpkg</command> にはバージョンを比較するための <literal>--compare-versions</literal> オプションが用意されており、外部プログラム (特に <command>dpkg</command> 自身が呼び出す設定スクリプト) の中でバージョンを簡単に比較できるようにしています。<literal>--compare-versions</literal> オプションは 3 つの引数を取ります。具体的に言えば引数としてバージョン番号、比較演算子、2 番目のバージョン番号を取ります。比較演算子として使える演算子は <literal>lt</literal> (より小さい)、<literal>le</literal> (以下)、<literal>eq</literal> (等しい)、<literal>ne</literal> (等しくない)、<literal>ge</literal> (以上)、<literal>gt</literal> (より大きい) です。比較式が真ならば <command>dpkg</command> は 0 (成功) を返します。一方で偽ならば非ゼロ (失敗) を返します。"
 
@@ -1693,6 +2369,12 @@ msgid "<command>dpkg</command>'s Log File"
 msgstr "<command>dpkg</command> のログファイル"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><filename>/var/log/dpkg.log</filename></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<command>dpkg</command> keeps a log of all of its actions in <filename>/var/log/dpkg.log</filename>. This log is extremely verbose, since it details every one of the stages through which packages handled by <command>dpkg</command> go. In addition to offering a way to track dpkg's behavior, it helps, above all, to keep a history of the development of the system: one can find the exact moment when each package has been installed or updated, and this information can be extremely useful in understanding a recent change in behavior. Additionally, all versions being recorded, it is easy to cross-check the information with the <filename>changelog.Debian.gz</filename> for packages in question, or even with online bug reports."
 msgstr "<command>dpkg</command> は <filename>/var/log/dpkg.log</filename> に作業のすべてを記録します。<filename>/var/log/dpkg.log</filename> は極めて詳細です。なぜなら <filename>/var/log/dpkg.log</filename> には <command>dpkg</command> がパッケージに対して行った操作の各段階すべてが詳しく記録されているからです。dpkg の挙動を追跡する方法を提供することに加えて、<filename>/var/log/dpkg.log</filename> はシステムの変化の履歴を保存するのに役立ちます。すなわち、パッケージがインストールされたり更新された正確な日時を探すことが可能ですし、この情報は最近の挙動変化を理解するのに極めて役立ちます。加えて、すべてのバージョンが記録されていますから、注目しているパッケージの <filename>changelog.Debian.gz</filename> またはオンラインバグ報告と情報を簡単に照合できます。"
 
@@ -1725,27 +2407,53 @@ msgid "<command>dpkg</command>'s multi-arch support allows users to define “fo
 msgstr "<command>dpkg</command> のマルチアーキテクチャサポートのおかげで、ユーザは現在のシステムにインストールできる「外来アーキテクチャ」を定義できます。これを行うには、以下に示す通り <command>dpkg --add-architecture</command> を使ってください。関連して、<command>dpkg --remove-architecture</command> は外来アーキテクチャのサポートを取り消しますが、取り消したいアーキテクチャのパッケージが残っていた場合には失敗します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>dpkg --print-architecture</userinput>\n"
+#| "<computeroutput>amd64\n"
+#| "# </computeroutput><userinput>dpkg --print-foreign-architectures</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>dpkg -i gcc-6-base_6.3.0-18_armhf.deb</userinput>\n"
+#| "<computeroutput>dpkg: error processing archive gcc-6-base_6.3.0-18_armhf.deb (--install):\n"
+#| " package architecture (armhf) does not match system (amd64)\n"
+#| "Errors were encountered while processing:\n"
+#| " gcc-6-base_6.3.0-18_armhf.deb\n"
+#| "# </computeroutput><userinput>dpkg --add-architecture armhf</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>dpkg --add-architecture armel</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>dpkg --print-foreign-architectures</userinput>\n"
+#| "<computeroutput>armhf\n"
+#| "armel\n"
+#| "# </computeroutput><userinput>dpkg -i gcc-6-base_6.3.0-18_armhf.deb</userinput>\n"
+#| "<computeroutput>Selecting previously unselected package gcc-6-base:armhf.\n"
+#| "(Reading database ... 112000 files and directories currently installed.)\n"
+#| "Preparing to unpack gcc-6-base_6.3.0-18_armhf.deb ...\n"
+#| "Unpacking gcc-6-base:armhf (6.3.0-18) ...\n"
+#| "Setting up gcc-6-base:armhf (6.3.0-18) ...\n"
+#| "# </computeroutput><userinput>dpkg --remove-architecture armhf</userinput>\n"
+#| "<computeroutput>dpkg: error: cannot remove architecture 'armhf' currently in use by the database\n"
+#| "# </computeroutput><userinput>dpkg --remove-architecture armel</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>dpkg --print-foreign-architectures</userinput>\n"
+#| "<computeroutput>armhf</computeroutput>"
 msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>dpkg --print-architecture</userinput>\n"
 "<computeroutput>amd64\n"
 "# </computeroutput><userinput>dpkg --print-foreign-architectures</userinput>\n"
-"<computeroutput># </computeroutput><userinput>dpkg -i gcc-6-base_6.3.0-18_armhf.deb</userinput>\n"
-"<computeroutput>dpkg: error processing archive gcc-6-base_6.3.0-18_armhf.deb (--install):\n"
+"<computeroutput># </computeroutput><userinput>dpkg -i gcc-8-base_8.3.0-6_armhf.deb</userinput>\n"
+"<computeroutput>dpkg: error processing archive gcc-8-base_8.3.0-6_armhf.deb (--install):\n"
 " package architecture (armhf) does not match system (amd64)\n"
 "Errors were encountered while processing:\n"
-" gcc-6-base_6.3.0-18_armhf.deb\n"
+" gcc-8-base_8.3.0-6_armhf.deb\n"
 "# </computeroutput><userinput>dpkg --add-architecture armhf</userinput>\n"
 "<computeroutput># </computeroutput><userinput>dpkg --add-architecture armel</userinput>\n"
 "<computeroutput># </computeroutput><userinput>dpkg --print-foreign-architectures</userinput>\n"
 "<computeroutput>armhf\n"
 "armel\n"
-"# </computeroutput><userinput>dpkg -i gcc-6-base_6.3.0-18_armhf.deb</userinput>\n"
-"<computeroutput>Selecting previously unselected package gcc-6-base:armhf.\n"
-"(Reading database ... 112000 files and directories currently installed.)\n"
-"Preparing to unpack gcc-6-base_6.3.0-18_armhf.deb ...\n"
-"Unpacking gcc-6-base:armhf (6.3.0-18) ...\n"
-"Setting up gcc-6-base:armhf (6.3.0-18) ...\n"
+"# </computeroutput><userinput>dpkg -i gcc-8-base_8.3.0-6_armhf.deb</userinput>\n"
+"<computeroutput>(Reading database ... 14319 files and directories currently installed.)\n"
+"Preparing to unpack gcc-8-base_8.3.0-6_armhf.deb ...\n"
+"Unpacking gcc-8-base:armhf (8.3.0-6) ...\n"
+"Setting up gcc-8-base:armhf (8.3.0-6) ...\n"
 "# </computeroutput><userinput>dpkg --remove-architecture armhf</userinput>\n"
 "<computeroutput>dpkg: error: cannot remove architecture 'armhf' currently in use by the database\n"
 "# </computeroutput><userinput>dpkg --remove-architecture armel</userinput>\n"
@@ -1783,7 +2491,9 @@ msgid "<emphasis>NOTE</emphasis> APT's multi-arch support"
 msgstr "<emphasis>NOTE</emphasis> APT のマルチアーキテクチャサポート"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "APT will automatically detect when dpkg has been configured to support foreign architectures and will start downloading the corresponding <filename>Packages</filename> files durings its update process."
+#, fuzzy
+#| msgid "APT will automatically detect when dpkg has been configured to support foreign architectures and will start downloading the corresponding <filename>Packages</filename> files durings its update process."
+msgid "APT will automatically detect when dpkg has been configured to support foreign architectures and will start downloading the corresponding <filename>Packages</filename> files during its update process."
 msgstr "APT は dpkg が外来アーキテクチャをサポートするように設定されているかを自動的に検出し、更新作業中に対応する <filename>Packages</filename> ファイルをダウンロードします。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1795,7 +2505,9 @@ msgid "<emphasis>IN PRACTICE</emphasis> Using proprietary i386 binaries on amd64
 msgstr "<emphasis>IN PRACTICE</emphasis> amd64 上でプロプライエタリな i386 バイナリを使う"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "There are multiple use cases for multi-arch, but the most popular one is the possibility to execute 32 bit binaries (i386) on 64 bit systems (amd64)."
+#, fuzzy
+#| msgid "There are multiple use cases for multi-arch, but the most popular one is the possibility to execute 32 bit binaries (i386) on 64 bit systems (amd64)."
+msgid "There are multiple use cases for multi-arch, but the most popular ones are the possibility to execute (sometimes proprietary) 32 bit binaries (i386) on 64 bit systems (amd64), and the possibility to cross-compile software for a platform or an architecture different from the host one."
 msgstr "マルチアーキテクチャには複数の使用事例がありますが、最も一般的な使われ方は、32 ビットバイナリ (i386) を 64 ビットシステム (amd64) で実行できるようにする事例です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1803,22 +2515,38 @@ msgid "Multi-Arch Related Changes"
 msgstr "マルチアーキテクチャ関連の変更"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "To make multi-arch actually useful and usable, libraries had to be repackaged and moved to an architecture-specific directory so that multiple copies (targeting different architectures) can be installed alongside. Such updated packages contain the “<literal>Multi-Arch: same</literal>” header field to tell the packaging system that the various architectures of the package can be safely co-installed (and that those packages can only satisfy dependencies of packages of the same architecture). The most important libraries have been converted since the introduction of multi-arch in Debian <emphasis role=\"distribution\">Wheezy</emphasis>, but there are many libraries that will likely never be converted unless someone specifically requests it (through a bug report for example)."
+#, fuzzy
+#| msgid "To make multi-arch actually useful and usable, libraries had to be repackaged and moved to an architecture-specific directory so that multiple copies (targeting different architectures) can be installed alongside. Such updated packages contain the “<literal>Multi-Arch: same</literal>” header field to tell the packaging system that the various architectures of the package can be safely co-installed (and that those packages can only satisfy dependencies of packages of the same architecture). The most important libraries have been converted since the introduction of multi-arch in Debian <emphasis role=\"distribution\">Wheezy</emphasis>, but there are many libraries that will likely never be converted unless someone specifically requests it (through a bug report for example)."
+msgid "To make multi-arch actually useful and usable, libraries had to be repackaged and moved to an architecture-specific directory so that multiple copies (targeting different architectures) can be installed alongside. Such updated packages contain the “<literal>Multi-Arch: same</literal>” header field to tell the packaging system that the various architectures of the package can be safely co-installed (and that those packages can only satisfy dependencies of packages of the same architecture). The most important libraries have been converted since the introduction of multi-arch in Debian 7 <emphasis role=\"distribution\">Wheezy</emphasis>, but there are many libraries that will likely never be converted unless someone specifically requests it (through a bug report for example)."
 msgstr "マルチアーキテクチャを実際に有益で使いやすいものにするためには、ライブラリをもう一度パッケージングし直さなければいけませんでした。さらに複数のコピー (異なるアーキテクチャ向けのパッケージ) を同時にインストールできるようにするために、マルチアーキテクチャ専用のディレクトリにライブラリを移動しなければいけませんでした。このようにして更新されたパッケージには、このパッケージはアーキテクチャが違っても安全に同時インストールできること (そしてこのパッケージは自分と異なるアーキテクチャのパッケージの依存関係を満足することはできないこと) をパッケージングシステムに伝えるための「<literal>Multi-Arch: same</literal>」ヘッダフィールドが含まれています。マルチアーキテクチャが Debian に導入されたのは <emphasis role=\"distribution\">Wheezy</emphasis> の時ですから、最重要のライブラリは既にマルチアーキテクチャ対応が済んでいます。しかしながら、(バグ報告などの方法で) 要求しない限り絶対に対応されないライブラリが数多く存在することも事実です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid ""
+#| "<computeroutput>$ </computeroutput><userinput>dpkg -s gcc-6-base\n"
+#| "</userinput><computeroutput>dpkg-query: error: --status needs a valid package name but 'gcc-6-base' is not: ambiguous package name 'gcc-6-base' with more than one installed instance\n"
+#| "\n"
+#| "Use --help for help about querying packages.\n"
+#| "$ </computeroutput><userinput>dpkg -s gcc-6-base:amd64 gcc-6-base:armhf | grep ^Multi\n"
+#| "</userinput><computeroutput>Multi-Arch: same\n"
+#| "Multi-Arch: same\n"
+#| "$ </computeroutput><userinput>dpkg -L libgcc1:amd64 |grep .so\n"
+#| "</userinput><computeroutput>/lib/x86_64-linux-gnu/libgcc_s.so.1\n"
+#| "$ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-6-base/copyright\n"
+#| "</userinput><computeroutput>gcc-6-base:amd64, gcc-6-base:armhf: /usr/share/doc/gcc-6-base/copyright\n"
+#| "</computeroutput>"
 msgid ""
-"<computeroutput>$ </computeroutput><userinput>dpkg -s gcc-6-base\n"
-"</userinput><computeroutput>dpkg-query: error: --status needs a valid package name but 'gcc-6-base' is not: ambiguous package name 'gcc-6-base' with more than one installed instance\n"
+"<computeroutput>$ </computeroutput><userinput>dpkg -s gcc-8-base\n"
+"</userinput><computeroutput>dpkg-query: error: --status needs a valid package name but 'gcc-8-base' is not: ambiguous package name 'gcc-8-base' with more than one installed instance\n"
 "\n"
 "Use --help for help about querying packages.\n"
-"$ </computeroutput><userinput>dpkg -s gcc-6-base:amd64 gcc-6-base:armhf | grep ^Multi\n"
+"$ </computeroutput><userinput>dpkg -s gcc-8-base:amd64 gcc-8-base:armhf | grep ^Multi\n"
 "</userinput><computeroutput>Multi-Arch: same\n"
 "Multi-Arch: same\n"
 "$ </computeroutput><userinput>dpkg -L libgcc1:amd64 |grep .so\n"
 "</userinput><computeroutput>/lib/x86_64-linux-gnu/libgcc_s.so.1\n"
-"$ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-6-base/copyright\n"
-"</userinput><computeroutput>gcc-6-base:amd64, gcc-6-base:armhf: /usr/share/doc/gcc-6-base/copyright\n"
+"$ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-8-base/copyright\n"
+"</userinput><computeroutput>gcc-8-base:amd64, gcc-8-base:armhf: /usr/share/doc/gcc-8-base/copyright\n"
 "</computeroutput>"
 msgstr ""
 "<computeroutput>$ </computeroutput><userinput>dpkg -s gcc-6-base\n"
@@ -1875,7 +2603,9 @@ msgid "<emphasis>COMMUNITY</emphasis> Encouraging the adoption of <filename>.deb
 msgstr "<emphasis>COMMUNITY</emphasis> <filename>.deb</filename> の採用を働きかける"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "If you regularly use the <command>alien</command> program to install RPM packages coming from one of your providers, do not hesitate to write to them and amicably express your strong preference for the <filename>.deb</filename> format. Note that the format of the package is not everything: a <filename>.deb</filename> package built with <command>alien</command> or prepared for a version of Debian different than that which you use, or even for a derivative distribution like Ubuntu, would probably not offer the same level of quality and integration as a package specifically developed for Debian <emphasis role=\"distribution\">Stretch</emphasis>."
+#, fuzzy
+#| msgid "If you regularly use the <command>alien</command> program to install RPM packages coming from one of your providers, do not hesitate to write to them and amicably express your strong preference for the <filename>.deb</filename> format. Note that the format of the package is not everything: a <filename>.deb</filename> package built with <command>alien</command> or prepared for a version of Debian different than that which you use, or even for a derivative distribution like Ubuntu, would probably not offer the same level of quality and integration as a package specifically developed for Debian <emphasis role=\"distribution\">Stretch</emphasis>."
+msgid "If you regularly use the <command>alien</command> program to install RPM packages coming from one of your providers, do not hesitate to write to them and amicably express your strong preference for the <filename>.deb</filename> format. Note that the format of the package is not everything: a <filename>.deb</filename> package built with <command>alien</command> or prepared for a version of Debian different than that which you use, or even for a derivative distribution like Ubuntu, would probably not offer the same level of quality and integration as a package specifically developed for Debian <emphasis role=\"distribution\">Buster</emphasis>."
 msgstr "提供者から受け取った RPM パッケージをインストールするために、日常的に <command>alien</command> プログラムを使っているのなら、提供者に手紙を出して <filename>.deb</filename> フォーマットを強く欲しがっていることを平和的に表現してください。ここで重要なのは単にパッケージのフォーマットを <filename>.deb</filename> フォーマットに変えるだけで事足りる問題ではないという点です。すなわち、<command>alien</command> で作った <filename>.deb</filename> パッケージや、あなたの使っているバージョンと異なる Debian のバージョン用として準備されたパッケージや、Ubuntu などの派生ディストリビューション用として準備されたパッケージは Debian <emphasis role=\"distribution\">Stretch</emphasis> 専用に開発されたパッケージと比べて品質や整合性が違うかもしれません。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1904,6 +2634,22 @@ msgstr "<command>alien</command> コマンドの man ページを見ると、<co
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The stability of the software deployed using the <command>dpkg</command> tool contributes to Debian's fame. The APT suite of tools, described in the following chapter, preserves this advantage, while relieving the administrator from managing the status of packages, a necessary but difficult task."
 msgstr "<command>dpkg</command> ツールを使って配備されたソフトウェアの安定性は Debian の名声に寄与しています。次の章で説明する APT ツール集はこの長所を引き継いで、さらに、管理者が不可欠だが難しい作業であるパッケージの状態管理をしなくても済むようにしました。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "You should always install the “recommended” packages, unless you know exactly why you do not need them. Conversely, it is not necessary to install “suggested” packages unless you know why you need them."
+#~ msgstr "「推奨」パッケージは、それを必要としない理由を理解している場合を除いて、常にインストールされるべきです。逆に「提案」パッケージは、それを必要とする理由を理解している場合を除いて、インストールしなくても構いません。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<primary>CPAN</primary>"
+#~ msgstr "<primary>CPAN</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<computeroutput>$ </computeroutput><userinput>dpkg-source -x package_0.7-1.dsc</userinput>"
+#~ msgstr "<computeroutput>$ </computeroutput><userinput>dpkg-source -x package_0.7-1.dsc</userinput>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<computeroutput>$ </computeroutput><userinput>apt-get source <replaceable>package</replaceable></userinput>"
+#~ msgstr "<computeroutput>$ </computeroutput><userinput>apt-get source <replaceable>package</replaceable></userinput>"
 
 #~ msgid "Before multi-arch, when you wanted to uses a 32 bit appliction on a 64 bit system, you had to install <emphasis role=\"pkg\">ia32-libs</emphasis> to have 32 bit versions of the most popular libraries. That package was a huge hack that repackaged 32 bit libraries in an “amd64” package."
 #~ msgstr "マルチアーキテクチャ以前、32 ビットアプリケーションを 64 ビットシステムで実行したければ、<emphasis role=\"pkg\">ia32-libs</emphasis> をインストールすることで、システムに最も一般的なライブラリの 32 ビット版を導入する必要がありました。このパッケージは amd64 パッケージ内の 32 ビットライブラリを再パッケージングした大規模なハックでした。"

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2019-02-03 09:00+0900\n"
+"POT-Creation-Date: 2020-05-17 17:54+0200\n"
 "PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/debian-handbook/tree/master/translation/ja_JP/push>\n"
@@ -24,6 +24,9 @@ msgstr "ファイアウォール"
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Netfilter"
 msgstr "Netfilter"
+
+msgid "nftables"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "IDS/NIDS"
@@ -107,7 +110,9 @@ msgid "At the other end of the spectrum, we might want to protect the confidenti
 msgstr "その対極に、可能な限り包括的な方法を使って機密データの機密性を考え得る他のどんな方法よりも強力に保護したいとします。この場合の適切な方針は機密データを完全に破壊することです (安全にファイルを削除し、ハードディスクを粉々に破砕し、破片を酸に溶かすなどの方法で完全に破壊します)。追加的な要求としてデータを将来使えるように保存する必要があり (とは言え簡単に利用できる必要はありません)、さらに保存にかかる費用に糸目を付けない場合、データをイリジウムプラチナ合金板に保存し、この板を世界中に位置するいくつかの山の下にある防弾掩体壕の内部に保存し、各保存場所を (もちろん) 完全に秘密かつ軍隊の全員で警備することが適切な方針です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Extreme though these examples may seem, they would nevertheless be an adequate response to defined risks, insofar as they are the outcome of a thought process that takes into account the goals to reach and the constraints to fulfill. When coming from a reasoned decision, no security policy is less respectable than any other."
+#, fuzzy
+#| msgid "Extreme though these examples may seem, they would nevertheless be an adequate response to defined risks, insofar as they are the outcome of a thought process that takes into account the goals to reach and the constraints to fulfill. When coming from a reasoned decision, no security policy is less respectable than any other."
+msgid "Extreme though these examples may seem, they would, nevertheless, be an adequate response to defined risks, insofar as they are the outcome of a thought process that takes into account the goals to reach and the constraints to fulfill. When coming from a reasoned decision, no security policy is less respectable than any other."
 msgstr "これらの例は極端な対応に見えますが、到達させたい目標と満足させたい制限事項を考慮した結果この対応を取ったというのであれば、定義されたリスクに対する適切な応答と言えます。合理的な判定を下した結果ならば、他のセキュリティポリシーよりも軽んじても良いセキュリティポリシーなど存在しません。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -143,14 +148,6 @@ msgid "A firewall is a filtering network gateway and is only effective on packet
 msgstr "ファイアウォールはネットワークゲートウェイをフィルタするもので、ゲートウェイを通過しなければいけないパケットだけに有効です。それ故、フィルタしたいパケットをファイアウォール以外の経路で宛先に配送することが可能な場合、ファイアウォールは無意味です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The lack of a standard configuration (and the “process, not product” motto) explains the lack of a turn-key solution. There are, however, tools that make it simpler to configure the <emphasis>netfilter</emphasis> firewall, with a graphical representation of the filtering rules. <command>fwbuilder</command> is undoubtedly among the best of them."
-msgstr "標準的な設定が存在しないということは (そして「過程であって、成果ではない」モットーに従うということは) ややこしい初期設定の不要な解決策が存在しないということを意味します。しかしながら、<emphasis>netfilter</emphasis> ファイアウォールの設定を簡単に行うためのツールが存在し、ツールはフィルタリングルールをグラフィカルに表現する機能を備えています。<command>fwbuilder</command> がこの種のツールの中で最良のツールであることは疑いありません。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><emphasis>netfilter</emphasis></primary>"
-msgstr "<primary><emphasis>netfilter</emphasis></primary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>SPECIFIC CASE</emphasis> Local Firewall"
 msgstr "<emphasis>SPECIFIC CASE</emphasis> ローカルファイアウォール"
 
@@ -159,118 +156,101 @@ msgid "A firewall can be restricted to one particular machine (as opposed to a c
 msgstr "ファイアウォールを使って (完全なネットワークとは対照的に) 特定のマシンを制限することも可能です。この場合のファイアウォールの役割は一部のサービスへのアクセスをフィルタしたり制限すること、ユーザが好むと好まざるとに関わらずインストールした不正ソフトウェアによる外部への接続を防ぐことです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The Linux kernel embeds the <emphasis>netfilter</emphasis> firewall. It can be controlled from user space with the <command>iptables</command> and <command>ip6tables</command> commands. The difference between these two commands is that the former acts on the IPv4 network, whereas the latter acts on IPv6. Since both network protocol stacks will probably be around for many years, both tools will need to be used in parallel."
+#, fuzzy
+#| msgid "The Linux kernel embeds the <emphasis>netfilter</emphasis> firewall. It can be controlled from user space with the <command>iptables</command> and <command>ip6tables</command> commands. The difference between these two commands is that the former acts on the IPv4 network, whereas the latter acts on IPv6. Since both network protocol stacks will probably be around for many years, both tools will need to be used in parallel."
+msgid "The Linux kernel embeds the <emphasis>netfilter</emphasis> firewall, which can be controlled from user space with the <command>iptables</command>, <command>ip6tables</command>, <command>arptables</command> and <command>ebtables</command> commands."
 msgstr "Linux カーネルには <emphasis>netfilter</emphasis> ファイアウォールが組み込まれています。<command>iptables</command> と <command>ip6tables</command> コマンドを使うことで、<emphasis>netfilter</emphasis> ファイアウォールをユーザ空間から制御することが可能です。<command>iptables</command> と <command>ip6tables</command> コマンドの違いは、<command>iptables</command> が IPv4 ネットワークを取り扱うのに対し、<command>ip6tables</command> は IPv6 ネットワークを取り扱うという点です。おそらく IPv4 と IPv6 のネットワークプロトコルスタックは長きにわたり共存するでしょうから、両方のツールを並行して実行する必要があります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary><command>iptables</command></primary>"
 msgstr "<primary><command>iptables</command></primary>"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><command>ip6tables</command></primary>"
-msgstr "<primary><command>ip6tables</command></primary>"
+msgid "However, Netfilter iptables commands are being replaced by nftables, which avoids many of its problems. Its design involves less code duplication, and it can be managed with just the <command>nft</command> command. Debian <emphasis role=\"distribution\">Buster</emphasis> uses the nftables framework by default."
+msgstr ""
+
+msgid "To enable a default firewall in Debian execute:"
+msgstr ""
+
+msgid ""
+"<computeroutput># </computeroutput><userinput>apt install -y nftables\n"
+"</userinput><computeroutput>Reading package lists... Done\n"
+"...\n"
+"# </computeroutput><userinput>systemctl enable nftables.service</userinput><computeroutput>\n"
+"Created symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /lib/systemd/system/nftables.service.\n"
+"</computeroutput>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Netfilter Behavior"
+#, fuzzy
+#| msgid "Netfilter Behavior"
+msgid "nftables Behavior"
 msgstr "netfilter の挙動"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<emphasis>netfilter</emphasis> uses four distinct tables which store rules regulating three kinds of operations on packets:"
-msgstr "<emphasis>netfilter</emphasis> は以下に示す 4 種類の異なるテーブルを使います。テーブルには、パケットに対する 3 種類の操作を規制するためのルールを保存します。"
+msgid "As the kernel is processing a network packet it pauses and allows us to inspect the packet and decide what to do with that package. For example, we might want to drop or discard certain incoming packages, modify other packages in various ways, block certain outgoing packets to control against malware or redirect some packets at the earliest possible stage to bridge network interfaces or to spread the load of incoming packets between systems."
+msgstr ""
+
+msgid "A good understanding of the layers 3, 4 and 5 of the OSI (Open Systems Interconnection) model is essential to get the most from netfilter."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>filter</literal> concerns filtering rules (accepting, refusing or ignoring a packet);"
-msgstr "<literal>filter</literal>。フィルタリングルール (パケットを受け入れる、拒否する、無視するなど) に関係します。"
+#, fuzzy
+#| msgid "<emphasis>VOCABULARY</emphasis> Zero-day exploit"
+msgid "<emphasis>CULTURE</emphasis> The OSI model"
+msgstr "<emphasis>VOCABULARY</emphasis> ゼロデイ脆弱性"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>nat</literal> concerns translation of source or destination addresses and ports of packages;"
-msgstr "<literal>nat</literal>。パケットの送信元や宛先アドレスおよびポート番号の変換に関係します。"
+#, fuzzy
+#| msgid "<primary>logs</primary><secondary>display</secondary>"
+msgid "<primary>OSI</primary><secondary>model</secondary>"
+msgstr "<primary>ログ</primary><secondary sortas=\"ヒョウジ\">表示</secondary>"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>mangle</literal> concerns other changes to the IP packets (including the ToS — <emphasis>Type of Service</emphasis> — field and options);"
-msgstr "<literal>mangle</literal>。IP パケットに対するその他の変換に関係します (ToS すなわち <emphasis>Type of Service</emphasis> フィールドやオプションの変換も含まれます)。"
+msgid "The OSI model is a conceptual model to implement networking protocols without regard to its underlying internal structure and technology. Its goal is the interoperability of diverse communication systems with standard communication protocols."
+msgstr ""
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>raw</literal> allows other manual modifications on packets before they reach the connection tracking system."
-msgstr "<literal>raw</literal>。パケットが接続追跡システムに到達する前にパケットを手作業で別の変更を加えることが可能です。"
+msgid "This model was defined in the standard ISO/EIC 7498. The following seven layers are described:"
+msgstr ""
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Each table contains lists of rules called <emphasis>chains</emphasis>. The firewall uses standard chains to handle packets based on predefined circumstances. The administrator can create other chains, which will only be used when referred to by one of the standard chains (either directly or indirectly)."
-msgstr "それぞれのテーブルには、<emphasis>チェイン</emphasis>と呼ばれるルールのリストが含まれます。ファイアウォールは事前に定義された状況に基づいてパケットを取り扱うために標準的なチェインを使います。管理者は他のチェインを作成することが可能です。このチェインを使うには、標準的なチェインの 1 つから (直接的か間接的かのいずれか一方の方法で) このチェインを参照します。"
+msgid "Physical: transmission and reception of raw bit streams over a physical medium"
+msgstr ""
+
+msgid "Data Link: reliable transmission of data frames between two nodes connected by a connected by a physical layer"
+msgstr ""
+
+msgid "Network: structuring and managing a multi-node network, including addressing, routing and traffic control"
+msgstr ""
+
+msgid "Transport: reliable transmission of data segments between points on a network, including segmentation, acknowledgment and multiplexing"
+msgstr ""
+
+msgid "Session: managing communication sessions, i.e. continuous exchange of information in the form of multiple back-and-forth transmissions between two nodes"
+msgstr ""
+
+msgid "Presentation: translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption"
+msgstr ""
+
+msgid "Application: High-level APIs, including resource sharing, remote file access."
+msgstr ""
+
+msgid "More information can be found on Wikipedia: <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Osi_model\" />"
+msgstr ""
+
+msgid "The firewall is configured with <emphasis>tables</emphasis>, which hold <emphasis>rules</emphasis> contained in <emphasis>chains</emphasis>. Unlike iptables, <emphasis>nftables</emphasis> does not have any default table. The user decides which and how many tables to create. Every table must have only one of the following five families assigned: <literal>ip</literal>, <literal>ip6</literal>, <literal>inet</literal>, <literal>arp</literal> and <literal>bridge</literal>. <literal>ip</literal> is used if the family is not specified."
+msgstr ""
+
+msgid "There are two types of chains: <emphasis>base chains</emphasis> and <emphasis>regular chains</emphasis>. A base chain is an entry point for packets from the networking stack, they are registered into the Netfilter hooks, ie. these chains see packets flowing through the TCP/IP stack. On the other hand, and a regular chain is not attached to any hook, so they do not see any traffic, but it may be used as a jump target for better organization."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary>chain</primary>"
 msgstr "<primary>チェイン</primary>"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>filtering rule</primary>"
-msgstr "<primary>フィルタリングルール</primary>"
+msgid "Rules are made of statements, which includes some expressions to be matched and then a verdict statement, like <literal>accept</literal>, <literal>drop</literal>, <literal>queue</literal>, <literal>continue</literal>, <literal>return</literal>, <literal>jump chain</literal> and <literal>goto chain</literal>."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "The <literal>filter</literal> table has three standard chains:"
-msgstr "<literal>filter</literal> テーブルは以下に示す 3 種類の標準的なチェインを備えています。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>INPUT</literal>: concerns packets whose destination is the firewall itself;"
-msgstr "<literal>INPUT</literal>。宛先がファイアウォール自身のパケットに関係します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>OUTPUT</literal>: concerns packets emitted by the firewall;"
-msgstr "<literal>OUTPUT</literal>。ファイアウォールから送信されたパケットに関係します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>FORWARD</literal>: concerns packets transiting through the firewall (which is neither their source nor their destination)."
-msgstr "<literal>FORWARD</literal>。ファイアウォールを通過するパケット (送信元や宛先がファイアウォールでないパケット) に関係します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "The <literal>nat</literal> table also has three standard chains:"
-msgstr "<literal>nat</literal> テーブルは以下に示す 3 種類の標準的なチェインを備えています。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>PREROUTING</literal>: to modify packets as soon as they arrive;"
-msgstr "<literal>PREROUTING</literal>。パケットの到着直後にパケットを修正します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>POSTROUTING</literal>: to modify packets when they are ready to go on their way;"
-msgstr "<literal>POSTROUTING</literal>。パケットを宛先に送信する準備が完了した時にパケットを修正します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "<literal>OUTPUT</literal>: to modify packets generated by the firewall itself."
-msgstr "<literal>OUTPUT</literal>。ファイアウォールそれ自身によって生成されたパケットを修正します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "How <emphasis>netfilter</emphasis> chains are called"
-msgstr "<emphasis>netfilter</emphasis> チェインの呼び出される方法"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Each chain is a list of rules; each rule is a set of conditions and an action to execute when the conditions are met. When processing a packet, the firewall scans the appropriate chain, one rule after another; when the conditions for one rule are met, it “jumps” (hence the <literal>-j</literal> option in the commands) to the specified action to continue processing. The most common behaviors are standardized, and dedicated actions exist for them. Taking one of these standard actions interrupts the processing of the chain, since the packet's fate is already sealed (barring an exception mentioned below):"
-msgstr "各チェインはルールのリストです。そして各ルールは一連の条件とその条件に一致する場合に実行される動作です。パケットを処理する場合、ファイアウォールは適切なチェインを 1 つずつ検査します。そしてあるルールの条件に一致したら、処理を続けるために特定の動作に「ジャンプ」します (このためコマンドには <literal>-j</literal> オプションが存在します)。最も一般的な挙動は標準化されており、それぞれの挙動に対する専用の動作が存在します。以下に示す標準的な動作が選択されると、チェインの処理は中止されます。なぜなら、パケットの運命は既に決まっているからです (以下で言及されている除外に一致する場合を除きます)。"
+#, fuzzy
+#| msgid "<primary>MD5</primary>"
+msgid "<primary>rule</primary>"
+msgstr "<primary>MD5</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>BACK TO BASICS</emphasis> ICMP"
@@ -309,242 +289,198 @@ msgstr "<primary><command>ping</command></primary>"
 msgid "Note that although an IPv4 network can work without ICMP, ICMPv6 is strictly required for an IPv6 network, since it combines several functions that were, in the IPv4 world, spread across ICMPv4, IGMP (<emphasis>Internet Group Membership Protocol</emphasis>) and ARP (<emphasis>Address Resolution Protocol</emphasis>). ICMPv6 is defined in RFC4443. <ulink type=\"block\" url=\"http://www.faqs.org/rfcs/rfc4443.html\" />"
 msgstr "IPv4 ネットワークは ICMP がなくても動作しますが、IPv6 ネットワークは ICMPv6 を必須条件としています。なぜなら、ICMPv6 は IPv4 世界で ICMPv4、IGMP (<emphasis>Internet Group Membership Protocol</emphasis>)、ARP (<emphasis>Address Resolution Protocol</emphasis>) のように分散していたさまざまな機能をまとめているからです。ICMPv6 は RFC4443 で定義されています。<ulink type=\"block\" url=\"http://www.faqs.org/rfcs/rfc4443.html\" />"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>ACCEPT</literal>: allow the packet to go on its way;"
-msgstr "<literal>ACCEPT</literal>。対象のパケットの通過を許可します。"
+msgid "Moving from iptables to nftables"
+msgstr ""
+
+msgid "The <command>iptables-translate</command> and <command>ip6tables-translate</command> commands can be used to translate old iptables commands into the new nftables syntax. Whole rulesets can also be translated, in this case we migrate the rules configured in one computer which has Docker installed:"
+msgstr ""
+
+msgid ""
+"<computeroutput># </computeroutput><userinput>iptables-save &gt; iptables-ruleset.txt\n"
+"</userinput><computeroutput># </computeroutput><userinput>iptables-restore-translate -f iptables-ruleset.txt\n"
+"</userinput><computeroutput>\n"
+"# Translated by iptables-restore-translate v1.8.2 on Thu Jul 18 10:39:33 2019\n"
+"add table ip filter\n"
+"add chain ip filter INPUT { type filter hook input priority 0; policy accept; }\n"
+"add chain ip filter FORWARD { type filter hook forward priority 0; policy drop; }\n"
+"add chain ip filter OUTPUT { type filter hook output priority 0; policy accept; }\n"
+"add chain ip filter DOCKER\n"
+"add chain ip filter DOCKER-ISOLATION-STAGE-1\n"
+"add chain ip filter DOCKER-ISOLATION-STAGE-2\n"
+"add chain ip filter DOCKER-USER\n"
+"add rule ip filter FORWARD counter jump DOCKER-USER\n"
+"add rule ip filter FORWARD counter jump DOCKER-ISOLATION-STAGE-1\n"
+"add rule ip filter FORWARD oifname \"docker0\" ct state related,established counter accept\n"
+"add rule ip filter FORWARD oifname \"docker0\" counter jump DOCKER\n"
+"add rule ip filter FORWARD iifname \"docker0\" oifname != \"docker0\" counter accept\n"
+"add rule ip filter FORWARD iifname \"docker0\" oifname \"docker0\" counter accept\n"
+"add rule ip filter DOCKER-ISOLATION-STAGE-1 iifname \"docker0\" oifname != \"docker0\" counter jump DOCKER-ISOLATION-STAGE-2\n"
+"add rule ip filter DOCKER-ISOLATION-STAGE-1 counter return\n"
+"add rule ip filter DOCKER-ISOLATION-STAGE-2 oifname \"docker0\" counter drop\n"
+"add rule ip filter DOCKER-ISOLATION-STAGE-2 counter return\n"
+"add rule ip filter DOCKER-USER counter return\n"
+"add table ip nat\n"
+"add chain ip nat PREROUTING { type nat hook prerouting priority -100; policy accept; }\n"
+"add chain ip nat INPUT { type nat hook input priority 100; policy accept; }\n"
+"add chain ip nat POSTROUTING { type nat hook postrouting priority 100; policy accept; }\n"
+"add chain ip nat OUTPUT { type nat hook output priority -100; policy accept; }\n"
+"add chain ip nat DOCKER\n"
+"add rule ip nat PREROUTING fib daddr type local counter jump DOCKER\n"
+"add rule ip nat POSTROUTING oifname != \"docker0\" ip saddr 172.17.0.0/16 counter masquerade\n"
+"add rule ip nat OUTPUT ip daddr != 127.0.0.0/8 fib daddr type local counter jump DOCKER\n"
+"add rule ip nat DOCKER iifname \"docker0\" counter return\n"
+"# Completed on Thu Jul 18 10:39:33 2019\n"
+"# </computeroutput><userinput>iptables-restore-translate -f iptables-ruleset.txt &gt; ruleset.nft\n"
+"</userinput><computeroutput># </computeroutput><userinput>nft -f ruleset.nft\n"
+"</userinput><computeroutput># </computeroutput><userinput>nft list ruleset</userinput><computeroutput>\n"
+"table ip filter {\n"
+"\tchain INPUT {\n"
+"\t\ttype filter hook input priority 0; policy accept;\n"
+"\t}\n"
+"\n"
+"\tchain FORWARD {\n"
+"\t\ttype filter hook forward priority 0; policy drop;\n"
+"\t\tcounter packets 0 bytes 0 jump DOCKER-USER\n"
+"\t\tcounter packets 0 bytes 0 jump DOCKER-ISOLATION-STAGE-1\n"
+"\t\toifname \"docker0\" ct state related,established counter packets 0 bytes 0 accept\n"
+"\t\toifname \"docker0\" counter packets 0 bytes 0 jump DOCKER\n"
+"\t\tiifname \"docker0\" oifname != \"docker0\" counter packets 0 bytes 0 accept\n"
+"\t\tiifname \"docker0\" oifname \"docker0\" counter packets 0 bytes 0 accept\n"
+"\t}\n"
+"\n"
+"\tchain OUTPUT {\n"
+"\t\ttype filter hook output priority 0; policy accept;\n"
+"\t}\n"
+"\n"
+"\tchain DOCKER {\n"
+"\t}\n"
+"\n"
+"\tchain DOCKER-ISOLATION-STAGE-1 {\n"
+"\t\tiifname \"docker0\" oifname != \"docker0\" counter packets 0 bytes 0 jump DOCKER-ISOLATION-STAGE-2\n"
+"\t\tcounter packets 0 bytes 0 return\n"
+"\t}\n"
+"\n"
+"\tchain DOCKER-ISOLATION-STAGE-2 {\n"
+"\t\toifname \"docker0\" counter packets 0 bytes 0 drop\n"
+"\t\tcounter packets 0 bytes 0 return\n"
+"\t}\n"
+"\n"
+"\tchain DOCKER-USER {\n"
+"\t\tcounter packets 0 bytes 0 return\n"
+"\t}\n"
+"}\n"
+"table ip nat {\n"
+"\tchain PREROUTING {\n"
+"\t\ttype nat hook prerouting priority -100; policy accept;\n"
+"\t\tfib daddr type local counter packets 0 bytes 0 jump DOCKER\n"
+"\t}\n"
+"\n"
+"\tchain INPUT {\n"
+"\t\ttype nat hook input priority 100; policy accept;\n"
+"\t}\n"
+"\n"
+"\tchain POSTROUTING {\n"
+"\t\ttype nat hook postrouting priority 100; policy accept;\n"
+"\t\toifname != \"docker0\" ip saddr 172.17.0.0/16 counter packets 0 bytes 0 masquerade\n"
+"\t}\n"
+"\n"
+"\tchain OUTPUT {\n"
+"\t\ttype nat hook output priority -100; policy accept;\n"
+"\t\tip daddr != 127.0.0.0/8 fib daddr type local counter packets 0 bytes 0 jump DOCKER\n"
+"\t}\n"
+"\n"
+"\tchain DOCKER {\n"
+"\t\tiifname \"docker0\" counter packets 0 bytes 0 return\n"
+"\t}\n"
+"}\n"
+"table ip mangle {\n"
+"\tchain PREROUTING {\n"
+"\t\ttype filter hook prerouting priority -150; policy accept;\n"
+"\t}\n"
+"\n"
+"\tchain INPUT {\n"
+"\t\ttype filter hook input priority -150; policy accept;\n"
+"\t}\n"
+"\n"
+"\tchain FORWARD {\n"
+"\t\ttype filter hook forward priority -150; policy accept;\n"
+"\t}\n"
+"\n"
+"\tchain OUTPUT {\n"
+"\t\ttype route hook output priority -150; policy accept;\n"
+"\t}\n"
+"\n"
+"\tchain POSTROUTING {\n"
+"\t\ttype filter hook postrouting priority -150; policy accept;\n"
+"\t}\n"
+"}\n"
+"</computeroutput>"
+msgstr ""
+
+msgid "The tools <command>iptables-nft</command>, <command>ip6tables-nft</command>, <command>arptables-nft</command>, <command>ebtables-nft</command> are versions of iptables that use the nftables API, so users can keep using the old iptables syntax with them, but that is not recommended; these tools should only be used for backwards compatibility."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
 # Tag: L-CFMD;
-msgid "<literal>REJECT</literal>: reject the packet with an ICMP error packet (the <literal>--reject-with <replaceable>type</replaceable></literal> option to <command>iptables</command> allows selecting the type of error);"
-msgstr "<literal>REJECT</literal>。対象のパケットを拒否して ICMP エラーを返答します (<command>iptables</command> の <literal>--reject-with <replaceable>type</replaceable></literal> オプションを使えば返答するエラーの種類を選ぶことが可能です)。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>DROP</literal>: delete (ignore) the packet;"
-msgstr "<literal>DROP</literal>。対象のパケットを削除 (無視) します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>LOG</literal>: log (via <command>syslogd</command>) a message with a description of the packet; note that this action does not interrupt processing, and the execution of the chain continues at the next rule, which is why logging refused packets requires both a LOG and a REJECT/DROP rule;"
-msgstr "<literal>LOG</literal>。(<command>syslogd</command> を使って) 対象のパケットの説明とメッセージをログに記録します。ログ記録が選択された場合、チェインの処理は中止されず続行されて次のルールに進む点に注意してください。このため、拒否されたパケットをログに記録するには LOG と REJECT/DROP ルールの両方が必要です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>ULOG</literal>: log a message via <command>ulogd</command>, which can be better adapted and more efficient than <command>syslogd</command> for handling large numbers of messages; note that this action, like LOG, also returns processing to the next rule in the calling chain;"
-msgstr "<literal>ULOG</literal>。<command>ulogd</command> を介してメッセージをログに記録します。<command>ulogd</command> は大量のメッセージを処理する場合に <command>syslogd</command> よりも効率が良いです。LOG と同様、この場合も処理は呼び出されたチェインの次のルールに進む点に注意してください。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<replaceable>chain_name</replaceable>: jump to the given chain and evaluate its rules;"
-msgstr "<replaceable>chain_name</replaceable>。指定したチェインに飛んで、そのチェインのルールを評価します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>RETURN</literal>: interrupt processing of the current chain, and return to the calling chain; in case the current chain is a standard one, there's no calling chain, so the default action (defined with the <literal>-P</literal> option to <command>iptables</command>) is executed instead;"
-msgstr "<literal>RETURN</literal>。現在のチェインの処理を中止し、呼び出し元のチェインに戻ります。現在のチェインが標準的なチェインの場合、呼び出し元のチェインは存在しませんから、代わりにデフォルト動作 (<command>iptables</command> の <literal>-P</literal> オプションで定義された動作) が実行されます。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>SNAT</literal> (only in the <literal>nat</literal> table): apply <emphasis>Source NAT</emphasis> (extra options describe the exact changes to apply);"
-msgstr "<literal>SNAT</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。<emphasis>Source NAT</emphasis> を適用します (追加オプションを使って適用する正確な変更を設定します)。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>DNAT</literal> (only in the <literal>nat</literal> table): apply <emphasis>Destination NAT</emphasis> (extra options describe the exact changes to apply);"
-msgstr "<literal>DNAT</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。<emphasis>Destination NAT</emphasis> を適用します (追加オプションを使って適用する正確な変更を設定します)。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>MASQUERADE</literal> (only in the <literal>nat</literal> table): apply <emphasis>masquerading</emphasis> (a special case of <emphasis>Source NAT</emphasis>);"
-msgstr "<literal>MASQUERADE</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。<emphasis>マスカレード</emphasis>を適用します (<emphasis>マスカレード</emphasis>は <emphasis>Source NAT</emphasis> の特別な場合です)。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>REDIRECT</literal> (only in the <literal>nat</literal> table): redirect a packet to a given port of the firewall itself; this can be used to set up a transparent web proxy that works with no configuration on the client side, since the client thinks it connects to the recipient whereas the communications actually go through the proxy."
-msgstr "<literal>REDIRECT</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。ファイアウォールの指定したポートに対象のパケットを転送します。さらにこれを使って、クライアント側に特別な設定をせずとも動作する透過的なウェブプロキシをセットアップすることが可能です。なぜなら、クライアントは宛先に接続していると思っていても、実際の通信はプロキシを通過しているからです。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "Other actions, particularly those concerning the <literal>mangle</literal> table, are outside the scope of this text. The <citerefentry><refentrytitle>iptables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> and <citerefentry><refentrytitle>ip6tables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> have a comprehensive list."
-msgstr "その他の動作 (特に <literal>mangle</literal> テーブルに関する動作) は本書の範囲を超えています。<citerefentry><refentrytitle>iptables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> と <citerefentry><refentrytitle>ip6tables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> には包括的なリストが含まれています。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
-msgid "Syntax of <command>iptables</command> and <command>ip6tables</command>"
+#, fuzzy
+#| msgid "Syntax of <command>iptables</command> and <command>ip6tables</command>"
+msgid "Syntax of <command>nft</command>"
 msgstr "<command>iptables</command> と <command>ip6tables</command> の構文"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
-msgid "The <command>iptables</command> and <command>ip6tables</command> commands allow manipulating tables, chains and rules. Their <literal>-t <replaceable>table</replaceable></literal> option indicates which table to operate on (by default, <literal>filter</literal>)."
-msgstr "<command>iptables</command> と <command>ip6tables</command> コマンドを使って、テーブル、チェイン、ルールを操作することが可能です。<literal>-t <replaceable>table</replaceable></literal> オプションで操作対象のテーブルを指定します (デフォルトの場合、<literal>filter</literal> テーブルを操作します)。"
+msgid "The <command>nft</command> commands allow manipulating tables, chains and rules. The <literal>table</literal> option supports multiple operations: <literal>add</literal>, <literal>create</literal>, <literal>delete</literal>, <literal>list</literal> and <literal>flush</literal>. <command>nft add table ip6 mangle</command> adds a new table from the family <literal>ip6</literal>."
+msgstr ""
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Commands"
-msgstr "コマンド"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "The <literal>-N <replaceable>chain</replaceable></literal> option creates a new chain. The <literal>-X <replaceable>chain</replaceable></literal> deletes an empty and unused chain. The <literal>-A <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal> adds a rule at the end of the given chain. The <literal>-I <replaceable>chain</replaceable> <replaceable>rule_num</replaceable> <replaceable>rule</replaceable></literal> option inserts a rule before the rule number <replaceable>rule_num</replaceable>. The <literal>-D <replaceable>chain</replaceable> <replaceable>rule_num</replaceable></literal> (or <literal>-D <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal>) option deletes a rule in a chain; the first syntax identifies the rule to be deleted by its number, while the latter identifies it by its contents. The <literal>-F <replaceable>chain</replaceable></literal> option flushes a chain (deletes all its rules); if no chain is mentioned, all the rules in the table are deleted. The <literal>-L <replaceable>chain</replaceable></literal> option lists the rules in the chain. Finally, the <literal>-P <replaceable>chain</replaceable> <replaceable>action</replaceable></literal> option defines the default action, or “policy”, for a given chain; note that only standard chains can have such a policy."
-msgstr "<literal>-N <replaceable>chain</replaceable></literal> オプションは新しいチェインを作成します。<literal>-X <replaceable>chain</replaceable></literal> は空で使われていないチェインを削除します。<literal>-A <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal> はチェインの最後にルールを追加します。<literal>-I <replaceable>chain</replaceable> <replaceable>rule_num</replaceable> <replaceable>rule</replaceable></literal> オプションは指定したルール番号 <replaceable>rule_num</replaceable> の前にルールを挿入します。<literal>-D <replaceable>chain</replaceable> <replaceable>rule_num</replaceable></literal> (または <literal>-D <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal>) オプションはチェインからルールを削除します。ここで <replaceable>rule_num</replaceable> を使う構文はルール番号を指定してルールを削除し、<replaceable>rule</replaceable> を使う構文はルール内容を指定してルールを削除します。<literal>-F <replaceable>chain</replaceable></literal> オプションはチェインをクリアします (チェインに含まれるすべてのルールを削除します)。ここでチェインを指定しなかった場合、テーブルに含まれるすべてのルールを削除します。<literal>-L <replaceable>chain</replaceable></literal> オプションはチェインに含まれるルールを表示します。最後に、<literal>-P <replaceable>chain</replaceable> <replaceable>action</replaceable></literal> オプションは指定したチェインのデフォルト動作を意味する「ポリシー」を定義します。ここでポリシーを設定できるのは標準的なチェインだけという点に注意してください。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Rules"
-msgstr "ルール"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "Each rule is expressed as <literal><replaceable>conditions</replaceable> -j <replaceable>action</replaceable> <replaceable>action_options</replaceable></literal>. If several conditions are described in the same rule, then the criterion is the conjunction (logical <emphasis>and</emphasis>) of the conditions, which is at least as restrictive as each individual condition."
-msgstr "それぞれのルールは <literal><replaceable>conditions</replaceable> -j <replaceable>action</replaceable> <replaceable>action_options</replaceable></literal> の形で指定します。1 つのルールに複数の条件を指定する場合、複数の条件は結合 (論理 <emphasis>and</emphasis>) されます。つまり、各条件の結果をさらに限定することを意味します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "The <literal>-p <replaceable>protocol</replaceable></literal> condition matches the protocol field of the IP packet. The most common values are <literal>tcp</literal>, <literal>udp</literal>, <literal>icmp</literal>, and <literal>icmpv6</literal>. Prefixing the condition with an exclamation mark negates the condition, which then becomes a match for “any packets with a different protocol than the specified one”. This negation mechanism is not specific to the <literal>-p</literal> option and it can be applied to all other conditions too."
-msgstr "<literal>-p <replaceable>protocol</replaceable></literal> は指定されたプロトコルフィールドに一致する IP パケットを選択する条件です。<replaceable>protocol</replaceable> で最もよく使われる値は <literal>tcp</literal>、<literal>udp</literal>、<literal>icmp</literal>、<literal>icmpv6</literal> です。この条件の前に感嘆符を付けることで、この条件を否定することになります。つまり「<replaceable>protocol</replaceable> で指定されたプロトコル以外のすべてのプロトコルを使ったパケット」を選択する条件になります。条件否定の方法は <literal>-p</literal> オプションに限らず、以降で紹介する他のすべての条件にも適用することが可能です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "The <literal>-s <replaceable>address</replaceable></literal> or <literal>-s <replaceable>network/mask</replaceable></literal> condition matches the source address of the packet. Correspondingly, <literal>-d <replaceable>address</replaceable></literal> or <literal>-d <replaceable>network/mask</replaceable></literal> matches the destination address."
-msgstr "<literal>-s <replaceable>address</replaceable></literal> または <literal>-s <replaceable>network/mask</replaceable></literal> は指定された送信元アドレスに一致するパケットを選択する条件です。同様に、<literal>-d <replaceable>address</replaceable></literal> または <literal>-d <replaceable>network/mask</replaceable></literal> は指定された宛先アドレスに一致するパケットを選択する条件です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables;
-# Tag: L-CFMD;
-msgid "The <literal>-i <replaceable>interface</replaceable></literal> condition selects packets coming from the given network interface. <literal>-o <replaceable>interface</replaceable></literal> selects packets going out on a specific interface."
-msgstr "<literal>-i <replaceable>interface</replaceable></literal> は指定されたネットワークインターフェースを通じて受信したパケットを選択する条件です。<literal>-o <replaceable>interface</replaceable></literal> は指定されたインターフェースを通じて送信されるパケットを選択する条件です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "There are more specific conditions, depending on the generic conditions described above. For instance, the <literal>-p tcp</literal> condition can be complemented with conditions on the TCP ports, with clauses such as <literal>--source-port <replaceable>port</replaceable></literal> and <literal>--destination-port <replaceable>port</replaceable></literal>."
-msgstr "上で説明した一般的な条件ごとに、さらに条件の範囲を狭めるためのオプションが数多く存在します。たとえば <literal>-p tcp</literal> 条件に加えて TCP ポート番号を指定することで、選択するパケットをさらに絞り込むことが可能です。これを行うには、<literal>--source-port <replaceable>port</replaceable></literal> と <literal>--destination-port <replaceable>port</replaceable></literal> を使います。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Ref: http://www.iptables.info/en/connection-state.html
-# Ref: # modinfo ipt_conntrack;
-# Tag: L-CFMD;
-# Tag: PTAL;
-msgid "The <literal>--state <replaceable>state</replaceable></literal> condition matches the state of a packet in a connection (this requires the <command>ipt_conntrack</command> kernel module, for connection tracking). The <literal>NEW</literal> state describes a packet starting a new connection; <literal>ESTABLISHED</literal> matches packets belonging to an already existing connection, and <literal>RELATED</literal> matches packets initiating a new connection related to an existing one (which is useful for the <literal>ftp-data</literal> connections in the “active” mode of the FTP protocol)."
-msgstr "<literal>--state <replaceable>state</replaceable></literal> は指定されたパケット状態に一致するパケットを選択する条件です (接続追跡を行うための <command>ipt_conntrack</command> カーネルモジュールが必要です)。<literal>NEW</literal> 状態は新しい接続を開始するパケット、<literal>ESTABLISHED</literal> 状態は既に存在する接続に関連するパケットを意味します。<literal>RELATED</literal> 状態は既存の接続に関連した新しい接続を開始するパケットを意味します (これは FTP プロトコルの「アクティブ」モードを使った <literal>ftp-data</literal> 接続の際に有益です)。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "The previous section lists available actions, but not their respective options. The <literal>LOG</literal> action, for instance, has the following options:"
-msgstr "前節では利用できる標準的な動作を説明しましたが、その動作に対するオプションを説明していませんでした。たとえば、<literal>LOG</literal> 動作は以下のオプションを取ることが可能です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>--log-level</literal>, with default value <literal>warning</literal>, indicates the <command>syslog</command> severity level;"
-msgstr "<literal>--log-level</literal> は記録する <command>syslog</command> メッセージの重要度を指定します。デフォルトの場合 <literal>warning</literal> 以上の重要度を持つメッセージが記録されます。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>--log-prefix</literal> allows specifying a text prefix to differentiate between logged messages;"
-msgstr "<literal>--log-prefix</literal> はログに記録するメッセージを特徴づけるために行の先頭に付けるテキストを指定します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "<literal>--log-tcp-sequence</literal>, <literal>--log-tcp-options</literal> and <literal>--log-ip-options</literal> indicate extra data to be integrated into the message: respectively, the TCP sequence number, TCP options, and IP options."
-msgstr "<literal>--log-tcp-sequence</literal>、<literal>--log-tcp-options</literal>、<literal>--log-ip-options</literal> はログメッセージに含める追加的なデータを指定します。具体的に言えば、それぞれ TCP シーケンス番号、TCP オプション、IP オプションをログメッセージに含めます。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "The <literal>DNAT</literal> action provides the <literal>--to-destination <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> option to indicate the new destination IP address and/or port. Similarly, <literal>SNAT</literal> provides <literal>--to-source <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> to indicate the new source IP address and/or port."
-msgstr "<literal>DNAT</literal> 動作は以下のオプションを取ることが可能です。<literal>--to-destination <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> は新しい宛先 IP アドレスおよびポート番号を指定します。同様に、<literal>SNAT</literal> 動作は以下のオプションを取ることが可能です。<literal>--to-source <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> は新しい送信元 IP アドレスおよびポート番号を指定します。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 iptables-extensions;
-# Tag: L-CFMD;
-msgid "The <literal>REDIRECT</literal> action (only available if NAT is available) provides the <literal>--to-ports <replaceable>port(s)</replaceable></literal> option to indicate the port, or port range, where the packets should be redirected."
-msgstr "<literal>REDIRECT</literal> 動作は以下のオプションを取ることが可能です。<literal>--to-ports <replaceable>port(s)</replaceable></literal> はパケットの転送先ポート番号またはポート番号範囲を指定します (<literal>REDIRECT</literal> 動作は NAT を有効化している場合にのみ使うことが可能です)。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Creating Rules"
-msgstr "ルールの作成"
+msgid "To insert a new base chain to the <literal>filter</literal> table, you can execute the following command (note that the semicolon is escaped with a backslash when using Bash):"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "Each rule creation requires one invocation of <command>iptables</command>/<command>ip6tables</command>. Typing these commands manually can be tedious, so the calls are usually stored in a script so that the same configuration is set up automatically every time the machine boots. This script can be written by hand, but it can also be interesting to prepare it with a high-level tool such as <command>fwbuilder</command>."
-msgstr "1 つのルールを作成するには、<command>iptables</command>/<command>ip6tables</command> を 1 回実行する必要があります。これらのコマンドを手作業で実行することは退屈なので、通常スクリプトの形で保存しておきます。こうすることで、マシンの起動時に同じ設定を自動的に適用することが可能です。このスクリプトは手作業で書かなければいけませんが、<command>fwbuilder</command> などの高レベルツールを使ってスクリプトを準備しても良いでしょう。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
-msgid ""
-"\n"
-"<computeroutput># </computeroutput><userinput>apt install fwbuilder</userinput>"
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>apt install fwbuilder</userinput>"
+msgid "<computeroutput># </computeroutput><userinput>nft add chain filter input { type filter hook input priority 0 \\; }</userinput>"
 msgstr ""
 "\n"
 "<computeroutput># </computeroutput><userinput>apt install fwbuilder</userinput>"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The principle is simple. In the first step, one needs to describe all the elements that will be involved in the actual rules:"
-msgstr "<command>fwbuilder</command> の原理は簡単です。最初に、以下のような実際のルールに関連するすべての要素を宣言する必要があります。"
+msgid "Rules are usually added with the following syntax: <command>nft add rule [<replaceable>family</replaceable>] <replaceable>table</replaceable> <replaceable>chain</replaceable> handle <replaceable>handle</replaceable> statement</command>."
+msgstr ""
+
+msgid "<command>insert</command> is similar to the <command>add</command> command, but the given rule is prepended to the beginning of the chain or before the rule with the given handle instead of at the end or after that rule. For example, the following command inserts a rule before the rule with handler number 8:"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "the firewall itself, with its network interfaces;"
-msgstr "ネットワークインターフェースとそれを使うファイアウォール自身。"
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>apt install fwbuilder</userinput>"
+msgid ""
+"<computeroutput># </computeroutput><userinput>nft insert rule filter output position 8 ip daddr 127.0.0.8 drop\n"
+"</userinput>"
+msgstr ""
+"\n"
+"<computeroutput># </computeroutput><userinput>apt install fwbuilder</userinput>"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "the networks, with their corresponding IP ranges;"
-msgstr "対応する IP アドレス範囲とそれを使うネットワーク。"
+msgid "The executed <command>nft</command> commands do not make permanent changes to the configuration, so they are lost if they are not saved. The firewall rules are located in <filename>/etc/nftables.conf</filename>. A simple way to save the current firewall configuration permanently is to execute <command>nft list ruleset &gt; /etc/nftables.conf</command> as root."
+msgstr ""
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "the servers;"
-msgstr "サーバ。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "the ports belonging to the services hosted on the servers."
-msgstr "サーバでホストされているサービスに対応するポート番号。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The rules are then created with simple drag-and-drop actions on the objects. A few contextual menus can change the condition (negating it, for instance). Then the action needs to be chosen and configured."
-msgstr "これらの要素に対する単純なドラッグアンドドロップ動作を使ってルールを作成します。いくつかのコンテキストメニューを使ってルールの条件を変更する (たとえば条件を否定する) ことが可能です。その後、動作を選んで設定する必要があります。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "As far as IPv6 is concerned, one can either create two distinct rulesets for IPv4 and IPv6, or create only one and let <command>fwbuilder</command> translate the rules according to the addresses assigned to the objects."
-msgstr "IPv6 に関心があるなら、IPv4 と IPv6 で別々のルールセットを作成するか、片方のルールセットだけを作成して要素に割り当てられたアドレスに応じて <command>fwbuilder</command> にそのルールを変換してもらうかのどちらか一方を行うことが可能です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Fwbuilder's main window"
-msgstr "fwbuilder のメインウィンドウ"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><command>fwbuilder</command></primary>"
-msgstr "<primary><command>fwbuilder</command></primary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<command>fwbuilder</command> can then generate a script configuring the firewall according to the rules that have been defined. Its modular architecture gives it the ability to generate scripts targeting different systems (<command>iptables</command> for Linux, <command>ipf</command> for FreeBSD and <command>pf</command> for OpenBSD)."
-msgstr "これで <command>fwbuilder</command> は定義されたルールに従ってファイアウォールを設定するためのスクリプトを生成することが可能になりました。モジュール式のアーキテクチャのおかげで、<command>fwbuilder</command> はさまざまなファイアウォールシステム (Linux の <command>iptables</command>、FreeBSD の <command>ipf</command>、OpenBSD の <command>pf</command>) を設定するためのスクリプトを生成することが可能です。"
+msgid "<command>nft</command> allows many more operations, refer to its manual page <citerefentry><refentrytitle>nft</refentrytitle> <manvolnum>8</manvolnum></citerefentry> for more information."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Installing the Rules at Each Boot"
 msgstr "起動時にルールを適用する"
 
+msgid "To enable a default firewall in Debian, you need to store the rules in <filename>/etc/nftables.conf</filename> and execute <command>systemctl enable nftables.service</command> as root. You can stop the firewall executing <command>nft flush ruleset</command> as root."
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: PTAL;
-msgid "In other cases, the recommended way is to register the configuration script in an <literal>up</literal> directive of the <filename>/etc/network/interfaces</filename> file. In the following example, the script is stored under <filename>/usr/local/etc/arrakis.fw</filename>."
+#, fuzzy
+#| msgid "In other cases, the recommended way is to register the configuration script in an <literal>up</literal> directive of the <filename>/etc/network/interfaces</filename> file. In the following example, the script is stored under <filename>/usr/local/etc/arrakis.fw</filename>."
+msgid "In other cases, the recommended way is to register the configuration script in <literal>up</literal> directive of the <filename>/etc/network/interfaces</filename> file. In the following example, the script is stored under <filename>/usr/local/etc/arrakis.fw</filename>."
 msgstr "設定スクリプトを <filename>/etc/network/interfaces</filename> ファイルの <literal>up</literal> 指示文に登録する方法を推奨します。以下の例では、設定スクリプトは <filename>/usr/local/etc/arrakis.fw</filename> に保存されています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -692,7 +628,9 @@ msgid "<primary><command>top</command></primary>"
 msgstr "<primary><command>top</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "When the system seems to be overloaded, <command>top</command> is a great tool to see which processes are competing for processor time or consume too much memory. In particular, it is often interesting to check if the processes consuming resources match the real services that the machine is known to host. An unknown process running as the www-data user should really stand out and be investigated, since it's probably an instance of software installed and executed on the system through a vulnerability in a web application."
+#, fuzzy
+#| msgid "When the system seems to be overloaded, <command>top</command> is a great tool to see which processes are competing for processor time or consume too much memory. In particular, it is often interesting to check if the processes consuming resources match the real services that the machine is known to host. An unknown process running as the www-data user should really stand out and be investigated, since it's probably an instance of software installed and executed on the system through a vulnerability in a web application."
+msgid "When the system seems to be overloaded, <command>top</command> is a great tool to see which processes are competing for processor time or consume too much memory. In particular, it is often interesting to check if the processes consuming resources match the real services that the machine is known to host. An unknown process running as the www-data user should really stand out and be investigated, since it is probably an instance of software installed and executed on the system through a vulnerability in a web application."
 msgstr "システムの負荷が高過ぎる場合、<command>top</command> はプロセッサ時間を奪っていたりメモリを大量に消費しているプロセスを調査する素晴らしいツールになります。特に、リソースを消費しているプロセスがそのマシンでホストされる本物のサービスにふさわしいものであるか否かを確認することは興味深い作業と言えます。www-data ユーザとして実行されている不明なプロセスは特に警戒して調査するべきです。なぜなら、その不明なプロセスはウェブアプリケーションの脆弱性を利用してシステムにインストールおよび実行されたソフトウェアのインスタンスかもしれないからです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -736,7 +674,9 @@ msgstr "時間変化する情報の保存には専用のツールがたくさん
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "This book deals with Munin in some detail (see <xref linkend=\"sect.munin\" />) as part of <xref linkend=\"advanced-administration\" xrefstyle=\"select: label quotedtitle\" />. Debian also provides a similar tool, <emphasis role=\"pkg\">cacti</emphasis>. Its deployment is slightly more complex, since it is based solely on SNMP. Despite having a web interface, grasping the concepts involved in configuration still requires some effort. Reading the HTML documentation (<filename>/usr/share/doc/cacti/html/index.html</filename>) should be considered a prerequisite."
+#, fuzzy
+#| msgid "This book deals with Munin in some detail (see <xref linkend=\"sect.munin\" />) as part of <xref linkend=\"advanced-administration\" xrefstyle=\"select: label quotedtitle\" />. Debian also provides a similar tool, <emphasis role=\"pkg\">cacti</emphasis>. Its deployment is slightly more complex, since it is based solely on SNMP. Despite having a web interface, grasping the concepts involved in configuration still requires some effort. Reading the HTML documentation (<filename>/usr/share/doc/cacti/html/index.html</filename>) should be considered a prerequisite."
+msgid "This book deals with Munin in some detail (see <xref linkend=\"sect.munin\" />) as part of <xref linkend=\"advanced-administration\" xrefstyle=\"select: label quotedtitle\" />. Debian also provides a similar tool, <emphasis role=\"pkg\">cacti</emphasis>. Its deployment is slightly more complex, since it is based solely on SNMP. Despite having a web interface, grasping the concepts involved in configuration still requires some effort. Reading the HTML documentation (<filename>/usr/share/doc/cacti/html/Table-of-Contents.html</filename>) should be considered a prerequisite."
 msgstr "本書では、<xref linkend=\"advanced-administration\" xrefstyle=\"select: label quotedtitle\" />の中で Munin が詳細に取り上げられています (<xref linkend=\"sect.munin\" />を参照してください)。さらに Debian には類似のツールである <emphasis role=\"pkg\">cacti</emphasis> が含まれます。cacti の配備は Munin よりも少し複雑です。なぜなら cacti は SNMP だけに基づいているからです。cacti にはウェブインターフェースが用意されていますが、設定に必要な概念を理解するには少し努力が必要です。事前に HTML 文書 (<filename>/usr/share/doc/cacti/html/index.html</filename>) を読んでおくことを推奨します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -759,12 +699,67 @@ msgstr "<command>mrtg</command> (同名のパッケージに含まれます) は
 msgid "The <emphasis role=\"pkg\">mrtg-contrib</emphasis> and <emphasis role=\"pkg\">mrtgutils</emphasis> packages contain example scripts that can be used directly."
 msgstr "<emphasis role=\"pkg\">mrtg-contrib</emphasis> と <emphasis role=\"pkg\">mrtgutils</emphasis> パッケージには、直接使うことができるスクリプトの例が含まれます。"
 
+msgid "Avoiding Intrusion"
+msgstr ""
+
+msgid "Attackers try to get access to servers by guessing passwords, which is why strong passwords must always be used. Even then, you should also establish measures against brute-force attacks. A brute-force attack is an attempt to log in to an unauthorised software system by performing multiple login attempts in a short period of time."
+msgstr ""
+
+msgid "The best way to stop a brute-force atack is to limit the number of login attempts coming from the same origin, usually by temporarily banning an IP address."
+msgstr ""
+
+msgid "Fail2Ban is an intrusion prevention software suite that can be configured to monitor any service that writes login attemps to a log file. It can be found in the package <emphasis role=\"pkg\">fail2ban</emphasis>."
+msgstr ""
+
+msgid "Fail2Ban is configured through a simple protocol by <command>fail2ban-client</command>, which also reads configuration files and issues corresponding configuration commands to the server, <command>fail2ban-server</command>. It has four configuration file types, all stored in <filename>/etc/fail2ban</filename>:"
+msgstr ""
+
+msgid "<filename>fail2ban.conf</filename>. Global configuration (such as logging)."
+msgstr ""
+
+msgid "<filename>filter.d/*.conf</filename>. Filters specifying how to detect authentication failures. The Debian package already contains filters for many common programs."
+msgstr ""
+
+msgid "<filename>action.d/*.conf</filename>. Actions defining the commands for banning and unbanning of IP addresses."
+msgstr ""
+
+msgid "<filename>jail.conf</filename>. It is where <emphasis>jails</emphasis>, the combinations of filters and actions, are defined."
+msgstr ""
+
+msgid "Let us have a look at the configuration of <command>sshd</command> in <filename>/etc/fail2ban/jail.conf</filename> to better understand how Fail2Ban works..."
+msgstr ""
+
+msgid ""
+"[...]\n"
+"[DEFAULT]\n"
+"[...]\n"
+"bantime  = 10m\n"
+"[...]\n"
+"maxretry = 5\n"
+"[...]\n"
+"[sshd]\n"
+"port    = ssh\n"
+"logpath = %(sshd_log)s\n"
+"backend = %(sshd_backend)s"
+msgstr ""
+
+msgid "Fail2Ban will check for failed login attepts for <command>sshd</command> using Python regular expressions defined in <filename>/etc/fail2ban/filters.d/sshd.conf</filename> against the log file of <command>sshd</command>, which is defined in the variable <literal>sshd_log</literal> in the file <filename>/etc/fail2ban/paths_common.conf</filename>. If Fail2Ban detects five failed login attempts in a row, it will ban the IP address where those attempts originated."
+msgstr ""
+
+msgid "Fail2Ban is a very simple and effective way to protect against the most common brute-force attacks, but it cannot protect against distributed brute-force attacks, which is when an attacker uses a large number of machines spread around the Internet."
+msgstr ""
+
+msgid "A good way to provide extra protection against distributed brute force attacks is to artificially increase the login time after each failed attempt."
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Detecting Changes"
 msgstr "変更検出"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Once the system is installed and configured, and barring security upgrades, there's usually no reason for most of the files and directories to evolve, data excepted. It is therefore interesting to make sure that files actually do not change: any unexpected change would therefore be worth investigating. This section presents a few tools able to monitor files and to warn the administrator when an unexpected change occurs (or simply to list such changes)."
+#, fuzzy
+#| msgid "Once the system is installed and configured, and barring security upgrades, there's usually no reason for most of the files and directories to evolve, data excepted. It is therefore interesting to make sure that files actually do not change: any unexpected change would therefore be worth investigating. This section presents a few tools able to monitor files and to warn the administrator when an unexpected change occurs (or simply to list such changes)."
+msgid "Once the system is installed and configured, and barring security upgrades, there is usually no reason for most of the files and directories to evolve, data excepted. It is therefore interesting to make sure that files actually do not change: any unexpected change would therefore be worth investigating. This section presents a few tools able to monitor files and to warn the administrator when an unexpected change occurs (or simply to list such changes)."
 msgstr "システムのインストールと設定が完了したら、セキュリティアップグレードを行わない限りデータ以外のほとんどのファイルとディレクトリが変化する理由はありません。このため、ファイルが変化していないことを確認することは興味深いです。すなわち、ファイルに対する予想外の変化は調査に値します。この節では、ファイルに対する予想外の変化に備えて、ファイルを監視して管理者に警告する (または単純に変更をリストする) いくつかのツールを紹介します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -787,7 +782,9 @@ msgstr "<emphasis>GOING FURTHER</emphasis> Debian 並びにソフトウェア開
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 dpkg;
 # Tag: L-CFMD;
-msgid "<command>dpkg --verify</command> is useful in detecting changes to files coming from a Debian package, but it will be useless if the package itself is compromised, for instance if the Debian mirror is compromised. Protecting against this class of attacks involves using APT's digital signature verification system (see <xref linkend=\"sect.package-authentication\" />), and taking care to only install packages from a certified origin."
+#, fuzzy
+#| msgid "<command>dpkg --verify</command> is useful in detecting changes to files coming from a Debian package, but it will be useless if the package itself is compromised, for instance if the Debian mirror is compromised. Protecting against this class of attacks involves using APT's digital signature verification system (see <xref linkend=\"sect.package-authentication\" />), and taking care to only install packages from a certified origin."
+msgid "<command>dpkg --verify</command> is useful in detecting changes to files coming from a Debian package, but it will be useless if the package itself is compromised, for instance, if the Debian mirror is compromised. Protecting against this class of attacks involves using APT's digital signature verification system (see <xref linkend=\"sect.package-authentication\" />), and taking care to only install packages from a certified origin."
 msgstr "Debian パッケージの提供するファイルに対する変化を検出する場合には <command>dpkg --verify</command> は役に立ちますが、たとえば Debian アーカイブミラーが不正アクセスを受けたことによりパッケージ自体が不正に改竄された場合には <command>dpkg --verify</command> は役に立ちません。この種の攻撃に対抗するには、APT のデジタル署名照合システムを使い (<xref linkend=\"sect.package-authentication\" />を参照してください)、認証された発行元からのパッケージだけをインストールするように気を付けることが必要です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -894,6 +891,9 @@ msgstr ""
 msgid "Note that this example uses the <command>grep-status</command> command from the <emphasis role=\"pkg\">dctrl-tools</emphasis> package, which is not installed by default."
 msgstr "この例の中で、デフォルトではインストールされない <emphasis role=\"pkg\">dctrl-tools</emphasis> パッケージに含まれる <command>grep-status</command> コマンドが使われている点に注意してください。"
 
+msgid "<command>debsums</command> can be run frequently as a cronjob setting <literal>CRON_CHECK</literal> in <filename>/etc/default/debsums</filename>. To ignore certain files outside the <filename>/etc</filename> directory, which have been altered on purpuse or which are expected to change (like <filename>/usr/share/misc/pci.ids</filename>) you can add them to <filename>/etc/debsums-ignore</filename>."
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Monitoring Files: AIDE"
 msgstr "ファイル監視、AIDE"
@@ -955,6 +955,9 @@ msgstr "<emphasis role=\"pkg\">checksecurity</emphasis> パッケージには、
 msgid "The <emphasis role=\"pkg\">chkrootkit</emphasis> and <emphasis role=\"pkg\">rkhunter</emphasis> packages allow looking for <emphasis>rootkits</emphasis> potentially installed on the system. As a reminder, these are pieces of software designed to hide the compromise of a system while discreetly keeping control of the machine. The tests are not 100% reliable, but they can usually draw the administrator's attention to potential problems."
 msgstr "<emphasis role=\"pkg\">chkrootkit</emphasis> と <emphasis role=\"pkg\">rkhunter</emphasis> パッケージを使うことで、システムに潜在的にインストールされた <emphasis>rootkit</emphasis> を探し出すことが可能です。備忘録的になりますが、<emphasis>rootkit</emphasis> はシステムの不正侵入を隠すために設計されたソフトウェアで、マシンをこっそりと操作できる状態にし続けます。<emphasis role=\"pkg\">chkrootkit</emphasis> と <emphasis role=\"pkg\">rkhunter</emphasis> パッケージを使ったテストは 100% 信頼できるものではありませんが、管理者はテストにより潜在的な問題に対して注意を払うようになります。"
 
+msgid "<emphasis role=\"pkg\">rkhunter</emphasis> also performs checks to see if commands have been modified, if the system startup files have been modified, and various checks on the network interfaces, including checks for listening applications."
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Detecting Intrusion (IDS/NIDS)"
 msgstr "侵入検知 (IDS/NIDS)"
@@ -1001,7 +1004,9 @@ msgstr "「サービス妨害」攻撃はしばしば「分散」されること
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "<command>suricata</command> (in the Debian package of the same name) is a NIDS — a <emphasis>Network Intrusion Detection System</emphasis>. Its function is to listen to the network and try to detect infiltration attempts and/or hostile acts (including denial of service attacks). All these events are logged in multiple files in <filename>/var/log/suricata</filename>. There are third party tools (Kibana/logstash) to better browse all the data collected. <ulink type=\"block\" url=\"http://suricata-ids.org\" /> <ulink type=\"block\" url=\"https://www.elastic.co/products/kibana\" />"
+#, fuzzy
+#| msgid "<command>suricata</command> (in the Debian package of the same name) is a NIDS — a <emphasis>Network Intrusion Detection System</emphasis>. Its function is to listen to the network and try to detect infiltration attempts and/or hostile acts (including denial of service attacks). All these events are logged in multiple files in <filename>/var/log/suricata</filename>. There are third party tools (Kibana/logstash) to better browse all the data collected. <ulink type=\"block\" url=\"http://suricata-ids.org\" /> <ulink type=\"block\" url=\"https://www.elastic.co/products/kibana\" />"
+msgid "<command>suricata</command> (in the Debian package of the same name) is a NIDS — a <emphasis>Network Intrusion Detection System</emphasis>. Its function is to listen to the network and try to detect infiltration attempts and/or hostile acts (including denial of service attacks). All these events are logged in multiple files in <filename>/var/log/suricata</filename>. There are third party tools (Kibana/logstash) to better browse all the data collected. <ulink type=\"block\" url=\"https://suricata-ids.org\" /> <ulink type=\"block\" url=\"https://www.elastic.co/products/kibana\" />"
 msgstr "<command>suricata</command> (同名の Debian パッケージに含まれます) は NIDS すなわち<emphasis>ネットワーク型侵入検知システム</emphasis>です。NIDS の機能はネットワークをリッスンして侵入試行および敵対行為 (サービス妨害攻撃も含まれます) を検出しようとします。すべてのイベントは <filename>/var/log/suricata</filename> 内の複数のファイルに記録されます。収集されたすべてのデータを閲覧するためのサードパーティツール (Kibana/logstash) が存在します。<ulink type=\"block\" url=\"http://suricata-ids.org\" /><ulink type=\"block\" url=\"https://www.elastic.co/products/kibana\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1036,7 +1041,9 @@ msgstr "加えて、監視対象のネットワークインターフェースを
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "To detect bad behaviour, <command>suricata</command> needs a set of monitoring rules: you can find such rules in the <emphasis role=\"pkg\">snort-rules-default</emphasis> package. <command>snort</command> is the historical reference in the IDS ecosystem and <command>suricata</command> is able to reuse rules written for it. Unfortunately that package is missing from <emphasis role=\"distribution\">Debian Jessie</emphasis> and should be retrieved from another Debian release like <emphasis role=\"distribution\">Testing</emphasis> or <emphasis role=\"distribution\">Unstable</emphasis>."
+#, fuzzy
+#| msgid "To detect bad behaviour, <command>suricata</command> needs a set of monitoring rules: you can find such rules in the <emphasis role=\"pkg\">snort-rules-default</emphasis> package. <command>snort</command> is the historical reference in the IDS ecosystem and <command>suricata</command> is able to reuse rules written for it. Unfortunately that package is missing from <emphasis role=\"distribution\">Debian Jessie</emphasis> and should be retrieved from another Debian release like <emphasis role=\"distribution\">Testing</emphasis> or <emphasis role=\"distribution\">Unstable</emphasis>."
+msgid "To detect bad behavior, <command>suricata</command> needs a set of monitoring rules: you can find such rules in the <emphasis role=\"pkg\">snort-rules-default</emphasis> package. <command>snort</command> is the historical reference in the IDS ecosystem and <command>suricata</command> is able to reuse rules written for it."
 msgstr "不正行為を検出するためには、<command>suricata</command> に一連の監視規則を設定する必要があります。いくつかの監視規則は <emphasis role=\"pkg\">snort-rules-default</emphasis> パッケージに含まれています。<command>snort</command> は IDS エコシステムにおける歴史的な基準ソフトウェアで、<command>suricata</command> は <command>snort</command> 向けに書かれた監視規則を再利用することが可能です。残念なことに <emphasis role=\"pkg\">snort-rules-default</emphasis> パッケージは <emphasis role=\"distribution\">Debian Jessie</emphasis> には含まれません。このため、<emphasis role=\"pkg\">snort-rules-default</emphasis> パッケージを入手するには<emphasis role=\"distribution\">テスト版</emphasis>か<emphasis role=\"distribution\">不安定版</emphasis>などの他の Debian リリースを使ってください。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1092,7 +1099,9 @@ msgid "<primary><emphasis>Linux Security Modules</emphasis></primary>"
 msgstr "<primary><emphasis>Linux Security Modules</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "AppArmor applies a set of rules (known as “profile”) on each program. The profile applied by the kernel depends on the installation path of the program being executed. Contrary to SELinux (discussed in <xref linkend=\"sect.selinux\" />), the rules applied do not depend on the user. All users face the same set of rules when they are executing the same program (but traditional user permissions still apply and might result in different behaviour!)."
+#, fuzzy
+#| msgid "AppArmor applies a set of rules (known as “profile”) on each program. The profile applied by the kernel depends on the installation path of the program being executed. Contrary to SELinux (discussed in <xref linkend=\"sect.selinux\" />), the rules applied do not depend on the user. All users face the same set of rules when they are executing the same program (but traditional user permissions still apply and might result in different behaviour!)."
+msgid "AppArmor applies a set of rules (known as “profile”) on each program. The profile applied by the kernel depends on the installation path of the program being executed. Contrary to SELinux (discussed in <xref linkend=\"sect.selinux\" />), the rules applied do not depend on the user. All users face the same set of rules when they are executing the same program (but traditional user permissions still apply and might result in different behavior!)."
 msgstr "AppArmor はプログラムごとに一連の規則 (これは「プロファイル」として知られています) を適用します。カーネルは実行されたプログラムのインストール先のパスに依存してこのプロファイルを適用します。SELinux とは対照的に (<xref linkend=\"sect.selinux\" />を参照してください)、このプロファイルはユーザに依存するものではありません。同じプログラムを実行したすべてのユーザは同じプロファイルを適用されます (しかしながら、伝統的なユーザパーミッションが適用されないわけではありません。このため、ユーザごとにプログラムの挙動が異なる可能性もあります!)。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1105,47 +1114,58 @@ msgid "Enabling AppArmor and managing AppArmor profiles"
 msgstr "AppArmor の有効化と AppArmor プロファイルの管理"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "AppArmor support is built into the standard kernels provided by Debian. Enabling AppArmor is thus just a matter of installing a few packages and adding some parameters to the kernel command line:"
+#, fuzzy
+#| msgid "AppArmor support is built into the standard kernels provided by Debian. Enabling AppArmor is thus just a matter of installing a few packages and adding some parameters to the kernel command line:"
+msgid "AppArmor support is built into the standard kernels provided by Debian. Enabling AppArmor is thus just a matter of installing some packages by executing <command>apt install apparmor apparmor-profiles apparmor-utils</command> with root privileges."
 msgstr "AppArmor のサポートは Debian が提供する標準カーネルに組み込まれています。このため AppArmor を有効化するには、いくつかのパッケージをインストールして、一部のパラメータをカーネルコマンドラインに追加します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid ""
-"<computeroutput># </computeroutput><userinput>apt install apparmor apparmor-profiles apparmor-utils\n"
-"</userinput><computeroutput>[...]\n"
-"# </computeroutput><userinput>perl -pi -e 's,GRUB_CMDLINE_LINUX=\"(.*)\"$,GRUB_CMDLINE_LINUX=\"$1 apparmor=1 security=apparmor\",' /etc/default/grub\n"
-"</userinput><computeroutput># </computeroutput><userinput>update-grub\n"
-"</userinput>"
-msgstr ""
-"<computeroutput># </computeroutput><userinput>apt install apparmor apparmor-profiles apparmor-utils\n"
-"</userinput><computeroutput>[...]\n"
-"# </computeroutput><userinput>perl -pi -e 's,GRUB_CMDLINE_LINUX=\"(.*)\"$,GRUB_CMDLINE_LINUX=\"$1 apparmor=1 security=apparmor\",' /etc/default/grub\n"
-"</userinput><computeroutput># </computeroutput><userinput>update-grub\n"
-"</userinput>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "After a reboot, AppArmor is now functional and <command>aa-status</command> will confirm it quickly:"
+#, fuzzy
+#| msgid "After a reboot, AppArmor is now functional and <command>aa-status</command> will confirm it quickly:"
+msgid "AppArmor is functional after the installation, and <command>aa-status</command> will confirm it quickly:"
 msgstr "AppArmor は再起動後に動作します。以下に示す通り <command>aa-status</command> を使えば AppArmor の有効化を素早く確認できます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>aa-status</userinput>\n"
+#| "<computeroutput>apparmor module is loaded.\n"
+#| "44 profiles are loaded.\n"
+#| "9 profiles are in enforce mode.\n"
+#| "   /usr/bin/lxc-start\n"
+#| "   /usr/lib/chromium-browser/chromium-browser//browser_java\n"
+#| "[...]\n"
+#| "35 profiles are in complain mode.\n"
+#| "   /sbin/klogd\n"
+#| "[...]\n"
+#| "3 processes have profiles defined.\n"
+#| "1 processes are in enforce mode.\n"
+#| "   /usr/sbin/libvirtd (1295) \n"
+#| "2 processes are in complain mode.\n"
+#| "   /usr/sbin/avahi-daemon (941) \n"
+#| "   /usr/sbin/avahi-daemon (1000) \n"
+#| "0 processes are unconfined but have a profile defined.</computeroutput>"
 msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>aa-status</userinput>\n"
 "<computeroutput>apparmor module is loaded.\n"
-"44 profiles are loaded.\n"
-"9 profiles are in enforce mode.\n"
-"   /usr/bin/lxc-start\n"
-"   /usr/lib/chromium-browser/chromium-browser//browser_java\n"
+"40 profiles are loaded.\n"
+"23 profiles are in enforce mode.\n"
+"   /usr/bin/evince\n"
+"   /usr/bin/evince-previewer\n"
 "[...]\n"
-"35 profiles are in complain mode.\n"
-"   /sbin/klogd\n"
+"17 profiles are in complain mode.\n"
+"   /usr/sbin/dnsmasq\n"
 "[...]\n"
-"3 processes have profiles defined.\n"
-"1 processes are in enforce mode.\n"
-"   /usr/sbin/libvirtd (1295) \n"
+"14 processes have profiles defined.\n"
+"12 processes are in enforce mode.\n"
+"   /usr/bin/evince (3462)\n"
+"[...]\n"
 "2 processes are in complain mode.\n"
-"   /usr/sbin/avahi-daemon (941) \n"
-"   /usr/sbin/avahi-daemon (1000) \n"
+"   /usr/sbin/avahi-daemon (429) avahi-daemon\n"
+"   /usr/sbin/avahi-daemon (511) avahi-daemon\n"
 "0 processes are unconfined but have a profile defined.</computeroutput>"
 msgstr ""
 "\n"
@@ -1178,17 +1198,27 @@ msgstr "<emphasis role=\"pkg\">apparmor-profiles</emphasis> パッケージに�
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "The state of each profile can be switched between enforcing and complaining with calls to <command>aa-enforce</command> and <command>aa-complain</command> giving as parameter either the path of the executable or the path to the policy file. Additionaly a profile can be entirely disabled with <command>aa-disable</command> or put in audit mode (to log accepted system calls too) with <command>aa-audit</command>."
+#, fuzzy
+#| msgid "The state of each profile can be switched between enforcing and complaining with calls to <command>aa-enforce</command> and <command>aa-complain</command> giving as parameter either the path of the executable or the path to the policy file. Additionaly a profile can be entirely disabled with <command>aa-disable</command> or put in audit mode (to log accepted system calls too) with <command>aa-audit</command>."
+msgid "The state of each profile can be switched between enforcing and complaining with calls to <command>aa-enforce</command> and <command>aa-complain</command> giving as parameter either the path of the executable or the path to the policy file. Additionally a profile can be entirely disabled with <command>aa-disable</command> or put in audit mode (to log accepted system calls too) with <command>aa-audit</command>."
 msgstr "それぞれのプロファイルの状態を enforce または complain モードに切り替えるには、引数に実行ファイルのパスかポリシーファイルのパスを与えて <command>aa-enforce</command> または <command>aa-complain</command> を呼び出します。さらにプロファイルを完全に無効化するには、<command>aa-disable</command> を使うか <command>aa-audit</command> を使ってプロファイルを audit モード (承認されたシステムコールもログ記録するモード) に切り替えます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>aa-enforce /usr/sbin/avahi-daemon</userinput>\n"
+#| "<computeroutput>Setting /usr/sbin/avahi-daemon to enforce mode.</computeroutput>\n"
+#| "<computeroutput># </computeroutput><userinput>aa-complain /etc/apparmor.d/usr.bin.lxc-start</userinput>\n"
+#| "<computeroutput>Setting /etc/apparmor.d/usr.bin.lxc-start to complain mode.</computeroutput>\n"
+#| "      "
 msgid ""
 "\n"
-"<computeroutput># </computeroutput><userinput>aa-enforce /usr/sbin/avahi-daemon</userinput>\n"
-"<computeroutput>Setting /usr/sbin/avahi-daemon to enforce mode.</computeroutput>\n"
-"<computeroutput># </computeroutput><userinput>aa-complain /etc/apparmor.d/usr.bin.lxc-start</userinput>\n"
-"<computeroutput>Setting /etc/apparmor.d/usr.bin.lxc-start to complain mode.</computeroutput>\n"
+"<computeroutput># </computeroutput><userinput>aa-enforce /usr/bin/pidgin</userinput>\n"
+"<computeroutput>Setting /usr/bin/pidgin to enforce mode.</computeroutput>\n"
+"<computeroutput># </computeroutput><userinput>aa-complain /usr/sbin/dnsmasq</userinput>\n"
+"<computeroutput>Setting /usr/sbin/dnsmasq to complain mode.</computeroutput>\n"
 "      "
 msgstr ""
 "\n"
@@ -1211,73 +1241,223 @@ msgstr "AppArmor プロファイルを作成することはかなり簡単な作
 msgid "The most important programs that need to be confined are the network facing programs as those are the most likely targets of remote attackers. That is why AppArmor conveniently provides an <command>aa-unconfined</command> command to list the programs which have no associated profile and which expose an open network socket. With the <literal>--paranoid</literal> option you get all unconfined processes that have at least one active network connection."
 msgstr "アクセス制限を設ける必要のある最も重要なプログラムはネットワークを取り扱うプログラムです。なぜなら、この種のプログラムは遠隔攻撃者からの標的になるからです。このため好都合なことに AppArmor には <command>aa-unconfined</command> コマンドが用意されています。<command>aa-unconfined</command> コマンドは関連するプロファイルが存在せず開かれたネットワークソケットを公開しているプログラムを表示します。<command>aa-unconfined</command> に <literal>--paranoid</literal> オプションを付けて実行すれば、少なくとも 1 つ以上のアクティブなネットワーク接続を持つアクセス制限を設けていないプロセスがすべて表示されます。"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
 msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>aa-unconfined</userinput>\n"
 "<computeroutput>801 /sbin/dhclient not confined\n"
-"890 /sbin/rpcbind not confined\n"
-"899 /sbin/rpc.statd not confined\n"
-"929 /usr/sbin/sshd not confined\n"
-"941 /usr/sbin/avahi-daemon confined by '/usr/sbin/avahi-daemon (complain)'\n"
-"988 /usr/sbin/minissdpd not confined\n"
-"1276 /usr/sbin/exim4 not confined\n"
-"1485 /usr/lib/erlang/erts-6.2/bin/epmd not confined\n"
-"1751 /usr/lib/erlang/erts-6.2/bin/beam.smp not confined\n"
-"19592 /usr/lib/dleyna-renderer/dleyna-renderer-service not confined</computeroutput>\n"
+"409 /usr/sbin/NetworkManager not confined\n"
+"411 /usr/sbin/cupsd confined by '/usr/sbin/cupsd (enforce)'\n"
+"429 /usr/sbin/avahi-daemon confined by 'avahi-daemon (enforce)'\n"
+"516 /usr/sbin/cups-browsed confined by '/usr/sbin/cups-browsed (enforce)'\n"
+"538 /usr/sbin/zebra not confined\n"
+"591 /usr/sbin/named not confined\n"
+"847 /usr/sbin/mysqld not confined\n"
+"849 /usr/sbin/sshd not confined\n"
+"1013 /usr/sbin/dhclient (/sbin/dhclient) not confined\n"
+"1276 /usr/sbin/apache2 not confined\n"
+"1322 /usr/sbin/apache2 not confined\n"
+"1323 /usr/sbin/apache2 not confined\n"
+"1324 /usr/sbin/apache2 not confined\n"
+"1325 /usr/sbin/apache2 not confined\n"
+"1327 /usr/sbin/apache2 not confined\n"
+"1829 /usr/lib/ipsec/charon confined by '/usr/lib/ipsec/charon (enforce)'\n"
+"2132 /usr/sbin/exim4 not confined\n"
+"12865 /usr/bin/python3.7 (/usr/bin/python3) not confined\n"
+"12873 /usr/bin/python3.7 (/usr/bin/python3) not confined</computeroutput>\n"
 "      "
 msgstr ""
-"\n"
-"<computeroutput># </computeroutput><userinput>aa-unconfined</userinput>\n"
-"<computeroutput>801 /sbin/dhclient not confined\n"
-"890 /sbin/rpcbind not confined\n"
-"899 /sbin/rpc.statd not confined\n"
-"929 /usr/sbin/sshd not confined\n"
-"941 /usr/sbin/avahi-daemon confined by '/usr/sbin/avahi-daemon (complain)'\n"
-"988 /usr/sbin/minissdpd not confined\n"
-"1276 /usr/sbin/exim4 not confined\n"
-"1485 /usr/lib/erlang/erts-6.2/bin/epmd not confined\n"
-"1751 /usr/lib/erlang/erts-6.2/bin/beam.smp not confined\n"
-"19592 /usr/lib/dleyna-renderer/dleyna-renderer-service not confined</computeroutput>\n"
-"      "
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "In the following example, we will thus try to create a profile for <command>/sbin/dhclient</command>. For this we will use <command>aa-genprof dhclient</command>. It will invite you to use the application in another window and when done to come back to <command>aa-genprof</command> to scan for AppArmor events in the system logs and convert those logs into access rules. For each logged event, it will make one or more rule suggestions that you can either approve or further edit in multiple ways:"
+#, fuzzy
+#| msgid "In the following example, we will thus try to create a profile for <command>/sbin/dhclient</command>. For this we will use <command>aa-genprof dhclient</command>. It will invite you to use the application in another window and when done to come back to <command>aa-genprof</command> to scan for AppArmor events in the system logs and convert those logs into access rules. For each logged event, it will make one or more rule suggestions that you can either approve or further edit in multiple ways:"
+msgid "In the following example, we will thus try to create a profile for <command>/sbin/dhclient</command>. For this we will use <command>aa-genprof dhclient</command>. In Debian <emphasis role=\"distribution\">Buster</emphasis> there is a known bug<footnote><para><ulink url=\"https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=928160\" /></para></footnote> that makes the previous command fail with the following error: <computeroutput>ERROR: Include file /etc/apparmor.d/local/usr.lib.dovecot.deliver not found</computeroutput>. To fix it create the missing files with <command>touch <replaceable>file</replaceable></command>. It will invite you to use the application in another window and when done to come back to <command>aa-genprof</command> to scan for AppArmor events in the system logs and convert those logs into access rules. For each logged event, it will make one or more rule suggestions that you can either approve or further edit in multiple ways:"
 msgstr "以下の例では、<command>/sbin/dhclient</command> 用のプロファイルを作成しようとしています。プロファイルを作成するためには <command>aa-genprof dhclient</command> を使います。<command>aa-genprof</command> はユーザに別のウィンドウから対象のアプリケーションを開始することを求め、その後ユーザにシステムログ内の AppArmor イベントをスキャンしてこれらのログをアクセス規則に変換するために <command>aa-genprof</command> に戻ることを求めます。ログ記録されたそれぞれのイベントについて、<command>aa-genprof</command> は 1 つ以上の規則を提案します。ユーザは提案された規則を受け入れるかまたはさまざまな方法で規則を編集することが可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput># </computeroutput><userinput>aa-genprof dhclient</userinput>\n"
+#| "<computeroutput>Writing updated profile for /sbin/dhclient.\n"
+#| "Setting /sbin/dhclient to complain mode.\n"
+#| "\n"
+#| "Before you begin, you may wish to check if a\n"
+#| "profile already exists for the application you\n"
+#| "wish to confine. See the following wiki page for\n"
+#| "more information:\n"
+#| "http://wiki.apparmor.net/index.php/Profiles\n"
+#| "\n"
+#| "Please start the application to be profiled in\n"
+#| "another window and exercise its functionality now.\n"
+#| "\n"
+#| "Once completed, select the \"Scan\" option below in \n"
+#| "order to scan the system logs for AppArmor events. \n"
+#| "\n"
+#| "For each AppArmor event, you will be given the \n"
+#| "opportunity to choose whether the access should be \n"
+#| "allowed or denied.\n"
+#| "\n"
+#| "Profiling: /sbin/dhclient\n"
+#| "\n"
+#| "[(S)can system log for AppArmor events] / (F)inish\n"
+#| "Reading log entries from /var/log/audit/audit.log.\n"
+#| "\n"
+#| "Profile:  /sbin/dhclient <co id=\"aa-genprof-execute\"></co>\n"
+#| "Execute:  /usr/lib/NetworkManager/nm-dhcp-helper\n"
+#| "Severity: unknown\n"
+#| "\n"
+#| "(I)nherit / (C)hild / (P)rofile / (N)amed / (U)nconfined / (X) ix On / (D)eny / Abo(r)t / (F)inish\n"
+#| "<userinput>P</userinput>\n"
+#| "Should AppArmor sanitise the environment when\n"
+#| "switching profiles?\n"
+#| "\n"
+#| "Sanitising environment is more secure,\n"
+#| "but some applications depend on the presence\n"
+#| "of LD_PRELOAD or LD_LIBRARY_PATH.\n"
+#| "\n"
+#| "(Y)es / [(N)o]\n"
+#| "<userinput>Y</userinput>\n"
+#| "Writing updated profile for /usr/lib/NetworkManager/nm-dhcp-helper.\n"
+#| "Complain-mode changes:\n"
+#| "WARN: unknown capability: CAP_net_raw\n"
+#| "\n"
+#| "Profile:    /sbin/dhclient <co id=\"aa-genprof-capability\"></co>\n"
+#| "Capability: net_raw\n"
+#| "Severity:   unknown\n"
+#| "\n"
+#| "[(A)llow] / (D)eny / (I)gnore / Audi(t) / Abo(r)t / (F)inish\n"
+#| "<userinput>A</userinput>\n"
+#| "Adding capability net_raw to profile.\n"
+#| "\n"
+#| "Profile:  /sbin/dhclient <co id=\"aa-genprof-read\"></co>\n"
+#| "Path:     /etc/nsswitch.conf\n"
+#| "Mode:     r\n"
+#| "Severity: unknown\n"
+#| "\n"
+#| "  1 - #include &lt;abstractions/apache2-common&gt; \n"
+#| "  2 - #include &lt;abstractions/libvirt-qemu&gt; \n"
+#| "  3 - #include &lt;abstractions/nameservice&gt; \n"
+#| "  4 - #include &lt;abstractions/totem&gt; \n"
+#| " [5 - /etc/nsswitch.conf]\n"
+#| "[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
+#| "<userinput>3</userinput>\n"
+#| "\n"
+#| "Profile:  /sbin/dhclient\n"
+#| "Path:     /etc/nsswitch.conf\n"
+#| "Mode:     r\n"
+#| "Severity: unknown\n"
+#| "\n"
+#| "  1 - #include &lt;abstractions/apache2-common&gt; \n"
+#| "  2 - #include &lt;abstractions/libvirt-qemu&gt; \n"
+#| " [3 - #include &lt;abstractions/nameservice&gt;]\n"
+#| "  4 - #include &lt;abstractions/totem&gt; \n"
+#| "  5 - /etc/nsswitch.conf \n"
+#| "[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
+#| "<userinput>A</userinput>\n"
+#| "Adding #include &lt;abstractions/nameservice&gt; to profile.\n"
+#| "\n"
+#| "Profile:  /sbin/dhclient\n"
+#| "Path:     /proc/7252/net/dev\n"
+#| "Mode:     r\n"
+#| "Severity: 6\n"
+#| "\n"
+#| "  1 - /proc/7252/net/dev \n"
+#| " [2 - /proc/*/net/dev]\n"
+#| "[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
+#| "<userinput>A</userinput>\n"
+#| "Adding /proc/*/net/dev r to profile\n"
+#| "\n"
+#| "[...]\n"
+#| "Profile:  /sbin/dhclient <co id=\"aa-genprof-write\"></co>\n"
+#| "Path:     /run/dhclient-eth0.pid\n"
+#| "Mode:     w\n"
+#| "Severity: unknown\n"
+#| "\n"
+#| " [1 - /run/dhclient-eth0.pid]\n"
+#| "[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
+#| "<userinput>N</userinput>\n"
+#| "\n"
+#| "Enter new path: /run/dhclient*.pid\n"
+#| "\n"
+#| "Profile:  /sbin/dhclient\n"
+#| "Path:     /run/dhclient-eth0.pid\n"
+#| "Mode:     w\n"
+#| "Severity: unknown\n"
+#| "\n"
+#| "  1 - /run/dhclient-eth0.pid \n"
+#| " [2 - /run/dhclient*.pid]\n"
+#| "[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
+#| "<userinput>A</userinput>\n"
+#| "Adding /run/dhclient*.pid w to profile\n"
+#| "\n"
+#| "[...]\n"
+#| "Profile:  /usr/lib/NetworkManager/nm-dhcp-helper <co id=\"aa-genprof-other-profile\"></co>\n"
+#| "Path:     /proc/filesystems\n"
+#| "Mode:     r\n"
+#| "Severity: 6\n"
+#| "\n"
+#| " [1 - /proc/filesystems]\n"
+#| "[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
+#| "<userinput>A</userinput>\n"
+#| "Adding /proc/filesystems r to profile\n"
+#| "\n"
+#| "= Changed Local Profiles =\n"
+#| "\n"
+#| "The following local profiles were changed. Would you like to save them?\n"
+#| "\n"
+#| " [1 - /sbin/dhclient]\n"
+#| "  2 - /usr/lib/NetworkManager/nm-dhcp-helper \n"
+#| "(S)ave Changes / Save Selec(t)ed Profile / [(V)iew Changes] / View Changes b/w (C)lean profiles / Abo(r)t\n"
+#| "<userinput>S</userinput>\n"
+#| "Writing updated profile for /sbin/dhclient.\n"
+#| "Writing updated profile for /usr/lib/NetworkManager/nm-dhcp-helper.\n"
+#| "\n"
+#| "Profiling: /sbin/dhclient\n"
+#| "\n"
+#| "[(S)can system log for AppArmor events] / (F)inish\n"
+#| "<userinput>F</userinput>\n"
+#| "Setting /sbin/dhclient to enforce mode.\n"
+#| "Setting /usr/lib/NetworkManager/nm-dhcp-helper to enforce mode.\n"
+#| "\n"
+#| "Reloaded AppArmor profiles in enforce mode.\n"
+#| "\n"
+#| "Please consider contributing your new profile!\n"
+#| "See the following wiki page for more information:\n"
+#| "http://wiki.apparmor.net/index.php/Profiles\n"
+#| "\n"
+#| "Finished generating profile for /sbin/dhclient.</computeroutput>"
 msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>aa-genprof dhclient</userinput>\n"
-"<computeroutput>Writing updated profile for /sbin/dhclient.\n"
-"Setting /sbin/dhclient to complain mode.\n"
+"<computeroutput>Writing updated profile for /usr/sbin/dhclient.\n"
+"Setting /usr/sbin/dhclient to complain mode.\n"
 "\n"
 "Before you begin, you may wish to check if a\n"
 "profile already exists for the application you\n"
 "wish to confine. See the following wiki page for\n"
 "more information:\n"
-"http://wiki.apparmor.net/index.php/Profiles\n"
+"https://gitlab.com/apparmor/apparmor/wikis/Profiles\n"
+"\n"
+"Profiling: /usr/sbin/dhclient\n"
 "\n"
 "Please start the application to be profiled in\n"
 "another window and exercise its functionality now.\n"
 "\n"
-"Once completed, select the \"Scan\" option below in \n"
-"order to scan the system logs for AppArmor events. \n"
+"Once completed, select the \"Scan\" option below in\n"
+"order to scan the system logs for AppArmor events.\n"
 "\n"
-"For each AppArmor event, you will be given the \n"
-"opportunity to choose whether the access should be \n"
+"For each AppArmor event, you will be given the\n"
+"opportunity to choose whether the access should be\n"
 "allowed or denied.\n"
 "\n"
-"Profiling: /sbin/dhclient\n"
-"\n"
 "[(S)can system log for AppArmor events] / (F)inish\n"
-"Reading log entries from /var/log/audit/audit.log.\n"
+"Reading log entries from /var/log/syslog.\n"
+"Updating AppArmor profiles in /etc/apparmor.d.\n"
 "\n"
-"Profile:  /sbin/dhclient <co id=\"aa-genprof-execute\"></co>\n"
-"Execute:  /usr/lib/NetworkManager/nm-dhcp-helper\n"
+"Profile:  /usr/sbin/dhclient <co id=\"aa-genprof-execute\"></co>\n"
+"Execute:  /usr/sbin/dhclient-script\n"
 "Severity: unknown\n"
 "\n"
 "(I)nherit / (C)hild / (P)rofile / (N)amed / (U)nconfined / (X) ix On / (D)eny / Abo(r)t / (F)inish\n"
@@ -1291,115 +1471,97 @@ msgid ""
 "\n"
 "(Y)es / [(N)o]\n"
 "<userinput>Y</userinput>\n"
-"Writing updated profile for /usr/lib/NetworkManager/nm-dhcp-helper.\n"
+"Writing updated profile for /usr/sbin/dhclient-script.\n"
 "Complain-mode changes:\n"
-"WARN: unknown capability: CAP_net_raw\n"
 "\n"
-"Profile:    /sbin/dhclient <co id=\"aa-genprof-capability\"></co>\n"
+"Profile:    /usr/sbin/dhclient <co id=\"aa-genprof-capability\"></co>\n"
 "Capability: net_raw\n"
-"Severity:   unknown\n"
+"Severity:   8\n"
 "\n"
+" [1 - capability net_raw,]\n"
 "[(A)llow] / (D)eny / (I)gnore / Audi(t) / Abo(r)t / (F)inish\n"
 "<userinput>A</userinput>\n"
 "Adding capability net_raw to profile.\n"
 "\n"
-"Profile:  /sbin/dhclient <co id=\"aa-genprof-read\"></co>\n"
-"Path:     /etc/nsswitch.conf\n"
-"Mode:     r\n"
-"Severity: unknown\n"
-"\n"
-"  1 - #include &lt;abstractions/apache2-common&gt; \n"
-"  2 - #include &lt;abstractions/libvirt-qemu&gt; \n"
-"  3 - #include &lt;abstractions/nameservice&gt; \n"
-"  4 - #include &lt;abstractions/totem&gt; \n"
-" [5 - /etc/nsswitch.conf]\n"
-"[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
-"<userinput>3</userinput>\n"
-"\n"
 "Profile:  /sbin/dhclient\n"
-"Path:     /etc/nsswitch.conf\n"
-"Mode:     r\n"
-"Severity: unknown\n"
+"Capability: net_bind_service\n"
+"Severity:   8\n"
 "\n"
-"  1 - #include &lt;abstractions/apache2-common&gt; \n"
-"  2 - #include &lt;abstractions/libvirt-qemu&gt; \n"
-" [3 - #include &lt;abstractions/nameservice&gt;]\n"
-"  4 - #include &lt;abstractions/totem&gt; \n"
-"  5 - /etc/nsswitch.conf \n"
+" [1 - #include &lt;abstractions/nis&gt; ]\n"
+"  2 - capability net_bind_service,\n"
+"(A)llow / [(D)eny] / (I)gnore / Audi(t) / Abo(r)t / (F)inish\n"
+"<userinput>A</userinput>\n"
+"Adding #include &lt;abstractions/nis&gt; to profile.\n"
+"\n"
+"Profile:  /usr/sbin/dhclient <co id=\"aa-genprof-read\"></co>\n"
+"Path:     /etc/ssl/openssl.cnf\n"
+"New Mode: owner r\n"
+"Severity: 2\n"
+"\n"
+" [1 - #include &lt;abstractions/lightdm&gt;]\n"
+"  2 - #include &lt;abstractions/openssl&gt;\n"
+"  3 - #include &lt;abstractions/ssl_keys&gt;\n"
+"  4 - owner /etc/ssl/openssl.cnf r,\n"
+"(A)llow / [(D)eny] / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Audi(t) / (O)wner permissions off / Abo(r)t / (F)inish\n"
+"<userinput>2</userinput>\n"
+"\n"
+"Profile:  /usr/sbin/dhclient\n"
+"Path:     /etc/ssl/openssl.cnf\n"
+"New Mode: owner r\n"
+"Severity: 2\n"
+"\n"
+"  1 - #include &lt;abstractions/lightdm&gt;\n"
+" [2 - #include &lt;abstractions/openssl&gt;]\n"
+"  3 - #include &lt;abstractions/ssl_keys&gt;\n"
+"  4 - owner /etc/ssl/openssl.cnf r,\n"
 "[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
 "<userinput>A</userinput>\n"
-"Adding #include &lt;abstractions/nameservice&gt; to profile.\n"
-"\n"
-"Profile:  /sbin/dhclient\n"
-"Path:     /proc/7252/net/dev\n"
-"Mode:     r\n"
-"Severity: 6\n"
-"\n"
-"  1 - /proc/7252/net/dev \n"
-" [2 - /proc/*/net/dev]\n"
-"[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
-"<userinput>A</userinput>\n"
-"Adding /proc/*/net/dev r to profile\n"
-"\n"
 "[...]\n"
-"Profile:  /sbin/dhclient <co id=\"aa-genprof-write\"></co>\n"
-"Path:     /run/dhclient-eth0.pid\n"
-"Mode:     w\n"
+"Profile:  /usr/sbin/dhclient-script <co id=\"aa-genprof-other-profile\"></co>\n"
+"Path:     /usr/bin/dash\n"
+"New Mode: owner r\n"
 "Severity: unknown\n"
 "\n"
-" [1 - /run/dhclient-eth0.pid]\n"
-"[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
-"<userinput>N</userinput>\n"
-"\n"
-"Enter new path: /run/dhclient*.pid\n"
-"\n"
-"Profile:  /sbin/dhclient\n"
-"Path:     /run/dhclient-eth0.pid\n"
-"Mode:     w\n"
-"Severity: unknown\n"
-"\n"
-"  1 - /run/dhclient-eth0.pid \n"
-" [2 - /run/dhclient*.pid]\n"
-"[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
+" [1 - #include &lt;abstractions/lightdm&gt;]\n"
+"  2 - #include &lt;abstractions/ubuntu-browsers.d/plugins-common&gt;\n"
+"  3 - owner /usr/bin/dash r,\n"
+"(A)llow / [(D)eny] / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Audi(t) / (O)wner permissions off / Abo(r)t / (F)inish\n"
 "<userinput>A</userinput>\n"
-"Adding /run/dhclient*.pid w to profile\n"
-"\n"
-"[...]\n"
-"Profile:  /usr/lib/NetworkManager/nm-dhcp-helper <co id=\"aa-genprof-other-profile\"></co>\n"
-"Path:     /proc/filesystems\n"
-"Mode:     r\n"
-"Severity: 6\n"
-"\n"
-" [1 - /proc/filesystems]\n"
-"[(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore\n"
-"<userinput>A</userinput>\n"
-"Adding /proc/filesystems r to profile\n"
+"Adding #include &lt;abstractions/lightdm&gt; to profile.\n"
+"Deleted 2 previous matching profile entries.\n"
 "\n"
 "= Changed Local Profiles =\n"
 "\n"
 "The following local profiles were changed. Would you like to save them?\n"
 "\n"
-" [1 - /sbin/dhclient]\n"
-"  2 - /usr/lib/NetworkManager/nm-dhcp-helper \n"
+" [1 - /usr/sbin/dhclient]\n"
+"  2 - /usr/sbin/dhclient-script\n"
 "(S)ave Changes / Save Selec(t)ed Profile / [(V)iew Changes] / View Changes b/w (C)lean profiles / Abo(r)t\n"
 "<userinput>S</userinput>\n"
-"Writing updated profile for /sbin/dhclient.\n"
-"Writing updated profile for /usr/lib/NetworkManager/nm-dhcp-helper.\n"
+"Writing updated profile for /usr/sbin/dhclient.\n"
+"Writing updated profile for /usr/sbin/dhclient-script.\n"
 "\n"
-"Profiling: /sbin/dhclient\n"
+"Profiling: /usr/sbin/dhclient\n"
+"\n"
+"Please start the application to be profiled in\n"
+"another window and exercise its functionality now.\n"
+"\n"
+"Once completed, select the \"Scan\" option below in\n"
+"order to scan the system logs for AppArmor events.\n"
+"\n"
+"For each AppArmor event, you will be given the\n"
+"opportunity to choose whether the access should be\n"
+"allowed or denied.\n"
 "\n"
 "[(S)can system log for AppArmor events] / (F)inish\n"
 "<userinput>F</userinput>\n"
-"Setting /sbin/dhclient to enforce mode.\n"
-"Setting /usr/lib/NetworkManager/nm-dhcp-helper to enforce mode.\n"
-"\n"
 "Reloaded AppArmor profiles in enforce mode.\n"
 "\n"
 "Please consider contributing your new profile!\n"
 "See the following wiki page for more information:\n"
-"http://wiki.apparmor.net/index.php/Profiles\n"
+"https://gitlab.com/apparmor/apparmor/wikis/Profiles\n"
 "\n"
-"Finished generating profile for /sbin/dhclient.</computeroutput>"
+"Finished generating profile for /usr/sbin/dhclient.</computeroutput>"
 msgstr ""
 "\n"
 "<computeroutput># </computeroutput><userinput>aa-genprof dhclient</userinput>\n"
@@ -1575,17 +1737,16 @@ msgstr "カーネルレベルでは root ユーザの特権が「capability」�
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "Here the program seeks read permissions for <filename>/etc/nsswitch.conf</filename>. <command>aa-genprof</command> detected that this permission was also granted by multiple “abstractions” and offers them as alternative choices. An abstraction provides a reusable set of access rules grouping together multiple resources that are commonly used together. In this specific case, the file is generally accessed through the nameservice related functions of the C library and we type “3” to first select the “#include &lt;abstractions/nameservice&gt;” choice and then “A” to allow it."
+#, fuzzy
+#| msgid "Here the program seeks read permissions for <filename>/etc/nsswitch.conf</filename>. <command>aa-genprof</command> detected that this permission was also granted by multiple “abstractions” and offers them as alternative choices. An abstraction provides a reusable set of access rules grouping together multiple resources that are commonly used together. In this specific case, the file is generally accessed through the nameservice related functions of the C library and we type “3” to first select the “#include &lt;abstractions/nameservice&gt;” choice and then “A” to allow it."
+msgid "Here the program seeks read permissions for <filename>/etc/ssl/openssl.cnf</filename>. <command>aa-genprof</command> detected that this permission was also granted by multiple “abstractions” and offers them as alternative choices. An abstraction provides a reusable set of access rules grouping together multiple resources that are commonly used together. In this specific case, the file is generally accessed through the nameservice related functions of the C library and we type “2” to first select the “#include &lt;abstractions/openssl&gt;” choice and then “A” to allow it."
 msgstr "ここで dhclient は <filename>/etc/nsswitch.conf</filename> を読み込もうとしています。<command>aa-genprof</command> は複数の「abstraction」を介して <filename>/etc/nsswitch.conf</filename> の読み込みが可能になることを検出し、代替選択肢として該当する「abstraction」を挙げています。abstraction とは通常同時に使われる複数のリソースをまとめた一連のアクセス規則を再利用できる形で提供するものです。今回の場合、<filename>/etc/nsswitch.conf</filename> ファイルは一般に C 言語ライブラリのネームサービスに関連する関数を通じてアクセスされます。ここでは最初に「3」を入力して「#include &lt;abstractions/nameservice&gt;」を選択し、その後に「A」を入力して<filename>/etc/nsswitch.conf</filename> の読み込みを許可しています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "The program wants to create the <filename>/run/dhclient-eth0.pid</filename> file. If we allow the creation of this specific file only, the program will not work when the user will use it on another network interface. Thus we select “New” to replace the filename with the more generic “/run/dhclient*.pid” before recording the rule with “Allow”."
-msgstr "ここで dhclient は <filename>/run/dhclient-eth0.pid</filename> ファイルを作成しようとしています。<filename>/run/dhclient-eth0.pid</filename> だけの作成を許可した場合、ユーザが eth0 以外のネットワークインターフェースに対して dhclient を実行する際に dhclient が動作しなくなるでしょう。このため、ここでは「New」を選択してファイル名をより一般的な「/run/dhclient*.pid」に変更した後、「Allow」を選択してこの規則を適用しています。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
-msgid "Notice that this access request is not part of the dhclient profile but of the new profile that we created when we allowed <filename>/usr/lib/NetworkManager/nm-dhcp-helper</filename> to run with its own profile."
+#, fuzzy
+#| msgid "Notice that this access request is not part of the dhclient profile but of the new profile that we created when we allowed <filename>/usr/lib/NetworkManager/nm-dhcp-helper</filename> to run with its own profile."
+msgid "Notice that this access request is not part of the dhclient profile but of the new profile that we created when we allowed <filename>/usr/sbin/dhclient-script</filename> to run with its own profile."
 msgstr "このアクセス要求に対するアクセス規則は dhclient 専用のプロファイルではなく、<filename>/usr/lib/NetworkManager/nm-dhcp-helper</filename> 専用のプロファイルを適用して nm-dhcp-helper を実行することを許可した際に作成された新しいプロファイルに組み込まれる点に注意してください。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1600,17 +1761,60 @@ msgstr "実際のところ <command>aa-genprof</command> は <command>aa-logprof
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "If you want the generated profile to be complete, you should use the program in all the ways that it is legitimately used. In the case of dhclient, it means running it via Network Manager, running it via ifupdown, running it manually, etc. In the end, you might get a <filename>/etc/apparmor.d/sbin.dhclient</filename> close to this:"
+#, fuzzy
+#| msgid "If you want the generated profile to be complete, you should use the program in all the ways that it is legitimately used. In the case of dhclient, it means running it via Network Manager, running it via ifupdown, running it manually, etc. In the end, you might get a <filename>/etc/apparmor.d/sbin.dhclient</filename> close to this:"
+msgid "If you want the generated profile to be complete, you should use the program in all the ways that it is legitimately used. In the case of dhclient, it means running it via Network Manager, running it via ifupdown, running it manually, etc. In the end, you might get a <filename>/etc/apparmor.d/usr.sbin.dhclient</filename> close to this:"
 msgstr "完全なプロファイルを作成したいならば、対象のプログラムに対するすべての合法的な使い方を試してみるべきです。dhclient の場合、NetworkManager を介して実行したり、ifupdown を介して実行したり、手作業で実行したりすることを意味します。こうすることで最終的に作成される <filename>/etc/apparmor.d/sbin.dhclient</filename> は完全なプロファイルに近いものとなるでしょう。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "# Last Modified: Tue Sep  8 21:40:02 2015\n"
+#| "#include &lt;tunables/global&gt;\n"
+#| "\n"
+#| "/sbin/dhclient {\n"
+#| "  #include &lt;abstractions/base&gt;\n"
+#| "  #include &lt;abstractions/nameservice&gt;\n"
+#| "\n"
+#| "  capability net_bind_service,\n"
+#| "  capability net_raw,\n"
+#| "\n"
+#| "  /bin/dash r,\n"
+#| "  /etc/dhcp/* r,\n"
+#| "  /etc/dhcp/dhclient-enter-hooks.d/* r,\n"
+#| "  /etc/dhcp/dhclient-exit-hooks.d/* r,\n"
+#| "  /etc/resolv.conf.* w,\n"
+#| "  /etc/samba/dhcp.conf.* w,\n"
+#| "  /proc/*/net/dev r,\n"
+#| "  /proc/filesystems r,\n"
+#| "  /run/dhclient*.pid w,\n"
+#| "  /sbin/dhclient mr,\n"
+#| "  /sbin/dhclient-script rCx,\n"
+#| "  /usr/lib/NetworkManager/nm-dhcp-helper Px,\n"
+#| "  /var/lib/NetworkManager/* r,\n"
+#| "  /var/lib/NetworkManager/*.lease rw,\n"
+#| "  /var/lib/dhcp/*.leases rw,\n"
+#| "\n"
+#| "  profile /sbin/dhclient-script flags=(complain) {\n"
+#| "    #include &lt;abstractions/base&gt;\n"
+#| "    #include &lt;abstractions/bash&gt;\n"
+#| "\n"
+#| "    /bin/dash rix,\n"
+#| "    /etc/dhcp/dhclient-enter-hooks.d/* r,\n"
+#| "    /etc/dhcp/dhclient-exit-hooks.d/* r,\n"
+#| "    /sbin/dhclient-script r,\n"
+#| "\n"
+#| "  }\n"
+#| "}\n"
+#| "      "
 msgid ""
 "\n"
-"# Last Modified: Tue Sep  8 21:40:02 2015\n"
+"# Last Modified: Fri Jul  5 00:51:02 2019\n"
 "#include &lt;tunables/global&gt;\n"
 "\n"
-"/sbin/dhclient {\n"
+"/usr/sbin/dhclient {\n"
 "  #include &lt;abstractions/base&gt;\n"
 "  #include &lt;abstractions/nameservice&gt;\n"
 "\n"
@@ -1633,16 +1837,9 @@ msgid ""
 "  /var/lib/NetworkManager/*.lease rw,\n"
 "  /var/lib/dhcp/*.leases rw,\n"
 "\n"
-"  profile /sbin/dhclient-script flags=(complain) {\n"
-"    #include &lt;abstractions/base&gt;\n"
-"    #include &lt;abstractions/bash&gt;\n"
-"\n"
-"    /bin/dash rix,\n"
-"    /etc/dhcp/dhclient-enter-hooks.d/* r,\n"
-"    /etc/dhcp/dhclient-exit-hooks.d/* r,\n"
-"    /sbin/dhclient-script r,\n"
-"\n"
-"  }\n"
+"  owner /etc/** mrwk,\n"
+"  owner /var/** mrwk,\n"
+"  owner /{,var/}run/** mrwk,\n"
 "}\n"
 "      "
 msgstr ""
@@ -1686,6 +1883,21 @@ msgstr ""
 "}\n"
 "      "
 
+msgid "And <filename>/etc/apparmor.d/usr.sbin.dhclient-script</filename> might be similar to this:"
+msgstr ""
+
+msgid ""
+"\n"
+"# Last Modified: Fri Jul  5 00:51:55 2019\n"
+"#include &lt;tunables/global&gt;\n"
+"\n"
+"/usr/sbin/dhclient-script {\n"
+"  #include &lt;abstractions/base&gt;\n"
+"  #include &lt;abstractions/bash&gt;\n"
+"  #include &lt;abstractions/lightdm&gt;\n"
+"}"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Introduction to SELinux"
 msgstr "SELinux の紹介"
@@ -1714,7 +1926,9 @@ msgstr "セキュリティコンテキストと Unix ログイン名"
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: man 1 newrole;
 # Tag: L-CFMD;
-msgid "In practice, during login, the user gets assigned a default security context (depending on the roles that they should be able to endorse). This defines the current domain, and thus the domain that all new child processes will carry. If you want to change the current role and its associated domain, you must call <command>newrole -r <replaceable>role_r</replaceable> -t <replaceable>domain_t</replaceable></command> (there's usually only a single domain allowed for a given role, the <literal>-t</literal> parameter can thus often be left out). This command authenticates you by asking you to type your password. This feature forbids programs to automatically switch roles. Such changes can only happen if they are explicitly allowed in the SELinux policy."
+#, fuzzy
+#| msgid "In practice, during login, the user gets assigned a default security context (depending on the roles that they should be able to endorse). This defines the current domain, and thus the domain that all new child processes will carry. If you want to change the current role and its associated domain, you must call <command>newrole -r <replaceable>role_r</replaceable> -t <replaceable>domain_t</replaceable></command> (there's usually only a single domain allowed for a given role, the <literal>-t</literal> parameter can thus often be left out). This command authenticates you by asking you to type your password. This feature forbids programs to automatically switch roles. Such changes can only happen if they are explicitly allowed in the SELinux policy."
+msgid "In practice, during login, the user gets assigned a default security context (depending on the roles that they should be able to endorse). This defines the current domain, and thus the domain that all new child processes will carry. If you want to change the current role and its associated domain, you must call <command>newrole -r <replaceable>role_r</replaceable> -t <replaceable>domain_t</replaceable></command> (there is usually only a single domain allowed for a given role, the <literal>-t</literal> parameter can thus often be left out). This command authenticates you by asking you to type your password. This feature forbids programs to automatically switch roles. Such changes can only happen if they are explicitly allowed in the SELinux policy."
 msgstr "具体的に言えば、ログイン時にユーザはデフォルトのセキュリティコンテキストを割り当てられます (セキュリティコンテキストはユーザに与える SELinux ロールに依存します)。セキュリティコンテキストは現在の SELinux ドメインを定義し、ここで定義された SELinux ドメインが新しい子プロセスに割り当てられます。ユーザが現在の SELinux ロールと SELinux ロールに対応する SELinux ドメインを変更したい場合、<command>newrole -r <replaceable>role_r</replaceable> -t <replaceable>domain_t</replaceable></command> を実行しなければいけません (通常 SELinux ロールと SELinux ドメインは一対一に対応しているため、<literal>-t</literal> パラメータは省略されることが多いです)。<command>newrole</command> コマンドはユーザに自分のパスワードを入力させることで認証を行います。この機能のおかげで、プログラムが自動的に SELinux ロールを切り替えることを禁止できます。SELinux ロールの変更を行えるのは、ユーザが SELinux ポリシーに基づいて SELinux ロールの変更を許可されている場合に限ります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1726,7 +1940,9 @@ msgid "<emphasis>EXTRA</emphasis> Domains and types are equivalent"
 msgstr "<emphasis>EXTRA</emphasis> SELinux ドメインと SELinux タイプは同じ"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Internally, a domain is just a type, but a type that only applies to processes. That's why domains are suffixed with <literal>_t</literal> just like objects' types."
+#, fuzzy
+#| msgid "Internally, a domain is just a type, but a type that only applies to processes. That's why domains are suffixed with <literal>_t</literal> just like objects' types."
+msgid "Internally, a domain is just a type, but a type that only applies to processes. That is why domains are suffixed with <literal>_t</literal> just like objects' types."
 msgstr "内部的なことを言えば、SELinux ドメインは SELinux タイプに過ぎません。しかし SELinux タイプはプロセスにのみ適用されます。このため、SELinux ドメインはオブジェクトの SELinux タイプと同様に <literal>_t</literal> を末尾に付けられています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1813,19 +2029,6 @@ msgid "The <command>apt install selinux-basics selinux-policy-default</command> 
 msgstr "<command>apt install selinux-basics selinux-policy-default</command> コマンドで、SELinux システムを設定するために必要なパッケージが自動的にインストールされます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<emphasis>CAUTION</emphasis> Reference policy not in jessie"
-msgstr "<emphasis>CAUTION</emphasis> jessie にはリファレンスポリシーが含まれません"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: https://packages.debian.org/search?lang=ja&searchon=sourcenames&keywords=refpolicy;
-msgid "Unfortunately the maintainers of the <emphasis role=\"pkg\">refpolicy</emphasis> source package did not handle release critical bugs on their package and the package got removed from jessie. This means that the <emphasis role=\"pkg\">selinux-policy-*</emphasis> packages are currently not installable in jessie and need to be fetched from another place. Hopefully they will come back in one of the point releases or in jessie-backports. In the meantime, you can grab them from unstable."
-msgstr "残念なことに <emphasis role=\"pkg\">refpolicy</emphasis> ソースパッケージのメンテナがリリースクリティカルバグを修正しなかったため、<emphasis role=\"pkg\">refpolicy</emphasis> ソースパッケージは jessie から削除されました。このため、現在のところ <emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージは jessie に含まれず、別の場所から <emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージを入手してインストールする必要があります。うまくいけば、<emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージはポイントリリースの 1 つか jessie-backports に含まれることでしょう。それまでの間は、不安定版から <emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージを入手することが可能です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "This sad situation at least proves that SELinux is not very popular in the set of users/developers who are running the development versions of Debian. Thus, if you opt to use SELinux, you should expect the default policy to not work perfectly and you will have to invest quite some time to make it suitable to your specific needs."
-msgstr "この悲しい状況は少なくとも SELinux は Debian の開発版を使っているユーザおよび開発者から高評価を得られないでいることを示しています。そんなわけで、SELinux を使うことを決めた場合、デフォルトポリシーが完全に動くことを期待せず、自分の要求に適したポリシーを作るまでにかなりの時間を費やす覚悟が必要です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: https://packages.debian.org/sid/selinux-policy-default;
 msgid "The <emphasis role=\"pkg\">selinux-policy-default</emphasis> package contains a set of standard rules. By default, this policy only restricts access for a few widely exposed services. The user sessions are not restricted and it is thus unlikely that SELinux would block legitimate user operations. However, this does enhance the security of system services running on the machine. To setup a policy equivalent to the old “strict” rules, you just have to disable the <literal>unconfined</literal> module (modules management is detailed further in this section)."
 msgstr "<emphasis role=\"pkg\">selinux-policy-default</emphasis> パッケージには、標準的なルールが含まれています。デフォルトで、このポリシーは広範囲にわたって提供されるサービスへのアクセスを制限するだけです。ユーザセッションは制限されませんから、SELinux が正当なユーザ操作を妨害することはほとんどありません。しかしながら、このポリシーはマシンで実行されているシステムサービスのセキュリティを強化します。古い「strict」ルールと同じポリシーをセットアップするには、<literal>unconfined</literal> モジュールを無効化しなければいけません (モジュール管理に関してはこの節でさらに詳しく説明しています)。"
@@ -1871,11 +2074,15 @@ msgid "<emphasis>GOING FURTHER</emphasis> More documentation"
 msgstr "<emphasis>GOING FURTHER</emphasis> 追加的文書"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Since the NSA doesn't provide any official documentation, the community set up a wiki to compensate. It brings together a lot of information, but you must be aware that most SELinux contributors are Fedora users (where SELinux is enabled by default). The documentation thus tends to deal specifically with that distribution. <ulink type=\"block\" url=\"http://www.selinuxproject.org\" />"
+#, fuzzy
+#| msgid "Since the NSA doesn't provide any official documentation, the community set up a wiki to compensate. It brings together a lot of information, but you must be aware that most SELinux contributors are Fedora users (where SELinux is enabled by default). The documentation thus tends to deal specifically with that distribution. <ulink type=\"block\" url=\"http://www.selinuxproject.org\" />"
+msgid "Since the NSA doesn't provide any official documentation, the community set up a wiki to compensate. It brings together a lot of information, but you must be aware that most SELinux contributors are Fedora users (where SELinux is enabled by default). The documentation thus tends to deal specifically with that distribution. <ulink type=\"block\" url=\"https://selinuxproject.org\" />"
 msgstr "NSA は SELinux に関する公式の文書を提供していないので、それを埋め合わせるためにコミュニティが wiki を設置しています。wiki には多くの情報が寄せ集められていますが、多くの SELinux 貢献者が Fedora ユーザである点に気が付くでしょう (Fedora は SELinux をデフォルトで有効化しています)。そのため、wiki の文書は Fedora の問題の対処に特化しています。<ulink type=\"block\" url=\"http://www.selinuxproject.org\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "You should also have a look at the dedicated Debian wiki page as well as Russell Coker's blog, who is one of the most active Debian developers working on SELinux support. <ulink type=\"block\" url=\"http://wiki.debian.org/SELinux\" /> <ulink type=\"block\" url=\"http://etbe.coker.com.au/tag/selinux/\" />"
+#, fuzzy
+#| msgid "You should also have a look at the dedicated Debian wiki page as well as Russell Coker's blog, who is one of the most active Debian developers working on SELinux support. <ulink type=\"block\" url=\"http://wiki.debian.org/SELinux\" /> <ulink type=\"block\" url=\"http://etbe.coker.com.au/tag/selinux/\" />"
+msgid "You should also have a look at the dedicated Debian wiki page as well as Russell Coker's blog, who is one of the most active Debian developers working on SELinux support. <ulink type=\"block\" url=\"https://wiki.debian.org/SELinux\" /> <ulink type=\"block\" url=\"https://etbe.coker.com.au/tag/selinux/\" />"
 msgstr "管理者ならば、SELinux に関する専用の Debian wiki ページおよび Russell Coker のブログを見るべきです。Russell Coker は SELinux サポートに取り組んでいる、最も活動的な Debian 開発者の 1 人です。<ulink type=\"block\" url=\"http://wiki.debian.org/SELinux\" /><ulink type=\"block\" url=\"http://etbe.coker.com.au/tag/selinux/\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1897,25 +2104,41 @@ msgstr "現在の設定からモジュールを削除するには <command>semod
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 # Ref: $ man 8 semodule;
+#, fuzzy
+#| msgid ""
+#| "<computeroutput># </computeroutput><userinput>semodule -i /usr/share/selinux/default/abrt.pp.bz2</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>semodule -l</userinput>\n"
+#| "<computeroutput>abrt    1.5.0   Disabled\n"
+#| "accountsd       1.1.0   \n"
+#| "acct    1.6.0   \n"
+#| "[...]</computeroutput>\n"
+#| "<computeroutput># </computeroutput><userinput>semodule -e abrt</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>semodule -d accountsd</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>semodule -l</userinput>\n"
+#| "<computeroutput>abrt    1.5.0\n"
+#| "accountsd       1.1.0   Disabled\n"
+#| "acct    1.6.0   \n"
+#| "[...]</computeroutput>\n"
+#| "<computeroutput># </computeroutput><userinput>semodule -r abrt</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>semodule -l</userinput>\n"
+#| "<computeroutput>accountsd       1.1.0   Disabled\n"
+#| "acct    1.6.0   \n"
+#| "[...]</computeroutput>"
 msgid ""
 "<computeroutput># </computeroutput><userinput>semodule -i /usr/share/selinux/default/abrt.pp.bz2</userinput>\n"
-"<computeroutput># </computeroutput><userinput>semodule -l</userinput>\n"
-"<computeroutput>abrt    1.5.0   Disabled\n"
-"accountsd       1.1.0   \n"
-"acct    1.6.0   \n"
+"<computeroutput>libsemanage.semanage_direct_install_info: abrt module will be disabled after install as there is a disabled instance of this module present in the system.\n"
+"# </computeroutput><userinput>semodule -l</userinput>\n"
+"<computeroutput>accountsd\n"
+"acct\n"
 "[...]</computeroutput>\n"
 "<computeroutput># </computeroutput><userinput>semodule -e abrt</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semodule -d accountsd</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semodule -l</userinput>\n"
-"<computeroutput>abrt    1.5.0\n"
-"accountsd       1.1.0   Disabled\n"
-"acct    1.6.0   \n"
+"<computeroutput>abrt\n"
+"acct\n"
 "[...]</computeroutput>\n"
 "<computeroutput># </computeroutput><userinput>semodule -r abrt</userinput>\n"
-"<computeroutput># </computeroutput><userinput>semodule -l</userinput>\n"
-"<computeroutput>accountsd       1.1.0   Disabled\n"
-"acct    1.6.0   \n"
-"[...]</computeroutput>"
+"<computeroutput>libsemanage.semanage_direct_remove_key: abrt module at priority 100 is now active.</computeroutput><userinput>semodule -l</userinput>"
 msgstr ""
 "<computeroutput># </computeroutput><userinput>semodule -i /usr/share/selinux/default/abrt.pp.bz2</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semodule -l</userinput>\n"
@@ -1959,7 +2182,9 @@ msgstr "ユーザはログイン時に毎回、SELinux ユーザ名を割り当�
 # Ref: $ man 8 semanage-user;
 # Tag: L-CFMD;
 # Tag: PTAL;
-msgid "You should definitely read the <citerefentry><refentrytitle>semanage</refentrytitle><manvolnum>8</manvolnum></citerefentry> manual page, even if the command's syntax tends to be similar for all the concepts which are managed. You will find common options to all sub-commands: <literal>-a</literal> to add, <literal>-d</literal> to delete, <literal>-m</literal> to modify, <literal>-l</literal> to list, and <literal>-t</literal> to indicate a type (or domain)."
+#, fuzzy
+#| msgid "You should definitely read the <citerefentry><refentrytitle>semanage</refentrytitle><manvolnum>8</manvolnum></citerefentry> manual page, even if the command's syntax tends to be similar for all the concepts which are managed. You will find common options to all sub-commands: <literal>-a</literal> to add, <literal>-d</literal> to delete, <literal>-m</literal> to modify, <literal>-l</literal> to list, and <literal>-t</literal> to indicate a type (or domain)."
+msgid "You should definitely read the <citerefentry><refentrytitle>semanage</refentrytitle><manvolnum>8</manvolnum></citerefentry> manual page. All the managed concepts have their own manual page; for instance, <citerefentry><refentrytitle>semanage-login</refentrytitle><manvolnum>8</manvolnum></citerefentry>. Even if the command's syntax tends to be similar for all the concepts which are managed, it is recommended to read its manual page. You will find common options to most sub-commands: <literal>-a</literal> to add, <literal>-d</literal> to delete, <literal>-m</literal> to modify, <literal>-l</literal> to list, and <literal>-t</literal> to indicate a type (or domain)."
 msgstr "<command>semanage</command> コマンドはサブコマンドごとに管理する要素が決められています。サブコマンドの構文はすべてのサブコマンド間で類似しているとは言うものの、管理者は <citerefentry><refentrytitle>semanage</refentrytitle><manvolnum>8</manvolnum></citerefentry> マニュアルページを読むべきです。すべてのサブコマンドに対して共通のオプションが存在します。たとえば <literal>-a</literal> は追加、<literal>-d</literal> は削除、<literal>-m</literal> は修正、<literal>-l</literal> はリスト、<literal>-t</literal> は SELinux タイプ (または SELinux ドメイン) の指定を表します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1971,17 +2196,28 @@ msgstr "<command>semanage login -l</command> は Unix ログイン名と SELinux
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 8 semanage-login;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "<computeroutput># </computeroutput><userinput>semanage login -a -s user_u rhertzog</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>semanage login -l</userinput>\n"
+#| "<computeroutput>\n"
+#| "Login Name           SELinux User         MLS/MCS Range        Service\n"
+#| "\n"
+#| "__default__          unconfined_u         SystemLow-SystemHigh *\n"
+#| "rhertzog             user_u               SystemLow            *\n"
+#| "root                 unconfined_u         SystemLow-SystemHigh *\n"
+#| "system_u             system_u             SystemLow-SystemHigh *\n"
+#| "# </computeroutput><userinput>semanage login -d rhertzog</userinput> "
 msgid ""
 "<computeroutput># </computeroutput><userinput>semanage login -a -s user_u rhertzog</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semanage login -l</userinput>\n"
 "<computeroutput>\n"
 "Login Name           SELinux User         MLS/MCS Range        Service\n"
 "\n"
-"__default__          unconfined_u         SystemLow-SystemHigh *\n"
-"rhertzog             user_u               SystemLow            *\n"
-"root                 unconfined_u         SystemLow-SystemHigh *\n"
-"system_u             system_u             SystemLow-SystemHigh *\n"
-"# </computeroutput><userinput>semanage login -d rhertzog</userinput> "
+"__default__          unconfined_u         s0-s0:c0.c1023       *\n"
+"rhertzog             user_u               s0                   *\n"
+"root                 unconfined_u         s0-s0:c0.c1023       *\n"
+"# </computeroutput><userinput>semanage login -d rhertzog</userinput>"
 msgstr ""
 "<computeroutput># </computeroutput><userinput>semanage login -a -s user_u rhertzog</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semanage login -l</userinput>\n"
@@ -2003,20 +2239,36 @@ msgstr "<command>semanage user -l</command> は SELinux ユーザ名と許可さ
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 8 semanage-user;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "<computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>semanage user -l</userinput>\n"
+#| "<computeroutput>\n"
+#| "                Labeling   MLS/       MLS/                          \n"
+#| "SELinux User    Prefix     MCS Level  MCS Range             SELinux Roles\n"
+#| "\n"
+#| "root            sysadm     SystemLow  SystemLow-SystemHigh  staff_r sysadm_r system_r\n"
+#| "staff_u         staff      SystemLow  SystemLow-SystemHigh  staff_r sysadm_r\n"
+#| "sysadm_u        sysadm     SystemLow  SystemLow-SystemHigh  sysadm_r\n"
+#| "system_u        user       SystemLow  SystemLow-SystemHigh  system_r\n"
+#| "test_u          staff      SystemLow  SystemLow             staff_r user_r\n"
+#| "unconfined_u    unconfined SystemLow  SystemLow-SystemHigh  system_r unconfined_r\n"
+#| "user_u          user       SystemLow  SystemLow             user_r\n"
+#| "# </computeroutput><userinput>semanage user -d test_u</userinput>"
 msgid ""
 "<computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u</userinput>\n"
 "<computeroutput># </computeroutput><userinput>semanage user -l</userinput>\n"
 "<computeroutput>\n"
 "                Labeling   MLS/       MLS/                          \n"
-"SELinux User    Prefix     MCS Level  MCS Range             SELinux Roles\n"
+"SELinux User    Prefix     MCS Level  MCS Range                      SELinux Roles\n"
 "\n"
-"root            sysadm     SystemLow  SystemLow-SystemHigh  staff_r sysadm_r system_r\n"
-"staff_u         staff      SystemLow  SystemLow-SystemHigh  staff_r sysadm_r\n"
-"sysadm_u        sysadm     SystemLow  SystemLow-SystemHigh  sysadm_r\n"
-"system_u        user       SystemLow  SystemLow-SystemHigh  system_r\n"
-"test_u          staff      SystemLow  SystemLow             staff_r user_r\n"
-"unconfined_u    unconfined SystemLow  SystemLow-SystemHigh  system_r unconfined_r\n"
-"user_u          user       SystemLow  SystemLow             user_r\n"
+"root            sysadm     s0         s0-s0:c0.c1023                 staff_r sysadm_r system_r\n"
+"staff_u         staff      s0         s0-s0:c0.c1023                 staff_r sysadm_r\n"
+"sysadm_u        sysadm     s0         s0-s0:c0.c1023                 sysadm_r\n"
+"system_u        user       s0         s0-s0:c0.c1023                 system_r\n"
+"test_u          staff      s0         s0                             staff_r user_r\n"
+"unconfined_u    unconfined s0         s0-s0:c0.c1023                 system_r unconfined_r\n"
+"user_u          user       s0         s0                             user_r\n"
 "# </computeroutput><userinput>semanage user -d test_u</userinput>"
 msgstr ""
 "<computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u</userinput>\n"
@@ -2062,11 +2314,18 @@ msgstr "一部の SELinux モジュールでは、ブール値オプションを
 # Ref: $ man 8 getsebool;
 # Ref: $ man 8 setsebool;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid ""
+#| "<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>\n"
+#| "<computeroutput>httpd_enable_homedirs --&gt; off\n"
+#| "# </computeroutput><userinput>setsebool -P httpd_enable_homedirs on</userinput>\n"
+#| "<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput> \n"
+#| "<computeroutput>httpd_enable_homedirs --&gt; on</computeroutput>"
 msgid ""
 "<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>\n"
 "<computeroutput>httpd_enable_homedirs --&gt; off\n"
 "# </computeroutput><userinput>setsebool -P httpd_enable_homedirs on</userinput>\n"
-"<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput> \n"
+"<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>\n"
 "<computeroutput>httpd_enable_homedirs --&gt; on</computeroutput>"
 msgstr ""
 "<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>\n"
@@ -2264,7 +2523,9 @@ msgstr "<emphasis>DOCUMENTATION</emphasis> <emphasis>リファレンスポリシ
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "The <emphasis>reference policy</emphasis> evolves like any free software project: based on volunteer contributions. The project is hosted by Tresys, one of the most active companies in the SELinux field. Their wiki contains explanations on how the rules are structured and how you can create new ones. <ulink type=\"block\" url=\"https://github.com/TresysTechnology/refpolicy/wiki/GettingStarted\" />"
+#, fuzzy
+#| msgid "The <emphasis>reference policy</emphasis> evolves like any free software project: based on volunteer contributions. The project is hosted by Tresys, one of the most active companies in the SELinux field. Their wiki contains explanations on how the rules are structured and how you can create new ones. <ulink type=\"block\" url=\"https://github.com/TresysTechnology/refpolicy/wiki/GettingStarted\" />"
+msgid "The <emphasis>reference policy</emphasis> evolves like any free software project: based on volunteer contributions. The project is hosted by Tresys, one of the most active companies in the SELinux field. Their wiki contains explanations on how the rules are structured and how you can create new ones. <ulink type=\"block\" url=\"https://github.com/SELinuxProject/refpolicy/wiki/GettingStarted\" />"
 msgstr "SELinux の<emphasis>リファレンスポリシー</emphasis>はフリーソフトウェアプロジェクトのように発展しています。すなわち、ボランティアの貢献が発展を支えています。このプロジェクトは Tresys によってホストされています。Tresys は SELinux 分野における最も活発な企業の 1 つです。Tresys の wiki には、ルールを構築する方法と新しいルールを作成する方法が説明されています。<ulink type=\"block\" url=\"https://github.com/TresysTechnology/refpolicy/wiki/GettingStarted\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2375,7 +2636,9 @@ msgstr "ここでは <literal>domain_type</literal> および <literal>domain_en
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ less /usr/share/selinux/default/include/system/logging.if;
-msgid "<literal>logging_log_file</literal> is an interface provided by the reference policy. It indicates that files labeled with the given type are log files which ought to benefit from the associated rules (for example granting rights to <command>logrotate</command> so that it can manipulate them)."
+#, fuzzy
+#| msgid "<literal>logging_log_file</literal> is an interface provided by the reference policy. It indicates that files labeled with the given type are log files which ought to benefit from the associated rules (for example granting rights to <command>logrotate</command> so that it can manipulate them)."
+msgid "<literal>logging_log_file</literal> is an interface provided by the reference policy. It indicates that files labeled with the given type are log files which ought to benefit from the associated rules (for example, granting rights to <command>logrotate</command> so that it can manipulate them)."
 msgstr "<literal>logging_log_file</literal> はリファレンスポリシーによって提供されるインターフェースです。これは指定された SELinux タイプでラベリングされたファイルはその SELinux タイプに対応するルールから恩恵を受ける義務があるログファイルであることを表します (たとえば、<command>logrotate</command> がログファイルを処理することを可能にするために、<command>logrotate</command> に権限を与える場合に使います)。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2391,7 +2654,9 @@ msgid "Permissions are defined as the set of allowed operations and follow this 
 msgstr "パーミッションは許可された操作の一式として定義され、以下のテンプレートに従います。すなわち <literal>{ <replaceable>operation1</replaceable> <replaceable>operation2</replaceable> }</literal> です。しかしながら、最も役に立つパーミッションを表すマクロを使うことも可能です。<filename>/usr/share/selinux/devel/include/support/obj_perm_sets.spt</filename> には、最も役に立つパーミッションのマクロが説明されています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The following web page provides a relatively exhaustive list of object classes, and permissions that can be granted. <ulink type=\"block\" url=\"http://www.selinuxproject.org/page/ObjectClassesPerms\" />"
+#, fuzzy
+#| msgid "The following web page provides a relatively exhaustive list of object classes, and permissions that can be granted. <ulink type=\"block\" url=\"http://www.selinuxproject.org/page/ObjectClassesPerms\" />"
+msgid "The following web page provides a relatively exhaustive list of object classes, and permissions that can be granted. <ulink type=\"block\" url=\"https://selinuxproject.org/page/ObjectClassesPerms\" />"
 msgstr "以下のウェブページでは、オブジェクトクラスと与えられるパーミッションの比較的包括的なリストが載せられています。<ulink type=\"block\" url=\"http://www.selinuxproject.org/page/ObjectClassesPerms\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2468,7 +2733,9 @@ msgid "<computeroutput>dev=tmpfs</computeroutput>"
 msgstr "<computeroutput>dev=tmpfs</computeroutput>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "The device hosting the target object is a <literal>tmpfs</literal> (an in-memory filesystem). For a real disk, you could see the partition hosting the object (for example: “sda3”)."
+#, fuzzy
+#| msgid "The device hosting the target object is a <literal>tmpfs</literal> (an in-memory filesystem). For a real disk, you could see the partition hosting the object (for example: “sda3”)."
+msgid "The device hosting the target object is a <literal>tmpfs</literal> (an in-memory filesystem). For a real disk, you could see the partition hosting the object (for example, “sda3”)."
 msgstr "対象のオブジェクトをホストしているデバイスは <literal>tmpfs</literal> (メモリ内ファイルシステム) です。実ディスクの場合、オブジェクトをホストしているパーティション (たとえば「sda3」) になります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2505,7 +2772,9 @@ msgstr "対象オブジェクトは FIFO ファイルです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "By observing this log entry, it is possible to build a rule that would allow this operation. For example: <literal>allow syslogd_t device_t:fifo_file { read write }</literal>. This process can be automated, and it's exactly what the <command>audit2allow</command> command (of the <emphasis role=\"pkg\">policycoreutils</emphasis> package) offers. This approach is only useful if the various objects are already correctly labeled according to what must be confined. In any case, you will have to carefully review the generated rules and validate them according to your knowledge of the application. Effectively, this approach tends to grant more rights than are really required. The proper solution is often to create new types and to grant rights on those types only. It also happens that a denied operation isn't fatal to the application, in which case it might be better to just add a “<literal>dontaudit</literal>” rule to avoid the log entry despite the effective denial."
+#, fuzzy
+#| msgid "By observing this log entry, it is possible to build a rule that would allow this operation. For example: <literal>allow syslogd_t device_t:fifo_file { read write }</literal>. This process can be automated, and it's exactly what the <command>audit2allow</command> command (of the <emphasis role=\"pkg\">policycoreutils</emphasis> package) offers. This approach is only useful if the various objects are already correctly labeled according to what must be confined. In any case, you will have to carefully review the generated rules and validate them according to your knowledge of the application. Effectively, this approach tends to grant more rights than are really required. The proper solution is often to create new types and to grant rights on those types only. It also happens that a denied operation isn't fatal to the application, in which case it might be better to just add a “<literal>dontaudit</literal>” rule to avoid the log entry despite the effective denial."
+msgid "By observing this log entry, it is possible to build a rule that would allow this operation. For example, <literal>allow syslogd_t device_t:fifo_file { read write }</literal>. This process can be automated, and it is exactly what the <command>audit2allow</command> command (of the <emphasis role=\"pkg\">policycoreutils</emphasis> package) offers. This approach is only useful if the various objects are already correctly labeled according to what must be confined. In any case, you will have to carefully review the generated rules and validate them according to your knowledge of the application. Effectively, this approach tends to grant more rights than are really required. The proper solution is often to create new types and to grant rights on those types only. It also happens that a denied operation isn't fatal to the application, in which case it might be better to just add a “<literal>dontaudit</literal>” rule to avoid the log entry despite the effective denial."
 msgstr "SELinux ログエントリを観察することで、その操作を許可するために必要なルールを構築することが可能です。たとえば例に挙げた操作を許可するルールは <literal>allow syslogd_t device_t:fifo_file { read write }</literal> のようになります。この作業は自動化することが可能です。これが <command>audit2allow</command> コマンド (<emphasis role=\"pkg\">policycoreutils</emphasis> パッケージに含まれます) の役割です。設定する必要のある内容に応じてさまざまなオブジェクトが既に正しくラベリングされている場合にのみ、このアプローチは役に立ちます。いずれにせよ、管理者は必ず生成されたルールを注意深く確認し、アプリケーションに対する知識に基づいてルールの妥当性を検査しなければいけません。事実上、このアプローチはアプリケーションが本当に必要としている権限よりも多くの権限を与えようとします。ほとんどの場合、新しい SELinux タイプを作成し、作成した SELinux タイプだけに権限を与えることが適切な解決策と言えます。また、拒否された操作がアプリケーションにとって致命的でない場合もあります。この場合、「<literal>dontaudit</literal>」ルールを追加するだけに留めることがより良い解決策かもしれません。こうすることで、実際の実行を拒否するのではなくログエントリの記録だけが拒否されます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2531,7 +2800,9 @@ msgstr "ファイルのコンパイル"
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 # Ref: https://www.gnu.org/s/make/manual/html_node/Flavors.html;
-msgid "Once the 3 files (<filename>example.if</filename>, <filename>example.fc</filename>, and <filename>example.te</filename>) match your expectations for the new rules, just run <command>make NAME=devel</command> to generate a module in the <filename>example.pp</filename> file (you can immediately load it with <command>semodule -i example.pp</command>). If several modules are defined, <command>make</command> will create all the corresponding <filename>.pp</filename> files."
+#, fuzzy
+#| msgid "Once the 3 files (<filename>example.if</filename>, <filename>example.fc</filename>, and <filename>example.te</filename>) match your expectations for the new rules, just run <command>make NAME=devel</command> to generate a module in the <filename>example.pp</filename> file (you can immediately load it with <command>semodule -i example.pp</command>). If several modules are defined, <command>make</command> will create all the corresponding <filename>.pp</filename> files."
+msgid "Once the 3 files (<filename>example.if</filename>, <filename>example.fc</filename>, and <filename>example.te</filename>) match your expectations for the new rules, rename them to <filename>myapp.<replaceable>extension</replaceable></filename> and run <command>make NAME=devel</command> to generate a module in the <filename>myapp.pp</filename> file (you can immediately load it with <command>semodule -i myapp.pp</command>). If several modules are defined, <command>make</command> will create all the corresponding <filename>.pp</filename> files."
 msgstr "3 個のファイル (<filename>example.if</filename>、<filename>example.fc</filename>、<filename>example.te</filename>) が新しいルールに関する管理者の期待と一致したら、<command>make NAME=devel</command> を実行して <filename>example.pp</filename> ファイルの形でモジュールを生成します (<command>semodule -i example.pp</command> を使ってすぐさまこのモジュールをインストールすることが可能です)。複数のモジュールを定義した場合、<command>make</command> はすべての対応する <filename>.pp</filename> ファイルを生成します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2555,7 +2826,9 @@ msgid "<emphasis>VOCABULARY</emphasis> SQL injection"
 msgstr "<emphasis>VOCABULARY</emphasis> SQL インジェクション"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "When a program inserts data into SQL queries in an insecure manner, it becomes vulnerable to SQL injections; this name covers the act of changing a parameter in such a way that the actual query executed by the program is different from the intended one, either to damage the database or to access data that should normally not be accessible. <ulink type=\"block\" url=\"http://en.wikipedia.org/wiki/SQL_Injection\" />"
+#, fuzzy
+#| msgid "When a program inserts data into SQL queries in an insecure manner, it becomes vulnerable to SQL injections; this name covers the act of changing a parameter in such a way that the actual query executed by the program is different from the intended one, either to damage the database or to access data that should normally not be accessible. <ulink type=\"block\" url=\"http://en.wikipedia.org/wiki/SQL_Injection\" />"
+msgid "When a program inserts data into SQL queries in an insecure manner, it becomes vulnerable to SQL injections; this name covers the act of changing a parameter in such a way that the actual query executed by the program is different from the intended one, either to damage the database or to access data that should normally not be accessible. <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/SQL_Injection\" />"
 msgstr "プログラムが安全性に欠けるやり方で SQL クエリにデータを挿入している場合、プログラムは SQL インジェクションに対して脆弱になります。SQL インジェクションとは、パラメータを変更することで、プログラムが実行する実際のクエリを意図しないものに変える行為を指します。SQL インジェクションによりデータベースが破壊されたり、通常は利用できないデータへのアクセスが可能になります。<ulink type=\"block\" url=\"http://en.wikipedia.org/wiki/SQL_Injection\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2579,7 +2852,9 @@ msgid "<emphasis>QUICK LOOK</emphasis> Filtering HTTP queries"
 msgstr "<emphasis>QUICK LOOK</emphasis> HTTP クエリのフィルタ"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Apache 2 includes modules allowing filtering incoming HTTP queries. This allows blocking some attack vectors. For instance, limiting the length of parameters can prevent buffer overflows. More generally, one can validate parameters before they are even passed to the web application and restrict access along many criteria. This can even be combined with dynamic firewall updates, so that a client infringing one of the rules is banned from accessing the web server for a given period of time."
+#, fuzzy
+#| msgid "Apache 2 includes modules allowing filtering incoming HTTP queries. This allows blocking some attack vectors. For instance, limiting the length of parameters can prevent buffer overflows. More generally, one can validate parameters before they are even passed to the web application and restrict access along many criteria. This can even be combined with dynamic firewall updates, so that a client infringing one of the rules is banned from accessing the web server for a given period of time."
+msgid "Apache 2 includes modules allowing filtering incoming HTTP queries. This allows blocking some attack vectors. For instance, limiting the length of parameters can prevent buffer overflows. More generally, one can validate parameters before they are even passed to the web application and restrict access along many criteria. This can even be combined with dynamic firewall updates, so that a client infringing one of the rules is banned from accessing the web server for a given period of time."
 msgstr "Apache 2 には、入って来る HTTP クエリをフィルタするモジュールが含まれています。このモジュールを使うことで、いくつかの攻撃ベクトルを妨害することが可能です。たとえば、パラメータの長さに制限を設けることで、バッファオーバーフローを避けることが可能です。より一般的に言えば、ウェブアプリケーションにパラメータを渡す前にパラメータの妥当性を検査させ、多くの基準に従ってアクセス制限を加えることが可能です。さらにこれを動的なファイアウォールの更新に統合することが可能です。こうすることで、ルールを破ったクライアントは指定された期間ウェブサーバへのアクセスを禁止されることになります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2646,7 +2921,9 @@ msgid "A security audit is the process of thoroughly reading and analyzing the s
 msgstr "セキュリティ監査とはソフトウェアが持つ潜在的なセキュリティ脆弱性を探すためにあるソフトウェアのソースコードを徹底的に読んだり解析することを言います。通常セキュリティ監査は積極的な行動であり、プログラムがある種のセキュリティ要件を満足していることを保証するために行われます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "In the Free Software world, there is generally ample room for choice, and choosing one piece of software over another should be a decision based on the criteria that apply locally. More features imply an increased risk of a vulnerability hiding in the code; picking the most advanced program for a task may actually be counter-productive, and a better approach is usually to pick the simplest program that meets the requirements."
+#, fuzzy
+#| msgid "In the Free Software world, there is generally ample room for choice, and choosing one piece of software over another should be a decision based on the criteria that apply locally. More features imply an increased risk of a vulnerability hiding in the code; picking the most advanced program for a task may actually be counter-productive, and a better approach is usually to pick the simplest program that meets the requirements."
+msgid "In the free software world, there is generally ample room for choice, and choosing one piece of software over another should be a decision based on the criteria that apply locally. More features imply an increased risk of a vulnerability hiding in the code; picking the most advanced program for a task may actually be counter-productive, and a better approach is usually to pick the simplest program that meets the requirements."
 msgstr "通常フリーソフトウェア世界には多くの選択肢があります。そして、ソフトウェアは現場で適用する基準と同じ選択基準に従い決定するべきです。多くの機能を備えるということは、コードに隠された脆弱性の危険性を増加させることを意味します。そして実際、あるタスクに関する最も先進的なプログラムを選ぶことは逆効果となる可能性があり、要求を満足する最も単純なプログラムを選ぶことのほうがより良い選択と言えるでしょう。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2716,7 +2993,9 @@ msgstr "管理者は程度の差はあれど暗黙のうちに自分の管理す
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: PTAL;
-msgid "An attacker taking control of your machine then using it as a forward base (known as a “relay system”) from which to perform other nefarious activities could cause legal trouble for you, since the attacked party would initially see the attack coming from your system, and therefore consider you as the attacker (or as an accomplice). In many cases, the attacker will use your server as a relay to send spam, which shouldn't have much impact (except potentially registration on black lists that could restrict your ability to send legitimate emails), but won't be pleasant nevertheless. In other cases, more important trouble can be caused from your machine, for instance denial of service attacks. This will sometimes induce loss of revenue, since the legitimate services will be unavailable and data can be destroyed; sometimes this will also imply a real cost, because the attacked party can start legal proceedings against you. Rights-holders can sue you if an unauthorized copy of a work protected by copyright law is shared from your server, as well as other companies compelled by service level agreements if they are bound to pay penalties following the attack from your machine."
+#, fuzzy
+#| msgid "An attacker taking control of your machine then using it as a forward base (known as a “relay system”) from which to perform other nefarious activities could cause legal trouble for you, since the attacked party would initially see the attack coming from your system, and therefore consider you as the attacker (or as an accomplice). In many cases, the attacker will use your server as a relay to send spam, which shouldn't have much impact (except potentially registration on black lists that could restrict your ability to send legitimate emails), but won't be pleasant nevertheless. In other cases, more important trouble can be caused from your machine, for instance denial of service attacks. This will sometimes induce loss of revenue, since the legitimate services will be unavailable and data can be destroyed; sometimes this will also imply a real cost, because the attacked party can start legal proceedings against you. Rights-holders can sue you if an unauthorized copy of a work protected by copyright law is shared from your server, as well as other companies compelled by service level agreements if they are bound to pay penalties following the attack from your machine."
+msgid "An attacker taking control of your machine then using it as a forward base (known as a “relay system”) from which to perform other nefarious activities could cause legal trouble for you, since the attacked party would initially see the attack coming from your system, and therefore consider you as the attacker (or as an accomplice). In many cases, the attacker will use your server as a relay to send spam, which shouldn't have much impact (except potentially registration on black lists that could restrict your ability to send legitimate emails), but won't be pleasant, nevertheless. In other cases, more important trouble can be caused from your machine, for instance, denial of service attacks. This will sometimes induce loss of revenue, since the legitimate services will be unavailable and data can be destroyed; sometimes this will also imply a real cost, because the attacked party can start legal proceedings against you. Rights-holders can sue you if an unauthorized copy of a work protected by copyright law is shared from your server, as well as other companies compelled by service level agreements if they are bound to pay penalties following the attack from your machine."
 msgstr "あなたが管理しているマシンの制御を奪った攻撃者は、このマシンを前進基地 (「踏み台」として知られています) として使います。管理しているマシンから他の不正な活動を実行されることにより、あなたは法的な問題を被ることになります。なぜなら、攻撃された当事者にしてみれば、あなたのシステムが攻撃元に見えるため、あなたを攻撃者本人 (または共犯者) とみなすでしょう。多くの場合、攻撃者はスパムを送信するための中継サーバとしてあなたのサーバを使います。これは大きな影響をおよぼすものではありません (ブラックリストに登録されて、正規の電子メールを送信することに制限を受けるという潜在的な問題点を除きます)。とは言ってもこれは気持ちのよいものではありません。また別の場合、あなたのマシンはサービス拒否攻撃などのより重大な問題の要因になります。これはしばしば損失をもたらす場合があります。なぜなら、正規のサービスが利用できなくなり、データが破壊されるからです。さらに実質的な経費が掛かるという意味を持つ場合もあります。なぜなら、攻撃された当事者はあなたに対して法的手続きを開始するからです。すなわち、著作権で守られた著作物の認可されていない複製があなたのサーバから共有された場合、権利者はあなたに対して訴訟を起こすことが可能です。さらに、サービス水準合意を交わした他の企業があなたのマシンから攻撃を受けた場合に罰金を支払う契約になっている場合、彼らもあなたに対して訴訟を起こすことが可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2740,7 +3019,9 @@ msgid "The first step of reacting to cracking is to be aware of such an act. Thi
 msgstr "クラッキング対応の最初の段階はクラッキング行為を把握することです。クラッキング行為を特に十分な監視設備がない状態で把握することは不可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Cracking acts are often not detected until they have direct consequences on the legitimate services hosted on the machine, such as connections slowing down, some users being unable to connect, or any other kind of malfunction. Faced with these problems, the administrator needs to have a good look at the machine and carefully scrutinize what misbehaves. This is usually the time when they discover an unusual process, for instance one named <literal>apache</literal> instead of the standard <literal>/usr/sbin/apache2</literal>. If we follow that example, the thing to do is to note its process identifier, and check <filename>/proc/<replaceable>pid</replaceable>/exe</filename> to see what program this process is currently running:"
+#, fuzzy
+#| msgid "Cracking acts are often not detected until they have direct consequences on the legitimate services hosted on the machine, such as connections slowing down, some users being unable to connect, or any other kind of malfunction. Faced with these problems, the administrator needs to have a good look at the machine and carefully scrutinize what misbehaves. This is usually the time when they discover an unusual process, for instance one named <literal>apache</literal> instead of the standard <literal>/usr/sbin/apache2</literal>. If we follow that example, the thing to do is to note its process identifier, and check <filename>/proc/<replaceable>pid</replaceable>/exe</filename> to see what program this process is currently running:"
+msgid "Cracking acts are often not detected until they have direct consequences on the legitimate services hosted on the machine, such as connections slowing down, some users being unable to connect, or any other kind of malfunction. Faced with these problems, the administrator needs to have a good look at the machine and carefully scrutinize what misbehaves. This is usually the time when they discover an unusual process, for instance, one named <literal>apache</literal> instead of the standard <literal>/usr/sbin/apache2</literal>. If we follow that example, the thing to do is to note its process identifier, and check <filename>/proc/<replaceable>pid</replaceable>/exe</filename> to see what program this process is currently running:"
 msgstr "マシンでホストされている正規のサービスに直接的な影響をおよぼすまで (たとえば接続が遅くなったり、一部のユーザが接続できなくなったり、さまざまな誤作動が起きたりするまで)、クラッキング行為は気付かれないことが多いです。これらの問題に直面したら、管理者はマシンをよく見て不正行為を注意深く調べることが必要です。通常この時点で異常なプロセスが発見されます。たとえば標準的な <literal>/usr/sbin/apache2</literal> の代わりに <literal>apache</literal> と名付けられたプロセスなどが発見されます。この例に従うなら、やるべきことはプロセス ID を確認して、このプロセスによって現在実行されているプログラムの実体を確認するために <filename>/proc/<replaceable>pid</replaceable>/exe</filename> を確認することです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2789,7 +3070,9 @@ msgid "In any but the most exotic cases, the cracking comes from the network, an
 msgstr "クラッキングが最も派手に行われる場合を除けば、クラッキングはネットワーク経由で行われ、攻撃者は目標 (機密データへのアクセス、不正ファイルの共有、踏み台としてマシンを使うことによる本人識別情報の隠匿など) を達成するためにネットワークを必要とします。攻撃者がまだクラッキング行為を完了していないならば、ネットワークからコンピュータを切り離すことで攻撃者は目標を達成できなくなります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "This may only be possible if the server is physically accessible. When the server is hosted in a hosting provider's data center halfway across the country, or if the server is not accessible for any other reason, it's usually a good idea to start by gathering some important information (see <xref linkend=\"sect.keeping-everything-that-could-be-used-as-evidence\" />, <xref linkend=\"sect.forensic-analysis\" /> and <xref linkend=\"sect.reconstituting-the-attack-scenario\" />), then isolating that server as much as possible by shutting down as many services as possible (usually, everything but <command>sshd</command>). This case is still awkward, since one can't rule out the possibility of the attacker having SSH access like the administrator has; this makes it harder to “clean” the machines."
+#, fuzzy
+#| msgid "This may only be possible if the server is physically accessible. When the server is hosted in a hosting provider's data center halfway across the country, or if the server is not accessible for any other reason, it's usually a good idea to start by gathering some important information (see <xref linkend=\"sect.keeping-everything-that-could-be-used-as-evidence\" />, <xref linkend=\"sect.forensic-analysis\" /> and <xref linkend=\"sect.reconstituting-the-attack-scenario\" />), then isolating that server as much as possible by shutting down as many services as possible (usually, everything but <command>sshd</command>). This case is still awkward, since one can't rule out the possibility of the attacker having SSH access like the administrator has; this makes it harder to “clean” the machines."
+msgid "This may only be possible if the server is physically accessible. When the server is hosted in a hosting provider's data center halfway across the country, or if the server is not accessible for any other reason, it is usually a good idea to start by gathering some important information (see <xref linkend=\"sect.keeping-everything-that-could-be-used-as-evidence\" />, <xref linkend=\"sect.forensic-analysis\" /> and <xref linkend=\"sect.reconstituting-the-attack-scenario\" />), then isolating that server as much as possible by shutting down as many services as possible (usually, everything but <command>sshd</command>). This case is still awkward, since one can't rule out the possibility of the attacker having SSH access like the administrator has; this makes it harder to “clean” the machines."
 msgstr "サーバが物理的にアクセスできなければ、コンピュータをネットワークから切り離すことは不可能です。サーバがホスティングプロバイダの物凄く遠くにあるデータセンターでホストされていたり、その他の理由でサーバにアクセスできない場合、いくつかの重要な情報の収集を開始して (<xref linkend=\"sect.keeping-everything-that-could-be-used-as-evidence\" />、<xref linkend=\"sect.forensic-analysis\" />、<xref linkend=\"sect.reconstituting-the-attack-scenario\" />を参照してください)、可能な限り多くの (通常 <command>sshd</command> を除くすべての) サービスをシャットダウンすることで、可能な限りサーバを隔離することは通常良いアイディアです。これはまだ都合が悪い状態です。なぜなら、攻撃者は管理者がしているのと同様に SSH アクセスできるからです。このため、マシンを「きれいに」することは難しいです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2809,7 +3092,9 @@ msgid "<emphasis>CAUTION</emphasis> Hot analysis"
 msgstr "<emphasis>CAUTION</emphasis> その場解析"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "While it may seem tempting to analyze the system as it runs, especially when the server is not physically reachable, this is best avoided: quite simply you can't trust the programs currently installed on the compromised system. It's quite possible for a subverted <command>ps</command> command to hide some processes, or for a subverted <command>ls</command> to hide files; sometimes even the kernel is compromised!"
+#, fuzzy
+#| msgid "While it may seem tempting to analyze the system as it runs, especially when the server is not physically reachable, this is best avoided: quite simply you can't trust the programs currently installed on the compromised system. It's quite possible for a subverted <command>ps</command> command to hide some processes, or for a subverted <command>ls</command> to hide files; sometimes even the kernel is compromised!"
+msgid "While it may seem tempting to analyze the system as it runs, especially when the server is not physically reachable, this is best avoided: quite simply you can't trust the programs currently installed on the compromised system. It is quite possible for a subverted <command>ps</command> command to hide some processes, or for a subverted <command>ls</command> to hide files; sometimes even the kernel is compromised!"
 msgstr "特にサーバが物理的にアクセスできない場合、起動中のシステムを解析したいと思うかもしれませんが、これは特に避けるべきです。なぜなら特に単純に言って、不正侵入されたシステムに現在インストールされているプログラムを信頼できないからです。破壊された <command>ps</command> コマンドが一部のプロセスを非表示にしたり、破壊された <command>ls</command> が一部のファイルを非表示にしたりする可能性は高いと言って良いでしょう。場合によってはカーネルに不正侵入されることすらあるのです!"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2878,7 +3163,9 @@ msgid "special-purpose tools also allow restoring the contents of potentially de
 msgstr "特殊目的のツールを使うことで、削除された可能性のあるファイルすなわち攻撃者が削除することが多いログファイルなどの内容を復元することが可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Some of these operations can be made easier with specialized software. In particular, the <emphasis role=\"pkg\">sleuthkit</emphasis> package provides many tools to analyze a filesystem. Their use is made easier by the <emphasis>Autopsy Forensic Browser</emphasis> graphical interface (in the <emphasis role=\"pkg\">autopsy</emphasis> package)."
+#, fuzzy
+#| msgid "Some of these operations can be made easier with specialized software. In particular, the <emphasis role=\"pkg\">sleuthkit</emphasis> package provides many tools to analyze a filesystem. Their use is made easier by the <emphasis>Autopsy Forensic Browser</emphasis> graphical interface (in the <emphasis role=\"pkg\">autopsy</emphasis> package)."
+msgid "Some of these operations can be made easier with specialized software. In particular, the <emphasis role=\"pkg\">sleuthkit</emphasis> package provides many tools to analyze a filesystem. Their use is made easier by the <emphasis>Autopsy Forensic Browser</emphasis> graphical interface (in the <emphasis role=\"pkg\">autopsy</emphasis> package). Some Linux distributions have a \"live install\" image and contain many programs for forensic analysis, such as Kali Linux (see <xref linkend=\"sect.kali\" />), with its <emphasis>forensic mode</emphasis>, BlackArchLinux<footnote><para> <ulink url=\"https://blackarch.org\" /></para></footnote> and the commercial Grml-Forensic, based on Grml (see <xref linkend=\"sect.grml\" />)."
 msgstr "これらの操作は専用ソフトウェアを使うことで簡単に実行することが可能です。特に、<emphasis role=\"pkg\">sleuthkit</emphasis> パッケージにはファイルシステムを解析する多くのツールが含まれます。<emphasis>Autopsy Forensic Browser</emphasis> グラフィカルインターフェース (<emphasis role=\"pkg\">autopsy</emphasis> パッケージに含まれます) を使えば、これらのツールを簡単に使うことが可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2913,7 +3200,9 @@ msgstr ""
 "      "
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "This example matches exploitation of an old security vulnerability in phpBB. <ulink type=\"block\" url=\"http://secunia.com/advisories/13239/\" /> <ulink type=\"block\" url=\"http://www.phpbb.com/phpBB/viewtopic.php?t=240636\" />"
+#, fuzzy
+#| msgid "This example matches exploitation of an old security vulnerability in phpBB. <ulink type=\"block\" url=\"http://secunia.com/advisories/13239/\" /> <ulink type=\"block\" url=\"http://www.phpbb.com/phpBB/viewtopic.php?t=240636\" />"
+msgid "This example matches exploitation of an old security vulnerability in phpBB. <ulink type=\"block\" url=\"http://secunia.com/advisories/13239/\" /> <ulink type=\"block\" url=\"https://www.phpbb.com/phpBB/viewtopic.php?t=240636\" />"
 msgstr "これは phpBB の古いセキュリティ脆弱性を突いた例です。<ulink type=\"block\" url=\"http://secunia.com/advisories/13239/\" /><ulink type=\"block\" url=\"http://www.phpbb.com/phpBB/viewtopic.php?t=240636\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2967,6 +3256,390 @@ msgstr "並行して、攻撃者はさらに <filename>/tmp/pt</filename> と <f
 msgid "In this example, the whole intrusion has been reconstructed, and it can be deduced that the attacker has been able to take advantage of the compromised system for about three days; but the most important element in the analysis is that the vulnerability has been identified, and the administrator can be sure that the new installation really does fix the vulnerability."
 msgstr "この例では、不正侵入の手続きのすべてが再構成されました。そして、攻撃者は不正侵入されたシステムを約 3 日間にわたって悪用することができたと推測することが可能です。しかし、解析で明らかになった最も重要な要素は脆弱性の内容です。管理者は新規インストールによって完全にこの種の脆弱性が修正されたことを保証することが可能です。"
 
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "The lack of a standard configuration (and the “process, not product” motto) explains the lack of a turn-key solution. There are, however, tools that make it simpler to configure the <emphasis>netfilter</emphasis> firewall, with a graphical representation of the filtering rules. <command>fwbuilder</command> is undoubtedly among the best of them."
+#~ msgstr "標準的な設定が存在しないということは (そして「過程であって、成果ではない」モットーに従うということは) ややこしい初期設定の不要な解決策が存在しないということを意味します。しかしながら、<emphasis>netfilter</emphasis> ファイアウォールの設定を簡単に行うためのツールが存在し、ツールはフィルタリングルールをグラフィカルに表現する機能を備えています。<command>fwbuilder</command> がこの種のツールの中で最良のツールであることは疑いありません。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<primary><emphasis>netfilter</emphasis></primary>"
+#~ msgstr "<primary><emphasis>netfilter</emphasis></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<primary><command>ip6tables</command></primary>"
+#~ msgstr "<primary><command>ip6tables</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<emphasis>netfilter</emphasis> uses four distinct tables which store rules regulating three kinds of operations on packets:"
+#~ msgstr "<emphasis>netfilter</emphasis> は以下に示す 4 種類の異なるテーブルを使います。テーブルには、パケットに対する 3 種類の操作を規制するためのルールを保存します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>filter</literal> concerns filtering rules (accepting, refusing or ignoring a packet);"
+#~ msgstr "<literal>filter</literal>。フィルタリングルール (パケットを受け入れる、拒否する、無視するなど) に関係します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>nat</literal> concerns translation of source or destination addresses and ports of packages;"
+#~ msgstr "<literal>nat</literal>。パケットの送信元や宛先アドレスおよびポート番号の変換に関係します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>mangle</literal> concerns other changes to the IP packets (including the ToS — <emphasis>Type of Service</emphasis> — field and options);"
+#~ msgstr "<literal>mangle</literal>。IP パケットに対するその他の変換に関係します (ToS すなわち <emphasis>Type of Service</emphasis> フィールドやオプションの変換も含まれます)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>raw</literal> allows other manual modifications on packets before they reach the connection tracking system."
+#~ msgstr "<literal>raw</literal>。パケットが接続追跡システムに到達する前にパケットを手作業で別の変更を加えることが可能です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "Each table contains lists of rules called <emphasis>chains</emphasis>. The firewall uses standard chains to handle packets based on predefined circumstances. The administrator can create other chains, which will only be used when referred to by one of the standard chains (either directly or indirectly)."
+#~ msgstr "それぞれのテーブルには、<emphasis>チェイン</emphasis>と呼ばれるルールのリストが含まれます。ファイアウォールは事前に定義された状況に基づいてパケットを取り扱うために標準的なチェインを使います。管理者は他のチェインを作成することが可能です。このチェインを使うには、標準的なチェインの 1 つから (直接的か間接的かのいずれか一方の方法で) このチェインを参照します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<primary>filtering rule</primary>"
+#~ msgstr "<primary>フィルタリングルール</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "The <literal>filter</literal> table has three standard chains:"
+#~ msgstr "<literal>filter</literal> テーブルは以下に示す 3 種類の標準的なチェインを備えています。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>INPUT</literal>: concerns packets whose destination is the firewall itself;"
+#~ msgstr "<literal>INPUT</literal>。宛先がファイアウォール自身のパケットに関係します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>OUTPUT</literal>: concerns packets emitted by the firewall;"
+#~ msgstr "<literal>OUTPUT</literal>。ファイアウォールから送信されたパケットに関係します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>FORWARD</literal>: concerns packets transiting through the firewall (which is neither their source nor their destination)."
+#~ msgstr "<literal>FORWARD</literal>。ファイアウォールを通過するパケット (送信元や宛先がファイアウォールでないパケット) に関係します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "The <literal>nat</literal> table also has three standard chains:"
+#~ msgstr "<literal>nat</literal> テーブルは以下に示す 3 種類の標準的なチェインを備えています。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>PREROUTING</literal>: to modify packets as soon as they arrive;"
+#~ msgstr "<literal>PREROUTING</literal>。パケットの到着直後にパケットを修正します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>POSTROUTING</literal>: to modify packets when they are ready to go on their way;"
+#~ msgstr "<literal>POSTROUTING</literal>。パケットを宛先に送信する準備が完了した時にパケットを修正します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "<literal>OUTPUT</literal>: to modify packets generated by the firewall itself."
+#~ msgstr "<literal>OUTPUT</literal>。ファイアウォールそれ自身によって生成されたパケットを修正します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "How <emphasis>netfilter</emphasis> chains are called"
+#~ msgstr "<emphasis>netfilter</emphasis> チェインの呼び出される方法"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "Each chain is a list of rules; each rule is a set of conditions and an action to execute when the conditions are met. When processing a packet, the firewall scans the appropriate chain, one rule after another; when the conditions for one rule are met, it “jumps” (hence the <literal>-j</literal> option in the commands) to the specified action to continue processing. The most common behaviors are standardized, and dedicated actions exist for them. Taking one of these standard actions interrupts the processing of the chain, since the packet's fate is already sealed (barring an exception mentioned below):"
+#~ msgstr "各チェインはルールのリストです。そして各ルールは一連の条件とその条件に一致する場合に実行される動作です。パケットを処理する場合、ファイアウォールは適切なチェインを 1 つずつ検査します。そしてあるルールの条件に一致したら、処理を続けるために特定の動作に「ジャンプ」します (このためコマンドには <literal>-j</literal> オプションが存在します)。最も一般的な挙動は標準化されており、それぞれの挙動に対する専用の動作が存在します。以下に示す標準的な動作が選択されると、チェインの処理は中止されます。なぜなら、パケットの運命は既に決まっているからです (以下で言及されている除外に一致する場合を除きます)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>ACCEPT</literal>: allow the packet to go on its way;"
+#~ msgstr "<literal>ACCEPT</literal>。対象のパケットの通過を許可します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>REJECT</literal>: reject the packet with an ICMP error packet (the <literal>--reject-with <replaceable>type</replaceable></literal> option to <command>iptables</command> allows selecting the type of error);"
+#~ msgstr "<literal>REJECT</literal>。対象のパケットを拒否して ICMP エラーを返答します (<command>iptables</command> の <literal>--reject-with <replaceable>type</replaceable></literal> オプションを使えば返答するエラーの種類を選ぶことが可能です)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>DROP</literal>: delete (ignore) the packet;"
+#~ msgstr "<literal>DROP</literal>。対象のパケットを削除 (無視) します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>LOG</literal>: log (via <command>syslogd</command>) a message with a description of the packet; note that this action does not interrupt processing, and the execution of the chain continues at the next rule, which is why logging refused packets requires both a LOG and a REJECT/DROP rule;"
+#~ msgstr "<literal>LOG</literal>。(<command>syslogd</command> を使って) 対象のパケットの説明とメッセージをログに記録します。ログ記録が選択された場合、チェインの処理は中止されず続行されて次のルールに進む点に注意してください。このため、拒否されたパケットをログに記録するには LOG と REJECT/DROP ルールの両方が必要です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>ULOG</literal>: log a message via <command>ulogd</command>, which can be better adapted and more efficient than <command>syslogd</command> for handling large numbers of messages; note that this action, like LOG, also returns processing to the next rule in the calling chain;"
+#~ msgstr "<literal>ULOG</literal>。<command>ulogd</command> を介してメッセージをログに記録します。<command>ulogd</command> は大量のメッセージを処理する場合に <command>syslogd</command> よりも効率が良いです。LOG と同様、この場合も処理は呼び出されたチェインの次のルールに進む点に注意してください。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<replaceable>chain_name</replaceable>: jump to the given chain and evaluate its rules;"
+#~ msgstr "<replaceable>chain_name</replaceable>。指定したチェインに飛んで、そのチェインのルールを評価します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>RETURN</literal>: interrupt processing of the current chain, and return to the calling chain; in case the current chain is a standard one, there's no calling chain, so the default action (defined with the <literal>-P</literal> option to <command>iptables</command>) is executed instead;"
+#~ msgstr "<literal>RETURN</literal>。現在のチェインの処理を中止し、呼び出し元のチェインに戻ります。現在のチェインが標準的なチェインの場合、呼び出し元のチェインは存在しませんから、代わりにデフォルト動作 (<command>iptables</command> の <literal>-P</literal> オプションで定義された動作) が実行されます。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>SNAT</literal> (only in the <literal>nat</literal> table): apply <emphasis>Source NAT</emphasis> (extra options describe the exact changes to apply);"
+#~ msgstr "<literal>SNAT</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。<emphasis>Source NAT</emphasis> を適用します (追加オプションを使って適用する正確な変更を設定します)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>DNAT</literal> (only in the <literal>nat</literal> table): apply <emphasis>Destination NAT</emphasis> (extra options describe the exact changes to apply);"
+#~ msgstr "<literal>DNAT</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。<emphasis>Destination NAT</emphasis> を適用します (追加オプションを使って適用する正確な変更を設定します)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>MASQUERADE</literal> (only in the <literal>nat</literal> table): apply <emphasis>masquerading</emphasis> (a special case of <emphasis>Source NAT</emphasis>);"
+#~ msgstr "<literal>MASQUERADE</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。<emphasis>マスカレード</emphasis>を適用します (<emphasis>マスカレード</emphasis>は <emphasis>Source NAT</emphasis> の特別な場合です)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>REDIRECT</literal> (only in the <literal>nat</literal> table): redirect a packet to a given port of the firewall itself; this can be used to set up a transparent web proxy that works with no configuration on the client side, since the client thinks it connects to the recipient whereas the communications actually go through the proxy."
+#~ msgstr "<literal>REDIRECT</literal> (<literal>nat</literal> テーブルの中だけでのみ使うことが可能です)。ファイアウォールの指定したポートに対象のパケットを転送します。さらにこれを使って、クライアント側に特別な設定をせずとも動作する透過的なウェブプロキシをセットアップすることが可能です。なぜなら、クライアントは宛先に接続していると思っていても、実際の通信はプロキシを通過しているからです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "Other actions, particularly those concerning the <literal>mangle</literal> table, are outside the scope of this text. The <citerefentry><refentrytitle>iptables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> and <citerefentry><refentrytitle>ip6tables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> have a comprehensive list."
+#~ msgstr "その他の動作 (特に <literal>mangle</literal> テーブルに関する動作) は本書の範囲を超えています。<citerefentry><refentrytitle>iptables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> と <citerefentry><refentrytitle>ip6tables</refentrytitle> <manvolnum>8</manvolnum></citerefentry> には包括的なリストが含まれています。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#~ msgid "The <command>iptables</command> and <command>ip6tables</command> commands allow manipulating tables, chains and rules. Their <literal>-t <replaceable>table</replaceable></literal> option indicates which table to operate on (by default, <literal>filter</literal>)."
+#~ msgstr "<command>iptables</command> と <command>ip6tables</command> コマンドを使って、テーブル、チェイン、ルールを操作することが可能です。<literal>-t <replaceable>table</replaceable></literal> オプションで操作対象のテーブルを指定します (デフォルトの場合、<literal>filter</literal> テーブルを操作します)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "Commands"
+#~ msgstr "コマンド"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "The <literal>-N <replaceable>chain</replaceable></literal> option creates a new chain. The <literal>-X <replaceable>chain</replaceable></literal> deletes an empty and unused chain. The <literal>-A <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal> adds a rule at the end of the given chain. The <literal>-I <replaceable>chain</replaceable> <replaceable>rule_num</replaceable> <replaceable>rule</replaceable></literal> option inserts a rule before the rule number <replaceable>rule_num</replaceable>. The <literal>-D <replaceable>chain</replaceable> <replaceable>rule_num</replaceable></literal> (or <literal>-D <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal>) option deletes a rule in a chain; the first syntax identifies the rule to be deleted by its number, while the latter identifies it by its contents. The <literal>-F <replaceable>chain</replaceable></literal> option flushes a chain (deletes all its rules); if no chain is mentioned, all the rules in the table are deleted. The <literal>-L <replaceable>chain</replaceable></literal> option lists the rules in the chain. Finally, the <literal>-P <replaceable>chain</replaceable> <replaceable>action</replaceable></literal> option defines the default action, or “policy”, for a given chain; note that only standard chains can have such a policy."
+#~ msgstr "<literal>-N <replaceable>chain</replaceable></literal> オプションは新しいチェインを作成します。<literal>-X <replaceable>chain</replaceable></literal> は空で使われていないチェインを削除します。<literal>-A <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal> はチェインの最後にルールを追加します。<literal>-I <replaceable>chain</replaceable> <replaceable>rule_num</replaceable> <replaceable>rule</replaceable></literal> オプションは指定したルール番号 <replaceable>rule_num</replaceable> の前にルールを挿入します。<literal>-D <replaceable>chain</replaceable> <replaceable>rule_num</replaceable></literal> (または <literal>-D <replaceable>chain</replaceable> <replaceable>rule</replaceable></literal>) オプションはチェインからルールを削除します。ここで <replaceable>rule_num</replaceable> を使う構文はルール番号を指定してルールを削除し、<replaceable>rule</replaceable> を使う構文はルール内容を指定してルールを削除します。<literal>-F <replaceable>chain</replaceable></literal> オプションはチェインをクリアします (チェインに含まれるすべてのルールを削除します)。ここでチェインを指定しなかった場合、テーブルに含まれるすべてのルールを削除します。<literal>-L <replaceable>chain</replaceable></literal> オプションはチェインに含まれるルールを表示します。最後に、<literal>-P <replaceable>chain</replaceable> <replaceable>action</replaceable></literal> オプションは指定したチェインのデフォルト動作を意味する「ポリシー」を定義します。ここでポリシーを設定できるのは標準的なチェインだけという点に注意してください。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "Rules"
+#~ msgstr "ルール"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "Each rule is expressed as <literal><replaceable>conditions</replaceable> -j <replaceable>action</replaceable> <replaceable>action_options</replaceable></literal>. If several conditions are described in the same rule, then the criterion is the conjunction (logical <emphasis>and</emphasis>) of the conditions, which is at least as restrictive as each individual condition."
+#~ msgstr "それぞれのルールは <literal><replaceable>conditions</replaceable> -j <replaceable>action</replaceable> <replaceable>action_options</replaceable></literal> の形で指定します。1 つのルールに複数の条件を指定する場合、複数の条件は結合 (論理 <emphasis>and</emphasis>) されます。つまり、各条件の結果をさらに限定することを意味します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "The <literal>-p <replaceable>protocol</replaceable></literal> condition matches the protocol field of the IP packet. The most common values are <literal>tcp</literal>, <literal>udp</literal>, <literal>icmp</literal>, and <literal>icmpv6</literal>. Prefixing the condition with an exclamation mark negates the condition, which then becomes a match for “any packets with a different protocol than the specified one”. This negation mechanism is not specific to the <literal>-p</literal> option and it can be applied to all other conditions too."
+#~ msgstr "<literal>-p <replaceable>protocol</replaceable></literal> は指定されたプロトコルフィールドに一致する IP パケットを選択する条件です。<replaceable>protocol</replaceable> で最もよく使われる値は <literal>tcp</literal>、<literal>udp</literal>、<literal>icmp</literal>、<literal>icmpv6</literal> です。この条件の前に感嘆符を付けることで、この条件を否定することになります。つまり「<replaceable>protocol</replaceable> で指定されたプロトコル以外のすべてのプロトコルを使ったパケット」を選択する条件になります。条件否定の方法は <literal>-p</literal> オプションに限らず、以降で紹介する他のすべての条件にも適用することが可能です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "The <literal>-s <replaceable>address</replaceable></literal> or <literal>-s <replaceable>network/mask</replaceable></literal> condition matches the source address of the packet. Correspondingly, <literal>-d <replaceable>address</replaceable></literal> or <literal>-d <replaceable>network/mask</replaceable></literal> matches the destination address."
+#~ msgstr "<literal>-s <replaceable>address</replaceable></literal> または <literal>-s <replaceable>network/mask</replaceable></literal> は指定された送信元アドレスに一致するパケットを選択する条件です。同様に、<literal>-d <replaceable>address</replaceable></literal> または <literal>-d <replaceable>network/mask</replaceable></literal> は指定された宛先アドレスに一致するパケットを選択する条件です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables;
+# Tag: L-CFMD;
+#~ msgid "The <literal>-i <replaceable>interface</replaceable></literal> condition selects packets coming from the given network interface. <literal>-o <replaceable>interface</replaceable></literal> selects packets going out on a specific interface."
+#~ msgstr "<literal>-i <replaceable>interface</replaceable></literal> は指定されたネットワークインターフェースを通じて受信したパケットを選択する条件です。<literal>-o <replaceable>interface</replaceable></literal> は指定されたインターフェースを通じて送信されるパケットを選択する条件です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "There are more specific conditions, depending on the generic conditions described above. For instance, the <literal>-p tcp</literal> condition can be complemented with conditions on the TCP ports, with clauses such as <literal>--source-port <replaceable>port</replaceable></literal> and <literal>--destination-port <replaceable>port</replaceable></literal>."
+#~ msgstr "上で説明した一般的な条件ごとに、さらに条件の範囲を狭めるためのオプションが数多く存在します。たとえば <literal>-p tcp</literal> 条件に加えて TCP ポート番号を指定することで、選択するパケットをさらに絞り込むことが可能です。これを行うには、<literal>--source-port <replaceable>port</replaceable></literal> と <literal>--destination-port <replaceable>port</replaceable></literal> を使います。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Ref: http://www.iptables.info/en/connection-state.html
+# Ref: # modinfo ipt_conntrack;
+# Tag: L-CFMD;
+# Tag: PTAL;
+#~ msgid "The <literal>--state <replaceable>state</replaceable></literal> condition matches the state of a packet in a connection (this requires the <command>ipt_conntrack</command> kernel module, for connection tracking). The <literal>NEW</literal> state describes a packet starting a new connection; <literal>ESTABLISHED</literal> matches packets belonging to an already existing connection, and <literal>RELATED</literal> matches packets initiating a new connection related to an existing one (which is useful for the <literal>ftp-data</literal> connections in the “active” mode of the FTP protocol)."
+#~ msgstr "<literal>--state <replaceable>state</replaceable></literal> は指定されたパケット状態に一致するパケットを選択する条件です (接続追跡を行うための <command>ipt_conntrack</command> カーネルモジュールが必要です)。<literal>NEW</literal> 状態は新しい接続を開始するパケット、<literal>ESTABLISHED</literal> 状態は既に存在する接続に関連するパケットを意味します。<literal>RELATED</literal> 状態は既存の接続に関連した新しい接続を開始するパケットを意味します (これは FTP プロトコルの「アクティブ」モードを使った <literal>ftp-data</literal> 接続の際に有益です)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "The previous section lists available actions, but not their respective options. The <literal>LOG</literal> action, for instance, has the following options:"
+#~ msgstr "前節では利用できる標準的な動作を説明しましたが、その動作に対するオプションを説明していませんでした。たとえば、<literal>LOG</literal> 動作は以下のオプションを取ることが可能です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>--log-level</literal>, with default value <literal>warning</literal>, indicates the <command>syslog</command> severity level;"
+#~ msgstr "<literal>--log-level</literal> は記録する <command>syslog</command> メッセージの重要度を指定します。デフォルトの場合 <literal>warning</literal> 以上の重要度を持つメッセージが記録されます。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>--log-prefix</literal> allows specifying a text prefix to differentiate between logged messages;"
+#~ msgstr "<literal>--log-prefix</literal> はログに記録するメッセージを特徴づけるために行の先頭に付けるテキストを指定します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "<literal>--log-tcp-sequence</literal>, <literal>--log-tcp-options</literal> and <literal>--log-ip-options</literal> indicate extra data to be integrated into the message: respectively, the TCP sequence number, TCP options, and IP options."
+#~ msgstr "<literal>--log-tcp-sequence</literal>、<literal>--log-tcp-options</literal>、<literal>--log-ip-options</literal> はログメッセージに含める追加的なデータを指定します。具体的に言えば、それぞれ TCP シーケンス番号、TCP オプション、IP オプションをログメッセージに含めます。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "The <literal>DNAT</literal> action provides the <literal>--to-destination <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> option to indicate the new destination IP address and/or port. Similarly, <literal>SNAT</literal> provides <literal>--to-source <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> to indicate the new source IP address and/or port."
+#~ msgstr "<literal>DNAT</literal> 動作は以下のオプションを取ることが可能です。<literal>--to-destination <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> は新しい宛先 IP アドレスおよびポート番号を指定します。同様に、<literal>SNAT</literal> 動作は以下のオプションを取ることが可能です。<literal>--to-source <replaceable>address</replaceable>:<replaceable>port</replaceable></literal> は新しい送信元 IP アドレスおよびポート番号を指定します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 iptables-extensions;
+# Tag: L-CFMD;
+#~ msgid "The <literal>REDIRECT</literal> action (only available if NAT is available) provides the <literal>--to-ports <replaceable>port(s)</replaceable></literal> option to indicate the port, or port range, where the packets should be redirected."
+#~ msgstr "<literal>REDIRECT</literal> 動作は以下のオプションを取ることが可能です。<literal>--to-ports <replaceable>port(s)</replaceable></literal> はパケットの転送先ポート番号またはポート番号範囲を指定します (<literal>REDIRECT</literal> 動作は NAT を有効化している場合にのみ使うことが可能です)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "Creating Rules"
+#~ msgstr "ルールの作成"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#~ msgid "Each rule creation requires one invocation of <command>iptables</command>/<command>ip6tables</command>. Typing these commands manually can be tedious, so the calls are usually stored in a script so that the same configuration is set up automatically every time the machine boots. This script can be written by hand, but it can also be interesting to prepare it with a high-level tool such as <command>fwbuilder</command>."
+#~ msgstr "1 つのルールを作成するには、<command>iptables</command>/<command>ip6tables</command> を 1 回実行する必要があります。これらのコマンドを手作業で実行することは退屈なので、通常スクリプトの形で保存しておきます。こうすることで、マシンの起動時に同じ設定を自動的に適用することが可能です。このスクリプトは手作業で書かなければいけませんが、<command>fwbuilder</command> などの高レベルツールを使ってスクリプトを準備しても良いでしょう。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "The principle is simple. In the first step, one needs to describe all the elements that will be involved in the actual rules:"
+#~ msgstr "<command>fwbuilder</command> の原理は簡単です。最初に、以下のような実際のルールに関連するすべての要素を宣言する必要があります。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "the firewall itself, with its network interfaces;"
+#~ msgstr "ネットワークインターフェースとそれを使うファイアウォール自身。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "the networks, with their corresponding IP ranges;"
+#~ msgstr "対応する IP アドレス範囲とそれを使うネットワーク。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "the servers;"
+#~ msgstr "サーバ。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "the ports belonging to the services hosted on the servers."
+#~ msgstr "サーバでホストされているサービスに対応するポート番号。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "The rules are then created with simple drag-and-drop actions on the objects. A few contextual menus can change the condition (negating it, for instance). Then the action needs to be chosen and configured."
+#~ msgstr "これらの要素に対する単純なドラッグアンドドロップ動作を使ってルールを作成します。いくつかのコンテキストメニューを使ってルールの条件を変更する (たとえば条件を否定する) ことが可能です。その後、動作を選んで設定する必要があります。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "As far as IPv6 is concerned, one can either create two distinct rulesets for IPv4 and IPv6, or create only one and let <command>fwbuilder</command> translate the rules according to the addresses assigned to the objects."
+#~ msgstr "IPv6 に関心があるなら、IPv4 と IPv6 で別々のルールセットを作成するか、片方のルールセットだけを作成して要素に割り当てられたアドレスに応じて <command>fwbuilder</command> にそのルールを変換してもらうかのどちらか一方を行うことが可能です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "Fwbuilder's main window"
+#~ msgstr "fwbuilder のメインウィンドウ"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<primary><command>fwbuilder</command></primary>"
+#~ msgstr "<primary><command>fwbuilder</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<command>fwbuilder</command> can then generate a script configuring the firewall according to the rules that have been defined. Its modular architecture gives it the ability to generate scripts targeting different systems (<command>iptables</command> for Linux, <command>ipf</command> for FreeBSD and <command>pf</command> for OpenBSD)."
+#~ msgstr "これで <command>fwbuilder</command> は定義されたルールに従ってファイアウォールを設定するためのスクリプトを生成することが可能になりました。モジュール式のアーキテクチャのおかげで、<command>fwbuilder</command> はさまざまなファイアウォールシステム (Linux の <command>iptables</command>、FreeBSD の <command>ipf</command>、OpenBSD の <command>pf</command>) を設定するためのスクリプトを生成することが可能です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid ""
+#~ "<computeroutput># </computeroutput><userinput>apt install apparmor apparmor-profiles apparmor-utils\n"
+#~ "</userinput><computeroutput>[...]\n"
+#~ "# </computeroutput><userinput>perl -pi -e 's,GRUB_CMDLINE_LINUX=\"(.*)\"$,GRUB_CMDLINE_LINUX=\"$1 apparmor=1 security=apparmor\",' /etc/default/grub\n"
+#~ "</userinput><computeroutput># </computeroutput><userinput>update-grub\n"
+#~ "</userinput>"
+#~ msgstr ""
+#~ "<computeroutput># </computeroutput><userinput>apt install apparmor apparmor-profiles apparmor-utils\n"
+#~ "</userinput><computeroutput>[...]\n"
+#~ "# </computeroutput><userinput>perl -pi -e 's,GRUB_CMDLINE_LINUX=\"(.*)\"$,GRUB_CMDLINE_LINUX=\"$1 apparmor=1 security=apparmor\",' /etc/default/grub\n"
+#~ "</userinput><computeroutput># </computeroutput><userinput>update-grub\n"
+#~ "</userinput>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#~ msgid ""
+#~ "\n"
+#~ "<computeroutput># </computeroutput><userinput>aa-unconfined</userinput>\n"
+#~ "<computeroutput>801 /sbin/dhclient not confined\n"
+#~ "890 /sbin/rpcbind not confined\n"
+#~ "899 /sbin/rpc.statd not confined\n"
+#~ "929 /usr/sbin/sshd not confined\n"
+#~ "941 /usr/sbin/avahi-daemon confined by '/usr/sbin/avahi-daemon (complain)'\n"
+#~ "988 /usr/sbin/minissdpd not confined\n"
+#~ "1276 /usr/sbin/exim4 not confined\n"
+#~ "1485 /usr/lib/erlang/erts-6.2/bin/epmd not confined\n"
+#~ "1751 /usr/lib/erlang/erts-6.2/bin/beam.smp not confined\n"
+#~ "19592 /usr/lib/dleyna-renderer/dleyna-renderer-service not confined</computeroutput>\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "<computeroutput># </computeroutput><userinput>aa-unconfined</userinput>\n"
+#~ "<computeroutput>801 /sbin/dhclient not confined\n"
+#~ "890 /sbin/rpcbind not confined\n"
+#~ "899 /sbin/rpc.statd not confined\n"
+#~ "929 /usr/sbin/sshd not confined\n"
+#~ "941 /usr/sbin/avahi-daemon confined by '/usr/sbin/avahi-daemon (complain)'\n"
+#~ "988 /usr/sbin/minissdpd not confined\n"
+#~ "1276 /usr/sbin/exim4 not confined\n"
+#~ "1485 /usr/lib/erlang/erts-6.2/bin/epmd not confined\n"
+#~ "1751 /usr/lib/erlang/erts-6.2/bin/beam.smp not confined\n"
+#~ "19592 /usr/lib/dleyna-renderer/dleyna-renderer-service not confined</computeroutput>\n"
+#~ "      "
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#~ msgid "The program wants to create the <filename>/run/dhclient-eth0.pid</filename> file. If we allow the creation of this specific file only, the program will not work when the user will use it on another network interface. Thus we select “New” to replace the filename with the more generic “/run/dhclient*.pid” before recording the rule with “Allow”."
+#~ msgstr "ここで dhclient は <filename>/run/dhclient-eth0.pid</filename> ファイルを作成しようとしています。<filename>/run/dhclient-eth0.pid</filename> だけの作成を許可した場合、ユーザが eth0 以外のネットワークインターフェースに対して dhclient を実行する際に dhclient が動作しなくなるでしょう。このため、ここでは「New」を選択してファイル名をより一般的な「/run/dhclient*.pid」に変更した後、「Allow」を選択してこの規則を適用しています。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<emphasis>CAUTION</emphasis> Reference policy not in jessie"
+#~ msgstr "<emphasis>CAUTION</emphasis> jessie にはリファレンスポリシーが含まれません"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: https://packages.debian.org/search?lang=ja&searchon=sourcenames&keywords=refpolicy;
+#~ msgid "Unfortunately the maintainers of the <emphasis role=\"pkg\">refpolicy</emphasis> source package did not handle release critical bugs on their package and the package got removed from jessie. This means that the <emphasis role=\"pkg\">selinux-policy-*</emphasis> packages are currently not installable in jessie and need to be fetched from another place. Hopefully they will come back in one of the point releases or in jessie-backports. In the meantime, you can grab them from unstable."
+#~ msgstr "残念なことに <emphasis role=\"pkg\">refpolicy</emphasis> ソースパッケージのメンテナがリリースクリティカルバグを修正しなかったため、<emphasis role=\"pkg\">refpolicy</emphasis> ソースパッケージは jessie から削除されました。このため、現在のところ <emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージは jessie に含まれず、別の場所から <emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージを入手してインストールする必要があります。うまくいけば、<emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージはポイントリリースの 1 つか jessie-backports に含まれることでしょう。それまでの間は、不安定版から <emphasis role=\"pkg\">selinux-policy-*</emphasis> パッケージを入手することが可能です。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "This sad situation at least proves that SELinux is not very popular in the set of users/developers who are running the development versions of Debian. Thus, if you opt to use SELinux, you should expect the default policy to not work perfectly and you will have to invest quite some time to make it suitable to your specific needs."
+#~ msgstr "この悲しい状況は少なくとも SELinux は Debian の開発版を使っているユーザおよび開発者から高評価を得られないでいることを示しています。そんなわけで、SELinux を使うことを決めた場合、デフォルトポリシーが完全に動くことを期待せず、自分の要求に適したポリシーを作るまでにかなりの時間を費やす覚悟が必要です。"
+
 #~ msgid "<literal>SNAT</literal> (only in the <literal>nat</literal> table, therefore only in IPv4 on <emphasis role=\"distribution\">Wheezy</emphasis> — NAT support for IPv6 appeared in the Linux 3.7 kernel): apply <emphasis>Source NAT</emphasis> (extra options describe the exact changes to apply);"
 #~ msgstr "<literal>SNAT</literal> (<literal>nat</literal> テーブル、つまり <emphasis role=\"distribution\">Wheezy</emphasis> の IPv4 の中だけでのみ使うことが可能です — IPv6 の NAT サポートは Linux 3.7 カーネルから導入されました)。これは <emphasis>Source NAT</emphasis> を適用します (追加オプションを使って適用する正確な変更を設定します)。"
 
@@ -2984,9 +3657,6 @@ msgstr "この例では、不正侵入の手続きのすべてが再構成され
 
 #~ msgid "<primary><command>root-tail</command></primary>"
 #~ msgstr "<primary><command>root-tail</command></primary>"
-
-#~ msgid "<primary>logs</primary><secondary>display</secondary>"
-#~ msgstr "<primary>ログ</primary><secondary sortas=\"ヒョウジ\">表示</secondary>"
 
 #~ msgid "In addition, the <filename>md5sums</filename> files are stored on the hard disk; a thorough attacker will therefore update these files so they contain the new control sums for the subverted files."
 #~ msgstr "加えて、<filename>md5sums</filename> ファイルはハードディスク上に保存されます。このため、完璧主義の攻撃者なら <filename>md5sums</filename> ファイルの中の指紋を改竄したファイルに対応する新しい指紋で置き換えるでしょう。"

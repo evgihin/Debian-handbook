@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2014-01-31T10:09:32\n"
+"POT-Creation-Date: 2020-05-17 17:54+0200\n"
 "PO-Revision-Date: 2017-12-09 16:56+0000\n"
 "Last-Translator: Galina Anikina <merilaga@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/ru/>\n"
@@ -43,29 +43,72 @@ msgstr "Нередко администратор, постоянно имеющ
 msgid "Rebuilding a Package from its Sources"
 msgstr "Пересборка пакета из его исходного кода"
 
-#| msgid "Rebuilding a binary package is required under several sets of circumstances. In some cases, the administrator needs a software feature that requires the software to be compiled from sources, with a particular compilation option; in others, the software as packaged in the installed version of Debian is not recent enough. In the latter case, the administrator will usually build a more recent package taken from a newer version of Debian — such as <emphasis role=\"distribution\">Testing</emphasis> or even <emphasis role=\"distribution\">Unstable</emphasis> — so that this new package works in their <emphasis role=\"distribution\">Stable</emphasis> distribution; this operation is called “backporting”. As usual, care should be taken, before undertaking such a task, to check whether it has been done already — a quick look on the Package Tracking System's page for that package will reveal that information. <ulink type=\"block\" url=\"http://packages.qa.debian.org/\" /> <indexterm><primary>backport</primary></indexterm>"
 msgid "Rebuilding a binary package is required under several sets of circumstances. In some cases, the administrator needs a software feature that requires the software to be compiled from sources, with a particular compilation option; in others, the software as packaged in the installed version of Debian is not recent enough. In the latter case, the administrator will usually build a more recent package taken from a newer version of Debian — such as <emphasis role=\"distribution\">Testing</emphasis> or even <emphasis role=\"distribution\">Unstable</emphasis> — so that this new package works in their <emphasis role=\"distribution\">Stable</emphasis> distribution; this operation is called “backporting”. As usual, care should be taken, before undertaking such a task, to check whether it has been done already — a quick look on the Debian Package Tracker for that package will reveal that information. <ulink type=\"block\" url=\"https://tracker.debian.org/\" /> <indexterm><primary>backport</primary></indexterm>"
 msgstr "Пересборка двоичного пакета требуется при ряде обстоятельств. В некоторых случаях администратору нужна функциональность программы, для активации которой необходима компиляция из исходного кода с определенной опцией; в других программное обеспечение, упакованное в установленной версии Debian, недостаточно актуально. В последнем случае администратору обычно нужно собрать более свежий пакет, взятый из более новой версии Debian — например <emphasis role=\"distribution\">Testing</emphasis> или даже <emphasis role=\"distribution\">Unstable</emphasis> — чтобы новый пакет заработал в дистрибутиве <emphasis role=\"distribution\">Stable</emphasis>; эта операция называется «бэкпортирование». Как обычно, прежде чем приступать к такой задаче, следует проверить, не был ли такой пакет уже создан, — для этого достаточно беглого взгляда на страницу данного пакета в Системе отслеживания пакетов Debian. <ulink type=\"block\" url=\"https://tracker.debian.org/\" /> <indexterm><primary>бэкпорт</primary></indexterm>"
 
 msgid "Getting the Sources"
 msgstr "Получение исходного кода"
 
-#| msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note however, that you'll be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal>, <literal>lzma</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there's an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. With the <literal>-x</literal> option, the source package is even unpacked locally after download."
-msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used)."
+#, fuzzy
+#| msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used)."
+msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note, however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it verifies the integrity of the downloaded source packages using <command>dscverify</command>, and it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used). The Debian keyring is needed, unless the option <literal>-u</literal> is supplied."
 msgstr "Пересборка пакета Debian начинается с получения его исходного кода. Простейший способ состоит в использовании команды <command>apt-get source <replaceable>название-пакета-исходного-кода</replaceable></command>. Данная команда требует наличия строки <literal>deb-src</literal> в файле <filename>/etc/apt/sources.list</filename> и обновлённых файлов индекса (после выполнения <command>apt-get update</command>). Эти условия должны быть уже выполнены, если вы следовали инструкциям из главы, посвященной конфигурации APT (см. <xref linkend=\"sect.apt-sources.list\" />). Однако заметьте, что вы будете загружать пакеты исходного кода из версии Debian, упомянутой в строке <literal>deb-src</literal>. Если необходима другая версия, вам может понадобиться загрузить её вручную с зеркала Debian или с веб-сайта. Для этого требуется получить два или три файла (с расширениями <filename>*.dsc</filename> — от <foreignphrase>Debian Source Control</foreignphrase> — <filename>*.tar.<replaceable>comp</replaceable></filename>, и иногда <filename>*.diff.gz</filename> или <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> может принимать одно из значений: <literal>gz</literal>, <literal>bz2</literal> или <literal>xz</literal> в зависимости от используемого инструмента сжатия), затем запустить команду <command>dpkg-source -x <replaceable>file.dsc</replaceable></command>. Если файл <filename>*.dsc</filename> доступен напрямую по известному URL, то есть еще более простой способ получить это всё — с помощью команды <command>dget <replaceable>URL</replaceable></command>. Эта команда (которую можно найти в пакете <emphasis role=\"pkg\">devscripts</emphasis>) загружает файл <filename>*.dsc</filename> по переданному ей адресу, затем анализирует его содержимое и автоматически загружает файл или файлы, перечисленные в нём. После того, как всё загружено, она распаковывает пакет исходных кодов (если только не используется опция <literal>-d</literal> или <literal>--download-only</literal>)."
 
 msgid "Making Changes"
 msgstr "Внесение изменений"
 
-#| msgid "The source of the package is now available in a directory named after the source package and its version (for instance, <emphasis>samba-3.6.16</emphasis>); this is where we'll work on our local changes."
-msgid "The source of the package is now available in a directory named after the source package and its version (for instance, <emphasis>samba-4.1.17+dfsg</emphasis>); this is where we'll work on our local changes."
+msgid "Let us use the <emphasis role=\"pkg\">samba</emphasis> package as an example."
+msgstr ""
+
+msgid ""
+"<computeroutput>$ </computeroutput><userinput>apt source samba\n"
+"</userinput><computeroutput>Reading package lists... Done\n"
+"NOTICE: 'samba' packaging is maintained in the 'Git' version control system at:\n"
+"https://salsa.debian.org/samba-team/samba.git\n"
+"Please use:\n"
+"git clone https://salsa.debian.org/samba-team/samba.git\n"
+"to retrieve the latest (possibly unreleased) updates to the package.\n"
+"Need to get 11.7 MB of source archives.\n"
+"Get:1 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (dsc) [4,316 B]\n"
+"Get:2 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (tar) [11.4 MB]\n"
+"Get:3 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (diff) [252 kB]\n"
+"Fetched 11.7 MB in 1s (9,505 kB/s)\n"
+"dpkg-source: info: extracting samba in samba-4.9.5+dfsg\n"
+"dpkg-source: info: unpacking samba_4.9.5+dfsg.orig.tar.xz\n"
+"dpkg-source: info: unpacking samba_4.9.5+dfsg-5+deb10u1.debian.tar.xz\n"
+"dpkg-source: info: using patch list from debian/patches/series\n"
+"dpkg-source: info: applying 07_private_lib\n"
+"dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch\n"
+"[...]\n"
+"</computeroutput>"
+msgstr ""
+
+#, fuzzy
+#| msgid "The source of the package is now available in a directory named after the source package and its version (for instance, <emphasis>samba-4.1.17+dfsg</emphasis>); this is where we'll work on our local changes."
+msgid "The source of the package is now available in a directory named after the source package and its version (<emphasis>samba-4.9.5+dfsg</emphasis>); this is where we'll work on our local changes."
 msgstr "Исходный код пакета теперь доступен в каталоге, имя которого составлено из имени пакета исходного кода и его версии (например <emphasis>samba-4.1.17+dfsg</emphasis>); здесь мы будем работать над нашими локальными изменениями."
 
-#| msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>3.6.16-2</literal>, we can create version <literal>3.6.16-2falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update do the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package, with an command such as <command>dch --local falcot</command>. This invokes a text editor (<command>sensible-editor</command> — this should be your favorite editor if it's mentioned in the <varname>VISUAL</varname> or <varname>EDITOR</varname> environment variables, and the default editor otherwise) to allow documenting the differences brought by this rebuild. This editor shows us that <command>dch</command> really did change the <filename>debian/changelog</filename> file."
-msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.1.17+dfsg-2</literal>, we can create version <literal>2:4.1.17+dfsg-2falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package, with an command such as <command>dch --local falcot</command>. This invokes a text editor (<command>sensible-editor</command> — this should be your favorite editor if it is mentioned in the <varname>VISUAL</varname> or <varname>EDITOR</varname> environment variables, and the default editor otherwise) to allow documenting the differences brought by this rebuild. This editor shows us that <command>dch</command> really did change the <filename>debian/changelog</filename> file."
+#, fuzzy
+#| msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.1.17+dfsg-2</literal>, we can create version <literal>2:4.1.17+dfsg-2falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package, with an command such as <command>dch --local falcot</command>. This invokes a text editor (<command>sensible-editor</command> — this should be your favorite editor if it is mentioned in the <varname>VISUAL</varname> or <varname>EDITOR</varname> environment variables, and the default editor otherwise) to allow documenting the differences brought by this rebuild. This editor shows us that <command>dch</command> really did change the <filename>debian/changelog</filename> file."
+msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.9.5+dfsg-5</literal>, we can create version <literal>2:4.9.5+dfsg-5falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package."
 msgstr "Первое, что необходимо сделать, это изменить версию пакета, чтобы пересобранные пакеты можно было отличить от оригинальных, предоставляемых Debian. Если предположить, что текущая версия — <literal>2:4.1.17+dfsg-2</literal>, мы можем создать версию <literal>2:4.1.17+dfsg-2falcot1</literal>, что явно указывает на происхождение пакета. Номер версии версии становится выше, чем у пакета, предоставленного Debian, таким образом, пакет можно будет легко установить как обновление оригинального пакета. Такое изменение лучше всего осуществляется с помощью команды <command>dch</command> (<emphasis>Debian CHangelog</emphasis>) из пакета <emphasis role=\"pkg\">devscripts</emphasis>, запустив её с параметрами <command>dch --local falcot</command>. Это действие вызовет текстовый редактор (<command>sensible-editor</command> — это должен быть ваш любимый редактор, если он указан в переменной окружения <varname>VISUAL</varname> или <varname>EDITOR</varname>, а в противном случае редактор по умолчанию) для того, чтобы документировать изменения, внесенные данной пересборкой. Этот редактор показывает нам, что <command>dch</command> действительно изменила файл <filename>debian/changelog</filename>."
 
-#| msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior."
+#, fuzzy
+#| msgid ""
+#| "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n"
+#| "</userinput><computeroutput>[...]\n"
+#| "</computeroutput>"
+msgid ""
+"<computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg\n"
+"</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput>"
+msgstr ""
+"<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n"
+"</userinput><computeroutput>[...]\n"
+"</computeroutput>"
+
+msgid "The last command invokes a text editor (<command>sensible-editor</command> — this should be your favorite editor if it is mentioned in the <varname>VISUAL</varname> or <varname>EDITOR</varname> environment variables, and the default editor otherwise) to allow documenting the differences brought by this rebuild. This editor shows us that <command>dch</command> really did change the <filename>debian/changelog</filename> file."
+msgstr ""
+
 msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages for explanations on how to achieve this)."
 msgstr "В случае, если требуются изменения в опциях сборки, они вносятся в файл <filename>debian/rules</filename>, который управляет шагами процесса сборки пакета. В простейших случаях строки, относящиеся к начальной конфигурации (<literal>./configure …</literal>) или к собственно сборке (<literal>$(MAKE) …</literal> или <literal>make …</literal>) легко обнаружить. Если эти команды не не вызываются явно, они, вероятно, являются побочным эффектом другой явной команды; в этом случае обратитесь к их документации, чтобы выяснить, как изменить поведение по умолчанию. В случае пакетов, использующих <command>dh</command>, может понадобиться переопределить команду <command>dh_auto_configure</command> или <command>dh_auto_build</command> (подробности см. на соответствующих страницах руководства)."
 
@@ -81,7 +124,6 @@ msgstr "<emphasis>СОВЕТ</emphasis> Установка <literal>Build-Depend
 msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
 msgstr "<primary><literal>Build-Depends</literal>, поле control</primary>"
 
-#| msgid "<indexterm><primary><literal>Build-Depends</literal>, control field</primary></indexterm> <command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>source-package</replaceable></command> command."
 msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>source-package</replaceable></command> command."
 msgstr "<command>apt-get</command> позволяет  установить все пакеты, упомянутые в поле <literal>Build-Depends</literal> исходного пакета, которые доступны в дистрибутиве, указанном в строке <literal>deb-src</literal> файла <filename>/etc/apt/sources.list</filename>. Для этого достаточно запустить команду <command>apt-get build-dep <replaceable>пакет-исходного-кода</replaceable></command>."
 
@@ -118,17 +160,25 @@ msgstr "Предыдущая команда может завершиться о
 msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis>devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
 msgstr "В большинстве случаев разработчики Debian используют программу более высокого уровня, такую как <command>debuild</command>; она запускает <command>dpkg-buildpackage</command> как обычно, но также добавляет вызов программы, выполняющей множество проверок пакета на соответствие политике Debian. Этот сценарий также очищает окружение, так что локальные переменные окружения не «загрязняют» сборку пакета. Команда <command>debuild</command> — один из инструментов набора <emphasis>devscripts</emphasis>, который берёт на себя часть работы по обеспечению постоянства и настройке, чтобы сделать задачу сопровождающего более легкой."
 
-msgid "<emphasis>QUICK LOOK</emphasis> <command>pbuilder</command>"
-msgstr "<emphasis>КРАТКИЙ ОБЗОР</emphasis> <command>pbuilder</command>"
+msgid "<emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted</emphasis> environment"
+msgstr ""
 
 msgid "<primary><command>pbuilder</command></primary>"
 msgstr "<primary><command>pbuilder</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>schroot</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
 
 msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
 msgstr "Программа <command>pbuilder</command> (в пакете с таким же названием) позволяет собирать пакет Debian в <emphasis>изолированном</emphasis> окружении. Она сперва создает временный каталог, содержащий минимальную систему, требующуюся для сборки пакета (включая пакеты, упомянутые в поле <emphasis>Build-Depends</emphasis>). Этот каталог в дальнейшем используется в качестве корневого каталога (<filename>/</filename>) командой <command>chroot</command> для сборки пакета."
 
 msgid "This tool allows the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and a <command>pbuilder</command> running on the same machine can be using <emphasis role=\"distribution\">Unstable</emphasis> for package builds."
 msgstr "Этот инструмент позволяет выполнять процесс сборки в окружении, не затрагиваемом пользовательскими манипуляциями. Он также позволяет быстро обнаружить недостающие сборочные зависимости (так как сборка завершится неудачно, если соответствующие зависимости не документированы). И наконец, он позволяет собрать пакет для версии Debian, отличной от установленной на данной машине: для обычной работы может использоваться <emphasis role=\"distribution\">Stable</emphasis>, а в <command>pbuilder</command>, запущенном на том же оборудовании, для сборки пакетов может использоваться <emphasis role=\"distribution\">Unstable</emphasis>."
+
+msgid "<command>schroot</command> allows running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
+msgstr ""
 
 msgid "Building your First Package"
 msgstr "Сборка вашего первого пакета"
@@ -139,8 +189,9 @@ msgstr "Метапакеты или пакеты-пустышки"
 msgid "Fake packages and meta-packages are similar, in that they are empty shells that only exist for the effects their meta-data have on the package handling stack."
 msgstr "Пакеты-пустышки и метапакеты схожи тем, что являются пустыми оболочками, существующими лишь ради эффектов, которые их метаданные оказывают на стек работы с пакетами."
 
-#| msgid "The purpose of a fake package is to trick <command>dpkg</command> and <command>apt</command> into believing that some package is installed even though it's only an empty shell. This allows satisfying dependencies on a package when the corresponding software was installed outside the scope of the packaging system. Such a method works, but it should still be avoided whenever possible, since there's no guarantee that the manually installed software behaves exactly like the corresponding package would and other packages depending on it would not work properly."
-msgid "The purpose of a fake package is to trick <command>dpkg</command> and <command>apt</command> into believing that some package is installed even though it's only an empty shell. This allows satisfying dependencies on a package when the corresponding software was installed outside the scope of the packaging system. Such a method works, but it should still be avoided whenever possible, since there is no guarantee that the manually installed software behaves exactly like the corresponding package would and other packages depending on it would not work properly."
+#, fuzzy
+#| msgid "The purpose of a fake package is to trick <command>dpkg</command> and <command>apt</command> into believing that some package is installed even though it's only an empty shell. This allows satisfying dependencies on a package when the corresponding software was installed outside the scope of the packaging system. Such a method works, but it should still be avoided whenever possible, since there is no guarantee that the manually installed software behaves exactly like the corresponding package would and other packages depending on it would not work properly."
+msgid "The purpose of a fake package is to trick <command>dpkg</command> and <command>apt</command> into believing that some package is installed even though it is only an empty shell. This allows satisfying dependencies on a package when the corresponding software was installed outside the scope of the packaging system. Such a method works, but it should still be avoided whenever possible, since there is no guarantee that the manually installed software behaves exactly like the corresponding package would and other packages depending on it would not work properly."
 msgstr "Назначение пакета-пустышки состоит в том, чтобы обманом заставить <command>dpkg</command> и <command>apt</command> поверить в то, что какой-либо пакет установлен, даже если он пуст. Это позволяет удовлетворить зависимость от пакета, когда соответствующее программное обеспечение было установлено в обход системы управления пакетами. Хотя такой способ работает, его следует по возможности избегать, ведь нет никакой гарантии, что установленное вручную программное обеспечение ведет себя точно так же, как соответствующий пакет, и зависящие от него пакеты могут работать некорректно."
 
 msgid "On the other hand, a meta-package exists mostly as a collection of dependencies, so that installing the meta-package will actually bring in a set of other packages in a single step."
@@ -152,16 +203,17 @@ msgstr "Оба эти типа пакетов могут быть созданы
 msgid "Header file of the <emphasis>libxml-libxml-perl</emphasis> fake package"
 msgstr "Заголовочный файл пакета-пустышки <emphasis>libxml-libxml-perl</emphasis>"
 
+#, fuzzy
 #| msgid ""
 #| "\n"
 #| "Section: perl\n"
 #| "Priority: optional\n"
-#| "Standards-Version: 3.8.4\n"
+#| "Standards-Version: 3.9.6\n"
 #| "\n"
 #| "Package: libxml-libxml-perl\n"
-#| "Version: 1.57-1\n"
+#| "Version: 2.0116-1\n"
 #| "Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
-#| "Depends: libxml2 (&gt;= 2.6.6)\n"
+#| "Depends: libxml2 (&gt;= 2.7.4)\n"
 #| "Architecture: all\n"
 #| "Description: Fake package - module manually installed in site_perl\n"
 #| " This is a fake package to let the packaging system\n"
@@ -174,16 +226,16 @@ msgid ""
 "\n"
 "Section: perl\n"
 "Priority: optional\n"
-"Standards-Version: 3.9.6\n"
+"Standards-Version: 4.4.1\n"
 "\n"
 "Package: libxml-libxml-perl\n"
-"Version: 2.0116-1\n"
+"Version: 2.0134-1\n"
 "Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
 "Depends: libxml2 (&gt;= 2.7.4)\n"
 "Architecture: all\n"
 "Description: Fake package - module manually installed in site_perl\n"
 " This is a fake package to let the packaging system\n"
-" believe that this Debian package is installed. \n"
+" believe that this Debian package is installed.\n"
 " .\n"
 " In fact, the package is not installed since a newer version\n"
 " of the module has been manually compiled &amp; installed in the\n"
@@ -213,28 +265,27 @@ msgstr "Следующий шаг состоит в том, чтобы созд�
 msgid "Simple File Archive"
 msgstr "Простое файловое хранилище"
 
-#| msgid "The Falcot Corp administrators need to create a Debian package in order to ease deployment of a set of documents on a large number of machines. The administrator in charge of this task first reads the “New Maintainer's Guide”, then starts working on their first package. <ulink type=\"block\" url=\"http://www.debian.org/doc/maint-guide/\" />"
 msgid "The Falcot Corp administrators need to create a Debian package in order to ease deployment of a set of documents on a large number of machines. The administrator in charge of this task first reads the “New Maintainer's Guide”, then starts working on their first package. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
 msgstr "Администраторам Falcot Corp необходимо создать пакет для того, чтобы облегчить развёртывание набора документов на большом количестве машин. Администратор, отвечающий за эту задачу, сперва читает «Руководство начинающего разработчика Debian», после чего начинает работать над своим первым пакетом. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
 
 msgid "The first step is creating a <filename>falcot-data-1.0</filename> directory to contain the target source package. The package will logically, be named <literal>falcot-data</literal> and bear the <literal>1.0</literal> version number. The administrator then places the document files in a <filename>data</filename> subdirectory. Then they invoke the <command>dh_make</command> command (from the <emphasis role=\"pkg\">dh-make</emphasis> package) to add files required by the package generation process, which will all be stored in a <filename>debian</filename> subdirectory:"
 msgstr "Первым шагом является создание каталога <filename>falcot-data-1.0</filename> для целевого пакета исходного кода. Пакет, логично, будет называться <literal>falcot-data</literal> и иметь номер версии <literal>1.0</literal>. Затем администратор размещает файлы документов в подкаталоге <filename>data</filename>. После этого вызывается команда <command>dh_make</command> (из пакета <emphasis role=\"pkg\">dh-make</emphasis>) для того, чтобы добавить файлы, необходимые для создания пакета, которые будут сохранены в подкаталоге <filename>debian</filename>:"
 
+#, fuzzy
 #| msgid ""
 #| "\n"
 #| "<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n"
 #| "<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n"
 #| "<computeroutput>\n"
-#| "Type of package: single binary, indep binary, multiple binary, library, kernel module, kernel patch or cdbs?\n"
-#| " [s/i/m/l/k/n/b] </computeroutput><userinput>i</userinput>\n"
+#| "Type of package: single binary, indep binary, multiple binary, library, kernel module, kernel patch?\n"
+#| " [s/i/m/l/k/n] </computeroutput><userinput>i</userinput>\n"
 #| "<computeroutput>\n"
 #| "Maintainer name : Raphael Hertzog\n"
 #| "Email-Address   : hertzog@debian.org\n"
-#| "Date            : Mon, 11 Apr 2011 15:11:36 +0200\n"
+#| "Date            : Fri, 04 Sep 2015 12:09:39 -0400\n"
 #| "Package Name    : falcot-data\n"
 #| "Version         : 1.0\n"
-#| "License         : blank\n"
-#| "Usind dpatch    : no\n"
+#| "License         : gpl3\n"
 #| "Type of Package : Independent\n"
 #| "Hit &lt;enter&gt; to confirm:\n"
 #| "Currently there is no top level Makefile. This may require additional tuning.\n"
@@ -246,20 +297,20 @@ msgid ""
 "<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n"
 "<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n"
 "<computeroutput>\n"
-"Type of package: single binary, indep binary, multiple binary, library, kernel module, kernel patch?\n"
-" [s/i/m/l/k/n] </computeroutput><userinput>i</userinput>\n"
+"Type of package: (single, indep, library, python)\n"
+"[s/i/l/p]? </computeroutput><userinput>i</userinput>\n"
 "<computeroutput>\n"
-"Maintainer name : Raphael Hertzog\n"
-"Email-Address   : hertzog@debian.org\n"
-"Date            : Fri, 04 Sep 2015 12:09:39 -0400\n"
-"Package Name    : falcot-data\n"
-"Version         : 1.0\n"
-"License         : gpl3\n"
-"Type of Package : Independent\n"
-"Hit &lt;enter&gt; to confirm:\n"
-"Currently there is no top level Makefile. This may require additional tuning.\n"
-"Done. Please edit the files in the debian/ subdirectory now. You should also\n"
-"check that the falcot-data Makefiles install into $DESTDIR and not in / .\n"
+"Maintainer Name     : Raphael Hertzog\n"
+"Email-Address       : hertzog@debian.org\n"
+"Date                : Fri, 04 Sep 2015 12:09:39 -0400\n"
+"Package Name        : falcot-data\n"
+"Version             : 1.0\n"
+"License             : gpl3\n"
+"Package Type        : indep\n"
+"Are the details correct? [Y/n/q]\n"
+"Currently there is not top level Makefile. This may require additional tuning\n"
+"Done. Please edit the files in the debian/ subdirectory now.\n"
+"\n"
 "$</computeroutput>"
 msgstr ""
 "\n"
@@ -282,7 +333,9 @@ msgstr ""
 "check that the falcot-data Makefiles install into $DESTDIR and not in / .\n"
 "$</computeroutput>"
 
-msgid "The selected type of package (<emphasis>indep binary</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single binary</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
+#, fuzzy
+#| msgid "The selected type of package (<emphasis>indep binary</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single binary</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
+msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
 msgstr "Выбранный тип пакета (<emphasis>indep binary</emphasis>) указывает на то,что из этого пакета с исходным кодом будет создан единственный двоичный пакет, не зависящий от архитектуры (<literal>Architecture: all</literal>). <emphasis>single binary</emphasis> аналогичен, но соответствует единичному двоичному пакету, зависящему от целевой архитектуры (<literal>Architecture: any</literal>). В этом случае первый выбор более актуален, поскольку пакет содержит только документы и никаких двоичных программ, так что он может быть с одинаковым успехом использован на компьютерах для всех архитектур."
 
 msgid "<primary>package types</primary>"
@@ -291,7 +344,9 @@ msgstr "<primary>типы пакетов</primary>"
 msgid "<primary>package</primary><secondary>types</secondary>"
 msgstr "<primary>пакет</primary><secondary>типы</secondary>"
 
-msgid "The <emphasis>multiple binary</emphasis> type corresponds to a source package leading to several binary packages. A particular case, <emphasis>library</emphasis>, is useful for shared libraries, since they need to follow strict packaging rules. In a similar fashion, <emphasis>kernel module</emphasis> or <emphasis>kernel patch</emphasis> should be restricted to packages containing kernel modules."
+#, fuzzy
+#| msgid "The <emphasis>multiple binary</emphasis> type corresponds to a source package leading to several binary packages. A particular case, <emphasis>library</emphasis>, is useful for shared libraries, since they need to follow strict packaging rules. In a similar fashion, <emphasis>kernel module</emphasis> or <emphasis>kernel patch</emphasis> should be restricted to packages containing kernel modules."
+msgid "The <emphasis>library</emphasis> type corresponds to a source package leading to several binary packages. It is useful for shared libraries, since they need to follow strict packaging rules."
 msgstr "Тип <emphasis>multiple binary</emphasis> соответствует пакету исходного кода, из которого получается несколько двоичных пакетов. Как частный случай, <emphasis>library</emphasis> полезен для разделяемых библиотек, так как они должны следовать строгим правилам пакетирования. Аналогичным образом, <emphasis>kernel module</emphasis> или <emphasis>kernel patch</emphasis> следует использовать только для пакетов, содержащих модули ядра."
 
 msgid "<emphasis>TIP</emphasis> Maintainer's name and email address"
@@ -312,24 +367,47 @@ msgstr ""
 msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file should be kept, since it is required for the correct functioning of the <emphasis>debhelper</emphasis> suite of programs (all beginning with the <command>dh_</command> prefix) used at various stages of the package build process."
 msgstr "Команда <command>dh_make</command> создала подкаталог <filename>debian</filename> со множеством файлов. Некоторые из них являются обязательными, в частности, <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> и <filename>copyright</filename>. Файлы с расширением <filename>.ex</filename> — это примеры файлов, которые могут быть использованы путем их модификации (и удаления расширения) при необходимости. Когда они не нужны, рекомендуется удалить их. Файл <filename>compat</filename> следует оставить, так как требуется для корректного функционирования набора программ <emphasis>debhelper</emphasis> (все они начинаются с префикса <command>dh_</command>), используемого на различных этапах процесса сборки пакета."
 
-msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>iceweasel | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
+#, fuzzy
+#| msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>iceweasel | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
+msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
 msgstr "Файл <filename>copyright</filename> должен содержать информацию об авторах документов, включенных в пакет, а также соответствующих лицензиях. В нашем случае это внутренние документы, и их использование ограничено пределами компании Falcot Corp. Файл <filename>changelog</filename> по умолчанию в целом нам подходит; замена  «Initial release» на более многословное объяснение и изменение дистрибутива с <literal>unstable</literal> на <literal>internal</literal> вполне достаточно. Файл <filename>control</filename> также был изменён: значение поля <literal>Section</literal> было заменено на <emphasis>misc</emphasis>, а поля <literal>Homepage</literal>, <literal>Vcs-Git</literal> и <literal>Vcs-Browser</literal> были удалены. В поле <literal>Depends</literal> было добавлено <literal>iceweasel | www-browser</literal>, чтобы обеспечить наличие веб-браузера, способного отображать документы, поставляемые в пакете."
 
 msgid "The <filename>control</filename> file"
 msgstr "Файл <filename>control</filename>"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Source: falcot-data\n"
+#| "Section: misc\n"
+#| "Priority: optional\n"
+#| "Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
+#| "Build-Depends: debhelper (&gt;= 9)\n"
+#| "Standards-Version: 3.9.5\n"
+#| "\n"
+#| "Package: falcot-data\n"
+#| "Architecture: all\n"
+#| "Depends: iceweasel | www-browser, ${misc:Depends}\n"
+#| "Description: Internal Falcot Corp Documentation\n"
+#| " This package provides several documents describing the internal\n"
+#| " structure at Falcot Corp.  This includes:\n"
+#| "  - organization diagram\n"
+#| "  - contacts for each department.\n"
+#| " .\n"
+#| " These documents MUST NOT leave the company.\n"
+#| " Their use is INTERNAL ONLY."
 msgid ""
 "\n"
 "Source: falcot-data\n"
 "Section: misc\n"
 "Priority: optional\n"
 "Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
-"Build-Depends: debhelper (&gt;= 9)\n"
-"Standards-Version: 3.9.5\n"
+"Build-Depends: debhelper (&gt;= 10)\n"
+"Standards-Version: 4.4.1\n"
 "\n"
 "Package: falcot-data\n"
 "Architecture: all\n"
-"Depends: iceweasel | www-browser, ${misc:Depends}\n"
+"Depends: firefox-esr | www-browser, ${misc:Depends}\n"
 "Description: Internal Falcot Corp Documentation\n"
 " This package provides several documents describing the internal\n"
 " structure at Falcot Corp.  This includes:\n"
@@ -386,14 +464,24 @@ msgstr ""
 msgid "The <filename>copyright</filename> file"
 msgstr "Файл <filename>copyright</filename>"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\n"
+#| "Upstream-Name: falcot-data\n"
+#| "\n"
+#| "Files: *\n"
+#| "Copyright: 2004-2015 Falcot Corp\n"
+#| "License: \n"
+#| " All rights reserved."
 msgid ""
 "\n"
-"Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\n"
+"Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\n"
 "Upstream-Name: falcot-data\n"
 "\n"
 "Files: *\n"
-"Copyright: 2004-2015 Falcot Corp\n"
-"License: \n"
+"Copyright: 2004-2019 Falcot Corp\n"
+"License:\n"
 " All rights reserved."
 msgstr ""
 "\n"
@@ -444,7 +532,9 @@ msgstr ""
 "\n"
 "data/* usr/share/falcot-data/"
 
-msgid "At this point, the package can be created. We will however add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
+#, fuzzy
+#| msgid "At this point, the package can be created. We will however add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
+msgid "At this point, the package can be created. We will, however, add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgstr "Теперь пакет может быть создан. Однако мы добавим несколько косметических штрихов. Поскольку администраторы хотят, чтобы документы были легко доступны из меню графического рабочего стола, мы добавим файл <filename>falcot-data.desktop</filename>, установим в <filename>/usr/share/applications</filename>, добавив вторую строчку в <filename>debian/falcot-data.install</filename>."
 
 msgid "The <filename>falcot-data.desktop</filename> file"
@@ -483,7 +573,9 @@ msgstr ""
 "data/* usr/share/falcot-data/\n"
 "falcot-data.desktop usr/share/applications/"
 
-msgid "Our source package is now ready. All that's left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
+#, fuzzy
+#| msgid "Our source package is now ready. All that's left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
+msgid "Our source package is now ready. All that is left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
 msgstr "Наш пакет исходного кода теперь готов. Все, что осталось сделать, это создать двоичный пакет тем же методом, который мы использовали ранее для пересборки пакетов: мы запускаем команду <command>dpkg-buildpackage -us -uc</command> в каталоге <filename>falcot-data-1.0</filename>."
 
 msgid "Creating a Package Repository for APT"
@@ -516,7 +608,9 @@ msgstr "<primary><command>mini-dinstall</command></primary>"
 msgid "The administrators therefore configure a virtual host on their internal HTTP server, with <filename>/srv/vhosts/packages/</filename> as the root of the associated web space. The management of the archive itself is delegated to the <command>mini-dinstall</command> command (in the similarly-named package). This tool keeps an eye on an <filename>incoming/</filename> directory (in our case, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>) and waits for new packages there; when a package is uploaded, it is installed into a Debian archive at <filename>/srv/vhosts/packages/</filename>. The <command>mini-dinstall</command> command reads the <filename>*.changes</filename> file created when the Debian package is generated. These files contain a list of all other files associated with the version of the package (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, or their equivalents with other compression tools), and these allow <command>mini-dinstall</command> to know which files to install. <filename>*.changes</filename> files also contain the name of the target distribution (often <literal>unstable</literal>) mentioned in the latest <filename>debian/changelog</filename> entry, and <command>mini-dinstall</command> uses this information to decide where the package should be installed. This is why administrators must always change this field before building a package, and set it to <literal>internal</literal> or <literal>updates</literal>, depending on the target location. <command>mini-dinstall</command> then generates the files required by APT, such as <filename>Packages.gz</filename>."
 msgstr "Соответственно, администраторы настраивают на своем внутреннем HTTP-сервере виртуальный хост с корневым каталогом <filename>/srv/vhosts/packages/</filename>. Управление самим архивом осуществляется командой <command>mini-dinstall</command> (из одноимённого пакета). Этот инструмент следит за каталогом <filename>incoming/</filename> (в нашем случае это <filename>/srv/vhosts/ packages/mini-dinstall/incoming/</filename>) и ожидает появления пакетов в нём; когда пакет будет загружен, он установится в хранилище Debian по адресу <filename>/srv/vhosts/packages/</filename>. Команда <command>mini-dinstall</command> считывает файл <filename>*.changes</filename>, создающийся при сбоке пакета Debian. Эти файлы содержат список всех прочих файлов, относящихя к этой версии пакета (<filename>*.deb</filename>, <filename>*.dsc </filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename> или их эквивалентов, сжатых другими инструментами), и из них <command>mini-dinstall</command> узнаёт, какие файлы устанавливать. Файлы <filename>*.changes</filename> также содержат название целевого дистрибутива (чаще <literal>unstable</literal>), указанного в последней записи в <filename>debian/changelog</filename>, и <command>mini-dinstall</command> использует эту информацию,чтобы решить, куда нужно установить пакеты. Поэтому администраторы перед сборкой пакета должны всегда изменять значение в этом поле на <literal>internal</literal> или <literal>updates</literal>, в зависимости от  целевого расположения. Затем <command>mini-dinstall</command> создает файлы, необхдимые для APT, такие как <filename>Packages.gz</filename>."
 
-msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>"
+#, fuzzy
+#| msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>"
+msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command>"
 msgstr "<emphasis>АЛЬТЕРНАТИВА</emphasis> <command>apt-ftparchive</command>"
 
 msgid "<primary><command>apt-ftparchive</command></primary>"
@@ -542,6 +636,9 @@ msgstr ""
 
 msgid "The <command>apt-ftparchive sources</command> command allows creating <filename>Sources.gz</filename> files in a similar fashion."
 msgstr "Команда <command>apt-ftparchive sources</command> позволяет создать файлы <filename>Sources.gz</filename> аналогичным образом."
+
+msgid "<command>reprepro</command> is a more advanced tool for the same purpose. It can produce, manage and syncronize a local repository of packages. It stores packages and checksums in a Berkeley DB database file, so no database server is needed. With <command>reprepro</command> you can check signatures of mirrored repositories and create signatures of the generated package indices."
+msgstr ""
 
 msgid "Configuring <command>mini-dinstall</command> requires setting up a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp case, the contents are as follows:"
 msgstr "Настройка <command>mini-dinstall</command> сводится к созданию файла <filename>~/.mini-dinstall.conf</filename>; в случае  Falcot Corp содержимое его будет следующим:"
@@ -589,7 +686,9 @@ msgstr "Решением, которое стоит отметить, являе
 msgid "<emphasis>SECURITY</emphasis> <command>mini-dinstall</command> and permissions"
 msgstr "<emphasis>БЕЗОПАСНОСТЬ</emphasis> <command>mini-dinstall</command> и права доступа"
 
-msgid "Since <command>mini-dinstall</command> has been designed to run as a regular user, there's no need to run it as root. The easiest way is to configure everything within the user account belonging to the administrator in charge of creating the Debian packages. Since only this administrator has the required permissions to put files in the <filename>incoming/</filename> directory, we can deduce that the administrator authenticated the origin of each package prior to deployment and <command>mini-dinstall</command> does not need to do it again. This explains the <literal>verify_sigs = 0</literal> parameter (which means that signatures need not be verified). However, if the contents of packages are sensitive, we can reverse the setting and elect to authenticate with a keyring containing the public keys of persons allowed to create packages (configured with the <literal>extra_keyrings</literal> parameter); <command>mini-dinstall</command> will then check the origin of each incoming package by analyzing the signature integrated to the <filename>*.changes</filename> file."
+#, fuzzy
+#| msgid "Since <command>mini-dinstall</command> has been designed to run as a regular user, there's no need to run it as root. The easiest way is to configure everything within the user account belonging to the administrator in charge of creating the Debian packages. Since only this administrator has the required permissions to put files in the <filename>incoming/</filename> directory, we can deduce that the administrator authenticated the origin of each package prior to deployment and <command>mini-dinstall</command> does not need to do it again. This explains the <literal>verify_sigs = 0</literal> parameter (which means that signatures need not be verified). However, if the contents of packages are sensitive, we can reverse the setting and elect to authenticate with a keyring containing the public keys of persons allowed to create packages (configured with the <literal>extra_keyrings</literal> parameter); <command>mini-dinstall</command> will then check the origin of each incoming package by analyzing the signature integrated to the <filename>*.changes</filename> file."
+msgid "Since <command>mini-dinstall</command> has been designed to run as a regular user, there is no need to run it as root. The easiest way is to configure everything within the user account belonging to the administrator in charge of creating the Debian packages. Since only this administrator has the required permissions to put files in the <filename>incoming/</filename> directory, we can deduce that the administrator authenticated the origin of each package prior to deployment and <command>mini-dinstall</command> does not need to do it again. This explains the <literal>verify_sigs = 0</literal> parameter (which means that signatures need not be verified). However, if the contents of packages are sensitive, we can reverse the setting and elect to authenticate with a keyring containing the public keys of persons allowed to create packages (configured with the <literal>extra_keyrings</literal> parameter); <command>mini-dinstall</command> will then check the origin of each incoming package by analyzing the signature integrated to the <filename>*.changes</filename> file."
 msgstr "Поскольку <command>mini-dinstall</command> разработан с целью запуска от имени обычного пользователя, нет нужды запускать его от имени root. Самый простой способ — настроить всё в пределах учетной записи, принадлежащей администратору, отвечающему за создание пакетов Debian. Так как только этот администратор имеет необходимые полномочия, необходимые для размещения файлов в каталоге <filename>incoming/</filename> мы можем сделать вывод, что администратор проверил подлинное происхождение каждого пакета до развёртывания, и у <command>mini-dinstall</command> нет необходимости делать это снова. Это объясняет параметр  <literal>verify_sigs = 0</literal> (который означает, что нет нужды проверять подписи). Однако, если содержимое пакетов уязвимо, мы можем изменить настройку и принять решение об аутентификации с помощью брелока, содержащего открытые ключи лиц, которым разрешено создавать пакеты (настроенного с помощью параметра <literal>extra_keyrings</literal>); в таком случае <command>mini-dinstall</command> проверит происхождение каждого входящего пакета, анализируя подпись, встроенную в файл <filename>*.changes</filename>."
 
 msgid "Invoking <command>mini-dinstall</command> actually starts a daemon in the background. As long as this daemon runs, it will check for new packages in the <filename>incoming/</filename> directory every half-hour; when a new package arrives, it will be moved to the archive and the appropriate <filename>Packages.gz</filename> and <filename>Sources.gz</filename> files will be regenerated. If running a daemon is a problem, <command>mini-dinstall</command> can also be manually invoked in batch mode (with the <literal>-b</literal> option) every time a package is uploaded into the <filename>incoming/</filename> directory. Other possibilities provided by <command>mini-dinstall</command> are documented in its <citerefentry><refentrytitle>mini-dinstall</refentrytitle> <manvolnum>1</manvolnum></citerefentry> manual page."
@@ -610,13 +709,17 @@ msgstr "Как стать сопровождающим пакета"
 msgid "Learning to Make Packages"
 msgstr "Учимся создавать пакеты"
 
-msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It's not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
+#, fuzzy
+#| msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It's not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
+msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
 msgstr "Создание качественного пакета Debian — не всегда простая задача, и чтобы стать сопровождающим пакета, нужно потратить некоторое время на обучение, включающее как теорию, так и практику. Это не просто сборка и установка программного обеспечения; большая часть сложностей требует понимания проблем и конфликтов, а также прочих взаимоотношений с мириадом других пакетов."
 
 msgid "Rules"
 msgstr "Правила"
 
-msgid "A Debian package must comply with the precise rules compiled in the Debian policy, and each package maintainer must know them. There is no requirement to know them by heart, but rather to know they exist and to refer to them whenever a choice presents a non-trivial alternative. Every Debian maintainer has made mistakes by not knowing about a rule, but this is not a huge problem as long as the error gets fixed when a user reports it as a bug report (which tends to happen fairly soon thanks to advanced users). <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
+#, fuzzy
+#| msgid "A Debian package must comply with the precise rules compiled in the Debian policy, and each package maintainer must know them. There is no requirement to know them by heart, but rather to know they exist and to refer to them whenever a choice presents a non-trivial alternative. Every Debian maintainer has made mistakes by not knowing about a rule, but this is not a huge problem as long as the error gets fixed when a user reports it as a bug report (which tends to happen fairly soon thanks to advanced users). <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
+msgid "A Debian package must comply with the precise rules compiled in the Debian policy, and each package maintainer must know them. There is no requirement to know them by heart, but rather to know they exist and to refer to them whenever a choice presents a non-trivial alternative. Every Debian maintainer has made mistakes by not knowing about a rule, but this is not a huge problem as long as the error gets fixed when a user reports it as a bug report (which tends to happen fairly soon thanks to advanced users). The <literal>Standards-Version</literal> field in <filename>debian/control</filename> specifies the version of the Debian policy with which a package complies. Maintainers should comply to the latest version of the Debian policy. <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
 msgstr "Пакет Debian должен подчиняться чётким правилам, сведённым в политику Debian, и каждый сопровождающий пакета должен знать их. Не требуется вызубрить их наизусть, но нужно знать, что они существуют и обращаться к ним всякий раз, сталкиваясь с нетривиальным выбором. Каждый сопровождающий Debian совершал ошибки, не зная о правиле, однако это не особо страшно если ошибка исправлена после того, как пользователь отправил отчёт о ней, что, как правило, происходит довольно быстро, благодаря продвинутым пользователям. <ulink type=\"block\" url=\"http://www.debian.org/doc/debian-policy/\" />"
 
 msgid "Procedures"
@@ -640,7 +743,9 @@ msgstr "Программа <command>lintian</command>"
 msgid "<primary><command>lintian</command></primary>"
 msgstr "<primary><command>lintian</command></primary>"
 
-msgid "This tool is one of the most important: it's the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
+#, fuzzy
+#| msgid "This tool is one of the most important: it's the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
+msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
 msgstr "Этот инструмент является одним из самых важных: он осуществляет проверку пакета Debian. Он включает большое количество тестов, созданных на основе политики Debian, и автоматически выявляет огромное число возможных ошибок, которые потом можно исправить до выпуска пакетов."
 
 msgid "This tool is only a helper, and it sometimes gets it wrong (for instance, since the Debian policy changes over time, <command>lintian</command> is sometimes outdated). It is also not exhaustive: not getting any Lintian error should not be interpreted as a proof that the package is perfect; at most, it avoids the most common errors."
@@ -723,6 +828,32 @@ msgstr "Debhelper представляет собой набор сценари�
 
 msgid "The <command>dh_make</command> script (in the <emphasis>dh-make</emphasis> package) creates files required for generating a Debian package in a directory initially containing the sources for a piece of software. As can be guessed from the name of the program, the generated files use debhelper by default."
 msgstr "Сценарий <command>dh_make</command> (из пакета <emphasis>dh-make</emphasis>) создает файлы, необходимые для создания пакета Debian в каталоге, изначально содержащем исходный код программы. Как можно догадаться из названия программы, сформированные файлы по умолчанию используют debhelper."
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<emphasis role=\"pkg\">autopkgtest</emphasis>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis>dh-make</emphasis></primary>"
+msgid "<primary><emphasis>autopkgtest</emphasis></primary>"
+msgstr "<primary><emphasis>dh-make</emphasis></primary>"
+
+msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package."
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<emphasis role=\"pkg\">reprotest</emphasis>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis>debhelper</emphasis></primary>"
+msgid "<primary><emphasis>reprotest</emphasis></primary>"
+msgstr "<primary><emphasis>debhelper</emphasis></primary>"
+
+msgid "<command>reprotest</command> builds the same source code twice in different environments, and then checks the binaries produced by each build for differences. If any are found, then <command>diffoscope</command> (if unavailable, <command>diff</command>) is used to display them in detail for later analysis."
+msgstr ""
 
 msgid "<command>dupload</command> and <command>dput</command>"
 msgstr "<command>dupload</command> и <command>dput</command>"
@@ -828,3 +959,6 @@ msgstr "На самом последнем этапе весь процесс р
 
 msgid "The DAM's decision is authoritative and (almost) without appeal, which explains why the people in that seat have often been criticized in the past."
 msgstr "Решение менеджера учётных записей является окончательным, (почти) без права на обжалование, что объясняет, почему люди находящиеся на этой позиции, часто критиковались в прошлом."
+
+#~ msgid "<emphasis>QUICK LOOK</emphasis> <command>pbuilder</command>"
+#~ msgstr "<emphasis>КРАТКИЙ ОБЗОР</emphasis> <command>pbuilder</command>"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2015-10-21 09:09+0200\n"
+"POT-Creation-Date: 2020-05-17 17:54+0200\n"
 "PO-Revision-Date: 2012-06-01T20:23:58\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: None\n"
@@ -43,22 +43,19 @@ msgstr ""
 msgid "<primary>interface</primary><secondary>graphical</secondary>"
 msgstr ""
 
-msgid "The initial configuration for the graphical interface can be awkward at times; very recent video cards often don't work perfectly with the X.org version shipped in the Debian stable version."
-msgstr ""
-
-msgid "A brief reminder: X.org is the software component that allows graphical applications to display windows on screen. It includes a driver that makes efficient use of the video card. The features offered to the graphical applications are exported through a standard interface, <emphasis>X11</emphasis> (<emphasis role=\"distribution\">Jessie</emphasis> contains its <emphasis>X11R7.7</emphasis> version)."
+msgid "A brief reminder: X.org is the software component that allows graphical applications to display windows on screen. It includes a driver that makes efficient use of the video card. The features offered to the graphical applications are exported through a standard interface, <emphasis>X11</emphasis> (<emphasis role=\"distribution\">Buster</emphasis> contains version <emphasis>X11R7.7</emphasis>)."
 msgstr ""
 
 msgid "<emphasis>PERSPECTIVE</emphasis> X11, XFree86 and X.org"
 msgstr ""
 
-msgid "X11 is the graphical system most widely used on Unix-like systems (also available, in addition to the native system, for Windows and Mac OS). Strictly speaking, the “X11” term only refers to a protocol specification, but it is also used to refer to the implementation in practice."
+msgid "X11 is the graphical system most widely used on Unix-like systems (also available for Windows and Mac OS). Strictly speaking, the term “X11” only refers to a protocol specification, but it is also used to refer to the implementation in practice."
 msgstr ""
 
-msgid "X11 had a rough start, but the 1990's saw XFree86 emerge as the reference implementation because it was free software, portable, and maintained by a collaborative community. However, the rate of evolution slowed down near the end when the software only gained new drivers. That situation, along with a very controversial license change, led to the X.org fork in 2004. This is now the reference implementation, and Debian <emphasis role=\"distribution\">Jessie</emphasis> uses X.org version 7.7."
+msgid "X11 had a rough start, but the 1990s saw XFree86 emerge as the reference implementation because it was free software, portable, and maintained by a collaborative community. However, the rate of evolution slowed down near the end when the software only gained new drivers. That situation, along with a very controversial license change, led to the X.org fork in 2004. This is now the reference implementation, and Debian <emphasis role=\"distribution\">Buster</emphasis> uses X.org version 7.7."
 msgstr ""
 
-msgid "Current versions of X.org are able to autodetect the available hardware: this applies to the video card and the monitor, as well as keyboards and mice; in fact, it is so convenient that the package no longer even creates a <filename>/etc/X11/xorg.conf</filename> configuration file. This is all made possible by features provided by the Linux kernel (in particular for keyboards and mice), by having each driver list the video cards it supports, and by using the DDC protocol to fetch monitor characteristics."
+msgid "Current versions of X.org are able to autodetect the available hardware: this applies to the video card and the monitor, as well as keyboards and mice; in fact, it is so convenient that the package no longer even creates a <filename>/etc/X11/xorg.conf</filename> configuration file."
 msgstr ""
 
 msgid "<primary>resolution</primary>"
@@ -76,7 +73,16 @@ msgstr ""
 msgid "<primary><emphasis role=\"pkg\">xserver-xorg</emphasis></primary>"
 msgstr ""
 
-msgid "Note that if the detected video card is not handled by any of the available drivers, X.org tries using the VESA and fbdev drivers. The former is a generic driver that should work everywhere, but with limited capabilities (fewer available resolutions, no hardware acceleration for games and visual effects for the desktop, and so on) while the latter works on top of the kernel's framebuffer device. The X server writes its messages to the <filename>/var/log/Xorg.0.log</filename> log file, which is where one would look to know what driver is currently in use. For example, the following snippet matches what the <literal>intel</literal> driver outputs when it is loaded:"
+msgid "Note that if the detected video card is not handled by any of the available drivers, X.org tries using the <literal>vesa</literal> and <literal>fbdev</literal> drivers. VESA is a generic driver that should work everywhere, but with limited capabilities (fewer available resolutions, no hardware acceleration for games and visual effects for the desktop, and so on) while <literal>fbdev</literal> works on top of the kernel's framebuffer device. Nowadays the X server can run without any administrative privileges (this used to be required to be able to configure the screen) and its log file is then stored in the user's home directory in <filename>~/.local/share/xorg/Xorg.0.log</filename>, whereas it is <filename>/var/log/Xorg.0.log</filename> for X servers started with root privileges and for versions older than Debian 9 <emphasis role=\"distribution\">Stetch</emphasis>. That log file is where one would look to know what driver is currently in use. For example, the following snippet matches what the <literal>intel</literal> driver outputs when it is loaded:"
+msgstr ""
+
+msgid "<primary>VESA</primary>"
+msgstr ""
+
+msgid "<primary><literal>fbdev</literal></primary>"
+msgstr ""
+
+msgid "<primary><literal>vesa</literal></primary>"
 msgstr ""
 
 msgid ""
@@ -90,28 +96,25 @@ msgid ""
 "(II) Loading /usr/lib/xorg/modules/drivers/intel_drv.so"
 msgstr ""
 
-msgid "<primary>VESA</primary>"
-msgstr ""
-
 msgid "<primary>video card</primary>"
 msgstr ""
 
 msgid "<emphasis>EXTRA</emphasis> Proprietary drivers"
 msgstr ""
 
-msgid "Some video card makers (most notably nVidia) refuse to publish the hardware specifications that would be required to implement good free drivers. They do, however, provide proprietary drivers that allow using their hardware. This policy is nefarious, because even when the provided driver exists, it is usually not as polished as it should be; more importantly, it does not necessarily follow the X.org updates, which may prevent the latest available driver from loading correctly (or at all). We cannot condone this behavior, and we recommend you avoid these makers and favor more cooperative manufacturers."
+msgid "Some video card makers (most notably NVIDIA) refuse to publish the hardware specifications that would be required to implement good free drivers. They do, however, provide proprietary drivers that allow using their hardware. This policy is nefarious, because even when the provided driver exists, it is usually not as polished as it should be; more importantly, it does not necessarily follow the X.org updates, which may prevent the latest available driver from loading correctly (or at all). We cannot condone this behavior, and we recommend you avoid these makers and favor more cooperative manufacturers."
 msgstr ""
 
-msgid "If you still end up with such a card, you will find the required packages in the <emphasis>non-free</emphasis> section: <emphasis role=\"pkg\">nvidia-glx</emphasis> for nVidia cards, and <emphasis role=\"pkg\">fglrx-driver</emphasis> for some ATI cards. Both cases require matching kernel modules. Building these modules can be automated by installing the <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (for nVidia), or <emphasis role=\"pkg\">fglrx-modules-dkms</emphasis> (for ATI) packages."
+msgid "If you still end up with such a card, you will find the required packages in the <emphasis>non-free</emphasis> section: <emphasis role=\"pkg\">nvidia-driver</emphasis> for NVIDIA cards. It requires a matching kernel module. Building the module can be automated by installing the package <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (for NVIDIA)."
 msgstr ""
 
-msgid "The “nouveau” project aims to develop a free software driver for nVidia cards. As of <emphasis role=\"distribution\">Jessie</emphasis>, its feature set does not match the proprietary driver. In the developers' defense, we should mention that the required information can only be gathered by reverse engineering, which makes things difficult. The free driver for ATI video cards, called “radeon”, is much better in that regard although it often requires a non-free firmware."
+msgid "The “nouveau” project aims to develop a free software driver for NVIDIA cards and is the default driver that you get for those cards in Debian. In general, its feature set and performance do not match the proprietary driver. In the developers' defense, we should mention that the required information can only be gathered by reverse engineering, which makes things difficult. The free drivers for ATI video cards, called “radeon” and \"amdgpu\", are much better in that regard although it often requires non-free firmware from the <emphasis role=\"pkg\">firmware-amd-graphics</emphasis> package."
 msgstr ""
 
 msgid "<primary>ATI</primary>"
 msgstr ""
 
-msgid "<primary>nVidia</primary>"
+msgid "<primary>NVIDIA</primary>"
 msgstr ""
 
 msgid "Customizing the Graphical Interface"
@@ -123,25 +126,49 @@ msgstr ""
 msgid "<primary>manager</primary><secondary>display</secondary>"
 msgstr ""
 
+msgid "<primary>display manager</primary><secondary>gdm</secondary>"
+msgstr ""
+
+msgid "<primary>display manager</primary><secondary>sddm</secondary>"
+msgstr ""
+
+msgid "<primary>display manager</primary><secondary>xdm</secondary>"
+msgstr ""
+
+msgid "<primary>display manager</primary><secondary>lightdm</secondary>"
+msgstr ""
+
 msgid "<primary><command>gdm</command></primary>"
 msgstr ""
 
-msgid "<primary><command>kdm</command></primary>"
+msgid "<primary><command>sddm</command></primary>"
 msgstr ""
 
 msgid "<primary><command>xdm</command></primary>"
 msgstr ""
 
-msgid "The graphical interface only provides display space. Running the X server by itself only leads to an empty screen, which is why most installations use a <emphasis>display manager</emphasis> to display a user authentication screen and start the graphical desktop once the user has authenticated. The three most popular display managers in current use are <emphasis role=\"pkg\">gdm3</emphasis> (<foreignphrase>GNOME Display Manager</foreignphrase>), <emphasis role=\"pkg\">kdm</emphasis> (<foreignphrase>KDE Display Manager</foreignphrase>) and <emphasis role=\"pkg\">lightdm</emphasis> (<foreignphrase>Light Display Manager</foreignphrase>). Since the Falcot Corp administrators have opted to use the GNOME desktop environment, they logically picked <command>gdm3</command> as a display manager too. The <filename>/etc/gdm3/daemon.conf</filename> configuration file has many options (the list can be found in the <filename>/usr/share/gdm/gdm.schemas</filename> schema file) to control its behaviour while <filename>/etc/gdm3/greeter.dconf-defaults</filename> contains settings for the greeter “session” (more than just a login window, it is a limited desktop with power management and accessibility related tools). Note that some of the most useful settings for end-users can be tweaked with GNOME's control center."
+msgid "<primary><command>lightdm</command></primary>"
+msgstr ""
+
+msgid "The graphical interface only provides display space. Running the X server by itself only leads to an empty screen, which is why most installations use a <emphasis>display manager</emphasis> to display a user authentication screen and start the graphical desktop once the user has authenticated. The three most popular display managers in current use are <emphasis role=\"pkg\">gdm3</emphasis> (<foreignphrase>GNOME Display Manager</foreignphrase>), <emphasis role=\"pkg\">sddm</emphasis> (suggested for KDE Plasma) and <emphasis role=\"pkg\">lightdm</emphasis> (<foreignphrase>Light Display Manager</foreignphrase>). Since the Falcot Corp administrators have opted to use the GNOME desktop environment, they logically picked <command>gdm3</command> as a display manager too. The <filename>/etc/gdm3/daemon.conf</filename> configuration file has many options (the list can be found in the <filename>/usr/share/gdm/gdm.schemas</filename> schema file) to control its behaviour while <filename>/etc/gdm3/greeter.dconf-defaults</filename> contains settings for the greeter “session” (more than just a login window, it is a limited desktop with power management and accessibility related tools). Note that some of the most useful settings for end-users can be tweaked with GNOME's control center."
 msgstr ""
 
 msgid "Choosing a Window Manager"
 msgstr ""
 
-msgid "Since each graphical desktop provides its own window manager, choosing the former usually implies software selections from the latter. GNOME uses the <command>mutter</command> window manager, KDE uses <command>kwin</command>, and Xfce (which we present later) has <command>xfwm</command>. The Unix philosophy always allows using one's window manager of choice, but following the recommendations allows an administrator to best take advantage of the integration efforts led by each project."
+msgid "<primary>manager</primary><secondary>window</secondary>"
 msgstr ""
 
-msgid "<primary><command>metacity</command></primary>"
+msgid "<primary>window manager</primary><secondary>mutter</secondary>"
+msgstr ""
+
+msgid "<primary>window manager</primary><secondary>kwin</secondary>"
+msgstr ""
+
+msgid "<primary>window manager</primary><secondary>xfwm</secondary>"
+msgstr ""
+
+msgid "Since each graphical desktop provides its own window manager, which window manager you choose is usually influenced by which desktop you have selected. GNOME uses the <command>mutter</command> window manager, Plasma uses <command>kwin</command>, and Xfce (which we present later) has <command>xfwm</command>. The Unix philosophy always allows using one's window manager of choice, but following the recommendations allows an administrator to best take advantage of the integration efforts led by each project."
 msgstr ""
 
 msgid "<primary><command>mutter</command></primary>"
@@ -150,37 +177,55 @@ msgstr ""
 msgid "<primary><command>kwin</command></primary>"
 msgstr ""
 
-msgid "<emphasis>BACK TO BASICS</emphasis> Window manager"
+msgid "<primary><command>xfwm</command></primary>"
 msgstr ""
 
-msgid "<primary>manager</primary><secondary>window</secondary>"
+msgid "<emphasis>BACK TO BASICS</emphasis> Window manager"
 msgstr ""
 
 msgid "<primary><emphasis>window manager</emphasis></primary>"
 msgstr ""
 
-msgid "True to the Unix tradition of doing one thing only but doing it well, the window manager displays the “decorations” around the windows belonging to the currently running applications, which includes frames and the title bar. It also allows reducing, restoring, maximizing, and hiding windows. Most window managers also provide a menu that pops up when the desktop is clicked in a specific way. This menu provides the means to close the window manager session, starting new applications, and in some cases, change to another window manager (if installed)."
+msgid "The window manager displays the “decorations” around the windows belonging to the currently running applications, which includes frames and the title bar. It also allows reducing, restoring, maximizing, and hiding windows. Most window managers also provide a menu that pops up when the desktop is clicked in a specific way. This menu provides the means to close the window manager session, start new applications, and in some cases, change to another window manager (if installed)."
 msgstr ""
 
-msgid "Older computers may, however, have a hard time running heavyweight graphical desktop environments. In these cases, a lighter configuration should be used. “Light” (or small footprint) window managers include WindowMaker (in the <emphasis role=\"pkg\">wmaker</emphasis> package), Afterstep, fvwm, icewm, blackbox, fluxbox, or openbox. In these cases, the system should be configured so that the appropriate window manager gets precedence; the standard way is to change the <command>x-window-manager</command> alternative with the <command>update-alternatives --config x-window-manager</command> command."
+msgid "Older computers may, however, have a hard time running heavyweight graphical desktop environments. In these cases, a lighter configuration should be used. “Light” (or small footprint) window managers include WindowMaker (in the <emphasis role=\"pkg\">wmaker</emphasis> package), Afterstep, fvwm, icewm, blackbox, fluxbox, or openbox. In these cases, the system should be configured so that the appropriate window manager gets precedence; the standard way is to change the <command>x-window-manager</command> alternative with the command <command>update-alternatives --config x-window-manager</command>."
 msgstr ""
 
 msgid "<primary>WindowMaker</primary>"
 msgstr ""
 
+msgid "<primary>window manager</primary><secondary>windowmaker</secondary>"
+msgstr ""
+
 msgid "<primary>Afterstep</primary>"
+msgstr ""
+
+msgid "<primary>window manager</primary><secondary>afterstep</secondary>"
 msgstr ""
 
 msgid "<primary>Blackbox</primary>"
 msgstr ""
 
+msgid "<primary>window manager</primary><secondary>blackbox</secondary>"
+msgstr ""
+
 msgid "<primary>Icewm</primary>"
+msgstr ""
+
+msgid "<primary>window manager</primary><secondary>icewm</secondary>"
 msgstr ""
 
 msgid "<primary>Fluxbox</primary>"
 msgstr ""
 
+msgid "<primary>window manager</primary><secondary>fluxbox</secondary>"
+msgstr ""
+
 msgid "<primary>Openbox</primary>"
+msgstr ""
+
+msgid "<primary>window manager</primary><secondary>openbox</secondary>"
 msgstr ""
 
 msgid "<primary><command>x-window-manager</command></primary>"
@@ -234,10 +279,13 @@ msgstr ""
 msgid "<primary><command>update-menus</command></primary>"
 msgstr ""
 
-msgid "Modern desktop environments and many window managers provide menus listing the available applications for the user. In order to keep menus up-to-date in relation to the actual set of available applications, each package usually provides a <filename>.desktop</filename> file in <filename>/usr/share/applications</filename>. The format of those files has been standardized by FreeDesktop.org: <ulink type=\"block\" url=\"http://standards.freedesktop.org/desktop-entry-spec/latest/\" />"
+msgid "<primary><filename>.desktop</filename></primary>"
 msgstr ""
 
-msgid "The applications menus can be further customized by administrators through system-wide configuration files as described by the “Desktop Menu Specification”. End-users can also customize the menus with graphical tools such as <emphasis role=\"pkg\">kmenuedit</emphasis> (in KDE), <emphasis role=\"pkg\">alacarte</emphasis> (in GNOME) or <emphasis role=\"pkg\">menulibre</emphasis>. <ulink type=\"block\" url=\"http://standards.freedesktop.org/menu-spec/latest/\" />"
+msgid "Modern desktop environments and many window managers provide menus listing the available applications for the user. In order to keep menus up-to-date in relation to the actual set of available applications, each package usually provides a <filename>.desktop</filename> file in <filename>/usr/share/applications</filename>. The format of those files has been standardized by FreeDesktop.org: <ulink type=\"block\" url=\"https://standards.freedesktop.org/desktop-entry-spec/latest/\" />"
+msgstr ""
+
+msgid "The applications menus can be further customized by administrators through system-wide configuration files as described by the “Desktop Menu Specification”. End-users can also customize the menus with graphical tools such as <emphasis role=\"pkg\">kmenuedit</emphasis> (in Plasma), <emphasis role=\"pkg\">alacarte</emphasis> (in GNOME) or <emphasis role=\"pkg\">menulibre</emphasis>. <ulink type=\"block\" url=\"https://standards.freedesktop.org/menu-spec/latest/\" />"
 msgstr ""
 
 msgid "<emphasis>HISTORY</emphasis> The Debian menu system"
@@ -246,10 +294,13 @@ msgstr ""
 msgid "Historically — way before the FreeDesktop.org standards emerged — Debian had invented its own menu system where each package provided a generic description of the desired menu entries in <filename>/usr/share/menu/</filename>. This tool is still available in Debian (in the <emphasis role=\"pkg\">menu</emphasis> package) but it is only marginally useful since package maintainers are encouraged to rely on <filename>.desktop</filename> files instead."
 msgstr ""
 
+msgid "<primary><filename>.menu</filename></primary>"
+msgstr ""
+
 msgid "Graphical Desktops"
 msgstr ""
 
-msgid "The free graphical desktop field is dominated by two large software collections: GNOME and KDE. Both of them are very popular. This is rather a rare instance in the free software world; the Apache web server, for instance, has very few peers."
+msgid "The free graphical desktop field is dominated by two large software collections: GNOME and Plasma by KDE. Both of them are very popular. This is rather a rare instance in the free software world; the Apache web server, for instance, has very few peers."
 msgstr ""
 
 msgid "<primary>graphical desktop</primary>"
@@ -267,10 +318,10 @@ msgstr ""
 msgid "<primary>Qt</primary>"
 msgstr ""
 
-msgid "This diversity is rooted in history. KDE was the first graphical desktop project, but it chose the Qt graphical toolkit and that choice wasn't acceptable for a large number of developers. Qt was not free software at the time, and GNOME was started based on the GTK+ toolkit. Qt became free software in the interval, but the projects haven't merged and evolved in parallel instead."
+msgid "This diversity is rooted in history. Plasma (initially only KDE, which is now the name of the community) was the first graphical desktop project, but it chose the Qt graphical toolkit and that choice wasn't acceptable for a large number of developers. Qt was not free software at the time, and GNOME was started based on the GTK+ toolkit. Qt has since become free software, but the projects still evolved in parallel."
 msgstr ""
 
-msgid "GNOME and KDE still work together: under the FreeDesktop.org umbrella, the projects collaborated in defining standards for interoperability across applications."
+msgid "The GNOME and KDE communities still work together: under the FreeDesktop.org umbrella, the projects collaborated in defining standards for interoperability across applications."
 msgstr ""
 
 msgid "<primary>FreeDesktop.org</primary>"
@@ -282,19 +333,19 @@ msgstr ""
 msgid "GNOME"
 msgstr ""
 
-msgid "Debian <emphasis role=\"distribution\">Jessie</emphasis> includes GNOME version 3.14, which can be installed by a simple <command>apt-get install gnome</command> (it can also be installed by selecting the “Debian desktop environment” task)."
+msgid "Debian <emphasis role=\"distribution\">Buster</emphasis> includes GNOME version 3.30, which can be installed by a simple <command>apt install gnome</command> (it can also be installed by selecting the “Debian desktop environment” task)."
 msgstr ""
 
 msgid "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
 msgstr ""
 
-msgid "GNOME is noteworthy for its efforts in usability and accessibility. Design professionals have been involved in writing standards and recommendations. This has helped developers to create satisfying graphical user interfaces. The project also gets encouragement from the big players of computing, such as Intel, IBM, Oracle, Novell, and of course, various Linux distributions. Finally, many programming languages can be used in developing applications interfacing to GNOME."
+msgid "GNOME is noteworthy for its efforts in usability and accessibility. Design professionals have been involved in writing its standards and recommendations, which has helped developers to create satisfying graphical user interfaces. The project also gets encouragement from the big players of computing, such as Intel, IBM, Oracle, Novell, and of course, various Linux distributions. Finally, many programming languages can be used in developing applications interfacing to GNOME."
 msgstr ""
 
 msgid "The GNOME desktop"
 msgstr ""
 
-msgid "For administrators, GNOME seems to be better prepared for massive deployments. Application configuration is handled through the GSettings interface and stores its data in the DConf database. The configuration settings can thus be queried and edited with the <command>gsettings</command>, and <command>dconf</command> command-line tools, or by the <command>dconf-editor</command> graphical user interfaces. The administrator can therefore change users' configuration with a simple script. The following website lists all information of interest to an administrator tasked to manage GNOME workstations: <ulink type=\"block\" url=\"https://help.gnome.org/admin/\" />"
+msgid "For administrators, GNOME seems to be better prepared for massive deployments. Application configuration is handled through the GSettings interface and stores its data in the DConf database. The configuration settings can thus be queried and edited with the <command>gsettings</command>, and <command>dconf</command> command-line tools, or by the <command>dconf-editor</command> graphical user interfaces. The administrator can therefore change users' configuration with a simple script. The GNOME website provides information to guide administrators who manage GNOME workstations: <ulink type=\"block\" url=\"https://help.gnome.org/admin/\" />"
 msgstr ""
 
 msgid "<primary><command>gsettings</command></primary>"
@@ -303,40 +354,58 @@ msgstr ""
 msgid "<primary><command>dconf</command></primary>"
 msgstr ""
 
-msgid "KDE"
+msgid "<primary><command>dconf-editor</command></primary>"
 msgstr ""
 
-msgid "Debian <emphasis role=\"distribution\">Jessie</emphasis> includes version 4.14 of KDE, which can be installed with <command>apt-get install kde-standard</command>."
+msgid "KDE and Plasma"
 msgstr ""
 
-msgid "KDE has had a rapid evolution based on a very hands-on approach. Its authors quickly got very good results, which allowed them to grow a large user-base. These factors contributed to the overall project quality. KDE is a perfectly mature desktop environment with a wide range of applications."
+msgid "Debian <emphasis role=\"distribution\">Buster</emphasis> includes version 5.14 of KDE Plasma, which can be installed with <command>apt install kde-standard</command>."
 msgstr ""
 
-msgid "The KDE desktop"
+msgid "Plasma has had a rapid evolution based on a very hands-on approach. Its authors quickly got very good results, which allowed them to grow a large user-base. These factors contributed to the overall project quality. Plasma is a mature desktop environment with a wide range of applications."
 msgstr ""
 
-msgid "Since the Qt 4.0 release, the last remaining license problem with KDE is no more. This version was released under the GPL both for Linux and Windows (whereas the Windows version was previously released under a non-free license). Note that KDE applications must be developed using the C++ language."
+msgid "The Plasma desktop"
+msgstr ""
+
+msgid "Since the Qt 4.0 release, the last remaining license problem with KDE software has been solved. This version was released under the GPL both for Linux and Windows (the Windows version was previously released under a non-free license). KDE applications are primarily developed using the C++ language."
 msgstr ""
 
 msgid "Xfce and Others"
 msgstr ""
 
-msgid "Xfce is a simple and lightweight graphical desktop, which is a perfect match for computers with limited resources. It can be installed with <command>apt-get install xfce4</command>. Like GNOME, Xfce is based on the GTK+ toolkit, and several components are common across both desktops."
+msgid "Xfce is a simple and lightweight graphical desktop, which is a perfect match for computers with limited resources. It can be installed with <command>apt install xfce4</command>. Like GNOME, Xfce is based on the GTK+ toolkit, and several components are common across both desktops."
 msgstr ""
 
 msgid "<primary>Xfce</primary>"
 msgstr ""
 
-msgid "Unlike GNOME and KDE, Xfce does not aim at being a vast project. Beyond the basic components of a modern desktop (file manager, window manager, session manager, a panel for application launchers and so on), it only provides a few specific applications: a terminal, a calendar (Orage), an image viewer, a CD/DVD burning tool, a media player (Parole), sound volume control and a text editor (mousepad)."
+msgid "Unlike GNOME and Plasma, Xfce does not aim to become a vast project. Beyond the basic components of a modern desktop (file manager, window manager, session manager, a panel for application launchers and so on), it only provides a few specific applications: a terminal, a calendar (<emphasis role=\"pkg\">orage</emphasis>), an image viewer, a CD/DVD burning tool, a media player (<emphasis role=\"pkg\">parole</emphasis>), sound volume control and a text editor (<emphasis role=\"pkg\">mousepad</emphasis>). <ulink type=\"block\" url=\"https://xfce.org/\" />"
 msgstr ""
 
 msgid "The Xfce desktop"
 msgstr ""
 
-msgid "Another desktop environment provided in <emphasis role=\"distribution\">Jessie</emphasis> is LXDE, which focuses on the “lightweight” aspect. It can be installed with the help of the <emphasis role=\"pkg\">lxde</emphasis> meta-package."
+msgid "Other Desktop Environments"
+msgstr ""
+
+msgid "<emphasis>LXDE</emphasis> and <emphasis>LXQt</emphasis> are two desktop environments focusing on the “lightweight” aspect. The former is GTK+ based while the latter is Qt based. They can be installed with the <emphasis role=\"pkg\">lxde</emphasis> and <emphasis role=\"pkg\">lxqt</emphasis> metapackages. <ulink type=\"block\" url=\"https://lxde.org/\" /> <ulink type=\"block\" url=\"https://lxqt.org/\" />"
 msgstr ""
 
 msgid "<primary>LXDE</primary>"
+msgstr ""
+
+msgid "<primary>LXQt</primary>"
+msgstr ""
+
+msgid "<emphasis>Cinnamon</emphasis> and <emphasis>MATE</emphasis> both started when GNOME 3 moved away from the traditional desktop paradigm, dropping the usual panel and its menu in favor of the new search-based shell. The former reintroduced a panel by forking GNOME Shell and the latter is a continuation of GNOME 2. They can be installed wih the <emphasis role=\"pkg\">cinnamon-desktop-environment</emphasis> and <emphasis role=\"pkg\">mate-desktop-environment</emphasis> metapackages. <ulink type=\"block\" url=\"https://developer.linuxmint.com/projects/cinnamon-projects.html\" /> <ulink type=\"block\" url=\"https://mate-desktop.org/\" />"
+msgstr ""
+
+msgid "<primary>Cinnamon</primary>"
+msgstr ""
+
+msgid "<primary>MATE</primary>"
 msgstr ""
 
 msgid "Email"
@@ -351,10 +420,13 @@ msgstr ""
 msgid "<primary>Evolution</primary>"
 msgstr ""
 
+msgid "<primary>email</primary><secondary><emphasis role=\"pkg\">evolution</emphasis></secondary>"
+msgstr ""
+
 msgid "<emphasis>COMMUNITY</emphasis> <emphasis>Popular</emphasis> packages"
 msgstr ""
 
-msgid "Installing the <emphasis role=\"pkg\">popularity-contest</emphasis> package enables participation in an automated survey that informs the Debian project about the most popular packages. A script is run weekly by <command>cron</command> which sends (by HTTP or email) an anonymized list of the installed packages and the latest access date for the files they contain. This allows differentiating, among the installed packages, those that are actually used."
+msgid "Installing the <emphasis role=\"pkg\">popularity-contest</emphasis> package enables participation in an automated survey that informs the Debian project about the most popular packages. A script is run weekly by <command>cron</command> which sends an anonymized list of the installed packages (by HTTP or email) and the latest access date for the files they contain. This allows the Debian maintainers to know which packages are most frequently installed, and of these, how frequently they are actually used."
 msgstr ""
 
 msgid "<primary><emphasis role=\"pkg\">popularity-contest</emphasis></primary>"
@@ -369,19 +441,19 @@ msgstr ""
 msgid "This information is a great help to the Debian project. It is used to determine which packages should go on the first installation disks. The installation data is also an important factor used to decide whether to remove a package with very few users from the distribution. We heartily recommend installing the <emphasis role=\"pkg\">popularity-contest</emphasis> package, and participating in the survey."
 msgstr ""
 
-msgid "The collected data are made public every day. <ulink type=\"block\" url=\"http://popcon.debian.org/\" />"
+msgid "The collected data are made public every day. <ulink type=\"block\" url=\"https://popcon.debian.org/\" />"
 msgstr ""
 
-msgid "These statistics can also help choose between two packages that would seem otherwise equivalent. Choosing the more popular package increases the probability of making a good choice."
+msgid "These statistics can also help users to choose between two packages that seem otherwise equivalent. Choosing the more popular package is probably a safer choice."
 msgstr ""
 
-msgid "Evolution is the GNOME email client and can be installed with <command>apt-get install evolution</command>. Evolution goes beyond a simple email client, and also provides a calendar, an address book, a task list, and a memo (free-form note) application. Its email component includes a powerful message indexing system, and allows for the creation of virtual folders based on search queries on all archived messages. In other words, all messages are stored the same way but displayed in a folder-based organization, each folder containing messages that match a set of filtering criteria."
+msgid "Evolution is the GNOME email client and can be installed with <command>apt install evolution</command>. It is more than a simple email client: it also provides a calendar, an address book, a task list, and a memo (free-form note) application. Its email component includes a powerful message indexing system, and allows for the creation of virtual folders based on search queries on all archived messages. In other words, all messages are stored the same way but displayed in a folder-based organization, each folder containing messages that match a set of filtering criteria."
 msgstr ""
 
 msgid "The Evolution email software"
 msgstr ""
 
-msgid "An extension to Evolution allows integration to a Microsoft Exchange email system; the required package is <emphasis role=\"pkg\">evolution-ews</emphasis>."
+msgid "An extension to Evolution allows integration with a Microsoft Exchange email system; the required package is <emphasis role=\"pkg\">evolution-ews</emphasis><footnote><para>The <emphasis role=\"pkg\">evolution-ews</emphasis> package is not part of Debian <emphasis role=\"distribution\">Buster</emphasis>. It was removed during the release process due to a security issue. But at the time of writing a recent version is available as backport (see <xref linkend=\"sect.apt-sources.list.stable.backports\" />).</para></footnote>."
 msgstr ""
 
 msgid "<primary><emphasis role=\"pkg\">evolution-ews</emphasis></primary>"
@@ -393,19 +465,19 @@ msgstr ""
 msgid "<primary>KMail</primary>"
 msgstr ""
 
-msgid "The KDE email software can be installed with <command>apt-get install kmail</command>. KMail only handles email, but it belongs to a software suite called KDE-PIM (for <emphasis>Personal Information Manager</emphasis>) that includes features such as address books, a calendar component, and so on. KMail has all the features one would expect from an excellent email client."
+msgid "<primary>email</primary><secondary><emphasis role=\"pkg\">kmail</emphasis></secondary>"
+msgstr ""
+
+msgid "The KDE email software can be installed with <command>apt install kmail</command>. KMail only handles email, but it belongs to a software suite called KDE-PIM (for <emphasis>Personal Information Manager</emphasis>) that includes features such as address books, a calendar component, and so on. KMail has all the features one would expect from an excellent email client."
 msgstr ""
 
 msgid "The KMail email software"
 msgstr ""
 
-msgid "Thunderbird and Icedove"
+msgid "Thunderbird"
 msgstr ""
 
-msgid "This email software, included in the <emphasis role=\"pkg\">icedove</emphasis> package, is part of the Mozilla software suite. Various localization sets are available in <emphasis role=\"pkg\">icedove-l10n-*</emphasis> packages; the <emphasis role=\"pkg\">enigmail</emphasis> extension handles message encrypting and signing (alas, it is not available in all languages)."
-msgstr ""
-
-msgid "The Icedove email software"
+msgid "<primary>email</primary><secondary><emphasis role=\"pkg\">thunderbird</emphasis></secondary>"
 msgstr ""
 
 msgid "<primary>Thunderbird, Mozilla</primary>"
@@ -414,10 +486,13 @@ msgstr ""
 msgid "<primary>Mozilla</primary><secondary>Thunderbird</secondary>"
 msgstr ""
 
-msgid "Thunderbird is one of the best email clients, and it seems to be a great success, just like Mozilla Firefox."
+msgid "The <emphasis role=\"pkg\">thunderbird</emphasis> package provides the email client from the Mozilla software suite. Various localization sets are available in <emphasis role=\"pkg\">thunderbird-l10n-*</emphasis> packages; the <emphasis role=\"pkg\">enigmail</emphasis> extension handles message encrypting and signing, but it is not available in all languages."
 msgstr ""
 
-msgid "Strictly speaking, Debian <emphasis role=\"distribution\">Jessie</emphasis> contains Icedove, and not Thunderbird, for legal reasons we will detail in the sidebar <xref linkend=\"sidebar.firefox-iceweasel\" />; but apart from their names (and icons), there are no real differences between them."
+msgid "<primary><emphasis role=\"pkg\">enigmail</emphasis></primary>"
+msgstr ""
+
+msgid "The Thunderbird email software"
 msgstr ""
 
 msgid "Web Browsers"
@@ -438,13 +513,55 @@ msgstr ""
 msgid "<primary>Epiphany</primary>"
 msgstr ""
 
-msgid "Konqueror, the KDE file manager, also behaves as a web browser. It uses the KDE-specific KHTML rendering engine; KHTML is an excellent engine, as witnessed by the fact that Apple's WebKit is based on KHTML. Konqueror is available in the <emphasis role=\"pkg\">konqueror</emphasis> package. <indexterm><primary>Konqueror</primary></indexterm>"
+msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">epihpany</emphasis></secondary>"
 msgstr ""
 
-msgid "Users not satisfied by either of the above can use Iceweasel. This browser, available in the <emphasis role=\"pkg\">iceweasel</emphasis> package, uses the Mozilla project's Gecko renderer, with a thin and extensible interface on top. <indexterm><primary>Gecko</primary></indexterm> <indexterm><primary>Mozilla</primary><secondary>Firefox</secondary></indexterm> <indexterm><primary>Firefox, Mozilla</primary></indexterm>"
+msgid "Konqueror, available in the <emphasis role=\"pkg\">konqueror</emphasis> package, is KDE's web browser (but can also assume the role of a file manager). It uses the KDE-specific KHTML rendering engine; KHTML is an excellent engine, as witnessed by the fact that Apple's WebKit is based on KHTML."
 msgstr ""
 
-msgid "The Iceweasel web browser"
+msgid "<primary>Konqueror</primary>"
+msgstr ""
+
+msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">konqueror</emphasis></secondary>"
+msgstr ""
+
+msgid "Users not satisfied by either of the above can use Firefox. This browser, available in the <emphasis role=\"pkg\">firefox-esr</emphasis> package, uses the Mozilla project's Gecko renderer, with a thin and extensible interface on top."
+msgstr ""
+
+msgid "<primary>Gecko</primary>"
+msgstr ""
+
+msgid "<primary>Mozilla</primary><secondary>Firefox</secondary>"
+msgstr ""
+
+msgid "<primary>Firefox, Mozilla</primary>"
+msgstr ""
+
+msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">firefox-esr</emphasis></secondary>"
+msgstr ""
+
+msgid "The Firefox web browser"
+msgstr ""
+
+msgid "<emphasis>VOCABULARY</emphasis> Firefox ESR"
+msgstr ""
+
+msgid "<primary><emphasis role=\"pkg\">firefox-esr</emphasis></primary>"
+msgstr ""
+
+msgid "<primary>Firefox (ESR)</primary>"
+msgstr ""
+
+msgid "Mozilla has a very fast-paced release cycle for Firefox. New releases are published every six to eight weeks and only the latest version is supported for security issues. This doesn't suit all kind of users so, every 10 cycles, they are promoting one of their release to an <emphasis>Extended Support Release</emphasis> (ESR) which will get security updates (and no functional changes) during the next 10 cycles (which covers a bit more than a year)."
+msgstr ""
+
+msgid "Debian has both versions packaged. The ESR one, in the package <emphasis role=\"pkg\">firefox-esr</emphasis>, is used by default since it is the only version suitable for Debian <emphasis role=\"distribution\">Stable</emphasis> with its long support period (and even there Debian has to upgrade from one ESR release to the next multiple times during a Debian Stable lifecycle). The regular Firefox is available in the <emphasis role=\"pkg\">firefox</emphasis> package but it is only available to users of Debian <emphasis role=\"distribution\">Unstable</emphasis>."
+msgstr ""
+
+msgid "<primary><emphasis role=\"pkg\">firefox</emphasis></primary>"
+msgstr ""
+
+msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">firefox</emphasis></secondary>"
 msgstr ""
 
 msgid "<emphasis>CULTURE</emphasis> Iceweasel, Firefox and others"
@@ -456,28 +573,22 @@ msgstr ""
 msgid "<primary>Icedove</primary>"
 msgstr ""
 
-msgid "Many users will no doubt be surprised by the absence of Mozilla Firefox in the Debian <emphasis role=\"distribution\">Jessie</emphasis> menus. No need to panic: the <emphasis role=\"pkg\">iceweasel</emphasis> package contains Iceweasel, which is basically Firefox under another name."
+msgid "Before Debian <emphasis role=\"distribution\">Stretch</emphasis>, Firefox and Thunderbird were missing. The <emphasis role=\"pkg\">iceweasel</emphasis> package contained Iceweasel, which was basically Firefox under another name."
 msgstr ""
 
-msgid "The rationale behind this renaming is a result of the usage rules imposed by the Mozilla Foundation on the <trademark>Firefox</trademark> registered trademark: any software named Firefox must use the official Firefox logo and icons. However, since these elements are not released under a free license, Debian cannot distribute them in its <emphasis>main</emphasis> section. Rather than moving the whole browser to <emphasis>non-free</emphasis>, the package maintainer chose to use a different name."
-msgstr ""
-
-msgid "The <command>firefox</command> command still exists in the <emphasis role=\"pkg\">iceweasel</emphasis> package, but only for compatibility with tools that would try to use it."
+msgid "The rationale behind this renaming was a result of the usage rules imposed by the Mozilla Foundation on the <trademark>Firefox</trademark> registered trademark: any software named Firefox had to use the official Firefox logo and icons. However, since these elements are not released under a free license, Debian could not distribute them in its <emphasis>main</emphasis> section. Rather than moving the whole browser to <emphasis>non-free</emphasis>, the package maintainer choose to use a different name."
 msgstr ""
 
 msgid "For similar reasons, the <trademark>Thunderbird</trademark> email client was renamed to Icedove in a similar fashion."
 msgstr ""
 
-msgid "<primary>Mozilla</primary><secondary>Firefox</secondary>"
-msgstr ""
-
-msgid "<primary>Firefox, Mozilla</primary>"
+msgid "Nowadays, the logo and icons are distributed under a free software license and Mozilla recognized that the changes made by the Debian project are respecting their trademark license so Debian is again able to ship Mozilla's applications under their official name."
 msgstr ""
 
 msgid "<emphasis>CULTURE</emphasis> Mozilla"
 msgstr ""
 
-msgid "Netscape Navigator was the standard browser when the web started reaching the masses, but it was progressively left behind when Microsoft Internet Explorer came around. Faced with this failure, Netscape (the company) decided to “free” its source code, by releasing it under a free license, to give it a second life. This was the beginning of the Mozilla project. After many years of development, the results are more than satisfying: the Mozilla project brought forth an HTML rendering engine (called Gecko) that is among the most standard-compliant. This rendering engine is in particular used by the Mozilla Firefox browser, which is one of the most successful browsers, with a fast-growing user base."
+msgid "Netscape Navigator was the standard browser when the web started reaching the masses, but lost ground when Microsoft bundled Internet Explorer with Windows and signed contracts with computer manufacturers which forbade them from pre-installing Netscape Navigator. Faced with this failure, Netscape (the company) decided to “free” its source code, by releasing it under a free license, to give it a second life. This was the beginning of the Mozilla project. After many years of development, the results are more than satisfying: the Mozilla project brought forth an HTML rendering engine (called Gecko) that is among the most standard-compliant. This rendering engine is in particular used by the Mozilla Firefox browser, which is one of the major browsers."
 msgstr ""
 
 msgid "<primary>Mozilla</primary>"
@@ -486,7 +597,10 @@ msgstr ""
 msgid "<primary>Netscape</primary>"
 msgstr ""
 
-msgid "Last but not least, Debian also contains the <emphasis>Chromium</emphasis> web browser (available in the <emphasis role=\"pkg\">chromium-browser</emphasis> package). This browser is developed by Google at such a fast pace that maintaining a single version of it across the whole lifespan of Debian <emphasis role=\"distribution\">Jessie</emphasis> is unlikely to be possible. Its clear purpose is to make web services more attractive, both by optimizing the browser for performance and by increasing the user's security. The free code that powers Chromium is also used by its proprietary version called Google Chrome."
+msgid "Last but not least, Debian also contains the <emphasis>Chromium</emphasis> web browser (available in the <emphasis role=\"pkg\">chromium</emphasis> package). This browser is developed by Google and has become the most popular browser in just a few years. Its clear purpose is to make web services more attractive, both by optimizing the browser for performance and by increasing the user's security. The free code that powers Chromium is also used by its proprietary version called <trademark>Google Chrome</trademark>."
+msgstr ""
+
+msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">chromium</emphasis></secondary>"
 msgstr ""
 
 msgid "Development"
@@ -495,22 +609,25 @@ msgstr ""
 msgid "Tools for GTK+ on GNOME"
 msgstr ""
 
-msgid "Anjuta (in the <emphasis role=\"pkg\">anjuta</emphasis> package) is a development environment optimized for creating GTK+ applications for GNOME. Glade (in the <emphasis role=\"pkg\">glade</emphasis> package) is an application designed to create GTK+ graphical interfaces for GNOME and save them in an XML file. These XML files can then be loaded by the <emphasis>libglade</emphasis> shared library, which can dynamically recreate the saved interfaces; such a feature can be interesting, for instance for plugins that require dialogs."
+msgid "Anjuta (in the <emphasis role=\"pkg\">anjuta</emphasis> package) and GNOME Builder (in the <emphasis role=\"pkg\">gnome-builder</emphasis> package) are Integrated Development Environments (<acronym>IDE</acronym>) optimized for creating GTK+ applications for GNOME. Glade (in the <emphasis role=\"pkg\">glade</emphasis> package) is an application designed to create GTK+ graphical interfaces for GNOME and save them in an XML file. These XML files can then be loaded by the GTK+ shared library though its <literal>GtkBuilder</literal> component to recreate the saved interfaces; such a feature can be interesting, for instance for plugins that require dialogs. <ulink type=\"block\" url=\"https://wiki.gnome.org/Apps/Builder\" /> <ulink type=\"block\" url=\"http://anjuta.org/\" /> <ulink type=\"block\" url=\"https://glade.gnome.org/\" />"
 msgstr ""
 
 msgid "<primary>Anjuta</primary>"
 msgstr ""
 
+msgid "<primary>Builder, GNOME Builder</primary>"
+msgstr ""
+
 msgid "<primary>Glade</primary>"
 msgstr ""
 
-msgid "The scope of Anjuta is to combine, in a modular way, all the features one would expect from an integrated development environment."
+msgid "Tools for Qt"
 msgstr ""
 
-msgid "Tools for Qt on KDE"
+msgid "The equivalent applications for Qt applications are KDevelop by KDE (in the <emphasis role=\"pkg\">kdevelop</emphasis> package) for the development environment, and Qt Designer (in the <emphasis role=\"pkg\">qttools5-dev-tools</emphasis> package) for the design of graphical interfaces for Qt applications."
 msgstr ""
 
-msgid "The equivalent applications for KDE are KDevelop (in the <emphasis role=\"pkg\">kdevelop</emphasis> package) for the development environment, and Qt Designer (in the <emphasis role=\"pkg\">qttools5-dev-tools</emphasis> package) for the design of graphical interfaces for Qt applications on KDE."
+msgid "KDevelop is also a generic IDE and provides plugins for other languages like Python and PHP and different build systems."
 msgstr ""
 
 msgid "<primary>KDevelop</primary>"
@@ -528,13 +645,10 @@ msgstr ""
 msgid "Working in Groups: <foreignphrase>groupware</foreignphrase>"
 msgstr ""
 
-msgid "<primary><emphasis>groupware</emphasis></primary>"
+msgid "<primary>groupware</primary>"
 msgstr ""
 
-msgid "Groupware tools tend to be relatively complex to maintain because they aggregate multiple tools and have requirements that are not always easy to reconcile in the context of an integrated distribution. Thus there is a long list of groupware that were once available in Debian but have been dropped for lack of maintainers or incompatibility with other (newer) software in Debian. It has been the case of PHPGroupware, eGroupware, and Kolab. <ulink type=\"block\" url=\"http://www.phpgroupware.org/\" /> <ulink type=\"block\" url=\"http://www.egroupware.org/\" /> <ulink type=\"block\" url=\"http://www.kolab.org/\" />"
-msgstr ""
-
-msgid "<primary>PHPGroupware</primary>"
+msgid "Groupware tools tend to be relatively complex to maintain because they aggregate multiple tools and have requirements that are not always easy to reconcile in the context of an integrated distribution. Thus there is a long list of groupware packages that were once available in Debian but have been dropped for lack of maintainers or incompatibility with other (newer) software in Debian. This has been the case with PHPGroupware, eGroupware, and Kolab. <ulink type=\"block\" url=\"https://www.egroupware.org/\" /> <ulink type=\"block\" url=\"https://www.kolab.org/\" />"
 msgstr ""
 
 msgid "<primary>eGroupware</primary>"
@@ -543,7 +657,16 @@ msgstr ""
 msgid "<primary>Kolab</primary>"
 msgstr ""
 
-msgid "All is not lost though. Many of the features traditionally provided by “groupware” software are increasingly integrated into “standard” software. This is reducing the requirement for specific, specialized groupware software. On the other hand, this usually requires a specific server. More interestingly, Citadel (in the <emphasis role=\"pkg\">citadel-suite</emphasis> package) and Sogo (in the <emphasis role=\"pkg\">sogo</emphasis> package) are alternatives that are available in Debian <emphasis role=\"distribution\">Jessie</emphasis>."
+msgid "All is not lost though. Many of the features traditionally provided by “groupware” software are increasingly integrated into “standard” software. This is reducing the requirement for specific, specialized groupware software. On the other hand, this usually requires a specific server. Citadel (in the <emphasis role=\"pkg\">citadel-suite</emphasis> package), Sogo (in the <emphasis role=\"pkg\">sogo</emphasis> package) and Kopano (in the <emphasis role=\"pkg\">kopano-core</emphasis> package) are alternatives that are available in Debian <emphasis role=\"distribution\">Buster</emphasis>."
+msgstr ""
+
+msgid "<primary>groupware</primary><secondary><emphasis role=\"pkg\">citadel-suite</emphasis></secondary>"
+msgstr ""
+
+msgid "<primary>groupware</primary><secondary><emphasis role=\"pkg\">sogo</emphasis></secondary>"
+msgstr ""
+
+msgid "<primary>groupware</primary><secondary><emphasis role=\"pkg\">kopano-core</emphasis></secondary>"
 msgstr ""
 
 msgid "Collaborative Work With FusionForge"
@@ -561,19 +684,37 @@ msgstr ""
 msgid "FusionForge can be seen as an amalgamation of several tools dedicated to manage, track and coordinate projects. These tools can be roughly classified into three families:"
 msgstr ""
 
-msgid "<emphasis>communication</emphasis>: web forums, mailing-list manager, announcement system allowing a project to publish news;"
+msgid "<emphasis>communication</emphasis>: web forums, mailing-list manager, and announcement system allowing a project to publish news"
 msgstr ""
 
-msgid "<emphasis>tracking</emphasis>: task tracker to control progress and schedule tasks, trackers for bugs (or patches or feature requests, or any other kind of “ticket”), surveys;"
+msgid "<emphasis>tracking</emphasis>: tools to track project progress and schedule tasks, to track bugs, feature requests, or any other kind of “ticket”, and to run surveys"
 msgstr ""
 
 msgid "<emphasis>sharing</emphasis>: documentation manager to provide a single central point for documents related to a project, generic file release manager, dedicated website for each project."
 msgstr ""
 
-msgid "Since FusionForge is largely targeting development projects, it also integrates many tools such as CVS, Subversion, Git, Bazaar, Darcs, Mercurial and Arch for source control management or “configuration management” or “version control” — this process has many names. These programs keep a history of all the revisions of all tracked files (often source code files), with all the changes they go through, and they can merge modifications when several developers work simultaneously on the same part of a project."
+msgid "Since FusionForge largely targets development projects, it also integrates many tools such as CVS, Subversion, Git, Bazaar, Darcs, Mercurial and Arch for source control management (also called “configuration management” or “version control”). These programs keep a history of all the revisions of all tracked files (often source code files), with all the changes they go through, and they can merge modifications when several developers work simultaneously on the same part of a project."
 msgstr ""
 
-msgid "Most of these tools are accessible, or even managed, through a web interface, with a fine-grained permission system, and email notifications for some events."
+msgid "Most of these tools can be accessed or even managed through a web interface, with a fine-grained permission system, and email notifications for some events."
+msgstr ""
+
+msgid "FusionForge is not part of Debian <emphasis role=\"distribution\">Stable</emphasis>. It is a large software stack that is hard to maintain properly and benefits only few users who are usually expert enough to be able to backport the package from Debian <emphasis role=\"distribution\">Unstable</emphasis>."
+msgstr ""
+
+msgid "<primary><emphasis role=\"pkg\">fusionforge</emphasis></primary>"
+msgstr ""
+
+msgid "<emphasis>ALTERNATIVE</emphasis> GitLab"
+msgstr ""
+
+msgid "FusionForge has been used to power the <literal>alioth.debian.org</literal> platform used by the Debian project and its developers for collaborative package management and development for almost a decade. Due to some limitations it has been replaced and shut down in 2018 by a new service powered by GitLab. See sidebar <xref linkend=\"sidebar.gitlab\" />."
+msgstr ""
+
+msgid "<primary><emphasis role=\"pkg\">fusionforge</emphasis></primary><seealso><literal>alioth.debian.org</literal></seealso>"
+msgstr ""
+
+msgid "<primary><literal>alioth.debian.org</literal></primary><seealso><literal>salsa.debian.org</literal></seealso>"
 msgstr ""
 
 msgid "Office Suites"
@@ -585,7 +726,7 @@ msgstr ""
 msgid "<primary>suite, office</primary>"
 msgstr ""
 
-msgid "Office software has long been seen as lacking in the free software world. Users have long asked for replacements for Microsoft tools such as Word and Excel, but these are so complex that replacements were hard to develop. The situation changed when the OpenOffice.org project started (following Sun's release of the StarOffice code under a free license). Nowadays Debian contains Libre Office, a fork of OpenOffice.org. The GNOME and KDE projects are still working on their offerings (GNOME Office and Calligra Suite), and the friendly competition leads to interesting results. For instance, the Gnumeric spreadsheet (part of GNOME Office) is even better than OpenOffice.org/Libre Office in some domains, notably the precision of its calculations. On the word processing front, the OpenOffice.org and Libre Office suites still lead the way."
+msgid "Office software has long been seen as lacking in the free software world. Users require replacements for Microsoft tools such as Word and Excel, but these are so complex that replacements were hard to develop. The situation changed when Sun released the StarOffice code under a free license as OpenOffice, a project which later gave birth to LibreOffice, which is available on Debian. The KDE project also has its own office suite, called Calligra Suite (previously KOffice), and GNOME, while never offering a comprehensive office suite, provides AbiWord as a word processor and Gnumeric as a spreadsheet. The various projects each have their strengths. For instance, the Gnumeric spreadsheet is better than OpenOffice.org/LibreOffice in some domains, notably the precision of its calculations. On the word processing front, the LibreOffice suite still leads the way."
 msgstr ""
 
 msgid "<primary>OpenOffice.org</primary>"
@@ -594,7 +735,7 @@ msgstr ""
 msgid "<primary>StarOffice</primary>"
 msgstr ""
 
-msgid "<primary>Libre Office</primary>"
+msgid "<primary>LibreOffice</primary>"
 msgstr ""
 
 msgid "<primary>GNOME Office</primary>"
@@ -606,16 +747,16 @@ msgstr ""
 msgid "<primary>Gnumeric</primary>"
 msgstr ""
 
-msgid "Another important feature for users is the ability to import Word and Excel documents received from contacts or found in archives. Even though all office suites have filters which allow working on these formats, only the ones found in OpenOffice.org and Libre Office are functional enough for daily use."
+msgid "Another important feature for users is the ability to import Microsoft Office documents. Even though all office suites have this feature, only the ones in OpenOffice.org and LibreOffice are functional enough for daily use."
 msgstr ""
 
-msgid "<emphasis>THE BROADER VIEW</emphasis> Libre Office replaces OpenOffice.org"
+msgid "<emphasis>THE BROADER VIEW</emphasis> LibreOffice replaces OpenOffice.org"
 msgstr ""
 
-msgid "OpenOffice.org contributors have set up a foundation (<emphasis>The Document Foundation</emphasis>) to foster project development. The idea had been discussed for some time, but the actual trigger was Oracle's acquisition of Sun. The new ownership made the future of OpenOffice under Oracle uncertain. Since Oracle declined to join the foundation, the developers had to give up on the OpenOffice.org name. The software is now known as <emphasis>Libre Office</emphasis>. After a period of relative stagnation on the OpenOffice.org front, Oracle decided to migrate the code and associated rights to the Apache Software Foundation, and OpenOffice is now an Apache project."
+msgid "OpenOffice.org contributors set up a foundation (<emphasis>The Document Foundation</emphasis>) to foster the project's development. The idea had been discussed for some time, but the actual trigger was Oracle's acquisition of Sun. The new ownership made the future of OpenOffice under Oracle uncertain. Since Oracle declined to join the foundation, the developers had to give up on the OpenOffice.org name. This office suite is now known as <emphasis>LibreOffice</emphasis>, and is available in Debian."
 msgstr ""
 
-msgid "Debian only includes Libre Office. The OpenOffice software suite as published by the Apache Software Foundation is not currently available in Debian."
+msgid "After a period of relative stagnation on OpenOffice.org, Oracle donated the code and associated rights to the Apache Software Foundation, and OpenOffice is now an Apache project. This project is not currently available in Debian and is rather moribund when compared to LibreOffice."
 msgstr ""
 
 msgid "<primary>Word, Microsoft</primary>"
@@ -630,7 +771,16 @@ msgstr ""
 msgid "<primary>Microsoft</primary><secondary>Excel</secondary>"
 msgstr ""
 
-msgid "Libre Office and Calligra Suite are, respectively, available in the <emphasis role=\"pkg\">libreoffice</emphasis> and <emphasis role=\"pkg\">calligra</emphasis> Debian packages. There is no more package for GNOME Office (it was <emphasis role=\"pkg\">gnome-office</emphasis>). Language-specific packs for Libre Office are distributed in separate packages: <emphasis role=\"pkg\">libreoffice-l10n-*</emphasis> and <emphasis role=\"pkg\">libreoffice-help-*</emphasis> most notably; some features such as spelling dictionaries, hyphenation patterns and thesauri are in separate packages, such as <emphasis role=\"pkg\">myspell-*</emphasis>/<emphasis role=\"pkg\">hunspell-*</emphasis>, <emphasis role=\"pkg\">hyphen-*</emphasis> and <emphasis role=\"pkg\">mythes-*</emphasis>. Note that Calligra Suite used to be called KOffice."
+msgid "LibreOffice and Calligra Suite are available in the <emphasis role=\"pkg\">libreoffice</emphasis> and <emphasis role=\"pkg\">calligra</emphasis> Debian packages, respectively. Although the <emphasis role=\"pkg\">gnome-office</emphasis> package was previously used to install a collection of office tools such as AbiWord and Gnumeric, this package is no longer part of Debian, with the individual packages now standing on their own."
+msgstr ""
+
+msgid "Language-specific packs for LibreOffice are distributed in separate packages, most notably <emphasis role=\"pkg\">libreoffice-l10n-*</emphasis> and <emphasis role=\"pkg\">libreoffice-help-*</emphasis>. Some features such as spelling dictionaries, hyphenation patterns and thesauri are in separate packages, such as <emphasis role=\"pkg\">myspell-*</emphasis>, <emphasis role=\"pkg\">hunspell-*</emphasis>, <emphasis role=\"pkg\">hyphen-*</emphasis> and <emphasis role=\"pkg\">mythes-*</emphasis>."
+msgstr ""
+
+msgid "<primary>office suite</primary><secondary><emphasis role=\"pkg\">libreoffice</emphasis></secondary>"
+msgstr ""
+
+msgid "<primary>office suite</primary><secondary><emphasis role=\"pkg\">calligra</emphasis></secondary>"
 msgstr ""
 
 msgid "Emulating Windows: Wine"
@@ -648,7 +798,7 @@ msgstr ""
 msgid "<emphasis>COMPLEMENTS</emphasis> CrossOver Linux"
 msgstr ""
 
-msgid "<emphasis>CrossOver</emphasis>, produced by CodeWeavers, is a set of enhancements to Wine that broadens the available set of emulated features to a point at which Microsoft Office becomes fully usable. Some of the enhancements are periodically merged into Wine. <ulink type=\"block\" url=\"http://www.codeweavers.com/products/\" />"
+msgid "<emphasis>CrossOver</emphasis>, produced by CodeWeavers, is a set of enhancements to Wine that broadens the available set of emulated features to a point at which Microsoft Office becomes fully usable. Some of the enhancements are periodically merged into Wine. <ulink type=\"block\" url=\"https://www.codeweavers.com/products/\" />"
 msgstr ""
 
 msgid "<primary><emphasis>CrossOver</emphasis></primary>"
@@ -671,7 +821,7 @@ msgstr ""
 
 msgid ""
 "\n"
-"<computeroutput># </computeroutput><userinput>apt-get install wine ttf-mscorefonts-installer</userinput>"
+"<computeroutput># </computeroutput><userinput>apt install wine ttf-mscorefonts-installer</userinput>"
 msgstr ""
 
 msgid "<primary><command>winecfg</command></primary>"
@@ -704,7 +854,7 @@ msgstr ""
 msgid "Yet another possibility is to remotely run the legacy Windows applications on a central server with <emphasis>Windows Terminal Server</emphasis> and access the application from Linux machines using <emphasis>rdesktop</emphasis>. This is a Linux client for the RDP protocol (<emphasis>Remote Desktop Protocol</emphasis>) that <foreignphrase>Windows NT/2000 Terminal Server</foreignphrase> uses to display desktops on remote machines."
 msgstr ""
 
-msgid "<primary>RDP</primary>"
+msgid "<primary>RDP</primary><see>Remote Desktop Protocol</see>"
 msgstr ""
 
 msgid "<primary><emphasis>Remote Desktop Protocol</emphasis></primary>"
@@ -719,7 +869,13 @@ msgstr ""
 msgid "Real-Time Communications software"
 msgstr ""
 
-msgid "Debian provides a wide range of Real-Time Communications (RTC) client software. The setup of RTC servers is discussed in <xref linkend=\"sect.rtc-services\" />. In SIP terminology, a client application or device is also referred to as a user agent."
+msgid "<primary>Real-Time Communication</primary>"
+msgstr ""
+
+msgid "<primary>RTC</primary><see>Real-Time Communication</see>"
+msgstr ""
+
+msgid "Debian provides a wide range of Real-Time Communications (<acronym>RTC</acronym>) client software. The setup of RTC servers is discussed in <xref linkend=\"sect.rtc-services\" />. In <acronym>SIP</acronym> (Session Initiation Protocol) terminology, a client application or device is also referred to as a user agent."
 msgstr ""
 
 msgid "<primary>User agent (SIP)</primary>"
@@ -734,13 +890,25 @@ msgstr ""
 msgid "To maximize the ability of users to communicate with the wider world, it is recommended to configure both SIP and XMPP clients or a single client that supports both protocols."
 msgstr ""
 
-msgid "<primary>SIP</primary>"
+msgid "<primary>Session Initiation Protocol</primary>"
 msgstr ""
 
-msgid "<primary>XMPP</primary>"
+msgid "<primary>Extensible Messaging and Presence Protocol</primary>"
 msgstr ""
 
-msgid "The default GNOME desktop includes the Empathy communications client. Empathy can support both SIP and XMPP. It supports instant messaging (IM), voice and video. The KDE desktop provides KDE Telepathy, a communications client based on the same underlying Telepathy APIs used by the GNOME Empathy client."
+msgid "<primary>Instant Messaging</primary>"
+msgstr ""
+
+msgid "<primary>SIP</primary><see>Session Initiation Protocol</see>"
+msgstr ""
+
+msgid "<primary>XMPP</primary><see>Extensible Messaging and Presence Protocol</see>"
+msgstr ""
+
+msgid "<primary>IM</primary><see>Instant Messaging</see>"
+msgstr ""
+
+msgid "The default GNOME desktop suggests the Empathy communications client. Empathy can support both SIP and XMPP. It supports instant messaging (IM), voice and video. The KDE project provides KDE Telepathy, a communications client based on the same underlying Telepathy APIs used by the GNOME Empathy client."
 msgstr ""
 
 msgid "<primary>Empathy</primary>"
@@ -749,13 +917,10 @@ msgstr ""
 msgid "<primary>Telepathy</primary>"
 msgstr ""
 
-msgid "Popular alternatives to Empathy/Telepathy include Ekiga, Jitsi, Linphone, Psi and Ring (formerly known as SFLphone)."
+msgid "Popular alternatives to Empathy/Telepathy include Ekiga, Linphone, Psi and Jami (formerly known as Ring)."
 msgstr ""
 
 msgid "<primary>Ekiga</primary>"
-msgstr ""
-
-msgid "<primary>Jitsi</primary>"
 msgstr ""
 
 msgid "<primary>Linphone</primary>"
@@ -764,13 +929,13 @@ msgstr ""
 msgid "<primary>Psi</primary>"
 msgstr ""
 
-msgid "<primary>Ring (soft-phone)</primary>"
+msgid "<primary>Jami (soft-phone)</primary>"
 msgstr ""
 
 msgid "<primary>SFLphone</primary>"
 msgstr ""
 
-msgid "Some of these applications can also interact with mobile users using apps such as Lumicall on Android. <ulink type=\"block\" url=\"http://lumicall.org\" />"
+msgid "Some of these applications can also interact with mobile users using apps such as Lumicall on Android. <ulink type=\"block\" url=\"https://lumicall.org\" />"
 msgstr ""
 
 msgid "<primary>Lumicall</primary>"
@@ -780,6 +945,18 @@ msgid "The <emphasis>Real-Time Communications Quick Start Guide</emphasis> has a
 msgstr ""
 
 msgid "<emphasis>TIP</emphasis> Look for clients supporting ICE and TURN"
+msgstr ""
+
+msgid "<primary>Traversal Using Relays around NAT</primary>"
+msgstr ""
+
+msgid "<primary>Interactive Connectivity Establishment</primary>"
+msgstr ""
+
+msgid "<primary>TURN</primary><see>Traversal Using Relays around NAT</see>"
+msgstr ""
+
+msgid "<primary>ICE</primary><see>Interactive Connectivity Establishment</see>"
 msgstr ""
 
 msgid "Some RTC clients have significant problems sending voice and video through firewalls and NAT networks. Users may receive ghost calls (their phone rings but they don't hear the other person) or they may not be able to call at all."
@@ -800,7 +977,7 @@ msgstr ""
 msgid "IRC can also be considered, in addition to SIP and XMPP. IRC is more oriented around the concept of channels, the name of which starts with a hash sign <literal>#</literal>. Each channel is usually targeted at a specific topic and any number of people can join a channel to discuss it (but users can still have one-to-one private conversations if needed). The IRC protocol is older, and does not allow end-to-end encryption of the messages; it is still possible to encrypt the communications between the users and the server by tunneling the IRC protocol inside SSL."
 msgstr ""
 
-msgid "<primary>IRC</primary>"
+msgid "<primary>IRC</primary><see>Internet Relay Chat</see>"
 msgstr ""
 
 msgid "<primary><foreignphrase>Internet Relay Chat</foreignphrase></primary>"
@@ -809,29 +986,5 @@ msgstr ""
 msgid "IRC clients are a bit more complex, and they usually provide many features that are of limited use in a corporate environment. For instance, channel “operators” are users endowed with the ability to kick other users from a channel, or even ban them permanently, when the normal discussion is disrupted."
 msgstr ""
 
-msgid "Since the IRC protocol is very old, many clients are available to cater for many user groups; examples include XChat and Smuxi (graphical clients based on GTK+), Irssi (text mode), Erc (integrated to Emacs), and so on."
-msgstr ""
-
-msgid "<emphasis>QUICK LOOK</emphasis> Video conferencing with Ekiga"
-msgstr ""
-
-msgid "Ekiga (formerly GnomeMeeting) is a prominent application for Linux video conferencing. It is both stable and functional, and is very easily used on a local network; setting up the service on a global network is much more complex when the firewalls involved lack explicit support for the H323 and/or SIP teleconferencing protocols with all their quirks."
-msgstr ""
-
-msgid "<primary>video conference</primary>"
-msgstr ""
-
-msgid "<primary>H323</primary>"
-msgstr ""
-
-msgid "If only one Ekiga client is to run behind the firewall, the configuration is rather straightforward, and only involves forwarding a few ports to the dedicated host: TCP port 1720 (listening for incoming connections), TCP port 5060 (for SIP), TCP ports 30000 to 30010 (for control of open connections) and UDP ports 5000 to 5100 (for audio and video data transmission and registration to an H323 proxy)."
-msgstr ""
-
-msgid "<primary>GnomeMeeting</primary>"
-msgstr ""
-
-msgid "When several Ekiga clients are to run behind the firewall, complexity increases notably. An H323 proxy (for instance the <emphasis role=\"pkg\">gnugk</emphasis> package) must be set up, and its configuration is far from simple."
-msgstr ""
-
-msgid "<primary><emphasis role=\"pkg\">gnugk</emphasis></primary>"
+msgid "Since the IRC protocol is very old, many clients are available to cater for many user groups; examples include XChat, and Smuxi (graphical clients based on GTK+), Irssi (text mode), Circe (integrated to Emacs), and so on."
 msgstr ""

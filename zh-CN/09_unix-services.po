@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2015-10-06 16:10+0200\n"
+"POT-Creation-Date: 2020-05-17 17:54+0200\n"
 "PO-Revision-Date: 2018-04-09 08:59+0000\n"
 "Last-Translator: Faris Xiao <atzlinux@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/09_unix-services/zh_Hans/>\n"
@@ -91,13 +91,17 @@ msgstr "<command>systemd</command> 是相当新的 “启动系统”，虽然�
 msgid "<emphasis>ALTERNATIVE</emphasis> Other boot systems"
 msgstr "<emphasis>选择</emphasis> 其它启动系统"
 
-msgid "This book describes the boot system used by default in Debian <emphasis role=\"distribution\">Jessie</emphasis> (as implemented by the <emphasis role=\"pkg\">systemd</emphasis> package), as well as the previous default, <emphasis role=\"pkg\">sysvinit</emphasis>, which is derived and inherited from <emphasis>System V</emphasis> Unix systems; there are others."
+#, fuzzy
+#| msgid "This book describes the boot system used by default in Debian <emphasis role=\"distribution\">Jessie</emphasis> (as implemented by the <emphasis role=\"pkg\">systemd</emphasis> package), as well as the previous default, <emphasis role=\"pkg\">sysvinit</emphasis>, which is derived and inherited from <emphasis>System V</emphasis> Unix systems; there are others."
+msgid "This book describes the boot system used by default in Debian <emphasis role=\"distribution\">Buster</emphasis> (as implemented by the <emphasis role=\"pkg\">systemd</emphasis> package), as well as the previous default, <emphasis role=\"pkg\">sysvinit</emphasis>, which is derived and inherited from <emphasis>System V</emphasis> Unix systems; there are others."
 msgstr "本书描述的是 Debian <emphasis role=\"distribution\">Jessie</emphasis> (如 <emphasis role=\"pkg\">systemd</emphasis> 软件包所应用的) 缺省的启动系统，以及更早的默认值，<emphasis role=\"pkg\">sysvinit</emphasis>，源自于 <emphasis>System V</emphasis> Unix 系统；还有若干其他的。"
 
 msgid "<emphasis role=\"pkg\">file-rc</emphasis> is a boot system with a very simple process. It keeps the principle of runlevels, but replaces the directories and symbolic links with a configuration file, which indicates to <command>init</command> the processes that must be started and their launch order."
 msgstr "<emphasis role=\"pkg\">file-rc</emphasis> 是一个过程很简单的启动系统。它保留运行等级的原则，但是用配置文件取代了目录和符号链接，来告诉<command>init</command>哪些进程必须启动及其顺序。"
 
-msgid "The <command>upstart</command> system is still not perfectly tested on Debian. It is event based: init scripts are no longer executed in a sequential order but in response to events such as the completion of another script upon which they are dependent. This system, started by Ubuntu, is present in Debian <emphasis role=\"distribution\">Jessie</emphasis>, but is not the default; it comes, in fact, as a replacement for <emphasis role=\"pkg\">sysvinit</emphasis>, and one of the tasks launched by <command>upstart</command> is to launch the scripts written for traditional systems, especially those from the <emphasis role=\"pkg\">sysv-rc</emphasis> package."
+#, fuzzy
+#| msgid "The <command>upstart</command> system is still not perfectly tested on Debian. It is event based: init scripts are no longer executed in a sequential order but in response to events such as the completion of another script upon which they are dependent. This system, started by Ubuntu, is present in Debian <emphasis role=\"distribution\">Jessie</emphasis>, but is not the default; it comes, in fact, as a replacement for <emphasis role=\"pkg\">sysvinit</emphasis>, and one of the tasks launched by <command>upstart</command> is to launch the scripts written for traditional systems, especially those from the <emphasis role=\"pkg\">sysv-rc</emphasis> package."
+msgid "The <command>upstart</command> system is still not perfectly tested on Debian. It is event based: init scripts are no longer executed in a sequential order but in response to events such as the completion of another script upon which they are dependent. This system, started by Ubuntu, was present in Debian <emphasis role=\"distribution\">Jessie</emphasis>, but was not the default; it came, in fact, as a replacement for <emphasis role=\"pkg\">sysvinit</emphasis>, and one of the tasks launched by <command>upstart</command> was to launch the scripts written for traditional systems, especially those from the <emphasis role=\"pkg\">sysv-rc</emphasis> package."
 msgstr "此 <command>upstart</command> 系统在 Debian 上仍未完整测试。它以事件为基础：不再依序运行 init 脚本，但以回应另个依附的脚本。由 Ubuntu 开始的这个系统，列在 Debian <emphasis role=\"distribution\">Jessie</emphasis> 内，但还不是缺省；事实上，做为 <emphasis role=\"pkg\">sysvinit</emphasis> 的替代品，由 <command>upstart</command> 启动的工作，系用来启动为传统系统而设的，特别是来自 <emphasis role=\"pkg\">sysv-rc</emphasis> 软件包的脚本。"
 
 msgid "There are also other systems and other operating modes, such as <command>runit</command> or <command>minit</command>, but they are relatively specialized and not widespread."
@@ -139,7 +143,9 @@ msgstr "为了防止此类事件，可以给加载器设定密码。你也许会
 msgid "Finally, be aware that most BIOS have a generic password available. Initially intended for troubleshooting for those who have forgotten their password, these passwords are now public and available on the Internet (see for yourself by searching for “generic BIOS passwords” in a search engine). All of these protections will thus impede unauthorized access to the machine without being able to completely prevent it. There is no reliable way to protect a computer if the attacker can physically access it; they could dismount the hard drives to connect them to a computer under their own control anyway, or even steal the entire machine, or erase the BIOS memory to reset the password…"
 msgstr "最后，应该知道大多数 BIOS 有一个通用的密码。最初用于让那些忘记自己密码的人解决问题，这些密码现在是公开的并且可以在网上找到（通过搜索引擎搜索“通用 BIOS 密码”）。所有这些保护措施都不太可能完全阻止非授权用户操作机器。如果攻击者能直接接触电脑，就没有可靠的方法保护电脑；他们可以拆下硬盘连到自己的电脑上，甚至是偷走整个机器，或者擦除 BIOS 来重置密码…"
 
-msgid "Systemd executes several processes, in charge of setting up the system: keyboard, drivers, filesystems, network, services. It does this while keeping a global view of the system as a whole, and the requirements of the components. Each component is described by a “unit file” (sometimes more); the general syntax is derived from the widely-used “*.ini files“ syntax, with <literal><replaceable>key</replaceable> = <replaceable>value</replaceable></literal> pairs grouped between <literal>[<replaceable>section</replaceable>]</literal> headers. Unit files are stored under <filename>/lib/systemd/system/</filename> and <filename>/etc/systemd/system/</filename>; they come in several flavours, but we will focus on “services” and “targets” here."
+#, fuzzy
+#| msgid "Systemd executes several processes, in charge of setting up the system: keyboard, drivers, filesystems, network, services. It does this while keeping a global view of the system as a whole, and the requirements of the components. Each component is described by a “unit file” (sometimes more); the general syntax is derived from the widely-used “*.ini files“ syntax, with <literal><replaceable>key</replaceable> = <replaceable>value</replaceable></literal> pairs grouped between <literal>[<replaceable>section</replaceable>]</literal> headers. Unit files are stored under <filename>/lib/systemd/system/</filename> and <filename>/etc/systemd/system/</filename>; they come in several flavours, but we will focus on “services” and “targets” here."
+msgid "Systemd executes several processes, in charge of setting up the system: keyboard, drivers, filesystems, network, services. It does this while keeping a global view of the system as a whole, and the requirements of the components. Each component is described by a “unit file” (sometimes more); the general syntax is derived from the widely-used “*.ini files“ syntax, with <literal><replaceable>key</replaceable> = <replaceable>value</replaceable></literal> pairs grouped between <literal>[<replaceable>section</replaceable>]</literal> headers. Unit files are stored under <filename>/lib/systemd/system/</filename> and <filename>/etc/systemd/system/</filename>; they come in several flavors, but we will focus on “services” and “targets” here."
 msgstr "Systemd 运行多个进程，设置系统：键盘、驱动程序、文件系统、网络、服务等。同时全面查看系统，以及必要的配件。每个配件都视为一个 “单元文件” (有时为多个)；通用的语法源自于常用的 “*.ini files“ 语法，包括配对的 <literal><replaceable>key</replaceable> = <replaceable>value</replaceable></literal> 列在 <literal>[<replaceable>section</replaceable>]</literal> 标头内。单元文件保存在 <filename>/lib/systemd/system/</filename> 与 <filename>/etc/systemd/system/</filename> 内；以多种风貌呈现，目前专注在 “服务” 与 “目标”。"
 
 msgid "A systemd “service file” describes a process managed by systemd. It contains roughly the same information as old-style init-scripts, but expressed in a declaratory (and much more concise) way. Systemd handles the bulk of the repetitive tasks (starting and stopping the process, checking its status, logging, dropping privileges, and so on), and the service file only needs to fill in the specifics of the process. For instance, here is the service file for SSH:"
@@ -196,7 +202,9 @@ msgstr "运行 <command>systemctl start <replaceable>servicename</replaceable>.s
 msgid "To control whether a service is active (i.e. whether it will get started automatically on boot), use <command>systemctl enable <replaceable>servicename</replaceable>.service</command> (or <command>disable</command>). <command>is-enabled</command> allows checking the status of the service."
 msgstr "以 <command>systemctl enable <replaceable>servicename</replaceable>.service</command> (或 <command>disable</command>) 控制启动服务 (即开机后自动启动)。<command>is-enabled</command> 可以检查服务的状态。"
 
-msgid "An interesting feature of systemd is that it includes a logging component named <command>journald</command>. It comes as a complement to more traditional logging systems such as <command>syslogd</command>, but it adds interesting features such as a formal link between a service and the messages it generates, and the ability to capture error messages generated by its initialisation sequence. The messages can be displayed later on, with a little help from the <command>journalctl</command> command. Without any arguments, it simply spews all log messages that occurred since system boot; it will rarely be used in such a manner. Most of the time, it will be used with a service identifier:"
+#, fuzzy
+#| msgid "An interesting feature of systemd is that it includes a logging component named <command>journald</command>. It comes as a complement to more traditional logging systems such as <command>syslogd</command>, but it adds interesting features such as a formal link between a service and the messages it generates, and the ability to capture error messages generated by its initialisation sequence. The messages can be displayed later on, with a little help from the <command>journalctl</command> command. Without any arguments, it simply spews all log messages that occurred since system boot; it will rarely be used in such a manner. Most of the time, it will be used with a service identifier:"
+msgid "An interesting feature of systemd is that it includes a logging component named <command>journald</command>. It comes as a complement to more traditional logging systems such as <command>syslogd</command>, but it adds interesting features such as a formal link between a service and the messages it generates, and the ability to capture error messages generated by its initialization sequence. The messages can be displayed later on, with a little help from the <command>journalctl</command> command. Without any arguments, it simply spews all log messages that occurred since system boot; it will rarely be used in such a manner. Most of the time, it will be used with a service identifier:"
 msgstr "systemd 重要的功能之一是包括登录的组件 <command>journald</command>。做为补充 <command>syslogd</command> 之类传统登录系统的组件，但加入额外的功能包括在服务与其产生消息间的正式链接，以及补捉由初始过程产生的错误消息。在 <command>journalctl</command> 命令的协助下，稍后可显示该等消息。不需任何参数，它溢出系统启动后发生的所有日志消息；不过很少用到它。多数时间，把它做为服务的辨识器："
 
 msgid ""
@@ -585,7 +593,9 @@ msgstr "任何拥有私有密钥的人都可以登录已经配置的账户。这
 msgid "<emphasis>CULTURE</emphasis> OpenSSL flaw in Debian <emphasis role=\"distribution\">Etch</emphasis>"
 msgstr "<emphasis>文化</emphasis> OpenSSL 在 Debian <emphasis role=\"distribution\">Etch</emphasis>上的缺陷"
 
-msgid "The OpenSSL library, as initially provided in Debian <emphasis role=\"distribution\">Etch</emphasis>, had a serious problem in its random number generator (RNG). Indeed, the Debian maintainer had made a change so that applications using it would no longer generate warnings when analyzed by memory testing tools like <command>valgrind</command>. Unfortunately, this change also meant that the RNG was employing only one source of entropy corresponding to the process number (PID) whose 32,000 possible values do not offer enough randomness. <ulink type=\"block\" url=\"http://www.debian.org/security/2008/dsa-1571\" />"
+#, fuzzy
+#| msgid "The OpenSSL library, as initially provided in Debian <emphasis role=\"distribution\">Etch</emphasis>, had a serious problem in its random number generator (RNG). Indeed, the Debian maintainer had made a change so that applications using it would no longer generate warnings when analyzed by memory testing tools like <command>valgrind</command>. Unfortunately, this change also meant that the RNG was employing only one source of entropy corresponding to the process number (PID) whose 32,000 possible values do not offer enough randomness. <ulink type=\"block\" url=\"http://www.debian.org/security/2008/dsa-1571\" />"
+msgid "The OpenSSL library, as initially provided in Debian <emphasis role=\"distribution\">Etch</emphasis>, had a serious problem in its random number generator (RNG). Indeed, the Debian maintainer had made a change so that applications using it would no longer generate warnings when analyzed by memory testing tools like <command>valgrind</command>. Unfortunately, this change also meant that the RNG was employing only one source of entropy corresponding to the process number (PID) whose 32,000 possible values do not offer enough randomness. <ulink type=\"block\" url=\"https://www.debian.org/security/2008/dsa-1571\" />"
 msgstr "OpenSSL 程序库，首先由 Debian <emphasis role=\"distribution\">Etch</emphasis> 提供，在其随机数值产生器 (random number generator, RNG) 里有重大缺陷。所以，Debian 维护者修改它，使用 <command>valgrind</command> 之类的内存测试工具时，不再产生警示消息。不幸的是，此种改变让 RNG 套用一个熵值对应 32,000 个可能的处理编号 (PID)，不足以称为乱数。<ulink type=\"block\" url=\"http://www.debian.org/security/2008/dsa-1571\" />"
 
 msgid "Specifically, whenever OpenSSL was used to generate a key, it always produced a key within a known set of hundreds of thousands of keys (32,000 multiplied by a small number of key lengths). This affected SSH keys, SSL keys, and X.509 certificates used by numerous applications, such as OpenVPN. A cracker had only to try all of the keys to gain unauthorized access. To reduce the impact of the problem, the SSH daemon was modified to refuse problematic keys that are listed in the <emphasis role=\"pkg\">openssh-blacklist</emphasis> and <emphasis role=\"pkg\">openssh-blacklist-extra</emphasis> packages. Additionally, the <command>ssh-vulnkey</command> command allows identification of possibly compromised keys in the system."
@@ -594,7 +604,9 @@ msgstr "特别是当OpenSSL 用于产生密钥，它总是生成一个在已知�
 msgid "A more thorough analysis of this incident brings to light that it is the result of multiple (small) problems, both within the OpenSSL project and with the Debian package maintainer. A widely used library like OpenSSL should — without modifications — not generate warnings when tested by <command>valgrind</command>. Furthermore, the code (especially the parts as sensitive as the RNG) should be better commented to prevent such errors. On Debian's side, the maintainer wanted to validate the modifications with the OpenSSL developers, but simply explained the modifications without providing the corresponding patch to review and failed to mention his role within Debian. Finally, the maintenance choices were sub-optimal: the changes made to the original code were not clearly documented; all the modifications were effectively stored in a Subversion repository, but they ended up all lumped into one single patch during creation of the source package."
 msgstr "进一步分析这个事件，发现影响多个 (小) 问题，包括 OpenSSL 计划内与 Debian 软件包维护者。像 OpenSSL 这种被广泛使用程序库，被 <command>valgrind</command> 测试时，应该 — 未经修改 — 不能产生警示。尤有甚者，其代码 (尤其是像 RNG 这么敏感的部分) 应该有更好的说明以避免这种错误。从 Debian 的角度来看，维护者要向 OpenSSL 开发者认证其修改的部分，但单纯的解说修改而未提供对应的补丁供查看，以致 Debian 发生前述的错误。最后，维护者的选择是次要的选项：源代码的修改没有清楚的文档；所有的修改都保存在典藏所的次版本内，但是把所有的修改总结在一个补丁内纳入原始软件包中。"
 
-msgid "It is difficult under such conditions to find the corrective measures to prevent such incidents from recurring. The lesson to be learned here is that every divergence Debian introduces to upstream software must be justified, documented, submitted to the upstream project when possible, and widely publicized. It is from this perspective that the new source package format (“3.0 (quilt)”) and the Debian sources webservice were developed. <ulink type=\"block\" url=\"http://sources.debian.net\" />"
+#, fuzzy
+#| msgid "It is difficult under such conditions to find the corrective measures to prevent such incidents from recurring. The lesson to be learned here is that every divergence Debian introduces to upstream software must be justified, documented, submitted to the upstream project when possible, and widely publicized. It is from this perspective that the new source package format (“3.0 (quilt)”) and the Debian sources webservice were developed. <ulink type=\"block\" url=\"http://sources.debian.net\" />"
+msgid "It is difficult under such conditions to find the corrective measures to prevent such incidents from recurring. The lesson to be learned here is that every divergence Debian introduces to upstream software must be justified, documented, submitted to the upstream project when possible, and widely publicized. It is from this perspective that the new source package format (“3.0 (quilt)”) and the Debian sources webservice were developed. <ulink type=\"block\" url=\"https://sources.debian.org\" />"
 msgstr "在这种情况下，很难找出正确的方法以避免再发生此类事件。从此得到的教训，让每个发散的 Debian 必须尽可能的大量公开，经过调整过、文档充足后，才能上传软件。经过此事后，发展出新的原始软件包格式 (“3.0 (quilt)”) 与 Debian 原始网页服务。<ulink type=\"block\" url=\"http://sources.debian.net\" />"
 
 msgid "Using Remote X11 Applications"
@@ -675,7 +687,9 @@ msgstr "<primary><emphasis role=\"pkg\">krfb</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">x11vnc</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">x11vnc</emphasis></primary>"
 
-msgid "First, the user must authorize sharing their session. The GNOME graphical desktop environment in <emphasis role=\"distribution\">Jessie</emphasis> includes that option in its configuration panel (contrary to previous versions of Debian, where the user had to install and run <command>vino</command>). KDE still requires using <command>krfb</command> to allow sharing an existing session over VNC. For other graphical desktop environments, the <command>x11vnc</command> command (from the Debian package of the same name) serves the same purpose; you can make it available to the user with an explicit icon."
+#, fuzzy
+#| msgid "First, the user must authorize sharing their session. The GNOME graphical desktop environment in <emphasis role=\"distribution\">Jessie</emphasis> includes that option in its configuration panel (contrary to previous versions of Debian, where the user had to install and run <command>vino</command>). KDE still requires using <command>krfb</command> to allow sharing an existing session over VNC. For other graphical desktop environments, the <command>x11vnc</command> command (from the Debian package of the same name) serves the same purpose; you can make it available to the user with an explicit icon."
+msgid "First, the user must authorize sharing their session. The GNOME graphical desktop environment from <emphasis role=\"distribution\">Jessie</emphasis> onward includes that option in its configuration panel (contrary to previous versions of Debian, where the user had to install and run <command>vino</command>). KDE Plasma still requires using <command>krfb</command> to allow sharing an existing session over VNC. For other graphical desktop environments, the <command>x11vnc</command> command (from the Debian package of the same name) serves the same purpose; you can make it available to the user with an explicit icon."
 msgstr "首先，用户必须授权共享其进程。在 <emphasis role=\"distribution\">Jessie</emphasis> 配置面版 (不同于稍早的 Debian 版本，用户必须安装并运行 <command>vino</command>) 的GNOME 图形桌面环境已有此选项。KDE 桌面环境仍需使用 <command>krfb</command> 才能经由 VNC 共享既有的进程。其他皂图形桌面环境，<command>x11vnc</command> 命令 (在同名的 Debian 软件包内) 也能达到同样的结果；以明确的图标标明。"
 
 msgid "<primary><emphasis role=\"pkg\">vinagre</emphasis></primary>"
@@ -690,7 +704,9 @@ msgstr "<primary><emphasis role=\"pkg\">krdc</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">xvnc4viewer</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">xvnc4viewer</emphasis></primary>"
 
-msgid "When the graphical session is made available by VNC, the administrator must connect to it with a VNC client. GNOME has <command>vinagre</command> and <command>remmina</command> for that, while KDE includes <command>krdc</command> (in the menu at <menuchoice> <guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice>). There are other VNC clients that use the command line, such as <command>xvnc4viewer</command> in the Debian package of the same name. Once connected, the administrator can see what is going on, work on the machine remotely, and show the user how to proceed."
+#, fuzzy
+#| msgid "When the graphical session is made available by VNC, the administrator must connect to it with a VNC client. GNOME has <command>vinagre</command> and <command>remmina</command> for that, while KDE includes <command>krdc</command> (in the menu at <menuchoice> <guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice>). There are other VNC clients that use the command line, such as <command>xvnc4viewer</command> in the Debian package of the same name. Once connected, the administrator can see what is going on, work on the machine remotely, and show the user how to proceed."
+msgid "When the graphical session is made available by VNC, the administrator must connect to it with a VNC client. GNOME has <command>vinagre</command> and <command>remmina</command> for that, while the KDE project provides <command>krdc</command> (in the menu at <menuchoice> <guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice>). There are other VNC clients that use the command line, such as <command>xvnc4viewer</command> in the Debian package of the same name. Once connected, the administrator can see what is going on, work on the machine remotely, and show the user how to proceed."
 msgstr "从 VNC 取得图形进程时，管理者必须链接至 VNC 客户端。GNOME 有 <command>vinagre</command> 和 <command>remmina</command> 命令链接，而 KDE 使用 <command>krdc</command> (在 <menuchoice> <guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice> 菜单内)。还有使用命令行的其他 VNC 客户端，诸如 <command>xvnc4viewer</command> 在 Debian 的同名软件包内。链接后，管理者可以看到远程的桌面、操控远程桌面、并让远程用户知道运作的方式。"
 
 msgid "<emphasis>SECURITY</emphasis> VNC over SSH"
@@ -942,7 +958,9 @@ msgstr "<primary><emphasis>webmin</emphasis></primary>"
 msgid "This is, without a doubt, one of the most successful administration interfaces. It is a modular system managed through a web browser, covering a wide array of areas and tools. Furthermore, it is internationalized and available in many languages."
 msgstr "毋庸置疑，这是最成功的管理界面。它是透过网络浏览器的模块化系统，覆盖了广泛的领域和工具。而且，它是国际化的并且可以在多种语言中使用。"
 
-msgid "Sadly, <command>webmin</command> is no longer part of Debian. Its Debian maintainer — Jaldhar H. Vyas — removed the packages he created because he no longer had the time required to maintain them at an acceptable quality level. Nobody has officially taken over, so <emphasis role=\"distribution\">Jessie</emphasis> does not have the <command>webmin</command> package."
+#, fuzzy
+#| msgid "Sadly, <command>webmin</command> is no longer part of Debian. Its Debian maintainer — Jaldhar H. Vyas — removed the packages he created because he no longer had the time required to maintain them at an acceptable quality level. Nobody has officially taken over, so <emphasis role=\"distribution\">Jessie</emphasis> does not have the <command>webmin</command> package."
+msgid "Sadly, <command>webmin</command> is no longer part of Debian. Its Debian maintainer — Jaldhar H. Vyas — removed the packages he created because he no longer had the time required to maintain them at an acceptable quality level. Nobody has officially taken over, so <emphasis role=\"distribution\">Buster</emphasis> does not have the <command>webmin</command> package."
 msgstr "不幸的是，<command>webmin</command> 不是 Debian 的一部分。Debian 维护者 — Jaldhar H. Vyas — 移除他自建的软件包，因为他没有时间把该程序维护至相当水准。没有人正式接手，所以 <emphasis role=\"distribution\">Jessie</emphasis> 没有 <command>webmin</command> 软件包。"
 
 msgid "There is, however, an unofficial package distributed on the <literal>webmin.com</literal> website. Contrary to the original Debian packages, this package is monolithic; all of its configuration modules are installed and activated by default, even if the corresponding service is not installed on the machine."
@@ -1266,7 +1284,9 @@ msgstr "当 Debian 缺省安装 <emphasis role=\"pkg\">openbsd-inetd</emphasis> 
 msgid "This last incarnation of a super-server offers very interesting possibilities. Most notably, its configuration can be split into several files (stored, of course, in the <filename>/etc/xinetd.d/</filename> directory), which can make an administrator's life easier."
 msgstr "最后的这个超级服务载体提供了很有趣的特性。最引人注目的是，它的配置文件可以分割成几个不同文件（存储在 <filename>/etc/xinetd.d/</filename> 目录），让管理员更容易管理。"
 
-msgid "Last but not least, it is even possible to emulate <command>inetd</command>'s behaviour with <command>systemd</command>'s socket-activation mechanism (see <xref linkend=\"sect.systemd\" />)."
+#, fuzzy
+#| msgid "Last but not least, it is even possible to emulate <command>inetd</command>'s behaviour with <command>systemd</command>'s socket-activation mechanism (see <xref linkend=\"sect.systemd\" />)."
+msgid "Last but not least, it is even possible to emulate <command>inetd</command>'s behavior with <command>systemd</command>'s socket-activation mechanism (see <xref linkend=\"sect.systemd\" />)."
 msgstr "最后但不是最不重要，甚至可以仿真 <command>inetd</command> 的行为，以 <command>systemd</command> 的插座启用模式运作 (见 <xref linkend=\"sect.systemd\" />)。"
 
 msgid "Scheduling Tasks with <command>cron</command> and <command>atd</command>"
@@ -1435,7 +1455,9 @@ msgstr "只是在系统启动后，单次执行一个命令，可以使用 <lite
 msgid "<emphasis>ALTERNATIVE</emphasis> Emulating <command>cron</command> with <command>systemd</command>"
 msgstr "<emphasis>其他</emphasis> 仿真 <command>cron</command> 用 <command>systemd</command>"
 
-msgid "It is possible to emulate part of <command>cron</command>'s behaviour with <command>systemd</command>'s timer mechanism (see <xref linkend=\"sect.systemd\" />)."
+#, fuzzy
+#| msgid "It is possible to emulate part of <command>cron</command>'s behaviour with <command>systemd</command>'s timer mechanism (see <xref linkend=\"sect.systemd\" />)."
+msgid "It is possible to emulate part of <command>cron</command>'s behavior with <command>systemd</command>'s timer mechanism (see <xref linkend=\"sect.systemd\" />)."
 msgstr "部分 <command>cron</command> 的行为，可以用 <command>systemd</command> 的时间机制仿真 (见 <xref linkend=\"sect.systemd\" />)。"
 
 msgid "Using the <command>at</command> Command"
@@ -1533,7 +1555,9 @@ msgstr "可以在脚本中使用 <command>setquota</command> 程序自动更改�
 msgid "The quota system allows you to set four limits:"
 msgstr "配额系统允许设置四个限制："
 
-msgid "two limits (called “soft” and “hard”) refer to the number of blocks consumed. If the filesystem was created with a block-size of 1 kibibyte, a block contains 1024 bytes from the same file. Unsaturated blocks thus induce losses of disk space. A quota of 100 blocks, which theoretically allows storage of 102,400 bytes, will however be saturated with just 100 files of 500 bytes each, only representing 50,000 bytes in total."
+#, fuzzy
+#| msgid "two limits (called “soft” and “hard”) refer to the number of blocks consumed. If the filesystem was created with a block-size of 1 kibibyte, a block contains 1024 bytes from the same file. Unsaturated blocks thus induce losses of disk space. A quota of 100 blocks, which theoretically allows storage of 102,400 bytes, will however be saturated with just 100 files of 500 bytes each, only representing 50,000 bytes in total."
+msgid "two limits (called “soft” and “hard”) refer to the number of blocks consumed. If the filesystem was created with a block-size of 1 kibibyte, a block contains 1024 bytes from the same file. Unsaturated blocks thus induce losses of disk space. A quota of 100 blocks, which theoretically allows storage of 102,400 bytes, will, however, be saturated with just 100 files of 500 bytes each, only representing 50,000 bytes in total."
 msgstr "两种限制（称为“软的”和“硬的”）使用消耗的块数表示。如果文件系统使用１Ｋ的块创建，相同文件的每个块包含１０２４字节。不饱和的块会减少磁盘空间。１００个块的配额，理论上允许存储１０２４００字节，然而，它们有可能被１００个每个包含５００字节的文件填充，总数仅仅是５００００字节。"
 
 msgid "two limits (soft and hard) refer to the number of inodes used. Each file occupies at least one inode to store information about it (permissions, owner, timestamp of last access, etc.). It is thus a limit on the number of user files."
@@ -1802,18 +1826,6 @@ msgstr "另外，越来越多的驱动使用动态值作为设备的主、次设
 msgid "<emphasis>udev</emphasis> was created precisely to solve this problem."
 msgstr "<emphasis>udev</emphasis> 正是为了解决该问题而创立的。"
 
-msgid "<emphasis>IN PRACTICE</emphasis> Network card management"
-msgstr "<emphasis>实践</emphasis> 网络管理"
-
-msgid "Many computers have multiple network cards (sometimes two wired interfaces and a wifi interface), and with <emphasis>hotplug</emphasis> support on most bus types, the Linux kernel does not guarantee fixed naming of network interfaces. But users who want to configure their network in <filename>/etc/network/interfaces</filename> need a fixed name!"
-msgstr "当代的电脑有多张网络卡 (两张网络卡加一个 wifi 接口)，以及在多个接口支持 <emphasis>热插拔</emphasis>，Linux 核心不保证给这些网络接口固定的名称。不过，用户却需要在配置 <filename>/etc/network/interfaces</filename> 时，需用到固定的名称！"
-
-msgid "It would be difficult to ask every user to create their own <emphasis>udev</emphasis> rules to address this problem. This is why <emphasis>udev</emphasis> was configured in a rather peculiar manner; on first boot (and, more generally, each time that a new network card appears) it uses the name of the network interface and its MAC address to create new rules that will reassign the same name on subsequent boots. These rules are stored in <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>."
-msgstr "很难要求每个用户建立自己的 <emphasis>udev</emphasis> 规则来解决此问题。因此 <emphasis>udev</emphasis> 使用一种很特殊的方式来进行配置；首次启动（更通俗的说，每次新网卡出现的时候），它会使用网络接口的名字和网卡的MAC 地址创建新规则，并在随后的启动中赋予同样的名字。这些规则储存在 <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>。"
-
-msgid "This mechanism has some side effects that you should know about. Let's consider the case of a computer that has only one PCI network card. The network interface is named <literal>eth0</literal>, logically. Now say the card breaks down, and the administrator replaces it; the new card will have a new MAC address. Since the old card was assigned the name, <literal>eth0</literal>, the new one will be assigned <literal>eth1</literal>, even though the <literal>eth0</literal> card is gone for good (and the network will not be functional because <filename>/etc/network/interfaces</filename> likely configures an <literal>eth0</literal> interface). In this case, it is enough to simply delete the <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> file before rebooting the computer. The new card will then be given the expected <literal>eth0</literal> name."
-msgstr "此机制有个副作用值得注意。只有一个 PCI 网卡的电脑。自然把网络接口命名为 <literal>eth0</literal>。然后，网卡坏了，换个新的；新网卡的 MAC 地址当然不同。旧网卡已有名称，<literal>eth0</literal>，新网卡被命名为 <literal>eth1</literal>，实际上，<literal>eth0</literal> 网卡已经不会再回来了 (且网络不会运作如常，因为 <filename>/etc/network/interfaces</filename> 配置一个 <literal>eth0</literal> 接口)。在此情况下，重新开机前先删除 <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> 文件。新的网卡就会取得 <literal>eth0</literal> 名称。"
-
 msgid "How <emphasis>udev</emphasis> Works"
 msgstr "<emphasis>udev</emphasis> 如何工作"
 
@@ -1907,54 +1919,99 @@ msgstr "一个具体例子"
 msgid "Let us consider the case of a simple USB key and try to assign it a fixed name. First, you must find the elements that will identify it in a unique manner. For this, plug it in and run <command>udevadm info -a -n /dev/sdc</command> (replacing <replaceable>/dev/sdc</replaceable> with the actual name assigned to the key)."
 msgstr "我们来考虑一个Ｕ盘并给它指派固定名字的例子。首先，必须要找到能唯一识别它的元素。可以插入并运行 <command>udevadm info -a -n /dev/sdc</command> （ 用指派给Ｕ盘的名字代替<replaceable>/dev/sdc</replaceable> ）。"
 
+#, fuzzy
+#| msgid ""
+#| "<computeroutput># </computeroutput><userinput>udevadm info -a -n /dev/sdc</userinput>\n"
+#| "<computeroutput>[...]\n"
+#| "  looking at device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2/1-2.2:1.0/host9/target9:0:0/9:0:0:0/block/sdc':\n"
+#| "    KERNEL==\"sdc\"\n"
+#| "    SUBSYSTEM==\"block\"\n"
+#| "    DRIVER==\"\"\n"
+#| "    ATTR{range}==\"16\"\n"
+#| "    ATTR{ext_range}==\"256\"\n"
+#| "    ATTR{removable}==\"1\"\n"
+#| "    ATTR{ro}==\"0\"\n"
+#| "    ATTR{size}==\"126976\"\n"
+#| "    ATTR{alignment_offset}==\"0\"\n"
+#| "    ATTR{capability}==\"53\"\n"
+#| "    ATTR{stat}==\"      51      100     1208      256        0        0        0        0        0      192      25        6\"\n"
+#| "    ATTR{inflight}==\"       0        0\"\n"
+#| "[...]\n"
+#| "  looking at parent device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2/1-2.2:1.0/host9/target9:0:0/9:0:0:0':\n"
+#| "    KERNELS==\"9:0:0:0\"\n"
+#| "    SUBSYSTEMS==\"scsi\"\n"
+#| "    DRIVERS==\"sd\"\n"
+#| "    ATTRS{device_blocked}==\"0\"\n"
+#| "    ATTRS{type}==\"0\"\n"
+#| "    ATTRS{scsi_level}==\"3\"\n"
+#| "    ATTRS{vendor}==\"I0MEGA  \"\n"
+#| "    ATTRS{model}==\"UMni64MB*IOM2C4 \"\n"
+#| "    ATTRS{rev}==\"    \"\n"
+#| "    ATTRS{state}==\"running\"\n"
+#| "[...]\n"
+#| "    ATTRS{max_sectors}==\"240\"\n"
+#| "[...]\n"
+#| "  looking at parent device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2':\n"
+#| "    KERNELS==\"9:0:0:0\"\n"
+#| "    SUBSYSTEMS==\"usb\"\n"
+#| "    DRIVERS==\"usb\"\n"
+#| "    ATTRS{configuration}==\"iCfg\"\n"
+#| "    ATTRS{bNumInterfaces}==\" 1\"\n"
+#| "    ATTRS{bConfigurationValue}==\"1\"\n"
+#| "    ATTRS{bmAttributes}==\"80\"\n"
+#| "    ATTRS{bMaxPower}==\"100mA\"\n"
+#| "    ATTRS{urbnum}==\"398\"\n"
+#| "    ATTRS{idVendor}==\"4146\"\n"
+#| "    ATTRS{idProduct}==\"4146\"\n"
+#| "    ATTRS{bcdDevice}==\"0100\"\n"
+#| "[...]\n"
+#| "    ATTRS{manufacturer}==\"USB Disk\"\n"
+#| "    ATTRS{product}==\"USB Mass Storage Device\"\n"
+#| "    ATTRS{serial}==\"M004021000001\"\n"
+#| "[...]\n"
+#| "</computeroutput>"
 msgid ""
 "<computeroutput># </computeroutput><userinput>udevadm info -a -n /dev/sdc</userinput>\n"
 "<computeroutput>[...]\n"
-"  looking at device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2/1-2.2:1.0/host9/target9:0:0/9:0:0:0/block/sdc':\n"
+"  looking at device '/devices/pci0000:00/0000:00:10.0/usb2/2-1/2-1:1.0/host4/target4:0:0/4:0:0:0/block/sdc':\n"
 "    KERNEL==\"sdc\"\n"
 "    SUBSYSTEM==\"block\"\n"
 "    DRIVER==\"\"\n"
+"    ATTR{hidden}==\"0\"\n"
+"    ATTR{events}==\"media_change\"\n"
+"    ATTR{ro}==\"0\"\n"
+"    ATTR{discard_alignment}==\"0\"\n"
+"    ATTR{removable}==\"1\"\n"
+"    ATTR{events_async}==\"\"\n"
+"    ATTR{alignment_offset}==\"0\"\n"
+"    ATTR{capability}==\"51\"\n"
+"    ATTR{events_poll_msecs}==\"-1\"\n"
+"    ATTR{stat}==\"     130        0     6328      435        0        0        0        0        0      252      252        0        0        0        0\"\n"
+"    ATTR{size}==\"15100224\"\n"
 "    ATTR{range}==\"16\"\n"
 "    ATTR{ext_range}==\"256\"\n"
-"    ATTR{removable}==\"1\"\n"
-"    ATTR{ro}==\"0\"\n"
-"    ATTR{size}==\"126976\"\n"
-"    ATTR{alignment_offset}==\"0\"\n"
-"    ATTR{capability}==\"53\"\n"
-"    ATTR{stat}==\"      51      100     1208      256        0        0        0        0        0      192      25        6\"\n"
 "    ATTR{inflight}==\"       0        0\"\n"
 "[...]\n"
-"  looking at parent device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2/1-2.2:1.0/host9/target9:0:0/9:0:0:0':\n"
-"    KERNELS==\"9:0:0:0\"\n"
-"    SUBSYSTEMS==\"scsi\"\n"
-"    DRIVERS==\"sd\"\n"
-"    ATTRS{device_blocked}==\"0\"\n"
-"    ATTRS{type}==\"0\"\n"
-"    ATTRS{scsi_level}==\"3\"\n"
-"    ATTRS{vendor}==\"I0MEGA  \"\n"
-"    ATTRS{model}==\"UMni64MB*IOM2C4 \"\n"
-"    ATTRS{rev}==\"    \"\n"
-"    ATTRS{state}==\"running\"\n"
+"\n"
+"  looking at parent device '/devices/pci0000:00/0000:00:10.0/usb2/2-1/2-1:1.0/host4/target4:0:0/4:0:0:0':\n"
 "[...]\n"
 "    ATTRS{max_sectors}==\"240\"\n"
 "[...]\n"
-"  looking at parent device '/devices/pci0000:00/0000:00:10.3/usb1/1-2/1-2.2':\n"
-"    KERNELS==\"9:0:0:0\"\n"
+"  looking at parent device '/devices/pci0000:00/0000:00:10.0/usb2/2-1':\n"
+"    KERNELS==\"2-1\"\n"
 "    SUBSYSTEMS==\"usb\"\n"
 "    DRIVERS==\"usb\"\n"
-"    ATTRS{configuration}==\"iCfg\"\n"
+"    ATTRS{bDeviceProtocol}==\"00\"\n"
 "    ATTRS{bNumInterfaces}==\" 1\"\n"
-"    ATTRS{bConfigurationValue}==\"1\"\n"
-"    ATTRS{bmAttributes}==\"80\"\n"
-"    ATTRS{bMaxPower}==\"100mA\"\n"
-"    ATTRS{urbnum}==\"398\"\n"
-"    ATTRS{idVendor}==\"4146\"\n"
-"    ATTRS{idProduct}==\"4146\"\n"
-"    ATTRS{bcdDevice}==\"0100\"\n"
+"    ATTRS{busnum}==\"2\"\n"
+"    ATTRS{quirks}==\"0x0\"\n"
+"    ATTRS{authorized}==\"1\"\n"
+"    ATTRS{ltm_capable}==\"no\"\n"
+"    ATTRS{speed}==\"480\"\n"
+"    ATTRS{product}==\"TF10\"\n"
+"    ATTRS{manufacturer}==\"TDK LoR\"\n"
 "[...]\n"
-"    ATTRS{manufacturer}==\"USB Disk\"\n"
-"    ATTRS{product}==\"USB Mass Storage Device\"\n"
-"    ATTRS{serial}==\"M004021000001\"\n"
+"    ATTRS{serial}==\"07032998B60AB777\"\n"
 "[...]\n"
 "</computeroutput>"
 msgstr ""
@@ -2011,9 +2068,13 @@ msgstr ""
 msgid "To create a new rule, you can use tests on the device's variables, as well as those of one of the parent devices. The above case allows us to create two rules like these:"
 msgstr "可以通过检测设备变量，还有父设备变量创建新的规则。上面的例子运行我们创建两个这样的规则："
 
+#, fuzzy
+#| msgid ""
+#| "KERNEL==\"sd?\", SUBSYSTEM==\"block\", ATTRS{serial}==\"M004021000001\", SYMLINK+=\"usb_key/disk\"\n"
+#| "KERNEL==\"sd?[0-9]\", SUBSYSTEM==\"block\", ATTRS{serial}==\"M004021000001\", SYMLINK+=\"usb_key/part%n\""
 msgid ""
-"KERNEL==\"sd?\", SUBSYSTEM==\"block\", ATTRS{serial}==\"M004021000001\", SYMLINK+=\"usb_key/disk\"\n"
-"KERNEL==\"sd?[0-9]\", SUBSYSTEM==\"block\", ATTRS{serial}==\"M004021000001\", SYMLINK+=\"usb_key/part%n\""
+"KERNEL==\"sd?\", SUBSYSTEM==\"block\", ATTRS{serial}==\"07032998B60AB777\", SYMLINK+=\"usb_key/disk\"\n"
+"KERNEL==\"sd?[0-9]\", SUBSYSTEM==\"block\", ATTRS{serial}==\"07032998B60AB777\", SYMLINK+=\"usb_key/part%n\""
 msgstr ""
 "KERNEL==\"sd?\", SUBSYSTEM==\"block\", ATTRS{serial}==\"M004021000001\", SYMLINK+=\"usb_key/disk\"\n"
 "KERNEL==\"sd?[0-9]\", SUBSYSTEM==\"block\", ATTRS{serial}==\"M004021000001\", SYMLINK+=\"usb_key/part%n\""
@@ -2059,6 +2120,18 @@ msgstr "无法顺利待机时，罪魁祸首多半是显卡的驱动程序。碰
 
 msgid "After this overview of basic services common to many Unix systems, we will focus on the environment of the administered machines: the network. Many services are required for the network to work properly. They will be discussed in the next chapter."
 msgstr "在介绍了这么多Unix 系统上通用的基本服务之后，接下来关注管理机器的运行环境：网络。许多服务都需要网络的支持。这些会在下一章讨论。"
+
+#~ msgid "<emphasis>IN PRACTICE</emphasis> Network card management"
+#~ msgstr "<emphasis>实践</emphasis> 网络管理"
+
+#~ msgid "Many computers have multiple network cards (sometimes two wired interfaces and a wifi interface), and with <emphasis>hotplug</emphasis> support on most bus types, the Linux kernel does not guarantee fixed naming of network interfaces. But users who want to configure their network in <filename>/etc/network/interfaces</filename> need a fixed name!"
+#~ msgstr "当代的电脑有多张网络卡 (两张网络卡加一个 wifi 接口)，以及在多个接口支持 <emphasis>热插拔</emphasis>，Linux 核心不保证给这些网络接口固定的名称。不过，用户却需要在配置 <filename>/etc/network/interfaces</filename> 时，需用到固定的名称！"
+
+#~ msgid "It would be difficult to ask every user to create their own <emphasis>udev</emphasis> rules to address this problem. This is why <emphasis>udev</emphasis> was configured in a rather peculiar manner; on first boot (and, more generally, each time that a new network card appears) it uses the name of the network interface and its MAC address to create new rules that will reassign the same name on subsequent boots. These rules are stored in <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>."
+#~ msgstr "很难要求每个用户建立自己的 <emphasis>udev</emphasis> 规则来解决此问题。因此 <emphasis>udev</emphasis> 使用一种很特殊的方式来进行配置；首次启动（更通俗的说，每次新网卡出现的时候），它会使用网络接口的名字和网卡的MAC 地址创建新规则，并在随后的启动中赋予同样的名字。这些规则储存在 <filename>/etc/udev/rules.d/70-persistent-net.rules</filename>。"
+
+#~ msgid "This mechanism has some side effects that you should know about. Let's consider the case of a computer that has only one PCI network card. The network interface is named <literal>eth0</literal>, logically. Now say the card breaks down, and the administrator replaces it; the new card will have a new MAC address. Since the old card was assigned the name, <literal>eth0</literal>, the new one will be assigned <literal>eth1</literal>, even though the <literal>eth0</literal> card is gone for good (and the network will not be functional because <filename>/etc/network/interfaces</filename> likely configures an <literal>eth0</literal> interface). In this case, it is enough to simply delete the <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> file before rebooting the computer. The new card will then be given the expected <literal>eth0</literal> name."
+#~ msgstr "此机制有个副作用值得注意。只有一个 PCI 网卡的电脑。自然把网络接口命名为 <literal>eth0</literal>。然后，网卡坏了，换个新的；新网卡的 MAC 地址当然不同。旧网卡已有名称，<literal>eth0</literal>，新网卡被命名为 <literal>eth1</literal>，实际上，<literal>eth0</literal> 网卡已经不会再回来了 (且网络不会运作如常，因为 <filename>/etc/network/interfaces</filename> 配置一个 <literal>eth0</literal> 接口)。在此情况下，重新开机前先删除 <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> 文件。新的网卡就会取得 <literal>eth0</literal> 名称。"
 
 #, fuzzy
 #~ msgid "<emphasis>CULTURE</emphasis> Advanced Power Management (APM)"
