@@ -1,17 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr ""
-"Project-Id-Version: 0\n"
-"POT-Creation-Date: 2015-10-01 18:01+0200\n"
-"PO-Revision-Date: 2017-10-24 05:04+0000\n"
-"Last-Translator: Faris Xiao <atzlinux@163.com>\n"
-"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/zh_Hans/>\n"
-"Language: zh-CN\n"
-"MIME-Version: 1.0\n"
-"Content-Type: application/x-publican; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.17\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2015-10-01 18:01+0200\nPO-Revision-Date: 2019-08-23 01:53+0000\nLast-Translator: Faris Xiao <atzlinux@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 3.9-dev\n"
 
 msgid "Network"
 msgstr "网络"
@@ -1038,62 +1027,63 @@ msgid "Once a network interface is configured, setting up this traffic limitatio
 msgstr "配置网络接口后，运行 <command>wondershaper <replaceable>interface</replaceable> <replaceable>download_rate</replaceable> <replaceable>upload_rate</replaceable></command>命令，设置流量控制。可以是 <literal>eth0</literal> 或 <literal>ppp0</literal> 接口，两者的速度均以每秒千位为单位。<command>wondershaper remove <replaceable>interface</replaceable></command> 命令可以在特定接口停用流量控制。"
 
 msgid "For an Ethernet connection, this script is best called right after the interface is configured. This is done by adding <literal>up</literal> and <literal>down</literal> directives to the <filename>/etc/network/interfaces</filename> file allowing declared commands to be run, respectively, after the interface is configured and before it is deconfigured. For example:"
-msgstr ""
+msgstr "对于一个以太网连接，这个脚本最好在接口配置完成以后调用。这个操作可以通过添加<literal>up</literal>和<literal>down</literal>操作到<filename>/etc/network/interfaces</filename>文件来分别在接口配置前，配置完成后运行。比如："
 
 msgid "Changes in the <filename>/etc/network/interfaces</filename> file"
-msgstr ""
+msgstr "对文件<filename>/etc/network/interfaces</filename>的变更"
 
 msgid ""
 "\n"
 "iface eth0 inet dhcp\n"
 "    up /sbin/wondershaper eth0 500 100\n"
 "    down /sbin/wondershaper remove eth0"
-msgstr ""
+msgstr "\niface eth0 inet dhcp\n    up /sbin/wondershaper eth0 500 100\n    down /sbin/wondershaper remove eth0"
 
 msgid "In the PPP case, creating a script that calls <command>wondershaper</command> in <filename>/etc/ppp/ip-up.d/</filename> will enable traffic control as soon as the connection is up."
-msgstr ""
+msgstr "对于PPP的情况，只要连接已建立，就可以在<filename>/etc/ppp/ip-up.d/</filename>生成一个脚本调用<command>wondershaper</command>命令来使能流量控制。"
 
 msgid "<emphasis>GOING FURTHER</emphasis> Optimal configuration"
-msgstr ""
+msgstr "<emphasis>进阶</emphasis>优化配置"
 
 msgid "The <filename>/usr/share/doc/wondershaper/README.Debian.gz</filename> file describes, in some detail, the configuration method recommended by the package maintainer. In particular, it advises measuring the download and upload speeds so as to best evaluate real limits."
-msgstr ""
+msgstr "文件<filename>/usr/share/doc/wondershaper/README.Debian.gz</filename>描述了由包维护者推荐的，一些细节的配置方式。尤其是，它建议测量下载和上传速度来最好评估实际限制。"
 
 msgid "Standard Configuration"
-msgstr ""
+msgstr "标准配置"
 
+#, fuzzy
 msgid "Barring a specific QoS configuration, the Linux kernel uses the <literal>pfifo_fast</literal> queue scheduler, which provides a few interesting features by itself. The priority of each processed IP packet is based on the ToS field (<emphasis>Type of Service</emphasis>) of this packet; modifying this field is enough to take advantage of the scheduling features. There are five possible values:"
-msgstr ""
+msgstr "除非有特定的QoS配置，linux内核使用<literal> pfifo_fast</literal>队列调度，它提供了一些有趣的特性。每个IP包的优先级基于其ToS字段（<emphasis>Type of Service</emphasis>）；修改这个字段就足够使用调度策略。下面是5个可能的值："
 
 msgid "Normal-Service (0);"
-msgstr ""
+msgstr "一般服务（0）；"
 
 msgid "Minimize-Cost (2);"
-msgstr ""
+msgstr "最小成本（2）；"
 
 msgid "Maximize-Reliability (4);"
-msgstr ""
+msgstr "最大可用性（4）；"
 
 msgid "Maximize-Throughput (8);"
-msgstr ""
+msgstr "最大吞吐量（8）；"
 
 msgid "Minimize-Delay (16)."
-msgstr ""
+msgstr "最小延迟（16）。"
 
 msgid "<primary>ToS</primary>"
-msgstr ""
+msgstr "<primary>ToS</primary>"
 
 msgid "<primary>Type of Service</primary>"
-msgstr ""
+msgstr "<primary>服务类型</primary>"
 
 msgid "The ToS field can be set by applications that generate IP packets, or modified on the fly by <emphasis>netfilter</emphasis>. The following rules are sufficient to increase responsiveness for a server's SSH service:"
-msgstr ""
+msgstr "Tos字段可以被生成IP数据包的应用设置，或由<emphasis>netfilter</emphasis>动态更改。下面的规则足以增加一台服务器的SSH服务的响应度"
 
 msgid ""
 "\n"
 "iptables -t mangle -A PREROUTING -p tcp --sport ssh -j TOS --set-tos Minimize-Delay\n"
 "iptables -t mangle -A PREROUTING -p tcp --dport ssh -j TOS --set-tos Minimize-Delay"
-msgstr ""
+msgstr "\niptables -t mangle -A PREROUTING -p tcp --sport ssh -j TOS --set-tos Minimize-Delay\niptables -t mangle -A PREROUTING -p tcp --dport ssh -j TOS --set-tos Minimize-Delay"
 
 msgid "Dynamic Routing"
 msgstr ""
