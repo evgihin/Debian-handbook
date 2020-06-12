@@ -417,6 +417,27 @@ $ </computeroutput><userinput>ls travail/</userinput>
     (for example, for a WiFi interface), then it will create the appropriate
     file in <filename>/etc/NetworkManager/system-connections/</filename>.</para>
 
+    <sidebar>
+      <title><emphasis>NOTE</emphasis> NetworkManager</title>
+      <indexterm><primary><emphasis role="pkg">network-manager</emphasis></primary></indexterm>
+
+      <!-- MAYCHANGE: the URL below are version-specific -->
+      <para>If Network Manager is particularly recommended in roaming setups
+      (see <xref linkend="sect.roaming-network-config" />),
+      it is also perfectly usable as the default network management
+      tool. You can create “System connections” that are used as soon
+      as the computer boots either manually with a
+      <filename>.ini</filename>-like file in
+      <filename>/etc/NetworkManager/system-connections/</filename> or
+      through a graphical tool (<command>nm-connection-editor</command>).
+      If you were using ifupdown, just remember to deactivate the entries in
+      <filename>/etc/network/interfaces</filename> that you want
+      Network Manager to handle.
+      <ulink type="block" url="https://wiki.gnome.org/Projects/NetworkManager/SystemSettings"/>
+      <ulink type="block" url="https://developer.gnome.org/NetworkManager/1.14/ref-settings.html"/>
+      </para>
+    </sidebar>
+
     <para>If Network Manager is not installed, then the installer
     will configure <emphasis role="pkg">ifupdown</emphasis> by creating
     the <filename>/etc/network/interfaces</filename> file. A line starting with
@@ -435,27 +456,6 @@ $ </computeroutput><userinput>ls travail/</userinput>
     <indexterm><primary>network</primary><secondary>configuration</secondary></indexterm>
     <indexterm><primary>configuration</primary><secondary>of the network</secondary></indexterm>
     <indexterm><primary>interface</primary><secondary>network interface</secondary></indexterm>
-
-    <sidebar>
-      <title><emphasis>ALTERNATIVE</emphasis> NetworkManager</title>
-      <indexterm><primary><emphasis role="pkg">network-manager</emphasis></primary></indexterm>
-
-      <!-- MAYCHANGE: the URL below are version-specific -->
-      <para>If Network Manager is particularly recommended in roaming setups
-      (see <xref linkend="sect.roaming-network-config" />),
-      it is also perfectly usable as the default network management
-      tool. You can create “System connections” that are used as soon
-      as the computer boots either manually with a
-      <filename>.ini</filename>-like file in
-      <filename>/etc/NetworkManager/system-connections/</filename> or
-      through a graphical tool (<command>nm-connection-editor</command>).
-      Just remember to deactivate the entries in
-      <filename>/etc/network/interfaces</filename> that you want
-      Network Manager to handle.
-      <ulink type="block" url="https://wiki.gnome.org/Projects/NetworkManager/SystemSettings"/>
-      <ulink type="block" url="https://developer.gnome.org/NetworkManager/1.14/ref-settings.html"/>
-      </para>
-    </sidebar>
 
     <section id="sect.interface-ethernet">
       <title>Ethernet Interface</title>
@@ -1173,16 +1173,6 @@ nameserver 8.8.8.8
       </itemizedlist>
 
       <sidebar>
-        <title><emphasis>DOCUMENTATION</emphasis> <filename>/etc/passwd</filename>, <filename>/etc/shadow</filename> and <filename>/etc/group</filename> file formats</title>
-
-	<para>These formats are documented in the following man pages:
-	<citerefentry><refentrytitle>passwd</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-	<citerefentry><refentrytitle>shadow</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-	and
-	<citerefentry><refentrytitle>group</refentrytitle><manvolnum>5</manvolnum></citerefentry>.</para>
-      </sidebar>
-
-      <sidebar>
         <title><emphasis>SECURITY</emphasis> <filename>/etc/shadow</filename> file security</title>
 
 	<para><filename>/etc/shadow</filename>, unlike its alter-ego,
@@ -1194,6 +1184,16 @@ nameserver 8.8.8.8
 	characters. This attack — called a "dictionary attack" — is no
 	longer possible on systems using
 	<filename>/etc/shadow</filename>.</para>
+      </sidebar>
+
+      <sidebar>
+        <title><emphasis>DOCUMENTATION</emphasis> <filename>/etc/passwd</filename>, <filename>/etc/shadow</filename> and <filename>/etc/group</filename> file formats</title>
+
+	<para>These formats are documented in the following man pages:
+	<citerefentry><refentrytitle>passwd</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+	<citerefentry><refentrytitle>shadow</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+	and
+	<citerefentry><refentrytitle>group</refentrytitle><manvolnum>5</manvolnum></citerefentry>.</para>
       </sidebar>
     </section>
     <section id="sect.account-modification">

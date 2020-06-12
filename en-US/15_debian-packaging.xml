@@ -217,6 +217,17 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
 </computeroutput></screen>
       </example>
 
+      <para>The previous command can fail if the
+      <literal>Build-Depends</literal> fields have not been updated, or if
+      the related packages are not installed. In such a case, it is
+      possible to overrule this check by passing the <literal>-d</literal>
+      option to <command>dpkg-buildpackage</command>. However, explicitly
+      ignoring these dependencies runs the risk of the build process
+      failing at a later stage. Worse, the package may seem to build
+      correctly but fail to run properly: some programs automatically
+      disable some of their features when a required library is not
+      available at build time.</para>
+
       <sidebar id="sidebar.fakeroot">
         <title><emphasis>TOOL</emphasis> <command>fakeroot</command></title>
 
@@ -243,17 +254,6 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
 	actually created with that user's permissions). At no time does it
 	actually get root privileges that it could abuse.</para>
       </sidebar>
-
-      <para>The previous command can fail if the
-      <literal>Build-Depends</literal> fields have not been updated, or if
-      the related packages are not installed. In such a case, it is
-      possible to overrule this check by passing the <literal>-d</literal>
-      option to <command>dpkg-buildpackage</command>. However, explicitly
-      ignoring these dependencies runs the risk of the build process
-      failing at a later stage. Worse, the package may seem to build
-      correctly but fail to run properly: some programs automatically
-      disable some of their features when a required library is not
-      available at build time.</para>
 
       <para>More often than not, Debian developers use a higher-level
       program such as <command>debuild</command>; this runs

@@ -889,8 +889,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
 	<para>First, we prepare the physical volumes using
 	<command>pvcreate</command>:</para>
 
-        <screen id="screen.pvcreate"><computeroutput># </computeroutput><userinput>pvdisplay</userinput>
-<computeroutput># </computeroutput><userinput>pvcreate /dev/sdb2</userinput>
+        <screen id="screen.pvcreate"><computeroutput># </computeroutput><userinput>pvcreate /dev/sdb2</userinput>
 <computeroutput>  Physical volume "/dev/sdb2" successfully created.
 # </computeroutput><userinput>pvdisplay</userinput>
 <computeroutput>  "/dev/sdb2" is a new physical volume of "4.00 GiB"
@@ -910,8 +909,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
   Physical volume "/dev/sdd" successfully created.
   Physical volume "/dev/sdf1" successfully created.
   Physical volume "/dev/sdf2" successfully created.
-# </computeroutput><userinput>pvdisplay -C</userinput>
-<computeroutput>  PV         VG Fmt  Attr PSize PFree
+# </computeroutput><userinput>pvdisplay -C</userinput><computeroutput>
   PV         VG Fmt  Attr PSize  PFree 
   /dev/sdb2     lvm2 ---   4.00g  4.00g
   /dev/sdc3     lvm2 ---   3.00g  3.00g
@@ -932,8 +930,7 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
 	<filename>vg_normal</filename>, will also include slower
 	elements.</para>
 
-        <screen id="screen.vgcreate"><computeroutput># </computeroutput><userinput>vgdisplay</userinput>
-<computeroutput># </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>
+        <screen id="screen.vgcreate"><computeroutput># </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>
 <computeroutput>  Volume group "vg_critical" successfully created
 # </computeroutput><userinput>vgdisplay</userinput>
 <computeroutput>  --- Volume group ---
@@ -1603,13 +1600,6 @@ Device    Boot     Start       End   Sectors Size Id Type
       </sidebar>
 
       <sidebar>
-        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
-
-        <para>Xen is currently only available for the i386, amd64, arm64
-        and armhf architectures.</para>
-      </sidebar>
-
-      <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and non-Linux kernels</title>
 
 	<para>Xen requires modifications to all the operating systems
@@ -1626,6 +1616,13 @@ Device    Boot     Start       End   Sectors Size Id Type
 	to virtualization (which are only present in more recent
 	processors), even non-modified operating systems can run as domU
 	(including Windows).</para>
+      </sidebar>
+
+      <sidebar>
+        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
+
+        <para>Xen is currently only available for the i386, amd64, arm64
+        and armhf architectures.</para>
       </sidebar>
 
       <para>Using Xen under Debian requires three components:</para>

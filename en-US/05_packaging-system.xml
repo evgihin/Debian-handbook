@@ -249,8 +249,7 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
       <filename>control</filename> file looks like the following:</para>
 
       <screen>
-<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>
-<computeroutput><![CDATA[
+<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput><computeroutput><![CDATA[
 Package: apt
 Version: 1.8.2
 Installed-Size: 4064
@@ -384,33 +383,6 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
         are examples of meta-packages.</para>
 
         <sidebar>
-          <title><emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal> </title>
-          <indexterm><primary><literal>Pre-Depends</literal>, header field</primary></indexterm>
-          <indexterm><primary>package</primary><secondary>pre-dependency</secondary></indexterm>
-          <indexterm><primary>pre-dependency</primary></indexterm>
-          <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary></indexterm>
-
-          <para>“Pre-dependencies”, which are listed in the
-          “<literal>Pre-Depends</literal>” field in the package
-          headers, complete the normal dependencies; their syntax is
-          identical. A normal dependency indicates that the package in
-          question must be unpacked and configured before configuration of the package
-          declaring the dependency. A pre-dependency stipulates that the
-          package in question must be unpacked and configured before
-          execution of the pre-installation script of the package declaring
-          the pre-dependency, that is before its installation.</para>
-
-          <para>A pre-dependency is very demanding for
-          <command>apt</command>, because it adds a strict constraint on
-          the ordering of the packages to install. As such,
-          pre-dependencies are discouraged unless absolutely necessary. It
-          is even recommended to consult other developers on
-          <email>debian-devel@lists.debian.org</email> before adding a
-          pre-dependency. It is generally possible to find another solution
-          as a work-around.</para>
-        </sidebar>
-
-        <sidebar>
           <title><emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>, <literal>Suggests</literal>, and <literal>Enhances</literal> fields</title>
           <indexterm><primary><literal>Recommends</literal>, header field</primary></indexterm>
           <indexterm><primary><literal>Suggests</literal>, header field</primary></indexterm>
@@ -462,6 +434,33 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
           <literal>Enhances</literal> field to appear to the user in
           addition to the traditional suggestions — found in the
           <literal>Suggests</literal> field.</para>
+        </sidebar>
+
+        <sidebar>
+          <title><emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal> </title>
+          <indexterm><primary><literal>Pre-Depends</literal>, header field</primary></indexterm>
+          <indexterm><primary>package</primary><secondary>pre-dependency</secondary></indexterm>
+          <indexterm><primary>pre-dependency</primary></indexterm>
+          <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary></indexterm>
+
+          <para>“Pre-dependencies”, which are listed in the
+          “<literal>Pre-Depends</literal>” field in the package
+          headers, complete the normal dependencies; their syntax is
+          identical. A normal dependency indicates that the package in
+          question must be unpacked and configured before configuration of the package
+          declaring the dependency. A pre-dependency stipulates that the
+          package in question must be unpacked and configured before
+          execution of the pre-installation script of the package declaring
+          the pre-dependency, that is before its installation.</para>
+
+          <para>A pre-dependency is very demanding for
+          <command>apt</command>, because it adds a strict constraint on
+          the ordering of the packages to install. As such,
+          pre-dependencies are discouraged unless absolutely necessary. It
+          is even recommended to consult other developers on
+          <email>debian-devel@lists.debian.org</email> before adding a
+          pre-dependency. It is generally possible to find another solution
+          as a work-around.</para>
         </sidebar>
       </section>
 
@@ -1007,6 +1006,23 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
       the file and attempt to re-instate the relevant modifications
       (previously identified with <command>diff</command>).</para>
 
+      <sidebar id="sidebar.questions-conffiles-bis">
+        <title><emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions</title>
+        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary></indexterm>
+
+        <para>The <command>--force-confask</command> option requires
+        <command>dpkg</command> to display the questions about the
+        configuration files, even in cases where they would not normally be
+        necessary. Thus, when reinstalling a package with this option,
+        <command>dpkg</command> will ask the questions again for all of the
+        configuration files modified or deleted by the administrator. This is
+        very convenient, especially for reinstalling the original configuration
+        file if it has been deleted and no other copy is available: a normal
+        re-installation won't work, because <command>dpkg</command> considers
+        removal as a form of legitimate modification, and, thus, doesn't
+        install the desired configuration file.</para>
+      </sidebar>
+
       <sidebar id="sidebar.questions-conffiles">
         <title><emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questions</title>
         <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confnew</command></secondary></indexterm>
@@ -1058,23 +1074,6 @@ DPkg::options { "--force-confdef"; "--force-confold"; }
         <para>Including this option in the configuration file means that it
         will also be used in a graphical interface such as
         <command>aptitude</command>.</para>
-      </sidebar>
-
-      <sidebar id="sidebar.questions-conffiles-bis">
-        <title><emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions</title>
-        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary></indexterm>
-
-        <para>The <command>--force-confask</command> option requires
-        <command>dpkg</command> to display the questions about the
-        configuration files, even in cases where they would not normally be
-        necessary. Thus, when reinstalling a package with this option,
-        <command>dpkg</command> will ask the questions again for all of the
-        configuration files modified or deleted by the administrator. This is
-        very convenient, especially for reinstalling the original configuration
-        file if it has been deleted and no other copy is available: a normal
-        re-installation won't work, because <command>dpkg</command> considers
-        removal as a form of legitimate modification, and, thus, doesn't
-        install the desired configuration file.</para>
       </sidebar>
     </section>
   </section>
