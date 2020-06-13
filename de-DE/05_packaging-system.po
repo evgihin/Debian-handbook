@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-06-13 17:41+0000\nLast-Translator: Carsten Bachert <caba@bachert.info>\nLanguage-Team: German <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/de/>\nLanguage: de-DE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.1-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-06-13 17:41+0000\nLast-Translator: ssantos <ssantos@web.de>\nLanguage-Team: German <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/de/>\nLanguage: de-DE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.1-dev\n"
 
 msgid "Binary package"
 msgstr "Binärpaket"
@@ -14,7 +14,7 @@ msgid "dpkg"
 msgstr "dpkg"
 
 msgid "deb"
-msgstr ""
+msgstr "deb"
 
 msgid "dependencies"
 msgstr "Abhängigkeiten"
@@ -28,18 +28,14 @@ msgstr "Paketierungssystem: Hilfsprogramme und grundlegende Prinzipien"
 msgid "As a Debian system administrator, you will routinely handle <filename>.deb</filename> packages, since they contain consistent functional units (applications, documentation, etc.), whose installation and maintenance they facilitate. It is therefore a good idea to know what they are and how to use them."
 msgstr "Als Debian-Systemadministrator werden Sie regelmäßig mit <filename>.deb</filename>-Paketen umgehen, da sie festgelegte funktionale Einheiten (Anwendungen, Dokumentation usw.) enthalten, deren Installation und Wartung sie vereinfachen. Deshalb ist es gut zu wissen, was sie sind und wie man sie benutzt."
 
-#, fuzzy
-#| msgid "This chapter describes the structure and contents of “binary” and “source” packages. The former are <filename>.deb</filename> files, directly usable by <command>dpkg</command>, while the latter contain the source code, as well as instructions for building binary packages."
 msgid "This chapter describes the structure and contents of “binary” and “source” packages. The former are files directly usable by <command>dpkg</command>, while the latter contain the source code, as well as instructions for building binary packages."
-msgstr "Dieses Kapitel beschreibt die Struktur und den Inhalt von „Binär“- und „Quell“-Paketen. Erstere sind <filename>.deb</filename>-Dateien, die direkt mit dem Befehl <command>dpkg</command> benutzt werden können, während letztere den Programm-Quellcode sowie Anweisungen zum Bau von Binärpaketen enthalten."
+msgstr "Dieses Kapitel beschreibt die Struktur und den Inhalt von „Binär“- und „Quell“-Paketen. Erstere sind Dateien, die direkt mit dem Befehl <command>dpkg</command> benutzt werden können, während letztere den Programm-Quellcode sowie Anweisungen zum Bau von Binärpaketen enthalten."
 
 msgid "Structure of a Binary Package"
 msgstr "Struktur eines Binärpakets"
 
-#, fuzzy
-#| msgid "<primary>package</primary><secondary>binary package</secondary>"
 msgid "<primary>package</primary><secondary>binary package</secondary><seealso><filename>.deb</filename></seealso>"
-msgstr "<primary>Paket</primary><secondary>Binärpaket</secondary>"
+msgstr "<primary>Paket</primary><secondary>Binärpaket</secondary><seealso><filename>.deb</filename></seealso>"
 
 msgid "<primary><command>ar</command></primary>"
 msgstr "<primary><command>ar</command></primary>"
@@ -47,58 +43,38 @@ msgstr "<primary><command>ar</command></primary>"
 msgid "<primary><command>dpkg</command></primary>"
 msgstr "<primary><command>dpkg</command></primary>"
 
-#, fuzzy
-#| msgid "The Debian package format is designed so that its content may be extracted on any Unix system that has the classic commands <command>ar</command>, <command>tar</command>, and <command>gzip</command> (sometimes <command>xz</command> or <command>bzip2</command>). This seemingly trivial property is important for portability and disaster recovery."
 msgid "The Debian package format is designed so that its content may be extracted on any Unix system that has the classic commands <command>ar</command>, <command>tar</command>, and <command>xz</command> or sometimes <command>gzip</command> or <command>bzip2</command>. This seemingly trivial property is important for portability and disaster recovery."
-msgstr "Das Debian-Paketformat ist so gestaltet, dass sein Inhalt auf jedem Unixsystem entpackt werden kann, das über die klassischen Befehle <command>ar</command>, <command>tar</command> und <command>gzip</command> (manchmal auch <command>xz</command> oder <command>bzip2</command>) verfügt. Diese eigentlich triviale Anforderung ist wichtig für die Portierbarkeit und Wiederherstellung."
+msgstr "Das Debian-Paketformat ist so gestaltet, dass sein Inhalt auf jedem Unixsystem entpackt werden kann, das über die klassischen Befehle <command>ar</command>, <command>tar</command> und <command>xz</command> oder manchmal auch <command>gzip</command> oder <command>bzip2</command> verfügt. Diese eigentlich triviale Anforderung ist wichtig für die Portierbarkeit und Wiederherstellung in Notfall."
 
-#, fuzzy
-#| msgid "Imagine, for example, that you mistakenly deleted the <command>dpkg</command> program, and that you could thus no longer install Debian packages. <command>dpkg</command> being a Debian package itself, it would seem your system would be done for... Fortunately, you know the format of a package and can therefore download the <filename>.deb</filename> file of the <emphasis role=\"pkg\">dpkg</emphasis> package and install it manually (see sidebar <xref linkend=\"sidebar.dpkg-apt-ar\" />). If by some misfortune one or more of the programs <command>ar</command>, <command>tar</command> or <command>gzip</command>/<command>xz</command>/<command>bzip2</command> have disappeared, you will only need to copy the missing program from another system (since each of these operates in a completely autonomous manner, without dependencies, a simple copy will suffice). If your system suffered some even more outrageous fortune, and even these don't work (maybe the deepest system libraries are missing?), you should try the static version of <command>busybox</command> (provided in the <emphasis role=\"pkg\">busybox-static</emphasis> package), which is even more self-contained, and provides subcommands such as <command>busybox ar</command>, <command>busybox tar</command> and <command>busybox gunzip</command>."
 msgid "Imagine, for example, that you mistakenly deleted the <command>dpkg</command> program, and that you could thus no longer install Debian packages. <command>dpkg</command> being a Debian package itself, it would seem your system would be done for... Fortunately, you know the format of a package and can therefore <ulink url=\"https://www.debian.org/distrib/packages#search_packages\">download</ulink> the <filename>.deb</filename> file of the <emphasis role=\"pkg\">dpkg</emphasis> package and install it manually (see sidebar <xref linkend=\"sidebar.dpkg-apt-ar\" />). If by some misfortune one or more of the programs <command>ar</command>, <command>tar</command> or <command>gzip</command>/<command>xz</command>/<command>bzip2</command> have disappeared, you will only need to copy the missing program from another system (since each of these operates in a completely autonomous manner, without dependencies, a simple copy will suffice). If your system suffered some even more outrageous fortune, and even these don't work (maybe the deepest system libraries are missing?), you should try the static version of <command>busybox</command> (provided in the <emphasis role=\"pkg\">busybox-static</emphasis> package), which is even more self-contained, and provides subcommands such as <command>busybox ar</command>, <command>busybox tar</command> and <command>busybox xz</command>."
-msgstr "Nehmen Sie zum Beispiel an, dass Sie aus Versehen das Programm <command>dpkg</command> gelöscht haben, und dass Sie daher keine Debian-Pakete mehr installieren können. Da <command>dpkg</command> selbst ein Debian-Paket ist, sieht es so aus, als ob ihr System erledigt sei... Zum Glück kennen Sie das Format eines Pakets und können daher die <filename>.deb</filename>-Datei des <emphasis role=\"pkg\">dpkg</emphasis>-Pakets herunterladen und es manuell installieren (siehe Seitenleiste <xref linkend=\"sidebar.dpkg-apt-ar\" />). Wenn durch ein Missgeschick eines oder mehrere der Programme <command>ar</command>, <command>tar</command> oder <command>gzip</command>/<command>xz</command>/<command>bzip2</command> verschwunden sind, brauchen Sie nur das fehlende Programm von einem anderen System zu kopieren (da jedes von ihnen auf vollständig autonome Weise ohne Abhängigkeiten arbeitet, reicht einfaches Kopieren). Wenn Ihr System ein noch schlimmeres Schicksal erlitten hat und auch diese nicht funktionieren (vielleicht fehlen die tiefsten Systembibliotheken?), sollten Sie die statische Version von <command>busybox</command> ausprobieren (bereitgestellt im Paket <emphasis role=\"pkg\">busybox-static</emphasis>), die noch eigenständiger ist und Unterbefehle wie <command>busybox ar</command>, <command>busybox tar</command> und <command>busybox gunzip</command> bietet."
+msgstr "Nehmen Sie zum Beispiel an, dass Sie aus Versehen das Programm <command>dpkg</command> gelöscht haben, und dass Sie daher keine Debian-Pakete mehr installieren können. Da <command>dpkg</command> selbst ein Debian-Paket ist, sieht es so aus, als ob ihr System erledigt sei... Zum Glück kennen Sie das Format eines Pakets und können daher die <filename>.deb</filename>-Datei des <emphasis role=\"pkg\">dpkg</emphasis>-Pakets <ulink url=\"https://www.debian.org/distrib/packages#search_packages\">herunterladen</ulink> und es manuell installieren (siehe Seitenleiste <xref linkend=\"sidebar.dpkg-apt-ar\" />). Wenn durch ein Missgeschick eines oder mehrere der Programme <command>ar</command>, <command>tar</command> oder <command>gzip</command>/<command>xz</command>/<command>bzip2</command> verschwunden sind, brauchen Sie nur das fehlende Programm von einem anderen System zu kopieren (da jedes von ihnen auf vollständig autonome Weise ohne Abhängigkeiten arbeitet, reicht einfaches Kopieren). Wenn Ihr System ein noch schlimmeres Schicksal erlitten hat und auch diese nicht funktionieren (vielleicht fehlen die tiefsten Systembibliotheken?), sollten Sie die statische Version von <command>busybox</command> ausprobieren (bereitgestellt im Paket <emphasis role=\"pkg\">busybox-static</emphasis>), die noch eigenständiger ist und Unterbefehle wie <command>busybox ar</command>, <command>busybox tar</command> und <command>busybox xz</command> bietet."
 
 msgid "<emphasis>In case of a misfortune you better also have a backup of your system (see <xref linkend=\"sect.backup\" />).</emphasis>"
-msgstr ""
+msgstr "<emphasis> Im Falle eines Unglücks sollten Sie auch eine Sicherung Ihres Systems haben (siehe <xref linkend=\"sect.backup\" />). </emphasis>"
 
 msgid "<emphasis>TOOLS</emphasis> <command>dpkg</command>, <command>APT</command> and <command>ar</command>"
 msgstr "<emphasis>HILFSPROGRAMME</emphasis> <command>dpkg</command>, <command>APT</command> und <command>ar</command>"
 
-#, fuzzy
-#| msgid "<primary>dpkg</primary><secondary>database</secondary>"
 msgid "<primary>APT</primary><secondary><command>apt</command></secondary>"
-msgstr "<primary>dpkg</primary><secondary>Datenbank</secondary>"
+msgstr "<primary>APT</primary><secondary><command>apt</command></secondary>"
 
 msgid "<primary>Advanced Packaging Tools</primary><seealso>APT</seealso>"
-msgstr ""
+msgstr "<primary>Advanced Packaging Tools</primary><seealso>APT</seealso>"
 
-#, fuzzy
-#| msgid "<command>dpkg</command> is the program that handles <filename>.deb</filename> files, notably extracting, analyzing, and unpacking them."
 msgid "<command>dpkg</command> is the program that handles <filename>.deb</filename> files (binary packages), notably extracting, analyzing, and unpacking them."
-msgstr "<command>dpkg</command> ist das Programm, das mit <filename>.deb</filename>-Dateien umgeht, sie insbesondere extrahiert, analysiert und entpackt."
+msgstr "<command>dpkg</command> ist das Programm, das mit <filename>.deb</filename>-Dateien (Binärpakete) umgeht, sie insbesondere extrahiert, analysiert und entpackt."
 
-#, fuzzy
-#| msgid "<command>APT</command> is a group of programs that allows the execution of higher-level modifications to the system: installing or removing a package (while keeping dependencies satisfied), updating the system, listing the available packages, etc."
 msgid "<acronym>APT</acronym> (the abbreviation of \"Advanced Packaging Tool\") is a group of programs that allows the execution of higher-level modifications to the system: installing or removing a package (while keeping dependencies satisfied), updating and upgrading the system, listing the available packages, etc."
-msgstr "<command>APT</command> ist eine Gruppe von Programmen, die es ermöglichen, Veränderungen auf höherer Ebene des Systems durchzuführen: ein Paket zu installieren oder zu entfernen (und dabei Abhängigkeiten erfüllt zu halten), das System zu aktualisieren, die verfügbaren Pakete aufzulisten usw."
+msgstr "<acronym> APT</acronym> (die Abkürzung für \"Advanced Packaging Tool\") ist eine Gruppe von Programmen, die es ermöglichen, Veränderungen auf höherer Ebene des Systems durchzuführen: ein Paket zu installieren oder zu entfernen (und dabei Abhängigkeiten erfüllt zu halten), das System zu aktualisieren, verfügbare Pakete aufzulisten, usw."
 
-#, fuzzy
-#| msgid "As for the <command>ar</command> program, it allows handling files of the same name: <command>ar t <replaceable>archive</replaceable></command> displays the list of files contained in such an archive, <command>ar x <replaceable>archive</replaceable></command> extracts the files from the archive into the current working directory, <command>ar d <replaceable>archive</replaceable> <replaceable>file</replaceable></command> deletes a file from the archive, etc. Its man page (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>) documents all its other features. <command>ar</command> is a very rudimentary tool that a Unix administrator would only use on rare occasions, but admins routinely use <command>tar</command>, a more evolved archive and file management program. This is why it is easy to restore <command>dpkg</command> in the event of an erroneous deletion. You would only have to download the Debian package and extract the content from the <filename>data.tar.gz</filename> archive in the system's root (<filename>/</filename>):"
 msgid "As for the <command>ar</command> program, it allows handling files of the same name: <command>ar t <replaceable>archive</replaceable></command> displays the list of files contained in such an archive, <command>ar x <replaceable>archive</replaceable></command> extracts the files from the archive into the current working directory, <command>ar d <replaceable>archive</replaceable> <replaceable>file</replaceable></command> deletes a file from the archive, etc. Its man page (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>) documents all its other features. <command>ar</command> is a very rudimentary tool that a Unix administrator would only use on rare occasions, but admins routinely use <command>tar</command>, a more evolved archive and file management program. This is why it is easy to restore <command>dpkg</command> in the event of an erroneous deletion. You would only have to download the Debian package and extract the content from the <filename>data.tar.xz</filename> archive in the system's root (<filename>/</filename>):"
-msgstr "Das Paket <command>ar</command> ermöglicht es, mit Dateien, die diesen Namen tragen, umzugehen: <command>ar t <replaceable>archiv</replaceable></command> zeigt eine Liste der in einem solchen Archiv enthaltenen Dateien an, <command>ar x <replaceable>archiv</replaceable></command> entpackt die Dateien aus dem Archiv in das aktuelle Arbeitsverzeichnis, <command>ar d <replaceable>archiv</replaceable> <replaceable>datei</replaceable></command> löscht eine Datei aus dem Archiv usw. Die zugehörige Handbuchseite (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>) dokumentiert noch viele andere Funkionen. <command>ar</command> ist ein sehr rudimentäres Werkzeug, das ein Unix-Administrator nur selten benutzen wird. Stattdessen verwenden Administratoren üblicherweise <command>tar</command>, ein höher entwickeltes Programm für das Archiv- und Dateimanagement. Daher ist es einfach, <command>dpkg</command> wieder herzustellen, falls es versehentlich gelöscht wurde. Sie brauchen nur das Debian-Paket herunterzuladen und seinen Inhalt aus dem Archiv <filename>data.tar.gz</filename> in das Wurzelverzeichnis des Systems (<filename>/</filename>) zu entpacken:"
+msgstr "Das Paket <command>ar</command> ermöglicht es, mit Dateien, die diesen Namen tragen, umzugehen: <command>ar t <replaceable>archiv</replaceable></command> zeigt eine Liste der in einem solchen Archiv enthaltenen Dateien an, <command>ar x <replaceable>archiv</replaceable></command> entpackt die Dateien aus dem Archiv in das aktuelle Arbeitsverzeichnis, <command>ar d <replaceable>archiv</replaceable> <replaceable>datei</replaceable></command> löscht eine Datei aus dem Archiv, usw. Die zugehörige Handbuchseite (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>) dokumentiert noch viele andere Funkionen. <command>ar</command> ist ein sehr rudimentäres Werkzeug, das ein Unix-Administrator nur selten benutzen wird. Stattdessen verwenden Administratoren üblicherweise <command>tar</command>, ein höher entwickeltes Programm für das Archiv- und Dateimanagement. Daher ist es einfach, <command>dpkg</command> wieder herzustellen, falls es versehentlich gelöscht wurde. Sie brauchen nur das Debian-Paket herunterzuladen und seinen Inhalt aus dem Archiv <filename>data.tar.xz</filename> in das Wurzelverzeichnis des Systems (<filename>/</filename>) zu entpacken:"
 
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "<computeroutput># </computeroutput><userinput>ar x dpkg_1.17.23_amd64.deb</userinput>\n"
-#| "<computeroutput># </computeroutput><userinput>tar -C / -p -xzf data.tar.gz</userinput>"
 msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n"
 "<computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>"
-msgstr ""
-"\n"
-"<computeroutput># </computeroutput><userinput>ar x dpkg_1.17.23_amd64.deb</userinput>\n"
-"<computeroutput># </computeroutput><userinput>tar -C / -p -xzf data.tar.gz</userinput>"
+msgstr "\n<computeroutput># </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n<computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>"
 
 msgid "<emphasis>BACK TO BASICS</emphasis> Man page notation"
 msgstr "<emphasis>ZURÜCK ZU DEN GRUNDLAGEN</emphasis> Ausdrucksweise in den Handbuchseiten"
@@ -115,42 +91,6 @@ msgstr "<xref linkend=\"solving-problems\" /> erläutert Handbuchseiten ausführ
 msgid "Have a look at the content of a <filename>.deb</filename> file:"
 msgstr "Werfen Sie einen Blick auf den Inhalt einer <filename>.deb</filename>-Datei:"
 
-#, fuzzy
-#| msgid ""
-#| "<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.17.23_amd64.deb</userinput>\n"
-#| "<computeroutput>debian-binary\n"
-#| "control.tar.gz\n"
-#| "data.tar.gz\n"
-#| "$ </computeroutput><userinput>ar x dpkg_1.17.23_amd64.deb</userinput>\n"
-#| "<computeroutput>$ </computeroutput><userinput>ls</userinput>\n"
-#| "<computeroutput>control.tar.gz  data.tar.gz  debian-binary  dpkg_1.17.23_amd64.deb\n"
-#| "$ </computeroutput><userinput>tar tzf data.tar.gz | head -n 15</userinput>\n"
-#| "<computeroutput>./\n"
-#| "./var/\n"
-#| "./var/lib/\n"
-#| "./var/lib/dpkg/\n"
-#| "./var/lib/dpkg/parts/\n"
-#| "./var/lib/dpkg/info/\n"
-#| "./var/lib/dpkg/alternatives/\n"
-#| "./var/lib/dpkg/updates/\n"
-#| "./etc/\n"
-#| "./etc/logrotate.d/\n"
-#| "./etc/logrotate.d/dpkg\n"
-#| "./etc/dpkg/\n"
-#| "./etc/dpkg/dpkg.cfg.d/\n"
-#| "./etc/dpkg/dpkg.cfg\n"
-#| "./etc/alternatives/\n"
-#| "$ </computeroutput><userinput>tar tzf control.tar.gz</userinput>\n"
-#| "<computeroutput>./\n"
-#| "./conffiles\n"
-#| "./postinst\n"
-#| "./md5sums\n"
-#| "./prerm\n"
-#| "./preinst\n"
-#| "./control\n"
-#| "./postrm\n"
-#| "$ </computeroutput><userinput>cat debian-binary</userinput>\n"
-#| "<computeroutput>2.0</computeroutput>"
 msgid ""
 "<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.19.7_amd64.deb</userinput>\n"
 "<computeroutput>debian-binary\n"
@@ -186,59 +126,19 @@ msgid ""
 "./postrm\n"
 "$ </computeroutput><userinput>cat debian-binary</userinput>\n"
 "<computeroutput>2.0</computeroutput>"
-msgstr ""
-"<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.17.23_amd64.deb</userinput>\n"
-"<computeroutput>debian-binary\n"
-"control.tar.gz\n"
-"data.tar.gz\n"
-"$ </computeroutput><userinput>ar x dpkg_1.17.23_amd64.deb</userinput>\n"
-"<computeroutput>$ </computeroutput><userinput>ls</userinput>\n"
-"<computeroutput>control.tar.gz  data.tar.gz  debian-binary  dpkg_1.17.23_amd64.deb\n"
-"$ </computeroutput><userinput>tar tzf data.tar.gz | head -n 15</userinput>\n"
-"<computeroutput>./\n"
-"./var/\n"
-"./var/lib/\n"
-"./var/lib/dpkg/\n"
-"./var/lib/dpkg/parts/\n"
-"./var/lib/dpkg/info/\n"
-"./var/lib/dpkg/alternatives/\n"
-"./var/lib/dpkg/updates/\n"
-"./etc/\n"
-"./etc/logrotate.d/\n"
-"./etc/logrotate.d/dpkg\n"
-"./etc/dpkg/\n"
-"./etc/dpkg/dpkg.cfg.d/\n"
-"./etc/dpkg/dpkg.cfg\n"
-"./etc/alternatives/\n"
-"$ </computeroutput><userinput>tar tzf control.tar.gz</userinput>\n"
-"<computeroutput>./\n"
-"./conffiles\n"
-"./postinst\n"
-"./md5sums\n"
-"./prerm\n"
-"./preinst\n"
-"./control\n"
-"./postrm\n"
-"$ </computeroutput><userinput>cat debian-binary</userinput>\n"
-"<computeroutput>2.0</computeroutput>"
+msgstr "<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.19.7_amd64.deb</userinput>\n<computeroutput>debian-binary\ncontrol.tar.gz\ndata.tar.xz\n$ </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n<computeroutput>$ </computeroutput><userinput>ls</userinput>\n<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.19.7_amd64.deb\n$ </computeroutput><userinput>tar tJf data.tar.xz | head -n 16</userinput>\n<computeroutput>./\n./\n./etc/\n./etc/alternatives/\n./etc/alternatives/README\n./etc/cron.daily/\n./etc/cron.daily/dpkg\n./etc/dpkg/\n./etc/dpkg/dpkg.cfg\n./etc/dpkg/dpkg.cfg.d/\n./etc/logrotate.d/\n./etc/logrotate.d/alternatives\n./etc/logrotate.d/dpkg\n./sbin/\n./sbin/start-stop-daemon\n./usr/\n./usr/bin/\n$ </computeroutput><userinput>tar tJf control.tar.xz</userinput>\n<computeroutput>./\n./conffiles\n./control\n./md5sums\n./postinst\n./postrm\n$ </computeroutput><userinput>cat debian-binary</userinput>\n<computeroutput>2.0</computeroutput>"
 
 msgid "As you can see, the <command>ar</command> archive of a Debian package is comprised of three files:"
 msgstr "Wie Sie sehen, besteht das <command>ar</command>-Archiv eines Debian-Pakets aus drei Dateien:"
 
-#, fuzzy
-#| msgid "A <filename>.dsc</filename> file"
 msgid "<filename>debian-binary</filename>"
-msgstr "Eine <filename>.dsc</filename>-Datei"
+msgstr "<filename>debian-binary</filename>"
 
-#, fuzzy
-#| msgid "<filename>debian-binary</filename>. This is a text file which simply indicates the version of the <filename>.deb</filename> file used (in 2015: version 2.0)."
 msgid "This is a text file which simply indicates the version of the <filename>.deb</filename> file package format version. In Debian <emphasis role=\"distribution\">Buster</emphasis> it is still version 2.0."
-msgstr "<filename>debian-binary</filename>. Dies ist eine Textdatei, die lediglich die Version der verwendeten <filename>.deb</filename>-Datei angibt (2015: Version 2.0)."
+msgstr "Dies ist eine Textdatei, die einfach die Version des <filename>.deb</filename>-Dateipaketformats angibt. In Debian <emphasis role=\"distribution\">Buster</emphasis> ist es immer noch Version 2.0."
 
-#, fuzzy
-#| msgid "<primary><filename>control.tar.gz</filename></primary>"
 msgid "<filename>control.tar.xz</filename>"
-msgstr "<primary><filename>control.tar.gz</filename></primary>"
+msgstr "<filename>control.tar.xz</filename>"
 
 #, fuzzy
 #| msgid "<filename>control.tar.gz</filename>. This archive file contains all of the available meta-information, like the name and version of the package. Some of this meta-information allows package management tools to determine if it is possible to install or uninstall it, for example according to the list of packages already on the machine."
