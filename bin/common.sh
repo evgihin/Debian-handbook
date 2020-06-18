@@ -45,13 +45,14 @@ get_publish_directory() {
 
 parse_options() {
     local temp
-    temp=$(getopt -o l:so: -l lang:,skip,opts: -- "$@")
+    temp=$(getopt -o l:so:p -l lang:,skip,opts:,paperback -- "$@")
     eval set -- "$temp"
     while true; do
 	case "$1" in
 	    -l|--lang) OPT_lang="$2"; shift 2; ;;
 	    -o|--opts) OPT_opts="$2"; shift 2; ;;
 	    -s|--skip) OPT_skip="1"; shift 1; ;;
+	    -p|--paperback) OPT_paperback="1"; shift 1; ;;
 	    --) shift; break; ;;
 	    *) echo "ERROR: Invalid command-line option: $1" >&2; exit 1; ;;
 	esac
