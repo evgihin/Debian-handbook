@@ -707,7 +707,7 @@ Consistency Policy : resync
 	<para>Backing up the configuration is therefore important, if only
 	for reference. The standard way to do it is by editing the
 	<filename>/etc/mdadm/mdadm.conf</filename> file, an example of
-	which is listed here:</para>
+	which is listed here:<?latex \pagebreak ?></para>
 
         <example id="example.mdadm-conf">
           <title><command>mdadm</command> configuration file</title>
@@ -1693,13 +1693,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  be used (with a distribution name such as <emphasis
 	  role="distribution">buster</emphasis>).</para>
 
-          <sidebar>
-            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
-
-	    <para>In case of a non-Linux system, care should be taken to
-	    define the kernel the domU must use, using the
-	    <literal>--kernel</literal> option.</para>
-          </sidebar>
         </listitem>
         <listitem>
 	  <para><literal>--dhcp</literal> states that the domU's network
@@ -1729,6 +1722,14 @@ Device    Boot     Start       End   Sectors Size Id Type
 	    Xen image's configuration file is in order after its initial
 	    creation with <command>xen-create-image</command>.</para>
           </sidebar>
+          <sidebar>
+            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
+
+	    <para>In case of a non-Linux system, care should be taken to
+	    define the kernel the domU must use, using the
+	    <literal>--kernel</literal> option.</para>
+          </sidebar>
+
         </listitem>
       </itemizedlist>
 
@@ -1837,7 +1838,7 @@ iface xenbr0 inet dhcp
       <filename>/etc/xen/testxen.cfg</filename>). Here we have set it to
       1024 (megabytes).</para>
 
-      <screen><computeroutput># </computeroutput><userinput>xl list</userinput>
+      <screen role="scale"><computeroutput># </computeroutput><userinput>xl list</userinput>
 <computeroutput>Name                                        ID   Mem VCPUs	State	Time(s)
 Domain-0                                     0  1894     2     r-----      63.5
 # </computeroutput><userinput>xl create /etc/xen/testxen.cfg</userinput>
@@ -2903,6 +2904,8 @@ warning: centos-release-7-6.1810.2.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
 	parameter will instruct Debconf to only ask critical questions, and
 	use the default answer for others.</para>
 
+        <?latex \pagebreak ?>
+
         <sidebar>
           <title><emphasis>DOCUMENTATION</emphasis> Installation guide appendix</title>
 
@@ -3230,39 +3233,6 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
 	a symbolic link in <filename>/etc/munin/plugins/</filename> are
 	really used.</para>
 
-	<para>When the package is installed, a set of active plugins is
-	determined based on the available software and the current
-	configuration of the host. However, this autoconfiguration depends
-	on a feature that each plugin must provide, and it is usually a
-        good idea to review and tweak the results by hand. Browsing
-        the Plugin Gallery<footnote><para><ulink type="block"
-        url="http://gallery.munin-monitoring.org"/></para></footnote>
-        can be interesting even though not all plugins have comprehensive
-        documentation. However, all plugins are scripts and most are rather simple and
-	well-commented. Browsing <filename>/etc/munin/plugins/</filename>
-	is therefore a good way of getting an idea of what each plugin is
-	about and determining which should be removed. Similarly, enabling
-	an interesting plugin found in
-	<filename>/usr/share/munin/plugins/</filename> is a simple matter
-	of setting up a symbolic link with <command>ln -sf
-	/usr/share/munin/plugins/<replaceable>plugin</replaceable>
-	/etc/munin/plugins/</command>. Note that when a plugin name ends
-	with an underscore “_”, the plugin requires a parameter. This
-	parameter must be stored in the name of the symbolic link; for
-	instance, the “if_” plugin must be enabled with a
-	<filename>if_eth0</filename> symbolic link, and it will monitor
-	network traffic on the eth0 interface.</para>
-
-	<para>Once all plugins are correctly set up, the daemon
-	configuration must be updated to describe access control for the
-	collected data. This involves <literal>allow</literal> directives
-	in the <filename>/etc/munin/munin-node.conf</filename> file. The
-	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
-	and only allows access to the local host. An administrator will
-	usually add a similar line containing the IP address of the grapher
-	host, then restart the daemon with <command>systemctl restart 
-	munin-node</command>.</para>
-
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Creating local plugins</title>
 
@@ -3310,6 +3280,39 @@ load.info 5 minute load average
 	  according to whether the plugin should be enabled on this
 	  host.</para>
         </sidebar>
+
+	<para>When the package is installed, a set of active plugins is
+	determined based on the available software and the current
+	configuration of the host. However, this autoconfiguration depends
+	on a feature that each plugin must provide, and it is usually a
+        good idea to review and tweak the results by hand. Browsing
+        the Plugin Gallery<footnote><para><ulink url="http://gallery.munin-monitoring.org"/></para></footnote>
+        can be interesting even though not all plugins have comprehensive
+        documentation. However, all plugins are scripts and most are rather simple and
+	well-commented. Browsing <filename>/etc/munin/plugins/</filename>
+	is therefore a good way of getting an idea of what each plugin is
+	about and determining which should be removed. Similarly, enabling
+	an interesting plugin found in
+	<filename>/usr/share/munin/plugins/</filename> is a simple matter
+	of setting up a symbolic link with <command>ln -sf
+	/usr/share/munin/plugins/<replaceable>plugin</replaceable>
+	/etc/munin/plugins/</command>. Note that when a plugin name ends
+	with an underscore “_”, the plugin requires a parameter. This
+	parameter must be stored in the name of the symbolic link; for
+	instance, the “if_” plugin must be enabled with a
+	<filename>if_eth0</filename> symbolic link, and it will monitor
+	network traffic on the eth0 interface.</para>
+
+	<para>Once all plugins are correctly set up, the daemon
+	configuration must be updated to describe access control for the
+	collected data. This involves <literal>allow</literal> directives
+	in the <filename>/etc/munin/munin-node.conf</filename> file. The
+	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
+	and only allows access to the local host. An administrator will
+	usually add a similar line containing the IP address of the grapher
+	host, then restart the daemon with <command>systemctl restart 
+	munin-node</command>.</para>
+
       </section>
       <section>
         <title>Configuring the Grapher</title>

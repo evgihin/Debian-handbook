@@ -117,7 +117,7 @@
       <title>Boot sequence of a computer running Linux with systemd</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/startup-systemd.png" scalefit="1" width="70%"/>
+          <imagedata fileref="images/startup-systemd.png" scalefit="1" width="65%"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -374,6 +374,8 @@ the logs; they indicate an error in the configuration file.  After
 editing the configuration file and fixing the error, we restart the
 service, then verify that it is indeed running.</para>
 
+<?latex \pagebreak ?>
+
 <sidebar><title><emphasis>GOING FURTHER</emphasis> Other types of unit files</title>
 
 <para>We have only described the most basic of systemd's capabilities in
@@ -551,7 +553,7 @@ up. </para></listitem>
       <title>Boot sequence of a computer running Linux with System V init</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/startup-sysvinit.png" scalefit="1" width="80%"/>
+          <imagedata fileref="images/startup-sysvinit.png" scalefit="1" width="75%"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -667,17 +669,6 @@ up. </para></listitem>
       encrypted.</para>
 
       <sidebar>
-        <title><emphasis>CULTURE</emphasis> Telnet and RSH are obsolete</title>
-	<indexterm><primary><command>telnet</command></primary></indexterm>
-	<indexterm><primary><command>rsh</command></primary></indexterm>
-
-	<para>Before SSH, <emphasis>Telnet</emphasis> and
-	<emphasis>RSH</emphasis> were the main tools used to login
-	remotely. They are now largely obsolete and should no longer be
-	used even if Debian still provides them.</para>
-      </sidebar>
-
-      <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Authentication, encryption</title>
 
 	<para>When you need to give a client the ability to conduct or
@@ -693,6 +684,20 @@ up. </para></listitem>
 	both because they are frequently used together, and because they
 	are usually implemented with similar mathematical concepts.</para>
       </sidebar>
+
+      <?latex \pagebreak ?>
+
+      <sidebar>
+        <title><emphasis>CULTURE</emphasis> Telnet and RSH are obsolete</title>
+	<indexterm><primary><command>telnet</command></primary></indexterm>
+	<indexterm><primary><command>rsh</command></primary></indexterm>
+
+	<para>Before SSH, <emphasis>Telnet</emphasis> and
+	<emphasis>RSH</emphasis> were the main tools used to login
+	remotely. They are now largely obsolete and should no longer be
+	used even if Debian still provides them.</para>
+      </sidebar>
+
 
       <para>SSH also offers two file transfer services.
       <command>scp</command> is a command line tool that can be used like
@@ -777,21 +782,6 @@ up. </para></listitem>
 	$(ssh-agent)</command>.</para>
 
         <sidebar>
-          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
-
-	  <para>Whoever has the private key can login on the account thus
-	  configured. This is why access to the private key is protected by
-	  a “passphrase”. Someone who acquires a copy of a private key
-	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
-	  to know this phrase in order to be able to use it. This
-	  additional protection is not, however, impregnable, and if you
-	  think that this file has been compromised, it is best to disable
-	  that key on the computers in which it has been installed (by
-	  removing it from the <filename>authorized_keys</filename> files)
-	  and replacing it with a newly generated key.</para>
-        </sidebar>
-
-        <sidebar>
           <title><emphasis>CULTURE</emphasis> OpenSSL flaw in Debian <emphasis role="distribution">Etch</emphasis></title>
 
 	  <para>The OpenSSL library, as initially provided in Debian
@@ -845,6 +835,22 @@ up. </para></listitem>
           package format (“3.0 (quilt)”) and the Debian sources webservice
           were developed.
 	  <ulink type="block" url="https://sources.debian.org"/></para>
+        </sidebar>
+
+        <?latex \pagebreak ?>
+        <sidebar>
+          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
+
+	  <para>Whoever has the private key can login on the account thus
+	  configured. This is why access to the private key is protected by
+	  a “passphrase”. Someone who acquires a copy of a private key
+	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
+	  to know this phrase in order to be able to use it. This
+	  additional protection is not, however, impregnable, and if you
+	  think that this file has been compromised, it is best to disable
+	  that key on the computers in which it has been installed (by
+	  removing it from the <filename>authorized_keys</filename> files)
+	  and replacing it with a newly generated key.</para>
         </sidebar>
       </section>
       <section id="sect.ssh-x11">
@@ -1949,6 +1955,8 @@ ident  stream tcp nowait  nobody     /usr/sbin/identd   identd -i
         </itemizedlist>
       </sidebar>
 
+      <?latex \pagebreak ?>
+
       <sidebar>
         <title><emphasis>SPECIAL CASE</emphasis> <command>cron</command> and daylight savings time</title>
 
@@ -2493,6 +2501,19 @@ exclude:
       been modified since the last backup are included.</para>
 
       <sidebar>
+        <title><emphasis>CULTURE</emphasis> <emphasis>TAR</emphasis>, the standard for tape backups</title>
+        <indexterm><primary>backup</primary><secondary>on tape</secondary></indexterm>
+        <indexterm><primary>tape, backup</primary></indexterm>
+        <indexterm><primary>TAR</primary></indexterm>
+
+	<para>Historically, the simplest means of making a backup on Unix
+	was to store a <emphasis>TAR</emphasis> archive on a tape. The
+	<command>tar</command> command even got its name from “Tape
+	ARchive”.</para>
+      </sidebar>
+
+      <?latex \pagebreak ?>
+      <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Backing up SQL and LDAP services</title>
 
 	<para>Many services (such as SQL or LDAP databases) cannot be
@@ -2514,17 +2535,6 @@ exclude:
         <indexterm><primary>dump</primary></indexterm>
       </sidebar>
 
-      <sidebar>
-        <title><emphasis>CULTURE</emphasis> <emphasis>TAR</emphasis>, the standard for tape backups</title>
-        <indexterm><primary>backup</primary><secondary>on tape</secondary></indexterm>
-        <indexterm><primary>tape, backup</primary></indexterm>
-        <indexterm><primary>TAR</primary></indexterm>
-
-	<para>Historically, the simplest means of making a backup on Unix
-	was to store a <emphasis>TAR</emphasis> archive on a tape. The
-	<command>tar</command> command even got its name from “Tape
-	ARchive”.</para>
-      </sidebar>
     </section>
   </section>
   <section id="sect.hotplug">
