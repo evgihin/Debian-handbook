@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-05-17 17:54+0200\n"
+"POT-Creation-Date: 2020-06-19 11:25+0200\n"
 "PO-Revision-Date: 2017-12-09 10:55+0000\n"
 "Last-Translator: Galina Anikina <merilaga@yandex.ru>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/vi/>\n"
@@ -369,8 +369,7 @@ msgstr "Tệp này sử dụng một cấu trúc giống như headers của emai
 #| "SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</computeroutput>"
 msgid ""
 "\n"
-"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>\n"
-"<computeroutput><![CDATA[\n"
+"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput><computeroutput><![CDATA[\n"
 "Package: apt\n"
 "Version: 1.8.2\n"
 "Installed-Size: 4064\n"
@@ -526,29 +525,6 @@ msgstr "<primary>meta-package</primary>"
 msgid "The dependencies system is a good mechanism for guaranteeing the operation of a program, but it has another use with “meta-packages”. These are empty packages that only describe dependencies. They facilitate the installation of a consistent group of programs preselected by the meta-package maintainer; as such, <command>apt install <replaceable>meta-package</replaceable></command> will automatically install all of these programs using the meta-package's dependencies. The <emphasis role=\"pkg\">gnome</emphasis>, <emphasis role=\"pkg\">kde-full</emphasis> and <emphasis role=\"pkg\">linux-image-amd64</emphasis> packages are examples of meta-packages."
 msgstr "Hệ thống phụ thuộc là một cơ chế tốt để đảm bảo các hoạt động của một chương trình, nhưng nó còn sử dụng cho “meta-packages”. Đây là gói không chứa nội dung chương trình mà chỉ mô tả phụ thuộc. Nó tạo điều kiện cho quá trình cài đặt của một nhóm các chương trình được phù hợp chọn trước bởi nhà bảo trì meta-package; như vậy, <command>apt install <replaceable>meta-package</replaceable></command> sẽ tự động cài đặt tất cả các chương trình sử dụng các phụ thuộc của meta-package. Các gói <emphasis role=\"pkg\">gnome</emphasis>, <emphasis role=\"pkg\">kde-full</emphasis> and <emphasis role=\"pkg\">linux-image-amd64</emphasis> là ví dụ của meta-packages."
 
-msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
-msgstr "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, một đòi hỏi nhiều hơn <literal>Depends</literal>"
-
-msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
-msgstr "<primary><literal>Pre-Depends</literal>, trường header</primary>"
-
-#, fuzzy
-#| msgid "<primary>package</primary><secondary>dependency</secondary>"
-msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
-msgstr "<primary>package</primary><secondary>dependency</secondary>"
-
-msgid "<primary>pre-dependency</primary>"
-msgstr "<primary>pre-dependency</primary>"
-
-msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
-msgstr ""
-
-msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
-msgstr "“Pre-dependencies”, mà được liệt kê ở trường “<literal>Pre-Depends</literal>” trong tiêu đề gói, ổn định cho sự phụ thuộc bình thường; cú pháp của là giống hệt nhau. Một phụ thuộc bình thường chỉ ra rằng các gói trong trường cần phải được giải nén và cấu hình trước khi cấu hình của gói tuyên bố sự phụ thuộc. Một tiền phụ thuộc (pre) quy định rằng các gói trong trường của nó cần phải được giải nén và cấu hình trước khi thực hiện các kịch bản cài đặt sẵn của gói tuyên bố  của tiền phụ thuộc, đó là trước khi cài đặt của nó."
-
-msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
-msgstr "Một phụ thuộc trước là rất cần thiết cho <command>apt</command>, vì nó thêm một hạn chế nghiêm ngặt về thứ tự các gói để cài đặt. Vì vậy, các phụ thuộc trước không được khuyến khích trừ khi thật sự cần thiết. Thậm chí còn khuyến khích tham khảo các ý kiến từ các nhà phát triển trên <email>debian-devel@lists.debian.org</email> trước khi thêm một tiền phụ thuộc. Thường có thể tìm thấy giải pháp khác xung quanh vấn đề đấy."
-
 msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>, <literal>Suggests</literal>, and <literal>Enhances</literal> fields"
 msgstr "<emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>, <literal>Suggests</literal>, và <literal>Enhances</literal> fields"
 
@@ -608,6 +584,29 @@ msgstr ""
 
 msgid "The <literal>Enhances</literal> field also describes a suggestion, but in a different context. It is indeed located in the suggested package, and not in the package that benefits from the suggestion. Its interest lies in that it is possible to add a suggestion without having to modify the package that is concerned. Thus, all add-ons, plug-ins, and other extensions of a program can then appear in the list of suggestions related to the software. Although it has existed for several years, this last field is still largely ignored by programs such as <command>apt</command> or <command>synaptic</command>. Its purpose is for a suggestion made by the <literal>Enhances</literal> field to appear to the user in addition to the traditional suggestions — found in the <literal>Suggests</literal> field."
 msgstr "Trường <literal>Enhances</literal> cũng miêu tả một sự gợi ý, nhưng có một điều khác biệt. Nó thực sự nằm trong các gói gợi ý, và không có các lợi ích từ sự gợi ý này. Quan tâm của nó nằm ở chỗ có thểm thêm các gợi ý mà không sửa đổi các gói phần mềm liên quan. Do đó, tất cả các add-on, plug-ins, và các thành phần mở rộng khác của một chương trình có thể xuất hiện ở trường này. Mặc dầu nó đã tồn tại trong vài năm, nhưng trường này vẫn bị bỏ qua bởi các chương trình như <command>apt</command> hoặc <command>synaptic</command>. Mục đích của nó cho một sự gợi ý từ trường <literal>Enhances</literal> cho người dùng trong tìm ra trường <literal>Enhances</literal>."
+
+msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
+msgstr "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, một đòi hỏi nhiều hơn <literal>Depends</literal>"
+
+msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
+msgstr "<primary><literal>Pre-Depends</literal>, trường header</primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>dependency</secondary>"
+msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
+msgstr "<primary>package</primary><secondary>dependency</secondary>"
+
+msgid "<primary>pre-dependency</primary>"
+msgstr "<primary>pre-dependency</primary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
+msgstr ""
+
+msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
+msgstr "“Pre-dependencies”, mà được liệt kê ở trường “<literal>Pre-Depends</literal>” trong tiêu đề gói, ổn định cho sự phụ thuộc bình thường; cú pháp của là giống hệt nhau. Một phụ thuộc bình thường chỉ ra rằng các gói trong trường cần phải được giải nén và cấu hình trước khi cấu hình của gói tuyên bố sự phụ thuộc. Một tiền phụ thuộc (pre) quy định rằng các gói trong trường của nó cần phải được giải nén và cấu hình trước khi thực hiện các kịch bản cài đặt sẵn của gói tuyên bố  của tiền phụ thuộc, đó là trước khi cài đặt của nó."
+
+msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
+msgstr "Một phụ thuộc trước là rất cần thiết cho <command>apt</command>, vì nó thêm một hạn chế nghiêm ngặt về thứ tự các gói để cài đặt. Vì vậy, các phụ thuộc trước không được khuyến khích trừ khi thật sự cần thiết. Thậm chí còn khuyến khích tham khảo các ý kiến từ các nhà phát triển trên <email>debian-devel@lists.debian.org</email> trước khi thêm một tiền phụ thuộc. Thường có thể tìm thấy giải pháp khác xung quanh vấn đề đấy."
 
 msgid "Conflicts: the <literal>Conflicts</literal> field"
 msgstr "Xung đột: trường <literal>Conflicts</literal>"
@@ -963,6 +962,19 @@ msgstr "<filename>conffiles</filename> liệt kê các tệp tin gói phải đ�
 msgid "In effect, in this situation, <command>dpkg</command> behaves as intelligently as possible: if the standard configuration file has not changed between the two versions, it does nothing. If, however, the file has changed, it will try to update this file. Two cases are possible: either the administrator has not touched this configuration file, in which case <command>dpkg</command> automatically installs the new version; or the file has been modified, in which case <command>dpkg</command> asks the administrator which version they wish to use (the old one with modifications, or the new one provided with the package). To assist in making this decision, <command>dpkg</command> offers to display a “<command>diff</command>” that shows the difference between the two versions. If the user chooses to retain the old version, the new one will be stored in the same location in a file with the <filename>.dpkg-dist</filename> suffix. If the user chooses the new version, the old one is retained in a file with the <filename>.dpkg-old</filename> suffix. Another available action consists of momentarily interrupting <command>dpkg</command> to edit the file and attempt to re-instate the relevant modifications (previously identified with <command>diff</command>)."
 msgstr "Trong trường hợp này, <command>dpkg</command> hoạt động thông minh nhất có thể: nếu tập tin cấu hình tiêu chuẩn không thay đổi giữa hai phiên bản, nó không làm gì cả. Tuy nhiên, nếu tệp đã thay đổi, nó sẽ cố gắng cập nhật tệp này. Có hai trường hợp: quản trị viên không chạm vào tệp cấu hình này, trong trường hợp đó <command>dpkg</command> tự động cài đặt phiên bản mới; Hoặc tập tin đã được sửa đổi, trong trường hợp này <command>dpkg</command> yêu cầu quản trị viên phiên bản nào họ muốn sử dụng (bản cũ có sửa đổi, hoặc phiên bản mới được cung cấp kèm theo gói). Để hỗ trợ đưa ra quyết định này, <command>dpkg</command> cung cấp để hiển thị “<command>diff</command>” cho thấy sự khác biệt giữa hai phiên bản.  Nếu người dùng chọn giữ lại phiên bản cũ, tệp mới sẽ được lưu trữ ở cùng vị trí trong một tệp có đuôi <filename>.dpkg-dist</filename>. Nếu người dùng chọn phiên bản mới, phần cũ sẽ được giữ lại trong một tệp có đuôi <filename>.dpkg-old</filename>. Một hành động khả dụng khác bao gồm tạm ngưng <command>dpkg</command> để chỉnh sửa tệp và cố gắng cài đặt lại các sửa đổi có liên quan (trước đây được xác định với <command>diff</command>)."
 
+msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
+msgstr "<emphasis>GOING FURTHER</emphasis> Buộc dpkg yêu cầu hỏi về tệp cấu hình"
+
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary>hoạt động nội bộ</secondary>"
+
+#, fuzzy
+#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgstr "Tùy chọn <command>--force-confask</command> yêu cầu <command>dpkg</command> hiển thị các câu hỏi về các tệp cấu hình, ngay cả trong trường hợp không cần thiết. Do đó, khi cài đặt lại một gói với tùy chọn này, <command>dpkg</command> sẽ hỏi lại tất cả các tập tin cấu hình do quản trị viên sửa đổi. Điều này rất thuận tiện, đặc biệt là để cài đặt lại tập tin cấu hình ban đầu nếu nó đã bị xóa và không có bản sao nào khác có sẵn: trong khi cài đặt lại bình thường sẽ không hoạt động vì <command>dpkg</command> coi việc xóa như một hình thức sửa đổi hợp pháp, và, do đó không cài đặt các tập tin cấu hình mong muốn."
+
 msgid "<emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questions"
 msgstr "<emphasis>GOING FURTHER</emphasis> Tránh các câu hỏi về tệp cấu hình"
 
@@ -1013,19 +1025,6 @@ msgstr ""
 
 msgid "Including this option in the configuration file means that it will also be used in a graphical interface such as <command>aptitude</command>."
 msgstr "Bao gồm tùy chọn này trong tệp cấu hình có nghĩa là nó cũng sẽ được sử dụng trong một giao diện đồ họa như <command>aptitude</command>."
-
-msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
-msgstr "<emphasis>GOING FURTHER</emphasis> Buộc dpkg yêu cầu hỏi về tệp cấu hình"
-
-#, fuzzy
-#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
-msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
-msgstr "<primary><command>dpkg</command></primary><secondary>hoạt động nội bộ</secondary>"
-
-#, fuzzy
-#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgstr "Tùy chọn <command>--force-confask</command> yêu cầu <command>dpkg</command> hiển thị các câu hỏi về các tệp cấu hình, ngay cả trong trường hợp không cần thiết. Do đó, khi cài đặt lại một gói với tùy chọn này, <command>dpkg</command> sẽ hỏi lại tất cả các tập tin cấu hình do quản trị viên sửa đổi. Điều này rất thuận tiện, đặc biệt là để cài đặt lại tập tin cấu hình ban đầu nếu nó đã bị xóa và không có bản sao nào khác có sẵn: trong khi cài đặt lại bình thường sẽ không hoạt động vì <command>dpkg</command> coi việc xóa như một hình thức sửa đổi hợp pháp, và, do đó không cài đặt các tập tin cấu hình mong muốn."
 
 msgid "Structure of a Source Package"
 msgstr "Cấu trúc của Gói nguồn"

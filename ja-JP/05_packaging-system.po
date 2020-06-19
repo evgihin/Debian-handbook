@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-05-17 17:54+0200\n"
+"POT-Creation-Date: 2020-06-19 11:25+0200\n"
 "PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/debian-handbook/tree/master/translation/ja_JP/push>\n"
@@ -416,8 +416,7 @@ msgstr "<filename>control</filename> ファイルは (RFC 2822 の定義する)
 #| "SHA256: bc319a3abaf98d76e7e13ac97ab0ee7c238a48e2d4ab85524be8b10cfd23d50d</computeroutput>"
 msgid ""
 "\n"
-"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>\n"
-"<computeroutput><![CDATA[\n"
+"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput><computeroutput><![CDATA[\n"
 "Package: apt\n"
 "Version: 1.8.2\n"
 "Installed-Size: 4064\n"
@@ -595,35 +594,6 @@ msgid "The dependencies system is a good mechanism for guaranteeing the operatio
 msgstr "依存関係システムはプログラムの動作を保証する良いメカニズムですが、「メタパッケージ」を使う手もあります。メタパッケージは依存関係を表記するだけの空のパッケージです。メタパッケージはメンテナが事前に選んだ一連のプログラムグループのインストールを楽にします。すなわち <command>apt install <replaceable>meta-package</replaceable></command> はメタパッケージが依存するすべてのプログラムを自動的にインストールします。<emphasis role=\"pkg\">gnome</emphasis>、<emphasis role=\"pkg\">kde-full</emphasis>、<emphasis role=\"pkg\">linux-image-amd64</emphasis> パッケージはメタパッケージの例です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
-msgstr "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>、<literal>Depends</literal> よりも厳しい要求"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
-msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Pre-Depends</literal></secondary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-#, fuzzy
-#| msgid "<primary>package</primary><secondary>dependency</secondary>"
-msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
-msgstr "<primary>パッケージ</primary><secondary sortas=\"イゾンカンケイ\">依存関係</secondary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>pre-dependency</primary>"
-msgstr "<primary sortas=\"センコウイゾン\">先行依存</primary>"
-
-msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
-msgstr ""
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
-msgstr "「先行依存」はパッケージヘッダの「<literal>Pre-Depends</literal>」フィールドに書かれており、通常の依存関係を完全なものにします。条件の書式は <literal>Depends</literal> フィールドと同じです。通常の依存関係とは、依存関係が記述されたパッケージの設定前に、依存関係にあるパッケージの展開および設定を行わなければいけないことを示しています。先行依存とは、先行依存関係が記述されたパッケージのインストール前スクリプトの実行前 (インストールの前) に、先行依存関係にあるパッケージの展開および設定を行わなければいけないことを規定しています。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
-msgstr "先行依存は <command>apt</command> にとってとても重要です。なぜなら、先行依存関係はパッケージをインストールする順番を厳しく制約するからです。先行依存関係それ自体は、絶対に必要でない限り勧められません。先行依存関係を追加する前に、<email>debian-devel@lists.debian.org</email> の他の開発者に相談することをお勧めします。通常、次善策として別の解決策を見つけることが可能です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>, <literal>Suggests</literal>, and <literal>Enhances</literal> fields"
 msgstr "<emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>、<literal>Suggests</literal>、<literal>Enhances</literal> フィールド"
 
@@ -694,6 +664,35 @@ msgstr ""
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The <literal>Enhances</literal> field also describes a suggestion, but in a different context. It is indeed located in the suggested package, and not in the package that benefits from the suggestion. Its interest lies in that it is possible to add a suggestion without having to modify the package that is concerned. Thus, all add-ons, plug-ins, and other extensions of a program can then appear in the list of suggestions related to the software. Although it has existed for several years, this last field is still largely ignored by programs such as <command>apt</command> or <command>synaptic</command>. Its purpose is for a suggestion made by the <literal>Enhances</literal> field to appear to the user in addition to the traditional suggestions — found in the <literal>Suggests</literal> field."
 msgstr "<literal>Enhances</literal> フィールドは <literal>Recommends</literal> や <literal>Suggests</literal> フィールドと同様にパッケージを提案するためのものですが、使用法が少し違います。自分があるパッケージから利益を得る場合は Suggests フィールドにそのパッケージを追加し、自分があるパッケージに利益を与える場合は Enhances フィールドにそのパッケージを追加します。Enhances フィールドの良いところは、提案される側のパッケージを変更せずにそのパッケージにとって自分が有用であるという提案を追加できる、という点です。つまり、あるソフトウェアのアドオン、プラグイン、機能拡張のパッケージはそのソフトウェアを Enhances フィールドに載せることが可能です。数年前から存在したにも関わらず、Enhances フィールドはいまだに <command>apt</command> や <command>synaptic</command> など多くのプログラムから無視されています。<literal>Enhances</literal> フィールドの目的とは、<literal>Suggests</literal> フィールドによる伝統的な提案ではカバーできない提案をユーザに示すことです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
+msgstr "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>、<literal>Depends</literal> よりも厳しい要求"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
+msgstr "<primary>ヘッダフィールド</primary><secondary><literal>Pre-Depends</literal></secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>dependency</secondary>"
+msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"イゾンカンケイ\">依存関係</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<primary>pre-dependency</primary>"
+msgstr "<primary sortas=\"センコウイゾン\">先行依存</primary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
+msgstr "「先行依存」はパッケージヘッダの「<literal>Pre-Depends</literal>」フィールドに書かれており、通常の依存関係を完全なものにします。条件の書式は <literal>Depends</literal> フィールドと同じです。通常の依存関係とは、依存関係が記述されたパッケージの設定前に、依存関係にあるパッケージの展開および設定を行わなければいけないことを示しています。先行依存とは、先行依存関係が記述されたパッケージのインストール前スクリプトの実行前 (インストールの前) に、先行依存関係にあるパッケージの展開および設定を行わなければいけないことを規定しています。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
+msgstr "先行依存は <command>apt</command> にとってとても重要です。なぜなら、先行依存関係はパッケージをインストールする順番を厳しく制約するからです。先行依存関係それ自体は、絶対に必要でない限り勧められません。先行依存関係を追加する前に、<email>debian-devel@lists.debian.org</email> の他の開発者に相談することをお勧めします。通常、次善策として別の解決策を見つけることが可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Conflicts: the <literal>Conflicts</literal> field"
@@ -1157,6 +1156,23 @@ msgid "In effect, in this situation, <command>dpkg</command> behaves as intellig
 msgstr "実際のところ、システムに現存する設定ファイルをパッケージから提供された設定ファイルで更新する際に <command>dpkg</command> はできるだけ賢明に振る舞います。以下に <command>dpkg</command> のデフォルトの設定ファイル更新処理規則を述べます。パッケージの更新前後でパッケージから提供される標準設定ファイルの内容が同じ場合、<command>dpkg</command> は何もしません。しかしながら、パッケージの更新前後でパッケージから提供される標準設定ファイルの内容が違う場合、<command>dpkg</command> はシステムに現存する設定ファイルを更新しようとします。ここでさらに 2 つの場合が考えられます。システムに現存する設定ファイルと古いバージョンのパッケージから提供される標準設定ファイルの内容が同じ場合、<command>dpkg</command> は自動的に新しいパッケージから提供される標準設定ファイルをパッケージ更新完了後の設定ファイルとして採用します。一方で、システムに現存する設定ファイルと古いバージョンのパッケージから提供される標準設定ファイルの内容が違う場合、<command>dpkg</command> は管理者に対してシステムに現存する設定ファイルまたは新しいバージョンのパッケージから提供される標準設定ファイルのどちらを更新後の設定ファイルとして採用するかを尋ねます。この判断を手助けするために、<command>dpkg</command> は「<command>diff</command>」を使って 2 つの設定ファイルの内容の違いを表示します。管理者が現存する設定ファイルを選んだ場合、新しいバージョンのパッケージから提供される標準設定ファイルは同じ場所にファイル名の末尾に <filename>.dpkg-dist</filename> を追加して保存されます。管理者が新しいバージョンのパッケージから提供される標準設定ファイルを選んだ場合、現存する設定ファイルは同じ場所にファイル名の末尾に <filename>.dpkg-old</filename> を追加して保存されます。この段階では、一時的に <command>dpkg</command> の処理を中断してファイルを編集したり、もう一度バージョン間の違いを表示したり (先と同様に <command>diff</command> コマンドを実行する) することも可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
+msgstr "<emphasis>GOING FURTHER</emphasis> 設定ファイルの更新に関連する質問を強制する"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: PTAL;
+#, fuzzy
+#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgstr "<command>--force-confask</command> オプションを使うと、<command>dpkg</command> は通常は質問の必要がない場合でも設定ファイルの更新に関する質問を表示します。このため、<command>--force-confask</command> を付けてパッケージを再インストールすると、<command>dpkg</command> は管理者が修正したすべての設定ファイルの更新に関してもう一度質問します。特にこれはインストール済みパッケージの設定ファイルが削除され、コピーも残っていない状態でパッケージから提供される設定ファイルを再インストールしたい場合にとても便利です。つまり、通常の再インストールでは駄目な場合にこれを使います。なぜなら、<command>dpkg</command> は設定ファイルの削除を意味のある変更の一種とみなしており、<command>--force-confask</command> が使われていなければシステムに現存する設定ファイルの状態 (削除状態) を維持してパッケージから提供される設定ファイルをインストールしないからです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questions"
 msgstr "<emphasis>GOING FURTHER</emphasis> 設定ファイルの更新に関連する質問を回避する"
 
@@ -1218,23 +1234,6 @@ msgstr ""
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Including this option in the configuration file means that it will also be used in a graphical interface such as <command>aptitude</command>."
 msgstr "<command>dpkg</command> に渡すオプションを <command>apt</command> の設定ファイルに保存した場合、<command>aptitude</command> のようなグラフィカルインターフェースでもここで指定したオプションが使われるようになります。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
-msgstr "<emphasis>GOING FURTHER</emphasis> 設定ファイルの更新に関連する質問を強制する"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-#, fuzzy
-#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
-msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
-msgstr "<primary><command>dpkg</command></primary><secondary sortas=\"ナイブドウサ\">内部動作</secondary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: PTAL;
-#, fuzzy
-#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgstr "<command>--force-confask</command> オプションを使うと、<command>dpkg</command> は通常は質問の必要がない場合でも設定ファイルの更新に関する質問を表示します。このため、<command>--force-confask</command> を付けてパッケージを再インストールすると、<command>dpkg</command> は管理者が修正したすべての設定ファイルの更新に関してもう一度質問します。特にこれはインストール済みパッケージの設定ファイルが削除され、コピーも残っていない状態でパッケージから提供される設定ファイルを再インストールしたい場合にとても便利です。つまり、通常の再インストールでは駄目な場合にこれを使います。なぜなら、<command>dpkg</command> は設定ファイルの削除を意味のある変更の一種とみなしており、<command>--force-confask</command> が使われていなければシステムに現存する設定ファイルの状態 (削除状態) を維持してパッケージから提供される設定ファイルをインストールしないからです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Structure of a Source Package"

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-05-17 17:54+0200\n"
+"POT-Creation-Date: 2020-06-19 11:25+0200\n"
 "PO-Revision-Date: 2017-03-04 17:58+0000\n"
 "Last-Translator: Chang-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/zh_Hant/>\n"
@@ -369,8 +369,7 @@ msgstr "此檔案採用類似電子郵件標頭 (如 RFC 2822 的定義) 的做
 #| "SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</computeroutput>"
 msgid ""
 "\n"
-"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>\n"
-"<computeroutput><![CDATA[\n"
+"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput><computeroutput><![CDATA[\n"
 "Package: apt\n"
 "Version: 1.8.2\n"
 "Installed-Size: 4064\n"
@@ -526,29 +525,6 @@ msgstr "<primary>meta-package</primary>"
 msgid "The dependencies system is a good mechanism for guaranteeing the operation of a program, but it has another use with “meta-packages”. These are empty packages that only describe dependencies. They facilitate the installation of a consistent group of programs preselected by the meta-package maintainer; as such, <command>apt install <replaceable>meta-package</replaceable></command> will automatically install all of these programs using the meta-package's dependencies. The <emphasis role=\"pkg\">gnome</emphasis>, <emphasis role=\"pkg\">kde-full</emphasis> and <emphasis role=\"pkg\">linux-image-amd64</emphasis> packages are examples of meta-packages."
 msgstr "相依性系統是保證程式順利運作的良好機制，但它也有另個用法 「中介套件」。這些空的軟體套件內容祗有相依性的說明。由中介套件維護者把一群程式的相依性描述在其中；例如，<command>apt install <replaceable>meta-package</replaceable></command> 將自動安裝所有用到中介套件相依的檔案。<emphasis role=\"pkg\">gnome</emphasis>、<emphasis role=\"pkg\">kde-full</emphasis> 與 <emphasis role=\"pkg\">linux-image-amd64</emphasis> 套件就是中介套件之一。"
 
-msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
-msgstr "<emphasis>DEBIAN 政策</emphasis> <literal>預相依</literal>，更苛刻的 <literal>相依</literal>"
-
-msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
-msgstr "<primary><literal>預相依</literal>，標頭欄位</primary>"
-
-#, fuzzy
-#| msgid "<primary>package</primary><secondary>dependency</secondary>"
-msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
-msgstr "<primary>套件</primary><secondary>相依</secondary>"
-
-msgid "<primary>pre-dependency</primary>"
-msgstr "<primary>預相依</primary>"
-
-msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
-msgstr ""
-
-msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
-msgstr "“預相依性”，列在套件標頭的 “<literal>Pre-Depends</literal>” 欄位，滿足完整的正常相依性；它的語法是相同的。正常相依性係指必須在宣告相依性前先解開並組態的問題套件。預相依性規定在執行套件的預安裝腳本前，必須先解開並組態套件，就是在安裝之前。"
-
-msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
-msgstr "<command>apt</command> 極度需要預相依，因為在安裝前加入嚴格的限制。因此，除非絕對的必要，不鼓勵加入預相依性。甚至要求在加入預相依性之前，在 <email>debian-devel@lists.debian.org</email> 郵寄清單諮詢其他發展者的意見。通常可以找出其他的解決方案。"
-
 msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>, <literal>Suggests</literal>, and <literal>Enhances</literal> fields"
 msgstr "<emphasis>DEBIAN 政策</emphasis> <literal>推薦</literal>、<literal>建議</literal>、與 <literal>強化</literal> 欄位"
 
@@ -608,6 +584,29 @@ msgstr ""
 
 msgid "The <literal>Enhances</literal> field also describes a suggestion, but in a different context. It is indeed located in the suggested package, and not in the package that benefits from the suggestion. Its interest lies in that it is possible to add a suggestion without having to modify the package that is concerned. Thus, all add-ons, plug-ins, and other extensions of a program can then appear in the list of suggestions related to the software. Although it has existed for several years, this last field is still largely ignored by programs such as <command>apt</command> or <command>synaptic</command>. Its purpose is for a suggestion made by the <literal>Enhances</literal> field to appear to the user in addition to the traditional suggestions — found in the <literal>Suggests</literal> field."
 msgstr "<literal>Enhances</literal> 欄位也描述建議，但是位於不同的內文。實際上位於建議套件內，而不是受益於建議的套件內。有可能在不修改套件的前提下新增建議。因此所有插件、外掛與其他的程式延伸可以顯示在與軟體相關的建議清單內。雖然已存在多年，但是 <command>apt</command> 或 <command>synaptic</command> 等程式依然忽略此欄位的存在。<literal>Enhances</literal> 欄位提出的建議係在傳統建議 — <literal>Suggests</literal> 欄位供使用者參考。"
+
+msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
+msgstr "<emphasis>DEBIAN 政策</emphasis> <literal>預相依</literal>，更苛刻的 <literal>相依</literal>"
+
+msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
+msgstr "<primary><literal>預相依</literal>，標頭欄位</primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>dependency</secondary>"
+msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
+msgstr "<primary>套件</primary><secondary>相依</secondary>"
+
+msgid "<primary>pre-dependency</primary>"
+msgstr "<primary>預相依</primary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
+msgstr ""
+
+msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
+msgstr "“預相依性”，列在套件標頭的 “<literal>Pre-Depends</literal>” 欄位，滿足完整的正常相依性；它的語法是相同的。正常相依性係指必須在宣告相依性前先解開並組態的問題套件。預相依性規定在執行套件的預安裝腳本前，必須先解開並組態套件，就是在安裝之前。"
+
+msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
+msgstr "<command>apt</command> 極度需要預相依，因為在安裝前加入嚴格的限制。因此，除非絕對的必要，不鼓勵加入預相依性。甚至要求在加入預相依性之前，在 <email>debian-devel@lists.debian.org</email> 郵寄清單諮詢其他發展者的意見。通常可以找出其他的解決方案。"
 
 msgid "Conflicts: the <literal>Conflicts</literal> field"
 msgstr "衝突： <literal>Conflicts</literal> 欄位"
@@ -963,6 +962,19 @@ msgstr "<filename>conffiles</filename> 列出必須當成組態檔案處理的�
 msgid "In effect, in this situation, <command>dpkg</command> behaves as intelligently as possible: if the standard configuration file has not changed between the two versions, it does nothing. If, however, the file has changed, it will try to update this file. Two cases are possible: either the administrator has not touched this configuration file, in which case <command>dpkg</command> automatically installs the new version; or the file has been modified, in which case <command>dpkg</command> asks the administrator which version they wish to use (the old one with modifications, or the new one provided with the package). To assist in making this decision, <command>dpkg</command> offers to display a “<command>diff</command>” that shows the difference between the two versions. If the user chooses to retain the old version, the new one will be stored in the same location in a file with the <filename>.dpkg-dist</filename> suffix. If the user chooses the new version, the old one is retained in a file with the <filename>.dpkg-old</filename> suffix. Another available action consists of momentarily interrupting <command>dpkg</command> to edit the file and attempt to re-instate the relevant modifications (previously identified with <command>diff</command>)."
 msgstr "實際上，在此情況下，<command>dpkg</command> 儘可能地機靈：若在兩個版本間的標準組態檔並未改變， dpkg 就什麼事也不做。但是，若檔案改變動，就會更新此檔案。有兩種可能：管理員碰觸此組態檔時，由  <command>dpkg</command> 自動安裝新版本；或者被管理員修改過，<command>dpkg</command> 將要求管理員指定安裝的版本 (修訂過的舊版本、或套件提供的新版本)。為了有助於決定，<command>dpkg</command> 提供 “<command>diff</command>” 指令顯示兩個版本的差異。若選擇保留舊版本，新版仍儲存在同個資料夾其後綴檔名為 <filename>.dpkg-dist</filename>。若選擇使用新版本，舊仍儲存在同個資料夾其後綴檔名為 <filename>.dpkg-old</filename>。另一個作為是暫時中斷 <command>dpkg</command> 以編輯檔案並試圖重新安裝相關的修訂 (之前被 <command>diff</command> 驗証的差異)。"
 
+msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
+msgstr "<emphasis>進一步</emphasis> 強迫 dpkg 詢問組態檔的問題"
+
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary>內部運作</secondary>"
+
+#, fuzzy
+#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgstr "<command>--force-confask</command> 選項要求 <command>dpkg</command> 顯示有關組態檔案的問題，即使不是必要的問題也需顯示。因此，以此選項重新安裝套件時，<command>dpkg</command> 將再詢管理者修改過的組態檔案問題。這種方式極為便利，尤其是重新安裝已經被刪除且無可用複本的原始組態檔：標準的重新安裝無效，因為 <command>dpkg</command> 認為移除為合法的修改，且不會安裝預期的組態檔。"
+
 msgid "<emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questions"
 msgstr "<emphasis>進一步</emphasis> 避免組態檔的問題"
 
@@ -1013,19 +1025,6 @@ msgstr ""
 
 msgid "Including this option in the configuration file means that it will also be used in a graphical interface such as <command>aptitude</command>."
 msgstr "把此選項納入組態檔的意思是，將使用 <command>aptitude</command> 之類的圖形介面。"
-
-msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
-msgstr "<emphasis>進一步</emphasis> 強迫 dpkg 詢問組態檔的問題"
-
-#, fuzzy
-#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
-msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
-msgstr "<primary><command>dpkg</command></primary><secondary>內部運作</secondary>"
-
-#, fuzzy
-#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgstr "<command>--force-confask</command> 選項要求 <command>dpkg</command> 顯示有關組態檔案的問題，即使不是必要的問題也需顯示。因此，以此選項重新安裝套件時，<command>dpkg</command> 將再詢管理者修改過的組態檔案問題。這種方式極為便利，尤其是重新安裝已經被刪除且無可用複本的原始組態檔：標準的重新安裝無效，因為 <command>dpkg</command> 認為移除為合法的修改，且不會安裝預期的組態檔。"
 
 msgid "Structure of a Source Package"
 msgstr "原始套件的結構"

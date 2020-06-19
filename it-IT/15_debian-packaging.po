@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-17 17:54+0200\n"
+"POT-Creation-Date: 2020-06-19 11:25+0200\n"
 "PO-Revision-Date: 2015-12-30 15:09+0000\n"
 "Last-Translator: Marco De Luca <marcodeluca@hotmail.it>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/it/>\n"
@@ -148,6 +148,9 @@ msgstr ""
 "</userinput><computeroutput>[...]\n"
 "</computeroutput>"
 
+msgid "The previous command can fail if the <literal>Build-Depends</literal> fields have not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time."
+msgstr "Il comando precedente può fallire se i campi <literal>Build-Depends</literal> non sono stati aggiornati o se i relativi pacchetti non sono installati. In questo caso è possibile saltare questo controllo passando l'opzione <literal>-d</literal> al comando <command>dpkg-buildpackage</command>. Tuttavia, ignorando esplicitamente queste dipendenze si corre il rischio che una fase successiva del processo di generazione fallisca. O peggio ancora, il pacchetto può sembrare generato correttamente, ma si comporta in modo anomalo: alcuni programmi disabilitano automaticamente alcune delle loro caratteristiche quando non è disponibile una libreria richiesta in fase di compilazione."
+
 msgid "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
 msgstr "<emphasis>STRUMENTO</emphasis> <command>fakeroot</command>"
 
@@ -156,9 +159,6 @@ msgstr "Il processo di creazione di un pacchetto si occupa, in sostanza, di racc
 
 msgid "Note that the program is only tricked into “believing” that it operates as a privileged account, and the process actually runs as the user running <command>fakeroot <replaceable>program</replaceable></command> (and the files are actually created with that user's permissions). At no time does it actually get root privileges that it could abuse."
 msgstr "È da notare che il programma è solamente portato a «credere» che è eseguito da un account privilegiato, il realtà il programma viene eseguito con l'utente che lancia il comando <command>fakeroot <replaceable>programma</replaceable></command> (ed i file vengono creati con gli stessi permessi di questo utente). In questo modo non si utilizzano effettivamente i privilegi dell'utente root, dato che potrebbe essere pericoloso."
-
-msgid "The previous command can fail if the <literal>Build-Depends</literal> fields have not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time."
-msgstr "Il comando precedente può fallire se i campi <literal>Build-Depends</literal> non sono stati aggiornati o se i relativi pacchetti non sono installati. In questo caso è possibile saltare questo controllo passando l'opzione <literal>-d</literal> al comando <command>dpkg-buildpackage</command>. Tuttavia, ignorando esplicitamente queste dipendenze si corre il rischio che una fase successiva del processo di generazione fallisca. O peggio ancora, il pacchetto può sembrare generato correttamente, ma si comporta in modo anomalo: alcuni programmi disabilitano automaticamente alcune delle loro caratteristiche quando non è disponibile una libreria richiesta in fase di compilazione."
 
 msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis>devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
 msgstr "Il più delle volte, gli sviluppatori Debian utilizzano un programma di alto livello come <command>debuild</command>. Questo esegue <command>dpkg-buildpackage</command> e richiama un programma che avvia molti controlli per convalidare le policy Debian del pacchetto generato. Questo script fa in modo che le variabili d'ambiente locali non «inquinino» la fase di generazione del pacchetto. Il comando <command>debuild</command> è uno degli strumenti della suite <emphasis>devscripts</emphasis>, che condividono la stessa consistenza e configurazione, per rendere il compito più facile ai maintainer."

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-05-17 17:54+0200\n"
+"POT-Creation-Date: 2020-06-19 11:25+0200\n"
 "PO-Revision-Date: 2017-12-09 16:50+0000\n"
 "Last-Translator: Galina Anikina <merilaga@yandex.ru>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/fr/>\n"
@@ -370,8 +370,7 @@ msgstr "Ce fichier utilise une structure similaire à un en-tête de courriel (d
 #| "SHA256: 371a559ce741394b59dbc6460470a9399be5245356a9183bbeea0f89ecaabb03</computeroutput>"
 msgid ""
 "\n"
-"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput>\n"
-"<computeroutput><![CDATA[\n"
+"<computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput><computeroutput><![CDATA[\n"
 "Package: apt\n"
 "Version: 1.8.2\n"
 "Installed-Size: 4064\n"
@@ -528,29 +527,6 @@ msgstr "<primary>métapaquet</primary>"
 msgid "The dependencies system is a good mechanism for guaranteeing the operation of a program, but it has another use with “meta-packages”. These are empty packages that only describe dependencies. They facilitate the installation of a consistent group of programs preselected by the meta-package maintainer; as such, <command>apt install <replaceable>meta-package</replaceable></command> will automatically install all of these programs using the meta-package's dependencies. The <emphasis role=\"pkg\">gnome</emphasis>, <emphasis role=\"pkg\">kde-full</emphasis> and <emphasis role=\"pkg\">linux-image-amd64</emphasis> packages are examples of meta-packages."
 msgstr "Le système de dépendances est un bon mécanisme pour garantir le fonctionnement d'un logiciel, mais il trouve un autre usage avec les « métapaquets ». Il s'agit de paquets vides, décrivant uniquement des dépendances. Ils facilitent l'installation d'un ensemble cohérent de logiciels présélectionnés par le mainteneur du métapaquet ; en effet, <command>apt install <replaceable>métapaquet</replaceable></command> installera automatiquement l'ensemble de ces logiciels grâce aux dépendances du métapaquet. Les paquets <emphasis role=\"pkg\">gnome</emphasis>, <emphasis role=\"pkg\">kde</emphasis> et <emphasis role=\"pkg\">linux-image-amd64</emphasis> sont des exemples de métapaquets."
 
-msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
-msgstr "<emphasis>CHARTE DEBIAN</emphasis> <literal>Pre-Depends</literal>, un <literal>Depends</literal> plus exigeant"
-
-msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
-msgstr "<primary><literal>Pre-Depends</literal>, champ d'en-tête</primary>"
-
-#, fuzzy
-#| msgid "<primary>package</primary><secondary>dependency</secondary>"
-msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
-msgstr "<primary>paquet</primary><secondary>dépendance</secondary>"
-
-msgid "<primary>pre-dependency</primary>"
-msgstr "<primary>pré-dépendance</primary>"
-
-msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
-msgstr ""
-
-msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
-msgstr "Des « pré-dépendances », données dans le champ « <literal>Pre-Depends</literal> » de l'en-tête du paquet, complètent les dépendances normales ; leur syntaxe est identique. Une dépendance normale indique que le paquet concerné doit être décompacté et configuré avant que le paquet la déclarant ne soit lui-même configuré. Une pré-dépendance stipule que le paquet concerné doit être décompacté et configuré avant même d'exécuter le script de pré-installation du paquet la déclarant, c'est-à-dire avant son installation proprement dite."
-
-msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
-msgstr "Une pré-dépendance est très contraignante pour <command>apt</command>, qui doit ordonnancer la liste des paquets à installer. Elles sont donc déconseillées en l'absence de nécessité stricte. Il est même recommandé de consulter l'avis des (autres) développeurs sur <email>debian-devel@lists.debian.org</email> avant d'ajouter une pré-dépendance. En règle générale, il est possible de trouver une solution de substitution qui permet de l'éviter."
-
 msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Recommends</literal>, <literal>Suggests</literal>, and <literal>Enhances</literal> fields"
 msgstr "<emphasis>CHARTE DEBIAN</emphasis> Champs <literal>Recommends</literal>, <literal>Suggests</literal> et <literal>Enhances</literal>"
 
@@ -610,6 +586,29 @@ msgstr ""
 
 msgid "The <literal>Enhances</literal> field also describes a suggestion, but in a different context. It is indeed located in the suggested package, and not in the package that benefits from the suggestion. Its interest lies in that it is possible to add a suggestion without having to modify the package that is concerned. Thus, all add-ons, plug-ins, and other extensions of a program can then appear in the list of suggestions related to the software. Although it has existed for several years, this last field is still largely ignored by programs such as <command>apt</command> or <command>synaptic</command>. Its purpose is for a suggestion made by the <literal>Enhances</literal> field to appear to the user in addition to the traditional suggestions — found in the <literal>Suggests</literal> field."
 msgstr "Le champ <literal>Enhances</literal> (améliore) décrit lui aussi une suggestion, mais dans un contexte différent. Il se situe en effet dans le paquet suggéré, et non pas dans celui qui profite de la suggestion. Son intérêt est de pouvoir ajouter une suggestion sans devoir modifier le paquet concerné par celle-ci. Ainsi, tous les <foreignphrase>add-ons</foreignphrase> (ajouts), <foreignphrase>plug-ins</foreignphrase> (greffons) et autres extensions d'un logiciel pourront ensuite prendre place dans la liste des suggestions liées au logiciel. Ce dernier champ, bien qu'existant depuis plusieurs années, est encore largement ignoré par des programmes comme <command>apt</command> ou <command>synaptic</command>. L'objectif est cependant qu'une suggestion faite par le biais d'un champ <literal>Enhances</literal> apparaisse à l'utilisateur en complément des suggestions traditionnelles — réalisées avec le champ <literal>Suggests</literal>."
+
+msgid "<emphasis>DEBIAN POLICY</emphasis> <literal>Pre-Depends</literal>, a more demanding <literal>Depends</literal>"
+msgstr "<emphasis>CHARTE DEBIAN</emphasis> <literal>Pre-Depends</literal>, un <literal>Depends</literal> plus exigeant"
+
+msgid "<primary><literal>Pre-Depends</literal>, header field</primary>"
+msgstr "<primary><literal>Pre-Depends</literal>, champ d'en-tête</primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>dependency</secondary>"
+msgid "<primary>package</primary><secondary>pre-dependency</secondary>"
+msgstr "<primary>paquet</primary><secondary>dépendance</secondary>"
+
+msgid "<primary>pre-dependency</primary>"
+msgstr "<primary>pré-dépendance</primary>"
+
+msgid "<primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary>"
+msgstr ""
+
+msgid "“Pre-dependencies”, which are listed in the “<literal>Pre-Depends</literal>” field in the package headers, complete the normal dependencies; their syntax is identical. A normal dependency indicates that the package in question must be unpacked and configured before configuration of the package declaring the dependency. A pre-dependency stipulates that the package in question must be unpacked and configured before execution of the pre-installation script of the package declaring the pre-dependency, that is before its installation."
+msgstr "Des « pré-dépendances », données dans le champ « <literal>Pre-Depends</literal> » de l'en-tête du paquet, complètent les dépendances normales ; leur syntaxe est identique. Une dépendance normale indique que le paquet concerné doit être décompacté et configuré avant que le paquet la déclarant ne soit lui-même configuré. Une pré-dépendance stipule que le paquet concerné doit être décompacté et configuré avant même d'exécuter le script de pré-installation du paquet la déclarant, c'est-à-dire avant son installation proprement dite."
+
+msgid "A pre-dependency is very demanding for <command>apt</command>, because it adds a strict constraint on the ordering of the packages to install. As such, pre-dependencies are discouraged unless absolutely necessary. It is even recommended to consult other developers on <email>debian-devel@lists.debian.org</email> before adding a pre-dependency. It is generally possible to find another solution as a work-around."
+msgstr "Une pré-dépendance est très contraignante pour <command>apt</command>, qui doit ordonnancer la liste des paquets à installer. Elles sont donc déconseillées en l'absence de nécessité stricte. Il est même recommandé de consulter l'avis des (autres) développeurs sur <email>debian-devel@lists.debian.org</email> avant d'ajouter une pré-dépendance. En règle générale, il est possible de trouver une solution de substitution qui permet de l'éviter."
 
 msgid "Conflicts: the <literal>Conflicts</literal> field"
 msgstr "Conflits : champ <literal>Conflicts</literal>"
@@ -967,6 +966,19 @@ msgstr "<filename>conffiles</filename> liste les fichiers du paquet qu'il faudra
 msgid "In effect, in this situation, <command>dpkg</command> behaves as intelligently as possible: if the standard configuration file has not changed between the two versions, it does nothing. If, however, the file has changed, it will try to update this file. Two cases are possible: either the administrator has not touched this configuration file, in which case <command>dpkg</command> automatically installs the new version; or the file has been modified, in which case <command>dpkg</command> asks the administrator which version they wish to use (the old one with modifications, or the new one provided with the package). To assist in making this decision, <command>dpkg</command> offers to display a “<command>diff</command>” that shows the difference between the two versions. If the user chooses to retain the old version, the new one will be stored in the same location in a file with the <filename>.dpkg-dist</filename> suffix. If the user chooses the new version, the old one is retained in a file with the <filename>.dpkg-old</filename> suffix. Another available action consists of momentarily interrupting <command>dpkg</command> to edit the file and attempt to re-instate the relevant modifications (previously identified with <command>diff</command>)."
 msgstr "En effet, dans une telle situation, <command>dpkg</command> se comporte aussi intelligemment que possible : si le fichier de configuration standard n'a pas évolué entre les deux versions, il ne fait rien. Sinon, il va essayer de le mettre à jour. Deux cas sont possibles : soit l'administrateur n'a pas touché à ce fichier de configuration, auquel cas <command>dpkg</command> installe automatiquement la nouvelle version disponible, soit le fichier a été modifié, auquel cas <command>dpkg</command> demande à l'administrateur quelle version il souhaite utiliser (l'ancienne avec les modifications, ou la nouvelle fournie par le paquet). Pour l'aider à prendre sa décision, <command>dpkg</command> lui propose de consulter un « <command>diff</command> » présentant les différences entre les deux versions. S'il choisit de conserver l'ancienne version, la nouvelle sera stockée au même emplacement dans un fichier suffixé de <filename>.dpkg-dist</filename>. S'il choisit la nouvelle version, l'ancienne sera conservée dans un fichier <filename>.dpkg-old</filename>. La dernière possibilité offerte consiste à interrompre momentanément <command>dpkg</command> pour éditer le fichier et tenter d'y reprendre les modifications pertinentes (préalablement identifiées grâce au <foreignphrase>diff</foreignphrase>)."
 
+msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
+msgstr "<emphasis>POUR ALLER PLUS LOIN</emphasis> Forcer dpkg à poser les questions sur les fichiers de configuration"
+
+#, fuzzy
+#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
+msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
+msgstr "<primary><command>dpkg</command></primary><secondary>fonctionnement interne</secondary>"
+
+#, fuzzy
+#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
+msgstr "L'option <command>--force-confask</command> demande à <command>dpkg</command> d'afficher les questions concernant les fichiers de configuration même dans les cas où cela n'est normalement plus nécessaire. Ainsi, en réinstallant un paquet avec cette option, <command>dpkg</command> posera à nouveau la question pour tous les fichiers de configuration modifiés par l'administrateur. C'est très pratique notamment pour réinstaller le fichier de configuration original s'il a été supprimé et si aucune copie n'est disponible : une réinstallation normale ne suffit pas car <command>dpkg</command> considère la suppression comme une forme de modification légitime et n'installe donc pas le fichier de configuration désiré."
+
 msgid "<emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questions"
 msgstr "<emphasis>POUR ALLER PLUS LOIN</emphasis> Éviter les questions sur les fichiers de configuration"
 
@@ -1017,19 +1029,6 @@ msgstr ""
 
 msgid "Including this option in the configuration file means that it will also be used in a graphical interface such as <command>aptitude</command>."
 msgstr "Intégrer cette option dans le fichier de configuration permettra d'en profiter même dans le cadre d'une interface graphique telle qu'<command>aptitude</command>."
-
-msgid "<emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions"
-msgstr "<emphasis>POUR ALLER PLUS LOIN</emphasis> Forcer dpkg à poser les questions sur les fichiers de configuration"
-
-#, fuzzy
-#| msgid "<primary><command>dpkg</command></primary><secondary>internal operation</secondary>"
-msgid "<primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary>"
-msgstr "<primary><command>dpkg</command></primary><secondary>fonctionnement interne</secondary>"
-
-#, fuzzy
-#| msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgid "The <command>--force-confask</command> option requires <command>dpkg</command> to display the questions about the configuration files, even in cases where they would not normally be necessary. Thus, when reinstalling a package with this option, <command>dpkg</command> will ask the questions again for all of the configuration files modified or deleted by the administrator. This is very convenient, especially for reinstalling the original configuration file if it has been deleted and no other copy is available: a normal re-installation won't work, because <command>dpkg</command> considers removal as a form of legitimate modification, and, thus, doesn't install the desired configuration file."
-msgstr "L'option <command>--force-confask</command> demande à <command>dpkg</command> d'afficher les questions concernant les fichiers de configuration même dans les cas où cela n'est normalement plus nécessaire. Ainsi, en réinstallant un paquet avec cette option, <command>dpkg</command> posera à nouveau la question pour tous les fichiers de configuration modifiés par l'administrateur. C'est très pratique notamment pour réinstaller le fichier de configuration original s'il a été supprimé et si aucune copie n'est disponible : une réinstallation normale ne suffit pas car <command>dpkg</command> considère la suppression comme une forme de modification légitime et n'installe donc pas le fichier de configuration désiré."
 
 msgid "Structure of a Source Package"
 msgstr "Structure d'un paquet source"

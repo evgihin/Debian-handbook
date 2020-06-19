@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-05-17 17:54+0200\n"
+"POT-Creation-Date: 2020-06-19 11:25+0200\n"
 "PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/debian-handbook/tree/master/translation/ja_JP/push>\n"
@@ -1186,7 +1186,6 @@ msgstr "最初に、<command>pvcreate</command> を使って PV を作成しま�
 #| "  /dev/sdf2       lvm2 ---  5.22g 5.22g\n"
 #| "</computeroutput>"
 msgid ""
-"<computeroutput># </computeroutput><userinput>pvdisplay</userinput>\n"
 "<computeroutput># </computeroutput><userinput>pvcreate /dev/sdb2</userinput>\n"
 "<computeroutput>  Physical volume \"/dev/sdb2\" successfully created.\n"
 "# </computeroutput><userinput>pvdisplay</userinput>\n"
@@ -1207,8 +1206,7 @@ msgid ""
 "  Physical volume \"/dev/sdd\" successfully created.\n"
 "  Physical volume \"/dev/sdf1\" successfully created.\n"
 "  Physical volume \"/dev/sdf2\" successfully created.\n"
-"# </computeroutput><userinput>pvdisplay -C</userinput>\n"
-"<computeroutput>  PV         VG Fmt  Attr PSize PFree\n"
+"# </computeroutput><userinput>pvdisplay -C</userinput><computeroutput>\n"
 "  PV         VG Fmt  Attr PSize  PFree \n"
 "  /dev/sdb2     lvm2 ---   4.00g  4.00g\n"
 "  /dev/sdc3     lvm2 ---   3.00g  3.00g\n"
@@ -1295,7 +1293,6 @@ msgstr "<command>vgcreate</command> を使って、これらの PV から VG を
 #| "  vg_normal     3   0   0 wz--n- 12.30g 12.30g\n"
 #| "</computeroutput>"
 msgid ""
-"<computeroutput># </computeroutput><userinput>vgdisplay</userinput>\n"
 "<computeroutput># </computeroutput><userinput>vgcreate vg_critical /dev/sdb2 /dev/sdf1</userinput>\n"
 "<computeroutput>  Volume group \"vg_critical\" successfully created\n"
 "# </computeroutput><userinput>vgdisplay</userinput>\n"
@@ -2067,14 +2064,6 @@ msgid "Since <emphasis role=\"distribution\">Jessie</emphasis> is based on versi
 msgstr "<emphasis role=\"distribution\">Jessie</emphasis> は Linux カーネルのバージョン 3.16 に基づくため、標準的な <emphasis role=\"pkg\">linux-image-686-pae</emphasis> と <emphasis role=\"pkg\">linux-image-amd64</emphasis> パッケージには Xen を動作させるために必要なコードが含まれます。Debian の <emphasis role=\"distribution\">Squeeze</emphasis> およびそれ以前のバージョンで必要とされていたディストリビューションに特有のパッチ作業はもはや必要ありません。<ulink type=\"block\" url=\"http://wiki.xenproject.org/wiki/Xen_Kernel_Feature_Matrix\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<emphasis>NOTE</emphasis> Architectures compatible with Xen"
-msgstr "<emphasis>NOTE</emphasis> Xen 互換のアーキテクチャ"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Xen is currently only available for the i386, amd64, arm64 and armhf architectures."
-msgstr "現在のところ、Xen を利用できるのは i386、amd64、arm64、armhf アーキテクチャだけです。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>CULTURE</emphasis> Xen and non-Linux kernels"
 msgstr "<emphasis>CULTURE</emphasis> Xen と非 Linux カーネル"
 
@@ -2088,6 +2077,14 @@ msgstr "Xen 上でオペレーティングシステムを動作させるには�
 # Tag: PTAL;
 msgid "However, if Xen can rely on the hardware functions dedicated to virtualization (which are only present in more recent processors), even non-modified operating systems can run as domU (including Windows)."
 msgstr "しかしながら、Xen で仮想化専用のハードウェア機能 (最近のプロセッサだけが搭載した機能) に依存するオペレーティングシステムを動作させる場合や、修正されていないオペレーティングシステム (Windows など) を動作させる場合、そのオペレーティングシステムは domU としてのみ動作します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<emphasis>NOTE</emphasis> Architectures compatible with Xen"
+msgstr "<emphasis>NOTE</emphasis> Xen 互換のアーキテクチャ"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+msgid "Xen is currently only available for the i386, amd64, arm64 and armhf architectures."
+msgstr "現在のところ、Xen を利用できるのは i386、amd64、arm64、armhf アーキテクチャだけです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Using Xen under Debian requires three components:"
@@ -2974,11 +2971,11 @@ msgid ""
 "<computeroutput># </computeroutput><userinput>virt-install --connect qemu:///system  <co id=\"virtinst.connect\"></co>\n"
 "               --virt-type kvm           <co id=\"virtinst.type\"></co>\n"
 "               --name testkvm            <co id=\"virtinst.name\"></co>\n"
-"               --memory 1024                <co id=\"virtinst.ram\"></co>\n"
-"               --disk /srv/kvm/testkvm.qcow,format=qcow2,size=10 <co id=\"virtinst.disk\"></co>\n"
+"               --memory 1024             <co id=\"virtinst.ram\"></co>\n"
+"               --disk /srv/kvm/testkvm.qcow,format=qcow2,size=10  <co id=\"virtinst.disk\"></co>\n"
 "               --cdrom /srv/isos/debian-10.2.0-amd64-netinst.iso  <co id=\"virtinst.cdrom\"></co>\n"
-"               --network bridge=virbr0      <co id=\"virtinst.network\"></co>\n"
-"               --graphics vnc                     <co id=\"virtinst.vnc\"></co>\n"
+"               --network bridge=virbr0   <co id=\"virtinst.network\"></co>\n"
+"               --graphics vnc            <co id=\"virtinst.vnc\"></co>\n"
 "               --os-type linux           <co id=\"virtinst.os\"></co>\n"
 "               --os-variant debian10\n"
 "</userinput><computeroutput>\n"
