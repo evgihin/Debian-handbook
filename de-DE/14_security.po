@@ -1,7 +1,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 # Georg Käsler <gkaesler@gmx.de>, 2013.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-06-22 07:41+0000\nLast-Translator: Carsten Bachert <caba@bachert.info>\nLanguage-Team: German <https://hosted.weblate.org/projects/debian-handbook/14_security/de/>\nLanguage: de-DE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-06-24 00:42+0000\nLast-Translator: Carsten Bachert <caba@bachert.info>\nLanguage-Team: German <https://hosted.weblate.org/projects/debian-handbook/14_security/de/>\nLanguage: de-DE\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2-dev\n"
 
 msgid "Firewall"
 msgstr "Firewall"
@@ -105,19 +105,17 @@ msgstr "<emphasis>SONDERFALL</emphasis> Lokale Firewall"
 msgid "A firewall can be restricted to one particular machine (as opposed to a complete network), in which case its role is to filter or limit access to some services, or possibly to prevent outgoing connections by rogue software that a user could, willingly or not, have installed."
 msgstr "Eine Firewall kann auf einen bestimmten Rechner beschränkt sein (im Gegensatz zu einem ganzen Netzwerk), wobei ihre Rolle dann darin besteht, den Zugang zu einigen Diensten zu filtern oder zu beschränken, oder möglicherweise ausgehende Verbindungen von Schadsoftware, die ein Anwender vorsätzlich oder unabsichtlich installiert hat, zu unterbinden."
 
-#, fuzzy
-#| msgid "The Linux kernel embeds the <emphasis>netfilter</emphasis> firewall. It can be controlled from user space with the <command>iptables</command> and <command>ip6tables</command> commands. The difference between these two commands is that the former acts on the IPv4 network, whereas the latter acts on IPv6. Since both network protocol stacks will probably be around for many years, both tools will need to be used in parallel."
 msgid "The Linux kernel embeds the <emphasis>netfilter</emphasis> firewall, which can be controlled from user space with the <command>iptables</command>, <command>ip6tables</command>, <command>arptables</command> and <command>ebtables</command> commands."
-msgstr "Der Linux Kernel schließt die <emphasis>Netfilter</emphasis>-Firewall ein. Diese kann aus dem User Space mit den Befehlen <command>iptables</command> und <command>ip6tables</command> gesteuert werden. Der Unterschied zwischen diesen beiden Befehlen besteht darin, dass ersterer auf das IPv4-Netzwerk einwirkt, letzterer auf IPv6. Da beide Netzwerk-Protokoll-Stapel wahrscheinlich noch viele Jahre in Gebrauch sein werden, müssen beide Hilfsprogramme parallel verwendet werden."
+msgstr "Der Linux Kernel schließt die <emphasis>Netfilter</emphasis>-Firewall ein, die aus dem User Space mit den Befehlen <command>iptables</command>, <command>ip6tables</command>,  <command>arptables</command> und <command>ebtables</command> gesteuert werden kann."
 
 msgid "<primary><command>iptables</command></primary>"
 msgstr "<primary><command>iptables</command></primary>"
 
 msgid "However, Netfilter iptables commands are being replaced by nftables, which avoids many of its problems. Its design involves less code duplication, and it can be managed with just the <command>nft</command> command. Debian <emphasis role=\"distribution\">Buster</emphasis> uses the nftables framework by default."
-msgstr ""
+msgstr "Netfilter iptables-Befehle werden jedoch durch nftables ersetzt, wodurch viele der Probleme vermieden werden. Das Design erfordert weniger Duplizierung im Code und kann einfach mit dem Befehl <command>nft</command> verwendet werden. Debian <emphasis role=\"distribution\">Buster</emphasis> verwendet standardmäßig das nftables-Framework."
 
 msgid "To enable a default firewall in Debian execute:"
-msgstr ""
+msgstr "So aktivieren Sie eine Standard-Firewall in Debian:"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>apt install -y nftables\n"
@@ -126,58 +124,52 @@ msgid ""
 "# </computeroutput><userinput>systemctl enable nftables.service</userinput><computeroutput>\n"
 "Created symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /lib/systemd/system/nftables.service.\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>apt install -y nftables\n</userinput><computeroutput>Reading package lists... Done\n...\n# </computeroutput><userinput>systemctl enable nftables.service</userinput><computeroutput>\nCreated symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /lib/systemd/system/nftables.service.\n</computeroutput>"
 
-#, fuzzy
-#| msgid "Netfilter Behavior"
 msgid "nftables Behavior"
-msgstr "Verhalten von Netfilter"
+msgstr "Verhalten von nftables"
 
 msgid "As the kernel is processing a network packet it pauses and allows us to inspect the packet and decide what to do with that package. For example, we might want to drop or discard certain incoming packages, modify other packages in various ways, block certain outgoing packets to control against malware or redirect some packets at the earliest possible stage to bridge network interfaces or to spread the load of incoming packets between systems."
-msgstr ""
+msgstr "Wenn der Kernel ein Netzwerkpaket verarbeitet, wird er gestoppt und ermöglicht es uns, das Paket zu überprüfen und zu entscheiden, was mit diesem Paket geschehen soll. Beispielsweise möchten wir möglicherweise bestimmte eingehende Pakete löschen oder verwerfen, andere Pakete auf verschiedene Weise ändern, bestimmte ausgehende Pakete blockieren um sie vor Malware zu schützen, oder einige Pakete zum frühestmöglichen Zeitpunkt umleiten, um Netzwerkschnittstellen zu überbrücken oder die Last eingehender Pakete zwischen Systemen zu verteilen."
 
 msgid "A good understanding of the layers 3, 4 and 5 of the OSI (Open Systems Interconnection) model is essential to get the most from netfilter."
-msgstr ""
+msgstr "Ein gutes Verständnis der Schichten 3, 4 und 5 des OSI-Modells (Open Systems Interconnection) ist wichtig, um Netfilter optimal nutzen zu können."
 
-#, fuzzy
-#| msgid "<emphasis>VOCABULARY</emphasis> Zero-day exploit"
 msgid "<emphasis>CULTURE</emphasis> The OSI model"
-msgstr "<emphasis>WÖRTERVERZEICHNIS</emphasis> Zero-Day-Exploit"
+msgstr "<emphasis>CULTURE</emphasis> Das OSI-Modell"
 
-#, fuzzy
-#| msgid "<primary>logs</primary><secondary>display</secondary>"
 msgid "<primary>OSI</primary><secondary>model</secondary>"
-msgstr "<primary>Protokolle</primary><secondary>Anzeige</secondary>"
+msgstr "<primary>OSI</primary><secondary>-Modell</secondary>"
 
 msgid "The OSI model is a conceptual model to implement networking protocols without regard to its underlying internal structure and technology. Its goal is the interoperability of diverse communication systems with standard communication protocols."
-msgstr ""
+msgstr "Das OSI-Modell ist ein konzeptionelles Modell zur Implementierung von Netzwerkprotokollen ohne Berücksichtigung der zugrunde liegenden internen Struktur und Technologie. Ziel ist die Interoperabilität unterschiedlicher Kommunikationssysteme mit Standard-Kommunikationsprotokollen."
 
 msgid "This model was defined in the standard ISO/EIC 7498. The following seven layers are described:"
-msgstr ""
+msgstr "Das Modell wurde im Standard ISO/EIC 7498 festgelegt. Die sieben Layer werden wie folgt beschrieben:"
 
 msgid "Physical: transmission and reception of raw bit streams over a physical medium"
-msgstr ""
+msgstr "Physikalisch: Senden und Empfangen von Bit-Strömen über ein physikalisches Medium"
 
 msgid "Data Link: reliable transmission of data frames between two nodes connected by a connected by a physical layer"
-msgstr ""
+msgstr "Data Link: Zuverlässige Übertragung von Daten-Frames zwischen zwei Knoten, die durch eine durch eine physikalische Schicht verbunden sind"
 
 msgid "Network: structuring and managing a multi-node network, including addressing, routing and traffic control"
-msgstr ""
+msgstr "Netzwerk: Strukturieren und Verwalten eines Netzwerks mit mehreren Knoten, einschließlich Adressierung, Routing und Verkehrssteuerung"
 
 msgid "Transport: reliable transmission of data segments between points on a network, including segmentation, acknowledgment and multiplexing"
-msgstr ""
+msgstr "Transport: Zuverlässige Übertragung von Daten-Bereichen zwischen Punkten in einem Netzwerk, einschließlich Segmentierung, Bestätigung und Multiplexing"
 
 msgid "Session: managing communication sessions, i.e. continuous exchange of information in the form of multiple back-and-forth transmissions between two nodes"
-msgstr ""
+msgstr "Sitzung: Verwalten von Kommunikationssitzungen, d. H. Kontinuierlicher Informationsaustausch in Form mehrerer Hin- und Her-Übertragungen zwischen zwei Knoten"
 
 msgid "Presentation: translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption"
-msgstr ""
+msgstr "Präsentation: Übersetzung von Daten zwischen einem Netzwerkdienst und einer Anwendung; einschließlich Zeichenkodierung, Datenkomprimierung und Verschlüsselung / Entschlüsselung"
 
 msgid "Application: High-level APIs, including resource sharing, remote file access."
-msgstr ""
+msgstr "Anwendung: High-Level APIs, einschließlich Ressourcenfreigabe und Remote-Dateizugriff."
 
 msgid "More information can be found on Wikipedia: <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Osi_model\" />"
-msgstr ""
+msgstr "Weitere Informationen dazu finden sich auf Wikipedia: <ulink type=\"block\" url=\"https://de.wikipedia.org/wiki/OSI-Modell\" />"
 
 msgid "The firewall is configured with <emphasis>tables</emphasis>, which hold <emphasis>rules</emphasis> contained in <emphasis>chains</emphasis>. Unlike iptables, <emphasis>nftables</emphasis> does not have any default table. The user decides which and how many tables to create. Every table must have only one of the following five families assigned: <literal>ip</literal>, <literal>ip6</literal>, <literal>inet</literal>, <literal>arp</literal> and <literal>bridge</literal>. <literal>ip</literal> is used if the family is not specified."
 msgstr ""
