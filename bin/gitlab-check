@@ -5,8 +5,8 @@
 check_cwd
 
 LANGS=[a-z][a-z]-[A-Z][A-Z]
-ret=0
 
+failed=""
 for lang in $LANGS; do
     tempfile=$(mktemp build-log-$lang-XXXXXX)
     echo "Building TXT version for lang=$lang"
@@ -15,9 +15,14 @@ for lang in $LANGS; do
     else
 	echo "ERROR: Build failed. Here's the build log:"
 	cat $tempfile
-	ret=1
+	failed="${failed:+$failed }$lang"
     fi
     rm -f $tempfile
 done
 
-exit $ret
+if [ -n "$failed" ]; then
+    echo "ERROR: the following languages failed to build: $failed"
+    exit 1
+fi
+
+exit 0
