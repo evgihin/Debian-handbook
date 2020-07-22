@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-06-20 21:41+0000\nLast-Translator: Cyanoxygen <cyanoxygen2725@gmail.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/04_installation/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-07-22 13:29+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/04_installation/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.2-dev\n"
 
 msgid "Installation"
 msgstr "安装"
@@ -466,7 +466,7 @@ msgid "The Debian installer allows this operation when using the manual mode for
 msgstr "当使用手动模式分区时， Debian 安装程序允许使用这个操作。你只需选择 Windows 分区并输入新的大小(对于 FAT 和 NTFS 分区都一样)。"
 
 msgid "If Windows is using BitLocker-encrypted partitions, the steps to resize them requires to use the BitLocker Management together with the Windows Disk Management tool."
-msgstr ""
+msgstr "如果Windows使用了BitLocker加密的分区，那么将其重新划分容量的步骤，需要同时使用BitLocker Management和Windows Disk Management（Windows磁盘管理）工具。"
 
 msgid "The first screen displays the available disks, their partitions, and any possible free space that has not yet been partitioned. You can select each displayed element; pressing the <keycap>Enter</keycap> key then gives a list of possible actions."
 msgstr "首先显示可用硬盘，它们的分区，没被分区的可用的剩余空间。你可以选择每个显示的分支；按下 <keycap>Enter</keycap> 键，然后列出了可选操作。"
@@ -755,7 +755,7 @@ msgid "GRUB is the default bootloader installed by Debian thanks to its technica
 msgstr "由于 GRUB 的技术优势，GRUB 是 Debian 的默认引导程序：它能识别大部分的文件系统，因此在每次安装新内核之后无须作更新，这是由于引导时 GRUB 是通过读取配置文件找到新内核的实际位置的。版本 1 的 GRUB （又被称为\"Grub Legacy\"）不能处理有 LVM  和 软件 RAID 的情况；版本 2 默认支持，更全面。某些情况推荐使用LILO（另一种引导程序），安装程序会自动提示的。"
 
 msgid "It is worth noting that GRUB is not a single bootloader, it is more like a collection of bootloaders suited for different cases. The numerous binary packages built out of the GRUB source package reflect that: <emphasis role=\"pkg\">grub-efi-amd64</emphasis> is for 64-bit PC booting in UEFI mode, <emphasis role=\"pkg\">grub-efi-ia32</emphasis> is for 32-bit PC booting in UEFI mode, <emphasis role=\"pkg\">grub-pc</emphasis> is for PC booting in BIOS mode, <emphasis>grub-uboot</emphasis> for ARM computers, etc."
-msgstr ""
+msgstr "GRUB不是单一的引导加载程序并没有什么大不了的，它更像是一组始于不同情况的多个引导加载程序。GRUB源软件包之外建立多个二进制软件包反映出：<emphasis role=\"pkg\">grub-efi-amd64</emphasis>是64位PC以UEFI模式启动，<emphasis role=\"pkg\">grub-efi-ia32</emphasis>是32位PC以UEFI模式启动，<emphasis role=\"pkg\">grub-pc</emphasis>是以BIOS模式启动PC<emphasis>grub-uboot</emphasis>用于ARM计算机等。"
 
 msgid "For more information on configuring GRUB, please refer to <xref linkend=\"sect.config-grub\" />."
 msgstr "关于配置GRUB的更多信息，请移步至<xref linkend=\"sect.config-grub\" />。"
@@ -776,13 +776,13 @@ msgid "<primary>shim</primary>"
 msgstr "<primary>swap交换分区</primary>"
 
 msgid "Secure Boot is a technology ensuring that you run only software validated by your operating system vendor. To accomplish its work each element of the boot sequences validates the next software component that it will execute. At the deepest level, the UEFI firmware embeds cryptographic keys provided by Microsoft to check the bootloader's signature, ensuring that it is safe to execute. Since getting a binary signed by Microsoft is a lengthy process, Debian decided to not sign GRUB directly. Instead it uses an intermediary bootloader called shim, which almost never needs to change, and whose only role is to check Debian's provided signature on GRUB and execute GRUB. To run Debian on a machine having Secure Boot enabled, you need to install the <emphasis role=\"pkg\">shim-signed</emphasis> package."
-msgstr ""
+msgstr "安全启动（Secure Boot）是一种保证只有操作系统发行者确认合法的软件才允许运行的技术。为了实现这个工作，启动顺序的每个单元都确认将要运行的下个软件部分合法。在最深的层次上，UEFI固件嵌入了微软提供的密钥，来检查引导加载程序的签名，确保安全执行。由于获得微软签署的二级制文件是个漫长的过程，Debian决定不直接签署GRUB。取而代之的是使用被称为shim的中间引导加载程序，它几乎从不需要改变，其角色是检查Grub上Debian提供的签名，并执行GRUB。为了在允许安全启动的机器上运行Debian，需要安装<emphasis role=\"pkg\">shim-signed</emphasis>软件包。"
 
 msgid "Down the stack, GRUB will do a similar check with the kernel, and then the kernel might also check signatures on modules that get loaded. The kernel might also forbid some operations that could alter the integrity of the system."
-msgstr ""
+msgstr "Down the stack，GRUB会对内核进行相似的检查，然后内核还会检查将要加载模块的签名。内核还会禁止一些可能改变系统完整性的操作。"
 
 msgid "Debian 10 is the first release supporting Secure Boot. Before, you had to disable that feature in the system setup screen offered by the BIOS or the UEFI."
-msgstr ""
+msgstr "Debian10是支持安全启动（Secure Boot）的第一个发行版。此前，必须禁止BIOS或UEFI提供的系统设置屏幕上的安全特性。"
 
 msgid "Finishing the Installation and Rebooting"
 msgstr "完成安装并重启"
