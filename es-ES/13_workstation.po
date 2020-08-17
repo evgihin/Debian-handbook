@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-06-11 16:41+0000\nLast-Translator: Manuel Alvarez <manuelalvarezgomez@gmail.com>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/debian-handbook/13_workstation/es/>\nLanguage: es-ES\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.1-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2020-08-18 10:32+0000\nLast-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/debian-handbook/13_workstation/es/>\nLanguage: es-ES\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2-dev\n"
 
 msgid "Workstation"
 msgstr "Estación de trabajo"
@@ -70,23 +70,17 @@ msgstr "<primary>servidor</primary><secondary>X</secondary>"
 msgid "<primary><emphasis role=\"pkg\">xserver-xorg</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">xserver-xorg</emphasis></primary>"
 
-#, fuzzy
-#| msgid "Note that if the detected video card is not handled by any of the available drivers, X.org tries using the VESA and fbdev drivers. The former is a generic driver that should work everywhere, but with limited capabilities (fewer available resolutions, no hardware acceleration for games and visual effects for the desktop, and so on) while the latter works on top of the kernel's framebuffer device. The X server writes its messages to the <filename>/var/log/Xorg.0.log</filename> log file, which is where one would look to know what driver is currently in use. For example, the following snippet matches what the <literal>intel</literal> driver outputs when it is loaded:"
 msgid "Note that if the detected video card is not handled by any of the available drivers, X.org tries using the <literal>vesa</literal> and <literal>fbdev</literal> drivers. VESA is a generic driver that should work everywhere, but with limited capabilities (fewer available resolutions, no hardware acceleration for games and visual effects for the desktop, and so on) while <literal>fbdev</literal> works on top of the kernel's framebuffer device. Nowadays the X server can run without any administrative privileges (this used to be required to be able to configure the screen) and its log file is then stored in the user's home directory in <filename>~/.local/share/xorg/Xorg.0.log</filename>, whereas it is <filename>/var/log/Xorg.0.log</filename> for X servers started with root privileges and for versions older than Debian 9 <emphasis role=\"distribution\">Stetch</emphasis>. That log file is where one would look to know what driver is currently in use. For example, the following snippet matches what the <literal>intel</literal> driver outputs when it is loaded:"
-msgstr "Sepa que si la tarjeta de video detectada no es compatible con ninguno de los controladores disponibles, X.org intentará utilizar los controladores VESA y fbdev. El primero es un controlador genérico que debería funcionar siempre, pero con capacidades limitadas (menos resoluciones disponibles, sin aceleración por hardware para juegos o efectos visuales del escritorio, etc.) mientras que el último funciona sobre el dispositivo «framebuffer» del núcleo. El servidor X escribe sus mensajes al archivo de registro <filename>/var/log/Xorg.0.log</filename>, donde uno buscaría para saber qué controlador está utilizando actualmente. Por ejemplo, el siguiente extracto coincide con la salida de cuando se carga el controlador <literal>intel</literal>:"
+msgstr "Sepa que si la tarjeta de video detectada no es compatible con ninguno de los controladores disponibles, X.org intentará utilizar los controladores <literal>vesa</literal> y <literal>fbdev</literal>. VESA es un controlador genérico que debería funcionar siempre, pero con capacidades limitadas (menos resoluciones disponibles, sin aceleración por hardware para juegos o efectos visuales del escritorio, etc.) mientras que <literal>fbdev</literal> funciona sobre el dispositivo «framebuffer» del núcleo. A día de hoy, el servidor X puede ejecutarse sin ningún privilegio administrativo (esto solía requerirse para poder configurar la pantalla) y su archivo de registro se guarda entonces en el directorio personal en <filename>~/.local/share/xorg/Xorg.0.log</filename>, mientras que es <filename>/var/log/Xorg.0.log</filename> para servidores X iniciados con privilegios de superusuario y para versiones anteriores a Debian 9 <emphasis role=\"distribution\">Stetch</emphasis>. Ese archivo de registro es donde uno buscaría para saber qué controlador está utilizando actualmente. Por ejemplo, el siguiente extracto coincide con la salida de cuando se carga el controlador <literal>intel</literal>:"
 
 msgid "<primary>VESA</primary>"
 msgstr "<primary>VESA</primary>"
 
-#, fuzzy
-#| msgid "<primary><filename>.desktop</filename></primary>"
 msgid "<primary><literal>fbdev</literal></primary>"
-msgstr "<primary><filename>.desktop</filename></primary>"
+msgstr "<primary><literal>fbdev</literal></primary>"
 
-#, fuzzy
-#| msgid "<primary>Afterstep</primary>"
 msgid "<primary><literal>vesa</literal></primary>"
-msgstr "<primary>Afterstep</primary>"
+msgstr "<primary><literal>vesa</literal></primary>"
 
 msgid ""
 "\n"
@@ -118,10 +112,8 @@ msgstr "<emphasis>EXTRA</emphasis> Controladores privativos"
 msgid "Some video card makers (most notably NVIDIA) refuse to publish the hardware specifications that would be required to implement good free drivers. They do, however, provide proprietary drivers that allow using their hardware. This policy is nefarious, because even when the provided driver exists, it is usually not as polished as it should be; more importantly, it does not necessarily follow the X.org updates, which may prevent the latest available driver from loading correctly (or at all). We cannot condone this behavior, and we recommend you avoid these makers and favor more cooperative manufacturers."
 msgstr "Algunos fabricantes de tarjetas de video (más notablemente, nVidia) se niegan a publicar las especificaciones de hardware que son necesarias para implementar buenos controladores libres. Sí proveen, sin embargo, controladores privativos que permiten utilizar su hardware. Esta política es nefasta ya que aún cuando existen los controladores necesarios, generalmente no están tan pulidos como deberían; lo que es más importante, no siguen necesariamente las actualizaciones de X.org, lo que podría evitar que cargue correctamente (o por completo) el último controlador disponible. No podemos justificar este comportamiento y recomendamos que evite a estos fabricantes en favor de aquellos más cooperativos."
 
-#, fuzzy
-#| msgid "If you still end up with such a card, you will find the required packages in the <emphasis>non-free</emphasis> section: <emphasis role=\"pkg\">nvidia-glx</emphasis> for nVidia cards, and <emphasis role=\"pkg\">fglrx-driver</emphasis> for some ATI cards. Both cases require matching kernel modules. Building these modules can be automated by installing the <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (for nVidia), or <emphasis role=\"pkg\">fglrx-modules-dkms</emphasis> (for ATI) packages."
 msgid "If you still end up with such a card, you will find the required packages in the <emphasis>non-free</emphasis> section: <emphasis role=\"pkg\">nvidia-driver</emphasis> for NVIDIA cards. It requires a matching kernel module. Building the module can be automated by installing the package <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (for NVIDIA)."
-msgstr "Si aún así termina con una de estas tarjetas, encontrará los paquetes necesarios en la sección <emphasis>non-free</emphasis>: <emphasis role=\"pkg\">nvidia-glx</emphasis> para tarjetas nVidia y <emphasis role=\"pkg\">fglrx-driver</emphasis> para algunas tarjetas ATI. En ambos casos necesitará los módulos de núcleo correspondientes. Puede automatizar la compilación de estos módulos con la instalación de los paquetes <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (para nVidia) o <emphasis role=\"pkg\">fglrx-modules-dkms</emphasis> (para ATI)."
+msgstr "Si aún así termina con una de estas tarjetas, encontrará los paquetes necesarios en la sección <emphasis>non-free</emphasis>: <emphasis role=\"pkg\">nvidia-driver</emphasis> para tarjetas NVIDIA. Necesitará el módulo del núcleo correspondiente. Puede automatizar la compilación de este módulo con la instalación del paquete <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (para NVIDIA)."
 
 #, fuzzy
 #| msgid "The “nouveau” project aims to develop a free software driver for nVidia cards. As of <emphasis role=\"distribution\">Jessie</emphasis>, its feature set does not match the proprietary driver. In the developers' defense, we should mention that the required information can only be gathered by reverse engineering, which makes things difficult. The free driver for ATI video cards, called “radeon”, is much better in that regard although it often requires a non-free firmware."
@@ -179,10 +171,8 @@ msgstr "<primary><command>xdm</command></primary>"
 msgid "<primary><command>lightdm</command></primary>"
 msgstr "<primary><command>lightdm</command></primary>"
 
-#, fuzzy
-#| msgid "The graphical interface only provides display space. Running the X server by itself only leads to an empty screen, which is why most installations use a <emphasis>display manager</emphasis> to display a user authentication screen and start the graphical desktop once the user has authenticated. The three most popular display managers in current use are <emphasis role=\"pkg\">gdm3</emphasis> (<foreignphrase>GNOME Display Manager</foreignphrase>), <emphasis role=\"pkg\">kdm</emphasis> (<foreignphrase>KDE Display Manager</foreignphrase>) and <emphasis role=\"pkg\">lightdm</emphasis> (<foreignphrase>Light Display Manager</foreignphrase>). Since the Falcot Corp administrators have opted to use the GNOME desktop environment, they logically picked <command>gdm3</command> as a display manager too. The <filename>/etc/gdm3/daemon.conf</filename> configuration file has many options (the list can be found in the <filename>/usr/share/gdm/gdm.schemas</filename> schema file) to control its behaviour while <filename>/etc/gdm3/greeter.dconf-defaults</filename> contains settings for the greeter “session” (more than just a login window, it is a limited desktop with power management and accessibility related tools). Note that some of the most useful settings for end-users can be tweaked with GNOME's control center."
 msgid "The graphical interface only provides display space. Running the X server by itself only leads to an empty screen, which is why most installations use a <emphasis>display manager</emphasis> to display a user authentication screen and start the graphical desktop once the user has authenticated. The three most popular display managers in current use are <emphasis role=\"pkg\">gdm3</emphasis> (<foreignphrase>GNOME Display Manager</foreignphrase>), <emphasis role=\"pkg\">sddm</emphasis> (suggested for KDE Plasma) and <emphasis role=\"pkg\">lightdm</emphasis> (<foreignphrase>Light Display Manager</foreignphrase>). Since the Falcot Corp administrators have opted to use the GNOME desktop environment, they logically picked <command>gdm3</command> as a display manager too. The <filename>/etc/gdm3/daemon.conf</filename> configuration file has many options (the list can be found in the <filename>/usr/share/gdm/gdm.schemas</filename> schema file) to control its behaviour while <filename>/etc/gdm3/greeter.dconf-defaults</filename> contains settings for the greeter “session” (more than just a login window, it is a limited desktop with power management and accessibility related tools). Note that some of the most useful settings for end-users can be tweaked with GNOME's control center."
-msgstr "La interfaz gráfica sólo provee un espacio en la pantalla. Ejecutar únicamente el servidor X sólo le llevará a una pantalla vacía, razón por la que la mayoría de las instalaciones utilizan un <emphasis>gestor de pantalla</emphasis> («Display Manager») para mostrar la pantalla de autenticación de usuarios e iniciar el escritorio gráfico una vez que se autenticó el usuario. Los tres gestores de pantalla más populares utilizados actualmente son <emphasis role=\"pkg\">gdm3</emphasis> (<foreignphrase>GNOME Display Manager</foreignphrase>), <emphasis role=\"pkg\">kdm</emphasis> (<foreignphrase>KDE Display Manager</foreignphrase>) y <emphasis role=\"pkg\">lightdm</emphasis> (<foreignphrase>Light Display Manager</foreignphrase>). Debido a que los administradores de Falcot Corp eligieron utilizar el entorno de escritorio GNOME, lógicamente seleccionaron <command>gdm3</command> como gestor de pantalla también. El archivo de configuración <filename>/etc/gdm3/daemon.conf</filename> tiene muchas opciones (puede encontrar la lista en  el archivo de esquemas <filename>/usr/share/gdm/gdm.schemas</filename>) para controlar su comportamiento y el archivo <filename>/etc/gdm3/greeter.dconf-defaults</filename> contiene la configuración de la «sesión» de inicio (es más que sólo una pantalla para inicio de sesión, es un escritorio limitado con herramientas de accesibilidad y gestión de energía). Tenga en cuenta que puede personalizar las opciones más útiles para los usuarios desde el centro de control de GNOME."
+msgstr "La interfaz gráfica sólo provee un espacio en la pantalla. Ejecutar únicamente el servidor X sólo le llevará a una pantalla vacía, razón por la que la mayoría de las instalaciones utilizan un <emphasis>gestor de pantalla</emphasis> («Display Manager») para mostrar la pantalla de autenticación de usuarios e iniciar el escritorio gráfico una vez que se autenticó el usuario. Los tres gestores de pantalla más populares utilizados actualmente son <emphasis role=\"pkg\">gdm3</emphasis> (<foreignphrase>GNOME Display Manager</foreignphrase>), <emphasis role=\"pkg\">sddm</emphasis> (sugerido para KDE Plasma) y <emphasis role=\"pkg\">lightdm</emphasis> (<foreignphrase>Light Display Manager</foreignphrase>). Debido a que los administradores de Falcot Corp eligieron utilizar el entorno de escritorio GNOME, lógicamente seleccionaron <command>gdm3</command> como gestor de pantalla también. El archivo de configuración <filename>/etc/gdm3/daemon.conf</filename> tiene muchas opciones (puede encontrar la lista en el archivo de esquemas <filename>/usr/share/gdm/gdm.schemas</filename>) para controlar su comportamiento y el archivo <filename>/etc/gdm3/greeter.dconf-defaults</filename> contiene la configuración de la «sesión» de inicio (es más que sólo una pantalla para inicio de sesión, es un escritorio limitado con herramientas de accesibilidad y gestión de energía). Tenga en cuenta que puede personalizar las opciones más útiles para los usuarios desde el centro de control de GNOME."
 
 msgid "Choosing a Window Manager"
 msgstr "Elección de un gestor de ventanas"
@@ -339,10 +329,8 @@ msgstr "<primary><command>update-menus</command></primary>"
 msgid "<primary><filename>.desktop</filename></primary>"
 msgstr "<primary><filename>.desktop</filename></primary>"
 
-#, fuzzy
-#| msgid "Modern desktop environments and many window managers provide menus listing the available applications for the user. In order to keep menus up-to-date in relation to the actual set of available applications, each package usually provides a <filename>.desktop</filename> file in <filename>/usr/share/applications</filename>. The format of those files has been standardized by FreeDesktop.org: <ulink type=\"block\" url=\"http://standards.freedesktop.org/desktop-entry-spec/latest/\" />"
 msgid "Modern desktop environments and many window managers provide menus listing the available applications for the user. In order to keep menus up-to-date in relation to the actual set of available applications, each package usually provides a <filename>.desktop</filename> file in <filename>/usr/share/applications</filename>. The format of those files has been standardized by FreeDesktop.org: <ulink type=\"block\" url=\"https://standards.freedesktop.org/desktop-entry-spec/latest/\" />"
-msgstr "Los entornos de escritorio modernos y muchos gestores de ventanas proveen menús que enumeran las aplicaciones disponibles al usuario. Para poder mantenerlos actualizados en relación al conjunto real de aplicaciones disponibles, normalmente cada paquete proporciona  un fichero <filename>.desktop</filename> en <filename>/usr/share/applications</filename>. El formato de los cuales ha sido estandarizado por FreeDesktop.org: <ulink type=\"block\" url=\"http://standards.freedesktop.org/desktop-entry-spec/latest/\" />"
+msgstr "Los entornos de escritorio modernos y muchos gestores de ventanas proveen menús que enumeran las aplicaciones disponibles al usuario. Para poder mantenerlos actualizados en relación al conjunto real de aplicaciones disponibles, normalmente cada paquete proporciona un fichero <filename>.desktop</filename> en <filename>/usr/share/applications</filename>. El formato de los cuales ha sido estandarizado por FreeDesktop.org: <ulink type=\"block\" url=\"https://standards.freedesktop.org/desktop-entry-spec/latest/\" />"
 
 #, fuzzy
 #| msgid "The applications menus can be further customized by administrators through system-wide configuration files as described by the “Desktop Menu Specification”. End-users can also customize the menus with graphical tools such as <emphasis role=\"pkg\">kmenuedit</emphasis> (in KDE), <emphasis role=\"pkg\">alacarte</emphasis> (in GNOME) or <emphasis role=\"pkg\">menulibre</emphasis>. <ulink type=\"block\" url=\"http://standards.freedesktop.org/menu-spec/latest/\" />"
@@ -353,7 +341,7 @@ msgid "<emphasis>HISTORY</emphasis> The Debian menu system"
 msgstr "<emphasis>HISTORIA</emphasis> El sistema de menús de Debian"
 
 msgid "Historically — way before the FreeDesktop.org standards emerged — Debian had invented its own menu system where each package provided a generic description of the desired menu entries in <filename>/usr/share/menu/</filename>. This tool is still available in Debian (in the <emphasis role=\"pkg\">menu</emphasis> package) but it is only marginally useful since package maintainers are encouraged to rely on <filename>.desktop</filename> files instead."
-msgstr "Históricamente -- mucho antes de que surgieran los estándares de  FreeDesktop.org -- Debian había inventado su propio sistema de menús, donde cada paquete proporcionaba una descripción genérica de las entradas de menú en <filename>/usr/share/menu/</filename>. Esta herramienta todavía está disponible en Debian ( en el paquete <emphasis role=\"pkg\">menu</emphasis>) pero se usa marginalmente, ya que los reponsable aconsejan confiar en los ficheros <filename>.desktop</filename>."
+msgstr "Históricamente —mucho antes de que surgieran los estándares de FreeDesktop.org— Debian había inventado su propio sistema de menús, donde cada paquete proporcionaba una descripción genérica de las entradas de menú en <filename>/usr/share/menu/</filename>. Esta herramienta todavía está disponible en Debian ( en el paquete <emphasis role=\"pkg\">menu</emphasis>) pero se usa marginalmente, ya que los reponsable aconsejan confiar en los ficheros <filename>.desktop</filename>."
 
 #, fuzzy
 #| msgid "<primary><filename>.desktop</filename></primary>"
@@ -468,10 +456,8 @@ msgstr "XFce es un escritorio gráfico simple y liviano, ideal para equipos con 
 msgid "<primary>Xfce</primary>"
 msgstr "<primary>Xfce</primary>"
 
-#, fuzzy
-#| msgid "Unlike GNOME and KDE, Xfce does not aim at being a vast project. Beyond the basic components of a modern desktop (file manager, window manager, session manager, a panel for application launchers and so on), it only provides a few specific applications: a terminal, a calendar (Orage), an image viewer, a CD/DVD burning tool, a media player (Parole), sound volume control and a text editor (mousepad)."
 msgid "Unlike GNOME and Plasma, Xfce does not aim to become a vast project. Beyond the basic components of a modern desktop (file manager, window manager, session manager, a panel for application launchers and so on), it only provides a few specific applications: a terminal, a calendar (<emphasis role=\"pkg\">orage</emphasis>), an image viewer, a CD/DVD burning tool, a media player (<emphasis role=\"pkg\">parole</emphasis>), sound volume control and a text editor (<emphasis role=\"pkg\">mousepad</emphasis>). <ulink type=\"block\" url=\"https://xfce.org/\" />"
-msgstr "A diferencia de GNOME y KDE, Xfce no tiene como objetivo ser un gran proyecto. Más allá de los componentes básicos de un escritorio moderno (gestor de archivos, gestor de ventanas, gestor de sesiones, panel para lanzadores de aplicaciones, etc.), sólo provee unas pocas aplicaciones específicas: un terminal, un calendario (Orage), un visor de imágenes, una herramienta de grabación de CD/DVD, un reproductor de medios (Parole), un control de volumen de sonido y un editor de texto (mousepad)."
+msgstr "A diferencia de GNOME y Plasma, Xfce no tiene como objetivo ser un gran proyecto. Más allá de los componentes básicos de un escritorio moderno (gestor de archivos, gestor de ventanas, gestor de sesiones, panel para lanzadores de aplicaciones, etc.), solo provee unas pocas aplicaciones específicas: un terminal, un calendario (<emphasis role=\"pkg\">orage</emphasis>), un visor de imágenes, una herramienta de grabación de CD/DVD, un reproductor de medios (<emphasis role=\"pkg\">parole</emphasis>), un control de volumen de sonido y un editor de texto (<emphasis role=\"pkg\">mousepad</emphasis>). <ulink type=\"block\" url=\"https://xfce.org/\" />"
 
 msgid "The Xfce desktop"
 msgstr "El escritorio Xfce"
@@ -515,10 +501,8 @@ msgstr "Evolution"
 msgid "<primary>Evolution</primary>"
 msgstr "<primary>Evolution</primary>"
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">evolution-ews</emphasis></primary>"
 msgid "<primary>email</primary><secondary><emphasis role=\"pkg\">evolution</emphasis></secondary>"
-msgstr "<primary><emphasis role=\"pkg\">evolution-ews</emphasis></primary>"
+msgstr "<primary>email</primary><secondary><emphasis role=\"pkg\">evolution</emphasis></secondary>"
 
 msgid "<emphasis>COMMUNITY</emphasis> <emphasis>Popular</emphasis> packages"
 msgstr "<emphasis>COMUNIDAD</emphasis> Paquetes <emphasis>populares</emphasis>"
@@ -570,10 +554,8 @@ msgstr "KMail"
 msgid "<primary>KMail</primary>"
 msgstr "<primary>KMail</primary>"
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>software</secondary>"
 msgid "<primary>email</primary><secondary><emphasis role=\"pkg\">kmail</emphasis></secondary>"
-msgstr "<primary>correo</primary><secondary>software</secondary>"
+msgstr "<primary>correo</primary><secondary><emphasis role=\"pkg\">kmail</emphasis></secondary>"
 
 #, fuzzy
 #| msgid "The KDE email software can be installed with <command>apt-get install kmail</command>. KMail only handles email, but it belongs to a software suite called KDE-PIM (for <emphasis>Personal Information Manager</emphasis>) that includes features such as address books, a calendar component, and so on. KMail has all the features one would expect from an excellent email client."
@@ -588,10 +570,8 @@ msgstr "El software de correo KMail"
 msgid "Thunderbird"
 msgstr "Thunderbird y Icedove"
 
-#, fuzzy
-#| msgid "<primary>Mozilla</primary><secondary>Thunderbird</secondary>"
 msgid "<primary>email</primary><secondary><emphasis role=\"pkg\">thunderbird</emphasis></secondary>"
-msgstr "<primary>Mozilla</primary><secondary>Thunderbird</secondary>"
+msgstr "<primary>correo</primary><secondary><emphasis role=\"pkg\">thunderbird</emphasis></secondary>"
 
 msgid "<primary>Thunderbird, Mozilla</primary>"
 msgstr "<primary>Thunderbird, Mozilla</primary>"
@@ -632,10 +612,8 @@ msgstr "<primary>WebKit</primary>"
 msgid "<primary>Epiphany</primary>"
 msgstr "<primary>Epiphany</primary>"
 
-#, fuzzy
-#| msgid "<primary>Jabber</primary><secondary>clients</secondary>"
 msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">epihpany</emphasis></secondary>"
-msgstr "<primary>Jabber</primary><secondary>clientes</secondary>"
+msgstr "<primary>navegador, Web</primary><secondary><emphasis role=\"pkg\">epihpany</emphasis></secondary>"
 
 msgid "Konqueror, available in the <emphasis role=\"pkg\">konqueror</emphasis> package, is KDE's web browser (but can also assume the role of a file manager). It uses the KDE-specific KHTML rendering engine; KHTML is an excellent engine, as witnessed by the fact that Apple's WebKit is based on KHTML."
 msgstr ""
@@ -645,15 +623,11 @@ msgstr ""
 msgid "<primary>Konqueror</primary>"
 msgstr "<primary>Gnumeric</primary>"
 
-#, fuzzy
-#| msgid "<primary>Qt</primary><secondary>Designer</secondary>"
 msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">konqueror</emphasis></secondary>"
-msgstr "<primary>Qt</primary><secondary>Designer</secondary>"
+msgstr "<primary>navegador, Web</primary><secondary><emphasis role=\"pkg\">konqueror</emphasis></secondary>"
 
-#, fuzzy
-#| msgid "Users not satisfied by either of the above can use Iceweasel. This browser, available in the <emphasis role=\"pkg\">iceweasel</emphasis> package, uses the Mozilla project's Gecko renderer, with a thin and extensible interface on top. <indexterm><primary>Gecko</primary></indexterm> <indexterm><primary>Mozilla</primary><secondary>Firefox</secondary></indexterm> <indexterm><primary>Firefox, Mozilla</primary></indexterm>"
 msgid "Users not satisfied by either of the above can use Firefox. This browser, available in the <emphasis role=\"pkg\">firefox-esr</emphasis> package, uses the Mozilla project's Gecko renderer, with a thin and extensible interface on top."
-msgstr "Los usuarios que no estén satisfechos con ninguno de los anteriores pueden utilizar Iceweasel. Este navegador, disponible en el paquete <emphasis role=\"pkg\">iceweasel</emphasis>, utiliza el visualizador Gecko del proyecto Mozilla, con una interfaz delgada y extensible sobre él. <indexterm><primary>Gecko</primary></indexterm> <indexterm><primary>Mozilla</primary><secondary>Firefox</secondary></indexterm> <indexterm><primary>Firefox, Mozilla</primary></indexterm>"
+msgstr "Los usuarios que no estén satisfechos con ninguno de los anteriores pueden utilizar Firefox. Este navegador, disponible en el paquete <emphasis role=\"pkg\">firefox-esr</emphasis>, utiliza el visualizador Gecko del proyecto Mozilla, con una interfaz delgada y extensible sobre él."
 
 #, fuzzy
 #| msgid "<primary>Glade</primary>"
@@ -666,10 +640,8 @@ msgstr "<primary>Mozilla</primary><secondary>Firefox</secondary>"
 msgid "<primary>Firefox, Mozilla</primary>"
 msgstr "<primary>Firefox, Mozilla</primary>"
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">evolution-ews</emphasis></primary>"
 msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">firefox-esr</emphasis></secondary>"
-msgstr "<primary><emphasis role=\"pkg\">evolution-ews</emphasis></primary>"
+msgstr "<primary>navegador, Web</primary><secondary><emphasis role=\"pkg\">firefox-esr</emphasis></secondary>"
 
 #, fuzzy
 #| msgid "The Iceweasel web browser"
@@ -702,10 +674,8 @@ msgstr ""
 msgid "<primary><emphasis role=\"pkg\">firefox</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
 
-#, fuzzy
-#| msgid "<primary>Jabber</primary><secondary>clients</secondary>"
 msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">firefox</emphasis></secondary>"
-msgstr "<primary>Jabber</primary><secondary>clientes</secondary>"
+msgstr "<primary>navegador, Web</primary><secondary><emphasis role=\"pkg\">firefox</emphasis></secondary>"
 
 msgid "<emphasis>CULTURE</emphasis> Iceweasel, Firefox and others"
 msgstr "<emphasis>CULTURA</emphasis> Iceweasel, Firefox y otros"
@@ -746,15 +716,11 @@ msgstr "<primary>Mozilla</primary>"
 msgid "<primary>Netscape</primary>"
 msgstr "<primary>Netscape</primary>"
 
-#, fuzzy
-#| msgid "Last but not least, Debian also contains the <emphasis>Chromium</emphasis> web browser (available in the <emphasis role=\"pkg\">chromium-browser</emphasis> package). This browser is developed by Google at such a fast pace that maintaining a single version of it across the whole lifespan of Debian <emphasis role=\"distribution\">Jessie</emphasis> is unlikely to be possible. Its clear purpose is to make web services more attractive, both by optimizing the browser for performance and by increasing the user's security. The free code that powers Chromium is also used by its proprietary version called Google Chrome."
 msgid "Last but not least, Debian also contains the <emphasis>Chromium</emphasis> web browser (available in the <emphasis role=\"pkg\">chromium</emphasis> package). This browser is developed by Google and has become the most popular browser in just a few years. Its clear purpose is to make web services more attractive, both by optimizing the browser for performance and by increasing the user's security. The free code that powers Chromium is also used by its proprietary version called <trademark>Google Chrome</trademark>."
-msgstr "Por último, si bien no menos importante, Debian también contiene el navegador web <emphasis>Chromium</emphasis> (disponible en el paquete <emphasis role=\"pkg\">chromium-browser</emphasis>). Google desarrolla este navegador a un ritmo tan rápido que probablemente no sea posible mantener sólo una versión del mismo durante todo el ciclo de vida de Debian <emphasis role=\"distribution\">Jessie</emphasis>. Su propósito es hacer más atractivos los servicios web, tanto optimizando el rendimiento del navegador como aumentando la seguridad del usuario. El código libre que hace funcionar a Chromium también es utilizado por su versión privativa llamada Google Chrome."
+msgstr "Por último, si bien no menos importante, Debian también contiene el navegador web <emphasis>Chromium</emphasis> (disponible en el paquete <emphasis role=\"pkg\">chromium</emphasis>). Google desarrolla este navegador y se ha convertido en el navegador más popular en unos pocos años. Su claro propósito es hacer más atractivos los servicios web, tanto optimizando el rendimiento del navegador como aumentando la seguridad del usuario. El código libre que hace funcionar a Chromium también es utilizado por su versión privativa llamada <trademark>Google Chrome</trademark>."
 
-#, fuzzy
-#| msgid "<primary>Jabber</primary><secondary>clients</secondary>"
 msgid "<primary>browser, Web</primary><secondary><emphasis role=\"pkg\">chromium</emphasis></secondary>"
-msgstr "<primary>Jabber</primary><secondary>clientes</secondary>"
+msgstr "<primary>navegador, Web</primary><secondary><emphasis role=\"pkg\">chromium</emphasis></secondary>"
 
 msgid "Development"
 msgstr "Desarrollo"
@@ -762,10 +728,8 @@ msgstr "Desarrollo"
 msgid "Tools for GTK+ on GNOME"
 msgstr "Herramientas para GTK+ en GNOME"
 
-#, fuzzy
-#| msgid "Anjuta (in the <emphasis role=\"pkg\">anjuta</emphasis> package) is a development environment optimized for creating GTK+ applications for GNOME. Glade (in the <emphasis role=\"pkg\">glade</emphasis> package) is an application designed to create GTK+ graphical interfaces for GNOME and save them in an XML file. These XML files can then be loaded by the <emphasis>libglade</emphasis> shared library, which can dynamically recreate the saved interfaces; such a feature can be interesting, for instance for plugins that require dialogs."
 msgid "Anjuta (in the <emphasis role=\"pkg\">anjuta</emphasis> package) and GNOME Builder (in the <emphasis role=\"pkg\">gnome-builder</emphasis> package) are Integrated Development Environments (<acronym>IDE</acronym>) optimized for creating GTK+ applications for GNOME. Glade (in the <emphasis role=\"pkg\">glade</emphasis> package) is an application designed to create GTK+ graphical interfaces for GNOME and save them in an XML file. These XML files can then be loaded by the GTK+ shared library though its <literal>GtkBuilder</literal> component to recreate the saved interfaces; such a feature can be interesting, for instance for plugins that require dialogs. <ulink type=\"block\" url=\"https://wiki.gnome.org/Apps/Builder\" /> <ulink type=\"block\" url=\"http://anjuta.org/\" /> <ulink type=\"block\" url=\"https://glade.gnome.org/\" />"
-msgstr "Anjuta (en el paquete <emphasis role=\"pkg\">anjuta</emphasis>) es un entorno de desarrollo optimizado para crear aplicación GTK+ para GNOME. Glade (en el paquete <emphasis role=\"pkg\">glade</emphasis>) es una aplicación diseñada para crear interfaces gráficas GTK+ para GNOME y guardarlas en una archivo XML. La biblioteca compartida <emphasis>libglade</emphasis> puede cargar estos archivos XML y recrear dinámicamente las interfaces guardadas; esta funcionalidad puede ser interesante, por ejemplo para los plugins que necesitan ventanas interactivas."
+msgstr "Anjuta (en el paquete <emphasis role=\"pkg\">anjuta</emphasis>) y GNOME Builder (en el paquete <emphasis role=\"pkg\">gnome-builder</emphasis>) son entornos de desarrollo integrados (<foreignphrase>Integrated Development Environments</foreignphrase>, <acronym>IDE</acronym>) optimizados para crear aplicaciones GTK+ para GNOME. Glade (en el paquete <emphasis role=\"pkg\">glade</emphasis>) es una aplicación diseñada para crear interfaces gráficas GTK+ para GNOME y guardarlas en un archivo XML. Estos archivos XML pueden ser luego cargados desde la librería compartida GTK+ a través de su componente <literal>GtkBuilder</literal> para recrear dinámicamente las interfaces guardadas; esta funcionalidad puede ser interesante, por ejemplo, para los <foreignphrase>plugins</foreignphrase> que necesitan ventanas interactivas. <ulink type=\"block\" url=\"https://wiki.gnome.org/Apps/Builder\" /> <ulink type=\"block\" url=\"http://anjuta.org/\" /> <ulink type=\"block\" url=\"https://glade.gnome.org/\" />"
 
 msgid "<primary>Anjuta</primary>"
 msgstr "<primary>Anjuta</primary>"
@@ -811,10 +775,8 @@ msgstr "Trabajo en grupo: <foreignphrase>groupware</foreignphrase>"
 msgid "<primary>groupware</primary>"
 msgstr "<primary>eGroupware</primary>"
 
-#, fuzzy
-#| msgid "Groupware tools tend to be relatively complex to maintain because they aggregate multiple tools and have requirements that are not always easy to reconcile in the context of an integrated distribution. Thus there is a long list of groupware that were once available in Debian but have been dropped for lack of maintainers or incompatibility with other (newer) software in Debian. It has been the case of PHPGroupware, eGroupware, and Kolab. <ulink type=\"block\" url=\"http://www.phpgroupware.org/\" /> <ulink type=\"block\" url=\"http://www.egroupware.org/\" /> <ulink type=\"block\" url=\"http://www.kolab.org/\" />"
 msgid "Groupware tools tend to be relatively complex to maintain because they aggregate multiple tools and have requirements that are not always easy to reconcile in the context of an integrated distribution. Thus there is a long list of groupware packages that were once available in Debian but have been dropped for lack of maintainers or incompatibility with other (newer) software in Debian. This has been the case with PHPGroupware, eGroupware, and Kolab. <ulink type=\"block\" url=\"https://www.egroupware.org/\" /> <ulink type=\"block\" url=\"https://www.kolab.org/\" />"
-msgstr "Las herramientas de trabajo en grupo («groupware») suelen ser bastante complejas de mantener porque concentran varias herramientas y tienen requerimientos que no siempre son fáciles de cumplir en el contexto de una distribución integrada. Existe, por lo tanto, una larga lista de groupware que estuvo disponible en Debian en algún momento pero fueron eliminadas por falta de encargados o incompatibilidades con otro software (más reciente) en Debian. Este fue el caso de PHPGroupware, eGroupware y Kolab. <ulink type=\"block\" url=\"http://www.phpgroupware.org/\" /> <ulink type=\"block\" url=\"http://www.egroupware.org/\" /> <ulink type=\"block\" url=\"http://www.kolab.org/\" />"
+msgstr "Las herramientas de trabajo en grupo («groupware») suelen ser bastante complejas de mantener porque concentran varias herramientas y tienen requerimientos que no siempre son fáciles de cumplir en el contexto de una distribución integrada. Existe, por lo tanto, una larga lista de paquetes groupware que estuvo disponible en Debian en algún momento pero fueron eliminadas por falta de encargados o incompatibilidades con otro software (más reciente) en Debian. Este fue el caso de PHPGroupware, eGroupware y Kolab. <ulink type=\"block\" url=\"https://www.egroupware.org/\" /> <ulink type=\"block\" url=\"https://www.kolab.org/\" />"
 
 msgid "<primary>eGroupware</primary>"
 msgstr "<primary>eGroupware</primary>"
@@ -822,25 +784,17 @@ msgstr "<primary>eGroupware</primary>"
 msgid "<primary>Kolab</primary>"
 msgstr "<primary>Kolab</primary>"
 
-#, fuzzy
-#| msgid "All is not lost though. Many of the features traditionally provided by “groupware” software are increasingly integrated into “standard” software. This is reducing the requirement for specific, specialized groupware software. On the other hand, this usually requires a specific server. More interestingly, Citadel (in the <emphasis role=\"pkg\">citadel-suite</emphasis> package) and Sogo (in the <emphasis role=\"pkg\">sogo</emphasis> package) are alternatives that are available in Debian <emphasis role=\"distribution\">Jessie</emphasis>."
 msgid "All is not lost though. Many of the features traditionally provided by “groupware” software are increasingly integrated into “standard” software. This is reducing the requirement for specific, specialized groupware software. On the other hand, this usually requires a specific server. Citadel (in the <emphasis role=\"pkg\">citadel-suite</emphasis> package), Sogo (in the <emphasis role=\"pkg\">sogo</emphasis> package) and Kopano (in the <emphasis role=\"pkg\">kopano-core</emphasis> package) are alternatives that are available in Debian <emphasis role=\"distribution\">Buster</emphasis>."
-msgstr "Sin embargo, no todo está perdido. Mucha de las características clásicas que provee el software «groupware» están siendo integradas al software «estándar». Esto reduce la necesidad de software groupware específico y especializado. Por el otro lado, esto generalmente necesita un servidor específico. Más interesantes son las alternativas Citadel (en el paquete <emphasis role=\"pkg\">citadel-suite</emphasis>) y Sogo (en el paquete <emphasis role=\"pkg\">sogo</emphasis>) disponibles en Debian <emphasis role=\"distribution\">Jessie</emphasis>."
+msgstr "Sin embargo, no todo está perdido. Mucha de las características clásicas que provee el software «groupware» están siendo integradas al software «estándar». Esto reduce la necesidad de software groupware específico y especializado. Por el otro lado, esto generalmente necesita un servidor específico. Citadel (en el paquete <emphasis role=\"pkg\">citadel-suite</emphasis>), Sogo (en el paquete <emphasis role=\"pkg\">sogo</emphasis>) y Kopano (en el paquete <emphasis role=\"pkg\">kopano-core</emphasis>) son alternativas que están disponibles en Debian <emphasis role=\"distribution\">Buster</emphasis>."
 
-#, fuzzy
-#| msgid "<primary>package</primary><secondary>popularity</secondary>"
 msgid "<primary>groupware</primary><secondary><emphasis role=\"pkg\">citadel-suite</emphasis></secondary>"
-msgstr "<primary>paquete</primary><secondary>popularidad</secondary>"
+msgstr "<primary>groupware</primary><secondary><emphasis role=\"pkg\">citadel-suite</emphasis></secondary>"
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
 msgid "<primary>groupware</primary><secondary><emphasis role=\"pkg\">sogo</emphasis></secondary>"
-msgstr "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
+msgstr "<primary>groupware</primary><secondary><emphasis role=\"pkg\">sogo</emphasis></secondary>"
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
 msgid "<primary>groupware</primary><secondary><emphasis role=\"pkg\">kopano-core</emphasis></secondary>"
-msgstr "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
+msgstr "<primary>groupware</primary><secondary><emphasis role=\"pkg\">kopano-core</emphasis></secondary>"
 
 msgid "Collaborative Work With FusionForge"
 msgstr "Trabajo colaborativo con FusionForge"
@@ -857,15 +811,11 @@ msgstr "<primary>SourceForge</primary>"
 msgid "FusionForge can be seen as an amalgamation of several tools dedicated to manage, track and coordinate projects. These tools can be roughly classified into three families:"
 msgstr "Se puede considerar a FusionForge como una amalgama de varias herramientas dedicadas a gestionar, seguir y coordinar proyectos. Podríamos clasificar estas herramientas, a grandes rasgos, en tres familias:"
 
-#, fuzzy
-#| msgid "<emphasis>communication</emphasis>: web forums, mailing-list manager, announcement system allowing a project to publish news;"
 msgid "<emphasis>communication</emphasis>: web forums, mailing-list manager, and announcement system allowing a project to publish news"
-msgstr "<emphasis>comunicación</emphasis>: foros web, gestor de listas de correo, sistemas de anuncios que permiten que el proyecto publique noticias;"
+msgstr "<emphasis>comunicación</emphasis>: foros web, gestor de listas de correo y sistemas de anuncios que permiten que el proyecto publique noticias"
 
-#, fuzzy
-#| msgid "<emphasis>tracking</emphasis>: task tracker to control progress and schedule tasks, trackers for bugs (or patches or feature requests, or any other kind of “ticket”), surveys;"
 msgid "<emphasis>tracking</emphasis>: tools to track project progress and schedule tasks, to track bugs, feature requests, or any other kind of “ticket”, and to run surveys"
-msgstr "<emphasis>seguimiento</emphasis>: gestor de tareas para controlar el progreso y programar tareas, seguimiento de errores (o parches, o pedidos de funcionalidad, o cualquier otro tipo de reporte ­— «ticket»), encuestas;"
+msgstr "<emphasis>seguimiento</emphasis>: herramientas para controlar el progreso del proyecto y programar tareas, para seguimiento de errores, solicitudes de funcionalidades, o cualquier otro tipo de reporte ­(«ticket»), y para hacer encuestas"
 
 msgid "<emphasis>sharing</emphasis>: documentation manager to provide a single central point for documents related to a project, generic file release manager, dedicated website for each project."
 msgstr "<emphasis>compartir</emphasis>: gestor de documentación para proveer un único punto central para documentos relacionados a un proyecto, gestor genérico de publicación de archivos, sitio web dedicado a cada proyecto."
@@ -896,10 +846,8 @@ msgstr "<emphasis>ALTERNATIVA</emphasis> Máquinas virtuales"
 msgid "FusionForge has been used to power the <literal>alioth.debian.org</literal> platform used by the Debian project and its developers for collaborative package management and development for almost a decade. Due to some limitations it has been replaced and shut down in 2018 by a new service powered by GitLab. See sidebar <xref linkend=\"sidebar.gitlab\" />."
 msgstr ""
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">fusionforge</emphasis></primary><seealso><literal>alioth.debian.org</literal></seealso>"
-msgstr "<primary><emphasis role=\"pkg\">gnome</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">fusionforge</emphasis></primary><seealso><literal>alioth.debian.org</literal></seealso>"
 
 msgid "<primary><literal>alioth.debian.org</literal></primary><seealso><literal>salsa.debian.org</literal></seealso>"
 msgstr ""
@@ -971,20 +919,14 @@ msgstr "<primary>Microsoft</primary><secondary>Excel</secondary>"
 msgid "LibreOffice and Calligra Suite are available in the <emphasis role=\"pkg\">libreoffice</emphasis> and <emphasis role=\"pkg\">calligra</emphasis> Debian packages, respectively. Although the <emphasis role=\"pkg\">gnome-office</emphasis> package was previously used to install a collection of office tools such as AbiWord and Gnumeric, this package is no longer part of Debian, with the individual packages now standing on their own."
 msgstr ""
 
-#, fuzzy
-#| msgid "Libre Office and Calligra Suite are, respectively, available in the <emphasis role=\"pkg\">libreoffice</emphasis> and <emphasis role=\"pkg\">calligra</emphasis> Debian packages. There is no more package for GNOME Office (it was <emphasis role=\"pkg\">gnome-office</emphasis>). Language-specific packs for Libre Office are distributed in separate packages: <emphasis role=\"pkg\">libreoffice-l10n-*</emphasis> and <emphasis role=\"pkg\">libreoffice-help-*</emphasis> most notably; some features such as spelling dictionaries, hyphenation patterns and thesauri are in separate packages, such as <emphasis role=\"pkg\">myspell-*</emphasis>/<emphasis role=\"pkg\">hunspell-*</emphasis>, <emphasis role=\"pkg\">hyphen-*</emphasis> and <emphasis role=\"pkg\">mythes-*</emphasis>. Note that Calligra Suite used to be called KOffice."
 msgid "Language-specific packs for LibreOffice are distributed in separate packages, most notably <emphasis role=\"pkg\">libreoffice-l10n-*</emphasis> and <emphasis role=\"pkg\">libreoffice-help-*</emphasis>. Some features such as spelling dictionaries, hyphenation patterns and thesauri are in separate packages, such as <emphasis role=\"pkg\">myspell-*</emphasis>, <emphasis role=\"pkg\">hunspell-*</emphasis>, <emphasis role=\"pkg\">hyphen-*</emphasis> and <emphasis role=\"pkg\">mythes-*</emphasis>."
-msgstr "Libre Office y el paquete Calligra se encuentran disponibles, respectivamente, en los paquetes Debian <emphasis role=\"pkg\">libreoffice</emphasis> y <emphasis role=\"pkg\">calligra</emphasis>. No hay más paquetes para GNOME Office (era <emphasis role=\"pkg\">gnome-office</emphasis>). Los paquetes específicos de idioma para Libre Office se distribyen en paquetes separados: los más importantes son <emphasis role=\"pkg\">libreoffice-l10n-*</emphasis> y <emphasis role=\"pkg\">libreoffice-help-*</emphasis>; algunas funcionalidades, como los diccionarios de ortografía, patrones para separado en sílabas y thesaurus se encuentran en paquetes tales como  <emphasis role=\"pkg\">myspell-*</emphasis>/<emphasis role=\"pkg\">hunspell-*</emphasis>), <emphasis role=\"pkg\">hyphen-*</emphasis> y <emphasis role=\"pkg\">mythes-*</emphasis>. Tenga en cuenta que Calligra Suite solía llamarse KOffice."
+msgstr "Los paquetes específicos de idioma para LibreOffice se distribyen en paquetes separados: los más importantes son <emphasis role=\"pkg\">libreoffice-l10n-*</emphasis> y <emphasis role=\"pkg\">libreoffice-help-*</emphasis>. Algunas funcionalidades, como los diccionarios de ortografía, patrones para separado en sílabas y thesaurus se encuentran en paquetes tales como <emphasis role=\"pkg\">myspell-*</emphasis>, <emphasis role=\"pkg\">hunspell-*</emphasis>), <emphasis role=\"pkg\">hyphen-*</emphasis> y <emphasis role=\"pkg\">mythes-*</emphasis>."
 
-#, fuzzy
-#| msgid "<primary>Qt</primary><secondary>Designer</secondary>"
 msgid "<primary>office suite</primary><secondary><emphasis role=\"pkg\">libreoffice</emphasis></secondary>"
-msgstr "<primary>Qt</primary><secondary>Designer</secondary>"
+msgstr "<primary>suite ofimática</primary><secondary><emphasis role=\"pkg\">libreoffice</emphasis></secondary>"
 
-#, fuzzy
-#| msgid "<primary>interface</primary><secondary>graphical</secondary>"
 msgid "<primary>office suite</primary><secondary><emphasis role=\"pkg\">calligra</emphasis></secondary>"
-msgstr "<primary>interfaz</primary><secondary>gráfica</secondary>"
+msgstr "<primary>suite ofimática</primary><secondary><emphasis role=\"pkg\">calligra</emphasis></secondary>"
 
 msgid "Emulating Windows: Wine"
 msgstr "Emulación de Windows: Wine"
@@ -1063,12 +1005,10 @@ msgid "<emphasis>ALTERNATIVE</emphasis> <foreignphrase>Windows Terminal Server</
 msgstr "<emphasis>ALTERNATIVA</emphasis> <foreignphrase>Windows Terminal Server</foreignphrase> o VNC"
 
 msgid "Yet another possibility is to remotely run the legacy Windows applications on a central server with <emphasis>Windows Terminal Server</emphasis> and access the application from Linux machines using <emphasis>rdesktop</emphasis>. This is a Linux client for the RDP protocol (<emphasis>Remote Desktop Protocol</emphasis>) that <foreignphrase>Windows NT/2000 Terminal Server</foreignphrase> uses to display desktops on remote machines."
-msgstr "Otra posibilidad es ejecutar remotamente las aplicaciones Windows en un servidor central con <emphasis>Windows Terminal Server</emphasis> y acceder a la aplicación desde máquinas Linux utilizando <emphasis>rdesktop</emphasis>. Éste es un cliente Linux para el protocolo RDP (<emphasis>protocolo de escritorio remoto</emphasis>: «Remote Desktop Protocol») que  <foreignphrase>Windows NT/2000 Terminal Server</foreignphrase> utiliza para mostrar escritorios en máquinas remotas."
+msgstr "Otra posibilidad es ejecutar remotamente las aplicaciones Windows en un servidor central con <emphasis>Windows Terminal Server</emphasis> y acceder a la aplicación desde máquinas Linux utilizando <emphasis>rdesktop</emphasis>. Éste es un cliente Linux para el protocolo RDP (<emphasis>protocolo de escritorio remoto</emphasis>: «Remote Desktop Protocol») que <foreignphrase>Windows NT/2000 Terminal Server</foreignphrase> utiliza para mostrar escritorios en máquinas remotas."
 
-#, fuzzy
-#| msgid "<primary><emphasis>Remote Desktop Protocol</emphasis></primary>"
 msgid "<primary>RDP</primary><see>Remote Desktop Protocol</see>"
-msgstr "<primary><emphasis>Remote Desktop Protocol</emphasis></primary>"
+msgstr "<primary>RDP</primary><see>Remote Desktop Protocol</see>"
 
 msgid "<primary><emphasis>Remote Desktop Protocol</emphasis></primary>"
 msgstr "<primary><emphasis>Remote Desktop Protocol</emphasis></primary>"
@@ -1090,10 +1030,8 @@ msgstr "<primary>resolución</primary>"
 msgid "<primary>RTC</primary><see>Real-Time Communication</see>"
 msgstr ""
 
-#, fuzzy
-#| msgid "Debian provides a wide range of Real-Time Communications (RTC) client software. The setup of RTC servers is discussed in <xref linkend=\"sect.rtc-services\" />. In SIP terminology, a client application or device is also referred to as a user agent."
 msgid "Debian provides a wide range of Real-Time Communications (<acronym>RTC</acronym>) client software. The setup of RTC servers is discussed in <xref linkend=\"sect.rtc-services\" />. In <acronym>SIP</acronym> (Session Initiation Protocol) terminology, a client application or device is also referred to as a user agent."
-msgstr "Debian proporciona un amplo rango de sofware cliente de comunicaciones en tiempo real (RTC). La configuración de servidores RTC se cubre en <xref linkend=\"sect.rtc-services\" />. En terminología SIP, también se denomina como agente de usuario a una aplicación cliente o dispositivo."
+msgstr "Debian proporciona un amplo rango de sofware cliente de comunicaciones en tiempo real (<acronym>RTC</acronym>). La configuración de servidores RTC se cubre en <xref linkend=\"sect.rtc-services\" />. En terminología <acronym>SIP</acronym> (Session Initiation Protocol), también se denomina como agente de usuario a una aplicación cliente o dispositivo."
 
 msgid "<primary>User agent (SIP)</primary>"
 msgstr "<primary>Agente de usuario (SIP)</primary>"
@@ -1122,23 +1060,17 @@ msgstr "<primary>Excel, Microsoft</primary>"
 msgid "<primary>Instant Messaging</primary>"
 msgstr "<primary>GnomeMeeting</primary>"
 
-#, fuzzy
-#| msgid "<primary>SIP</primary><secondary>user agent</secondary>"
 msgid "<primary>SIP</primary><see>Session Initiation Protocol</see>"
-msgstr "<primary>SIP</primary><secondary>agente de usuario</secondary>"
+msgstr "<primary>SIP</primary><see>Session Initiation Protocol</see>"
 
 msgid "<primary>XMPP</primary><see>Extensible Messaging and Presence Protocol</see>"
 msgstr ""
 
-#, fuzzy
-#| msgid "<primary>SIP</primary><secondary>user agent</secondary>"
 msgid "<primary>IM</primary><see>Instant Messaging</see>"
-msgstr "<primary>SIP</primary><secondary>agente de usuario</secondary>"
+msgstr "<primary>IM</primary><see>Instant Messaging</see>"
 
-#, fuzzy
-#| msgid "The default GNOME desktop includes the Empathy communications client. Empathy can support both SIP and XMPP. It supports instant messaging (IM), voice and video. The KDE desktop provides KDE Telepathy, a communications client based on the same underlying Telepathy APIs used by the GNOME Empathy client."
 msgid "The default GNOME desktop suggests the Empathy communications client. Empathy can support both SIP and XMPP. It supports instant messaging (IM), voice and video. The KDE project provides KDE Telepathy, a communications client based on the same underlying Telepathy APIs used by the GNOME Empathy client."
-msgstr "El escritorio por defecto de GNOME incluye el cliente de comunicaciones Empathy. Empathy puede soportar SIP y XMPP. Soporta mensajería instantánea (IM), voz y vídeo. El escritorio KDE proporciona Telepathy, un cliente de comunicaciones basado en la misma API que Telepathy , empleado en el cliente Empathy de GNOME."
+msgstr "El escritorio por defecto de GNOME sugiere el cliente de comunicaciones Empathy. Empathy puede soportar SIP y XMPP. Soporta mensajería instantánea (IM), voz y vídeo. El proyecto KDE proporciona Telepathy, un cliente de comunicaciones basado en la misma API que Telepathy , empleado en el cliente Empathy de GNOME."
 
 msgid "<primary>Empathy</primary>"
 msgstr "<primary>Empathy</primary>"
@@ -1216,10 +1148,8 @@ msgstr "<emphasis>ALTERNATIVA</emphasis> IRC: «Internet Relay Chat»"
 msgid "IRC can also be considered, in addition to SIP and XMPP. IRC is more oriented around the concept of channels, the name of which starts with a hash sign <literal>#</literal>. Each channel is usually targeted at a specific topic and any number of people can join a channel to discuss it (but users can still have one-to-one private conversations if needed). The IRC protocol is older, and does not allow end-to-end encryption of the messages; it is still possible to encrypt the communications between the users and the server by tunneling the IRC protocol inside SSL."
 msgstr "También podemos considerar IRC, además de SIP y XMPP. IRC está más orientado al concepto de canales, cuyos nombres comienzan con un símbolo de numeral <literal>#</literal>. Frecuentemente, cada canal está dedicado a un tema específico y cualquier cantidad de personas pueden unirse a un canal para discutirlo (pero los usuarios también pueden tener conversaciones privadas sólo entre dos si es necesario). El protocolo IRC es más antiguo y no permite cifrado punta-a-punta de los mensajes; sí es posible cifrar la comunicación entre los usuarios y el servidor utilizando un túnel SSL para el tráfico del protocolo IRC."
 
-#, fuzzy
-#| msgid "<primary><foreignphrase>Internet Relay Chat</foreignphrase></primary>"
 msgid "<primary>IRC</primary><see>Internet Relay Chat</see>"
-msgstr "<primary><foreignphrase>Internet Relay Chat</foreignphrase></primary>"
+msgstr "<primary>IRC</primary><see>Internet Relay Chat</see>"
 
 msgid "<primary><foreignphrase>Internet Relay Chat</foreignphrase></primary>"
 msgstr "<primary><foreignphrase>Internet Relay Chat</foreignphrase></primary>"
