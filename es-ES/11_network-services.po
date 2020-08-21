@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-08-18 10:32+0000\nLast-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/debian-handbook/11_network-services/es/>\nLanguage: es-ES\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-08-21 13:36+0000\nLast-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/debian-handbook/11_network-services/es/>\nLanguage: es-ES\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2.1-dev\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -260,7 +260,7 @@ msgid "The <emphasis>snake oil</emphasis> certificates, like the <emphasis>snake
 msgstr "Los certificados <emphasis>snake oil</emphasis>, al igual que los medicamentos vendidos por charlatanes sin escrúpulos en los viejos tiempos (promocionados como <emphasis>aceite de serpiente</emphasis>, de ahí su nombre), no tienen absolutamente ningún valor: no puede confiar en ellos para autenticación del servidor puesto que son certificados autofirmados generados automáticamente. No obstante, son útiles para mejorar la privacidad de los intercambios."
 
 msgid "In general they should only be used for testing purposes, and normal service must use real certificates. The <link linkend=\"sidebar.letsencrypt\">Let's encrypt</link> initiative offers free and trusted SSL/TLS certificates, which can be generated using the <emphasis role=\"pkg\">certbot</emphasis> package as described in <xref linkend=\"sect.apache-ssl\" /> and then used in <command>postfix</command> like this:"
-msgstr ""
+msgstr "En general solo deberían usarse con fines de prueba, y un servicio normal debe usar certificados reales. La iniciativa <link linkend=\"sidebar.letsencrypt\">Let's encrypt</link> ofrece certificados SSL/TLS gratuitos y de confianza, que pueden ser generados usando el paquete <emphasis role=\"pkg\">certbot</emphasis> como se describe en <xref linkend=\"sect.apache-ssl\" /> y luego pueden ser usados en <command>postfix</command> de este modo:"
 
 msgid "<primary>Postfix</primary><secondary><emphasis role=\"pkg\">certbot</emphasis></secondary>"
 msgstr "<primary>Postfix</primary><secondary><emphasis role=\"pkg\">certbot</emphasis></secondary>"
@@ -292,10 +292,10 @@ msgid ""
 "smtpd_tls_CAfile = /etc/ssl/certs/ca-certificates.crt\n"
 "smtpd_tls_CApath = /etc/ssl/certs\n"
 "smtp_tls_CApath = /etc/ssl/certs"
-msgstr ""
+msgstr "\nsmtpd_tls_cert_file = /etc/letsencrypt/live/<replaceable>DOMINIO</replaceable>/fullchain.pem\nsmtpd_tls_key_file = /etc/letsencrypt/live/<replaceable>DOMINIO</replaceable>/privkey.pem\nsmtpd_tls_CAfile = /etc/ssl/certs/ca-certificates.crt\nsmtpd_tls_CApath = /etc/ssl/certs\nsmtp_tls_CApath = /etc/ssl/certs"
 
 msgid "A different way to generate own certificates is described in <xref linkend=\"sect.easy-rsa\" />."
-msgstr ""
+msgstr "En <xref linkend=\"sect.easy-rsa\" /> se describe una forma diferente de generar certificados propios."
 
 msgid "Configuring Virtual Domains"
 msgstr "Configuración de dominios virtuales"
@@ -368,7 +368,7 @@ msgid ""
 msgstr "\nwebmaster@falcotsbrand.com  jean@falcot.com\ncontact@falcotsbrand.com    laure@falcot.com, sophie@falcot.com\n# El alias siguiente es genérico y abarca todas las direcciones\n# del dominio falcotsbrand.com que no están incluidas explícitamente\n# en este archivo.\n# Estas direcciones reenvían el correo al usuario con el mismo nombre\n# del dominio falcot.com\n@falcotsbrand.com           @falcot.com"
 
 msgid "After changing <filename>/etc/postfix/virtual</filename> the postfix table <filename>/etc/postfix/virtual.db</filename> needs to be updated using <command>sudo postmap /etc/postfix/virtual</command>."
-msgstr ""
+msgstr "Después de cambiar <filename>/etc/postfix/virtual</filename>, la tabla postfix <filename>/etc/postfix/virtual.db</filename> necesita ser actualizada utilizando <command>sudo postmap /etc/postfix/virtual</command>."
 
 msgid "Virtual Mailbox Domains"
 msgstr "Casillas de dominio virtual"
@@ -451,7 +451,7 @@ msgid "The growing number of unsolicited bulk emails (<emphasis>spam</emphasis>)
 msgstr "La cantidad creciente de correo masivo no solicitado (<emphasis>spam</emphasis>) hace necesario ser cada vez más estricto al decidir qué correos debe aceptar un servidor. Esta sección presenta alguna de las estrategias incluidas en Postfix."
 
 msgid "If the reject-rules are too strict, it may happen that even legitimate email traffic gets locked out. It is therefor a good habit to test restrictions and prevent the permanent rejection of requests during this time using the <literal>soft_bounce = yes</literal> directive. By prepending a reject-type directive with <literal>warn_if_reject</literal> only a log message will be recorded instead of rejecting the request."
-msgstr ""
+msgstr "Si las reglas de rechazo son demasiado estrictas, puede ocurrir que incluso que se bloquee tráfico de correo electrónico legítimo. Es por eso un buen hábito comprobar las restricciones y evitar el rechazo permanente de peticiones durante este tiempo usando la directiva <literal>soft_bounce = yes</literal>. Al preceder una directiva de dirección con <literal>warn_if_reject</literal>, solo se registra un mensaje en vez de rechazar la petición."
 
 msgid "<primary>Postfix</primary><secondary><literal>soft_bounce</literal></secondary>"
 msgstr "<primary>Postfix</primary><secondary><literal>soft_bounce</literal></secondary>"
@@ -574,7 +574,7 @@ msgid "<primary>email</primary><secondary>filtering on the mail host</secondary>
 msgstr "<primary>correo</primary><secondary>filtro de remitente</secondary>"
 
 msgid "Each SMTP exchange starts with a <literal>HELO</literal> (or <literal>EHLO</literal>) command, followed by the name of the sending email server. Checking the validity of this name can be interesting. To fully enforce the restrictions listed in <literal>smtpd_helo_restrictions</literal> the <literal>smtpd_helo_required</literal> option needs to be enabled. Otherwise clients could skip the restrictions by not sending any <literal>HELO</literal>/<literal>EHLO</literal> command."
-msgstr ""
+msgstr "Cada intercambio SMTP comienza con una orden <literal>HELO</literal> (o <literal>EHLO</literal>), seguido del nombre del servidor de correo que envía. Puede ser interesante comprobar la validez de este nombre. Para hacer cumplir las restricciones listadas en <literal>smtpd_helo_restrictions</literal> totalmente, la opción <literal>smtpd_helo_required</literal> necesita estar habilitada. De lo contrario, los clientes se saltarían las restricciones sin enviar ninguna orden <literal>HELO</literal>/<literal>EHLO</literal>."
 
 msgid "<primary><literal>HELO</literal></primary>"
 msgstr "<primary><literal>HELO</literal></primary>"
@@ -624,7 +624,7 @@ msgid "<primary>Postfix</primary><secondary><literal>reject_unknown_helo_hostnam
 msgstr "<primary>Postfix</primary><secondary><literal>reject_unknown_helo_hostname</literal></secondary>"
 
 msgid "The <literal>reject_rhsbl_helo</literal> allows to specify a black list to check the hostname against an RHSBL."
-msgstr ""
+msgstr "<literal>reject_rhsbl_helo</literal> permite especificar una lista negra para comprobar el nombre del equipo en una RHSBL."
 
 #, fuzzy
 #| msgid "Using <literal>permit_mynetworks</literal> as the first rule has an interesting side effect: the following rules only apply to hosts outside the local network. This allows blacklisting all hosts that announce themselves as part of the <literal>falcot.com</literal>, for instance by adding a <literal>falcot.com REJECT You are not in our network!</literal> line to the <filename>/etc/postfix/access_helo</filename> file."
@@ -687,7 +687,7 @@ msgid "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_sender</lit
 msgstr "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_sender</literal></secondary>"
 
 msgid "The <literal>reject_rhsbl_sender</literal> rule reject senders based on a (domain-based) RHSBL service."
-msgstr ""
+msgstr "La regla <literal>reject_rhsbl_sender</literal> rechaza remitentes en base al servicio (basado en dominios) RHSBL."
 
 msgid "<primary>Postfix</primary><secondary><literal>reject_rhsbl_sender</literal></secondary>"
 msgstr "<primary>Postfix</primary><secondary><literal>reject_rhsbl_sender</literal></secondary>"
@@ -736,7 +736,7 @@ msgid "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_recipient</
 msgstr "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_recipient</literal></secondary>"
 
 msgid "The <literal>permit</literal> directive at the end is not necessary. But it can be useful at the end of a restriction list to make the default policy explicit."
-msgstr ""
+msgstr "La directiva <literal>permit</literal> al final no es necesaria. Pero puede ser útil al final de una lista de restricciones para hacer la explícita la política predeterminada."
 
 msgid "Restrictions Associated with the <literal>DATA</literal> Command"
 msgstr "Restricciones asociadas con la orden <literal>DATA</literal>"
@@ -788,7 +788,7 @@ msgid "A final advantage to this choice is that the rules can accumulate informa
 msgstr "Una ventaja final de esta opción es que las reglas pueden acumular información durante las varias etapas del intercambio SMTP; esto permite definir permisos más precisos, como rechazar conexiones remotas si se anuncia como un remitente local."
 
 msgid "The default behavior is controlled by the <literal>smtpd_delay_reject</literal> rule."
-msgstr ""
+msgstr "La regla <literal>smtpd_delay_reject</literal> controla el comportamiento por defecto."
 
 msgid "Filtering Based on the Message Contents"
 msgstr "Filtros basados en el contenido del mensaje"
@@ -1033,7 +1033,7 @@ msgid "<emphasis>SECURITY</emphasis> Controversial Discussion of Anti-Virus Soft
 msgstr "<emphasis>SEGURIDAD</emphasis> Acceso a las estadísticas"
 
 msgid "The usage of virus scanners, or so called antivirus software, is controversial. There is usually a gap between the release of some piece of malware and the addition of detection rules to the antivirus database. During this gap, there is no software-based protection. Further, the usage often requires to run additional software, for example, to uncompress archives and scan all kinds of executables, which drastically increases the exploit potential of the antivirus software itself. Usage of such software solutions can therefor never replace awareness campaigns and simple behavioral rules (never open unsolicited sent attachments, etc.)."
-msgstr ""
+msgstr "El uso de escáneres de virus, o el llamado software antivirus, es controvertido. Normalmente hay un intervalo entre la publicación de una pieza de malware y la incorporación de reglas de detección en la base de datos del antivirus. Durante este intervalo, no hay protección basada en software. Además, el uso normalmente requiere la ejecución de software adicional, por ejemplo, para descomprimir archivos y escanear todo tipo de ejecutables, lo que aumenta drásticamente el potencial de explotación del propio software antivirus. Así pues, el uso de tales soluciones de software nunca reemplaza campañas de concienciación y simples reglas de comportamiento (nunca abrir adjuntos de enviados no solicitados, etc.)."
 
 #, fuzzy
 #| msgid "<primary>Chat</primary><secondary>server</secondary>"
@@ -1110,10 +1110,10 @@ msgid "All messages handled by Postfix now go through the antivirus filter."
 msgstr "Todos los mensajes gestionados por Postfix ahora pasarán a través del filtro antivirus."
 
 msgid "Fighting Spam with SPF, DKIM and DMARC"
-msgstr ""
+msgstr "Luchando contra el spam con SPF, DKIM y DMARC"
 
 msgid "The high number of unsolicited email sent every day led to the creation of several standards, which aim at validating, that the sending host of an email is authorized and that the email has not been tampered with. The following systems are all DNS-based and require the administrators to not only have control over the mail server, but over the DNS for the domain in question too."
-msgstr ""
+msgstr "El gran número de correos no solicitados enviados cada día ha llevado a la creación de varios estándares, que tratan corroborar que el equipo que envía un mensaje está autorizado y que no se ha manipulado el correo. Los siguientes sistemas están todos basados en DNS y requieren no solo que los administradores tengan control sobre el servidor de correo, sino también sobre el DNS para el dominio en cuestión."
 
 #, fuzzy
 #| msgid "<emphasis>CAUTION</emphasis> First installation"
@@ -1121,10 +1121,10 @@ msgid "<emphasis>CAUTION</emphasis> Controversial Discussion"
 msgstr "<emphasis>PRECAUCIÓN</emphasis> Primera instalación"
 
 msgid "Like any other tool, the following standards have limits and real effects if put to use. They can (and should) lead to emails being rejected or even just discarded. If that happens to some legitimate emails (sometimes sent from a misconfigured SMTP server), it usually causes anger and a lack of understanding by the user. Therefor these rules are often applied as a \"soft fail\" or a \"soft reject\", which usually means, that failing the checks only leads to adding a (header) mark to the affected email. There are people who think that this makes these standards \"broken by design\". Decide for yourself and be careful about how strict you choose to apply these standards."
-msgstr ""
+msgstr "Como cualquier otra herramienta, los siguientes estándares tienen límites y efectos reales si se ponen en uso. Pueden (y deberían) llevar a que se rechacen o incluso simplemente se descarten correos. Si eso ocurre con algunos correos legítimos (a veces enviados desde un servidor SMTP mal configurado), normalmente causa enfado y la falta de comprensión del usuario. Por ello, estas reglas se aplican normalmente como un «fallo suave» o «rechazo suave», que normalmente significa que las comprobaciones que fallan solo hacen que se añada una marca (de cabecera) al correo afectado. Hay gente que piensa que esto vuelve a estos estándares «rotos por defecto». Decida por sí mismo y sea cuidadoso sobre cuán estrictamente decide aplicar estos estándares."
 
 msgid "Integrating the Sender Policy Framework (SPF)"
-msgstr ""
+msgstr "Ingrando el Convenio de Remitentes (Sender Policy Framework [SPF])"
 
 msgid "<primary>SPF</primary><see>Sender Policy Framework</see>"
 msgstr "<primary>SPF</primary><see>Sender Policy Framework</see>"
@@ -1140,10 +1140,10 @@ msgid "<primary><emphasis role=\"pkg\">postfix-policyd-spf-python</emphasis></pr
 msgstr "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 
 msgid "The Sender Policy Framework (<acronym>SPF</acronym>) is used to validate if a certain mail server is allowed to send emails for a given domain. It is mostly configured through DNS. The syntax for the entry to make is explained in detail at: <ulink type=\"block\" url=\"http://www.open-spf.org/SPF_Record_Syntax\" /> <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc7208\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Sender_Policy_Framework\" />"
-msgstr ""
+msgstr "El Convenio de Remitentes (<acronym>SPF</acronym> en inglés) se usa para comprobar si se permite a un determinado servidor de correo enviar correos para un dominio determinado. Se configura principalmente mediante DNS. Se sintaxis de la entrada a realizar se explica con detalle en: <ulink type=\"block\" url=\"http://www.open-spf.org/SPF_Record_Syntax\" /> <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc7208\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Sender_Policy_Framework\" />"
 
 msgid "The following is a sample DNS entry which states that all the domain's Mail Exchange Resource Records (MX-RRs) are allowed to email the current domain, and all others are prohibited. The DNS entry does not need to be given a name. But to use the <literal>include</literal> directive it must have one."
-msgstr ""
+msgstr "Lo que sigue es una entrada DNS de muestra que indica se permite a todos los registros del Mail Exchange Resource Records (MX-RRs) enviar un correo al dominio actual, y a todos los demás no. No hace falta darle un nombre a la entrada DNS, pero para usar la directiva <literal>include</literal> debe tener uno."
 
 msgid ""
 "<![CDATA[\n"
@@ -1152,10 +1152,10 @@ msgid ""
 "TTL:  3600\n"
 "Data: v=spf1 a mx -all\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\nName: example.org\nType: TXT\nTTL:  3600\nData: v=spf1 a mx -all\n]]>"
 
 msgid "Let's take a quick look at the <literal>falcot.org</literal> entry."
-msgstr ""
+msgstr "Echemos un vistazo rápido a la entrada de <literal>falcot.org</literal>."
 
 msgid ""
 "\n"
@@ -1164,10 +1164,10 @@ msgid ""
 msgstr ""
 
 msgid "It states, that the IP of the sender must match the A record for the sending domain, or must be listed as one of the Mail Exchange Resource Records for the current domain, or must be one of the three mentioned IP4 addresses. All other hosts should be marked as not being allowed to send email for the sender domain. The latter is called a \"soft fail\" and is intended to mark the email accordingly, but still accept it."
-msgstr ""
+msgstr "Indica que la IP del remitente debe coincidir con el registro A para el dominio que envía, debe estar listada en uno de los Mail Exchange Resource Records para el dominio actual, o debe ser una de las tres direcciones IP4 mencionadas. Todos los demás equipos deben marcarse como que no se les permite enviar correo al dominio del remitente. Lo último se llama un «fallo suave» y está pensado para marcar el correo como corresponde, pero todavía aceptarlo."
 
 msgid "The <command>postfix</command> mail server can check the SPF record for incoming emails using the <emphasis role=\"pkg\">postfix-policyd-spf-python</emphasis> package, a policy agent written in Python. The file <filename>/usr/share/doc/postfix-policyd-spf-python/README.Debian</filename> describes the necessary steps to integrate the agent into postfix, so we won't repeat it here."
-msgstr ""
+msgstr "El servidor de correo <command>postfix</command> puede comprobar el registro SPF para correos entrantes usando el paquete <emphasis role=\"pkg\">postfix-policyd-spf-python</emphasis>, un intermediario de normas escrito en Python. El archivo <filename>/usr/share/doc/postfix-policyd-spf-python/README.Debian</filename> describe los pasos necesarios para integrar en postfix el intermediario, así que no lo repetiremos aquí."
 
 #, fuzzy
 #| msgid "<primary>SIP</primary><secondary>PBX</secondary>"
@@ -1175,13 +1175,13 @@ msgid "<primary>Postfix</primary><secondary>SPF</secondary>"
 msgstr "<primary>SIP</primary><secondary>PBX</secondary>"
 
 msgid "The configuration is done in the file <filename>/etc/postfix-policyd-spf-python/policyd-spf.conf</filename>, which is fully documented in <citerefentry><refentrytitle>policyd-spf.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> and <filename>/usr/share/doc/postfix-policyd-spf-python/policyd-spf.conf.commented.gz</filename>. The main configuration parameters are <literal>HELO_reject</literal> and <literal>Mail_From_reject</literal>, which configure if emails should be rejected (<literal>Fail</literal>) or accepted with a header being appended (<literal>False</literal>), if checks fail. The latter is often useful, when the message is further processed by a spam filter."
-msgstr ""
+msgstr "La configuración se realiza en el archivo <filename>/etc/postfix-policyd-spf-python/policyd-spf.conf</filename>, que está documentado de forma completa en <citerefentry><refentrytitle>policyd-spf.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> y <filename>/usr/share/doc/postfix-policyd-spf-python/policyd-spf.conf.commented.gz</filename>. Los parámetros de configuración principales son <literal>HELO_reject</literal> y <literal>Mail_From_reject</literal>, que configuran si los correos deberían ser rechazados (<literal>Fail</literal>) o aceptados precediendo una cabecera (<literal>False</literal>), si las comprobaciones fallan. Lo último es muchas veces útil cuando el mensaje todavía se procesará por un filtro de <foreignphrase>spam</foreignphrase>."
 
 msgid "If the result is intended to be used by <emphasis role=\"pkg\">opendmarc</emphasis> (<xref linkend=\"sect.dmarc\" />), then <literal>Header_Type</literal> must be set to <literal>AR</literal>."
-msgstr ""
+msgstr "Si el resultado está pensado para usarse por <emphasis role=\"pkg\">opendmarc</emphasis> (<xref linkend=\"sect.dmarc\" />), debería darle a <literal>Header_Type</literal> el valor <literal>AR</literal>."
 
 msgid "Note, that <emphasis role=\"pkg\">spamassassin</emphasis> contains a plugin to check the SPF record."
-msgstr ""
+msgstr "Tenga en cuenta que <emphasis role=\"pkg\">spamassassin</emphasis> contiene un complemento para comprobar el registro SPF."
 
 #, fuzzy
 #| msgid "<primary>client</primary><secondary>NFS</secondary>"
@@ -1189,7 +1189,7 @@ msgid "<primary>spamassassin</primary><secondary>SPF</secondary>"
 msgstr "<primary>cliente</primary><secondary>NFS</secondary>"
 
 msgid "Integrating DomainKeys (DKIM) Signing and Checking"
-msgstr ""
+msgstr "Integrando DomainKeys (DKIM) Firmando y Comprobando"
 
 msgid "<primary>DKIM</primary><see>DomainKeys Identified Mail</see>"
 msgstr "<primary>DKIM</primary><see>DomainKeys Identified Mail</see>"
@@ -1205,7 +1205,7 @@ msgid "<primary><emphasis role=\"pkg\">opendkim</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">nginx</emphasis></primary>"
 
 msgid "The Domain Keys Identified Mail (<acronym>DKIM</acronym>) standard is a sender authentication system. The mail transport agent, here <command>postfix</command>, adds a digital signature associated with the domain name to the header of outgoing emails. The receiving party can validate the message body and header fields by checking the signature against a public key, which is retrieved from the senders DNS records. <ulink type=\"block\" url=\"http://dkim.org/\" />"
-msgstr ""
+msgstr "El estándar Domain Keys Identified Mail (<acronym>DKIM</acronym>) es un sistema de autentificación del remitente. El transporte de agente de correo, aquí <command>postfix</command>, añade una firma digital asociada con el nombre de dominio a la cabecera de los correos salientes. La parte receptora puede validar el cuerpo del mensaje y los archivos de cabecera comprobando la firma con una clave pública, que se recibe de los registros de los DNS de los remitentes. <ulink type=\"block\" url=\"http://dkim.org/\" />"
 
 #, fuzzy
 #| msgid "The client features in Samba allow a Linux machine to access Windows shares and shared printers. The required programs are available in the <emphasis role=\"pkg\">cifs-utils</emphasis> and <emphasis role=\"pkg\">smbclient</emphasis> packages."
@@ -1218,7 +1218,7 @@ msgid "<emphasis>CAUTION</emphasis> Mailing List Software and DKIM"
 msgstr "<emphasis>PRECAUCIÓN</emphasis> Rotación de archivos de registro"
 
 msgid "Mailing list managers often rewrite some email headers, thus leading to invalid DKIM signatures. Even using a <literal>relaxed</literal> canonicalization does not always prevent this from happening. So the administrators must pay close attention to the mail severs log files to identify such issues. Otherwise such emails might be flagged as spam and might get rejected."
-msgstr ""
+msgstr "Los administradores de listas de correo a menudo reescriben algunas cabeceras de correos, invalidando así las firmas DKIM. Incluso usar una canonización <literal>relaxed</literal> no evita siempre que esto ocurra. Así pues, los administradores deben prestar mucha atención a los archivos de registro de los servidores de correo para identificar esos problemas. De lo contrario, tales correos pueden ser marcados como <foreignphrase>spam</foreignphrase> y podrían rechazarse."
 
 #, fuzzy
 #| msgid "<primary>email</primary><secondary>filtering on contents</secondary>"
@@ -1226,13 +1226,13 @@ msgid "<primary>DomainKeys Identified Mail</primary><secondary>mailing list prob
 msgstr "<primary>email</primary><secondary>filtro de contenido</secondary>"
 
 msgid "First the private key must be created using the command <command>opendkim-genkey -s <replaceable>SELECTOR</replaceable> -d <replaceable>DOMAIN</replaceable></command>. <replaceable>SELECTOR</replaceable> must be a unique name for the key. It can be as simple as \"mail\" or the date of creation, if you plan to rotate keys."
-msgstr ""
+msgstr "Primero debe crearse la clave privada con la orden <command>opendkim-genkey -s <replaceable>SELECTOR</replaceable> -d <replaceable>DOMINIO</replaceable></command>. <replaceable>SELECTOR</replaceable> debe ser un nombre único para la clave. Puede ser tan simple como «correo» o la fecha de creación, si tiene pensado alternar las claves."
 
 msgid "<primary><emphasis role=\"pkg\">opendkim</emphasis></primary><secondary>opendkim-genkey</secondary>"
 msgstr "<primary><emphasis role=\"pkg\">opendkim</emphasis></primary><secondary>opendkim-genkey</secondary>"
 
 msgid "Create a private key for signing E-Mails from falcot.com"
-msgstr ""
+msgstr "Crear una clave privada para firmar los correos de falcot.com"
 
 #, fuzzy
 #| msgid ""
@@ -1249,7 +1249,7 @@ msgstr ""
 "<computeroutput># </computeroutput><userinput>LDAPADD=\"/usr/bin/ldapadd -c\" ETC_ALIASES=/dev/null ./migrate_all_online.sh</userinput>"
 
 msgid "This will create the files <filename>/etc/dkimkeys/mail.private</filename> and <filename>/etc/dkimkeys/mail.txt</filename> and set the appropriate ownership. The first file contains the private key and the latter the public key, that needs to be added to the DNS:"
-msgstr ""
+msgstr "Esto creará los archivos <filename>/etc/dkimkeys/mail.private</filename> y <filename>/etc/dkimkeys/mail.txt</filename> y asignará la propiedad apropiada. El primer archivo contiene la clave privada y el último la clave pública que necesita añadirse al DNS:"
 
 msgid ""
 "<![CDATA[\n"
@@ -1258,13 +1258,13 @@ msgid ""
 "TTL:  3600\n"
 "Data: \"v=DKIM1; h=sha256; k=rsa; s=email; p=[...]\"\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\nName: mail._domainkey\nType: TXT\nTTL:  3600\nData: \"v=DKIM1; h=sha256; k=rsa; s=email; p=[...]\"\n]]>"
 
 msgid "The <emphasis role=\"pkg\">opendkim</emphasis> package in Debian defaults to a keysize of 2048 bit. Unfortunately some DNS servers can only handle text entries with a maximum length of 255 characters, which is exceeded by the chosen default keysize. In this case use the option <command>-b 1024</command> to chose a smaller keysize. If <command>opendkim-testkey</command> succeeds, the entry has been successfully set up. The syntax of the entry is explained here: <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc6376\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/DKIM\" />"
-msgstr ""
+msgstr "El paquete <emphasis role=\"pkg\">opendkim</emphasis> en Debian tiene un tamaño de clave predeterminado de 2048 bits. Por desgracia algunos servidores DNS solo manejan entradas de texto con una longitud máxima de 255 caracteres, lo cual es excedido por el tamaño de clave predeterminado elegido. En este caso, use la opción <command>-b 1024</command> para elegir un tamaño de clave más pequeño. Si <command>opendkim-testkey</command> tiene éxito, la entrada se ha ajustado correctamente. Aquí se explica la sintaxis de la entrada: <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc6376\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/DKIM\" />"
 
 msgid "To configure <emphasis role=\"pkg\">opendkim</emphasis>, <literal>SOCKET</literal> and <literal>RUNDIR</literal> must be chosen in <filename>/etc/default/opendkim</filename>. Please note that <literal>SOCKET</literal> must be accessible from <literal>postfix</literal> in its chrooted environment. The further configuration is done in <filename>/etc/opendkim.conf</filename>. The following is a configuration excerpt, which makes sure that the <literal>Domain</literal> \"falcot.com\" and all subdomains (<literal>SubDomain</literal>) are signed by the <literal>Selector</literal> \"mail\" and the single private key (<literal>KeyFile</literal>) <filename>/etc/dkimkeys/mail.private</filename>. The \"relaxed\" <literal>Canonicalization</literal> for both the header and the body tolerates mild modification (by a mailing list software, for example). The filter runs both in signing (\"s\") and verification (\"v\") <literal>Mode</literal>. If a signature fails to validate (<literal>On-BadSignature</literal>), the mail should be quarantined (\"q\")."
-msgstr ""
+msgstr "Para configurar <emphasis role=\"pkg\">opendkim</emphasis>, se deben elegir <literal>SOCKET</literal> y <literal>RUNDIR</literal> en <filename>/etc/default/opendkim</filename>. Tenga en cuenta que <literal>SOCKET</literal> debe ser accesible desde <literal>postfix</literal> en su entorno con chroot. La configuración adicional se realiza en <filename>/etc/opendkim.conf</filename>. Lo que sigue es un extracto de configuración, que se asegura de que <literal>Domain</literal> \"falcot.com\" y todos los subdominios (<literal>SubDomain</literal>) están firmados por el <literal>Selector</literal> \"mail\" y la única clave privada (<literal>KeyFile</literal>) <filename>/etc/dkimkeys/mail.private</filename>. La <literal>Canonicalization</literal> \"relaxed\" para tanto la cabecera como el cuerpo tolera una modificación ligera (por el software de una lista de correo, por ejemplo). El filtro se ejecuta tanto en modo (<literal>Mode</literal>) de firmado (\"s\" de <foreignphrase>signing</foreignphrase>) como de verificación (\"v\"). Si una firma falla al validar (<literal>On-BadSignature</literal>), el correo debería ponerse en cuarentena (\"q\" de <foreignphrase>quarantine</foreignphrase>)."
 
 msgid ""
 "<![CDATA[\n"
@@ -1285,10 +1285,10 @@ msgid ""
 "[...]\n"
 "UserID                  opendkim\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\n[...]\nDomain                  falcot.com\nKeyFile                 /etc/dkimkeys/mail.private\nSelector                mail\n\n[...]\nCanonicalization        relaxed/relaxed\nMode                    sv\nOn-BadSignature         q\nSubDomains              yes\n\n[...]\nSocket                  inet:12345@localhost\n\n[...]\nUserID                  opendkim\n]]>"
 
 msgid "It is also possible to use multiple selectors/keys (<literal>KeyTable</literal>), domains (<literal>SigningTable</literal>) and to specify internal or trusted hosts (<literal>InternalHosts</literal>, <literal>ExternalIgnoreList</literal>), which may send mail through the server as one of the signing domains without credentials."
-msgstr ""
+msgstr "También es posible usar varios selectores/claves (<literal>KeyTable</literal>), dominios (<literal>SigningTable</literal>) y especificar equipos internos o de confianza (<literal>InternalHosts</literal>, <literal>ExternalIgnoreList</literal>), lo que puede enviar correo mediante el servidor como uno de los dominios que firman sin credenciales."
 
 msgid "The following directives in <filename>/etc/postfix/main.cf</filename> make <literal>postfix</literal> use the filter:"
 msgstr "Las siguientes directivas en <filename>/etc/postfix/main.cf</filename> hacen que <literal>postfix</literal> use el filtro:"
@@ -1310,16 +1310,16 @@ msgid ""
 "non_smtpd_milters = inet:localhost:12345\n"
 "smtpd_milters = inet:localhost:12345\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\nmilter_default_action = accept\nnon_smtpd_milters = inet:localhost:12345\nsmtpd_milters = inet:localhost:12345\n]]>"
 
 msgid "To differentiate signing and verification it is sometimes more useful to add the directives to the services in <filename>/etc/postfix/master.cf</filename> instead."
-msgstr ""
+msgstr "Para diferenciar el firmado y la verificación a veces es más útil añadir en su lugar las directivas a los servicios en <filename>/etc/postfix/master.cf</filename>."
 
 msgid "More information is available in the <filename>/usr/share/doc/opendkim/</filename> directory and the manual pages <citerefentry><refentrytitle>opendkim</refentrytitle> <manvolnum>8</manvolnum></citerefentry> and <citerefentry><refentrytitle>opendkim.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
-msgstr ""
+msgstr "Hay más información disponible en el directorio <filename>/usr/share/doc/opendkim/</filename> y en las páginas de manual <citerefentry><refentrytitle>opendkim</refentrytitle> <manvolnum>8</manvolnum></citerefentry> y <citerefentry><refentrytitle>opendkim.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 
 msgid "Note that <emphasis role=\"pkg\">spamassassin</emphasis> contains a plugin to check the DKIM record."
-msgstr ""
+msgstr "Tenga en cuenta que <emphasis role=\"pkg\">spamassassin</emphasis> contiene un <foreignphrase>plugin</foreignphrase> para comprobar el registro DKIM."
 
 #, fuzzy
 #| msgid "<primary>server</primary><secondary>MX</secondary>"
@@ -1327,13 +1327,13 @@ msgid "<primary>spamassassin</primary><secondary>DKIM</secondary>"
 msgstr "<primary>servidor</primary><secondary>MX</secondary>"
 
 msgid "Integrating Domain-based Message Authentication, Reporting and Conformance (DMARC)"
-msgstr ""
+msgstr "Integrando Autenticación de Mensajes Basada en Dominios, Informes y Conformidad (DMARC, en inglés)"
 
 msgid "<primary>DMARC</primary><see>Domain-based Message Authentication, Reporting and Conformance</see>"
-msgstr ""
+msgstr "<primary>DMARC</primary><see>Autenticación de Mensajes Basada en Dominios, Informes y Conformidad</see>"
 
 msgid "<primary>Domain-based Message Authentication, Reporting and Conformance</primary>"
-msgstr ""
+msgstr "<primary>Autenticación de Mensajes Basada en Dominios, Informes y Conformidad</primary>"
 
 #, fuzzy
 #| msgid "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
@@ -1341,10 +1341,10 @@ msgid "<primary><emphasis role=\"pkg\">opendmarc</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 
 msgid "The Domain-based Message Authentication, Reporting and Conformance (<acronym>DMARC</acronym>) standard can be used to define a DNS TXT entry with the name <literal>_dmarc</literal> and the action, that should be taken, when emails, which contain your domain as sending host, fail to validate using DKIM and SPF. <ulink type=\"block\" url=\"https://dmarc.org/overview/\" />"
-msgstr ""
+msgstr "El estándar Autenticación de Mensajes Basada en Dominios, Informes y Conformidad (<acronym>DMARC</acronym>, en inglés) puede usarse para definir una entrada DNS TXT con el nombre <literal>_dmarc</literal> y la acción que se debería tomar cuando los correos que contienen su dominio como el equipo remitente fallen al validar usando DKIM y SPF. <ulink type=\"block\" url=\"https://dmarc.org/overview/\" />"
 
 msgid "Let's have a look at the entries of two large providers:"
-msgstr ""
+msgstr "Echemos un vistazo a las entradas de dos grandes proveedores:"
 
 msgid ""
 "\n"
@@ -1355,13 +1355,13 @@ msgid ""
 msgstr ""
 
 msgid "Yahoo has a strict policy to <literal>reject</literal> all emails pretending to be sent from a Yahoo account but missing or failing DKIM and SPF checks. Google Mail (Gmail) propagates a very relaxed policy, in which such messages from the main domain should still be accepted (<literal>p=none</literal>). For subdomains they should be marked as spam (<literal>sp=quarantine</literal>). The addresses given in the <literal>rua</literal> key can be used to send aggregated DMARC reports to. The full syntax is explained here: <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc7489\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/DMARC\" />"
-msgstr ""
+msgstr "Yahoo tiene una política estricta para rechazar (<literal>reject</literal>) todos los correos que aparentan enviarse desde Yahoo, pero fallan las comprobaciones DKIM y SPF. Google Mail (Gmail) propaga una política muy relajada en la que tales mensajes del dominio principal aún deben aceptarse (<literal>p=none</literal>). Para subdominios deben marcarse como <foreignphrase>spam</foreignphrase> (<literal>sp=quarantine</literal>). A las direcciones dadas en la clave <literal>rua</literal> se les puede enviar informes agregados DMARC. La sintaxis completa se explica aquí: <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc7489\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/DMARC\" />"
 
 msgid "The <command>postfix</command> mail server can use this information too. The <emphasis role=\"pkg\">opendmarc</emphasis> package contains the necessary milter. Similar to <emphasis role=\"pkg\">opendkim</emphasis> <literal>SOCKET</literal> and <literal>RUNDIR</literal> must be chosen in <filename>/etc/default/opendmarc</filename> (for Unix sockets you must make sure, that they are inside the postfix chroot to be found). The configuration file <filename>/etc/opendmarc.conf</filename> contains detailed comments and is also explained in <citerefentry><refentrytitle>opendmarc.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry>. By default, emails failing the DMARC validation are not rejected but flagged, by adding an appropriate header field. To change this, use <literal>RejectFailures true</literal>."
-msgstr ""
+msgstr "El servidor de correo <command>postfix</command> puede usar también esta información. El paquete <emphasis role=\"pkg\">opendmarc</emphasis> contiene el filtro de correo necesario. De forma similar a <emphasis role=\"pkg\">opendkim</emphasis>, <literal>SOCKET</literal> y <literal>RUNDIR</literal> deben elegirse en <filename>/etc/default/opendmarc</filename> (para zócalos de Unix debe asegurarse de que se pueden encontrar dentro del chroot de postfix). El archivo de configuración <filename>/etc/opendmarc.conf</filename> contiene comentarios detallados, y también se explica en <citerefentry><refentrytitle>opendmarc.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry>. Por defecto, los correos que fallan la validación DMARC no se rechazan, sino se marcan añadiendo un campo de cabecera apropiado. Para cambiar esto, use <literal>RejectFailures true</literal>."
 
 msgid "The milter is then added to <literal>smtpd_milters</literal> and <literal>non_smtpd_milters</literal>. If we configured the opendkim and opendmarc milters to run on ports 12345 and 54321, the entry in <filename>/etc/postfix/main.cf</filename> looks like this:"
-msgstr ""
+msgstr "El filtro de correo se añade entonces a <literal>smtpd_milters</literal> y <literal>non_smtpd_milters</literal>. Si configuramos los filtros de correo opendkim y opendmarc para funcionar en los puertos 12345 y 54321, la entrada en <filename>/etc/postfix/main.cf</filename> tiene este aspecto:"
 
 #, fuzzy
 #| msgid "<primary>server</primary><secondary>MX</secondary>"
@@ -1379,7 +1379,7 @@ msgid ""
 "non_smtpd_milters = inet:localhost:12345,inet:localhost:54321\n"
 "smtpd_milters = inet:localhost:12345,inet:localhost:54321\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\nnon_smtpd_milters = inet:localhost:12345,inet:localhost:54321\nsmtpd_milters = inet:localhost:12345,inet:localhost:54321\n]]>"
 
 msgid "The milter can also be selectively applied to a service in <filename>/etc/postfix/master.cf</filename> instead."
 msgstr "En su lugar, el <foreignphrase>milter</foreignphrase> también se puede aplicar selectivamente en <filename>/etc/postfix/master.cf</filename>."
@@ -1428,7 +1428,7 @@ msgid ""
 msgstr "\n# Activar autenticación SASL\nsmtpd_sasl_auth_enable = yes\n# Definir el dominio de autenticación SASL\nsmtpd_sasl_local_domain = $myhostname\n[...]\n# Agregar permit_sasl_authenticated antes de reject_unauth_destination\n# permite reenviar correos enviados por usuarios autenticados por SASL\nsmtpd_recipient_restrictions =\n    permit_sasl_authenticated,\n    permit_mynetworks,\n    reject_unauth_destination,\n[...]"
 
 msgid "It is usually a good idea to not send passwords over an unencrypted connection. <emphasis>Postfix</emphasis> allows to use different configurations for each port (service) it runs on. All these can be configured with different rules and directives in the <filename>/etc/postfix/master.cf</filename> file. To turn off authentication at all for port 25 (<literal>smtpd</literal> service) add the following directive:"
-msgstr ""
+msgstr "Normalmente es buena idea no enviar contraseñas en una conexión no cifrada. <emphasis>Postfix</emphasis> permite usar diferentes configuraciones para cada puerto (servicio) en el que se ejecuta. Todas ellas pueden configurarse con diferentes reglas y directivas en el archivo <filename>/etc/postfix/master.cf</filename>. Para desactivar la autentificación por completo para el puerto 25 (servicio <literal>smtpd</literal>) añada la siguiente directiva:"
 
 msgid ""
 "<![CDATA[smtp      inet  n       -       y       -       -       smtpd\n"
@@ -1436,10 +1436,10 @@ msgid ""
 "    -o smtpd_sasl_auth_enable=no\n"
 "    [..]\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[smtp      inet  n       -       y       -       -       smtpd\n    [..]\n    -o smtpd_sasl_auth_enable=no\n    [..]\n]]>"
 
 msgid "If for some reason clients use an outdated <literal>AUTH</literal> command (some very old mail clients do), interoperability with them can be enabled using the <literal>broken_sasl_auth_clients</literal> directive."
-msgstr ""
+msgstr "Si por alguna razón los clientes usan una orden <literal>AUTH</literal> desactualizada (algunos clientes de correo muy viejos lo hacen), se puede habilitar la interoperabilidad con estos usando la directiva <literal>broken_sasl_auth_clients</literal>."
 
 msgid "<emphasis>EXTRA</emphasis> Authenticated SMTP client"
 msgstr "<emphasis>EXTRA</emphasis> Cliente SMTP autenticado"
@@ -1580,7 +1580,7 @@ msgid "<primary>Apache</primary><secondary>mod_info</secondary>"
 msgstr "<primary>NFS</primary><secondary>opciones</secondary>"
 
 msgid "The <literal>mod_info</literal> module (<command>a2enmod info</command>) allows to access the comprehensive Apache server configuration and information via browser visiting <literal>http://localhost/server-info</literal>. Because it might contain sensitive information, access is only allowed from the local host by default. <ulink type=\"block\" url=\"https://httpd.apache.org/docs/2.4/mod/mod_info.html\" />"
-msgstr ""
+msgstr "El módulo <literal>mod_info</literal> (<command>a2enmod info</command>) permite acceder a la comprensiva configuración e información del servidor Apache mediante el navegador visitando <literal>http://localhost/server-info</literal>. Como podría contener información sensible, solo se permite el acceso desde el equipo local por defecto. <ulink type=\"block\" url=\"https://httpd.apache.org/docs/2.4/mod/mod_info.html\" />"
 
 msgid "With its default configuration, the web server listens on port 80 (as configured in <filename>/etc/apache2/ports.conf</filename>), and serves pages from the <filename>/var/www/html/</filename> directory (as configured in <filename>/etc/apache2/sites-enabled/000-default.conf</filename>)."
 msgstr "Con su configuración predeterminada, el servidor web escuchará en el puerto 80 (según se encuentra configurado en <filename>/etc/apache2/ports.conf</filename>) y servirá páginas del directorio <filename>/var/www/html/</filename> (según se encuentra configurado en <filename>/etc/apache2/sites-enabled/000-default.conf</filename>)."

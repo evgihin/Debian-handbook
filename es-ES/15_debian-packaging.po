@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-08-18 10:32+0000\nLast-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/es/>\nLanguage: es-ES\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-08-21 13:36+0000\nLast-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/es/>\nLanguage: es-ES\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2.1-dev\n"
 
 msgid "Backport"
 msgstr "Retroadaptación"
@@ -70,10 +70,8 @@ msgid ""
 "</computeroutput>"
 msgstr ""
 
-#, fuzzy
-#| msgid "The source of the package is now available in a directory named after the source package and its version (for instance, <emphasis>samba-4.1.17+dfsg</emphasis>); this is where we'll work on our local changes."
 msgid "The source of the package is now available in a directory named after the source package and its version (<emphasis>samba-4.9.5+dfsg</emphasis>); this is where we'll work on our local changes."
-msgstr "Ahora tiene las fuentes del paquete disponibles en un directorio cuyo nombre coincide con el paquete fuente y su versión (por ejemplo: <emphasis>samba-4.1.17+dfsg</emphasis>); allí es donde trabajaremos en nuestros cambios locales."
+msgstr "Ahora tiene las fuentes del paquete disponibles en un directorio cuyo nombre coincide con el paquete fuente y su versión (<emphasis>samba-4.9.5+dfsg</emphasis>); allí es donde trabajaremos en nuestros cambios locales."
 
 msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.9.5+dfsg-5</literal>, we can create version <literal>2:4.9.5+dfsg-5falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package."
 msgstr "Lo primero que debemos hacer es cambiar el número de versión del paquete para que podamos distinguir el paquete recompilado del paquete original que provee Debian. Si asumimos que la versión actual es <literal>2:4.9.5+dfsg-5</literal> podemos crear la versión <literal>2:4.9.5+dfsg5falcot1</literal>, que indica claramente el origen del paquete. Esto además hace que el número de versión del paquete sea mayor al del que provee Debian para que el paquete se instalará fácilmente como una actualización al paquete original. La mejor forma de realizar dicho cambio es con el programa <command>dch</command> (por <emphasis>cambios Debian</emphasis>: «Debian CHangelog») del paquete <emphasis role=\"pkg\">devscripts</emphasis>."
@@ -84,7 +82,7 @@ msgid ""
 msgstr "<computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg\n</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput>"
 
 msgid "The last command invokes a text editor (<command>sensible-editor</command> — this should be your favorite editor if it is mentioned in the <varname>VISUAL</varname> or <varname>EDITOR</varname> environment variables, and the default editor otherwise) to allow documenting the differences brought by this rebuild. This editor shows us that <command>dch</command> really did change the <filename>debian/changelog</filename> file."
-msgstr ""
+msgstr "La última orden llama a un editor de texto (<command>sensible-editor</command> —esto debería ser su editor favorito si se menciona en las variables de entorno <varname>VISUAL</varname> o <varname>EDITOR</varname>, y el editor predeterminado en caso contrario—) para permitir documentar las diferencias que ha traido esta recompilación. El editor nos muestra que <command>dch</command> realmente cambió el archivo <filename>debian/changelog</filename>."
 
 msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages for explanations on how to achieve this)."
 msgstr "Cuando necesitamos cambiar las opciones de compilación, debemos realizar cambios a <filename>debian/rules</filename>, el cual se encarga de todos los pasos en el proceso de compilación del paquete. En los casos más simples, es sencillo encontrar las líneas sobre la configuración inicial (<literal>./configure …</literal>) o la compilación en sí (<literal>$(MAKE) …</literal> o <literal>make …</literal>). Si no se ejecutan específicamente estos programas probablemente son un efecto secundario de otra orden explícita, en cuyo caso refiérase a la documentación de las mismas para aprender cómo cambiar el comportamiento predeterminado. Con paquetes usando <command>dh</command>, puede necesitar agregar un reemplazo para los comandos <command>dh_auto_configure</command> o <command>dh_auto_build</command> (ver las páginas de los respectivos manuales para obtener explicaciones de cómo hacerlo)."
@@ -138,15 +136,13 @@ msgid "More often than not, Debian developers use a higher-level program such as
 msgstr "La mayoría de las veces, los desarrolladores Debian utilizan un programa de alto nivel como <command>debuild</command>; éste ejecuta <command>dpkg-buildpackage</command> normalmente, pero también agrega una invocación de un programa que ejecuta muchos chequeos para validar el paquete generado según la normativa Debian. Este script también limpia el entorno para que las variables de entorno locales no «contaminen» la compilación del paquete. El programa <command>debuild</command> es una de las herramientas de <emphasis>devscripts</emphasis>, que comparte un poco de consistencia y configuración para facilitar la tarea del desarrollador."
 
 msgid "<emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted</emphasis> environment"
-msgstr ""
+msgstr "<emphasis>VISTA RÁPIDA</emphasis> Compilando paquetes en un entorno con <emphasis>chroot</emphasis>"
 
 msgid "<primary><command>pbuilder</command></primary>"
 msgstr "<primary><command>pbuilder</command></primary>"
 
-#, fuzzy
-#| msgid "<primary><command>dch</command></primary>"
 msgid "<primary><command>schroot</command></primary>"
-msgstr "<primary><command>dch</command></primary>"
+msgstr "<primary><command>schroot</command></primary>"
 
 msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
 msgstr "El programa <command>pbuilder</command> (en el paquete del mismo nombre) permite crear un paquete Debian en un entorno <emphasis>chroot</emphasis>. Primero crea un directorio temporal que contiene el sistema mínimo necesario para crear el paquete (incluyendo los paquetes mencionados en el campo <emphasis>Build-Depends</emphasis>). Luego utiliza este directorio como raíz (<filename>/</filename>) con el programa <command>chroot</command> durante el proceso de compilación."
@@ -155,7 +151,7 @@ msgid "This tool allows the build process to happen in an environment that is no
 msgstr "Esta herramienta permite que el proceso de compilación ocurra en un entorno que no fue modificado por el usuario. Esto también permite una detección rápida de las dependencias de compilación faltantes (ya que la compilación fallará a menos que las dependencias apropiadas estén documentadas). Finalmente, permite crear un paquete para una versión de Debian que no es la instalada en el sistema: el equipo puede estar utilizando <emphasis role=\"distribution\">Stable</emphasis> para su trabajo normal, pero <command>pbuilder</command> en el mismo equipo puede utilizar <emphasis role=\"distribution\">Unstable</emphasis> para compilar paquetes."
 
 msgid "<command>schroot</command> allows running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
-msgstr ""
+msgstr "<command>schroot</command> permite ejecutar una orden o una consola de inicio de sesión en un entorno con <emphasis>chroot</emphasis>."
 
 msgid "Building your First Package"
 msgstr "Creación de su primer paquete"
@@ -166,10 +162,8 @@ msgstr "Metapaquetes o paquetes falsos"
 msgid "Fake packages and meta-packages are similar, in that they are empty shells that only exist for the effects their meta-data have on the package handling stack."
 msgstr "Los paquetes falsos y los metapaquetes son similares en que son cascarones vacíos que sólo existen por los efectos que tienen sus metadatos en el sistema de gestión de paquetes."
 
-#, fuzzy
-#| msgid "The purpose of a fake package is to trick <command>dpkg</command> and <command>apt</command> into believing that some package is installed even though it's only an empty shell. This allows satisfying dependencies on a package when the corresponding software was installed outside the scope of the packaging system. Such a method works, but it should still be avoided whenever possible, since there is no guarantee that the manually installed software behaves exactly like the corresponding package would and other packages depending on it would not work properly."
 msgid "The purpose of a fake package is to trick <command>dpkg</command> and <command>apt</command> into believing that some package is installed even though it is only an empty shell. This allows satisfying dependencies on a package when the corresponding software was installed outside the scope of the packaging system. Such a method works, but it should still be avoided whenever possible, since there is no guarantee that the manually installed software behaves exactly like the corresponding package would and other packages depending on it would not work properly."
-msgstr "El propósito de un paquete falso es engañar a <command>dpkg</command> y <command>apt</command> para que crean que un paquete está instalado. Esto permite satisfacer las dependencias de un paquete cuando se instaló el software correspondiente fuera del alcance del sistema de paquetes. Este método funciona, pero debería evitarlo siempre que sea posible ya que no hay garantías que el software instalado manualmente se comporta exactamente de la misma forma que el paquete correspondiente y que otros paquetes que dependan de él funcionarán correctamente."
+msgstr "El propósito de un paquete falso es engañar a <command>dpkg</command> y <command>apt</command> para que crean que un paquete está instalado, aunque solo sea una consola vacía. Esto permite satisfacer las dependencias de un paquete cuando se instaló el software correspondiente fuera del alcance del sistema de paquetes. Este método funciona, pero debería evitarlo siempre que sea posible ya que no hay garantías que el software instalado manualmente se comporta exactamente de la misma forma que el paquete correspondiente y que otros paquetes que dependan de él funcionarán correctamente."
 
 msgid "On the other hand, a meta-package exists mostly as a collection of dependencies, so that installing the meta-package will actually bring in a set of other packages in a single step."
 msgstr "Por otro lado, un metapaquete existe más que nada como una colección de dependencias, para que su instalación incluya un conjunto de otros paquetes en un solo paso."
@@ -310,10 +304,8 @@ msgstr ""
 "check that the falcot-data Makefiles install into $DESTDIR and not in / .\n"
 "$</computeroutput>"
 
-#, fuzzy
-#| msgid "The selected type of package (<emphasis>indep binary</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single binary</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
 msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
-msgstr "El tipo de paquete seleccionado (<emphasis>binario independiente</emphasis>: «indep binary») indica que este paquete fuente generará sólo un paquete binario que puede ser compartido entre todas las arquitecturas (<literal>Architecture: all</literal>. <emphasis>Binario único</emphasis> («single binary») es lo contrario y generará sólo un paquete binario que depende de la arquitectura objetivo (<literal>Architecture: any</literal>). En este caso, esta primera opción es la más relevante, ya que el paquete sólo contiene documentos y ningún programa binario, por lo que se lo puede utilizar de la misma forma en equipos de cualquier arquitectura."
+msgstr "El tipo de paquete seleccionado (<emphasis>indep</emphasis>) indica que este paquete fuente generará solo un paquete binario que puede ser compartido entre todas las arquitecturas (<literal>Architecture: all</literal>). <emphasis>single</emphasis> es lo contrario y generará solo un paquete binario que depende de la arquitectura objetivo (<literal>Architecture: any</literal>). En este caso, esta primera opción es la más relevante, ya que el paquete sólo contiene documentos y ningún programa binario, por lo que se lo puede utilizar de la misma forma en equipos de cualquier arquitectura."
 
 msgid "<primary>package types</primary>"
 msgstr "<primary>tipos de paquete</primary>"
@@ -505,8 +497,6 @@ msgstr ""
 "\n"
 "data/* usr/share/falcot-data/"
 
-#, fuzzy
-#| msgid "At this point, the package can be created. We will however add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgid "At this point, the package can be created. We will, however, add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgstr "En este punto, podemos crear el paquete. Sin embargo, agregaremos una capa de pintura. Debido a que los administradores desean que se pueda acceder fácilmente a los documentos desde los menú de los entornos gráficos de escritorio, añadiremos un fichero <filename>falcot-data.desktop</filename> y lo instalaremos en <filename>/usr/share/applications</filename> agregando una segunda línea a <filename>debian/falcot-data.install</filename>."
 
@@ -544,8 +534,6 @@ msgstr ""
 "data/* usr/share/falcot-data/\n"
 "falcot-data.desktop usr/share/applications/"
 
-#, fuzzy
-#| msgid "Our source package is now ready. All that's left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
 msgid "Our source package is now ready. All that is left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
 msgstr "Ahora nuestro paquete fuente está listo. Todo lo que falta es generar el paquete binario con el mismo método que utilizamos para recompilar paquetes: ejecutaremos <command>dpkg-buildpackage -us -uc</command> desde el directorio <filename>falcot-data-1.0</filename>."
 
@@ -607,7 +595,7 @@ msgid "The <command>apt-ftparchive sources</command> command allows creating <fi
 msgstr "Ejecutar <command>apt-ftparchive sources</command> permite crear archivos <filename>Sources.gz</filename> de forma similar."
 
 msgid "<command>reprepro</command> is a more advanced tool for the same purpose. It can produce, manage and synchronize a local repository of packages. It stores packages and checksums in a Berkeley DB database file, so no database server is needed. With <command>reprepro</command> you can check signatures of mirrored repositories and create signatures of the generated package indices."
-msgstr ""
+msgstr "<command>reprepro</command> es una herramienta más avanzada para el mismo propósito. Puede producir, gestionar y sincronizar un repositorio local de paquetes. Guarda paquetes y sumas de verificación en un archivo de base de datos de Berkeley DB, así que no se necesita ningún servidor de base de datos. Con <command>reprepro</command> puede comprobar las firmas de repositorios replicados y crear firmas para los índices de paquetes generados."
 
 msgid "Configuring <command>mini-dinstall</command> requires setting up a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp case, the contents are as follows:"
 msgstr "La configuración de <command>mini-dinstall</command> necesita definir un archivo <filename>~/.mini-dinstall.conf</filename>; en el caso de Falcot Corp, su contenido es el siguiente:"
@@ -655,8 +643,6 @@ msgstr "Una decisión importante es la generación de archivos <filename>Release
 msgid "<emphasis>SECURITY</emphasis> <command>mini-dinstall</command> and permissions"
 msgstr "<emphasis>SEGURIDAD</emphasis> <command>mini-dinstall</command> y permisos"
 
-#, fuzzy
-#| msgid "Since <command>mini-dinstall</command> has been designed to run as a regular user, there's no need to run it as root. The easiest way is to configure everything within the user account belonging to the administrator in charge of creating the Debian packages. Since only this administrator has the required permissions to put files in the <filename>incoming/</filename> directory, we can deduce that the administrator authenticated the origin of each package prior to deployment and <command>mini-dinstall</command> does not need to do it again. This explains the <literal>verify_sigs = 0</literal> parameter (which means that signatures need not be verified). However, if the contents of packages are sensitive, we can reverse the setting and elect to authenticate with a keyring containing the public keys of persons allowed to create packages (configured with the <literal>extra_keyrings</literal> parameter); <command>mini-dinstall</command> will then check the origin of each incoming package by analyzing the signature integrated to the <filename>*.changes</filename> file."
 msgid "Since <command>mini-dinstall</command> has been designed to run as a regular user, there is no need to run it as root. The easiest way is to configure everything within the user account belonging to the administrator in charge of creating the Debian packages. Since only this administrator has the required permissions to put files in the <filename>incoming/</filename> directory, we can deduce that the administrator authenticated the origin of each package prior to deployment and <command>mini-dinstall</command> does not need to do it again. This explains the <literal>verify_sigs = 0</literal> parameter (which means that signatures need not be verified). However, if the contents of packages are sensitive, we can reverse the setting and elect to authenticate with a keyring containing the public keys of persons allowed to create packages (configured with the <literal>extra_keyrings</literal> parameter); <command>mini-dinstall</command> will then check the origin of each incoming package by analyzing the signature integrated to the <filename>*.changes</filename> file."
 msgstr "Debido a que se diseñó a <command>mini-dinstall</command> para ejecutar como un usuario normal, no es necesario ejecutarlo como root. La forma más sencilla es configurar todo en la cuenta de usuario que pertenezca al administrador encargado de crear los paquetes Debian. Debido a que sólo este administrador tiene los permisos necesarios para guardar archivos en el directorio <filename>incoming/</filename> podemos deducir que éste autenticó el origen de cada paquetes antes de desplegarlo y <command>mini-dinstall</command> no necesita hacerlo nuevamente. Esto explica el parámetros <literal>verify_sigs = 0</literal> (que significa que no se necesita verificar firmas). Sin embargo, si el contenido del paquete es sensible, podemos revertir esta configuración y seleccionar autenticar con un conjunto de llaves que contenga aquellas de las personas que tienen permitido crear paquetes (configurado con el parámetro <literal>extra_keyrings</literal>); <command>mini-dinstall</command> luego verificará el origen de cada paquete entrante analizando la firma integrada en el archivo <filename>*.changes</filename>."
 
@@ -678,10 +664,8 @@ msgstr "Cómo convertirse en un encargado de paquetes"
 msgid "Learning to Make Packages"
 msgstr "Aprendizaje de creación de paquetes"
 
-#, fuzzy
-#| msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It's not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
 msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
-msgstr "Crear un paquete Debian de calidad no siempre es una tarea sencilla y necesitará aprender algunas cosas para convertirse en un encargado de paquetes («package mantainer»), tanto teóricas como prácticas. No es sólo cuestión de compilar e instalar software; en cambio, la mayor parte de la complejidad proviene de entender problemas, conflictos y, en general, las interacciones con los muchos otros paquetes disponibles."
+msgstr "Crear un paquete Debian de calidad no siempre es una tarea sencilla y necesitará aprender algunas cosas para convertirse en un encargado de paquetes («package mantainer»), tanto teóricas como prácticas. No es solo cuestión de compilar e instalar software; en cambio, la mayor parte de la complejidad proviene de entender problemas, conflictos y, en general, las interacciones con los muchos otros paquetes disponibles."
 
 msgid "Rules"
 msgstr "Reglas"
@@ -710,8 +694,6 @@ msgstr "El programa <command>lintian</command>"
 msgid "<primary><command>lintian</command></primary>"
 msgstr "<primary><command>lintian</command></primary>"
 
-#, fuzzy
-#| msgid "This tool is one of the most important: it's the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
 msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
 msgstr "Esta herramienta es una de las más importantes: es el verificador de paquetes Debian. Está basado en un gran conjunto de pruebas creadas a partir de la normativa Debian, y detecta rápida y automáticamente muchos errores que pueden corregirse antes de publicar los paquetes."
 
@@ -799,24 +781,20 @@ msgstr "El script <command>dh_make</command> (en el paquete <emphasis>dh-make</e
 msgid "<emphasis role=\"pkg\">autopkgtest</emphasis>"
 msgstr "<emphasis role=\"pkg\">autopkgtest</emphasis>"
 
-#, fuzzy
-#| msgid "<primary><emphasis>dh-make</emphasis></primary>"
 msgid "<primary><emphasis>autopkgtest</emphasis></primary>"
-msgstr "<primary><emphasis>dh-make</emphasis></primary>"
+msgstr "<primary><emphasis>autopkgtest</emphasis></primary>"
 
 msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package."
-msgstr ""
+msgstr "<command>autopkgtest</command> ejecuta pruebas en paquetes binarios, usando las pruebas proporcionadas en el paquete fuente."
 
 msgid "<emphasis role=\"pkg\">reprotest</emphasis>"
 msgstr "<emphasis role=\"pkg\">reprotest</emphasis>"
 
-#, fuzzy
-#| msgid "<primary><emphasis>debhelper</emphasis></primary>"
 msgid "<primary><emphasis>reprotest</emphasis></primary>"
-msgstr "<primary><emphasis>debhelper</emphasis></primary>"
+msgstr "<primary><emphasis>reprotest</emphasis></primary>"
 
 msgid "<command>reprotest</command> builds the same source code twice in different environments, and then checks the binaries produced by each build for differences. If any are found, then <command>diffoscope</command> (if unavailable, <command>diff</command>) is used to display them in detail for later analysis."
-msgstr ""
+msgstr "<command>reprotest</command> compila el mismo código fuente dos veces en diferentes entornos, y luego comprueba si hay diferencias en los binarios producidos en cada compilación. Si se encuentra alguna, la instrucción <command>diffoscope</command> (si no está disponible, <command>diff</command>) se usa para mostrarlos en detalle para un posterior análisis."
 
 msgid "<command>dupload</command> and <command>dput</command>"
 msgstr "<command>dupload</command> y <command>dput</command>"
