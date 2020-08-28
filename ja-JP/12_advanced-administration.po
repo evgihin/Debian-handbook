@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-06-19 11:25+0200\n"
+"POT-Creation-Date: 2020-08-28 10:15+0200\n"
 "PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/debian-handbook/tree/master/translation/ja_JP/push>\n"
@@ -2038,7 +2038,9 @@ msgid "Xen <indexterm><primary>Xen</primary></indexterm> is a “paravirtualizat
 msgstr "Xen<indexterm><primary>Xen</primary></indexterm> は「準仮想化」ソリューションです。Xen には薄い抽象化層が含まれ、この抽象化層は「ハイパーバイザ」と呼ばれ、ハードウェアとその上にあるシステムの間に位置します。さらにハイパーバイザは審判員として振る舞い、仮想マシンからハードウェアへのアクセスを制御します。しかしながら、Xen ハイパーバイザは命令のほんの一部だけを取り扱い、残りは Xen ハイパーバイザではなくハードウェアによって直接的に実行されます。こうすることによる主な有効性は性能が低下せず、システムがネイティブ速度に迫る性能を発揮するという点です。一方で欠点は Xen ハイパーバイザ上でオペレーティングシステムを実行するには実行されるオペレーティングシステムのカーネルを修正しなければいけないという点です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Let's spend some time on terms. The hypervisor is the lowest layer, that runs directly on the hardware, even below the kernel. This hypervisor can split the rest of the software across several <emphasis>domains</emphasis>, which can be seen as so many virtual machines. One of these domains (the first one that gets started) is known as <emphasis>dom0</emphasis>, and has a special role, since only this domain can control the hypervisor and the execution of other domains. These other domains are known as <emphasis>domU</emphasis>. In other words, and from a user point of view, the <emphasis>dom0</emphasis> matches the “host” of other virtualization systems, while a <emphasis>domU</emphasis> can be seen as a “guest”."
+#, fuzzy
+#| msgid "Let's spend some time on terms. The hypervisor is the lowest layer, that runs directly on the hardware, even below the kernel. This hypervisor can split the rest of the software across several <emphasis>domains</emphasis>, which can be seen as so many virtual machines. One of these domains (the first one that gets started) is known as <emphasis>dom0</emphasis>, and has a special role, since only this domain can control the hypervisor and the execution of other domains. These other domains are known as <emphasis>domU</emphasis>. In other words, and from a user point of view, the <emphasis>dom0</emphasis> matches the “host” of other virtualization systems, while a <emphasis>domU</emphasis> can be seen as a “guest”."
+msgid "Let's spend some time on terms. The hypervisor is the lowest layer, which runs directly on the hardware, even below the kernel. This hypervisor can split the rest of the software across several <emphasis>domains</emphasis>, which can be seen as so many virtual machines. One of these domains (the first one that gets started) is known as <emphasis>dom0</emphasis>, and has a special role, since only this domain can control the hypervisor and the execution of other domains. These other domains are known as <emphasis>domU</emphasis>. In other words, and from a user point of view, the <emphasis>dom0</emphasis> matches the “host” of other virtualization systems, while a <emphasis>domU</emphasis> can be seen as a “guest”."
 msgstr "用語の解説に少し時間を割きましょう。Xen ハイパーバイザはカーネルよりも下層の最も低い層に位置し、ハードウェア上で直接動きます。Xen ハイパーバイザは残りのソフトウェアをいくつかの<emphasis>ドメイン</emphasis>に分割することが可能で、<emphasis>ドメイン</emphasis>は多数の仮想マシンと考えられます。これらのドメインの 1 つ (最初に起動されたもの) は <emphasis>dom0</emphasis> と呼ばれ、特別な役割を担います。なぜなら、<emphasis>dom0</emphasis> だけが Xen ハイパーバイザを制御することが可能だからです。他のドメインは <emphasis>domU</emphasis> として知られています。ユーザ視点で言い換えれば、<emphasis>dom0</emphasis> は他の仮想システムにおける「ホスト」、これに対して <emphasis>domU</emphasis> は「ゲスト」になります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -2209,7 +2211,7 @@ msgid ""
 "<computeroutput># </computeroutput><userinput>xen-create-image --hostname testxen --dhcp --dir /srv/testxen --size=2G --dist=buster --role=udev</userinput>\n"
 "<computeroutput>\n"
 "[...]\n"
-"eneral Information\n"
+"General Information\n"
 "--------------------\n"
 "Hostname       :  testxen\n"
 "Distribution   :  buster\n"
@@ -2270,7 +2272,9 @@ msgid "We now have a virtual machine, but it is currently not running (and there
 msgstr "これで仮想マシンが作成されましたが、仮想マシンはまだ実行されていません (このため dom0 のハードディスク上の領域が使われているだけです)。もちろん、異なるパラメータを使ってより多くのイメージを作成することが可能です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Before turning these virtual machines on, we need to define how they'll be accessed. They can of course be considered as isolated machines, only accessed through their system console, but this rarely matches the usage pattern. Most of the time, a domU will be considered as a remote server, and accessed only through a network. However, it would be quite inconvenient to add a network card for each domU; which is why Xen allows creating virtual interfaces, that each domain can see and use in a standard way. Note that these cards, even though they're virtual, will only be useful once connected to a network, even a virtual one. Xen has several network models for that:"
+#, fuzzy
+#| msgid "Before turning these virtual machines on, we need to define how they'll be accessed. They can of course be considered as isolated machines, only accessed through their system console, but this rarely matches the usage pattern. Most of the time, a domU will be considered as a remote server, and accessed only through a network. However, it would be quite inconvenient to add a network card for each domU; which is why Xen allows creating virtual interfaces, that each domain can see and use in a standard way. Note that these cards, even though they're virtual, will only be useful once connected to a network, even a virtual one. Xen has several network models for that:"
+msgid "Before turning these virtual machines on, we need to define how they'll be accessed. They can of course be considered as isolated machines, only accessed through their system console, but this rarely matches the usage pattern. Most of the time, a domU will be considered as a remote server, and accessed only through a network. However, it would be quite inconvenient to add a network card for each domU; which is why Xen allows creating virtual interfaces that each domain can see and use in a standard way. Note that these cards, even though they're virtual, will only be useful once connected to a network, even a virtual one. Xen has several network models for that:"
 msgstr "仮想マシンを起動する前に、仮想マシンにアクセスする方法を定義します。もちろん仮想マシンは隔離されたマシンですから、仮想マシンにアクセスする唯一の方法はシステムコンソールだけです。しかし、システムコンソールだけで要求を満足できることはほとんどないと言っても過言ではありません。ほとんどの時間、domU はリモートサーバとして機能し、ネットワークを通じてのみアクセスされます。しかしながら、各 domU 専用のネットワークカードを追加するのはかなり不便です。このため Xen は仮想インターフェースの作成機能を備えています。各ドメインは仮想インターフェースを参照し、標準的な方法で使うことが可能です。これらのネットワークカードは仮想的なものですが、ネットワークに接続されている状況下でのみ役に立つという点に注意してください。Xen は以下に挙げる複数のネットワークモデルを備えています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
