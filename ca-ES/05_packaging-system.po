@@ -1,103 +1,92 @@
 msgid ""
-msgstr ""
-"Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-08-28 10:15+0200\n"
-"PO-Revision-Date: 2020-07-25 22:41+0000\n"
-"Last-Translator: d <dmanye@gmail.com>\n"
-"Language-Team: Catalan <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/ca/>\n"
-"Language: ca-ES\n"
-"MIME-Version: 1.0\n"
-"Content-Type: application/x-publican; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2020-09-04 16:36+0000\nLast-Translator: d <dmanye@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/ca/>\nLanguage: ca-ES\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.3-dev\n"
 
 msgid "Binary package"
-msgstr ""
+msgstr "Paquet binari"
 
 msgid "Source package"
-msgstr ""
+msgstr "Paquet font"
 
 msgid "dpkg"
-msgstr ""
+msgstr "dpkg"
 
 msgid "deb"
-msgstr ""
+msgstr "deb"
 
 msgid "dependencies"
-msgstr ""
+msgstr "dependències"
 
 msgid "conflict"
-msgstr ""
+msgstr "conflicte"
 
 msgid "Packaging System: Tools and Fundamental Principles"
-msgstr ""
+msgstr "Sistema de paquets: eines i principis fonamentals"
 
 msgid "As a Debian system administrator, you will routinely handle <filename>.deb</filename> packages, since they contain consistent functional units (applications, documentation, etc.), whose installation and maintenance they facilitate. It is therefore a good idea to know what they are and how to use them."
-msgstr ""
+msgstr "Com a administrador de sistema Debian, gestionareu rutinàriament els paquets <filename>.deb</filename>, ja que contenen unitats funcionals consistents (aplicacions, documentació, etc.), i de les quals en faciliten la instal·lació i manteniment. Per tant, és bona idea saber què són i com utilitzar-los."
 
 msgid "This chapter describes the structure and contents of “binary” and “source” packages. The former are files directly usable by <command>dpkg</command>, while the latter contain the source code, as well as instructions for building binary packages."
-msgstr ""
+msgstr "Aquest capítol descriu l'estructura i el contingut dels paquets “binaris” i “font”. Els primers són arxius directament utilitzables per <command>dpkg</command>, mentre que aquests últims contenen el codi font, així com les instruccions per construir paquets binaris."
 
 msgid "Structure of a Binary Package"
-msgstr ""
+msgstr "Estructura d'un paquet binari"
 
 msgid "<primary>package</primary><secondary>binary package</secondary><seealso><filename>.deb</filename></seealso>"
-msgstr ""
+msgstr "<primary>paquet</primary><secondary>paquet binari</secondary><seealso><filename>.deb</filename></seealso>"
 
 msgid "<primary><command>ar</command></primary>"
-msgstr ""
+msgstr "<primary><command>ar</command></primary>"
 
 msgid "<primary><command>dpkg</command></primary>"
-msgstr ""
+msgstr "<primary><command>dpkg</command></primary>"
 
 msgid "The Debian package format is designed so that its content may be extracted on any Unix system that has the classic commands <command>ar</command>, <command>tar</command>, and <command>xz</command> or sometimes <command>gzip</command> or <command>bzip2</command>. This seemingly trivial property is important for portability and disaster recovery."
-msgstr ""
+msgstr "El format del paquet Debian està dissenyat de manera que el seu contingut es pugui extreure en qualsevol sistema Unix que tingui les ordres clàssiques <command>ar</command>, <command>tar</command>, i <command>xz</command>, o de vegades <command>gzip</command> o <command>bzip2</command>. Aquesta propietat aparentment trivial és important per a la portabilitat i la recuperació en cas de desastre."
 
 msgid "Imagine, for example, that you mistakenly deleted the <command>dpkg</command> program, and that you could thus no longer install Debian packages. <command>dpkg</command> being a Debian package itself, it would seem your system would be done for... Fortunately, you know the format of a package and can therefore <ulink url=\"https://www.debian.org/distrib/packages#search_packages\">download</ulink> the <filename>.deb</filename> file of the <emphasis role=\"pkg\">dpkg</emphasis> package and install it manually (see sidebar <xref linkend=\"sidebar.dpkg-apt-ar\" />). If by some misfortune one or more of the programs <command>ar</command>, <command>tar</command> or <command>gzip</command>/<command>xz</command>/<command>bzip2</command> have disappeared, you will only need to copy the missing program from another system (since each of these operates in a completely autonomous manner, without dependencies, a simple copy will suffice). If your system suffered some even more outrageous fortune, and even these don't work (maybe the deepest system libraries are missing?), you should try the static version of <command>busybox</command> (provided in the <emphasis role=\"pkg\">busybox-static</emphasis> package), which is even more self-contained, and provides subcommands such as <command>busybox ar</command>, <command>busybox tar</command> and <command>busybox xz</command>."
-msgstr ""
+msgstr "Imagineu, per exemple, que heu esborrat erròniament el programa <command>dpkg</command>, i que per tant ja no podeu instal·lar paquets de Debian. Essent <command>dpkg </command> un paquet de Debian en si, semblaria que el vostre sistema estaria acabat per... Per sort, ja coneixeu el format d'un paquet i per tant podeu <ulink url=\"https://www.debian.org/distrib/packages#search_packages\">descarregar</ulink> el fitxer <filename>.deb</filename> del paquet <emphasis role=\"pkg\">dpkg</emphasis> i instal·lar-lo manualment (vegeu el requadre <xref linkend=\"sidebar.dpkg-apt-ar\" />). Si per alguna desgràcia un o més dels programes <command>ar</command>, <command>tar</command> o <command>gzip</command>/<command>xz</command>/<command>bzip2</command> han desaparegut, només cal copiar d'un altre sistema el programa que us falti (ja que cadascun d'ells funciona de manera completament autònoma, sense dependències, una còpia simple serà suficient). Si el vostre sistema ha patit un infortuni encara més escandalós, i fins i tot això no funciona (potser falten biblioteques de sistema de més baix nivell?), hauríeu de provar la versió estàtica de <command>busybox</command> (contingut al paquet <emphasis role=\"pkg\">busybox-static</emphasis>), que és encara més autònom, i ofereix subordres com ara <command>busybox ar</command>, <command>busybox tar</command> i <command>busybox xz</command>."
 
 msgid "<emphasis>In case of a misfortune you better also have a backup of your system (see <xref linkend=\"sect.backup\" />).</emphasis>"
-msgstr ""
+msgstr "<emphasis>En cas de desgràcia també és millor que tingueu una còpia de seguretat del vostre sistema (vegeu <xref linkend=\"sect.backup\" />).</emphasis>"
 
 msgid "<emphasis>TOOLS</emphasis> <command>dpkg</command>, <command>APT</command> and <command>ar</command>"
-msgstr ""
+msgstr "<emphasis>EINES</emphasis> <command>dpkg</command>, <command>APT</command> i <command>ar</command>"
 
 msgid "<primary>APT</primary><secondary><command>apt</command></secondary>"
-msgstr ""
+msgstr "<primary>APT</primary><secondary><command>apt</command></secondary>"
 
 msgid "<primary>Advanced Packaging Tools</primary><seealso>APT</seealso>"
-msgstr ""
+msgstr "<primary>Advanced Packaging Tools</primary><seealso>APT</seealso>"
 
 msgid "<command>dpkg</command> is the program that handles <filename>.deb</filename> files (binary packages), notably extracting, analyzing, and unpacking them."
-msgstr ""
+msgstr "<command>dpkg</command> és el programa que gestiona arxius <filename>.deb</filename> (paquets binaris), especialment l'extracció, anàlisi i desempaquetament."
 
 msgid "<acronym>APT</acronym> (the abbreviation of \"Advanced Packaging Tool\") is a group of programs that allows the execution of higher-level modifications to the system: installing or removing a package (while keeping dependencies satisfied), updating and upgrading the system, listing the available packages, etc."
-msgstr ""
+msgstr "<acronym>APT</acronym> (l'abreviatura de “Eina Avançada de Paquets” o «Advanced Packaging Tool») és un grup de programes que permeten l'execució de modificacions de més alt nivell al sistema: instal·lació o eliminació d'un paquet (al temps que manté les dependències satisfetes), actualització dels repositoris i del sistema, llistat dels paquets disponibles, etc."
 
 msgid "As for the <command>ar</command> program, it allows handling files of the same name: <command>ar t <replaceable>archive</replaceable></command> displays the list of files contained in such an archive, <command>ar x <replaceable>archive</replaceable></command> extracts the files from the archive into the current working directory, <command>ar d <replaceable>archive</replaceable> <replaceable>file</replaceable></command> deletes a file from the archive, etc. Its man page (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>) documents all its other features. <command>ar</command> is a very rudimentary tool that a Unix administrator would only use on rare occasions, but admins routinely use <command>tar</command>, a more evolved archive and file management program. This is why it is easy to restore <command>dpkg</command> in the event of an erroneous deletion. You would only have to download the Debian package and extract the content from the <filename>data.tar.xz</filename> archive in the system's root (<filename>/</filename>):"
-msgstr ""
+msgstr "Pel que fa al programa <command>ar</command>, permet gestionar fitxers del mateix nom: <command>ar t <replaceable>archive</replaceable></command> mostra la llista de fitxers que conté un arxiu d'aquests, <command>ar x <replaceable>archive</replaceable></command> extreu els fitxers de l'arxiu en el directori de treball actual, <command>ar d <replaceable>archive</replaceable> <replaceable>file</replaceable></command> esborra un fitxer de l'arxiu, etc. La seva pàgina man (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>) documenta totes les altres funcions. <command>ar</command> és una eina molt rudimentària que un administrador d'Unix només utilitzaria en rares ocasions, però els administradors usen habitualment <command>tar</command>, un programa d'arxivat i gestió de fitxers més desenvolupat. Per això és fàcil restaurar <command>dpkg</command> en cas d'un esborrat per error. Només haureu de baixar el paquet Debian i extreure'n el contingut del fitxer <filename>data.tar.xz</filename> a l'arrel del sistema (<filename>/</filename>):"
 
 msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n"
 "<computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>"
-msgstr ""
+msgstr "\n<computeroutput># </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n<computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>"
 
 msgid "<emphasis>BACK TO BASICS</emphasis> Man page notation"
-msgstr ""
+msgstr "<emphasis>TORNAR A LES BASES</emphasis> Notació de les pàgines de “man”"
 
 msgid "It can be confusing for beginners to find references to “<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>” in the literature. This is generally a convenient means of referring to the man page entitled <literal>ar</literal> in section 1."
-msgstr ""
+msgstr "Pot ser confús per als principiants trobar referències a “<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>” a la literatura. Això és generalment un mitjà convenient per referir-se a la pàgina man titulada <literal>ar</literal> de la secció 1."
 
 msgid "Sometimes this notation is also used to remove ambiguities, for example to distinguish between the <command>printf</command> command that can also be indicated by <citerefentry><refentrytitle>printf</refentrytitle><manvolnum>1</manvolnum></citerefentry> and the <function>printf</function> function in the C programming language, which can also be referred to as <citerefentry><refentrytitle>printf</refentrytitle><manvolnum>3</manvolnum></citerefentry>."
-msgstr ""
+msgstr "De vegades aquesta notació també s'utilitza per eliminar ambigüitats, per exemple per distingir entre l'ordre <command>printf</command> que també es pot indicar com <citerefentry><refentrytitle>printf</refentrytitle><manvolnum>1</manvolnum></citerefentry> i la funció <function>printf</function> del llenguatge de programació C, que també pot ser referit com a <citerefentry><refentrytitle>printf</refentrytitle><manvolnum>3</manvolnum></citerefentry>."
 
 msgid "<xref linkend=\"solving-problems\" /> discusses manual pages in further detail (see <xref linkend=\"sect.manual-pages\" />)."
-msgstr ""
+msgstr "El <xref linkend=\"solving-problems\" /> analitza les pàgines del manual amb més detall (vegeu <xref linkend=\"sect.manual-pages\" />)."
 
 msgid "Have a look at the content of a <filename>.deb</filename> file:"
-msgstr ""
+msgstr "Doneu un cop d'ull al contingut d'un fitxer <filename>.deb</filename>:"
 
 msgid ""
 "<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.19.7_amd64.deb</userinput>\n"
@@ -134,70 +123,70 @@ msgid ""
 "./postrm\n"
 "$ </computeroutput><userinput>cat debian-binary</userinput>\n"
 "<computeroutput>2.0</computeroutput>"
-msgstr ""
+msgstr "<computeroutput>$ </computeroutput><userinput>ar t dpkg_1.19.7_amd64.deb</userinput>\n<computeroutput>debian-binary\ncontrol.tar.gz\ndata.tar.xz\n$ </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>\n<computeroutput>$ </computeroutput><userinput>ls</userinput>\n<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.19.7_amd64.deb\n$ </computeroutput><userinput>tar tJf data.tar.xz | head -n 16</userinput>\n<computeroutput>./\n./\n./etc/\n./etc/alternatives/\n./etc/alternatives/README\n./etc/cron.daily/\n./etc/cron.daily/dpkg\n./etc/dpkg/\n./etc/dpkg/dpkg.cfg\n./etc/dpkg/dpkg.cfg.d/\n./etc/logrotate.d/\n./etc/logrotate.d/alternatives\n./etc/logrotate.d/dpkg\n./sbin/\n./sbin/start-stop-daemon\n./usr/\n./usr/bin/\n$ </computeroutput><userinput>tar tJf control.tar.xz</userinput>\n<computeroutput>./\n./conffiles\n./control\n./md5sums\n./postinst\n./postrm\n$ </computeroutput><userinput>cat debian-binary</userinput>\n<computeroutput>2.0</computeroutput>"
 
 msgid "As you can see, the <command>ar</command> archive of a Debian package is comprised of three files:"
-msgstr ""
+msgstr "Com podeu veure, l'arxiu <command>ar</command> d'un paquet Debian està format per tres fitxers:"
 
 msgid "<filename>debian-binary</filename>"
-msgstr ""
+msgstr "<filename>debian-binary</filename>"
 
 msgid "This is a text file which simply indicates the version of the <filename>.deb</filename> file package format version. In Debian <emphasis role=\"distribution\">Buster</emphasis> it is still version 2.0."
-msgstr ""
+msgstr "Aquest és un fitxer de text que simplement indica la versió del format <filename>.deb</filename> de paquet de fitxers. A Debian <emphasis role=\"distribution\">Buster</emphasis> encara és a la versió 2.0."
 
 msgid "<filename>control.tar.xz</filename>"
-msgstr ""
+msgstr "<filename>control.tar.xz</filename>"
 
 msgid "This archive file contains all of the available meta-information, like the name and version of the package as well as some scripts to run before, during or after (un-)installation of it. Some of the meta-information allows package management tools to determine if it is possible to install or uninstall it, for example according to the list of packages already on the machine, and if files shipped have been modified locally."
-msgstr ""
+msgstr "Aquest arxiu conté tota la meta-informació disponible, com el nom i la versió del paquet, així com alguns «scripts» per executar abans, durant o després de la (des)instal·lació d'aquest. Alguna de la meta-informació permet a les eines de gestió de paquets determinar si és possible instal·lar o desinstal·lar-lo, per exemple, d'acord amb la llista de paquets que ja hi ha a la màquina, i si els arxius continguts s'han modificat localment."
 
 msgid "<filename>data.tar.xz</filename>"
-msgstr ""
+msgstr "<filename>data.tar.xz</filename>"
 
 msgid "<filename>data.tar.bz2</filename>"
-msgstr ""
+msgstr "<filename>data.tar.bz2</filename>"
 
 msgid "<filename>data.tar.gz</filename>"
-msgstr ""
+msgstr "<filename>data.tar.gz</filename>"
 
 msgid "This archive contains all of the files to be extracted from the package; this is where the executable files, libraries, documentation, etc., are all stored. Packages may use different compression formats, in which case the file will be named differently for <command>xz</command>, <command>bzip2</command> or <command>gzip</command>."
-msgstr ""
+msgstr "Aquest arxiu conté tots els fitxers que s'han d'extreure del paquet; aquí és on s'emmagatzemen els arxius executables, les biblioteques, la documentació, etc. Els paquets poden utilitzar diferents formats de compressió, en aquest cas el fitxer s'anomenarà de manera diferent per a <command>xz</command>, <command>bzip2</command> o <command>gzip</command>."
 
 msgid "Package Meta-Information"
-msgstr ""
+msgstr "Meta-informació del paquet"
 
 msgid "<primary>package meta-information</primary><seealso>meta-information</seealso>"
-msgstr ""
+msgstr "<primary>meta-informació del paquete</primary><seealso>meta-informació</seealso>"
 
 msgid "<primary>package</primary><secondary>meta-information</secondary>"
-msgstr ""
+msgstr "<primary>paquet</primary><secondary>meta-informació</secondary>"
 
 msgid "<primary>package</primary><secondary>maintainer scripts</secondary>"
-msgstr ""
+msgstr "<primary>paquet</primary><secondary>scripts del mantenidor</secondary>"
 
 msgid "<primary>package</primary><secondary>checksums</secondary>"
-msgstr ""
+msgstr "<primary>paquet</primary><secondary>sumes de verificació</secondary>"
 
 msgid "The Debian package is not only an archive of files intended for installation. It is part of a larger whole and describes its relationship with other Debian packages (requisites, dependencies, conflicts, suggestions). It also provides scripts that enable the execution of commands at different stages in the package's lifecycle (installation, upgrade, removal). These data are used by the package management tools but are not part of the packaged software; they are, within the package, what is called its “meta-information” (information about other information)."
-msgstr ""
+msgstr "El paquet Debian no és només un arxiu de fitxers destinats a la instal·lació. Forma part d'un conjunt més gran i descriu la seva relació amb altres paquets de Debian (requisits, dependències, conflictes, suggeriments). També proporciona «scripts» que permeten l'execució d'ordres en diferents etapes en el cicle de vida del paquet (instal·lació, actualització, eliminació). Aquestes dades són utilitzades per les eines de gestió de paquets però no formen part del programari empaquetat; són, dins del paquet, el que s'anomena la seva “meta-informació” (informació sobre altra informació)."
 
 msgid "Description: the <filename>control</filename> File"
-msgstr ""
+msgstr "Descripció: l'arxiu <filename>control</filename>"
 
 msgid "<primary>package meta-information</primary>"
-msgstr ""
+msgstr "<primary>metainformació d'un paquet</primary>"
 
 msgid "<primary>package</primary><secondary><filename>control</filename></secondary>"
-msgstr ""
+msgstr "<primary>paquet</primary><secondary><filename>control</filename></secondary>"
 
 msgid "<primary><filename>control</filename></primary><seealso>package meta-information</seealso>"
-msgstr ""
+msgstr "<primary><filename>control</filename></primary><seealso>meta-informació del paquet</seealso>"
 
 msgid "This file uses a structure similar to email headers (as defined by <link linkend=\"sidebar.rfc\">RFC 2822</link>) and is fully described in the Debian Policy and the manual pages <citerefentry><refentrytitle>deb-control</refentrytitle><manvolnum>5</manvolnum></citerefentry> and <citerefentry><refentrytitle>deb822</refentrytitle><manvolnum>5</manvolnum></citerefentry>. <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/ch-controlfields.html\" />"
-msgstr ""
+msgstr "Aquest fitxer utilitza una estructura similar a les capçaleres de correu electrònic (com es defineixen a <link linkend=\"sidebar.rfc\">RFC 2822</link>) i es descriu completament a la Normativa de Debian i a les pàgines del manual <citerefentry><refentrytitle>deb-control</refentrytitle><manvolnum>5</manvolnum></citerefentry> i <citerefentry><refentrytitle>deb822</refentrytitle><manvolnum>5</manvolnum></citerefentry>.<ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/ch-controlfields.html\" />"
 
 msgid "For example, for <emphasis role=\"pkg\">apt</emphasis>, the <filename>control</filename> file looks like the following:"
-msgstr ""
+msgstr "Per exemple, el <filename>control</filename> de <emphasis role=\"pkg\">apt</emphasis>, es veu d'aquesta manera:"
 
 msgid ""
 "\n"
