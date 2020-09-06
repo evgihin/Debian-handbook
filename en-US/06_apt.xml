@@ -828,6 +828,35 @@ deb http://localhost:9999/debian buster main contrib non-free
 
       </sidebar>
 
+      <sidebar id="sidebar.apt-install-and-remove">
+        <title><emphasis>TIP</emphasis> Removing and installing at the same time</title>
+
+        <para>It is possible to ask <command>apt</command> (or
+        <command>apt-get</command>, or <command>aptitude</command>) to install
+        certain packages and remove others on the same command line by adding a
+        suffix. With an <command>apt install</command> command, add
+        “<literal>-</literal>” to the names of the packages you wish to remove.
+        With an <command>apt remove</command> command, add
+        “<literal>+</literal>” to the names of the packages you wish to
+        install.</para>
+
+        <para>The next example shows two different ways to install
+        <replaceable>package1</replaceable> and to remove
+        <replaceable>package2</replaceable>.</para>
+
+        <informalexample>
+          <screen># <userinput>apt install <replaceable>package1</replaceable> <replaceable>package2</replaceable>-</userinput></screen>
+          <screen># <userinput>apt remove <replaceable>package1</replaceable>+ <replaceable>package2</replaceable></userinput></screen>
+        </informalexample>
+
+        <para>This can also be used to exclude packages which would otherwise
+        be installed, for example, due to an automatic installation of
+        <literal>Recommends</literal>. In general, the dependency solver will
+        use that information as a hint to look for alternative
+        solutions.</para>
+
+      </sidebar>
+
     </section>
 
     <section id="sect.apt.install">
@@ -857,69 +886,27 @@ deb http://localhost:9999/debian buster main contrib non-free
       <indexterm><primary><command>aptitude remove</command></primary></indexterm>
       <indexterm><primary><command>aptitude purge</command></primary></indexterm>
 
-      <sidebar>
-        <title><emphasis>TIP</emphasis> Installing the same selection of packages several times</title>
+      <para>If the file <filename>sources.list</filename> mentions several
+      distributions, it is possible to give the version of the package to
+      install. A specific version number can be requested with <command>apt
+      install
+      <replaceable>package</replaceable>=<replaceable>version</replaceable></command>,
+      but indicating its distribution of origin (<emphasis
+      role="distribution">Stable</emphasis>, <emphasis
+      role="distribution">Testing</emphasis> or <emphasis
+      role="distribution">Unstable</emphasis>) — with <command>apt install
+      <replaceable>package</replaceable>/<replaceable>distribution</replaceable></command>
+      — is usually preferred. With this command, it is possible to go back to
+      an older version of a package (if, for instance, you know that it works
+      well), provided that it is still available in one of the sources
+      referenced by the <filename>sources.list</filename> file.  Otherwise the
+      <literal>snapshot.debian.org</literal> archive can come to the rescue
+      (see sidebar <xref linkend="sidebar.snapshot.debian.org"/>).</para>
 
-        <para>It can be useful to systematically install the same list of
-        packages on several computers. This can be done quite easily.</para>
-
-        <para>First, retrieve the list of packages installed on the computer
-        which will serve as the “model” to copy.</para>
-
-        <screen><computeroutput>$ </computeroutput><userinput>dpkg --get-selections &gt;pkg-list</userinput></screen>
-
-        <para>The <filename>pkg-list</filename> file then contains the list of
-        installed packages. Next, transfer the <filename>pkg-list</filename>
-        file onto the computers you want to update and use the following
-        commands:</para>
-
-        <screen>## Update dpkg's database of known packages
-# <userinput>avail=`mktemp`</userinput>
-# <userinput>apt-cache dumpavail &gt; "$avail"</userinput>
-# <userinput>dpkg --merge-avail "$avail"</userinput>
-# <userinput>rm -f "$avail"</userinput>
-## Update dpkg's selections
-# <userinput>dpkg --set-selections &lt; pkg-list</userinput>
-## Ask apt-get to install the selected packages
-# <userinput>apt-get dselect-upgrade</userinput>
-</screen>
-
-        <para>The first commands record the list of available packages in the
-        dpkg database. Then <command>dpkg --set-selections</command> restores
-        the selection of packages that you wish to install, and the
-        <command>apt-get</command> invocation executes the required operations!
-        <command>aptitude</command> does not have this command.</para>
-
-      </sidebar>
-
-      <sidebar id="sidebar.apt-install-and-remove">
-        <title><emphasis>TIP</emphasis> Removing and installing at the same time</title>
-
-        <para>It is possible to ask <command>apt</command> (or
-        <command>apt-get</command>, or <command>aptitude</command>) to install
-        certain packages and remove others on the same command line by adding a
-        suffix. With an <command>apt install</command> command, add
-        “<literal>-</literal>” to the names of the packages you wish to remove.
-        With an <command>apt remove</command> command, add
-        “<literal>+</literal>” to the names of the packages you wish to
-        install.</para>
-
-        <para>The next example shows two different ways to install
-        <replaceable>package1</replaceable> and to remove
-        <replaceable>package2</replaceable>.</para>
-
-        <informalexample>
-          <screen># <userinput>apt install <replaceable>package1</replaceable> <replaceable>package2</replaceable>-</userinput></screen>
-          <screen># <userinput>apt remove <replaceable>package1</replaceable>+ <replaceable>package2</replaceable></userinput></screen>
-        </informalexample>
-
-        <para>This can also be used to exclude packages which would otherwise
-        be installed, for example, due to an automatic installation of
-        <literal>Recommends</literal>. In general, the dependency solver will
-        use that information as a hint to look for alternative
-        solutions.</para>
-
-      </sidebar>
+      <example>
+        <title>Installation of the <emphasis role="distribution">Unstable</emphasis> version of <emphasis role="pkg">spamassassin</emphasis></title>
+        <screen><computeroutput># </computeroutput><userinput>apt install spamassassin/unstable</userinput></screen>
+      </example>
 
       <sidebar id="sidebar.apt-install-reinstall">
         <title><emphasis>TIP</emphasis> <command>apt --reinstall</command> and <command>aptitude reinstall</command></title>
@@ -976,27 +963,40 @@ deb http://localhost:9999/debian buster main contrib non-free
         the commands shown above won't work.</para>
       </sidebar>
 
-      <para>If the file <filename>sources.list</filename> mentions several
-      distributions, it is possible to give the version of the package to
-      install. A specific version number can be requested with <command>apt
-      install
-      <replaceable>package</replaceable>=<replaceable>version</replaceable></command>,
-      but indicating its distribution of origin (<emphasis
-      role="distribution">Stable</emphasis>, <emphasis
-      role="distribution">Testing</emphasis> or <emphasis
-      role="distribution">Unstable</emphasis>) — with <command>apt install
-      <replaceable>package</replaceable>/<replaceable>distribution</replaceable></command>
-      — is usually preferred. With this command, it is possible to go back to
-      an older version of a package (if, for instance, you know that it works
-      well), provided that it is still available in one of the sources
-      referenced by the <filename>sources.list</filename> file.  Otherwise the
-      <literal>snapshot.debian.org</literal> archive can come to the rescue
-      (see sidebar <xref linkend="sidebar.snapshot.debian.org"/>).</para>
+      <sidebar>
+        <title><emphasis>TIP</emphasis> Installing the same selection of packages several times</title>
 
-      <example>
-        <title>Installation of the <emphasis role="distribution">Unstable</emphasis> version of <emphasis role="pkg">spamassassin</emphasis></title>
-        <screen><computeroutput># </computeroutput><userinput>apt install spamassassin/unstable</userinput></screen>
-      </example>
+        <para>It can be useful to systematically install the same list of
+        packages on several computers. This can be done quite easily.</para>
+
+        <para>First, retrieve the list of packages installed on the computer
+        which will serve as the “model” to copy.</para>
+
+        <screen><computeroutput>$ </computeroutput><userinput>dpkg --get-selections &gt;pkg-list</userinput></screen>
+
+        <para>The <filename>pkg-list</filename> file then contains the list of
+        installed packages. Next, transfer the <filename>pkg-list</filename>
+        file onto the computers you want to update and use the following
+        commands:</para>
+
+        <screen>## Update dpkg's database of known packages
+# <userinput>avail=`mktemp`</userinput>
+# <userinput>apt-cache dumpavail &gt; "$avail"</userinput>
+# <userinput>dpkg --merge-avail "$avail"</userinput>
+# <userinput>rm -f "$avail"</userinput>
+## Update dpkg's selections
+# <userinput>dpkg --set-selections &lt; pkg-list</userinput>
+## Ask apt-get to install the selected packages
+# <userinput>apt-get dselect-upgrade</userinput>
+</screen>
+
+        <para>The first commands record the list of available packages in the
+        dpkg database. Then <command>dpkg --set-selections</command> restores
+        the selection of packages that you wish to install, and the
+        <command>apt-get</command> invocation executes the required operations!
+        <command>aptitude</command> does not have this command.</para>
+
+      </sidebar>
 
       <para>If the package to install has been made available to you under the
       form of a simple <filename>.deb</filename> file without any associated
@@ -1065,6 +1065,58 @@ deb http://localhost:9999/debian buster main contrib non-free
       intended.</para>
 
       <indexterm><primary>APT</primary><secondary><literal>APT::Default-Release</literal></secondary></indexterm>
+
+      <sidebar id="sidebar.directory.d">
+        <title><emphasis>BACK TO BASICS</emphasis> Directories ending in <filename>.d</filename></title>
+        <indexterm><primary><filename>.d</filename></primary></indexterm>
+
+        <para>Directories with a <filename>.d</filename> suffix are used more
+        and more often. Each directory represents a configuration file which is
+        split over multiple files. In this sense, all of the files in
+        <filename>/etc/apt/apt.conf.d/</filename> are instructions for the
+        configuration of APT. APT includes them in alphabetical order, so that
+        the last ones can modify a configuration element defined in one of the
+        first ones.</para>
+
+        <para>This structure brings some flexibility to the machine
+        administrator and to the package maintainers. Indeed, the administrator
+        can easily modify the configuration of the software by adding a
+        ready-made file in the directory in question without having to change
+        an existing file. Package maintainers use the same approach when they
+        need to adapt the configuration of another software to ensure that it
+        perfectly co-exists with theirs.  The Debian policy explicitly forbids
+        modifying configuration files of other packages — only users are
+        allowed to do this. Remember that during a package upgrade, the user
+        gets to choose the version of the configuration file that should be
+        kept when a modification has been detected. Any external modification
+        of the file would trigger that request, which would disturb the
+        administrator, who is sure not to have changed anything.</para>
+
+        <para>Without a <filename>.d</filename> directory, it is impossible for
+        an external package to change the settings of a program without
+        modifying its configuration file. Instead it must invite the user to do
+        it themselves and lists the operations to be done in the file
+        <filename>/usr/share/doc/<replaceable>package</replaceable>/README.Debian</filename>.</para>
+
+        <para>Depending on the application, the <filename>.d</filename>
+        directory is used directly or managed by an external script which will
+        concatenate all the files to create the configuration file itself. It
+        is important to execute the script after any change in that directory
+        so that the most recent modifications are taken into account. In the
+        same way, it is important not to work directly in the configuration
+        file created automatically, since everything would be lost at the next
+        execution of the script. The chosen method (<filename>.d</filename>
+        directory used directly or a file generated from that directory) is
+        usually dictated by implementation constraints, but in both cases the
+        gains in terms of configuration flexibility more than make up for the
+        small complications that they entail. The Exim 4 mail server is an
+        example of the generated file method: it can be configured through
+        several files (<filename>/etc/exim4/conf.d/*</filename>) which are
+        concatenated into
+        <filename>/var/lib/exim4/config.autogenerated</filename> by the
+        <command>update-exim4.conf</command> command.</para>
+
+      </sidebar>
 
       <para>To tell <command>apt</command> to use a specific distribution when
       searching for upgraded packages, you need to use the
@@ -1145,58 +1197,6 @@ deb http://localhost:9999/debian buster main contrib non-free
       <citerefentry><refentrytitle>apt.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>
       manual page with the <command>man apt.conf</command> command (for details
       on manual pages, see <xref linkend="sect.manual-pages" />).</para>
-
-      <sidebar id="sidebar.directory.d">
-        <title><emphasis>BACK TO BASICS</emphasis> Directories ending in <filename>.d</filename></title>
-        <indexterm><primary><filename>.d</filename></primary></indexterm>
-
-        <para>Directories with a <filename>.d</filename> suffix are used more
-        and more often. Each directory represents a configuration file which is
-        split over multiple files. In this sense, all of the files in
-        <filename>/etc/apt/apt.conf.d/</filename> are instructions for the
-        configuration of APT. APT includes them in alphabetical order, so that
-        the last ones can modify a configuration element defined in one of the
-        first ones.</para>
-
-        <para>This structure brings some flexibility to the machine
-        administrator and to the package maintainers. Indeed, the administrator
-        can easily modify the configuration of the software by adding a
-        ready-made file in the directory in question without having to change
-        an existing file. Package maintainers use the same approach when they
-        need to adapt the configuration of another software to ensure that it
-        perfectly co-exists with theirs.  The Debian policy explicitly forbids
-        modifying configuration files of other packages — only users are
-        allowed to do this. Remember that during a package upgrade, the user
-        gets to choose the version of the configuration file that should be
-        kept when a modification has been detected. Any external modification
-        of the file would trigger that request, which would disturb the
-        administrator, who is sure not to have changed anything.</para>
-
-        <para>Without a <filename>.d</filename> directory, it is impossible for
-        an external package to change the settings of a program without
-        modifying its configuration file. Instead it must invite the user to do
-        it themselves and lists the operations to be done in the file
-        <filename>/usr/share/doc/<replaceable>package</replaceable>/README.Debian</filename>.</para>
-
-        <para>Depending on the application, the <filename>.d</filename>
-        directory is used directly or managed by an external script which will
-        concatenate all the files to create the configuration file itself. It
-        is important to execute the script after any change in that directory
-        so that the most recent modifications are taken into account. In the
-        same way, it is important not to work directly in the configuration
-        file created automatically, since everything would be lost at the next
-        execution of the script. The chosen method (<filename>.d</filename>
-        directory used directly or a file generated from that directory) is
-        usually dictated by implementation constraints, but in both cases the
-        gains in terms of configuration flexibility more than make up for the
-        small complications that they entail. The Exim 4 mail server is an
-        example of the generated file method: it can be configured through
-        several files (<filename>/etc/exim4/conf.d/*</filename>) which are
-        concatenated into
-        <filename>/var/lib/exim4/config.autogenerated</filename> by the
-        <command>update-exim4.conf</command> command.</para>
-
-      </sidebar>
 
     </section>
 
@@ -1659,24 +1659,6 @@ p   apt-xapian-index Depends  python-debian (&gt;= 0.1.14)
 
     </sidebar>
 
-    <indexterm><primary><command>apt show</command></primary></indexterm>
-    <indexterm><primary><command>apt search</command></primary></indexterm>
-    <indexterm><primary><command>apt-cache show</command></primary></indexterm>
-    <indexterm><primary><command>apt-cache search</command></primary></indexterm>
-    <indexterm><primary><command>aptitude show</command></primary></indexterm>
-    <indexterm><primary><command>aptitude search</command></primary></indexterm>
-
-    <para>The <command>apt-cache</command> command can do keyword-based
-    package searches with <command>apt-cache search
-    <replaceable>keyword</replaceable></command>. It can also display the
-    headers of the package's available versions with <command>apt-cache
-    show <replaceable>package</replaceable></command>. This command
-    provides the package's description, its dependencies, the name of its
-    maintainer, etc. Note that <command>apt search</command>, <command>apt
-    show</command>, <command>aptitude search</command>,
-    <command>aptitude show</command> work in the same way.
-    </para>
-
     <sidebar id="sidebar.apt-axi-cache">
       <title><emphasis>ALTERNATIVE</emphasis> <command>axi-cache</command></title>
       <indexterm><primary><command>axi-cache</command></primary></indexterm>
@@ -1712,6 +1694,24 @@ More tags: role::program interface::commandline works-with::software:package sui
 `axi-cache more' will give more results
 ]]></screen>
     </sidebar>
+
+    <indexterm><primary><command>apt show</command></primary></indexterm>
+    <indexterm><primary><command>apt search</command></primary></indexterm>
+    <indexterm><primary><command>apt-cache show</command></primary></indexterm>
+    <indexterm><primary><command>apt-cache search</command></primary></indexterm>
+    <indexterm><primary><command>aptitude show</command></primary></indexterm>
+    <indexterm><primary><command>aptitude search</command></primary></indexterm>
+
+    <para>The <command>apt-cache</command> command can do keyword-based
+    package searches with <command>apt-cache search
+    <replaceable>keyword</replaceable></command>. It can also display the
+    headers of the package's available versions with <command>apt-cache
+    show <replaceable>package</replaceable></command>. This command
+    provides the package's description, its dependencies, the name of its
+    maintainer, etc. Note that <command>apt search</command>, <command>apt
+    show</command>, <command>aptitude search</command>,
+    <command>aptitude show</command> work in the same way.
+    </para>
 
     <indexterm><primary><command>apt-cache policy</command></primary></indexterm>
     <indexterm><primary><command>apt-cache dumpavail</command></primary></indexterm>
@@ -2855,6 +2855,23 @@ yes '' | apt-get -y -o DPkg::options::="--force-confdef" -o DPkg::options::="--f
         avoided, and administrators can focus on the really useful
         part.</para>
       </sidebar>
+
+    <sidebar>
+      <title><emphasis>TIP</emphasis> Package naming conventions</title>
+      <indexterm><primary>package</primary><secondary>naming conventions</secondary></indexterm>
+
+      <para>Some categories of packages are named according to a
+      conventional naming scheme; knowing the scheme can sometimes allow
+      you to guess exact package names. For instance, for Perl modules, the
+      convention says that a module called
+      <literal>XML::Handler::Composer</literal> upstream should be packaged
+      as <emphasis role="pkg">libxml-handler-composer-perl</emphasis>. The
+      library enabling the use of the <command>gconf</command> system from
+      Python is packaged as <emphasis role="pkg">python-gconf</emphasis>.
+      It is unfortunately not possible to define a fully general naming
+      scheme for all packages, even though package maintainers usually try
+      to follow the choice of the upstream developers.</para>
+    </sidebar>
     </section>
   </section>
 
@@ -2874,23 +2891,6 @@ yes '' | apt-get -y -o DPkg::options::="--force-confdef" -o DPkg::options::="--f
     <replaceable>package</replaceable></command> returns a result, then the
     package exists. Unfortunately, this requires knowing or even guessing
     the package name, which isn't always possible.</para>
-
-    <sidebar>
-      <title><emphasis>TIP</emphasis> Package naming conventions</title>
-      <indexterm><primary>package</primary><secondary>naming conventions</secondary></indexterm>
-
-      <para>Some categories of packages are named according to a
-      conventional naming scheme; knowing the scheme can sometimes allow
-      you to guess exact package names. For instance, for Perl modules, the
-      convention says that a module called
-      <literal>XML::Handler::Composer</literal> upstream should be packaged
-      as <emphasis role="pkg">libxml-handler-composer-perl</emphasis>. The
-      library enabling the use of the <command>gconf</command> system from
-      Python is packaged as <emphasis role="pkg">python-gconf</emphasis>.
-      It is unfortunately not possible to define a fully general naming
-      scheme for all packages, even though package maintainers usually try
-      to follow the choice of the upstream developers.</para>
-    </sidebar>
 
     <para>A slightly more successful searching pattern is a plain-text
     search in package names, but it remains very limited. You can generally

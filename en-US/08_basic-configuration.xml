@@ -325,6 +325,29 @@ $ </computeroutput><userinput>ls travail/</userinput>
   <section id="sect.network-config">
     <title>Configuring the Network</title>
 
+    <para>The network is automatically configured during the initial
+    installation. If Network Manager gets installed (which is generally the case
+    for full desktop installations), then it might be that no configuration
+    is actually required (for example, if you rely on DHCP on a wired
+    connection and have no specific requirements). If a configuration is required
+    (for example, for a WiFi interface), then it will create the appropriate
+    file in <filename>/etc/NetworkManager/system-connections/</filename>.</para>
+
+    <para>If Network Manager is not installed, then the installer
+    will configure <emphasis role="pkg">ifupdown</emphasis> by creating
+    the <filename>/etc/network/interfaces</filename> file. A line starting with
+    <literal>auto</literal> gives a list of interfaces to be automatically
+    configured on boot by the <literal>networking</literal> service. When there
+    are many interfaces, it is good practice to keep the configuration in
+    different files inside <filename>/etc/network/interfaces.d/</filename>.
+    </para>
+
+    <para>
+      In a server context, <emphasis role="pkg">ifupdown</emphasis> is
+      thus the network configuration tool that you usually get. That is why
+      we will cover it in the next sections.
+    </para>
+
     <sidebar id="sidebar.networking-basics">
       <title><emphasis>BACK TO BASICS</emphasis> Essential network concepts (Ethernet, IP address, subnet, broadcast)</title>
       <indexterm><primary>Ethernet</primary></indexterm>
@@ -409,50 +432,6 @@ $ </computeroutput><userinput>ls travail/</userinput>
       remain the same.</para>
     </sidebar>
 
-    <para>The network is automatically configured during the initial
-    installation. If Network Manager gets installed (which is generally the case
-    for full desktop installations), then it might be that no configuration
-    is actually required (for example, if you rely on DHCP on a wired
-    connection and have no specific requirements). If a configuration is required
-    (for example, for a WiFi interface), then it will create the appropriate
-    file in <filename>/etc/NetworkManager/system-connections/</filename>.</para>
-
-    <sidebar>
-      <title><emphasis>NOTE</emphasis> NetworkManager</title>
-      <indexterm><primary><emphasis role="pkg">network-manager</emphasis></primary></indexterm>
-
-      <!-- MAYCHANGE: the URL below are version-specific -->
-      <para>If Network Manager is particularly recommended in roaming setups
-      (see <xref linkend="sect.roaming-network-config" />),
-      it is also perfectly usable as the default network management
-      tool. You can create “System connections” that are used as soon
-      as the computer boots either manually with a
-      <filename>.ini</filename>-like file in
-      <filename>/etc/NetworkManager/system-connections/</filename> or
-      through a graphical tool (<command>nm-connection-editor</command>).
-      If you were using ifupdown, just remember to deactivate the entries in
-      <filename>/etc/network/interfaces</filename> that you want
-      Network Manager to handle.
-      <ulink type="block" url="https://wiki.gnome.org/Projects/NetworkManager/SystemSettings"/>
-      <ulink type="block" url="https://developer.gnome.org/NetworkManager/1.14/ref-settings.html"/>
-      </para>
-    </sidebar>
-
-    <para>If Network Manager is not installed, then the installer
-    will configure <emphasis role="pkg">ifupdown</emphasis> by creating
-    the <filename>/etc/network/interfaces</filename> file. A line starting with
-    <literal>auto</literal> gives a list of interfaces to be automatically
-    configured on boot by the <literal>networking</literal> service. When there
-    are many interfaces, it is good practice to keep the configuration in
-    different files inside <filename>/etc/network/interfaces.d/</filename>.
-    </para>
-
-    <para>
-      In a server context, <emphasis role="pkg">ifupdown</emphasis> is
-      thus the network configuration tool that you usually get. That is why
-      we will cover it in the next sections.
-    </para>
-
     <indexterm><primary>network</primary><secondary>configuration</secondary></indexterm>
     <indexterm><primary>configuration</primary><secondary>of the network</secondary></indexterm>
     <indexterm><primary>interface</primary><secondary>network interface</secondary></indexterm>
@@ -481,6 +460,27 @@ iface enp0s31f6 inet dhcp
   hostname arrakis
 </programlisting>
       </example>
+
+    <sidebar>
+      <title><emphasis>NOTE</emphasis> NetworkManager</title>
+      <indexterm><primary><emphasis role="pkg">network-manager</emphasis></primary></indexterm>
+
+      <!-- MAYCHANGE: the URL below are version-specific -->
+      <para>If Network Manager is particularly recommended in roaming setups
+      (see <xref linkend="sect.roaming-network-config" />),
+      it is also perfectly usable as the default network management
+      tool. You can create “System connections” that are used as soon
+      as the computer boots either manually with a
+      <filename>.ini</filename>-like file in
+      <filename>/etc/NetworkManager/system-connections/</filename> or
+      through a graphical tool (<command>nm-connection-editor</command>).
+      If you were using ifupdown, just remember to deactivate the entries in
+      <filename>/etc/network/interfaces</filename> that you want
+      Network Manager to handle.
+      <ulink type="block" url="https://wiki.gnome.org/Projects/NetworkManager/SystemSettings"/>
+      <ulink type="block" url="https://developer.gnome.org/NetworkManager/1.14/ref-settings.html"/>
+      </para>
+    </sidebar>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Names of network interfaces</title>
@@ -2173,48 +2173,6 @@ other=/dev/sda1
       <para>The <command>logrotate</command> program is executed daily by
       the <command>cron</command> scheduling program (described in <xref
       linkend="sect.task-scheduling-cron-atd"/>).</para>
-    </section>
-    <section id="sect.sharing-admin-rights">
-      <title>Sharing Administrator Rights</title>
-      <indexterm><primary>account</primary><secondary>administrator account</secondary></indexterm>
-      <indexterm><primary>root</primary></indexterm>
-      <indexterm><primary><command>sudo</command></primary></indexterm>
-
-      <para>Frequently, several administrators work on the same network.
-      Sharing the root passwords is not very elegant, and opens the
-      door for abuse due to the anonymity such sharing creates. The
-      solution to this problem is the <command>sudo</command> program,
-      which allows certain users to execute certain commands with special
-      rights. In the most common use case, <command>sudo</command> allows a
-      trusted user to execute any command as root. To do so, the user
-      simply executes <command>sudo
-      <replaceable>command</replaceable></command> and authenticates using
-      their personal password.</para>
-
-      <para>When installed, the <emphasis role="pkg">sudo</emphasis>
-      package gives full root rights to members of the
-      <literal>sudo</literal> Unix group. To delegate other rights, the
-      administrator must use the <command>visudo</command> command, which
-      allows them to modify the <filename>/etc/sudoers</filename>
-      configuration file (here again, this will invoke the
-      <command>vi</command> editor, or any other editor indicated in the
-      <varname>EDITOR</varname> environment variable). Adding a line with
-      <literal><replaceable>username</replaceable> ALL=(ALL) ALL</literal>
-      allows the user in question to execute any command as root.</para>
-      <indexterm><primary><command>visudo</command></primary></indexterm>
-      <indexterm><primary><filename>sudoers</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/sudoers</filename></primary></indexterm>
-
-      <para>More sophisticated configurations allow authorization of only
-      specific commands to specific users. All the details of the various
-      possibilities are given in the
-      <citerefentry><refentrytitle>sudoers</refentrytitle>
-      <manvolnum>5</manvolnum></citerefentry> man page.</para>
-    </section>
-    <section id="sect.fstab-mount-points">
-      <title>List of Mount Points</title>
-      <indexterm><primary>point, mount</primary></indexterm>
-      <indexterm><primary>mount point</primary></indexterm>
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Mounting and unmounting</title>
@@ -2260,6 +2218,56 @@ other=/dev/sda1
 	would simply run <command>mount -t ext3 /dev/sdc1
 	/mnt/tmp/</command>.</para>
       </sidebar>
+    </section>
+    <section id="sect.sharing-admin-rights">
+      <title>Sharing Administrator Rights</title>
+      <indexterm><primary>account</primary><secondary>administrator account</secondary></indexterm>
+      <indexterm><primary>root</primary></indexterm>
+      <indexterm><primary><command>sudo</command></primary></indexterm>
+
+      <para>Frequently, several administrators work on the same network.
+      Sharing the root passwords is not very elegant, and opens the
+      door for abuse due to the anonymity such sharing creates. The
+      solution to this problem is the <command>sudo</command> program,
+      which allows certain users to execute certain commands with special
+      rights. In the most common use case, <command>sudo</command> allows a
+      trusted user to execute any command as root. To do so, the user
+      simply executes <command>sudo
+      <replaceable>command</replaceable></command> and authenticates using
+      their personal password.</para>
+
+      <para>When installed, the <emphasis role="pkg">sudo</emphasis>
+      package gives full root rights to members of the
+      <literal>sudo</literal> Unix group. To delegate other rights, the
+      administrator must use the <command>visudo</command> command, which
+      allows them to modify the <filename>/etc/sudoers</filename>
+      configuration file (here again, this will invoke the
+      <command>vi</command> editor, or any other editor indicated in the
+      <varname>EDITOR</varname> environment variable). Adding a line with
+      <literal><replaceable>username</replaceable> ALL=(ALL) ALL</literal>
+      allows the user in question to execute any command as root.</para>
+      <indexterm><primary><command>visudo</command></primary></indexterm>
+      <indexterm><primary><filename>sudoers</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/sudoers</filename></primary></indexterm>
+
+      <para>More sophisticated configurations allow authorization of only
+      specific commands to specific users. All the details of the various
+      possibilities are given in the
+      <citerefentry><refentrytitle>sudoers</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry> man page.</para>
+
+          <sidebar>
+            <title><emphasis>BACK TO BASICS</emphasis> NFS, a network filesystem</title>
+
+	    <para>NFS is a network filesystem; under Linux, it allows
+	    transparent access to remote files by including them in the
+	    local filesystem.</para>
+          </sidebar>
+    </section>
+    <section id="sect.fstab-mount-points">
+      <title>List of Mount Points</title>
+      <indexterm><primary>point, mount</primary></indexterm>
+      <indexterm><primary>mount point</primary></indexterm>
 
       <para>The <filename>/etc/fstab</filename> file gives a list of all
       possible mounts that happen either automatically on boot or manually
@@ -2291,14 +2299,6 @@ other=/dev/sda1
 	  <literal>vfat</literal>, <literal>ntfs</literal>,
 	  <literal>btrfs</literal>, <literal>xfs</literal> are a few
 	  examples.</para>
-
-          <sidebar>
-            <title><emphasis>BACK TO BASICS</emphasis> NFS, a network filesystem</title>
-
-	    <para>NFS is a network filesystem; under Linux, it allows
-	    transparent access to remote files by including them in the
-	    local filesystem.</para>
-          </sidebar>
 
 	  <para>A complete list of known filesystems is available in the
 	  <citerefentry><refentrytitle>mount</refentrytitle>
@@ -2683,21 +2683,6 @@ arrakis:/shared /shared         nfs     defaults        0       0
       <title>Compiling and Building the Package</title>
       <indexterm><primary><command>make deb-pkg</command></primary></indexterm>
 
-      <sidebar>
-        <title><emphasis>NOTE</emphasis> Clean up before rebuilding</title>
-
-	<para>If you have already compiled once in the directory and wish
-	to rebuild everything from scratch (for example, because you substantially
-	changed the kernel configuration), you will have to run
-	<command>make clean</command> to remove the compiled files.
-	<command>make distclean</command> removes even more generated files,
-	including your <filename>.config</filename> file too, so make sure to
-	backup it first. If you copied the configuration from <filename>/boot/</filename>,
-	you must change the system trusted keys option, providing an empty string
-	is enough:
-	<literal>CONFIG_SYSTEM_TRUSTED_KEYS = ""</literal>.</para>
-      </sidebar>
-
       <para>Once the kernel configuration is ready, a simple <command>make
       deb-pkg</command> will generate up to 5 Debian packages: <emphasis
       role="pkg">linux-image-<replaceable>version</replaceable></emphasis>
@@ -2731,6 +2716,21 @@ $ </computeroutput><userinput>ls ../*.deb
 ../linux-image-4.19.37-falcot_4.19.37-1_amd64.deb
 ../linux-libc-dev_4.19.37-1_amd64.deb
 </computeroutput></screen>
+
+      <sidebar>
+        <title><emphasis>NOTE</emphasis> Clean up before rebuilding</title>
+
+	<para>If you have already compiled once in the directory and wish
+	to rebuild everything from scratch (for example, because you substantially
+	changed the kernel configuration), you will have to run
+	<command>make clean</command> to remove the compiled files.
+	<command>make distclean</command> removes even more generated files,
+	including your <filename>.config</filename> file too, so make sure to
+	backup it first. If you copied the configuration from <filename>/boot/</filename>,
+	you must change the system trusted keys option, providing an empty string
+	is enough:
+	<literal>CONFIG_SYSTEM_TRUSTED_KEYS = ""</literal>.</para>
+      </sidebar>
     </section>
     <section id="sect.modules-build">
       <title>Compiling External Modules</title>

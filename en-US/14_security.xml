@@ -229,6 +229,44 @@ Created symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /l
       Systems Interconnection) model is essential to get the most from
       netfilter.</para>
 
+    <para>The firewall is configured with <emphasis>tables</emphasis>, which
+      hold <emphasis>rules</emphasis> contained in <emphasis>chains</emphasis>.
+      Unlike iptables, <emphasis>nftables</emphasis> does not have
+      any default table. The user decides which and how many tables to
+      create. Every table must have only one of the following five
+      families assigned:
+      <literal>ip</literal>, <literal>ip6</literal>,
+      <literal>inet</literal>, <literal>arp</literal> and <literal>bridge</literal>.
+      <literal>ip</literal> is used if the family is not specified.</para>
+
+      <para>There are two types of chains: <emphasis>base chains</emphasis> and
+      <emphasis>regular chains</emphasis>. A base chain is an entry
+      point for packets from the networking stack, they are registered into
+      the Netfilter hooks, ie. these chains see packets flowing through
+      the TCP/IP stack. On the other hand, and a regular chain is not
+      attached to any hook, so they do not see any traffic, but it
+      may be used as a jump target for better organization.</para>
+      <indexterm><primary>chain</primary></indexterm>
+
+      <para>Rules are made of statements, which includes some expressions
+      to be matched and then a verdict statement, like
+      <literal>accept</literal>, <literal>drop</literal>,
+      <literal>queue</literal>, <literal>continue</literal>,
+      <literal>return</literal>, <literal>jump chain</literal> and
+      <literal>goto chain</literal>.</para>
+      <indexterm><primary>rule</primary></indexterm>
+
+      <!-- TODO: Remove or replace this image
+      <figure id="figure.chaines-netfilter">
+        <title>How <emphasis>netfilter</emphasis> chains are called</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/netfilter.png" scalefit="1" width="65%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      -->
+
     <sidebar>
       <title><emphasis>CULTURE</emphasis> The OSI model</title>
       <indexterm><primary>OSI</primary><secondary>model</secondary></indexterm>
@@ -271,44 +309,6 @@ Created symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /l
       </orderedlist>
       <para>More information can be found on Wikipedia: <ulink type="block" url="https://en.wikipedia.org/wiki/Osi_model"/></para>
     </sidebar>
-
-    <para>The firewall is configured with <emphasis>tables</emphasis>, which
-      hold <emphasis>rules</emphasis> contained in <emphasis>chains</emphasis>.
-      Unlike iptables, <emphasis>nftables</emphasis> does not have
-      any default table. The user decides which and how many tables to
-      create. Every table must have only one of the following five
-      families assigned:
-      <literal>ip</literal>, <literal>ip6</literal>,
-      <literal>inet</literal>, <literal>arp</literal> and <literal>bridge</literal>.
-      <literal>ip</literal> is used if the family is not specified.</para>
-
-      <para>There are two types of chains: <emphasis>base chains</emphasis> and
-      <emphasis>regular chains</emphasis>. A base chain is an entry
-      point for packets from the networking stack, they are registered into
-      the Netfilter hooks, ie. these chains see packets flowing through
-      the TCP/IP stack. On the other hand, and a regular chain is not
-      attached to any hook, so they do not see any traffic, but it
-      may be used as a jump target for better organization.</para>
-      <indexterm><primary>chain</primary></indexterm>
-
-      <para>Rules are made of statements, which includes some expressions
-      to be matched and then a verdict statement, like
-      <literal>accept</literal>, <literal>drop</literal>,
-      <literal>queue</literal>, <literal>continue</literal>,
-      <literal>return</literal>, <literal>jump chain</literal> and
-      <literal>goto chain</literal>.</para>
-      <indexterm><primary>rule</primary></indexterm>
-
-      <!-- TODO: Remove or replace this image
-      <figure id="figure.chaines-netfilter">
-        <title>How <emphasis>netfilter</emphasis> chains are called</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/netfilter.png" scalefit="1" width="65%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-      -->
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> ICMP</title>
@@ -1793,6 +1793,24 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
       script automates those operations and forces a labeling on next boot
       (which avoids new non-labeled files created while SELinux was not yet
       active and while the labeling was going on).</para>
+
+      <sidebar>
+        <title><emphasis>GOING FURTHER</emphasis> More documentation</title>
+
+	<para>Since the NSA doesn't provide any official documentation, the
+	community set up a wiki to compensate. It brings together a lot of
+	information, but you must be aware that most SELinux contributors
+	are Fedora users (where SELinux is enabled by default). The
+	documentation thus tends to deal specifically with that
+	distribution. <ulink type="block"
+	url="https://selinuxproject.org"/></para>
+
+	<para>You should also have a look at the dedicated Debian wiki page
+	as well as Russell Coker's blog, who is one of the most active
+	Debian developers working on SELinux support. <ulink type="block"
+	url="https://wiki.debian.org/SELinux"/> <ulink type="block"
+	url="https://etbe.coker.com.au/tag/selinux/"/></para>
+      </sidebar>
     </section>
     <section id="sect.selinux-management">
       <title>Managing an SELinux System</title>
@@ -1816,23 +1834,6 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
       all those files must not be changed by hand. You should use the
       programs designed for this purpose.</para>
 
-      <sidebar>
-        <title><emphasis>GOING FURTHER</emphasis> More documentation</title>
-
-	<para>Since the NSA doesn't provide any official documentation, the
-	community set up a wiki to compensate. It brings together a lot of
-	information, but you must be aware that most SELinux contributors
-	are Fedora users (where SELinux is enabled by default). The
-	documentation thus tends to deal specifically with that
-	distribution. <ulink type="block"
-	url="https://selinuxproject.org"/></para>
-
-	<para>You should also have a look at the dedicated Debian wiki page
-	as well as Russell Coker's blog, who is one of the most active
-	Debian developers working on SELinux support. <ulink type="block"
-	url="https://wiki.debian.org/SELinux"/> <ulink type="block"
-	url="https://etbe.coker.com.au/tag/selinux/"/></para>
-      </sidebar>
       <section>
         <title>Managing SELinux Modules</title>
 

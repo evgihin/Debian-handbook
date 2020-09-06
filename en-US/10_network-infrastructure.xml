@@ -2083,50 +2083,6 @@ Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds
       only appears during an analysis of <literal>localhost</literal> and
       not when scanning <literal>mirtuel</literal> (which maps to the
       <literal>eth0</literal> interface on the same machine).</para>
-    </section>
-    <section id="sect.sniffers">
-      <title>Sniffers: <command>tcpdump</command> and <command>wireshark</command></title>
-
-      <para>Sometimes, one needs to look at what actually goes on the wire,
-      packet by packet. These cases call for a “frame analyzer”, more
-      widely known as a <emphasis>sniffer</emphasis>. Such a tool observes
-      all the packets that reach a given network interface, and displays
-      them in a user-friendly way.</para>
-      <indexterm><primary><command>tcpdump</command></primary></indexterm>
-
-      <para>The venerable tool in this domain is
-      <command>tcpdump</command>, available as a standard tool on a wide
-      range of platforms. It allows many kinds of network traffic capture,
-      but the representation of this traffic stays rather obscure. We will
-      therefore not describe it in further detail.</para>
-      <indexterm><primary><command>wireshark</command></primary></indexterm>
-
-      <para>A more recent (and more modern) tool,
-      <command>wireshark</command> (in the <emphasis
-      role="pkg">wireshark</emphasis> package), has become the new
-      reference in network traffic analysis due to its many decoding
-      modules that allow for a simplified analysis of the captured packets.
-      The packets are displayed graphically with an organization based on
-      the protocol layers. This allows a user to visualize all protocols
-      involved in a packet. For example, given a packet containing an HTTP
-      request, <command>wireshark</command> displays, separately, the
-      information concerning the physical layer, the Ethernet layer, the IP
-      packet information, the TCP connection parameters, and finally the
-      HTTP request itself.</para>
-
-      <figure id="figure.wireshark">
-        <title>The <command>wireshark</command> network traffic analyzer</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/wireshark.png" scalefit="1" width="75%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-
-      <para>In our example, the packets traveling over SSH are filtered
-      out (with the <literal>!tcp.port == 22</literal> filter). The packet
-      currently displayed was developed at the transport layer of the
-      SSHv2 protocol.</para>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> <command>wireshark</command> with no graphical interface: <command>tshark</command></title>
@@ -2146,6 +2102,50 @@ Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds
 	file can be loaded into a graphical <command>wireshark</command>
 	running on another machine.</para>
       </sidebar>
+    </section>
+    <section id="sect.sniffers">
+      <title>Sniffers: <command>tcpdump</command> and <command>wireshark</command></title>
+
+      <para>Sometimes, one needs to look at what actually goes on the wire,
+      packet by packet. These cases call for a “frame analyzer”, more
+      widely known as a <emphasis>sniffer</emphasis>. Such a tool observes
+      all the packets that reach a given network interface, and displays
+      them in a user-friendly way.</para>
+      <indexterm><primary><command>tcpdump</command></primary></indexterm>
+
+      <para>The venerable tool in this domain is
+      <command>tcpdump</command>, available as a standard tool on a wide
+      range of platforms. It allows many kinds of network traffic capture,
+      but the representation of this traffic stays rather obscure. We will
+      therefore not describe it in further detail.</para>
+      <indexterm><primary><command>wireshark</command></primary></indexterm>
+
+      <figure id="figure.wireshark">
+        <title>The <command>wireshark</command> network traffic analyzer</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/wireshark.png" scalefit="1" width="75%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>A more recent (and more modern) tool,
+      <command>wireshark</command> (in the <emphasis
+      role="pkg">wireshark</emphasis> package), has become the new
+      reference in network traffic analysis due to its many decoding
+      modules that allow for a simplified analysis of the captured packets.
+      The packets are displayed graphically with an organization based on
+      the protocol layers. This allows a user to visualize all protocols
+      involved in a packet. For example, given a packet containing an HTTP
+      request, <command>wireshark</command> displays, separately, the
+      information concerning the physical layer, the Ethernet layer, the IP
+      packet information, the TCP connection parameters, and finally the
+      HTTP request itself.</para>
+
+      <para>In our example, the packets traveling over SSH are filtered
+      out (with the <literal>!tcp.port == 22</literal> filter). The packet
+      currently displayed was developed at the transport layer of the
+      SSHv2 protocol.</para>
     </section>
   </section>
 </chapter>

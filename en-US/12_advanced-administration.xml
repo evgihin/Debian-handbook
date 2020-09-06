@@ -90,18 +90,6 @@
       failure, data can be losslessly reconstructed from the remaining
       disks.</para>
 
-      <sidebar>
-        <title><emphasis>CULTURE</emphasis> <foreignphrase>Independent</foreignphrase> or <foreignphrase>inexpensive</foreignphrase>?</title>
-
-	<para>The I in RAID initially stood for
-	<emphasis>inexpensive</emphasis>, because RAID allowed a drastic
-	increase in data safety without requiring investing in expensive
-	high-end disks. Probably due to image concerns, however, it is now
-	more customarily considered to stand for
-	<emphasis>independent</emphasis>, which doesn't have the unsavory
-	flavor of cheapness.</para>
-      </sidebar>
-
       <para>RAID can be implemented either by dedicated hardware (RAID
       modules integrated into SCSI or SATA controller cards) or by software
       abstraction (the kernel). Whether hardware or software, a RAID system
@@ -124,6 +112,18 @@
       different (depending on the driver).</para>
 
       <para>We only focus on software RAID in this book.</para>
+
+      <sidebar>
+        <title><emphasis>CULTURE</emphasis> <foreignphrase>Independent</foreignphrase> or <foreignphrase>inexpensive</foreignphrase>?</title>
+
+	<para>The I in RAID initially stood for
+	<emphasis>inexpensive</emphasis>, because RAID allowed a drastic
+	increase in data safety without requiring investing in expensive
+	high-end disks. Probably due to image concerns, however, it is now
+	more customarily considered to stand for
+	<emphasis>independent</emphasis>, which doesn't have the unsavory
+	flavor of cheapness.</para>
+      </sidebar>
 
       <section id="sect.raid-levels">
         <title>Different RAID Levels</title>
@@ -190,6 +190,17 @@
 	      set up on more than two disks, with a direct impact on the
 	      ratio of hardware cost versus available payload space.</para>
 
+	      <para>This RAID level, although expensive (since only half of
+	      the physical storage space, at best, is useful), is widely
+	      used in practice. It is simple to understand, and it allows
+	      very simple backups: since both disks have identical
+	      contents, one of them can be temporarily extracted with no
+	      impact on the working system. Read performance is often
+	      increased since the kernel can read half of the data on each
+	      disk in parallel, while write performance isn't too severely
+	      degraded. In case of a RAID-1 array of N disks, the data
+	      stays available even with N-1 disk failures.</para>
+
               <sidebar>
                 <title><emphasis>NOTE</emphasis> Disks and cluster sizes</title>
 
@@ -231,17 +242,6 @@
 		instead of the nine disks that would be required by three
 		triplets.</para>
               </sidebar>
-
-	      <para>This RAID level, although expensive (since only half of
-	      the physical storage space, at best, is useful), is widely
-	      used in practice. It is simple to understand, and it allows
-	      very simple backups: since both disks have identical
-	      contents, one of them can be temporarily extracted with no
-	      impact on the working system. Read performance is often
-	      increased since the kernel can read half of the data on each
-	      disk in parallel, while write performance isn't too severely
-	      degraded. In case of a RAID-1 array of N disks, the data
-	      stays available even with N-1 disk failures.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1016,6 +1016,22 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
 	what VG to operate on, of course, hence the last parameter on the
 	command line.</para>
 
+	<para>Logical volumes, once created, end up as block device files
+	in <filename>/dev/mapper/</filename>:</para>
+
+        <screen><computeroutput># </computeroutput><userinput>ls -l /dev/mapper</userinput>
+<computeroutput>total 0
+crw------- 1 root root 10, 236 Jun 10 16:52 control
+lrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_base -&gt; ../dm-1
+lrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_files -&gt; ../dm-0
+lrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_normal-lv_backups -&gt; ../dm-2
+# </computeroutput><userinput>ls -l /dev/dm-*</userinput>
+<computeroutput>brw-rw---T 1 root disk 253, 0 Jun 10 17:05 /dev/dm-0
+brw-rw---- 1 root disk 253, 1 Jun 10 17:05 /dev/dm-1
+brw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2
+</computeroutput>
+</screen>
+
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> <command>lvcreate</command> options</title>
 
@@ -1047,22 +1063,6 @@ ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:905077
 	  up some space on <filename>sdb2</filename> with the
 	  <command>pvmove</command> command.</para>
         </sidebar>
-
-	<para>Logical volumes, once created, end up as block device files
-	in <filename>/dev/mapper/</filename>:</para>
-
-        <screen><computeroutput># </computeroutput><userinput>ls -l /dev/mapper</userinput>
-<computeroutput>total 0
-crw------- 1 root root 10, 236 Jun 10 16:52 control
-lrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_base -&gt; ../dm-1
-lrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_critical-lv_files -&gt; ../dm-0
-lrwxrwxrwx 1 root root       7 Jun 10 17:05 vg_normal-lv_backups -&gt; ../dm-2
-# </computeroutput><userinput>ls -l /dev/dm-*</userinput>
-<computeroutput>brw-rw---T 1 root disk 253, 0 Jun 10 17:05 /dev/dm-0
-brw-rw---- 1 root disk 253, 1 Jun 10 17:05 /dev/dm-1
-brw-rw---- 1 root disk 253, 2 Jun 10 17:05 /dev/dm-2
-</computeroutput>
-</screen>
 
         <sidebar>
           <title><emphasis>NOTE</emphasis> Auto-detecting LVM volumes</title>
@@ -1258,14 +1258,6 @@ The filesystem on /dev/vg_critical/lv_files is now 1572864 (4k) blocks long.
       appropriate answer will of course depend on current and foreseeable
       requirements.</para>
 
-      <para>There are a few simple cases where the question doesn't really
-      arise. If the requirement is to safeguard data against hardware
-      failures, then obviously RAID will be set up on a redundant array of
-      disks, since LVM doesn't really address this problem. If, on the
-      other hand, the need is for a flexible storage scheme where the
-      volumes are made independent of the physical layout of the disks,
-      RAID doesn't help much and LVM will be the natural choice.</para>
-
       <sidebar>
         <title><emphasis>NOTE</emphasis> If performance matters…</title>
 
@@ -1291,6 +1283,14 @@ The filesystem on /dev/vg_critical/lv_files is now 1572864 (4k) blocks long.
 	performance aspect is most easily handled by using
 	SSDs.</para>
       </sidebar>
+
+      <para>There are a few simple cases where the question doesn't really
+      arise. If the requirement is to safeguard data against hardware
+      failures, then obviously RAID will be set up on a redundant array of
+      disks, since LVM doesn't really address this problem. If, on the
+      other hand, the need is for a flexible storage scheme where the
+      volumes are made independent of the physical layout of the disks,
+      RAID doesn't help much and LVM will be the natural choice.</para>
 
       <para>The third notable use case is when one just wants to
       aggregate two disks into one volume, either for performance
@@ -1390,32 +1390,6 @@ Device    Boot     Start       End   Sectors Size Id Type
         </listitem>
       </itemizedlist>
 
-      <para>Once the VGs are created, they can be partitioned in a very
-      flexible way. One must keep in mind that LVs created in
-      <filename>vg_raid</filename> will be preserved even if one of the
-      disks fails, which will not be the case for LVs created in
-      <filename>vg_bulk</filename>; on the other hand, the latter will be
-      allocated in parallel on both disks, which allows higher read or
-      write speeds for large files.</para>
-
-      <para>We will therefore create the
-      <filename>lv_var</filename> and <filename>lv_home</filename> LVs on
-      <filename>vg_raid</filename>, to host the matching filesystems;
-      another large LV, <filename>lv_movies</filename>, will be used to
-      host the definitive versions of movies after editing. The other VG
-      will be split into a large <filename>lv_rushes</filename>, for data
-      straight out of the digital video cameras, and a
-      <filename>lv_tmp</filename> for temporary files. The location of the
-      work area is a less straightforward choice to make: while good
-      performance is needed for that volume, is it worth risking losing
-      work if a disk fails during an editing session? Depending on the
-      answer to that question, the relevant LV will be created on one VG or
-      the other.</para>
-
-      <para>We now have both some redundancy for important data and much
-      flexibility in how the available space is split across the
-      applications.</para>
-
       <sidebar>
         <title><emphasis>NOTE</emphasis> Why three RAID-1 volumes?</title>
 
@@ -1455,6 +1429,32 @@ Device    Boot     Start       End   Sectors Size Id Type
 	<filename>lv_rushes</filename> logical volume can then be grown
 	according to requirements.</para>
       </sidebar>
+
+      <para>Once the VGs are created, they can be partitioned in a very
+      flexible way. One must keep in mind that LVs created in
+      <filename>vg_raid</filename> will be preserved even if one of the
+      disks fails, which will not be the case for LVs created in
+      <filename>vg_bulk</filename>; on the other hand, the latter will be
+      allocated in parallel on both disks, which allows higher read or
+      write speeds for large files.</para>
+
+      <para>We will therefore create the
+      <filename>lv_var</filename> and <filename>lv_home</filename> LVs on
+      <filename>vg_raid</filename>, to host the matching filesystems;
+      another large LV, <filename>lv_movies</filename>, will be used to
+      host the definitive versions of movies after editing. The other VG
+      will be split into a large <filename>lv_rushes</filename>, for data
+      straight out of the digital video cameras, and a
+      <filename>lv_tmp</filename> for temporary files. The location of the
+      work area is a less straightforward choice to make: while good
+      performance is needed for that volume, is it worth risking losing
+      work if a disk fails during an editing session? Depending on the
+      answer to that question, the relevant LV will be created on one VG or
+      the other.</para>
+
+      <para>We now have both some redundancy for important data and much
+      flexibility in how the available space is split across the
+      applications.</para>
     </section>
   </section>
   <section id="sect.virtualization">
@@ -1565,6 +1565,37 @@ Device    Boot     Start       End   Sectors Size Id Type
       virtualization systems, while a <emphasis>domU</emphasis> can be seen
       as a “guest”.</para>
 
+      <para>Using Xen under Debian requires three components:</para>
+      <itemizedlist>
+        <listitem>
+	  <para>The hypervisor itself. According to the available hardware,
+          the appropriate package will be either
+          <emphasis role="pkg">xen-hypervisor-4.11-amd64</emphasis>,
+          <emphasis role="pkg">xen-hypervisor-4.11-armhf</emphasis>,
+          or <emphasis role="pkg">xen-hypervisor-4.11-arm64</emphasis>.</para>
+        </listitem>
+        <listitem>
+	  <para>A kernel that runs on that hypervisor. Any kernel more
+	  recent than 3.0 will do, including the 4.19 version present
+	  in <emphasis role="distribution">Buster</emphasis>.</para>
+        </listitem>
+        <listitem>
+	  <para>The i386 architecture also requires a standard library with
+	  the appropriate patches taking advantage of Xen; this is in the
+	  <emphasis role="pkg">libc6-xen</emphasis> package.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The hypervisor also
+      brings <emphasis role="pkg">xen-utils-4.11</emphasis>, which
+      contains tools to control the hypervisor from the dom0. This in
+      turn brings the appropriate standard library. During the
+      installation of all that, configuration scripts also create a
+      new entry in the GRUB bootloader menu, so as to start the chosen
+      kernel in a Xen dom0. Note, however, that this entry is not
+      usually set to be the first one in the list, but it will 
+      be selected by default.</para>
+
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and the various versions of Linux</title>
 
@@ -1600,6 +1631,15 @@ Device    Boot     Start       End   Sectors Size Id Type
       </sidebar>
 
       <sidebar>
+        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
+
+        <para>Xen is currently only available for the i386, amd64, arm64
+        and armhf architectures.</para>
+	<!-- FIXME extend sidebar block vertically -->
+	<para>.</para>
+      </sidebar>
+
+      <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and non-Linux kernels</title>
 
 	<para>Xen requires modifications to all the operating systems
@@ -1617,44 +1657,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	processors), even non-modified operating systems can run as domU
 	(including Windows).</para>
       </sidebar>
-
-      <sidebar>
-        <title><emphasis>NOTE</emphasis> Architectures compatible with Xen</title>
-
-        <para>Xen is currently only available for the i386, amd64, arm64
-        and armhf architectures.</para>
-      </sidebar>
-
-      <para>Using Xen under Debian requires three components:</para>
-      <itemizedlist>
-        <listitem>
-	  <para>The hypervisor itself. According to the available hardware,
-          the appropriate package will be either
-          <emphasis role="pkg">xen-hypervisor-4.11-amd64</emphasis>,
-          <emphasis role="pkg">xen-hypervisor-4.11-armhf</emphasis>,
-          or <emphasis role="pkg">xen-hypervisor-4.11-arm64</emphasis>.</para>
-        </listitem>
-        <listitem>
-	  <para>A kernel that runs on that hypervisor. Any kernel more
-	  recent than 3.0 will do, including the 4.19 version present
-	  in <emphasis role="distribution">Buster</emphasis>.</para>
-        </listitem>
-        <listitem>
-	  <para>The i386 architecture also requires a standard library with
-	  the appropriate patches taking advantage of Xen; this is in the
-	  <emphasis role="pkg">libc6-xen</emphasis> package.</para>
-        </listitem>
-      </itemizedlist>
-
-      <para>The hypervisor also
-      brings <emphasis role="pkg">xen-utils-4.11</emphasis>, which
-      contains tools to control the hypervisor from the dom0. This in
-      turn brings the appropriate standard library. During the
-      installation of all that, configuration scripts also create a
-      new entry in the GRUB bootloader menu, so as to start the chosen
-      kernel in a Xen dom0. Note, however, that this entry is not
-      usually set to be the first one in the list, but it will 
-      be selected by default.</para>
 
       <para>Once these prerequisites are installed, the next step is to
       test the behavior of the dom0 by itself; this involves a reboot to
@@ -1693,13 +1695,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  be used (with a distribution name such as <emphasis
 	  role="distribution">buster</emphasis>).</para>
 
-          <sidebar>
-            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
-
-	    <para>In case of a non-Linux system, care should be taken to
-	    define the kernel the domU must use, using the
-	    <literal>--kernel</literal> option.</para>
-          </sidebar>
         </listitem>
         <listitem>
 	  <para><literal>--dhcp</literal> states that the domU's network
@@ -1718,6 +1713,18 @@ Device    Boot     Start       End   Sectors Size Id Type
 	  <command>xen-create-image</command> will then create a new
 	  logical volume inside that group, and this logical volume will be
 	  made available to the domU as a hard disk drive.</para>
+        </listitem>
+      </itemizedlist>
+
+          <sidebar>
+            <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
+
+	    <para>In case of a non-Linux system, care should be taken to
+	    define the kernel the domU must use, using the
+	    <literal>--kernel</literal> option.</para>
+	    <!-- FIXME extend sidebar block vertically -->
+	    <para>.</para>
+          </sidebar>
 
           <sidebar>
             <title><emphasis>NOTE</emphasis> Storage in the domU</title>
@@ -1729,8 +1736,6 @@ Device    Boot     Start       End   Sectors Size Id Type
 	    Xen image's configuration file is in order after its initial
 	    creation with <command>xen-create-image</command>.</para>
           </sidebar>
-        </listitem>
-      </itemizedlist>
 
       <para>Once these choices are made, we can create the image for our
       future Xen domU:</para>
@@ -1945,6 +1950,11 @@ testxen login: </computeroutput>
       also that Xen is so far incompatible with a large part of ACPI power
       management, which precludes suspending the host (dom0) system.</para>
 
+      <para>Halting or rebooting a domU can be done either from within the
+      domU (with the <command>shutdown</command> command) or from the dom0,
+      with <command>xl shutdown</command> or <command>xl
+      reboot</command>.</para>
+
       <sidebar>
         <title><emphasis>DOCUMENTATION</emphasis> <command>xl</command> options</title>
 
@@ -1953,11 +1963,6 @@ testxen login: </computeroutput>
 	described in the <citerefentry><refentrytitle>xl</refentrytitle>
 	<manvolnum>1</manvolnum></citerefentry> manual page.</para>
       </sidebar>
-
-      <para>Halting or rebooting a domU can be done either from within the
-      domU (with the <command>shutdown</command> command) or from the dom0,
-      with <command>xl shutdown</command> or <command>xl
-      reboot</command>.</para>
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Advanced Xen</title>
@@ -2862,6 +2867,18 @@ warning: centos-release-7-6.1810.2.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
 	installation is to save them into the configuration for
 	<command>isolinux</command> (in the CD-ROM case) or
 	<command>syslinux</command> (USB key).</para>
+
+        <sidebar>
+          <title><emphasis>DOCUMENTATION</emphasis> Installation guide appendix</title>
+
+	  <para>The installation guide, available online, includes detailed
+	  documentation on the use of a preseed file in an appendix. It
+	  also includes a detailed and commented sample file, which can
+	  serve as a base for local customizations. <ulink type="block"
+	  url="https://www.debian.org/releases/stable/amd64/apb"/>
+	  <ulink type="block"
+	  url="https://www.debian.org/releases/stable/example-preseed.txt"/></para>
+        </sidebar>
       </section>
       <section>
         <title>Creating a Preseed File</title>
@@ -2902,18 +2919,6 @@ warning: centos-release-7-6.1810.2.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
 	be preseeded; using the <literal>priority=critical</literal> boot
 	parameter will instruct Debconf to only ask critical questions, and
 	use the default answer for others.</para>
-
-        <sidebar>
-          <title><emphasis>DOCUMENTATION</emphasis> Installation guide appendix</title>
-
-	  <para>The installation guide, available online, includes detailed
-	  documentation on the use of a preseed file in an appendix. It
-	  also includes a detailed and commented sample file, which can
-	  serve as a base for local customizations. <ulink type="block"
-	  url="https://www.debian.org/releases/stable/amd64/apb"/>
-	  <ulink type="block"
-	  url="https://www.debian.org/releases/stable/example-preseed.txt"/></para>
-        </sidebar>
       </section>
       <section>
         <title>Creating a Customized Boot Media</title>
@@ -3230,39 +3235,6 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
 	a symbolic link in <filename>/etc/munin/plugins/</filename> are
 	really used.</para>
 
-	<para>When the package is installed, a set of active plugins is
-	determined based on the available software and the current
-	configuration of the host. However, this autoconfiguration depends
-	on a feature that each plugin must provide, and it is usually a
-        good idea to review and tweak the results by hand. Browsing
-        the Plugin Gallery<footnote><para><ulink type="block"
-        url="http://gallery.munin-monitoring.org"/></para></footnote>
-        can be interesting even though not all plugins have comprehensive
-        documentation. However, all plugins are scripts and most are rather simple and
-	well-commented. Browsing <filename>/etc/munin/plugins/</filename>
-	is therefore a good way of getting an idea of what each plugin is
-	about and determining which should be removed. Similarly, enabling
-	an interesting plugin found in
-	<filename>/usr/share/munin/plugins/</filename> is a simple matter
-	of setting up a symbolic link with <command>ln -sf
-	/usr/share/munin/plugins/<replaceable>plugin</replaceable>
-	/etc/munin/plugins/</command>. Note that when a plugin name ends
-	with an underscore “_”, the plugin requires a parameter. This
-	parameter must be stored in the name of the symbolic link; for
-	instance, the “if_” plugin must be enabled with a
-	<filename>if_eth0</filename> symbolic link, and it will monitor
-	network traffic on the eth0 interface.</para>
-
-	<para>Once all plugins are correctly set up, the daemon
-	configuration must be updated to describe access control for the
-	collected data. This involves <literal>allow</literal> directives
-	in the <filename>/etc/munin/munin-node.conf</filename> file. The
-	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
-	and only allows access to the local host. An administrator will
-	usually add a similar line containing the IP address of the grapher
-	host, then restart the daemon with <command>systemctl restart 
-	munin-node</command>.</para>
-
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Creating local plugins</title>
 
@@ -3310,6 +3282,39 @@ load.info 5 minute load average
 	  according to whether the plugin should be enabled on this
 	  host.</para>
         </sidebar>
+
+	<para>When the package is installed, a set of active plugins is
+	determined based on the available software and the current
+	configuration of the host. However, this autoconfiguration depends
+	on a feature that each plugin must provide, and it is usually a
+        good idea to review and tweak the results by hand. Browsing
+        the Plugin Gallery<footnote><para><ulink type="block"
+        url="http://gallery.munin-monitoring.org"/></para></footnote>
+        can be interesting even though not all plugins have comprehensive
+        documentation. However, all plugins are scripts and most are rather simple and
+	well-commented. Browsing <filename>/etc/munin/plugins/</filename>
+	is therefore a good way of getting an idea of what each plugin is
+	about and determining which should be removed. Similarly, enabling
+	an interesting plugin found in
+	<filename>/usr/share/munin/plugins/</filename> is a simple matter
+	of setting up a symbolic link with <command>ln -sf
+	/usr/share/munin/plugins/<replaceable>plugin</replaceable>
+	/etc/munin/plugins/</command>. Note that when a plugin name ends
+	with an underscore “_”, the plugin requires a parameter. This
+	parameter must be stored in the name of the symbolic link; for
+	instance, the “if_” plugin must be enabled with a
+	<filename>if_eth0</filename> symbolic link, and it will monitor
+	network traffic on the eth0 interface.</para>
+
+	<para>Once all plugins are correctly set up, the daemon
+	configuration must be updated to describe access control for the
+	collected data. This involves <literal>allow</literal> directives
+	in the <filename>/etc/munin/munin-node.conf</filename> file. The
+	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
+	and only allows access to the local host. An administrator will
+	usually add a similar line containing the IP address of the grapher
+	host, then restart the daemon with <command>systemctl restart 
+	munin-node</command>.</para>
       </section>
       <section>
         <title>Configuring the Grapher</title>

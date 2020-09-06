@@ -953,6 +953,23 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
           installation on its own, without having to stay there staring at
           the screen waiting for questions.</para>
         </sidebar>
+
+      <sidebar id="sidebar.questions-conffiles-bis">
+        <title><emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions</title>
+        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary></indexterm>
+
+        <para>The <command>--force-confask</command> option requires
+        <command>dpkg</command> to display the questions about the
+        configuration files, even in cases where they would not normally be
+        necessary. Thus, when reinstalling a package with this option,
+        <command>dpkg</command> will ask the questions again for all of the
+        configuration files modified or deleted by the administrator. This is
+        very convenient, especially for reinstalling the original configuration
+        file if it has been deleted and no other copy is available: a normal
+        re-installation won't work, because <command>dpkg</command> considers
+        removal as a form of legitimate modification, and, thus, doesn't
+        install the desired configuration file.</para>
+      </sidebar>
       </section>
     </section>
 
@@ -976,51 +993,6 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
       since their installation. Note that when this file doesn't exist,
       <command>dpkg</command> will generate it dynamically at installation time
       (and store it in the dpkg database just like other control files).</para>
-
-      <para><filename>conffiles</filename> lists package files that must be
-      handled as configuration files (see also
-      <citerefentry><refentrytitle>deb-conffiles</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
-      Configuration files can be modified by the administrator, and
-      <command>dpkg</command> will try to preserve those changes during a
-      package update.</para>
-
-      <para>In effect, in this situation, <command>dpkg</command> behaves
-      as intelligently as possible: if the standard configuration file has
-      not changed between the two versions, it does nothing. If, however,
-      the file has changed, it will try to update this file. Two cases are
-      possible: either the administrator has not touched this configuration
-      file, in which case <command>dpkg</command> automatically installs
-      the new version; or the file has been modified, in which case
-      <command>dpkg</command> asks the administrator which version they
-      wish to use (the old one with modifications, or the new one provided
-      with the package). To assist in making this decision,
-      <command>dpkg</command> offers to display a
-      “<command>diff</command>” that shows the difference between the
-      two versions. If the user chooses to retain the old version, the new
-      one will be stored in the same location in a file with the
-      <filename>.dpkg-dist</filename> suffix. If the user chooses the new
-      version, the old one is retained in a file with the
-      <filename>.dpkg-old</filename> suffix. Another available action
-      consists of momentarily interrupting <command>dpkg</command> to edit
-      the file and attempt to re-instate the relevant modifications
-      (previously identified with <command>diff</command>).</para>
-
-      <sidebar id="sidebar.questions-conffiles-bis">
-        <title><emphasis>GOING FURTHER</emphasis> Force dpkg to ask configuration file questions</title>
-        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary></indexterm>
-
-        <para>The <command>--force-confask</command> option requires
-        <command>dpkg</command> to display the questions about the
-        configuration files, even in cases where they would not normally be
-        necessary. Thus, when reinstalling a package with this option,
-        <command>dpkg</command> will ask the questions again for all of the
-        configuration files modified or deleted by the administrator. This is
-        very convenient, especially for reinstalling the original configuration
-        file if it has been deleted and no other copy is available: a normal
-        re-installation won't work, because <command>dpkg</command> considers
-        removal as a form of legitimate modification, and, thus, doesn't
-        install the desired configuration file.</para>
-      </sidebar>
 
       <sidebar id="sidebar.questions-conffiles">
         <title><emphasis>GOING FURTHER</emphasis> Avoiding the configuration file questions</title>
@@ -1074,39 +1046,13 @@ DPkg::options { "--force-confdef"; "--force-confold"; }
         will also be used in a graphical interface such as
         <command>aptitude</command>.</para>
       </sidebar>
-    </section>
-  </section>
 
-  <section id="sect.source-package-structure">
-    <title>Structure of a Source Package</title>
-    <indexterm><primary>package</primary><secondary>source package</secondary></indexterm>
-    <indexterm><primary>source</primary><secondary>package</secondary></indexterm>
-
-    <section>
-      <title>Format</title>
-      <indexterm><primary>DSC file</primary></indexterm>
-      <indexterm><primary><filename>dsc</filename> file</primary></indexterm>
-      <indexterm><primary><filename>diff.gz</filename> file</primary></indexterm>
-      <indexterm><primary><filename>debian.tar.gz</filename> file</primary></indexterm>
-      <indexterm><primary><filename>orig.tar.gz</filename> file</primary></indexterm>
-      <indexterm><primary><filename>.dsc</filename></primary></indexterm>
-      <indexterm><primary>Debian Source Control</primary><see><filename>.dsc</filename></see></indexterm>
-
-      <para>A source package is usually comprised of three files, a
-      <filename>.dsc</filename>, a <filename>.orig.tar.gz</filename>, and a
-      <filename>.debian.tar.xz</filename> (or <filename>.diff.gz</filename>).
-      They allow creation of binary packages (<filename>.deb</filename>
-      files described above) from the source code files of the program,
-      which are written in a programming language.</para>
-
-      <para>The <filename>.dsc</filename> (Debian Source Control) file is a
-      short text file containing an RFC 2822 header (just like the
-      <filename>control</filename> file studied in <xref
-      linkend="sect.control"/>) which describes the source package and
-      indicates which other files are part thereof. It is signed by its
-      maintainer, which guarantees authenticity. See <xref
-      linkend="sect.package-authentication"/> for further details on this
-      subject.</para>
+      <para><filename>conffiles</filename> lists package files that must be
+      handled as configuration files (see also
+      <citerefentry><refentrytitle>deb-conffiles</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
+      Configuration files can be modified by the administrator, and
+      <command>dpkg</command> will try to preserve those changes during a
+      package update.</para>
 
       <example>
         <title>A <filename>.dsc</filename> file</title>
@@ -1155,13 +1101,26 @@ L0GQhKlViDuu8gzsqm7efPEhPcsF1A==
 ]]></programlisting>
       </example>
 
-      <indexterm><primary><literal>Build-Depends</literal>, header field</primary></indexterm>
-      <indexterm><primary>package</primary><secondary>build dependencies</secondary></indexterm>
-
-      <para>Note that the source package also has dependencies
-      (<literal>Build-Depends</literal>) completely distinct from those of
-      binary packages, since they indicate tools required to compile the
-      software in question and construct its binary package.</para>
+      <para>In effect, in this situation, <command>dpkg</command> behaves
+      as intelligently as possible: if the standard configuration file has
+      not changed between the two versions, it does nothing. If, however,
+      the file has changed, it will try to update this file. Two cases are
+      possible: either the administrator has not touched this configuration
+      file, in which case <command>dpkg</command> automatically installs
+      the new version; or the file has been modified, in which case
+      <command>dpkg</command> asks the administrator which version they
+      wish to use (the old one with modifications, or the new one provided
+      with the package). To assist in making this decision,
+      <command>dpkg</command> offers to display a
+      “<command>diff</command>” that shows the difference between the
+      two versions. If the user chooses to retain the old version, the new
+      one will be stored in the same location in a file with the
+      <filename>.dpkg-dist</filename> suffix. If the user chooses the new
+      version, the old one is retained in a file with the
+      <filename>.dpkg-old</filename> suffix. Another available action
+      consists of momentarily interrupting <command>dpkg</command> to edit
+      the file and attempt to re-instate the relevant modifications
+      (previously identified with <command>diff</command>).</para>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Distinct namespaces</title>
@@ -1177,6 +1136,40 @@ L0GQhKlViDuu8gzsqm7efPEhPcsF1A==
         <literal>Binary</literal> fields to explicitly name the source package and
         store the list of binary packages that it generates.</para>
       </sidebar>
+
+    </section>
+  </section>
+
+  <section id="sect.source-package-structure">
+    <title>Structure of a Source Package</title>
+    <indexterm><primary>package</primary><secondary>source package</secondary></indexterm>
+    <indexterm><primary>source</primary><secondary>package</secondary></indexterm>
+
+    <section>
+      <title>Format</title>
+      <indexterm><primary>DSC file</primary></indexterm>
+      <indexterm><primary><filename>dsc</filename> file</primary></indexterm>
+      <indexterm><primary><filename>diff.gz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>debian.tar.gz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>orig.tar.gz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>.dsc</filename></primary></indexterm>
+      <indexterm><primary>Debian Source Control</primary><see><filename>.dsc</filename></see></indexterm>
+
+      <para>A source package is usually comprised of three files, a
+      <filename>.dsc</filename>, a <filename>.orig.tar.gz</filename>, and a
+      <filename>.debian.tar.xz</filename> (or <filename>.diff.gz</filename>).
+      They allow creation of binary packages (<filename>.deb</filename>
+      files described above) from the source code files of the program,
+      which are written in a programming language.</para>
+
+      <para>The <filename>.dsc</filename> (Debian Source Control) file is a
+      short text file containing an RFC 2822 header (just like the
+      <filename>control</filename> file studied in <xref
+      linkend="sect.control"/>) which describes the source package and
+      indicates which other files are part thereof. It is signed by its
+      maintainer, which guarantees authenticity. See <xref
+      linkend="sect.package-authentication"/> for further details on this
+      subject.</para>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Why divide into several packages</title>
@@ -1203,6 +1196,14 @@ L0GQhKlViDuu8gzsqm7efPEhPcsF1A==
         of the architectures (instead of having the documentation
         duplicated in the packages for each architecture).</para>
       </sidebar>
+
+      <indexterm><primary><literal>Build-Depends</literal>, header field</primary></indexterm>
+      <indexterm><primary>package</primary><secondary>build dependencies</secondary></indexterm>
+
+      <para>Note that the source package also has dependencies
+      (<literal>Build-Depends</literal>) completely distinct from those of
+      binary packages, since they indicate tools required to compile the
+      software in question and construct its binary package.</para>
 
       <sidebar>
         <title><emphasis>PERSPECTIVE</emphasis> Different source package formats</title>
@@ -1250,6 +1251,41 @@ L0GQhKlViDuu8gzsqm7efPEhPcsF1A==
       of a <filename>debian</filename> directory containing the instructions to
       execute to construct a Debian package.</para>
 
+    </section>
+
+    <section>
+      <title>Usage within Debian</title>
+
+      <para>The source package is the foundation of everything in Debian.
+      All Debian packages come from a source package, and each modification
+      in a Debian package is the consequence of a modification made to the
+      source package. The Debian maintainers work with the source package,
+      knowing, however, the consequences of their actions on the binary
+      packages. The fruits of their labors are thus found in the source
+      packages available from Debian: you can easily go back to them and
+      everything stems from them.</para>
+
+      <para>When a new version of a package (source package and one or more
+      binary packages) arrives on the Debian server, the source package is
+      the most important. Indeed, it will then be used by a network of
+      machines of different architectures for compilation on the various
+      architectures supported by Debian. The fact that the developer also
+      sends one or more binary packages for a given architecture (usually
+      i386 or amd64) is relatively unimportant, since these could just as
+      well have been automatically generated. <ulink type="block"
+      url="https://buildd.debian.org/"/></para>
+
+      <sidebar>
+        <title><emphasis>GOING FURTHER</emphasis> Source only maintainer uploads</title>
+
+        <para>Right after the release of Debian 10 <emphasis
+        role="distribution">Buster</emphasis> the <link
+        linkend="srm-team">Release Team</link> announced that maintainer
+        binary uploads will no longer be accepted for <literal>main</literal>
+        and all binary packages in this component will be built automatically
+        from mandatory source-only uploads.</para>
+      </sidebar>
+
       <sidebar>
         <title><emphasis>TOOL</emphasis> Decompressing a source package</title>
         <indexterm><primary><command>dpkg-source</command></primary></indexterm>
@@ -1296,40 +1332,6 @@ dpkg-source: info: extracting zim in zim-0.68
 dpkg-source: info: unpacking zim_0.68.orig.tar.gz
 dpkg-source: info: unpacking zim_0.68-1.debian.tar.xz
 ]]></computeroutput></screen>
-      </sidebar>
-    </section>
-
-    <section>
-      <title>Usage within Debian</title>
-
-      <para>The source package is the foundation of everything in Debian.
-      All Debian packages come from a source package, and each modification
-      in a Debian package is the consequence of a modification made to the
-      source package. The Debian maintainers work with the source package,
-      knowing, however, the consequences of their actions on the binary
-      packages. The fruits of their labors are thus found in the source
-      packages available from Debian: you can easily go back to them and
-      everything stems from them.</para>
-
-      <para>When a new version of a package (source package and one or more
-      binary packages) arrives on the Debian server, the source package is
-      the most important. Indeed, it will then be used by a network of
-      machines of different architectures for compilation on the various
-      architectures supported by Debian. The fact that the developer also
-      sends one or more binary packages for a given architecture (usually
-      i386 or amd64) is relatively unimportant, since these could just as
-      well have been automatically generated. <ulink type="block"
-      url="https://buildd.debian.org/"/></para>
-
-      <sidebar>
-        <title><emphasis>GOING FURTHER</emphasis> Source only maintainer uploads</title>
-
-        <para>Right after the release of Debian 10 <emphasis
-        role="distribution">Buster</emphasis> the <link
-        linkend="srm-team">Release Team</link> announced that maintainer
-        binary uploads will no longer be accepted for <literal>main</literal>
-        and all binary packages in this component will be built automatically
-        from mandatory source-only uploads.</para>
       </sidebar>
     </section>
   </section>
@@ -1485,6 +1487,16 @@ E: Unmet dependencies. Try using -f.</computeroutput></screen>
         the <literal>stable-backports</literal> one (see <xref
         linkend="sect.apt-sources.list.stable.backports"/>).</para>
       </sidebar>
+
+      <sidebar>
+        <title><emphasis>BACK TO BASICS</emphasis> Option syntax</title>
+
+        <para>Most options are available in a “long” version (one or
+        more relevant words, preceded by a double dash) and a “short”
+        version (a single letter, often the initial of one word from the
+        long version, and preceded by a single dash). This convention is so
+        common that it is a POSIX standard.</para>
+      </sidebar>
     </section>
 
     <section>
@@ -1517,44 +1529,6 @@ Purging configuration files for debian-cd (3.1.25) ...
 </computeroutput>
 </screen>
       </example>
-    </section>
-
-    <section id="sect.dpkg-list">
-      <title>Querying <command>dpkg</command>'s Database and Inspecting <filename>.deb</filename> Files</title>
-      <indexterm><primary>package</primary><secondary>status</secondary></indexterm>
-      <indexterm><primary>package</primary><secondary>file list</secondary></indexterm>
-      <indexterm><primary>package</primary><secondary>content inspection</secondary></indexterm>
-
-      <sidebar>
-        <title><emphasis>BACK TO BASICS</emphasis> Option syntax</title>
-
-        <para>Most options are available in a “long” version (one or
-        more relevant words, preceded by a double dash) and a “short”
-        version (a single letter, often the initial of one word from the
-        long version, and preceded by a single dash). This convention is so
-        common that it is a POSIX standard.</para>
-      </sidebar>
-
-      <para>Before concluding this section, we will study
-      <command>dpkg</command> options that query the internal database in
-      order to obtain information. Giving first the long options and then
-      corresponding short options (that will evidently take the same
-      possible arguments) we cite <literal>--listfiles
-      <replaceable>package</replaceable></literal> (or
-      <literal>-L</literal>), which lists the files installed by this
-      package; <literal>--search <replaceable>file</replaceable></literal>
-      (or <literal>-S</literal>), which finds the package(s) containing the
-      file; <literal>--status
-      <replaceable>package</replaceable></literal> (or
-      <literal>-s</literal>), which displays the headers of an installed
-      package; <literal>--list</literal> (or <literal>-l</literal>), which
-      displays the list of packages known to the system and their
-      installation status; <literal>--contents
-      <replaceable>file.deb</replaceable></literal> (or
-      <literal>-c</literal>), which lists the files in the Debian package
-      specified; <literal>--info<replaceable> file.deb
-      </replaceable></literal> (or <literal>-I</literal>), which displays
-      the headers of this Debian package.</para>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> <command>dpkg --search</command> and merged <filename>/usr</filename></title>
@@ -1585,6 +1559,34 @@ $ <userinput>dpkg --search /usr/bin/apt</userinput>
 apt: /usr/bin/apt
         </screen>
       </sidebar>
+    </section>
+
+    <section id="sect.dpkg-list">
+      <title>Querying <command>dpkg</command>'s Database and Inspecting <filename>.deb</filename> Files</title>
+      <indexterm><primary>package</primary><secondary>status</secondary></indexterm>
+      <indexterm><primary>package</primary><secondary>file list</secondary></indexterm>
+      <indexterm><primary>package</primary><secondary>content inspection</secondary></indexterm>
+
+      <para>Before concluding this section, we will study
+      <command>dpkg</command> options that query the internal database in
+      order to obtain information. Giving first the long options and then
+      corresponding short options (that will evidently take the same
+      possible arguments) we cite <literal>--listfiles
+      <replaceable>package</replaceable></literal> (or
+      <literal>-L</literal>), which lists the files installed by this
+      package; <literal>--search <replaceable>file</replaceable></literal>
+      (or <literal>-S</literal>), which finds the package(s) containing the
+      file; <literal>--status
+      <replaceable>package</replaceable></literal> (or
+      <literal>-s</literal>), which displays the headers of an installed
+      package; <literal>--list</literal> (or <literal>-l</literal>), which
+      displays the list of packages known to the system and their
+      installation status; <literal>--contents
+      <replaceable>file.deb</replaceable></literal> (or
+      <literal>-c</literal>), which lists the files in the Debian package
+      specified; <literal>--info<replaceable> file.deb
+      </replaceable></literal> (or <literal>-I</literal>), which displays
+      the headers of this Debian package.</para>
 
       <example>
         <title>Various queries with <command>dpkg</command></title>

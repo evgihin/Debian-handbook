@@ -368,12 +368,6 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
 # </computeroutput>
 </screen>
 
-<para>
-After checking the status of the service (failed), we went on to check
-the logs; they indicate an error in the configuration file.  After
-editing the configuration file and fixing the error, we restart the
-service, then verify that it is indeed running.</para>
-
 <sidebar><title><emphasis>GOING FURTHER</emphasis> Other types of unit files</title>
 
 <para>We have only described the most basic of systemd's capabilities in
@@ -406,6 +400,12 @@ up. </para></listitem>
 
 </itemizedlist>
 </sidebar>
+
+<para>
+After checking the status of the service (failed), we went on to check
+the logs; they indicate an error in the configuration file.  After
+editing the configuration file and fixing the error, we restart the
+service, then verify that it is indeed running.</para>
 
 </section>
 
@@ -555,6 +555,34 @@ up. </para></listitem>
         </imageobject>
       </mediaobject>
     </figure>
+
+    <sidebar>
+      <title><emphasis>VOCABULARY</emphasis> Console and terminal</title>
+
+      <para>The first computers were usually separated into several, very
+      large parts: the storage enclosure and the central processing unit
+      were separate from the peripheral devices used by the operators to
+      control them. These were part of a separate furniture, the
+      “console”. This term was retained, but its meaning has changed.
+      It has become more or less synonymous with “terminal”, being a
+      keyboard and a screen.</para>
+
+      <para>With the development of computers, operating systems have
+      offered several virtual consoles to allow for several independent
+      sessions at the same time, even if there is only one keyboard and
+      screen. Most GNU/Linux systems offer six virtual consoles (in text
+      mode), accessible by typing the key combinations <keycombo
+      action="simul"> <keycap>Control</keycap> <keycap>Alt</keycap>
+      <keycap>F1</keycap> </keycombo> through <keycombo action="simul">
+      <keycap>Control</keycap> <keycap>Alt</keycap> <keycap>F6</keycap>
+      </keycombo>.</para>
+
+      <para>By extension, the terms “console” and “terminal” can
+      also refer to a terminal emulator in a graphical X11 session (such as
+      <command>xterm</command>, <command>gnome-terminal</command> or
+      <command>konsole</command>).</para>
+    </sidebar>
+
     <indexterm><primary>initialization script</primary></indexterm>
 
     <para>All the scripts contained in the various
@@ -604,33 +632,6 @@ up. </para></listitem>
     prompt, waiting for a username, then executes <command>login
     <replaceable>user</replaceable></command> to initiate a session.</para>
     <indexterm><primary><command>getty</command></primary></indexterm>
-
-    <sidebar>
-      <title><emphasis>VOCABULARY</emphasis> Console and terminal</title>
-
-      <para>The first computers were usually separated into several, very
-      large parts: the storage enclosure and the central processing unit
-      were separate from the peripheral devices used by the operators to
-      control them. These were part of a separate furniture, the
-      “console”. This term was retained, but its meaning has changed.
-      It has become more or less synonymous with “terminal”, being a
-      keyboard and a screen.</para>
-
-      <para>With the development of computers, operating systems have
-      offered several virtual consoles to allow for several independent
-      sessions at the same time, even if there is only one keyboard and
-      screen. Most GNU/Linux systems offer six virtual consoles (in text
-      mode), accessible by typing the key combinations <keycombo
-      action="simul"> <keycap>Control</keycap> <keycap>Alt</keycap>
-      <keycap>F1</keycap> </keycombo> through <keycombo action="simul">
-      <keycap>Control</keycap> <keycap>Alt</keycap> <keycap>F6</keycap>
-      </keycombo>.</para>
-
-      <para>By extension, the terms “console” and “terminal” can
-      also refer to a terminal emulator in a graphical X11 session (such as
-      <command>xterm</command>, <command>gnome-terminal</command> or
-      <command>konsole</command>).</para>
-    </sidebar>
 </section>
   </section>
   <section id="sect.remote-login">
@@ -677,23 +678,6 @@ up. </para></listitem>
 	used even if Debian still provides them.</para>
       </sidebar>
 
-      <sidebar>
-        <title><emphasis>VOCABULARY</emphasis> Authentication, encryption</title>
-
-	<para>When you need to give a client the ability to conduct or
-	trigger actions on a server, security is important. You must ensure
-	the identity of the client; this is authentication. This identity
-	usually consists of a password that must be kept secret, or any
-	other client could get the password. This is the purpose of
-	encryption, which is a form of encoding that allows two systems to
-	communicate confidential information on a public channel while
-	protecting it from being readable to others.</para>
-
-	<para>Authentication and encryption are often mentioned together,
-	both because they are frequently used together, and because they
-	are usually implemented with similar mathematical concepts.</para>
-      </sidebar>
-
       <para>SSH also offers two file transfer services.
       <command>scp</command> is a command line tool that can be used like
       <command>cp</command>, except that any path to another machine is
@@ -719,6 +703,30 @@ up. </para></listitem>
       maintain a free version of SSH.</para>
       <indexterm><primary>OpenSSH</primary></indexterm>
 
+      <para>OpenSSH is split into two packages: the client part is in the <emphasis
+      role="pkg">openssh-client</emphasis> package, and the server is in
+      the <emphasis role="pkg">openssh-server</emphasis> package. The
+      <emphasis role="pkg">ssh</emphasis> meta-package depends on both
+      parts and facilitates installation of both (<command>apt install
+      ssh</command>).</para>
+
+      <sidebar>
+        <title><emphasis>VOCABULARY</emphasis> Authentication, encryption</title>
+
+	<para>When you need to give a client the ability to conduct or
+	trigger actions on a server, security is important. You must ensure
+	the identity of the client; this is authentication. This identity
+	usually consists of a password that must be kept secret, or any
+	other client could get the password. This is the purpose of
+	encryption, which is a form of encoding that allows two systems to
+	communicate confidential information on a public channel while
+	protecting it from being readable to others.</para>
+
+	<para>Authentication and encryption are often mentioned together,
+	both because they are frequently used together, and because they
+	are usually implemented with similar mathematical concepts.</para>
+      </sidebar>
+
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> <foreignphrase>Fork</foreignphrase></title>
         <indexterm><primary>fork</primary></indexterm>
@@ -738,13 +746,6 @@ up. </para></listitem>
 	previously went through a prior fork are not unheard of.</para>
       </sidebar>
 
-      <para>OpenSSH is split into two packages: the client part is in the <emphasis
-      role="pkg">openssh-client</emphasis> package, and the server is in
-      the <emphasis role="pkg">openssh-server</emphasis> package. The
-      <emphasis role="pkg">ssh</emphasis> meta-package depends on both
-      parts and facilitates installation of both (<command>apt install
-      ssh</command>).</para>
-
       <section id="sect.ssh-key-based-auth">
         <title>Key-Based Authentication</title>
 
@@ -753,43 +754,6 @@ up. </para></listitem>
 	you want to automate a connection, or if you use a tool that
 	requires frequent connections over SSH. This is why SSH offers a
 	key-based authentication system.</para>
-
-	<para>The user generates a key pair on the client machine with
-	<command>ssh-keygen -t rsa</command>; the public key is stored in
-	<filename>~/.ssh/id_rsa.pub</filename>, while the corresponding
-	private key is stored in <filename>~/.ssh/id_rsa</filename>. The
-	user then uses <command>ssh-copy-id
-	<replaceable>server</replaceable></command> to add their public key
-	to the <filename>~/.ssh/authorized_keys</filename> file on the
-	server. If the private key was not protected with a
-	“passphrase” at the time of its creation, all subsequent logins
-	on the server will work without a password. Otherwise, the private
-	key must be decrypted each time by entering the passphrase.
-	Fortunately, <command>ssh-agent</command> allows us to keep private
-	keys in memory to not have to regularly re-enter the password. For
-	this, you simply use <command>ssh-add</command> (once per work
-	session) provided that the session is already associated with a
-	functional instance of <command>ssh-agent</command>. Debian
-	activates it by default in graphical sessions, but this can be
-	deactivated by changing
-	<filename>/etc/X11/Xsession.options</filename>. For a console
-	session, you can manually start it with <command>eval
-	$(ssh-agent)</command>.</para>
-
-        <sidebar>
-          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
-
-	  <para>Whoever has the private key can login on the account thus
-	  configured. This is why access to the private key is protected by
-	  a “passphrase”. Someone who acquires a copy of a private key
-	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
-	  to know this phrase in order to be able to use it. This
-	  additional protection is not, however, impregnable, and if you
-	  think that this file has been compromised, it is best to disable
-	  that key on the computers in which it has been installed (by
-	  removing it from the <filename>authorized_keys</filename> files)
-	  and replacing it with a newly generated key.</para>
-        </sidebar>
 
         <sidebar>
           <title><emphasis>CULTURE</emphasis> OpenSSL flaw in Debian <emphasis role="distribution">Etch</emphasis></title>
@@ -845,6 +809,43 @@ up. </para></listitem>
           package format (“3.0 (quilt)”) and the Debian sources webservice
           were developed.
 	  <ulink type="block" url="https://sources.debian.org"/></para>
+        </sidebar>
+
+	<para>The user generates a key pair on the client machine with
+	<command>ssh-keygen -t rsa</command>; the public key is stored in
+	<filename>~/.ssh/id_rsa.pub</filename>, while the corresponding
+	private key is stored in <filename>~/.ssh/id_rsa</filename>. The
+	user then uses <command>ssh-copy-id
+	<replaceable>server</replaceable></command> to add their public key
+	to the <filename>~/.ssh/authorized_keys</filename> file on the
+	server. If the private key was not protected with a
+	“passphrase” at the time of its creation, all subsequent logins
+	on the server will work without a password. Otherwise, the private
+	key must be decrypted each time by entering the passphrase.
+	Fortunately, <command>ssh-agent</command> allows us to keep private
+	keys in memory to not have to regularly re-enter the password. For
+	this, you simply use <command>ssh-add</command> (once per work
+	session) provided that the session is already associated with a
+	functional instance of <command>ssh-agent</command>. Debian
+	activates it by default in graphical sessions, but this can be
+	deactivated by changing
+	<filename>/etc/X11/Xsession.options</filename>. For a console
+	session, you can manually start it with <command>eval
+	$(ssh-agent)</command>.</para>
+
+        <sidebar>
+          <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
+
+	  <para>Whoever has the private key can login on the account thus
+	  configured. This is why access to the private key is protected by
+	  a “passphrase”. Someone who acquires a copy of a private key
+	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
+	  to know this phrase in order to be able to use it. This
+	  additional protection is not, however, impregnable, and if you
+	  think that this file has been compromised, it is best to disable
+	  that key on the computers in which it has been installed (by
+	  removing it from the <filename>authorized_keys</filename> files)
+	  and replacing it with a newly generated key.</para>
         </sidebar>
       </section>
       <section id="sect.ssh-x11">
@@ -1069,6 +1070,28 @@ up. </para></listitem>
       <replaceable>server</replaceable>:50</command>, because the port used
       is 5950.</para>
       <indexterm><primary><emphasis role="pkg">vnc4server</emphasis></primary></indexterm>
+
+    <sidebar>
+      <title><emphasis>SECURITY</emphasis> <literal>setuid</literal> and <literal>setgid</literal> executables</title>
+
+      <para>Two particular rights are relevant to executable files:
+      <literal>setuid</literal> and <literal>setgid</literal> (symbolized
+      with the letter “s”). Note that we frequently speak of “bit”,
+      since each of these boolean values can be represented by a 0 or a 1.
+      These two rights allow any user to execute the program with the
+      rights of the owner or the group, respectively. This mechanism grants
+      access to features requiring higher level permissions than those you
+      would usually have.</para>
+      <indexterm><primary><literal>setuid</literal>, right</primary></indexterm>
+      <indexterm><primary><literal>setgid</literal>, right</primary></indexterm>
+
+      <para>Since a <literal>setuid</literal> root program is
+      systematically run under the super-user identity, it is very
+      important to ensure it is secure and reliable. Indeed, a user who
+      would manage to subvert it to call a command of their choice could
+      then impersonate the root user and have all rights on the
+      system.</para>
+    </sidebar>
     </section>
   </section>
   <section id="sect.rights-management">
@@ -1129,28 +1152,6 @@ up. </para></listitem>
     access allows reading the content (including copying), write access
     allows changing it, and execute access allows you to run it (which will
     only work if it is a program).</para>
-
-    <sidebar>
-      <title><emphasis>SECURITY</emphasis> <literal>setuid</literal> and <literal>setgid</literal> executables</title>
-
-      <para>Two particular rights are relevant to executable files:
-      <literal>setuid</literal> and <literal>setgid</literal> (symbolized
-      with the letter “s”). Note that we frequently speak of “bit”,
-      since each of these boolean values can be represented by a 0 or a 1.
-      These two rights allow any user to execute the program with the
-      rights of the owner or the group, respectively. This mechanism grants
-      access to features requiring higher level permissions than those you
-      would usually have.</para>
-      <indexterm><primary><literal>setuid</literal>, right</primary></indexterm>
-      <indexterm><primary><literal>setgid</literal>, right</primary></indexterm>
-
-      <para>Since a <literal>setuid</literal> root program is
-      systematically run under the super-user identity, it is very
-      important to ensure it is secure and reliable. Indeed, a user who
-      would manage to subvert it to call a command of their choice could
-      then impersonate the root user and have all rights on the
-      system.</para>
-    </sidebar>
 
     <para>A directory is handled differently. Read access gives the right
     to consult the list of its entries (files and directories), write
@@ -1438,26 +1439,6 @@ up. </para></listitem>
 	network configuration, printer configuration, and so
 	on.</para>
       </sidebar>
-    </section>
-    <section id="sect.debconf">
-      <title>Configuring Packages: <command>debconf</command></title>
-      <indexterm><primary><command>debconf</command></primary></indexterm>
-      <indexterm><primary><command>dpkg-reconfigure</command></primary></indexterm>
-
-      <para>Many packages are automatically configured after asking a few
-      questions during installation through the Debconf tool. These
-      packages can be reconfigured by running <command>dpkg-reconfigure
-      <replaceable>package</replaceable></command>.</para>
-
-      <para>For most cases, these settings are very simple; only a few
-      important variables in the configuration file are changed. These
-      variables are often grouped between two “demarcation” lines so
-      that reconfiguration of the package only impacts the enclosed area.
-      In other cases, reconfiguration will not change anything if the
-      script detects a manual modification of the configuration file, in
-      order to preserve these human interventions (because the script can't
-      ensure that its own modifications will not disrupt the existing
-      settings).</para>
 
       <sidebar>
         <title><emphasis>DEBIAN POLICY</emphasis> Preserving changes</title>
@@ -1480,6 +1461,26 @@ up. </para></listitem>
 	of the same name) can be used to implement such a behavior.</para>
         <indexterm><primary><command>ucf</command></primary></indexterm>
       </sidebar>
+    </section>
+    <section id="sect.debconf">
+      <title>Configuring Packages: <command>debconf</command></title>
+      <indexterm><primary><command>debconf</command></primary></indexterm>
+      <indexterm><primary><command>dpkg-reconfigure</command></primary></indexterm>
+
+      <para>Many packages are automatically configured after asking a few
+      questions during installation through the Debconf tool. These
+      packages can be reconfigured by running <command>dpkg-reconfigure
+      <replaceable>package</replaceable></command>.</para>
+
+      <para>For most cases, these settings are very simple; only a few
+      important variables in the configuration file are changed. These
+      variables are often grouped between two “demarcation” lines so
+      that reconfiguration of the package only impacts the enclosed area.
+      In other cases, reconfiguration will not change anything if the
+      script detects a manual modification of the configuration file, in
+      order to preserve these human interventions (because the script can't
+      ensure that its own modifications will not disrupt the existing
+      settings).</para>
     </section>
   </section>
   <section id="sect.syslog">
@@ -1918,6 +1919,45 @@ ident  stream tcp nowait  nobody     /usr/sbin/identd   identd -i
       <title>Format of a <filename>crontab</filename> File</title>
       <indexterm><primary><filename>crontab</filename></primary></indexterm>
 
+      <para>Each significant line of a <emphasis>crontab</emphasis>
+      describes a scheduled command with the six (or seven) following
+      fields:</para>
+      <itemizedlist>
+        <listitem>
+	  <para>the value for the minute (number from 0 to 59);</para>
+        </listitem>
+        <listitem>
+	  <para>the value for the hour (from 0 to 23);</para>
+        </listitem>
+        <listitem>
+	  <para>the value for the day of the month (from 1 to 31);</para>
+        </listitem>
+        <listitem>
+	  <para>the value for the month (from 1 to 12);</para>
+        </listitem>
+        <listitem>
+	  <para>the value for the day of the week (from 0 to 7, 1
+	  corresponding to Monday, Sunday being represented by both 0 and
+	  7; it is also possible to use the first three letters of the name
+	  of the day of the week in English, such as
+	  <literal>Sun</literal>, <literal>Mon</literal>, etc.);</para>
+        </listitem>
+        <listitem>
+	  <para>the user name under whose identity the command must be
+	  executed (in the <filename>/etc/crontab</filename> file and in
+	  the fragments located in <filename>/etc/cron.d/</filename>, but
+	  not in the users' own crontab files);</para>
+        </listitem>
+        <listitem>
+	  <para>the command to execute (when the conditions defined by the
+	  first five columns are met).</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>All these details are documented in the
+      <citerefentry><refentrytitle>crontab</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry> man page.</para>
+
       <sidebar>
         <title><emphasis>TIP</emphasis> Text shortcuts for <command>cron</command></title>
 
@@ -1971,45 +2011,6 @@ ident  stream tcp nowait  nobody     /usr/sbin/identd   identd -i
 	prepare a special schedule for the two problematic nights per
 	year.</para>
       </sidebar>
-
-      <para>Each significant line of a <emphasis>crontab</emphasis>
-      describes a scheduled command with the six (or seven) following
-      fields:</para>
-      <itemizedlist>
-        <listitem>
-	  <para>the value for the minute (number from 0 to 59);</para>
-        </listitem>
-        <listitem>
-	  <para>the value for the hour (from 0 to 23);</para>
-        </listitem>
-        <listitem>
-	  <para>the value for the day of the month (from 1 to 31);</para>
-        </listitem>
-        <listitem>
-	  <para>the value for the month (from 1 to 12);</para>
-        </listitem>
-        <listitem>
-	  <para>the value for the day of the week (from 0 to 7, 1
-	  corresponding to Monday, Sunday being represented by both 0 and
-	  7; it is also possible to use the first three letters of the name
-	  of the day of the week in English, such as
-	  <literal>Sun</literal>, <literal>Mon</literal>, etc.);</para>
-        </listitem>
-        <listitem>
-	  <para>the user name under whose identity the command must be
-	  executed (in the <filename>/etc/crontab</filename> file and in
-	  the fragments located in <filename>/etc/cron.d/</filename>, but
-	  not in the users' own crontab files);</para>
-        </listitem>
-        <listitem>
-	  <para>the command to execute (when the conditions defined by the
-	  first five columns are met).</para>
-        </listitem>
-      </itemizedlist>
-
-      <para>All these details are documented in the
-      <citerefentry><refentrytitle>crontab</refentrytitle>
-      <manvolnum>5</manvolnum></citerefentry> man page.</para>
 
       <para>Each value can be expressed in the form of a list of possible
       values (separated by commas). The syntax <literal>a-b</literal>
