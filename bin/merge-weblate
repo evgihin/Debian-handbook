@@ -1,0 +1,41 @@
+#!/usr/bin/python3
+
+# This is a somewhat hackish script to help merge changes coming from weblate
+# You need to to the following:
+# 1- ensure "buster/master" is up-to-date
+# 2- checkout the latest weblate commit in the "weblate-merge" branch
+# 2- run this script, copy its output
+# 3- run "git rebase -i buster/master" and replace the list of commands
+#    by those that you have copied before
+# 4- switch back to "buster/master" and merge weblate-merge
+
+gitlog = ["git", "log", "--stat", "--reverse",
+          "--format=format:%h %ae %s",
+          "buster/master..weblate-merge"]
+re_log = r"^([a-f0-9]+) (\S+) (.*)"
+
+import re
+from subprocess import Popen, PIPE
+
+git = Popen(gitlog, stdout=PIPE)
+prevauthor = None
+didhelp = False
+while True:
+    line = git.stdout.readline().decode('utf-8')
+    if not line:
+        break
+    match = re.match(re_log, line)
+    if match:
+        (commit, author, desc) = match.groups()
+        if author == "noreply@weblate.org":
+            # Skip merges done by weblate
+            continue
+        if author == prevauthor:
+            print("fixup {0} {1}".format(commit, desc))
+            didhelp = True
+        else:
+            print("pick {0} {1}".format(commit, desc))
+        prevauthor = author
+
+if not didhelp:
+    print("WARNING: No commits were squashed, nothing changed.")
