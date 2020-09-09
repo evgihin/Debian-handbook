@@ -1,0 +1,49 @@
+Some notes for the the project maintainers
+==========================================
+
+The information here is only interesting for the project maintainers.
+
+How to merge from weblate
+-------------------------
+
+1. Go to https://hosted.weblate.org/projects/debian-handbook/#repository
+   and "lock" the repository. This will ensure nobody can make further
+   changes and will commit uncommitted changes.
+
+2. In your local checkout, fetch the weblate remote repository:
+   $ git fetch weblate
+   If you don't have it configured, do it:
+   $ git remote add weblate https://hosted.weblate.org/git/debian-handbook/12_advanced-administration
+
+3. Checkout the buster/master branch from weblate in "weblate-merge":
+   $ git checkout -B weblate-merge weblate/buster/master
+
+4. Rebase it on top on buster/master and squash as many commits as
+   possible. You can get a list of commands to feed by executing
+   bin/merge-weblate
+   $ bin/merge-weblate >/tmp/rebase-commands
+   $ git rebase -i buster/master  # feed content of /tmp/rebase-commands
+                                  # instead of list provided by git
+
+5. Switch back to buster/master and merge weblate-merge.
+   $ git checkout buster/master
+   $ git merge weblate-merge
+
+6. Run "bin/build-all". If some languages fail to build, find out why
+   and fix it. Usually it's due to some XML markup mistakes. Commit
+   those fixes with "git commit -a -m '<language-code>: fix XML markup'"
+   or something along those lines.
+
+7. Update the POT/PO files if some changes have been committed to the
+   English text.
+   $ bin/update-l10n
+
+8. Push the changes to the git repository on salsa.debian.org:
+   $ git push
+
+9. Force reset changes in the weblate git repository. You do this
+   from https://hosted.weblate.org/projects/debian-handbook/#repository
+   with the "Reset" button.
+
+10. Unlock the changes in weblate. From the same page click the "Unlock"
+    button.
