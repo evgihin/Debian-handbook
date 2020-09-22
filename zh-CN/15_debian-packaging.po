@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-09-20 08:42+0000\nLast-Translator: xiao sheng wen 肖盛文 Faris Xiao <atzlinux@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.3-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-09-22 08:35+0000\nLast-Translator: xiao sheng wen 肖盛文 Faris Xiao <atzlinux@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.3-dev\n"
 
 msgid "Backport"
 msgstr "反向移植"
@@ -99,7 +99,7 @@ msgid "<emphasis>TIP</emphasis> Installing <literal>Build-Depends</literal>"
 msgstr "<emphasis>技巧</emphasis> 安装<literal>构建依赖</literal>"
 
 msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
-msgstr ""
+msgstr "<primary><literal>构建依赖</literal>，控制字段</primary>"
 
 msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>source-package</replaceable></command> command."
 msgstr ""
@@ -111,7 +111,7 @@ msgid "When all the needed changes have been applied to the sources, we can star
 msgstr "当所有要做的更改都应用到源代码后，我们就可以开始生成实际的二进制包（<filename>.deb</filename>）。整个过程由<command>dpkg-buildpackage</command>管理。"
 
 msgid "Rebuilding a package"
-msgstr "重构建一个包"
+msgstr "重新构建一个包"
 
 msgid ""
 "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n"
@@ -377,7 +377,7 @@ msgid "Our source package is now ready. All that is left to do is to generate th
 msgstr ""
 
 msgid "Creating a Package Repository for APT"
-msgstr ""
+msgstr "创建用于 APT 的软件包仓库"
 
 msgid "<primary>package archive</primary>"
 msgstr ""
@@ -403,10 +403,8 @@ msgstr "<primary><command>mini-dinstall</command></primary>"
 msgid "The administrators therefore configure a virtual host on their internal HTTP server, with <filename>/srv/vhosts/packages/</filename> as the root of the associated web space. The management of the archive itself is delegated to the <command>mini-dinstall</command> command (in the similarly-named package). This tool keeps an eye on an <filename>incoming/</filename> directory (in our case, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>) and waits for new packages there; when a package is uploaded, it is installed into a Debian archive at <filename>/srv/vhosts/packages/</filename>. The <command>mini-dinstall</command> command reads the <filename>*.changes</filename> file created when the Debian package is generated. These files contain a list of all other files associated with the version of the package (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, or their equivalents with other compression tools), and these allow <command>mini-dinstall</command> to know which files to install. <filename>*.changes</filename> files also contain the name of the target distribution (often <literal>unstable</literal>) mentioned in the latest <filename>debian/changelog</filename> entry, and <command>mini-dinstall</command> uses this information to decide where the package should be installed. This is why administrators must always change this field before building a package, and set it to <literal>internal</literal> or <literal>updates</literal>, depending on the target location. <command>mini-dinstall</command> then generates the files required by APT, such as <filename>Packages.gz</filename>."
 msgstr ""
 
-#, fuzzy
-#| msgid "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
 msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command>"
-msgstr "<emphasis>工具</emphasis><command>fakeroot</command>"
+msgstr "<emphasis>替代</emphasis> <command>apt-ftparchive</command> 和 <command>reprepro</command>"
 
 msgid "<primary><command>apt-ftparchive</command></primary>"
 msgstr "<primary><command>apt-ftparchive</command></primary>"
@@ -585,7 +583,7 @@ msgid "<primary><emphasis>debhelper</emphasis></primary>"
 msgstr ""
 
 msgid "<primary><emphasis>dh-make</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
 msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix."
 msgstr ""
@@ -594,12 +592,10 @@ msgid "The <command>dh_make</command> script (in the <emphasis>dh-make</emphasis
 msgstr ""
 
 msgid "<emphasis role=\"pkg\">autopkgtest</emphasis>"
-msgstr ""
+msgstr "<emphasis role=\"pkg\">autopkgtest</emphasis>"
 
-#, fuzzy
-#| msgid "<primary><command>piuparts</command></primary>"
 msgid "<primary><emphasis>autopkgtest</emphasis></primary>"
-msgstr "<primary><command>piuparts</command></primary>"
+msgstr "<primary><emphasis>autopkgtest</emphasis></primary>"
 
 msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package."
 msgstr ""
@@ -607,16 +603,14 @@ msgstr ""
 msgid "<emphasis role=\"pkg\">reprotest</emphasis>"
 msgstr ""
 
-#, fuzzy
-#| msgid "<primary><command>piuparts</command></primary>"
 msgid "<primary><emphasis>reprotest</emphasis></primary>"
-msgstr "<primary><command>piuparts</command></primary>"
+msgstr "<primary><emphasis>reprotest</emphasis></primary>"
 
 msgid "<command>reprotest</command> builds the same source code twice in different environments, and then checks the binaries produced by each build for differences. If any are found, then <command>diffoscope</command> (if unavailable, <command>diff</command>) is used to display them in detail for later analysis."
 msgstr ""
 
 msgid "<command>dupload</command> and <command>dput</command>"
-msgstr "<command>dupload</command>和<command>dput</command>"
+msgstr "<command>dupload</command> 和 <command>dput</command>"
 
 msgid "<primary><command>dupload</command></primary>"
 msgstr "<primary><command>dupload</command></primary>"
