@@ -1,17 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr ""
-"Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-07-22 15:37+0200\n"
-"PO-Revision-Date: 2016-10-12 23:33+0000\n"
-"Last-Translator: mao <mao@lins.fju.edu.tw>\n"
-"Language-Team: Traditional Chinese <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hant/>\n"
-"Language: zh-TW\n"
-"MIME-Version: 1.0\n"
-"Content-Type: application/x-publican; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.9-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-10-10 14:26+0000\nLast-Translator: marklin0913da248e4cdada422a <marklin0913@protonmail.com>\nLanguage-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hant/>\nLanguage: zh-TW\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.3-dev\n"
 
 msgid "Backport"
 msgstr ""
@@ -29,13 +18,13 @@ msgid "Meta-package"
 msgstr ""
 
 msgid "Debian Developer"
-msgstr ""
+msgstr "Debian 開發者"
 
 msgid "Maintainer"
-msgstr ""
+msgstr "維護者"
 
 msgid "Creating a Debian Package"
-msgstr ""
+msgstr "建立一個套裝軟體"
 
 msgid "It is quite common, for an administrator who has been handling Debian packages in a regular fashion, to eventually feel the need to create their own packages, or to modify an existing package. This chapter aims to answer the most common questions in this field, and provide the required elements to take advantage of the Debian infrastructure in the best way. With any luck, after trying your hand for local packages, you may even feel the need to go further than that and join the Debian project itself!"
 msgstr ""
@@ -56,7 +45,7 @@ msgid "Making Changes"
 msgstr ""
 
 msgid "Let us use the <emphasis role=\"pkg\">samba</emphasis> package as an example."
-msgstr ""
+msgstr "讓我們使用 <emphasis role=\"pkg\">samba</emphasis> 套裝軟體當作示範。"
 
 msgid ""
 "<computeroutput>$ </computeroutput><userinput>apt source samba\n"
@@ -104,8 +93,9 @@ msgstr ""
 msgid "If you know for sure that these build-dependencies are too strict, you should feel free to relax them locally. Reading the files which document the standard way of building the software — these files are often called <filename>INSTALL</filename> — will help you figure out the appropriate dependencies. Ideally, all dependencies should be satisfiable from the distribution used for the rebuild; if they are not, a recursive process starts, whereby the packages mentioned in the <literal>Build-Depends</literal> field must be backported before the target package can be. Some packages may not need backporting, and can be installed as-is during the build process (a notable example is <emphasis role=\"pkg\">debhelper</emphasis>). Note that the backporting process can quickly become complex if you are not careful. Therefore, backports should be kept to a strict minimum when possible."
 msgstr ""
 
+#, fuzzy
 msgid "<emphasis>TIP</emphasis> Installing <literal>Build-Depends</literal>"
-msgstr ""
+msgstr "<emphasis>提示</emphasis> 安裝 <literal>Build-Depends</literal>"
 
 msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
 msgstr ""
@@ -120,7 +110,7 @@ msgid "When all the needed changes have been applied to the sources, we can star
 msgstr ""
 
 msgid "Rebuilding a package"
-msgstr ""
+msgstr "重新建立一個套裝軟體"
 
 msgid ""
 "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n"
@@ -132,7 +122,7 @@ msgid "The previous command can fail if the <literal>Build-Depends</literal> fie
 msgstr ""
 
 msgid "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
-msgstr ""
+msgstr "<emphasis>工具</emphasis> <command>fakeroot</command>"
 
 msgid "In essence, the package creation process is a simple matter of gathering in an archive a set of existing (or built) files; most of the files will end up being owned by <emphasis>root</emphasis> in the archive. However, building the whole package under this user would imply increased risks; fortunately, this can be avoided with the <command>fakeroot</command> command. This tool can be used to run a program and give it the impression that it runs as <emphasis>root</emphasis> and creates files with arbitrary ownership and permissions. When the program creates the archive that will become the Debian package, it is tricked into creating an archive containing files marked as belonging to arbitrary owners, including <emphasis>root</emphasis>. This setup is so convenient that <command>dpkg-buildpackage</command> uses <command>fakeroot</command> by default when building packages."
 msgstr ""
@@ -147,7 +137,7 @@ msgid "<emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted
 msgstr ""
 
 msgid "<primary><command>pbuilder</command></primary>"
-msgstr ""
+msgstr "<primary><command>pbuilder</command></primary>"
 
 msgid "<primary><command>schroot</command></primary>"
 msgstr ""
@@ -162,7 +152,7 @@ msgid "<command>schroot</command> allows running a command or a login shell in a
 msgstr ""
 
 msgid "Building your First Package"
-msgstr ""
+msgstr "建立你第一個套裝軟體"
 
 msgid "Meta-Packages or Fake Packages"
 msgstr ""
@@ -240,10 +230,10 @@ msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that 
 msgstr ""
 
 msgid "<primary>package types</primary>"
-msgstr ""
+msgstr "<primary>套裝軟體類型</primary>"
 
 msgid "<primary>package</primary><secondary>types</secondary>"
-msgstr ""
+msgstr "<primary>套裝軟體</primary><secondary>類型</secondary>"
 
 msgid "The <emphasis>library</emphasis> type corresponds to a source package leading to several binary packages. It is useful for shared libraries, since they need to follow strict packaging rules."
 msgstr ""
@@ -351,13 +341,13 @@ msgstr ""
 msgid ""
 "\n"
 "data/* usr/share/falcot-data/"
-msgstr ""
+msgstr "\ndata/* usr/share/falcot-data/"
 
 msgid "At this point, the package can be created. We will, however, add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgstr ""
 
 msgid "The <filename>falcot-data.desktop</filename> file"
-msgstr ""
+msgstr "<filename>falcot-data.desktop</filename> 檔案"
 
 msgid ""
 "\n"
@@ -371,19 +361,19 @@ msgid ""
 msgstr ""
 
 msgid "The updated <filename>debian/falcot-data.install</filename> looks like this:"
-msgstr ""
+msgstr "更新的 <filename>debian/falcot-data.install</filename> 看起來像這樣:"
 
 msgid ""
 "\n"
 "data/* usr/share/falcot-data/\n"
 "falcot-data.desktop usr/share/applications/"
-msgstr ""
+msgstr "\ndata/* usr/share/falcot-data/\nfalcot-data.desktop usr/share/applications/"
 
 msgid "Our source package is now ready. All that is left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
 msgstr ""
 
 msgid "Creating a Package Repository for APT"
-msgstr ""
+msgstr "新增套裝軟體到APT"
 
 msgid "<primary>package archive</primary>"
 msgstr ""
@@ -404,7 +394,7 @@ msgid ""
 msgstr ""
 
 msgid "<primary><command>mini-dinstall</command></primary>"
-msgstr ""
+msgstr "<primary><command>mini-dinstall</command></primary>"
 
 msgid "The administrators therefore configure a virtual host on their internal HTTP server, with <filename>/srv/vhosts/packages/</filename> as the root of the associated web space. The management of the archive itself is delegated to the <command>mini-dinstall</command> command (in the similarly-named package). This tool keeps an eye on an <filename>incoming/</filename> directory (in our case, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>) and waits for new packages there; when a package is uploaded, it is installed into a Debian archive at <filename>/srv/vhosts/packages/</filename>. The <command>mini-dinstall</command> command reads the <filename>*.changes</filename> file created when the Debian package is generated. These files contain a list of all other files associated with the version of the package (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, or their equivalents with other compression tools), and these allow <command>mini-dinstall</command> to know which files to install. <filename>*.changes</filename> files also contain the name of the target distribution (often <literal>unstable</literal>) mentioned in the latest <filename>debian/changelog</filename> entry, and <command>mini-dinstall</command> uses this information to decide where the package should be installed. This is why administrators must always change this field before building a package, and set it to <literal>internal</literal> or <literal>updates</literal>, depending on the target location. <command>mini-dinstall</command> then generates the files required by APT, such as <filename>Packages.gz</filename>."
 msgstr ""
@@ -413,7 +403,7 @@ msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <c
 msgstr ""
 
 msgid "<primary><command>apt-ftparchive</command></primary>"
-msgstr ""
+msgstr "<primary><command>apt-ftparchive</command></primary>"
 
 msgid "If <command>mini-dinstall</command> seems too complex for your Debian archive needs, you can also use the <command>apt-ftparchive</command> command. This tool scans the contents of a directory and displays (on its standard output) a matching <filename>Packages</filename> file. In the Falcot Corp case, administrators could upload the packages directly into <filename>/srv/vhosts/packages/updates/</filename> or <filename>/srv/vhosts/packages/internal/</filename>, then run the following commands to create the <filename>Packages.gz</filename> files:"
 msgstr ""
@@ -460,7 +450,7 @@ msgid "One decision worth noting is the generation of <filename>Release</filenam
 msgstr ""
 
 msgid "<emphasis>SECURITY</emphasis> <command>mini-dinstall</command> and permissions"
-msgstr ""
+msgstr "<emphasis>安全</emphasis> <command>mini-dinstall</command> 與許可"
 
 msgid "Since <command>mini-dinstall</command> has been designed to run as a regular user, there is no need to run it as root. The easiest way is to configure everything within the user account belonging to the administrator in charge of creating the Debian packages. Since only this administrator has the required permissions to put files in the <filename>incoming/</filename> directory, we can deduce that the administrator authenticated the origin of each package prior to deployment and <command>mini-dinstall</command> does not need to do it again. This explains the <literal>verify_sigs = 0</literal> parameter (which means that signatures need not be verified). However, if the contents of packages are sensitive, we can reverse the setting and elect to authenticate with a keyring containing the public keys of persons allowed to create packages (configured with the <literal>extra_keyrings</literal> parameter); <command>mini-dinstall</command> will then check the origin of each incoming package by analyzing the signature integrated to the <filename>*.changes</filename> file."
 msgstr ""
@@ -478,7 +468,7 @@ msgid "To help with this process, <command>mini-dinstall</command> includes a <l
 msgstr ""
 
 msgid "Becoming a Package Maintainer"
-msgstr ""
+msgstr "成為套裝軟體維護者"
 
 msgid "Learning to Make Packages"
 msgstr ""
@@ -493,7 +483,7 @@ msgid "A Debian package must comply with the precise rules compiled in the Debia
 msgstr ""
 
 msgid "Procedures"
-msgstr ""
+msgstr "程序"
 
 msgid "<primary>Debian Developer's Reference</primary>"
 msgstr ""
@@ -502,7 +492,7 @@ msgid "Debian is not a simple collection of individual packages. Everyone's pack
 msgstr ""
 
 msgid "Tools"
-msgstr ""
+msgstr "工具"
 
 msgid "Many tools help package maintainers in their work. This section describes them quickly, but does not give the full details, since they all have comprehensive documentation of their own."
 msgstr ""
@@ -511,7 +501,7 @@ msgid "The <command>lintian</command> Program"
 msgstr ""
 
 msgid "<primary><command>lintian</command></primary>"
-msgstr ""
+msgstr "<primary><command>lintian</command></primary>"
 
 msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
 msgstr ""
@@ -547,7 +537,7 @@ msgid "<primary><command>debi</command></primary>"
 msgstr ""
 
 msgid "<primary><command>debc</command></primary>"
-msgstr ""
+msgstr "<primary><command>debc</command></primary>"
 
 msgid "The <emphasis role=\"pkg\">devscripts</emphasis> package contains many programs helping with a wide array of a Debian developer's job:"
 msgstr ""
