@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2020-10-27 13:26+0000\nLast-Translator: xiao sheng wen 肖盛文 Faris Xiao <atzlinux@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.3.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2020-10-27 13:26+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.3.2-dev\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -1928,7 +1928,7 @@ msgid ""
 msgstr "<computeroutput>$ </computeroutput><userinput>cat /etc/logrotate.d/apache2\n</userinput><computeroutput><![CDATA[/var/log/apache2/*.log {\n  daily\n  missingok\n  rotate 14\n  compress\n  delaycompress\n  notifempty\n  create 644 root adm\n  sharedscripts\n  postrotate\n    if invoke-rc.d apache2 status > /dev/null 2>&1; then \\\n      invoke-rc.d apache2 reload > /dev/null 2>&1; \\\n    fi;\n  endscript\n  prerotate\n    if [ -d /etc/logrotate.d/httpd-prerotate ]; then \\\n      run-parts /etc/logrotate.d/httpd-prerotate; \\\n    fi; \\\n  endscript\n}\n]]>\n$ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate\n</userinput><computeroutput>$ </computeroutput><userinput>sudo ln -sf /usr/share/awstats/tools/update.sh \\\n  /etc/logrotate.d/httpd-prerotate/awstats\n</userinput>"
 
 msgid "Note also that the log files created by <command>logrotate</command> need to be readable by everyone, especially AWStats. In the above example, this is ensured by the <literal>create 644 root adm</literal> line (instead of the default <literal>640</literal> permissions)."
-msgstr ""
+msgstr "还要注意，由 <command>logrotate</command> 创建的日志文件需要被每个人读取，特别是 AWStats。在上面的例子中，这由<literal>create 644 root adm</literal> 这一行来确保（而不是默认的 <literal>640</literal> 权限）。"
 
 msgid "FTP File Server"
 msgstr "FTP文件服务器"
@@ -1940,34 +1940,34 @@ msgid "<primary>File Transfer Protocol</primary>"
 msgstr "<primary>File Transfer Protocol（文件传输协议）</primary>"
 
 msgid "<primary>server</primary><secondary>file</secondary>"
-msgstr ""
+msgstr "<primary>服务器</primary><secondary>文件</secondary>"
 
 msgid "<primary>server</primary><secondary>FTP</secondary>"
 msgstr "<primary>服务器</primary><secondary>FTP</secondary>"
 
 msgid "FTP (<emphasis>File Transfer Protocol</emphasis>) is one of the first protocols of the Internet (RFC 959 was issued in 1985!). It was used to distribute files before the Web was even born (the HTTP protocol was created in 1990, and formally defined in its 1.0 version by RFC 1945, issued in 1996)."
-msgstr ""
+msgstr "FTP （<emphasis>File Transfer Protocol（文件传输协议）</emphasis>）是因特网的第一批协议之一。（RFC 959 在 1985 年发行！）甚至在 Web 诞生之前就用于分发文件（HTTP 协议创建于 1990年，由 RFC 1945 正式定义其 1.0 版本，在 1996 年发行）。"
 
 msgid "This protocol allows both file uploads and file downloads; for this reason, it is still widely used to deploy updates to a website hosted by one's Internet service provider (or any other entity hosting websites). In these cases, secure access is enforced with a user identifier and password; on successful authentication, the FTP server grants read-write access to that user's home directory."
-msgstr ""
+msgstr "这个协议允许文件上穿和文件下载；由于这个原因，它仍然广泛用于因特网服务提供商（或任何其他实体）提供主机上的网站部署更新。在这些情况下，安全访问由用户身份与密码来强制；在成功的认证后，FTP 服务器授权用户对家目录进行读写访问。"
 
 msgid "Other FTP servers are mainly used to distribute files for public downloading; Debian packages are a good example. The contents of these servers is fetched from other, geographically remote, servers; it is then made available to less distant users. This means that client authentication is not required; as a consequence, this operating mode is known as “anonymous FTP”. To be perfectly correct, the clients do authenticate with the <literal>anonymous</literal> username; the password is often, by convention, the user's email address, but the server ignores it."
-msgstr ""
+msgstr "其它 FTP 服务器主要用于发布公众下载的文件；Debian 软件包就是个好的例子。这些服务器的内容取自地理上的远程服务器；然后供不那么远的用户来获取。这意味着不需要客户端认证；结果，这个操作模式被称为“匿名 FTP”。非常正确的是，客户端以 <literal>anonymous</literal> 用户名来认证；密码为了方便起见通常是用户的电子邮件地址，但服务器会忽略掉。"
 
 msgid "Many FTP servers are available in Debian (<emphasis role=\"pkg\">ftpd</emphasis><footnote><para>The <emphasis role=\"pkg\">ftpd</emphasis> package is not included in Debian <emphasis role=\"distribution\">Buster</emphasis> due to a bug, which could not be solved before the release.</para></footnote>, <emphasis role=\"pkg\">proftpd-basic</emphasis>, <emphasis role=\"pkg\">pyftpd</emphasis> and so on). The Falcot Corp administrators picked <emphasis role=\"pkg\">vsftpd</emphasis> because they only use the FTP server to distribute a few files (including a Debian package repository); since they don't need advanced features, they chose to focus on the security aspects."
-msgstr ""
+msgstr "很多 FTP 服务器可以在 Debian 中获得（<emphasis role=\"pkg\">ftpd</emphasis><footnote><para><emphasis role=\"pkg\">ftpd</emphasis> 软件包不包括在 Debian <emphasis role=\"distribution\">Buster</emphasis> 中，因为发布前没有解决缺陷 的原因。</para></footnote>，<emphasis role=\"pkg\">proftpd-basic</emphasis>，<emphasis role=\"pkg\">pyftpd</emphasis> 以及诸如此类）。Falcot 公司的管理员选取 <emphasis role=\"pkg\">vsftpd</emphasis>，因为他们只使用 FTP 服务器来分发一些文件（包括Debian 软件包仓库）；因为他们不需要高级特性，他们选择聚焦于安全方面。"
 
 msgid "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
-msgstr ""
+msgstr "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 
 msgid "Installing the package creates an <literal>ftp</literal> system user. This account is always used for anonymous FTP connections, and its home directory (<filename>/srv/ftp/</filename>) is the root of the tree made available to users connecting to this service. The default configuration (in <filename>/etc/vsftpd.conf</filename>) requires some changes to cater to the simple need of making big files available for public downloads: anonymous access needs to be enabled (<literal>anonymous_enable=YES</literal>) and read-only access of local users needs to be disabled (<literal>local_enable=NO</literal>). The latter is particularly important since the FTP protocol doesn't use any form of encryption and the user password could be intercepted over the wire."
-msgstr ""
+msgstr "安装软件包会创建 <literal>ftp</literal> 系统用户。这个账户总是用于匿名 FTP 连接，并且其家目录（<filename>/srv/ftp/</filename>）就是连接到这个服务上的用户可使用的树的根。默认配置（在 <filename>/etc/vsftpd.conf</filename> 中）需要一些更改，以迎合使大文件可供公众下载的简单需要：匿名王文需要启动（<literal>anonymous_enable=YES</literal>）并且对本地用户的只读访问需要被禁止（<literal>local_enable=NO</literal>）。后者非常重要，因为 FTP 协议不使用任何形式的加密，并且用户密码能够通过网络来翻译。"
 
 msgid "NFS File Server"
-msgstr ""
+msgstr "NFS 文件服务器"
 
 msgid "<primary>NFS</primary><seealso>Network File System</seealso>"
-msgstr ""
+msgstr "<primary>NFS</primary><seealso>Network File System</seealso>"
 
 msgid "<primary>Network File System</primary>"
 msgstr "<primary>网络文件系统</primary>"
@@ -1976,10 +1976,10 @@ msgid "<primary>server</primary><secondary>NFS</secondary>"
 msgstr "<primary>服务器</primary><secondary>NFS</secondary>"
 
 msgid "NFS (<emphasis>Network File System</emphasis>) is a protocol allowing remote access to a filesystem through the network. All Unix systems can work with this protocol."
-msgstr ""
+msgstr "NFS （<emphasis>Network File System</emphasis>——网络文件系统）是允许通过网络远程访问文件系统的协议。所有的 Unix 系统可以通过这个协议工作。"
 
 msgid "<emphasis>SPECIFIC CASE</emphasis> Microsoft Windows and NFS Shares"
-msgstr ""
+msgstr "<emphasis>特例</emphasis> Microsoft Windows 和 NFS 共享"
 
 msgid "When older or (so called) \"Home\" variants of Windows are involved, usually Samba (<xref linkend=\"sect.windows-file-server-with-samba\" />) must be used instead of NFS. Modern Windows Server and \"Pro\" or \"Enterprise\" Desktop solutions however have built-in support for NFS. After installation of the \"Services for NFS\" components NFS shares can be accessed and temporarily or permanently mounted like any other network share. Be aware of possible encoding issues in file names."
 msgstr ""
