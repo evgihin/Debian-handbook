@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2020-11-02 22:26+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.3.2-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2020-11-05 10:26+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.3.2-dev\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -36,7 +36,7 @@ msgid "Network Services: Postfix, Apache, NFS, Samba, Squid, LDAP, SIP, XMPP, TU
 msgstr "网络服务：Postfix, Apache, NFS, Samba, Squid, LDAP, SIP, XMPP, TURN"
 
 msgid "Network services are the programs that users interact with directly in their daily work. They are the tip of the information system iceberg, and this chapter focuses on them; the hidden parts they rely on are the infrastructure we already described. They usually require the encryption technology described in <xref linkend=\"sect.x509-cert\" />."
-msgstr "网络服务是用户在日常工作中直接通过它建立沟通的程序。它们是信息系统的冰山一角，将在这一章节集中阐释；这个被依赖而对用户不可见的网络服务就是我们已经描述过的基础架构。它们通常需要涉及 <xref linkend=\"sect.x509-cert\" /> 中所描述的加密技术。"
+msgstr "网络服务是用户在日常工作中直接与之沟通的程序。它们是信息系统的冰山一角，将在这一章节集中阐释；这个被依赖而对用户不可见的网络服务就是我们已经描述过的基础架构。它们通常需要涉及 <xref linkend=\"sect.x509-cert\" /> 中所描述的加密技术。"
 
 msgid "Mail Server"
 msgstr "邮件服务器"
@@ -2938,13 +2938,13 @@ msgid "<primary>key pair</primary>"
 msgstr "<primary>密钥配对</primary>"
 
 msgid "The first step is to create a key pair (comprising a public key and a private key) for the LDAP server. The Falcot administrators reuse <emphasis>easy-rsa</emphasis> to generate it (see <xref linkend=\"sect.easy-rsa\" />). Running <command>./easyrsa build-server-full ldap.falcot.com nopass</command> will ask you about the “common name”. The answer to that question <emphasis>must</emphasis> be the fully-qualified hostname for the LDAP server; in our case, <literal>ldap.falcot.com</literal>."
-msgstr ""
+msgstr "第一步是为 LDAP 服务器创建密钥对（包括公钥和私钥）。Falcot 公司的管理员重复使用 <emphasis>easy-rsa</emphasis> 来生成它（请参见 <xref linkend=\"sect.easy-rsa\" />）。运行 <command>./easyrsa build-server-full ldap.falcot.com nopass</command> 会询问有关“通用名称”。对问题的回答<emphasis>必须</emphasis>是 LDAP 服务器完全合法的主机名；在我们的例子中是 <literal>ldap.falcot.com</literal>。"
 
 msgid "This command creates a certificate in the <filename>pki/issued/ldap.falcot.com.crt</filename> file; the corresponding private key is stored in <filename>pki/private/ldap.falcot.com.key</filename>."
-msgstr ""
+msgstr "这个命令在 <filename>pki/issued/ldap.falcot.com.crt</filename> 文件中创建了证书；相应的私钥存储在 <filename>pki/private/ldap.falcot.com.key</filename> 中。"
 
 msgid "Now these keys have to be installed in their standard location, and we must make sure that the private file is readable by the LDAP server which runs under the <literal>openldap</literal> user identity:"
-msgstr ""
+msgstr "现在这些密钥必须安装到其标准位置上，并且我们必须确定私有文件可以被<literal>openldap</literal>身份下运行的 LDAP 服务器读取："
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>adduser openldap ssl-cert\n"
@@ -2967,13 +2967,13 @@ msgid ""
 "\n"
 "# </computeroutput><userinput>mv pki/dh.pem /etc/ssl/certs/ldap.falcot.com.pem\n"
 "</userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>adduser openldap ssl-cert\n</userinput><computeroutput>Adding user `openldap' to group `ssl-cert' ...\nAdding user openldap to group ssl-cert\nDone.\n# </computeroutput><userinput>mv pki/private/ldap.falcot.com.key /etc/ssl/private/ldap.falcot.com.key\n</userinput><computeroutput># </computeroutput><userinput>chown root:ssl-cert /etc/ssl/private/ldap.falcot.com.key\n</userinput><computeroutput># </computeroutput><userinput>chmod 0640 /etc/ssl/private/ldap.falcot.com.key\n</userinput><computeroutput># </computeroutput><userinput>./eassyrsa gen-dh\n</userinput><computeroutput>\nNote: using Easy-RSA configuration from: ./vars\n\nUsing SSL: openssl OpenSSL 1.1.1c  28 May 2019\nGenerating DH parameters, 2048 bit long safe prime, generator 2\nThis is going to take a long time\n........................................................+..........................................................................+...............................................................................+............\n[...]\nDH parameters of size 2048 created at /home/roland/pki/dh.pem\n\n# </computeroutput><userinput>mv pki/dh.pem /etc/ssl/certs/ldap.falcot.com.pem\n</userinput>"
 
 msgid "The <command>slapd</command> daemon also needs to be told to use these keys for encryption. The LDAP server configuration is managed dynamically: the configuration can be updated with normal LDAP operations on the <literal>cn=config</literal> object hierarchy, and the server updates <filename>/etc/ldap/slapd.d</filename> in real time to make the configuration persistent. <command>ldapmodify</command> is thus the right tool to update the configuration:"
-msgstr ""
+msgstr "还需要告知 <command>slapd</command> 守护程序使用这些密钥来加密。LDAP 服务器的配置被动态地管理：配置可以在 <literal>cn=config</literal> 对象层级上使用正常的 LDAP 操做来更新；并且无服务实时更新 <filename>/etc/ldap/slapd.d</filename> 而使配置持续。这样 <command>ldapmodify</command> 就是合适的工具来更新配置："
 
 msgid "Configuring <command>slapd</command> for encryption"
-msgstr ""
+msgstr "配置 <command>slapd</command> 来加密"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>cat &gt;ssl.ldif &lt;&lt;END\n"
@@ -2992,30 +2992,30 @@ msgid ""
 "SASL SSF: 0\n"
 "modifying entry \"cn=config\"\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>cat &gt;ssl.ldif &lt;&lt;END\ndn: cn=config\nchangetype: modify\nadd: olcTLSCertificateFile\nolcTLSCertificateFile: /etc/ssl/certs/ldap.falcot.com.pem\n-\nadd: olcTLSCertificateKeyFile\nolcTLSCertificateKeyFile: /etc/ssl/private/ldap.falcot.com.key\n-\nEND\n</userinput><computeroutput># </computeroutput><userinput>ldapmodify -Y EXTERNAL -H ldapi:/// -f ssl.ldif\n</userinput><computeroutput>SASL/EXTERNAL authentication started\nSASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth\nSASL SSF: 0\nmodifying entry \"cn=config\"\n</computeroutput>"
 
 msgid "<emphasis>TOOL</emphasis> <command>ldapvi</command> to edit an LDAP directory"
-msgstr ""
+msgstr "<emphasis>工具</emphasis> <command>ldapvi</command> 来编辑 LDAP 目录"
 
 msgid "<primary><command>ldapvi</command></primary>"
-msgstr ""
+msgstr "<primary><command>ldapvi</command></primary>"
 
 msgid "With <command>ldapvi</command>, you can display an LDIF output of any part of the LDAP directory, make some changes in the text editor, and let the tool do the corresponding LDAP operations for you."
-msgstr ""
+msgstr "使用 <command>ldapvi</command>，可以显示 LDAP 目录任何部分的 LDIF 输出，在文本编辑器中做一些更改，并让工具为您做相应的 LDAP 操作。"
 
 msgid "It is thus a convenient way to update the configuration of the LDAP server, simply by editing the <literal>cn=config</literal> hierarchy."
-msgstr ""
+msgstr "这样更新 LDAP 服务器配置的方便的方式，便是简单地编辑 <literal>cn=config</literal> 层级。"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>ldapvi -Y EXTERNAL -h ldapi:/// -b cn=config\n"
 "</userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>ldapvi -Y EXTERNAL -h ldapi:/// -b cn=config\n</userinput>"
 
 msgid "The last step for enabling encryption involves changing the <varname>SLAPD_SERVICES</varname> variable in the <filename>/etc/default/slapd</filename> file. We'll play it safe and disable unsecured LDAP altogether."
-msgstr ""
+msgstr "启动加密的最后一步包括更改 <filename>/etc/default/slapd</filename> 文件中的 <varname>SLAPD_SERVICES</varname> 变量。我们将同时安全地运行并禁止不安全 LDAP。"
 
 msgid "The <filename>/etc/default/slapd</filename> file"
-msgstr ""
+msgstr "<filename>/etc/default/slapd</filename> 文件"
 
 msgid ""
 "\n"
@@ -3064,16 +3064,16 @@ msgid ""
 "\n"
 "# Additional options to pass to slapd\n"
 "SLAPD_OPTIONS=\"\"\n"
-msgstr ""
+msgstr "\n# Default location of the slapd.conf file or slapd.d cn=config directory. If\n# empty, use the compiled-in default (/etc/ldap/slapd.d with a fallback to\n# /etc/ldap/slapd.conf).\nSLAPD_CONF=\n\n# System account to run the slapd server under. If empty the server\n# will run as root.\nSLAPD_USER=\"openldap\"\n\n# System group to run the slapd server under. If empty the server will\n# run in the primary group of its user.\nSLAPD_GROUP=\"openldap\"\n\n# Path to the pid file of the slapd server. If not set the init.d script\n# will try to figure it out from $SLAPD_CONF (/etc/ldap/slapd.conf by\n# default)\nSLAPD_PIDFILE=\n\n# slapd normally serves ldap only on all TCP-ports 389. slapd can also\n# service requests on TCP-port 636 (ldaps) and requests via unix\n# sockets.\n# Example usage:\n# SLAPD_SERVICES=\"ldap://127.0.0.1:389/ ldaps:/// ldapi:///\"\nSLAPD_SERVICES=\"ldaps:/// ldapi:///\"\n\n# If SLAPD_NO_START is set, the init script will not start or restart\n# slapd (but stop will still work).  Uncomment this if you are\n# starting slapd via some other means or if you don't want slapd normally\n# started at boot.\n#SLAPD_NO_START=1\n\n# If SLAPD_SENTINEL_FILE is set to path to a file and that file exists,\n# the init script will not start or restart slapd (but stop will still\n# work).  Use this for temporarily disabling startup of slapd (when doing\n# maintenance, for example, or through a configuration management system)\n# when you don't want to edit a configuration file.\nSLAPD_SENTINEL_FILE=/etc/ldap/noslapd\n\n# For Kerberos authentication (via SASL), slapd by default uses the system\n# keytab file (/etc/krb5.keytab).  To use a different keytab file,\n# uncomment this line and change the path.\n#export KRB5_KTNAME=/etc/krb5.keytab\n\n# Additional options to pass to slapd\nSLAPD_OPTIONS=\"\"\n"
 
 msgid "Configuring the Client"
 msgstr "设置客户端"
 
 msgid "On the client side, the configuration for the <emphasis>libpam-ldap</emphasis> and <emphasis>libnss-ldap</emphasis> modules needs to be modified to use an <literal>ldaps://</literal> URI."
-msgstr ""
+msgstr "在客户端一侧，用于 <emphasis>libpam-ldap</emphasis> 和 <emphasis>libnss-ldap</emphasis> 模块的配置需要修改，来使用 <literal>ldaps://</literal> URI。"
 
 msgid "LDAP clients also need to be able to authenticate the server. In a X.509 public key infrastructure, public certificates are signed by the key of a certificate authority (CA). With <emphasis>easy-rsa</emphasis>, the Falcot administrators have created their own CA and they now need to configure the system to trust the signatures of Falcot's CA. This can be done by putting the CA certificate in <filename>/usr/local/share/ca-certificates</filename> and running <command>update-ca-certificates</command>."
-msgstr ""
+msgstr "LDAP 客户端还需要能够认证服务器。在 X.509 公钥基础设施中，公共证书由认证机构（CA）的密钥签署。使用 <emphasis>easy-rsa</emphasis>，Falcot 公司的管理员建立了自己的 CA， 现在他们需要配置系统来信任 Falcot 公司的 CA 签名。这可以通过将 CA 证书放置到 <filename>/usr/local/share/ca-certificates</filename> 中，并运行 <command>update-ca-certificates</command> 来实现。"
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>cp pki/ca.crt /usr/local/share/ca-certificates/falcot.crt\n"
@@ -3085,13 +3085,13 @@ msgid ""
 "done.\n"
 "done.\n"
 "</computeroutput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>cp pki/ca.crt /usr/local/share/ca-certificates/falcot.crt\n</userinput><computeroutput># </computeroutput><userinput>update-ca-certificates\n</userinput><computeroutput>Updating certificates in /etc/ssl/certs... 1 added, 0 removed; done.\nRunning hooks in /etc/ca-certificates/update.d....\n\nAdding debian:falcot.pem\ndone.\ndone.\n</computeroutput>"
 
 msgid "Last but not least, the default LDAP URI and default base DN used by the various command line tools can be modified in <filename>/etc/ldap/ldap.conf</filename>. This will save quite some typing."
-msgstr ""
+msgstr "最后但不是最重要的，各个命令行工具使用的默认 LDAP URI 和默认基础 DN可以在 <filename>/etc/ldap/ldap.conf</filename> 中修改。这回节省一些输入工作。"
 
 msgid "The <filename>/etc/ldap/ldap.conf</filename> file"
-msgstr ""
+msgstr "<filename>/etc/ldap/ldap.conf</filename> 文件"
 
 msgid ""
 "#\n"
@@ -3110,28 +3110,28 @@ msgid ""
 "\n"
 "# TLS certificates (needed for GnuTLS)\n"
 "TLS_CACERT      /etc/ssl/certs/ca-certificates.crt"
-msgstr ""
+msgstr "#\n# LDAP Defaults\n#\n\n# See ldap.conf(5) for details\n# This file should be world readable but not world writable.\n\nBASE   dc=falcot,dc=com\nURI    ldaps://ldap.falcot.com\n\n#SIZELIMIT      12\n#TIMELIMIT      15\n#DEREF          never\n\n# TLS certificates (needed for GnuTLS)\nTLS_CACERT      /etc/ssl/certs/ca-certificates.crt"
 
 msgid "Real-Time Communication Services"
-msgstr ""
+msgstr "实时通信服务"
 
 msgid "Real-Time Communication (RTC) services include voice, video/webcam, instant messaging (IM) and desktop sharing. This chapter gives a brief introduction to three of the services required to operate RTC, including a TURN server, SIP server and XMPP server. Comprehensive details of how to plan, install and manage these services are available in the Real-Time Communications Quick Start Guide which includes examples specific to Debian. <ulink type=\"block\" url=\"https://rtcquickstart.org\" />"
-msgstr ""
+msgstr "实时通信（Real-Time Communication，RTC）服务包括语音、视频/webcam、即时通信（instant messaging，IM）和桌面分享。这章对需要操作 RTC 的三项服务给出了简要介绍，包括 TURN 服务器、 SIP 服务器和 XMPP 服务器。如何规划、安装并管理这些服务的深入细节可以在《实时通信的快速开始指南》中得到，它包括 Debian 的一些特定例子。<ulink type=\"block\" url=\"https://rtcquickstart.org\" />"
 
 msgid "<primary>VoIP</primary><secondary>server</secondary>"
-msgstr ""
+msgstr "<primary>VoIP</primary><secondary>服务器</secondary>"
 
 msgid "<primary>RTC</primary><secondary>server</secondary>"
-msgstr ""
+msgstr "<primary>RTC</primary><secondary>服务器</secondary>"
 
 msgid "<primary>Instant Messaging</primary><secondary>server</secondary>"
-msgstr ""
+msgstr "<primary>即时通信</primary><secondary>服务器</secondary>"
 
 msgid "<primary>Chat</primary><secondary>server</secondary>"
-msgstr ""
+msgstr "<primary>聊天</primary><secondary>服务器</secondary>"
 
 msgid "Both SIP and XMPP can provide the same functionality. SIP is slightly more well known for voice and video while XMPP is traditionally regarded as an IM protocol. In fact, they can both be used for any of these purposes. To maximize connectivity options, it is recommended to run both in parallel."
-msgstr ""
+msgstr "SIP 和 XMPP 可以提供相同的功能。SIP 在语音和视频上略微知名一些，而 XMPP 传统上被人为是 IM 协议。实际上，它们都可以用于这些之中的任何目的。为了使连接选项最大化，推荐并行运行它们。"
 
 msgid "<primary>SIP</primary>"
 msgstr "<primary>SIP</primary>"
@@ -3140,19 +3140,19 @@ msgid "<primary>XMPP</primary>"
 msgstr "<primary>XMPP</primary>"
 
 msgid "These services rely on X.509 certificates both for authentication and confidentiality purposes. See <xref linkend=\"sect.x509-cert\" /> for more information."
-msgstr ""
+msgstr "这些服务在认证和私有目的上都依赖于 X.509 证书。更多信息请参见 <xref linkend=\"sect.x509-cert\" />。"
 
 msgid "DNS settings for RTC services"
-msgstr ""
+msgstr "RTC 服务的 DNS 设置"
 
 msgid "RTC services require DNS SRV and NAPTR records. A sample configuration that can be placed in the zone file for <literal>falcot.com</literal>:"
-msgstr ""
+msgstr "RTC 服务需要 DNS SRV 和 NAPTR 记录。用于 <literal>falcot.com</literal> 的示例配置可以放置在区域文件中："
 
 msgid "<primary>DNS</primary><secondary>SRV record</secondary>"
-msgstr ""
+msgstr "<primary>DNS</primary><secondary>SRV 记录</secondary>"
 
 msgid "<primary>DNS</primary><secondary>NAPTR record</secondary>"
-msgstr ""
+msgstr "<primary>DNS</primary><secondary>NAPTR 记录</secondary>"
 
 msgid ""
 "\n"
@@ -3183,34 +3183,34 @@ msgid ""
 "; DNS SRV records for XMPP Server and Client modes:\n"
 "_xmpp-client._tcp  IN     SRV    5 0 5222 xmpp-gw.falcot.com.\n"
 "_xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.falcot.com."
-msgstr ""
+msgstr "\n; the server where everything will run\nserver1            IN     A      198.51.100.19\nserver1            IN     AAAA   2001:DB8:1000:2000::19\n\n; IPv4 only for TURN for now, some clients are buggy with IPv6\nturn-server        IN     A      198.51.100.19\n\n; IPv4 and IPv6 addresses for SIP\nsip-proxy          IN     A      198.51.100.19\nsip-proxy          IN     AAAA   2001:DB8:1000:2000::19\n\n; IPv4 and IPv6 addresses for XMPP\nxmpp-gw            IN     A      198.51.100.19\nxmpp-gw            IN     AAAA   2001:DB8:1000:2000::19\n\n; DNS SRV and NAPTR for STUN / TURN\n_stun._udp  IN SRV    0 1 3467 turn-server.falcot.com.\n_turn._udp  IN SRV    0 1 3467 turn-server.falcot.com.\n@           IN NAPTR  10 0 \"s\" \"RELAY:turn.udp\" \"\" _turn._udp.falcot.com.\n\n; DNS SRV and NAPTR records for SIP\n_sips._tcp  IN SRV    0 1 5061 sip-proxy.falcot.com.\n@           IN NAPTR  10 0 \"s\" \"SIPS+D2T\" \"\" _sips._tcp.falcot.com.\n\n; DNS SRV records for XMPP Server and Client modes:\n_xmpp-client._tcp  IN     SRV    5 0 5222 xmpp-gw.falcot.com.\n_xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.falcot.com."
 
 msgid "TURN Server"
-msgstr ""
+msgstr "TURN 服务器"
 
 msgid "TURN is a service that helps clients behind NAT routers and firewalls to discover the most efficient way to communicate with other clients and to relay the media streams if no direct media path can be found. It is highly recommended that the TURN server is installed before any of the other RTC services are offered to end users."
-msgstr ""
+msgstr "TURN 是一种服务，它帮助 NAT 路由器和放回呛后面的客户端发现更有效的方式，来与其他客户端通信，并且如果没有发现直接媒体路径的话会依赖媒体流。强烈推荐在其它 RTC 服务提供给终端用户之前安装 TURN 服务器。"
 
 msgid "<primary>TURN</primary><secondary>server</secondary>"
-msgstr ""
+msgstr "<primary>TURN</primary><secondary>服务器</secondary>"
 
 msgid "TURN and the related ICE protocol are open standards. To benefit from these protocols, maximizing connectivity and minimizing user frustration, it is important to ensure that all client software supports ICE and TURN."
-msgstr ""
+msgstr "TURN 和相关的 ICE 协议使开放的标准。为了从这些协议中获益，将连接最大化并将用户的挫败感最小化，重要的是确保所有的客户端软件支持 ICE 和 TURN。"
 
 msgid "<primary>ICE</primary>"
 msgstr "<primary>ICE</primary>"
 
 msgid "For the ICE algorithm to work effectively, the server must have two public IPv4 addresses."
-msgstr ""
+msgstr "对于有效工作的 ICE 算法，服务器必须具有两个公共的 IPV4 地址。"
 
 msgid "Install the <emphasis role=\"pkg\">coturn</emphasis> package and edit the <filename>/etc/turnserver.conf</filename> configuration file. By default, a SQLite database is configured in <filename>/var/db/turndb</filename> for user account settings, but PostgreSQL, MySQL or Redis can be set up instead if preferred. The most important thing to do is insert the IP addresses of the server."
-msgstr ""
+msgstr "安装 <emphasis role=\"pkg\">coturn</emphasis> 软件包并编辑 <filename>/etc/turnserver.conf</filename> 配置文件。SQLite 数据库默认在 <filename>/var/db/turndb</filename> 中配置用户账户设置，而如果需要的话可以替代设置 PostgreSQL、MySQL 或 Redis。 要做的最重要的事情是插入服务器的 IP 地址。"
 
 msgid "<primary>coturn</primary>"
 msgstr "<primary>coturn</primary>"
 
 msgid "The server can be started running <command>/usr/bin/turnserver</command>. We want the server to be an an automatically started system service, so we edit the <filename>/etc/default/coturn</filename> file like this:"
-msgstr ""
+msgstr "服务器可以开始运行 <command>/usr/bin/turnserver</command>。我们想要服务器成为自动启动的系统设备，所以我们编辑 <filename>/etc/default/coturn</filename> 文件，像这样："
 
 msgid ""
 "\n"
@@ -3219,45 +3219,45 @@ msgid ""
 "# an automatic system service daemon\n"
 "#\n"
 "TURNSERVER_ENABLED=1"
-msgstr ""
+msgstr "\n#\n# Uncomment it if you want to have the turnserver running as\n# an automatic system service daemon\n#\nTURNSERVER_ENABLED=1"
 
 msgid "By default, the TURN server uses anonymous access. We have to add the users we want to use:"
-msgstr ""
+msgstr "TURN 服务器默认使用匿名访问。我们必须添加我们想要使用的用户："
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>turnadmin -a -u roland -p <replaceable>secret_password</replaceable> -r falcot.com</userinput>\n"
 "<computeroutput># </computeroutput><userinput>turnadmin -A -u admin -p <replaceable>secret_password</replaceable></userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>turnadmin -a -u roland -p <replaceable>secret_password</replaceable> -r falcot.com</userinput>\n<computeroutput># </computeroutput><userinput>turnadmin -A -u admin -p <replaceable>secret_password</replaceable></userinput>"
 
 msgid "We use the argument <literal>-a</literal> to add a normal user and <literal>-A</literal> to add an admin user."
-msgstr ""
+msgstr "我们使用 <literal>-a</literal> 参数来添加用户，并用 <literal>-A</literal> 来添加管理用户。"
 
 msgid "SIP Proxy Server"
-msgstr ""
+msgstr "SIP 代理服务器"
 
 msgid "A SIP proxy server manages the incoming and outgoing SIP connections between other organizations, SIP trunking providers, SIP PBXes such as Asterisk, SIP phones, SIP-based softphones and WebRTC applications."
-msgstr ""
+msgstr "SIP 代理服务器管理其他组织、SIP 中继提供商、SIP PBXes 如 Asterisk、SIP 电话、基于 SIP 的软件电话与 WebRTC应用之间的进来与出去的 SIP 链接。"
 
 msgid "<primary>SIP</primary><secondary>server</secondary>"
-msgstr ""
+msgstr "<primary>SIP</primary><secondary>服务器</secondary>"
 
 msgid "<primary>SIP</primary><secondary>proxy</secondary>"
-msgstr ""
+msgstr "<primary>SIP</primary><secondary>代理</secondary>"
 
 msgid "<primary>SIP</primary><secondary>PBX</secondary>"
-msgstr ""
+msgstr "<primary>SIP</primary><secondary>PBX</secondary>"
 
 msgid "<primary>SIP</primary><secondary>trunk</secondary>"
-msgstr ""
+msgstr "<primary>SIP</primary><secondary>中继</secondary>"
 
 msgid "It is strongly recommended to install and configure the SIP proxy before attempting a SIP PBX setup. The SIP proxy normalizes a lot of the traffic reaching the PBX and provides greater connectivity and resilience."
-msgstr ""
+msgstr "强烈推荐在尝试 SIP PBX 设置之前安装并配置 SIP 代理。SIP 代理使大量到达 PBX 的流量正常化，并提供大量的连接与恢复能力。"
 
 msgid "Install the SIP proxy"
-msgstr ""
+msgstr "安装 SIP 代理"
 
 msgid "Install the <emphasis role=\"pkg\">kamailio</emphasis> package and the package for the database backend, the Falcot administrators chose MySQL, so they install <emphasis role=\"pkg\">mariadb-server</emphasis>. <filename>/etc/kamailio/kamctlrc</filename> is the configuration file for the control tools <command>kamctl</command> and <command>kamdbctl</command>. You need to edit and set the <literal>SIP_DOMAIN</literal> to your SIP service domain and set the <literal>DBENGINE</literal> to MySQL, another database backend can be used."
-msgstr ""
+msgstr "安装 <emphasis role=\"pkg\">kamailio</emphasis> 软件包和用于数据库后端的软件包，Falcot 公司的管理员选择 MySQL，于是它们安装 <emphasis role=\"pkg\">mariadb-server</emphasis>。<filename>/etc/kamailio/kamctlrc</filename> 是控制工具 <command>kamctl</command> 和 <command>kamdbctl</command> 的配置文件。您需要编辑并将 <literal>SIP_DOMAIN</literal> 设置到您的 SIP 服务域，并且设置 <literal>DBENGINE</literal> 到 MySQL，可以使用其它数据库后端。"
 
 msgid ""
 "\n"
@@ -3275,13 +3275,13 @@ msgid ""
 "# this parameter.\n"
 "DBENGINE=MYSQL\n"
 "[...]"
-msgstr ""
+msgstr "\n[...]\n## your SIP domain\nSIP_DOMAIN=sip.falcot.com\n\n## chrooted directory\n# $CHROOT_DIR=\"/path/to/chrooted/directory\"\n\n## database type: MYSQL, PGSQL, ORACLE, DB_BERKELEY, DBTEXT, or SQLITE\n# by default none is loaded\n#\n# If you want to setup a database with kamdbctl, you must at least specify\n# this parameter.\nDBENGINE=MYSQL\n[...]"
 
 msgid "<primary>Kamailio</primary>"
 msgstr "<primary>Kamailio</primary>"
 
 msgid "Now we focus on the configuration file <filename>/etc/kamailio/kamailio.cfg</filename>. Falcot needs user authentication and persistent user location, so they add the following <literal>#!define</literal> directives at the top of that file:"
-msgstr ""
+msgstr "现在我们聚焦在配置文件 <filename>/etc/kamailio/kamailio.cfg</filename> 上。Falcot 公司需要用户认证和持续的用户未知，所以它们在文件的顶部添加了后面的指令 <literal>#!define</literal>："
 
 msgid ""
 "\n"
@@ -3295,60 +3295,60 @@ msgid ""
 "#!define WITH_USRLOCDB\n"
 "[...]\n"
 "        "
-msgstr ""
+msgstr "\n#!KAMAILIO\n#\n# Kamailio (OpenSER) SIP Server v5.2 - default configuration script\n#     - web: https://www.kamailio.org\n#     - git: https://github.com/kamailio/kamailio\n#!define WITH_MYSQL\n#!define WITH_AUTH\n#!define WITH_USRLOCDB\n[...]\n        "
 
 msgid "Kamailio needs a database structure that we can create running <command>kamdbctl create</command> as root."
-msgstr ""
+msgstr "Kamailio 需要我们可以创建作为根用户运行 <command>kamdbctl create</command> 的数据库结构。"
 
 msgid "Finally, we can add some users with <command>kamctl</command>."
-msgstr ""
+msgstr "最后，我们可以使用 <command>kamctl</command> 添加一些用户。"
 
 msgid "<computeroutput># </computeroutput><userinput>kamctl add <replaceable>roland</replaceable> <replaceable>secret_password</replaceable></userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>kamctl add <replaceable>roland</replaceable> <replaceable>secret_password</replaceable></userinput>"
 
 msgid "Once everything is properly configured you can start or restart the service with <command>systemctl restart kamailio</command>, you can connect with a SIP client providing the IP address and the port (5090 is the default port). The users have the following id: <literal><replaceable>roland</replaceable>@<replaceable>sip.falcot.com</replaceable></literal>, and they can login using a client (see <xref linkend=\"sect.rtc-clients\" />)"
-msgstr ""
+msgstr "一旦每一部分都配置好了，就可以使用 <command>systemctl restart kamailio</command> 来启动或重新启动，可以与 SIP 客户端连接来提供 IP 地址或端口（5090 为默认端口）。用户有后面的 id：<literal><replaceable>roland</replaceable>@<replaceable>sip.falcot.com</replaceable></literal>，他们可以使用客户端登录（请参见 <xref linkend=\"sect.rtc-clients\" />）"
 
 msgid "XMPP Server"
-msgstr ""
+msgstr "XMPP 服务器"
 
 msgid "An XMPP server manages connectivity between local XMPP users and XMPP users in other domains on the public Internet."
-msgstr ""
+msgstr "XMPP 服务器管理本地 XMPP 公户与公共因特网上其它域的XMPP 用户之间的连接。"
 
 msgid "<primary>XMPP</primary><secondary>server</secondary>"
-msgstr ""
+msgstr "<primary>XMPP</primary><secondary>服务器</secondary>"
 
 msgid "<emphasis>VOCABULARY</emphasis> XMPP or Jabber?"
-msgstr ""
+msgstr "<emphasis>VOCABULARY</emphasis> XMPP 或 Jabber？"
 
 msgid "<primary>Jabber</primary>"
 msgstr "<primary>Jabber</primary>"
 
 msgid "XMPP is sometimes referred to as Jabber. In fact, Jabber is a trademark and XMPP is the official name of the standard."
-msgstr ""
+msgstr "XMPP 有时被称为 Jabber。实际上，Jabber 是个商标，而 XMPP 是标准的官方名称。"
 
 msgid "Prosody is a popular XMPP server that operates reliably on Debian servers."
-msgstr ""
+msgstr "Prosody 是 Debian 服务器上可靠运行的 XMPP 服务器。"
 
 msgid "<primary>Prosody</primary>"
 msgstr "<primary>Prosody</primary>"
 
 msgid "Install the XMPP server"
-msgstr ""
+msgstr "安装 XMPP 服务器"
 
 msgid "Install the <emphasis role=\"pkg\">prosody</emphasis> package."
-msgstr ""
+msgstr "安装 <emphasis role=\"pkg\">prosody</emphasis> 软件包。"
 
 msgid "Review the <filename>/etc/prosody/prosody.cfg.lua</filename> configuration file. The most important thing to do is insert JIDs of the users who are permitted to manage the server."
-msgstr ""
+msgstr "复查 <filename>/etc/prosody/prosody.cfg.lua</filename> 配置文件。要做的最重要的事情是插入允许管理服务器的用户的 JID。"
 
 msgid ""
 "\n"
 "admins = { \"joe@falcot.com\" }"
-msgstr ""
+msgstr "\nadmins = { \"joe@falcot.com\" }"
 
 msgid "An individual configuration file is also needed for each domain. Copy the sample from <filename>/etc/prosody/conf.avail/example.com.cfg.lua</filename> and use it as a starting point. Here is <literal>falcot.com.cfg.lua</literal>:"
-msgstr ""
+msgstr "每个域还需要独立的配置文件。从 <filename>/etc/prosody/conf.avail/example.com.cfg.lua</filename> 复制例子，并用它作为起点，这里是 <literal>falcot.com.cfg.lua</literal>："
 
 msgid ""
 "\n"
@@ -3361,81 +3361,81 @@ msgid ""
 "\n"
 "-- Set up a MUC (multi-user chat) room server on conference.example.com:\n"
 "Component \"conference.falcot.com\" \"muc\""
-msgstr ""
+msgstr "\nVirtualHost \"falcot.com\"\n        enabled = true\n        ssl = {\n                key = \"/etc/ssl/private/falcot.com-key.pem\";\n                certificate = \"/etc/ssl/public/falcot.com.pem\";\n                }\n\n-- Set up a MUC (multi-user chat) room server on conference.example.com:\nComponent \"conference.falcot.com\" \"muc\""
 
 msgid "To enable the domain, there must be a symlink from <filename>/etc/prosody/conf.d/</filename>. Create it that way:"
-msgstr ""
+msgstr "为了启动域，必须有个来自 <filename>/etc/prosody/conf.d/</filename> 的符号链接。以这样的方式来创建："
 
 msgid "<computeroutput># </computeroutput><userinput>ln -s /etc/prosody/conf.avail/falcot.com.cfg.lua /etc/prosody/conf.d/</userinput>"
-msgstr ""
+msgstr "<computeroutput># </computeroutput><userinput>ln -s /etc/prosody/conf.avail/falcot.com.cfg.lua /etc/prosody/conf.d/</userinput>"
 
 msgid "Restart the service to use the new configuration."
-msgstr ""
+msgstr "重新启动服务来使用新的配置。"
 
 msgid "Managing the XMPP server"
-msgstr ""
+msgstr "管理 XMPP 服务器"
 
 msgid "Some management operations can be performed using the <literal>prosodyctl</literal> command line utility. For example, to add the administrator account specified in <filename>/etc/prosody/prosody.cfg.lua</filename>:"
-msgstr ""
+msgstr "可以使用命令行工具 <literal>prosodyctl</literal> 执行一些管理操作。例如，为了在 <filename>/etc/prosody/prosody.cfg.lua</filename> 中添加管理员账户："
 
 msgid ""
 "\n"
 "# prosodyctl adduser joe@falcot.com"
-msgstr ""
+msgstr "\n# prosodyctl adduser joe@falcot.com"
 
 msgid "See the <ulink url=\"https://prosody.im/doc/configure\"> Prosody online documentation</ulink> for more details about how to customize the configuration."
-msgstr ""
+msgstr "关于如何定制配置的更多细节请参见 <ulink url=\"https://prosody.im/doc/configure\"> Prosody online documentation</ulink>。"
 
 msgid "Running services on port 443"
-msgstr ""
+msgstr "在端口 443 运行服务"
 
 msgid "Some administrators prefer to run all of their RTC services on port 443. This helps users to connect from remote locations such as hotels and airports where other ports may be blocked or Internet traffic is routed through HTTP proxy servers."
-msgstr ""
+msgstr "一些管理员倾向在端口 443 运行所有的 RTC 服务。这帮助用户从饭店或机场那样的远程位置连接，那里其他端口可能会被阻挡，或者因特网通信量会经由 HTTP 代理服务器。"
 
 msgid "To use this strategy, each service (SIP, XMPP and TURN) needs a different IP address. All the services can still be on the same host as Linux supports multiple IP addresses on a single host. The port number, 443, must be specified in the configuration files for each process and also in the DNS SRV records."
-msgstr ""
+msgstr "为了使用这个策略，每项服务（SIP、XMPP 和 TURN）需要不同的 IP 地址。所有的服务仍然可以在与单主机上支持多个 IP 地址的 Linux 相同的主机上。对于每个进程，并且必须在配置文件中，以及同样在 DNS SRV 记录中指定端口号，即443。"
 
 msgid "Adding WebRTC"
-msgstr ""
+msgstr "添加 WebRTC"
 
 msgid "Falcot wants to let customers make phone calls directly from the web site. The Falcot administrators also want to use WebRTC as part of their disaster recovery plan, so staff can use web browsers at home to log in to the company phone system and work normally in an emergency."
-msgstr ""
+msgstr "Falcot 公司想要让客户直接从网站上打电话。Falcot 公司的管理员还想要使用 WebRTC 作为灾难恢复计划的一部分，因此员工可以在家使用 web 浏览器登录公司电话系统，并在紧急情况下正常工作。"
 
 msgid "<primary>WebRTC</primary>"
 msgstr "<primary>WebRTC</primary>"
 
 msgid "<primary>SIP</primary><secondary>WebSockets</secondary>"
-msgstr ""
+msgstr "<primary>SIP</primary><secondary>WebSockets</secondary>"
 
 msgid "<emphasis>IN PRACTICE</emphasis> Try WebRTC"
-msgstr ""
+msgstr "<emphasis>实践</emphasis> 尝试 WebRTC"
 
 msgid "<primary>WebRTC</primary><secondary>demonstration</secondary>"
 msgstr "<primary>WebRTC</primary><secondary>说明</secondary>"
 
 msgid "If you have not tried WebRTC before, there are various sites that give an online demonstration and test facilities. <ulink type=\"block\" url=\"https://www.sip5060.net/test-calls\" />"
-msgstr ""
+msgstr "如果以前没有尝试过 WebRTC 的话，有几个网站给出了在线说明和测试设施。<ulink type=\"block\" url=\"https://www.sip5060.net/test-calls\" />"
 
 msgid "WebRTC is a rapidly evolving technology and it is essential to use packages from the <emphasis role=\"distribution\">Testing</emphasis> distribution. Another option is to compile the software."
-msgstr ""
+msgstr "WebRTC 是快速进化的技术，它本质上使用来自 <emphasis role=\"distribution\">Testing</emphasis>（测试） 发布版本的软件包。其他选项编译到软件中。"
 
 msgid "WebRTC uses a simple API to provide browsers and mobile applications with RTC, it is free software and it is being developed by Google. <ulink type=\"block\" url=\"https://webrtc.org\" />"
-msgstr ""
+msgstr "WebRTC 使用简单的 API 来提供 RTC 浏览器和移动应用，它是自由软件，由 Google 开发。<ulink type=\"block\" url=\"https://webrtc.org\" />"
 
 msgid "A very flexible approach is using GStreamer's WebRTC implementation. It enables pipeline-based multimedia applications, which allows developing interesting and highly efficient applications. A good starting point is the following demo by Centricular, the main company that is developing it: <ulink type=\"block\" url=\"https://github.com/centricular/gstwebrtc-demos\" />"
-msgstr ""
+msgstr "非常灵活的方法是使用 GStreamer 的 WebRTC 应用。它启动基于管道的多媒体应用，这允许开发有趣且高效的应用。好的起点是跟随 Centricular 的演示，这是它的开发公司：<ulink type=\"block\" url=\"https://github.com/centricular/gstwebrtc-demos\" />"
 
 msgid "<primary>GStreamer</primary>"
 msgstr "<primary>GStreamer</primary>"
 
 msgid "More advanced click-to-call web sites typically use server-side scripting to generate the <literal>config.js</literal> file dynamically. The <ulink url=\"https://www.drupal.org/project/drucall\">DruCall</ulink> source code demonstrates how to do this with PHP."
-msgstr ""
+msgstr "更先进的点击呼叫网站典型地使用服务器侧的脚本，来动态生成 <literal>config.js</literal> 文件。<ulink url=\"https://www.drupal.org/project/drucall\">DruCall</ulink> 源代码说明了如何使用 PHP 来做。"
 
 msgid "<primary>DruCall</primary>"
 msgstr "<primary>DruCall</primary>"
 
 msgid "This chapter sampled only a fraction of the available server software; however, most of the common network services were described. Now it is time for an even more technical chapter: we'll go into deeper detail for some concepts, describe massive deployments and virtualization."
-msgstr ""
+msgstr "这一章只举了部分可获得服务器软件的例子；但描述了多数常用网络服务。现在到了更技术性的章节了：我们将深入一些概念的细节，描述大量应用和虚拟化。"
 
 #, fuzzy
 #~| msgid "<primary>email</primary><secondary>server</secondary>"
