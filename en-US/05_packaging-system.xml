@@ -803,22 +803,49 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
         <indexterm><primary><command>dpkg</command></primary><secondary>internal operation</secondary></indexterm>
         <indexterm><primary>package</primary><secondary>installation</secondary></indexterm>
 
-        <para>Here is what happens during an installation (or an
-        update):</para>
+        <para>During the initial installation and for each upgrade of a package,
+        <command>dpkg</command> calls so called <emphasis>maintainer scripts</emphasis> such as the
+        <command>prerm</command> or <command>preinst</command> scripts. These
+        scripts can perform additional actions during the different stages of
+        a package's life-cycle. Script names preceded by <literal>new-</literal>
+        are the scripts from the new version of a package being installed or
+        upgraded to. Script names preceded by <literal>old-</literal> are
+        the scripts from the old version of a package that is being upgraded
+        from.</para>
+        
+        <para>During each invocation <command>dpkg</command> will pass certain
+        arguments to each script such as <command>upgrade
+        <replaceable>new-version</replaceable></command>. The invoked script can
+        then either handle the arguments and perform a particular action, or
+        ignore the arguments and return with an exit code of <literal>0</literal>,
+        if nothing needs to be done during that step. In practice many packages
+        will not need to perform an action during every step in the life cycle.
+        Thus a typical configuration script will check for a particular argument
+        and ignore all other ones, implicitly returning with exit code
+        <literal>0</literal>.</para>
+
+        <para>Here is what happens during an installation (or an update). The
+        <replaceable>old-version</replaceable>, 
+        <replaceable>new-version</replaceable> and
+        <replaceable>last-version-configured</replaceable> arguments are
+        placeholders for the actual (old and new) version numbers of the
+        package:</para>
         <orderedlist>
           <listitem>
             <para>For an update, <command>dpkg</command> calls the
-            <command>old-prerm upgrade
-            <replaceable>new-version</replaceable></command>.</para>
+            <command>old-prerm</command> script and passes
+            <command>upgrade <replaceable>new-version</replaceable></command>
+            as arguments.</para>
           </listitem>
           <listitem>
             <para>Still for an update, <command>dpkg</command> then
-            executes <command>new-preinst
-            upgrade <replaceable>old-version</replaceable></command>; for a
-            first installation, it executes <command>new-preinst
-            install</command>. It may add the old version in the last
+            executes the <command>new-preinst</command> script with the arguments
+            <command>upgrade <replaceable>old-version</replaceable></command>; for the
+            initial installation, it executes the <command>new-preinst</command> script
+            and passes <command>install</command> as argument.
+            It may add the old version in the last
             parameter, if the package has already been installed and
-            removed since (but not purged, the configuration files having
+            removed since (but not purged, and thus configuration files have
             been retained).</para>
           </listitem>
           <listitem>
@@ -827,9 +854,9 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
             temporarily made.</para>
           </listitem>
           <listitem>
-            <para>For an update, <command>dpkg</command> executes
-            <command>old-postrm upgrade
-            <replaceable>new-version</replaceable></command>.</para>
+            <para>For an update, <command>dpkg</command> executes the
+            <command>old-postrm</command> script and passes <command>upgrade
+            <replaceable>new-version</replaceable></command> as arguments.</para>
           </listitem>
           <listitem>
             <para><command>dpkg</command> updates all of the internal data
@@ -846,7 +873,8 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
           </listitem>
           <listitem>
             <para>Finally, <command>dpkg</command> configures the package
-            by executing <command>new-postinst configure
+            by executing the <command>new-postinst</command> script with the arguments
+            <command>configure
             <replaceable>last-version-configured</replaceable></command>.</para>
           </listitem>
         </orderedlist>
@@ -856,21 +884,23 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
         <title>Package Removal</title>
         <indexterm><primary>package</primary><secondary>removal</secondary></indexterm>
 
-        <para>Here is what happens during a package removal:</para>
+        <para>The steps to remove a package are analogous to the installation steps.
+        The main difference is that the removal scripts of the package are called:</para>
         <orderedlist>
           <listitem>
-            <para><command>dpkg</command> calls <command>prerm
-            remove</command>.</para>
+            <para><command>dpkg</command> calls the <command>prerm</command> script
+            and passes the <command>remove</command> argument.</para>
           </listitem>
           <listitem>
             <para><command>dpkg</command> removes all of the package's
             files, with the exception of the configuration files and
-            configuration scripts.</para>
+            maintainer scripts.</para>
           </listitem>
           <listitem>
-            <para><command>dpkg</command> executes <command>postrm
-            remove</command>. All of the configuration scripts, except
-            <filename>postrm</filename>, are removed. If the user has not
+            <para><command>dpkg</command> executes the <command>postrm</command>
+            script and passes <command>remove</command> as argument.
+            Afterwards, all of the maintainer scripts, except the
+            <filename>postrm</filename> script, are removed. If the user has not
             used the “purge” option, the process stops here.</para>
           </listitem>
           <listitem>
@@ -880,8 +910,8 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
             number of copies (<filename>*.dpkg-tmp</filename>,
             <filename>*.dpkg-old</filename>,
             <filename>*.dpkg-new</filename>) and temporary files;
-            <command>dpkg</command> then executes <command>postrm
-            purge</command>.</para>
+            <command>dpkg</command> then executes the <command>postrm</command> script
+            and passes <command>purge</command> as argument.</para>
           </listitem>
         </orderedlist>
 
