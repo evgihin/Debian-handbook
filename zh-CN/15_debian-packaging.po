@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2021-01-23 03:32+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2021-02-04 09:42+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Backport"
 msgstr "向后移植"
@@ -148,10 +148,10 @@ msgid "The <command>pbuilder</command> program (in the similarly named package) 
 msgstr "<command>pbuilder</command> 程序（在相似命名的包中）允许在 <emphasis>chrooted</emphasis> 环境中构建 Debian 软件包。它首先创建临时目录，里面包含了创建软件包（包括 <emphasis>Build-Depends</emphasis> 字段提到的软件包）所需的最小系统。然后在构建过程中使用 <command>chroot</command> 命令，将这个目录用作根目录（<filename>/</filename>）。"
 
 msgid "This tool allows the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and a <command>pbuilder</command> running on the same machine can be using <emphasis role=\"distribution\">Unstable</emphasis> for package builds."
-msgstr "这个工具允许构建过程在不被用户操作所改变的环境中发生。这还允许迅速检查丢失的包依赖（因为除非将适当的依赖归档，否则构建失败）。最后，它允许对于并非系统整体使用的 Debian 版本来构建软件包：机器可以在正常工作负荷下使用 <emphasis role=\"distribution\">稳定版</emphasis>，同一台机器上运行 <command>pbuilder</command> 可以使用 <emphasis role=\"distribution\">不稳定版</emphasis> 来构建软件包。"
+msgstr "这个工具允许构建过程在不被用户操作所改变的环境中发生。这还允许迅速检查丢失的构建依赖（因为除非将适当的依赖归档，否则构建会失败）。最后，它允许对于并非由系统作为整体使用的 Debian 版本来构建软件包：机器可以在正常工作负荷下使用 <emphasis role=\"distribution\">稳定版</emphasis>，在同一台机器上运行 <command>pbuilder</command> 可以使用 <emphasis role=\"distribution\">不稳定版</emphasis> 来构建软件包。"
 
 msgid "<command>schroot</command> allows running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
-msgstr "<command>schroot</command> 允许运行命令，或登录 <emphasis>chrooted</emphasis> 环境中的 shell。"
+msgstr "<command>schroot</command> 允许运行命令，或在 <emphasis>chrooted</emphasis> 环境中登录 shell。"
 
 msgid "Building your First Package"
 msgstr "构建您的第一个软件包"
@@ -159,20 +159,22 @@ msgstr "构建您的第一个软件包"
 msgid "Meta-Packages or Fake Packages"
 msgstr "元包或假软件包"
 
+#, fuzzy
 msgid "Fake packages and meta-packages are similar, in that they are empty shells that only exist for the effects their meta-data have on the package handling stack."
 msgstr "假软件包和元包是相似的，相似点在于它们是空壳，只为它们的元数据在软件包处理栈上的效果而存在。"
 
 msgid "The purpose of a fake package is to trick <command>dpkg</command> and <command>apt</command> into believing that some package is installed even though it is only an empty shell. This allows satisfying dependencies on a package when the corresponding software was installed outside the scope of the packaging system. Such a method works, but it should still be avoided whenever possible, since there is no guarantee that the manually installed software behaves exactly like the corresponding package would and other packages depending on it would not work properly."
-msgstr "假软件包的目的是欺骗 <command>dpkg</command> 和 <command>apt</command>，让它们相信一些软件包已经安装，即使只是个空壳。这允许当相应的软件安装在打包系统的范围之外时满足对软件包的依赖。这样的方法有效，但仍应该尽可能地避免，因为手动安装的软件包完全像相应的软件包那样工作，并且依赖它的其它软件包会不能正常地工作。"
+msgstr "假软件包的目的是欺骗 <command>dpkg</command> 和 <command>apt</command>，让它们相信一些软件包已经安装，即使只是个空壳。这允许当对应的软件安装在打包系统的范围之外时满足对软件包的依赖。这样的方法有效，但仍应该尽可能地避免，因为不能保证手动安装的软件包完全像对应的软件包那样工作，并且依赖它的其它软件包会不能正常地工作。"
 
 msgid "On the other hand, a meta-package exists mostly as a collection of dependencies, so that installing the meta-package will actually bring in a set of other packages in a single step."
-msgstr "另一方面，元包多数作为一组依赖而存在，从而安装元包将真正在单一步骤中带进来一组其它软件包。"
+msgstr "另一方面，元包主要作为一组依赖而存在，从而安装元包将真正一步带进一组其它软件包。"
 
 msgid "Both these kinds of packages can be created by the <command>equivs-control</command> and <command>equivs-build</command> commands (in the <emphasis role=\"pkg\">equivs</emphasis> package). The <command>equivs-control <replaceable>file</replaceable></command> command creates a Debian package header file that should be edited to contain the name of the expected package, its version number, the name of the maintainer, its dependencies, and its description. Other fields without a default value are optional and can be deleted. The <literal>Copyright</literal>, <literal>Changelog</literal>, <literal>Readme</literal> and <literal>Extra-Files</literal> fields are not standard fields in Debian packages; they only make sense within the scope of <command>equivs-build</command>, and they will not be kept in the headers of the generated package."
-msgstr "这两种软件包都可以通过 <command>equivs-control</command> 和 <command>equivs-build</command> 命令（在软件包 <emphasis role=\"pkg\">equivs</emphasis> 中）来创建。命令 <command>equivs-control <replaceable>file</replaceable></command> 创建了 Debian 软件包头文件，应该编辑它来包含所需要的软件包的名称、其版本号、维护者姓名、其依赖及其描述。没有默认值的其它字段是可选的，并且可以被删除。<literal>Copyright（版权）</literal>, <literal>Changelog（更改日志）</literal>, <literal>Readme（自述文件）</literal> 和 <literal>Extra-Files（补充的文件）</literal> 字段在 Debian 软件包中不是标准字段；它们只在 <command>equivs-build</command> 的范围内是合理的，并且它们不会被保留在生成的软件包的标头中。"
+msgstr "这两种软件包都可以通过 <command>equivs-control</command> 和 <command>equivs-build</command> 命令（在软件包 <emphasis role=\"pkg\">equivs</emphasis> 中）来创建。<command>equivs-control <replaceable>file</replaceable></command> 命令创建了 Debian 软件包头文件，应该编辑它来包含所需要的软件包的名称、其版本号、维护者姓名、其依赖及其描述。没有默认值的其它字段是可选的，并且可以被删除。<literal>Copyright（版权）</literal>、<literal>Changelog（更改日志）</literal>、<literal>Readme（自述文件）</literal> 和 <literal>Extra-Files（补充的文件）</literal> 字段在 Debian 软件包中不是标准字段；它们只在 <command>equivs-build</command> 的范围内是有意义，并且它们不会被保留在生成的软件包的标头中。"
 
+#, fuzzy
 msgid "Header file of the <emphasis>libxml-libxml-perl</emphasis> fake package"
-msgstr "<emphasis>libxml-libxml-perl</emphasis>的头文件 虚拟安装包"
+msgstr "<emphasis>libxml-libxml-perl</emphasis>的头文件 假软件包"
 
 msgid ""
 "\n"
@@ -201,10 +203,10 @@ msgid "Simple File Archive"
 msgstr "简单文件档案"
 
 msgid "The Falcot Corp administrators need to create a Debian package in order to ease deployment of a set of documents on a large number of machines. The administrator in charge of this task first reads the “New Maintainer's Guide”, then starts working on their first package. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
-msgstr "Falcot 公司的管理员需要创建 Debian 软件包，从而容易在大量机器上布设一组文档。负责这个人物的管理员首先阅读“New Maintainer's Guide”（新维护者指南），然后开始处理他们的第一个软件包。<ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
+msgstr "Falcot 公司的管理员需要创建 Debian 软件包，从而容易在大量机器上布设一组文档。负责这项任务的管理员首先阅读“New Maintainer's Guide”（新维护者指南），然后开始处理他们的第一个软件包。<ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
 
 msgid "The first step is creating a <filename>falcot-data-1.0</filename> directory to contain the target source package. The package will logically, be named <literal>falcot-data</literal> and bear the <literal>1.0</literal> version number. The administrator then places the document files in a <filename>data</filename> subdirectory. Then they invoke the <command>dh_make</command> command (from the <emphasis role=\"pkg\">dh-make</emphasis> package) to add files required by the package generation process, which will all be stored in a <filename>debian</filename> subdirectory:"
-msgstr "第一步是创建 <filename>falcot-data-1.0</filename> 目录，来包含目标源码包。软件包被本地命名为 <literal>falcot-data</literal> 并带有版本号 <literal>1.0</literal>。然后管理员将文档放置在 <filename>data</filename> 子目录中。然后调用 <command>dh_make</command> 命令（来自 <emphasis role=\"pkg\">dh-make</emphasis> 软件包），来添加软件包生成过程所需的文件，它们将被存储在 <filename>debian</filename> 子目录中："
+msgstr "第一步是创建 <filename>falcot-data-1.0</filename> 目录来包含目标源码包。软件包在本地命名为 <literal>falcot-data</literal> 并带有版本号 <literal>1.0</literal>。然后管理员将文档放置在 <filename>data</filename> 子目录中。然后调用 <command>dh_make</command> 命令（来自 <emphasis role=\"pkg\">dh-make</emphasis> 软件包），来添加软件包生成过程所需的文件，它们将被存储在 <filename>debian</filename> 子目录中："
 
 msgid ""
 "\n"
@@ -229,7 +231,7 @@ msgid ""
 msgstr "\n<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n<computeroutput>\nType of package: (single, indep, library, python)\n[s/i/l/p]? </computeroutput><userinput>i</userinput>\n<computeroutput>\nMaintainer Name     : Raphael Hertzog\nEmail-Address       : hertzog@debian.org\nDate                : Fri, 04 Sep 2015 12:09:39 -0400\nPackage Name        : falcot-data\nVersion             : 1.0\nLicense             : gpl3\nPackage Type        : indep\nAre the details correct? [Y/n/q]\nCurrently there is not top level Makefile. This may require additional tuning\nDone. Please edit the files in the debian/ subdirectory now.\n\n$</computeroutput>"
 
 msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
-msgstr "选择的类型的软件包（<emphasis>indep</emphasis>）指示了这个源码包将生成可以在所有架构（<literal>Architecture: all</literal>）上分享的单一二进制包。<emphasis>single</emphasis> 作为对应，导致依赖于目标架构（<literal>Architecture: any</literal>）的单一二进制包。在这种情况下，前者选择更相关，因为软件包只包含文档而没有二进制程序，因此可以在所有架构的计算机上使用。"
+msgstr "所选择的软件包类型（<emphasis>indep</emphasis>）指示了这个源码包将生成可以在所有架构（<literal>Architecture: all</literal>）上分享的单一二进制包。<emphasis>single</emphasis> 作为对应，产生依赖于目标架构（<literal>Architecture: any</literal>）的单一二进制包。在这种情况下，前者的选择更相关，因为软件包只包含文档而没有二进制程序，因此可以在所有架构的计算机上相似地使用。"
 
 msgid "<primary>package types</primary>"
 msgstr "<primary>软件包类型</primary>"
@@ -238,13 +240,13 @@ msgid "<primary>package</primary><secondary>types</secondary>"
 msgstr "<primary>软件包</primary><secondary>类型</secondary>"
 
 msgid "The <emphasis>library</emphasis> type corresponds to a source package leading to several binary packages. It is useful for shared libraries, since they need to follow strict packaging rules."
-msgstr "<emphasis>library</emphasis> 的类型符合产生几个二进制包的源码包。它对共享库有用，因为它们需要遵守严格的打包规则。"
+msgstr "<emphasis>library</emphasis> 的类型与产生几个二进制包的源码包对应。它对共享库有用，因为它们需要遵守严格的打包规则。"
 
 msgid "<emphasis>TIP</emphasis> Maintainer's name and email address"
 msgstr "<emphasis>技巧</emphasis> 维护者的名称与电子邮箱地址"
 
 msgid "Most of the programs involved in package maintenance will look for your name and email address in the <varname>DEBFULLNAME</varname> and <varname>DEBEMAIL</varname> or <varname>EMAIL</varname> environment variables. Defining them once and for all will avoid you having to type them multiple times. If your usual shell is <command>bash</command>, it is a simple matter of adding the following two lines in your <filename>~/.bashrc</filename> file (you will obviously replace the values with more relevant ones!):"
-msgstr "软件包维护包括的多数程序会在 <varname>DEBFULLNAME</varname> 与 <varname>DEBEMAIL</varname> 中或 <varname>EMAIL</varname> 环境变量中查找您的姓名和电子邮件地址。一旦并且尽管定义了它们，将避免将其多次键入。如果您通常的 shell 是 <command>bash</command> 的话，那么这是在您的 <filename>~/.bashrc</filename> 文件中添加后面的两行的简单事情（明显您会用更相关的值来替换！）："
+msgstr "软件包的维护所包括的多数程序会在 <varname>DEBFULLNAME</varname> 与 <varname>DEBEMAIL</varname> 中或 <varname>EMAIL</varname> 环境变量中查找您的姓名和电子邮件地址。为所有定义它们一次将避免将其多次键入。如果您通常的 shell 是 <command>bash</command> 的话，那么这是在您的 <filename>~/.bashrc</filename> 文件中添加后面两行的简单事情（明显您会用更相关的值来替换！）："
 
 msgid ""
 "\n"
@@ -253,13 +255,13 @@ msgid ""
 msgstr "\nexport EMAIL=\"hertzog@debian.org\"\nexport DEBFULLNAME=\"Raphael Hertzog\""
 
 msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file should be kept, since it is required for the correct functioning of the <emphasis>debhelper</emphasis> suite of programs (all beginning with the <command>dh_</command> prefix) used at various stages of the package build process."
-msgstr "<command>dh_make</command> 命令创建带有很多文件的 <filename>debian</filename> 子目录。一些使所需的，特别是 <filename>rules</filename>、<filename>control</filename>、<filename>changelog</filename> 和 <filename>copyright</filename>。带有 <filename>.ex</filename> 后缀的文件是可以在适当时间修改（并删除后缀）来使用的示例文件。当不需要它们时，推荐将其删除。<filename>compat</filename> 文件应该保留，因为它是使在软件包构建过程的各个阶段所使用的 <emphasis>debhelper</emphasis> 程序集（所有名称都是以 <command>dh_</command> 前缀来开始）正常运行所需要的。"
+msgstr "<command>dh_make</command> 命令创建带有很多文件的 <filename>debian</filename> 子目录。一些是所需的，特别是 <filename>rules</filename>、<filename>control</filename>、<filename>changelog</filename> 和 <filename>copyright</filename>。带有 <filename>.ex</filename> 后缀的文件是可以在适当时间修改（并删除后缀）来使用的示例文件。当不需要它们时，推荐将其删除。<filename>compat</filename> 文件应该保留，因为它是使在软件包构建过程的各个阶段所使用的 <emphasis>debhelper</emphasis> 程序集（所有名称都是以 <command>dh_</command> 前缀来开始）正常运行所需要的。"
 
 msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
-msgstr "<filename>copyright</filename> 文件必须将软件包中包括的文档的作者信息，以及相关的许可包括其中。在我们的情况下，这些是内部文档，并且其使用限制在 Falcot Corp 公司内部。默认的 <filename>changelog</filename> 文件通常是适当的；用更冗长的解释替换“Initial release”（初始发布），并将发布版本从 <literal>unstable</literal> 更改为 <literal>internal</literal> 就足够了。<filename>control</filename> 文件也被更新：<literal>Section</literal> 字段被更改为 <emphasis>misc</emphasis>，而 <literal>Homepage</literal>、<literal>Vcs-Git</literal> 和 <literal>Vcs-Browser</literal> 字段被删除。<literal>Depends</literal> 字段以 <literal>firefox-esr | www-browser</literal> 来填入完成，从而确保 web 浏览器能够显示软件包中的文档。"
+msgstr "<filename>copyright</filename> 文件必须包含软件包中包括的文档作者的信息，以及相关的许可包括其中。在我们的情况下，这些是内部文档，并且其使用限制在 Falcot Corp 公司内部。默认的 <filename>changelog</filename> 文件通常是适当的；用更冗长的解释替换“Initial release”（初始发布），并将发布版本从 <literal>unstable</literal> 更改为 <literal>internal</literal> 就足够了。<filename>control</filename> 文件也被更新：<literal>Section</literal> 字段被更改为 <emphasis>misc</emphasis>，而 <literal>Homepage</literal>、<literal>Vcs-Git</literal> 和 <literal>Vcs-Browser</literal> 字段被删除。<literal>Depends</literal> 字段以 <literal>firefox-esr | www-browser</literal> 来填入完成，从而确保 web 浏览器能够显示软件包中的文档。"
 
 msgid "The <filename>control</filename> file"
-msgstr "文件 <filename>control</filename>"
+msgstr "<filename>control</filename> 文件"
 
 msgid ""
 "\n"
@@ -284,7 +286,7 @@ msgid ""
 msgstr "\nSource: falcot-data\nSection: misc\nPriority: optional\nMaintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\nBuild-Depends: debhelper (&gt;= 10)\nStandards-Version: 4.4.1\n\nPackage: falcot-data\nArchitecture: all\nDepends: firefox-esr | www-browser, ${misc:Depends}\nDescription: Internal Falcot Corp Documentation\n This package provides several documents describing the internal\n structure at Falcot Corp.  This includes:\n  - organization diagram\n  - contacts for each department.\n .\n These documents MUST NOT leave the company.\n Their use is INTERNAL ONLY."
 
 msgid "The <filename>changelog</filename> file"
-msgstr "文件 <filename>changelog</filename>"
+msgstr "<filename>changelog</filename> 文件"
 
 msgid ""
 "\n"
@@ -299,7 +301,7 @@ msgid ""
 msgstr "\nfalcot-data (1.0) internal; urgency=low\n\n  * Initial Release.\n  * Let's start with few documents:\n    - internal company structure;\n    - contacts for each department.\n\n -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400"
 
 msgid "The <filename>copyright</filename> file"
-msgstr "文件 <filename>copyright</filename>"
+msgstr "<filename>copyright</filename> 文件"
 
 msgid ""
 "\n"
@@ -332,13 +334,13 @@ msgid "The interpretation of such a rule is as follows: if one of the <literal>s
 msgstr "这样的规则翻译如下：如果 <literal>source*</literal> 文件之一比 <literal>target</literal> 文件更新，那么需要使用 <command>command1</command> 和 <command>command2</command>，来生成目标。"
 
 msgid "Note that the command lines must start with a tab character; also note that when a command line starts with a dash character (<literal>-</literal>), failure of the command does not interrupt the whole process."
-msgstr "注意，命令行必须以制表符开始；还要注意当命令行以斜杠（<literal>-</literal>）开始时，失败的命令不会中断整个过程。"
+msgstr "注意，命令行必须以制表符开始；还要注意当命令行以短破折号（<literal>-</literal>）开始时，失败的命令不会中断整个过程。"
 
 msgid "The <filename>rules</filename> file usually contains a set of rules used to configure, build and install the software in a dedicated subdirectory (named after the generated binary package). The contents of this subdirectory is then archived within the Debian package as if it were the root of the filesystem. In our case, files will be installed in the <filename>debian/falcot-data/usr/share/falcot-data/</filename> subdirectory, so that installing the generated package will deploy the files under <filename>/usr/share/falcot-data/</filename>. The <filename>rules</filename> file is used as a <filename>Makefile</filename>, with a few standard targets (including <literal>clean</literal> and <literal>binary</literal>, used respectively to clean the source directory and generate the binary package)."
-msgstr "<filename>rules</filename> 文件通常包含一组用于在专用子目录（以生成的二级制软件包来命令）来配置、构建和安装软件的规则。然后这个子目录的内容在 Debian 软件包内存档，如同这个子目录是文件系统的根。在我们的情况下，文件将安装在 <filename>debian/falcot-data/usr/share/falcot-data/</filename> 子目录中，从而对生成的软件包的安装将文件部署在 <filename>/usr/share/falcot-data/</filename>下。<filename>rules</filename> 文件用作 <filename>Makefile</filename>，带有一些标准的目标（包括 <literal>clean</literal> 和 <literal>binary</literal>，分别用来清理源目录和生成的二进制软件包）。"
+msgstr "<filename>rules</filename> 文件通常包含一组用于在专用子目录（以生成的二级制软件包来命令）来配置、构建和安装软件的规则。然后这个子目录的内容在 Debian 软件包内存档，如同这个子目录是文件系统的根。在我们的情况下，文件将安装在 <filename>debian/falcot-data/usr/share/falcot-data/</filename> 子目录中，从而安装生成的软件包将在 <filename>/usr/share/falcot-data/</filename>下部署文件。<filename>rules</filename> 文件用作 <filename>Makefile</filename>，带有一些标准的目标（包括 <literal>clean</literal> 和 <literal>binary</literal>，分别用来清理源目录和生成的二进制软件包）。"
 
 msgid "Although this file is the heart of the process, it increasingly contains only the bare minimum for running a standard set of commands provided by the <command>debhelper</command> tool. Such is the case for files generated by <command>dh_make</command>. To install our files, we simply configure the behavior of the <command>dh_install</command> command by creating the following <filename>debian/falcot-data.install</filename> file:"
-msgstr "尽管这个文件是整个过程的中心，它仍然只逐渐包含了最低限， <command>debhelper</command> 工具提供的标准组的命令。这样是对于由 <command>dh_make</command> 生成的文件的情况。为了安装我们的文件，我们通过创建后面的 <filename>debian/falcot-data.install</filename> 文件，来简单地配置 <command>dh_install</command> 命令的行为："
+msgstr "尽管这个文件是整个过程的中心，它仍然只逐渐包含了运行 <command>debhelper</command> 工具提供的标准组命令的最低限。这是由 <command>dh_make</command> 生成文件的情况。为了安装我们的文件，我们通过创建后面的 <filename>debian/falcot-data.install</filename> 文件，来简单地配置 <command>dh_install</command> 命令的行为："
 
 msgid ""
 "\n"
@@ -346,7 +348,7 @@ msgid ""
 msgstr "\ndata/* usr/share/falcot-data/"
 
 msgid "At this point, the package can be created. We will, however, add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
-msgstr "这时可以创建软件包。然而，我们将加点涂料。由于管理员想要文档从图形化桌面环境的菜单中容易地访问，我们添加 <filename>falcot-data.desktop</filename> 文件，并通过在 <filename>debian/falcot-data.install</filename> 中添加第二行，而在 <filename>/usr/share/applications</filename> 中将它安装上。"
+msgstr "这时可以创建软件包。然而，我们将加点涂料。由于管理员想要文档从图形化桌面环境的菜单中容易地访问，我们添加了 <filename>falcot-data.desktop</filename> 文件，并通过在 <filename>debian/falcot-data.install</filename> 中添加第二行，而将它安装在 <filename>/usr/share/applications</filename> 中。"
 
 msgid "The <filename>falcot-data.desktop</filename> file"
 msgstr "<filename>falcot-data.desktop</filename>文件"
@@ -363,7 +365,7 @@ msgid ""
 msgstr "\n[Desktop Entry]\nName=Internal Falcot Corp Documentation\nComment=Starts a browser to read the documentation\nExec=x-www-browser /usr/share/falcot-data/index.html\nTerminal=false\nType=Application\nCategories=Documentation;"
 
 msgid "The updated <filename>debian/falcot-data.install</filename> looks like this:"
-msgstr "更新的 <filename>debian/falcot-data.install</filename> 看起来像这样："
+msgstr "已更新的 <filename>debian/falcot-data.install</filename> 看起来像这样："
 
 msgid ""
 "\n"
@@ -372,7 +374,7 @@ msgid ""
 msgstr "\ndata/* usr/share/falcot-data/\nfalcot-data.desktop usr/share/applications/"
 
 msgid "Our source package is now ready. All that is left to do is to generate the binary package, with the same method we used previously for rebuilding packages: we run the <command>dpkg-buildpackage -us -uc</command> command from within the <filename>falcot-data-1.0</filename> directory."
-msgstr "我们的源码包现在已经准备好了。所有剩下要做的，是通过我们之前用来重新构建软件包的相同方法来生成二进制软件包：我们从 <filename>falcot-data-1.0</filename> 目录中运行 <command>dpkg-buildpackage -us -uc</command> 命令。"
+msgstr "我们的源码包现在已经准备好了。所有剩下要做的，是通过我们之前用来重新构建软件包的相同方法来生成二进制软件包：我们从 <filename>falcot-data-1.0</filename> 目录内运行 <command>dpkg-buildpackage -us -uc</command> 命令。"
 
 msgid "Creating a Package Repository for APT"
 msgstr "创建用于 APT 的软件包仓库"
@@ -384,10 +386,10 @@ msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive 
 msgstr "<primary>软件包</primary><secondary>Debian</secondary><tertiary>之档案</tertiary>"
 
 msgid "Falcot Corp gradually started maintaining a number of Debian packages either locally modified from existing packages or created from scratch to distribute internal data and programs."
-msgstr "Falcot Corp 公司逐渐开始维护大量或者本地从现有软件包修改的，或者从头创建的 Debian 软件包，来发布内部数据和程序。"
+msgstr "Falcot Corp 公司逐渐开始维护大量的 Debian 软件包，或者是本地从现有软件包修改的，或者从头创建来发布内部数据和程序。"
 
 msgid "To make deployment easier, they want to integrate these packages in a package archive that can be directly used by APT. For obvious maintenance reasons, they wish to separate internal packages from locally-rebuilt packages. The goal is for the matching entries in a <filename>/etc/apt/sources.list.d/falcot.list</filename> file to be as follows:"
-msgstr "为了更容易部署，他们想要将这些软件包集成在能够由 APT 直接使用的软件包档案中。为了容易维护的原因，他们希望将内部软件包从本地重建的软件包中分出来。目标是使 <filename>/etc/apt/sources.list.d/falcot.list</filename> 文件中匹配的入口如后面这样："
+msgstr "为了更容易部署，他们想要将这些软件包集成在能够由 APT 直接使用的软件包档案中。明显为了维护的原因，他们希望将内部软件包从本地重建的软件包中分出来。目标是使 <filename>/etc/apt/sources.list.d/falcot.list</filename> 文件中的匹配入口如后面这样："
 
 msgid ""
 "\n"
@@ -399,7 +401,7 @@ msgid "<primary><command>mini-dinstall</command></primary>"
 msgstr "<primary><command>mini-dinstall</command></primary>"
 
 msgid "The administrators therefore configure a virtual host on their internal HTTP server, with <filename>/srv/vhosts/packages/</filename> as the root of the associated web space. The management of the archive itself is delegated to the <command>mini-dinstall</command> command (in the similarly-named package). This tool keeps an eye on an <filename>incoming/</filename> directory (in our case, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>) and waits for new packages there; when a package is uploaded, it is installed into a Debian archive at <filename>/srv/vhosts/packages/</filename>. The <command>mini-dinstall</command> command reads the <filename>*.changes</filename> file created when the Debian package is generated. These files contain a list of all other files associated with the version of the package (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, or their equivalents with other compression tools), and these allow <command>mini-dinstall</command> to know which files to install. <filename>*.changes</filename> files also contain the name of the target distribution (often <literal>unstable</literal>) mentioned in the latest <filename>debian/changelog</filename> entry, and <command>mini-dinstall</command> uses this information to decide where the package should be installed. This is why administrators must always change this field before building a package, and set it to <literal>internal</literal> or <literal>updates</literal>, depending on the target location. <command>mini-dinstall</command> then generates the files required by APT, such as <filename>Packages.gz</filename>."
-msgstr "这样管理员在他们的内部 HTTP 服务器上配置虚拟主机，以 <filename>/srv/vhosts/packages/</filename> 作为相关 web 空间的根。档案本身的管理委托给 <command>mini-dinstall</command> 命令（在相似命名的软件包中）。这个工具照看 <filename>incoming/</filename> 目录（在我们的情况下是<filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>）并在那里等待新的软件包；当软件包上传时，就被安装在 <filename>/srv/vhosts/packages/</filename> 的 Debian 档案中。<command>mini-dinstall</command> 命令读取 Debian 软件包生成时创建的 <filename>*.changes</filename> 文件。这些文件包含于软件包的版本相关的所有其它文件的列表（<filename>*.deb</filename>、<filename>*.dsc</filename>、<filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>、<filename>*.orig.tar.gz</filename>， 或它们使用其它压缩工具生成的相应文件），并且这些允许 <command>mini-dinstall</command> 知道安装哪些文件。<filename>*.changes</filename> 文件还包含目标发布版本（通常是 <literal>unstable</literal>）的名称，这些目标发布版本在最新的 <filename>debian/changelog</filename> 入口被提到，并且 <command>mini-dinstall</command> 使用这些信息来确定软件包应该安装在哪里。这就是为什么管理员在构建软件包前必须总是更改这个字段，并依赖于目标位置，将它设置为 <literal>internal</literal> 或 <literal>updates</literal>。然后 <command>mini-dinstall</command> 生成 APT 所需的文件，如 <filename>Packages.gz</filename>。"
+msgstr "这样管理员在他们的内部 HTTP 服务器上配置虚拟主机，以 <filename>/srv/vhosts/packages/</filename> 作为相关 web 空间的根。档案本身的管理委托给 <command>mini-dinstall</command> 命令（在相似命名的软件包中）。这个工具照看 <filename>incoming/</filename> 目录（在我们的情况下是 <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>），并在那里等待新的软件包；软件包当上传时，就安装在 <filename>/srv/vhosts/packages/</filename> 的 Debian 档案中。<command>mini-dinstall</command> 命令读取 Debian 软件包生成时创建的 <filename>*.changes</filename> 文件。这些文件包含与软件包的版本相关的所有其它文件的列表（<filename>*.deb</filename>、<filename>*.dsc</filename>、<filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>、<filename>*.orig.tar.gz</filename>，或使用其它压缩工具生成的它们的相应文件），并且这些允许 <command>mini-dinstall</command> 知道安装哪些文件。<filename>*.changes</filename> 文件还包含目标发布版本（通常是 <literal>unstable</literal>）的名称，这些目标发布版本在最新的 <filename>debian/changelog</filename> 入口被提到，并且 <command>mini-dinstall</command> 使用这个信息来确定软件包应该安装在哪里。这就是为什么管理员在构建软件包前必须总是更改这个字段，并依赖于目标位置，将它设置为 <literal>internal</literal> 或 <literal>updates</literal>。然后 <command>mini-dinstall</command> 生成 APT 所需的文件，如 <filename>Packages.gz</filename>。"
 
 msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command>"
 msgstr "<emphasis>替代</emphasis> <command>apt-ftparchive</command> 和 <command>reprepro</command>"
@@ -423,7 +425,7 @@ msgid "The <command>apt-ftparchive sources</command> command allows creating <fi
 msgstr "<command>apt-ftparchive sources</command> 命令允许以相似的方式创建 <filename>Sources.gz</filename> 文件。"
 
 msgid "<command>reprepro</command> is a more advanced tool for the same purpose. It can produce, manage and synchronize a local repository of packages. It stores packages and checksums in a Berkeley DB database file, so no database server is needed. With <command>reprepro</command> you can check signatures of mirrored repositories and create signatures of the generated package indices."
-msgstr "<command>reprepro</command> 是用于相同目的的更高级工具。它可以生成、管理并同步软件包的本地仓库。它在 Berkeley DB 数据库文件中存储软件包和校验和，所以不需要数据库服务器。通过 <command>reprepro</command>，可以检查镜像仓库的签名，并创建生成的软件包索引的签名。"
+msgstr "<command>reprepro</command> 是用于相同目的的更高级工具。它可以产生、管理并同步软件包的本地仓库。它在 Berkeley DB 数据库文件中存储软件包和校验和，所以不需要数据库服务器。通过 <command>reprepro</command>，可以检查镜像仓库的签名，并创建生成的软件包索引的签名。"
 
 msgid "Configuring <command>mini-dinstall</command> requires setting up a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp case, the contents are as follows:"
 msgstr "配置 <command>mini-dinstall</command> 需要设置 <filename>~/.mini-dinstall.conf</filename> 文件；在 Falcot Corp 公司的情况下，内容如下："
