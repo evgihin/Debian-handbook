@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2020-12-01 09:29+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.4-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-02-10 16:50+0000\nLast-Translator: Liu Tao <lyuutau@outlook.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Network"
 msgstr "网络"
@@ -408,10 +408,8 @@ msgstr ""
 "<computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot\n"
 "</userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>"
 
-#, fuzzy
-#| msgid "They then store the required parameters into the <filename>vars</filename> file, especially those named with a <literal>KEY_</literal> prefix; these variables are then integrated into the environment:"
 msgid "They then store the required parameters into the <filename>vars</filename> file, which can be uncommented and edited:"
-msgstr "把必要的参数保存在 <filename>vars</filename> 文件内，特别是以 <literal>KEY_</literal> 开头的部分；这些变量集成入环境："
+msgstr "然后它们将所需的参数存储到<filename>vars</filename>文件中，可以不加注释和编辑："
 
 msgid ""
 "\n"
@@ -465,10 +463,8 @@ msgid ""
 "</computeroutput>"
 msgstr ""
 
-#, fuzzy
-#| msgid "The next step is the creation of the CA's key pair itself (the two parts of the key pair will be stored under <filename>keys/ca.crt</filename> and <filename>keys/ca.key</filename> during this step):"
 msgid "The next step is the creation of the CA's key pair itself (the two parts of the key pair will be stored under <filename>pki/ca.crt</filename> and <filename>pki/private/ca.key</filename> during this step). We can add the option <literal>nopass</literal> to avoid entering a password each time the private key is used:"
-msgstr "接着添加 CA 密钥配对本身 (在此阶段把两组钥匙保存在 <filename>keys/ca.crt</filename> 和 <filename>keys/ca.key</filename>)："
+msgstr "下一步是创建CA本身的密钥对（在这一步中，密钥对的两个部分将存储在<filename>pki/ca.crt</filename>和<filename>pki/private/ca.key</filename>下）。我们可以添加选项 <literal>nopass</literal> 来避免每次使用私钥时输入密码："
 
 #, fuzzy
 #| msgid ""
@@ -520,35 +516,12 @@ msgid ""
 "/home/roland/pki-falcot/pki/ca.crt\n"
 "\n"
 "</computeroutput>"
-msgstr ""
-"\n"
-"<computeroutput>$ </computeroutput><userinput>./build-ca</userinput>\n"
-"<computeroutput>Generating a 2048 bit RSA private key\n"
-"...................................................................+++\n"
-"...+++\n"
-"writing new private key to 'ca.key'\n"
-"-----\n"
-"You are about to be asked to enter information that will be incorporated\n"
-"into your certificate request.\n"
-"What you are about to enter is what is called a Distinguished Name or a DN.\n"
-"There are quite a few fields but you can leave some blank\n"
-"For some fields there will be a default value,\n"
-"If you enter '.', the field will be left blank.\n"
-"-----\n"
-"Country Name (2 letter code) [FR]:\n"
-"State or Province Name (full name) [Loire]:\n"
-"Locality Name (eg, city) [Saint-Étienne]:\n"
-"Organization Name (eg, company) [Falcot Corp]:\n"
-"Organizational Unit Name (eg, section) [Certificate authority]:\n"
-"Common Name (eg, your name or your server's hostname) [Falcot Corp CA]:\n"
-"Name [Certificate authority for Falcot Corp]:\n"
-"Email Address [admin@falcot.com]:\n"
-"</computeroutput>"
+msgstr "\n<computeroutput>$ </computeroutput><userinput>./easyrsa build-ca nopass</userinput>\n<computeroutput>\nNote: using Easy-RSA configuration from: ./vars\n\nUsing SSL: openssl OpenSSL 1.1.1b  26 Feb 2019\nGenerating RSA private key, 2048 bit long modulus (2 primes)\n......................................................................................+++++\n......................+++++\ne is 65537 (0x010001)\nYou are about to be asked to enter information that will be incorporated\ninto your certificate request.\nWhat you are about to enter is what is called a Distinguished Name or a DN.\nThere are quite a few fields but you can leave some blank\nFor some fields there will be a default value,\nIf you enter '.', the field will be left blank.\n-----\nCommon Name (eg: your user, host, or server name) [Easy-RSA CA]:\n\nCA creation complete and you may now import and sign cert requests.\nYour new CA certificate file for publishing is at:\n/home/roland/pki-falcot/pki/ca.crt\n\n</computeroutput>"
 
 #, fuzzy
 #| msgid "The certificate for the VPN server can now be created, as well as the Diffie-Hellman parameters required for the server side of an SSL/TLS connection. The VPN server is identified by its DNS name <literal>vpn.falcot.com</literal>; this name is re-used for the generated key files (<filename>keys/vpn.falcot.com.crt</filename> for the public certificate, <filename>keys/vpn.falcot.com.key</filename> for the private key):"
 msgid "The certificate can now be created, as well as the Diffie-Hellman parameters required for the server side of an SSL/TLS connection. They want to use it for a VPN server (see section <xref linkend=\"sect.virtual-private-network\" />) that is identified by the DNS name <literal>vpn.falcot.com</literal>; this name is re-used for the generated key files (<filename>keys/vpn.falcot.com.crt</filename> for the public certificate, <filename>keys/vpn.falcot.com.key</filename> for the private key):"
-msgstr "现在 VPN 服务器的认证完成，Diffie-Hellman 参数供服务器的 SSL/TLS 链接亦完成。VPN 服务器以其 DNS 名称 <literal>vpn.falcot.com</literal> 识别；此名称再次使用于添加钥匙文件 (<filename>keys/vpn.falcot.com.crt</filename> 供公钥，<filename>keys/vpn.falcot.com.key</filename> 供私钥)："
+msgstr "现在可以创建证书，以及SSL/TLS连接服务器端所需的Diffie-Hellman参数。他们希望将其用于VPN服务器（见<xref linkend=\"sect.virtual-private-network\" />节），该服务器由DNS名称<literal>vpn.falcot.com</literal>识别；该名称被重新用于生成密钥文件（<filename>keys/vpn.falcot.com.crt</filename>用于公开证书，<filename>keys/vpn.falcot.com.keys</filename>用于私钥）："
 
 msgid ""
 "\n"
@@ -736,7 +709,7 @@ msgstr "以 SSH 创建虚拟专属网络的两种方法都很直接。然而，�
 #, fuzzy
 #| msgid "The explanation is that when a TCP/IP stack is encapsulated within a TCP/IP connection (for SSH), the TCP protocol is used twice, once for the SSH connection and once within the tunnel. This leads to problems, especially due to the way TCP adapts to network conditions by altering timeout delays. The following site describes the problem in more detail: <ulink type=\"block\" url=\"http://sites.inka.de/sites/bigred/devel/tcp-tcp.html\" /> VPNs over SSH should therefore be restricted to one-off tunnels with no performance constraints."
 msgid "The explanation is that when a TCP/IP stack is encapsulated within a TCP/IP connection (for SSH), the TCP protocol is used twice, once for the SSH connection and once within the tunnel. This leads to problems, especially due to the way TCP adapts to network conditions by altering timeout delays. The following site describes the problem in more detail: <ulink type=\"block\" url=\"http://sites.inka.de/sites/bigred/devel/tcp-tcp.html\" />"
-msgstr "当 TCP/IP 堆栈封装在 TCP/IP 链接 (供 SSH 使用) 时，TCP 协议用了两次，一次给 SSH 链接用，另一次使用于信道。问题就在这里，尤其是 TCP 改变网络延迟时间的状态。详情见：<ulink type=\"block\" url=\"http://sites.inka.de/sites/bigred/devel/tcp-tcp.html\" /> 所以在 SSH 环境下的 VPN 应限制于无性能限制的一次性信道。"
+msgstr "解释是，当TCP/IP协议栈被封装在TCP/IP连接中（用于SSH）时，TCP协议被使用两次，一次用于SSH连接，一次用于隧道内。这导致了问题，特别是由于TCP通过改变超时延迟来适应网络条件的方式。下面的网站更详细地描述了这个问题：<ulink type=\"block\" url=\"http://sites.inka.de/sites/bigred/devel/tcp-tcp.html\" />"
 
 msgid "VPNs over SSH should therefore be restricted to one-off tunnels with no performance constraints."
 msgstr ""
@@ -898,13 +871,7 @@ msgid ""
 "  # 192.168.0.0/24 is the (remote) Falcot network\n"
 "  ip route add 192.168.0.0/24 dev $1\n"
 "fi"
-msgstr ""
-"\n"
-"# Create the route to the Falcot network\n"
-"if [ \"$6\" = \"falcot\" ]; then\n"
-"  # 192.168.0.0/24 is the (remote) Falcot network\n"
-"  route add -net 192.168.0.0 netmask 255.255.255.0 dev $1\n"
-"fi"
+msgstr "\n# Create the route to the Falcot network\nif [ \"$6\" = \"falcot\" ]; then\n  # 192.168.0.0/24 is the (remote) Falcot network\n  ip route add 192.168.0.0/24 dev $1\nfi"
 
 msgid "The <filename>/etc/ppp/ip-down.d/falcot</filename> file"
 msgstr "<filename>/etc/ppp/ip-down.d/falcot</filename> 文件"
@@ -924,13 +891,7 @@ msgid ""
 "  # 192.168.0.0/24 is the (remote) Falcot network\n"
 "  ip route del 192.168.0.0/24 dev $1\n"
 "fi"
-msgstr ""
-"\n"
-"# Delete the route to the Falcot network\n"
-"if [ \"$6\" = \"falcot\" ]; then\n"
-"  # 192.168.0.0/24 is the (remote) Falcot network\n"
-"  route del -net 192.168.0.0 netmask 255.255.255.0 dev $1\n"
-"fi"
+msgstr "\n# Delete the route to the Falcot network\nif [ \"$6\" = \"falcot\" ]; then\n  # 192.168.0.0/24 is the (remote) Falcot network\n  ip route del 192.168.0.0/24 dev $1\nfi"
 
 msgid "<emphasis>SECURITY</emphasis> MPPE"
 msgstr "<emphasis>安全</emphasis> MPPE"
@@ -1277,9 +1238,8 @@ msgstr "文件<filename>/usr/share/doc/wondershaper/README.Debian.gz</filename>�
 msgid "Standard Configuration"
 msgstr "标准配置"
 
-#, fuzzy
 msgid "Barring a specific QoS configuration, the Linux kernel uses the <literal>pfifo_fast</literal> queue scheduler, which provides a few interesting features by itself. The priority of each processed IP packet is based on the DSCP field (<emphasis>Differentiated of Services Code Point</emphasis>) of this packet; modifying this 6-bit field is enough to take advantage of the scheduling features. Refer to <ulink url=\"https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector\" /> for more information."
-msgstr "除非有特定的QoS配置，linux内核使用<literal> pfifo_fast</literal>队列调度，它提供了一些有趣的特性。每个IP包的优先级基于其ToS字段（<emphasis>Type of Service</emphasis>）；修改这个字段就足够使用调度策略。下面是5个可能的值："
+msgstr "除非有特定的 QoS 配置，Linux 内核使用 <literal>pfifo_fast</literal> 队列调度器，它本身提供了一些有趣的功能。每个处理过的 IP 数据包的优先级是基于这个数据包的 DSCP 字段（<emphasis>Differentiated of Services Code Point</emphasis>），修改这个 6 位字段就可以利用调度功能。更多信息请参考 <ulink url=\"https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector\" />。"
 
 #, fuzzy
 #| msgid "<primary>DHCP</primary>"
@@ -1294,7 +1254,7 @@ msgstr "<primary>服务类型</primary>"
 #, fuzzy
 #| msgid "The ToS field can be set by applications that generate IP packets, or modified on the fly by <emphasis>netfilter</emphasis>. The following rules are sufficient to increase responsiveness for a server's SSH service:"
 msgid "The DSCP field can be set by applications that generate IP packets, or modified on the fly by <emphasis>netfilter</emphasis>. The following rules are sufficient to increase responsiveness for a server's SSH service, note that the DSCP field must be set in hexadecimal:"
-msgstr "Tos字段可以被生成IP数据包的应用设置，或由<emphasis>netfilter</emphasis>动态更改。下面的规则足以增加一台服务器的SSH服务的响应度"
+msgstr "DSCP 字段可以由生成 IP 数据包的应用程序设置，也可以由 <emphasis> netfilter </emphasis> 进行快速修改。以下规则足以提高服务器 SSH 服务的响应能力，请注意，DSCP 字段必须设置为十六进制："
 
 msgid ""
 "\n"
