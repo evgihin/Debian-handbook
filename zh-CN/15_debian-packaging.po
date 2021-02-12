@@ -1,6 +1,6 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2021-02-04 09:42+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2021-02-13 06:50+0000\nLast-Translator: tao wang <tonywang5@163.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Backport"
 msgstr "向后移植"
@@ -425,7 +425,7 @@ msgid "The <command>apt-ftparchive sources</command> command allows creating <fi
 msgstr "<command>apt-ftparchive sources</command> 命令允许以相似的方式创建 <filename>Sources.gz</filename> 文件。"
 
 msgid "<command>reprepro</command> is a more advanced tool for the same purpose. It can produce, manage and synchronize a local repository of packages. It stores packages and checksums in a Berkeley DB database file, so no database server is needed. With <command>reprepro</command> you can check signatures of mirrored repositories and create signatures of the generated package indices."
-msgstr "<command>reprepro</command> 是用于相同目的的更高级工具。它可以产生、管理并同步软件包的本地仓库。它在 Berkeley DB 数据库文件中存储软件包和校验和，所以不需要数据库服务器。通过 <command>reprepro</command>，可以检查镜像仓库的签名，并创建生成的软件包索引的签名。"
+msgstr "<command>reprepro</command> 是用于相同目的更高级的工具。它可以产生、管理并同步软件包的本地仓库。它将软件包和校验和存储在 Berkeley DB 数据库文件中，所以不需要数据库服务器。通过 <command>reprepro</command>，可以检查镜像仓库的签名，并创建生成的软件包索引的签名。"
 
 msgid "Configuring <command>mini-dinstall</command> requires setting up a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp case, the contents are as follows:"
 msgstr "配置 <command>mini-dinstall</command> 需要设置 <filename>~/.mini-dinstall.conf</filename> 文件；在 Falcot Corp 公司的情况下，内容如下："
@@ -451,40 +451,40 @@ msgid ""
 msgstr "\n[DEFAULT]\narchive_style = flat\narchivedir = /srv/vhosts/packages\n\nverify_sigs = 0\nmail_to = admin@falcot.com\n\ngenerate_release = 1\nrelease_origin = Falcot Corp\nrelease_codename = stable\n\n[updates]\nrelease_label = Recompiled Debian Packages\n\n[internal]\nrelease_label = Internal Packages"
 
 msgid "One decision worth noting is the generation of <filename>Release</filename> files for each archive. This can help manage package installation priorities using the <filename>/etc/apt/preferences</filename> configuration file (see <xref linkend=\"sect.apt.priorities\" /> for details)."
-msgstr "值得注意的一个决定是为每个档案生成 <filename>Release</filename> 文件。这可以使用 <filename>/etc/apt/preferences</filename> 配置文件帮助管理软件包安装的优先性（细节请参见 <xref linkend=\"sect.apt.priorities\" /> ）。"
+msgstr "值得注意的一个决定是为每个档案生成 <filename>Release</filename> 文件。这可以使用 <filename>/etc/apt/preferences</filename> 配置文件来帮助管理软件包安装的优先性（细节请参见 <xref linkend=\"sect.apt.priorities\" /> ）。"
 
 msgid "<emphasis>SECURITY</emphasis> <command>mini-dinstall</command> and permissions"
 msgstr "<emphasis>安全</emphasis> <command>mini-dinstall</command> 与权限"
 
 msgid "Since <command>mini-dinstall</command> has been designed to run as a regular user, there is no need to run it as root. The easiest way is to configure everything within the user account belonging to the administrator in charge of creating the Debian packages. Since only this administrator has the required permissions to put files in the <filename>incoming/</filename> directory, we can deduce that the administrator authenticated the origin of each package prior to deployment and <command>mini-dinstall</command> does not need to do it again. This explains the <literal>verify_sigs = 0</literal> parameter (which means that signatures need not be verified). However, if the contents of packages are sensitive, we can reverse the setting and elect to authenticate with a keyring containing the public keys of persons allowed to create packages (configured with the <literal>extra_keyrings</literal> parameter); <command>mini-dinstall</command> will then check the origin of each incoming package by analyzing the signature integrated to the <filename>*.changes</filename> file."
-msgstr "由于 <command>mini-dinstall</command> 设计来作为常规用户运行，因此不需要作为根来运行它。最简单的方式是在属于负责创建 Debian 软件包的管理员的用户账户内配置所有内容。由于只有这个管理员具有所需的权限来将文件放置在 <filename>incoming/</filename> 目录中，我们可以推断，管理员在部署前认证每个软件包的来源，而 <command>mini-dinstall</command> 不需要再做一次。这解释了 <literal>verify_sigs = 0</literal> 参数（它意味着不需要核实签名）。然而，如果软件包的内容是敏感的，那么我们可以相反地设置，并通过包含允许公钥的钥匙环来允许创建软件包，这个公钥属于创建软件包的人员（以 <literal>extra_keyrings</literal> 参数来配置）；<command>mini-dinstall</command> 然后通过分析集成到 <filename>*.changes</filename> 文件中的签名，来检查每个到来的软件包的来源。"
+msgstr "由于 <command>mini-dinstall</command> 设计来作为常规用户运行，因此不需要作为根来运行它。最简单的方式是，在属于负责创建 Debian 软件包的管理员的用户账户内，配置所有内容。由于只有这位管理员具有所需的权限将文件放置在 <filename>incoming/</filename> 目录中，我们可以推断，管理员在部署前认证每个软件包的来源，而 <command>mini-dinstall</command> 不需要再做一次。这解释了 <literal>verify_sigs = 0</literal> 参数（它意味着不需要核实签名）。然而，如果软件包的内容是敏感的，那么我们可以相反地设置，并通过包含允许公钥的钥匙环来允许创建软件包，这个公钥属于创建软件包的人员（以 <literal>extra_keyrings</literal> 参数来配置）；<command>mini-dinstall</command> 然后通过分析集成到 <filename>*.changes</filename> 文件中的签名，来检查每个到来的软件包的来源。"
 
 msgid "Invoking <command>mini-dinstall</command> actually starts a daemon in the background. As long as this daemon runs, it will check for new packages in the <filename>incoming/</filename> directory every half-hour; when a new package arrives, it will be moved to the archive and the appropriate <filename>Packages.gz</filename> and <filename>Sources.gz</filename> files will be regenerated. If running a daemon is a problem, <command>mini-dinstall</command> can also be manually invoked in batch mode (with the <literal>-b</literal> option) every time a package is uploaded into the <filename>incoming/</filename> directory. Other possibilities provided by <command>mini-dinstall</command> are documented in its <citerefentry><refentrytitle>mini-dinstall</refentrytitle> <manvolnum>1</manvolnum></citerefentry> manual page."
-msgstr "<command>mini-dinstall</command> 的调用实际上在后端启动了守护程序。只要这个守护程序运行，它就将没半个小时检查一次 <filename>incoming/</filename> 目录中的新软件包；当新软件包到达时，将被移动到档案中，并生成适当的 <filename>Packages.gz</filename> 和 <filename>Sources.gz</filename> 文件。如果运行守护程序是个问题，那么软件包每次上传到 <filename>incoming/</filename> 目录中时， <command>mini-dinstall</command> 也能够以批处理模式手动调用（通过 <literal>-b</literal> 选项）。由 <command>mini-dinstall</command> 提供的其它可能性归档在其 <citerefentry><refentrytitle>mini-dinstall</refentrytitle><manvolnum>1</manvolnum></citerefentry> 手册页面中。"
+msgstr "调用 <command>mini-dinstall</command> 实际上在后端启动了守护程序。只要这个守护程序运行，它就将每半个小时检查一次 <filename>incoming/</filename> 目录中的新软件包；新软件包当到达时，将被移动到档案中，并生成适当的 <filename>Packages.gz</filename> 和 <filename>Sources.gz</filename> 文件。如果运行守护程序是个问题，那么软件包每次上传到 <filename>incoming/</filename> 目录中时， <command>mini-dinstall</command> 也能够以批处理模式手动调用（通过 <literal>-b</literal> 选项）。由 <command>mini-dinstall</command> 提供的其它可能性归档在其 <citerefentry><refentrytitle>mini-dinstall</refentrytitle><manvolnum>1</manvolnum></citerefentry> 手册页面中。"
 
 msgid "<emphasis>EXTRA</emphasis> Generating a signed archive"
 msgstr "<emphasis>补充</emphasis> 生成签名的档案"
 
 msgid "The APT suite checks a chain of cryptographic signatures on the packages it handles before installing them, in order to ensure their authenticity (see <xref linkend=\"sect.package-authentication\" />). Private APT archives can then be a problem, since the machines using them will keep displaying warnings about unsigned packages. A diligent administrator will therefore integrate private archives with the secure APT mechanism."
-msgstr "APT 套件在安装它处理的软件包之前，检查它们的加密签名链，从而确保它们的真实性（请参见 <xref linkend=\"sect.package-authentication\" />）。然后私有 APT 档案会是个问题，因为使用它们的机器会一直显示未签名软件包的警告。勤奋的管理员这样将集成带有安全 APT 机制的私有档案。"
+msgstr "APT 套件在安装它处理的软件包之前，检查它们的加密签名链，从而确保它们的真实性（请参见 <xref linkend=\"sect.package-authentication\" />）。然后私有 APT 档案会有问题，因为使用它们的机器会一直显示未签名软件包的警告。这样勤奋的管理员将私有档案集成带有安全 APT 机制。"
 
 msgid "To help with this process, <command>mini-dinstall</command> includes a <literal>release_signscript</literal> configuration option that allows specifying a script to use for generating the signature. A good starting point is the <filename>sign-release.sh</filename> script provided by the <emphasis role=\"pkg\">mini-dinstall</emphasis> package in <filename>/usr/share/doc/mini-dinstall/examples/</filename>; local changes may be relevant."
 msgstr "为了帮助这个过程，<command>mini-dinstall</command> 包括 <literal>release_signscript</literal> 配置选项，允许指定脚本来产生签名。好的起点是 <filename>sign-release.sh</filename> 脚本，由 <filename>/usr/share/doc/mini-dinstall/examples/</filename> 中的 <emphasis role=\"pkg\">mini-dinstall</emphasis> 软件包来提供； 本地更改会是相关的。"
 
 msgid "Becoming a Package Maintainer"
-msgstr "成为软件包维护者"
+msgstr "成为软件包的维护者"
 
 msgid "Learning to Make Packages"
 msgstr "学习制作软件包"
 
 msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
-msgstr "创建有质量的 Debian 软件包并不总是个简单的任务，而成为软件包的维护者需要一些学习，既在理论上页在实践上。它不是创建与安装软件的简单事情，而是，大量的复杂性来自对问题和冲突的里欸见，而一般的是与其它无数可用软件包的相互作用。"
+msgstr "创建有质量的 Debian 软件包并不总是个简单的任务，而成为软件包的维护者需要一些学习，既在理论上也在实践上。这不是创建与安装软件的简单事情；而是，大量的复杂性来自对问题和冲突的理解，而一般的是与其它无数可用软件包的相互作用。"
 
 msgid "Rules"
 msgstr "规则"
 
 msgid "A Debian package must comply with the precise rules compiled in the Debian policy, and each package maintainer must know them. There is no requirement to know them by heart, but rather to know they exist and to refer to them whenever a choice presents a non-trivial alternative. Every Debian maintainer has made mistakes by not knowing about a rule, but this is not a huge problem as long as the error gets fixed when a user reports it as a bug report (which tends to happen fairly soon thanks to advanced users). The <literal>Standards-Version</literal> field in <filename>debian/control</filename> specifies the version of the Debian policy with which a package complies. Maintainers should comply to the latest version of the Debian policy. <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
-msgstr "Debian 软件包必须遵守 Debian 政策中编译的精确规则，并且每位软件包维护者必须知道它们。并不需要把它们记在心理，而要知道它们存在，并且无论何时选项中出现了不那么琐碎的替代方案，都要去查阅它们。每位 Debian 维护者都会因为不知道规则而犯错误，但只要当用户将其作为故障报告而汇报时错误能得到修复，这就不是个大问题（这由于高级用户而趋于迅速发生）。<filename>debian/control</filename> 中的 <literal>Standards-Version</literal> 字段指示了软件包所遵守的 Debian 政策的版本。维护者应该遵守最新版本的 Debian 政策。<ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
+msgstr "Debian 软件包必须遵守 Debian 政策中编译的精确规则，并且每位软件包维护者必须知道这些规则。并不要求把它们记在心理，而无论何时选项中出现了不那么琐碎的替代方案，都要知道它们存在并去查阅它们。每位 Debian 维护者都会因为不知道规则而犯错误，但只要当用户将其作为故障报告而汇报时错误能得到修复（这由于高级用户而趋于迅速发生），这就不是个大问题。<filename>debian/control</filename> 中的 <literal>Standards-Version</literal> 字段指示了软件包所遵守的 Debian 政策的版本。维护者应该遵守最新版本的 Debian 政策。<ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
 
 msgid "Procedures"
 msgstr "过程"
@@ -493,13 +493,13 @@ msgid "<primary>Debian Developer's Reference</primary>"
 msgstr "<primary>Debian 开发者的参考</primary>"
 
 msgid "Debian is not a simple collection of individual packages. Everyone's packaging work is part of a collective project; being a Debian developer involves knowing how the Debian project operates as a whole. Every developer will, sooner or later, interact with others. The Debian Developer's Reference (in the <emphasis role=\"pkg\">developers-reference</emphasis> package) summarizes what every developer must know in order to interact as smoothly as possible with the various teams within the project, and to take the best possible advantages of the available resources. This document also enumerates a number of duties a developer is expected to fulfill. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/developers-reference/\" />"
-msgstr "Debian 不是独立软件包的简单集合。每个人的打包工作都是集体项目的一部分；成为 Debian 开发者包括了解 Debian 项目作为整体如何运作。每名开发者迟早都会与他人互动。Debian 开发者参考（在 <emphasis role=\"pkg\">developers-reference</emphasis> 软件包中）总结了每名开发者必须知道的内容，从而尽可能平滑地在项目中与其他团队互动，并尽可能优先地获取资源。本文档还列举了一些开发者必须尽到的责任。<ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/developers-reference/\" />"
+msgstr "Debian 不是独立软件包的简单集合。每个人的打包工作都是集体项目的一部分；成为 Debian 开发者包括了解 Debian 项目作为整体如何运作。每位开发者迟早都会与他人互动。Debian 开发者参考（在 <emphasis role=\"pkg\">developers-reference</emphasis> 软件包中）总结了每位开发者都必须知道的内容，从而尽可能平滑地在项目中与各个团队互动，并尽获得可用资源尽可能多的优点。本文档还列举了一些开发者必须尽到的责任。<ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/developers-reference/\" />"
 
 msgid "Tools"
 msgstr "工具"
 
 msgid "Many tools help package maintainers in their work. This section describes them quickly, but does not give the full details, since they all have comprehensive documentation of their own."
-msgstr "很多工具帮助软件包的维护人员完成他们的工作。这一节快速地描述这些工具，但没有给出完整细节，因为它们自己都有详细的文档。"
+msgstr "很多工具帮助软件包的维护人员进行他们的工作。这一节快速地描述了这些工具，但没有给出完整细节，因为它们各自都有详细的文档。"
 
 msgid "The <command>lintian</command> Program"
 msgstr "<command>lintian</command> 程序"
@@ -508,10 +508,10 @@ msgid "<primary><command>lintian</command></primary>"
 msgstr "<primary><command>lintian</command></primary>"
 
 msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
-msgstr "这是最重要的工具之一：它是 Debian 软件包检查程序。它基于从 Debian 政策创立的大量测试，并快速并自动地检测很多错误，然后可以在软件包发布前修复。"
+msgstr "这是最重要的工具之一：它是 Debian 软件包检查程序。它基于从 Debian 政策创立的大量测试，并快速且自动地检测很多错误，然后可以在软件包发布前修复。"
 
 msgid "This tool is only a helper, and it sometimes gets it wrong (for instance, since the Debian policy changes over time, <command>lintian</command> is sometimes outdated). It is also not exhaustive: not getting any Lintian error should not be interpreted as a proof that the package is perfect; at most, it avoids the most common errors."
-msgstr "这个工具只是个榜首，它有时会犯错误（例如，由于 Debian 政策不是更改，<command>lintian</command> 有时会过时）。它有时还会令人筋疲力尽：没有得到任何 Lintian 错误不应该被理解成软件包被证明是完美的；最多不过是避免了最常见的错误。"
+msgstr "这个工具只是个帮手，它有时会犯错误（例如，由于 Debian 政策不时更改，<command>lintian</command> 有时会过时）。它有时还不够详细：没有得到任何 Lintian 错误不应该被理解成软件包被证明是完美的；最多不过是避免了最常见的错误。"
 
 msgid "The <command>piuparts</command> Program"
 msgstr "<command>piuparts</command> 程序"
@@ -520,7 +520,7 @@ msgid "<primary><command>piuparts</command></primary>"
 msgstr "<primary><command>piuparts</command></primary>"
 
 msgid "This is another important tool: it automates the installation, upgrade, removal and purge of a package (in an isolated environment), and checks that none of these operations leads to an error. It can help in detecting missing dependencies, and it also detects when files are incorrectly left over after the package got purged."
-msgstr "这是另一个重要工具：它（在隔离的环境中）自动安装、升级、删除并清除软件包，并且检查这些操作不导致错误。它可以帮助检查丢失的依赖，并且还可以检查在软件包清除后什么时候文件不正确地留下来。"
+msgstr "这是另一个重要工具：它（在隔离的环境中）自动安装、升级、删除并净化软件包，并且检查这些操作不会导致错误。它可以帮助检查丢失的依赖，并且还可以检查在软件包净化后文件在什么时候不正确地留下来。"
 
 msgid "devscripts"
 msgstr "devscripts"
@@ -544,10 +544,10 @@ msgid "<primary><command>debc</command></primary>"
 msgstr "<primary><command>debc</command></primary>"
 
 msgid "The <emphasis role=\"pkg\">devscripts</emphasis> package contains many programs helping with a wide array of a Debian developer's job:"
-msgstr "<emphasis role=\"pkg\">devscripts</emphasis> 软件包包含很多程序来帮助大范围的 Debian 开发者工作："
+msgstr "<emphasis role=\"pkg\">devscripts</emphasis> 软件包包含很多程序来帮助大范围的 Debian 开发者的工作："
 
 msgid "<command>debuild</command> allows generating a package (with <command>dpkg-buildpackage</command>) and running <command>lintian</command> to check its compliance with the Debian policy afterwards."
-msgstr "<command>debuild</command> 允许以（ <command>dpkg-buildpackage</command>）来生成软件包，然后允许运行<command>lintian</command> 来检查它与 Debian 政策的兼容性。"
+msgstr "<command>debuild</command> 允许（以 <command>dpkg-buildpackage</command>）来生成软件包，此后允许运行<command>lintian</command> 来检查它与 Debian 政策的兼容性。"
 
 msgid "<command>debclean</command> cleans a source package after a binary package has been generated."
 msgstr "<command>debclean</command> 在生成二进制包后清除源码包。"
@@ -556,7 +556,7 @@ msgid "<command>dch</command> allows quick and easy editing of a <filename>debia
 msgstr "<command>dch</command> 允许快速且容易地编辑源码包中的 <filename>debian/changelog</filename> 文件。"
 
 msgid "<command>uscan</command> checks whether a new version of a software has been released by the upstream author; this requires a <filename>debian/watch</filename> file with a description of the location of such releases."
-msgstr "<command>uscan</command> 检查上有作者是否发布了新版本的软件；这需要 <filename>debian/watch</filename> 文件具有这个发布位置的描述。"
+msgstr "<command>uscan</command> 检查新版本的软件是否已经由上游作者发布；这需要 <filename>debian/watch</filename> 文件具有这个发布位置的描述。"
 
 msgid "<command>debi</command> allows installing (with <command>dpkg -i</command>) the Debian package that was just generated without the need to type its full name and path."
 msgstr "<command>debi</command> 允许（以 <command>dpkg -i</command>）来安装刚生成的 Debian 软件包，而无需键入其完整名称与路径。"
@@ -574,7 +574,7 @@ msgid "<command>debsign</command> signs the <filename>*.dsc</filename> and <file
 msgstr "<command>debsign</command> 签署 <filename>*.dsc</filename> 和 <filename>*.changes</filename> 文件。"
 
 msgid "<command>uupdate</command> automates the creation of a new revision of a package when a new upstream version has been released."
-msgstr "当上游本本发布时，<command>uupdate</command> 自动创建新版本的软件包。"
+msgstr "当上游版本发布时，<command>uupdate</command> 自动创建新版本的软件包。"
 
 msgid "<emphasis role=\"pkg\">debhelper</emphasis> and <emphasis role=\"pkg\">dh-make</emphasis>"
 msgstr "<emphasis role=\"pkg\">debhelper</emphasis> 和 <emphasis role=\"pkg\">dh-make</emphasis>"
@@ -586,10 +586,10 @@ msgid "<primary><emphasis>dh-make</emphasis></primary>"
 msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
 msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix."
-msgstr "Debhelper 是一组脚本，来容易地创建政策兼容的软件包；这些脚本从 <filename>debian/rules</filename> 中调用。Debhelper 已经在 Debian 中广泛采用，主要的 Debian 官方软件包都是用它就是证明。它包含的所有命令都具有前缀 <command>dh_</command>。"
+msgstr "Debhelper 是一组脚本，使创建政策兼容的软件包更容易；这些脚本从 <filename>debian/rules</filename> 中调用。Debhelper 已经在 Debian 中广泛采用，主要的 Debian 官方软件包都使用它就是证明。它包含的所有命令都具有 <command>dh_</command> 前缀。"
 
 msgid "The <command>dh_make</command> script (in the <emphasis>dh-make</emphasis> package) creates files required for generating a Debian package in a directory initially containing the sources for a piece of software. As can be guessed from the name of the program, the generated files use debhelper by default."
-msgstr "<command>dh_make</command> 脚本（位于 <emphasis>dh-make</emphasis> 软件包中）创建文件，在初始包含一块软件的源代码的目录中生成 Debian 软件包需要这些文件。可以从程序的名称猜到，生成的文件默认使用 debhelper。"
+msgstr "<command>dh_make</command> 脚本（位于 <emphasis>dh-make</emphasis> 软件包中）创建文件，在初始包含一块软件的源代码的目录中生成 Debian 软件包需要这些创建文件。可以从程序的名称猜到，生成的文件默认使用 debhelper。"
 
 msgid "<emphasis role=\"pkg\">autopkgtest</emphasis>"
 msgstr "<emphasis role=\"pkg\">autopkgtest</emphasis>"
@@ -607,7 +607,7 @@ msgid "<primary><emphasis>reprotest</emphasis></primary>"
 msgstr "<primary><emphasis>reprotest</emphasis></primary>"
 
 msgid "<command>reprotest</command> builds the same source code twice in different environments, and then checks the binaries produced by each build for differences. If any are found, then <command>diffoscope</command> (if unavailable, <command>diff</command>) is used to display them in detail for later analysis."
-msgstr "<command>reprotest</command> 在不同的环境中两次构建相同的源代码，然后检查每次构建的二进制文件的差异。如果发现任何差异，那么 <command>diffoscope</command>（如果可用的话用 <command>diff</command>）用来将他们具体显示，共后面进行分析。"
+msgstr "<command>reprotest</command> 在不同的环境中两次构建相同的源代码，然后检查每次构建的二进制文件的差异。如果发现任何差异，那么 <command>diffoscope</command>（如果可用的话则用 <command>diff</command>）来具体显示它们供后面进行分析。"
 
 msgid "<command>dupload</command> and <command>dput</command>"
 msgstr "<command>dupload</command> 和 <command>dput</command>"
@@ -619,19 +619,19 @@ msgid "<primary><command>dput</command></primary>"
 msgstr "<primary><command>dput</command></primary>"
 
 msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>*.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
-msgstr "<command>dupload</command> 和 <command>dput</command> 命令允许将 Debian 软件包上传到（可能是远程的）服务器上。这允许开发者将他们的软件包发布在主 Debian 服务器（<literal>ftp-master.debian.org</literal>）上，从而可以集成到档案中并通过镜像发布。这些命令将 <filename>*.changes</filename> 文件作为参数，并从其内容中推断出其它相关文件。"
+msgstr "<command>dupload</command> 和 <command>dput</command> 命令允许将 Debian 软件包上传到（可能是远端的）服务器上。这允许开发者将他们的软件包发布在主 Debian 服务器（<literal>ftp-master.debian.org</literal>）上，从而可以集成到档案中并通过镜像发布。这些命令将 <filename>*.changes</filename> 文件作为参数，并从其内容中推断出其它相关文件。"
 
 msgid "Acceptance Process"
 msgstr "接受过程"
 
 msgid "Becoming a “Debian developer” is not a simple administrative matter. The process comprises several steps, and is as much an initiation as it is a selection process. In any case, it is formalized and well-documented, so anyone can track their progression on the website dedicated to the new member process. <ulink type=\"block\" url=\"https://nm.debian.org/\" />"
-msgstr "称为 “Debian 开发者”不是个简单的管理性事情。这个过程包含几个步骤，从开始就更是一个选择过程。在任何情况下，过程被形成并被良好地归档，从而任何人都可以在专供新的成员处理的网站上跟踪其进展。 <ulink type=\"block\" url=\"https://nm.debian.org/\" />"
+msgstr "称为 “Debian 开发者”不是个简单的管理性事情。这个过程包含几个步骤，从开始就更是一个选择过程。在任何情况下，这个过程形成并良好地归档，因此任何人都可以在专供新的成员处理的网站上跟踪其进展。 <ulink type=\"block\" url=\"https://nm.debian.org/\" />"
 
 msgid "<emphasis>EXTRA</emphasis> Lightweight process for “Debian Maintainers”"
 msgstr "<emphasis>补充</emphasis> “Debian 维护者”的瘦身过程"
 
 msgid "“Debian Maintainer” is another status that gives less privileges than “Debian developer” but whose associated process is quicker. With this status, the contributors can maintain their own packages only. A Debian developer only needs to perform a check on an initial upload, and issue a statement to the effect that they trust the prospective maintainer with the ability to maintain the package on their own."
-msgstr "“Debian 维护者”是另一种状态，比“Debian 开发者”给出更少特权，但他们的相关过程更迅速。通过这个状态，贡献者可以只维护其自己的软件包。Debian 开发者只需要在初始装入时执行检查，并对后果发布声明，他们信任那些自己有能力维护软件包的潜在维护者。"
+msgstr "“Debian 维护者”是另一种状态，比“Debian 开发者”给出更少特权，但他们的相关过程更迅速。通过这个状态，贡献者只可以维护其自己的软件包。Debian 开发者只需要在初始上传时执行检查，并对后果发布声明，他们信任那些自己有能力维护软件包的潜在维护者。"
 
 msgid "<primary>Debian Maintainer</primary>"
 msgstr "<primary>Debian维护者</primary>"
@@ -640,7 +640,7 @@ msgid "Prerequisites"
 msgstr "先决条件"
 
 msgid "All candidates are expected to have at least a working knowledge of the English language. This is required at all levels: for the initial communications with the examiner, of course, but also later, since English is the preferred language for most of the documentation; also, package users will be communicating in English when reporting bugs, and they will expect replies in English."
-msgstr "希望所有的志愿者都有英语的工作知识。在所有层面都需要这个要求：用于与检查者的初始沟通，当然同样也对后面的进一步沟通，因为英语是多数文档的首选语言；同样软件包的用户当汇报缺陷时也用英语沟通，并且他们希望以英语回复。"
+msgstr "希望所有的志愿者都至少具有英语的工作知识。在所有层面都对此有要求：用于与检查者的初始沟通，当然同样也用于后面的进一步沟通，因为英语是多数文档的首选语言；同样，软件包的用户当汇报缺陷时也用英语沟通，并且他们希望以英语回复。"
 
 msgid "The other prerequisite deals with motivation. Becoming a Debian developer is a process that only makes sense if the candidate knows that their interest in Debian will last for many months. The acceptance process itself may last for several months, and Debian needs developers for the long haul; each package needs permanent maintenance, and not just an initial upload."
 msgstr "其它先决条件涉及动机。成为 Debian 开发者是个过程，如果志愿者知道他们对 Debian 的兴趣会持续很长时间时才有意义。接受过程本身会持续几个月，而 Debian 需要开发者进行长时间费时费力的工作；每个软件包需要永久维护，而不只是初始的上传。"
@@ -649,43 +649,43 @@ msgid "Registration"
 msgstr "注册"
 
 msgid "The first (real) step consists in finding a sponsor or advocate; this means an official developer willing to state that they believe that accepting <emphasis>X</emphasis> would be a good thing for Debian. This usually implies that the candidate has already been active within the community, and that their work has been appreciated. If the candidate is shy and their work is not publicly touted, they can try to convince a Debian developer to advocate them by showing their work in a private way."
-msgstr "第一个（真实的）步骤包括找到赞助者或拥护者；这意味着官方开发者愿意生命他们相信，接受<emphasis>某个项目</emphasis>对于 Debian 是件好事。这通常意味着志愿者在社区内已经是活跃的，并且他们的工作已经收到欢迎。如果志愿者太羞涩并且他们的工作没有被公开宣传，他们可以尝试以私下的方式展示他们的工作，来说服 Debian 开发者支持他们。"
+msgstr "第一个（真实的）步骤包括找到赞助者或拥护者；这意味着官方开发者愿意声明，他们相信接受<emphasis>某个项目</emphasis>对于 Debian 是件好事。这通常意味着志愿者在社区内已经是活跃的，并且他们的工作已经受到欢迎。如果志愿者太羞涩并且他们的工作没有公开宣传，他们可以尝试以私下的方式展示他们的工作，来说服 Debian 开发者支持他们。"
 
 msgid "<primary>key pair</primary>"
-msgstr "<primary>密钥配对</primary>"
+msgstr "<primary>密钥对</primary>"
 
 msgid "At the same time, the candidate must generate a public/private RSA key pair with GnuPG, which should be signed by at least two official Debian developers. The signature authenticates the name on the key. Effectively, during a key signing party, each participant must show an official identification (usually an ID card or passport) together with their key identifiers. This step confirms the link between the human and the keys. This signature thus requires meeting in real life. If you have not yet met any Debian developers in a public free software conference, you can explicitly seek developers living nearby using the list on the following webpage as a starting point. <ulink type=\"block\" url=\"https://wiki.debian.org/Keysigning\" />"
-msgstr "同时，志愿者必须以 GnuPG 来生成RSA 公钥/私钥对，这必须由至少两名官方 Debian 开发者签署。签名验证了密钥上的名称。在密钥签发过程中，每名参加者必须有效地与他们的密钥识别符一起展示官方身份（通常是身份证或护照）。这一步确认了人与密钥之间的联系。这样，这个签名需要真实生活中的会见。如果还没有在公开的自由软件会议中遇到任何 Debian 开发者，那么必须使用后面的网页上的列表作为起点，来寻找生活在附近的开发者。<ulink type=\"block\" url=\"https://wiki.debian.org/Keysigning\" />"
+msgstr "同时，志愿者必须以 GnuPG 来生成 RSA 公钥/私钥对，这必须由至少两名官方 Debian 开发者签署。签名验证了密钥上的名称。在密钥签发组中，每位参加者必须有效地将官方身份（通常是身份证或护照）与他们的密钥识别符一起展示。这一步确认了真人与密钥之间的联系。这样，这个签名需要真实生活中的会面。如果还没有在公开的自由软件会议中遇到任何 Debian 开发者，那么必须使用后面的网页上的列表作为起点，来明确地寻找生活在附近的开发者。<ulink type=\"block\" url=\"https://wiki.debian.org/Keysigning\" />"
 
 msgid "Once the registration on <literal>nm.debian.org</literal> has been validated by the advocate, an <emphasis>Application Manager</emphasis> is assigned to the candidate. The application manager will then drive the process through multiple pre-defined steps and checks."
-msgstr "一旦 <literal>nm.debian.org</literal> 上的注册被拥护者验证，那么 <emphasis>Application Manager（申请管理者）</emphasis> 就被指定给志愿者。然后这个申请管理者通过多个预定的步骤和检查来驱动这个过程。"
+msgstr "一旦 <literal>nm.debian.org</literal> 上的注册被拥护者验证，那么 <emphasis>Application Manager（申请管理者）</emphasis> 就被指定给志愿者。然后申请管理者通过多个预定的步骤和检查来驱动这个过程。"
 
 msgid "The first verification is an identity check. If you already have a key signed by two Debian developers, this step is easy; otherwise, the application manager will try and guide you in your search for Debian developers close by to organize a meet-up and a key signing."
-msgstr "第一项验证是身份检查。如果您已经有两名 Debian 开发者签发的密钥，那么这步很容易；否则，申请管理者将通过组织会见和密钥签发来尝试并引导您搜索附近的 Debian 开发者。"
+msgstr "第一项验证是身份检查。如果已经有两名 Debian 开发者签发的密钥，那么这步很容易；否则，申请管理者将通过组织会见和密钥签发来尝试并引导您搜索附近的 Debian 开发者。"
 
 msgid "Accepting the Principles"
 msgstr "接受的原则"
 
 msgid "These administrative formalities are followed by philosophical considerations. The point is to make sure that the candidate understands and accepts the social contract and the principles behind Free Software. Joining Debian is only possible if one shares the values that unite the current developers, as expressed in the founding texts (and summarized in <xref linkend=\"the-debian-project\" />)."
-msgstr "这些管理手续经过哲学性的思考而来。要点是确定志愿者理解并接受社会接触与自由软件背后的原则。只有分享了团结当前的开发者这一价值观，如在奠基文本中所表达的（并且总结在 <xref linkend=\"the-debian-project\" /> 中），加入 Debian 才是可能的。"
+msgstr "这些管理手续经过哲学性的思考而来。要点是确定志愿者理解并接受社会接触与自由软件背后的原则。只有分享了将当前的开发者团结在一起这个价值观，如在奠基文本中所表达的（并且在 <xref linkend=\"the-debian-project\" /> 中总结），加入 Debian 才是可能的。"
 
 msgid "In addition, each candidate wishing to join the Debian ranks is expected to know the workings of the project, and how to interact appropriately to solve the problems they will doubtless encounter as time passes. All of this information is generally documented in manuals targeting the new maintainers, and in the Debian developer's reference. An attentive reading of this document should be enough to answer the examiner's questions. If the answers are not satisfactory, the candidate will be informed. They will then have to read (again) the relevant documentation before trying again. In the cases where the existing documentation does not contain the appropriate answer for the question, the candidate can usually reach an answer with some practical experience within Debian, or potentially by discussing with other Debian developers. This mechanism ensures that candidates get involved somewhat in Debian before becoming a full part of it. It is a deliberate policy, by which candidates who eventually join the project are integrated as another piece of an infinitely extensible jigsaw puzzle."
-msgstr "此外，希望每名想要加入 Debian 序列的志愿者都知道项目的工作此外，以及如何适当地互动，来解决随着时间的前进他们将无疑会遇到的问题。所有这些信息都存档在针对新维护者的手册中，以及在 Debian 开发者参考手册中。仔细阅读这个文档应该足以回到检查者的问题。如果回答不够令人满意，那么将通知志愿者。然后他们在尝试前（再次）阅读相关文档。在现有的文档没有包含问题的适当答案的情况下，志愿者通常可以通过 Debian 内的时间经验，或者可能通过与其他 Debian 开发者讨论来找到答案。这个机制确保了志愿者在成为真正的成员前在某种程度上参与进去。这是个深思熟虑的政策，最终加入项目的志愿者通过它组成了无限扩展的拼图的一部分。"
+msgstr "此外，希望每位想要加入 Debian 序列的志愿者都知道项目的工作，以及如何适当地互动，来解决随着时间的前进他们将无疑会遇到的问题。所有这些信息都存档在针对新维护者的手册中，以及在 Debian 开发者的参考手册中。仔细阅读这个文档应该足以回答检查者的问题。如果回答不够令人满意，那么将会通知志愿者。然后他们在尝试前必须（再次）阅读相关文档。在现有的文档没有包含问题的适当答案的情况下，志愿者通常可以通过 Debian 内的实践经验，或者可能潜在地通过与其他 Debian 开发者讨论来找到答案。这个机制确保了志愿者在成为真正的成员前在某种程度上参与进去。这是个深思熟虑的政策，最终加入项目的志愿者通过它组成了无限扩展的拼图的一部分。"
 
 msgid "<primary><emphasis>Philosophy &amp; Procedures</emphasis></primary>"
 msgstr "<primary><emphasis>哲学 &amp; 步骤</emphasis></primary>"
 
 msgid "This step is usually known as the <emphasis>Philosophy &amp; Procedures</emphasis> (P&amp;P for short) in the lingo of the developers involved in the new member process."
-msgstr "在新成员过程的术语中，这一步通常被称为<emphasis>哲学 &amp; 步骤</emphasis>（简写为 P&amp;P）。"
+msgstr "在新成员过程的术语中，这一步通常称为<emphasis>哲学 &amp; 步骤</emphasis>（简写为 P&amp;P）。"
 
 msgid "Checking Skills"
 msgstr "技能检查"
 
 msgid "Each application to become an official Debian developer must be justified. Becoming a project member requires showing that this status is legitimate, and that it facilitates the candidate's job in helping Debian. The most common justification is that being granted Debian developer status eases maintenance of a Debian package, but it is not the only one. Some developers join the project to contribute to porting to a specific architecture, others want to improve documentation, and so on."
-msgstr "必须证明要成为官方 Debian 开发者的每一份申请。成为项目成员需要显示这个状态是合法的，并且促进了志愿者的工作来帮助 Debian。最通常的证明是授予了 Debian 开发者的状态使 Debian 软件包的维护更容易了，但不只是这一点。一些开发者加入项目，为导出到特定架构做出了贡献，另一些人想要改进文档，以及诸如此类。"
+msgstr "每一份成为官方 Debian 开发者的申请都必须被证明。成为项目成员需要显示这个状态是合法的，并且促进了志愿者的工作来帮助 Debian。最通常的证明是授予了 Debian 开发者的状态使 Debian 软件包的维护更容易了，但不只是这一点。一些开发者加入项目，为导出到特定架构做出了贡献，另一些人想要改进文档，以及诸如此类。"
 
 msgid "This step represents the opportunity for the candidate to state what they intend to do within the Debian project and to show what they have already done towards that end. Debian is a pragmatic project and saying something is not enough, if the actions do not match what is announced. Generally, when the intended role within the project is related to package maintenance, a first version of the prospective package will have to be validated technically and uploaded to the Debian servers by a sponsor among the existing Debian developers."
-msgstr "这一步代表了志愿者声明想要在 Debian 项目中做什么，以及显示他们已经向终点做出了什么的机会。Debian 是程序化的项目，如果行动不所宣称的不同步，只是说些什么是不够的。通常，当项目中期望的角色与项目维护相关时，预期的软件包的第一版必须通过现有的 Debian 开发者中的赞助者在技术上验证，并且上传到 Debian 服务器上。"
+msgstr "这一步代表了志愿者的机会来声明想要在 Debian 项目中做什么，以及显示他们向终点已经做了什么。Debian 是务实的项目，如果行动与所宣称的不陪陪，那么只是说些什么是不够的。通常，当项目中期望的角色与项目维护相关时，预期的软件包的第一版必须通过现有的 Debian 开发者中的赞助者在技术上验证，并且上传到 Debian 服务器上。"
 
 msgid "<emphasis>COMMUNITY</emphasis> Sponsoring"
 msgstr "<emphasis>社区</emphasis> 赞助"
@@ -694,10 +694,10 @@ msgid "<primary>sponsoring</primary>"
 msgstr "<primary>赞助</primary>"
 
 msgid "Debian developers can “sponsor” packages prepared by someone else, meaning that they publish them in the official Debian repositories after having performed a careful review. This mechanism enables external persons, who have not yet gone through the new member process, to contribute occasionally to the project. At the same time, it ensures that all packages included in Debian have always been checked by an official member."
-msgstr "Debian 开发者可以“赞助”其他人准备的软件包，这意味着在执行仔细的复核后，他们将软件包发布在官方 Debian 仓库中。这个机制允许还没有通过新成员过程的外部人员偶尔为项目做贡献。同时，它确保了 Debian 中包括的所有软件包总是被官方成员检查。"
+msgstr "Debian 开发者可以“赞助”其他人准备的软件包，这意味着在执行仔细的复核后，他们将软件包发布在官方 Debian 仓库中。这个机制允许还没有通过新成员过程的外部人员偶尔为项目做贡献。同时，它确保了 Debian 中包括的所有软件包总是由官方成员检查。"
 
 msgid "Finally, the examiner checks the candidate's technical (packaging) skills with a detailed questionnaire. Bad answers are not permitted, but the answer time is not limited. All the documentation is available and several tries are allowed if the first answers are not satisfactory. This step does not intend to discriminate, but to ensure at least a modicum of knowledge common to new contributors."
-msgstr "最后，检查者通过具体的调查表来检查志愿者的技术（打包）技能。回答不能太差，但答题时间没有限制。可以使用所有的文档，如果第一次回答不令人满意的话，允许尝试几次。这一步不是用来甄别的，而是确保新的贡献者都至少具有少量知识。"
+msgstr "最后，检查者通过具体的调查表来检查志愿者的技术（打包）技能。答案不能不好，但答题时间没有限制。可以使用所有的文档，如果第一次回答不令人满意的话，允许尝试几次。这一步不是用来甄别的，而是确保新的贡献者都至少具有少量知识。"
 
 msgid "<primary><emphasis>Tasks &amp; Skills</emphasis></primary>"
 msgstr "<primary><emphasis>任务 &amp; 技能</emphasis></primary>"
@@ -709,7 +709,7 @@ msgid "Final Approval"
 msgstr "最终确认"
 
 msgid "At the very last step, the whole process is reviewed by a DAM (<emphasis>Debian Account Manager</emphasis>). The DAM will review all the information about the candidate that the examiner collected, and makes the decision on whether or not to create an account on the Debian servers. In cases where extra information is required, the account creation may be delayed. Refusals are rather rare if the examiner does a good job of following the process, but they sometimes happen. They are never permanent, and the candidate is free to try again at a later time."
-msgstr "在最后一步，整个过程由 DAM （<emphasis>Debian Account Manager——Debian 账户管理者</emphasis>）复查。DAM 将复查检查者搜集的关于志愿者的所有信息，并决定是否在 Debian 服务器上创建账户。在需要额外的信息的情况下，会推迟创建账户。 如果检查者在后面的过程中做了很好的工作的话，拒绝会很罕见，但有时也会发生。拒绝不是永久性的，志愿者后面可以任意地尝试。"
+msgstr "在最后一步，整个过程由 DAM （<emphasis>Debian Account Manager——Debian 账户管理者</emphasis>）复查。DAM 将复查检查者搜集的关于志愿者的所有信息，并决定是否在 Debian 服务器上创建账户。在需要补充信息的情况下，会推迟创建账户。 如果检查者在后面的过程中做了很好的工作的话，拒绝会很罕见，但有时也会发生。拒绝不是永久性的，志愿者后面可以任意尝试。"
 
 msgid "The DAM's decision is authoritative and (almost) without appeal, which explains why the people in that seat have often been criticized in the past."
 msgstr "DAM 的决定是权威性的，并且（几乎）不得上诉，这解释了为什么上位者过去经常被批评。"
