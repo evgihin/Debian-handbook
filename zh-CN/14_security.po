@@ -4,7 +4,7 @@
 # 肖盛文 <atzlinux@163.com>, 2017.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2021-02-10 16:50+0000\nLast-Translator: Liu Tao <lyuutau@outlook.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/14_security/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2021-02-20 06:50+0000\nLast-Translator: Liu Tao <lyuutau@outlook.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/14_security/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.5\n"
 
 msgid "Firewall"
 msgstr "防火墙"
@@ -128,9 +128,8 @@ msgstr "<primary><command>iptables</command></primary>"
 msgid "However, Netfilter iptables commands are being replaced by nftables, which avoids many of its problems. Its design involves less code duplication, and it can be managed with just the <command>nft</command> command. Debian <emphasis role=\"distribution\">Buster</emphasis> uses the nftables framework by default."
 msgstr "然而，Netfilter iptables 命令正在被 nftables 所取代，它避免了许多问题。它的设计涉及到较少的代码重复，而且它可以只用 <command>nft</command> 命令来管理。Debian <emphasis role=\"distribution\">Buster</emphasis> 默认使用 nftables 框架。"
 
-#, fuzzy
 msgid "To enable a default firewall in Debian execute:"
-msgstr "要在Debian中启用默认防火墙，请执行。"
+msgstr "要在 Debian 中启用默认防火墙，请执行："
 
 msgid ""
 "<computeroutput># </computeroutput><userinput>apt install -y nftables\n"
@@ -168,23 +167,29 @@ msgstr ""
 msgid "This model was defined in the standard ISO/EIC 7498. The following seven layers are described:"
 msgstr ""
 
+#, fuzzy
 msgid "Physical: transmission and reception of raw bit streams over a physical medium"
-msgstr ""
+msgstr "物理：通过物理介质传输和接收原始位流"
 
+#, fuzzy
 msgid "Data Link: reliable transmission of data frames between two nodes connected by a physical layer"
-msgstr ""
+msgstr "数据链路：通过物理层连接的两个节点之间可靠地传输数据帧"
 
+#, fuzzy
 msgid "Network: structuring and managing a multi-node network, including addressing, routing and traffic control"
-msgstr ""
+msgstr "网络：构建和管理多节点网络，包括寻址、路由和流量控制"
 
+#, fuzzy
 msgid "Transport: reliable transmission of data segments between points on a network, including segmentation, acknowledgment and multiplexing"
-msgstr ""
+msgstr "传输：在网络上的点之间可靠地传输数据段，包括分段、确认和多路复用"
 
+#, fuzzy
 msgid "Session: managing communication sessions, i.e. continuous exchange of information in the form of multiple back-and-forth transmissions between two nodes"
-msgstr ""
+msgstr "会话：管理通信会话，即以两个节点之间的多次来回传输的形式持续交换信息"
 
+#, fuzzy
 msgid "Presentation: translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption"
-msgstr ""
+msgstr "演示：网络服务和应用程序之间的数据转换;包括字符编码、数据压缩和加密/解密"
 
 msgid "Application: High-level APIs, including resource sharing, remote file access."
 msgstr "应用程序：高级 API，包括资源共享、远程文件访问。"
@@ -560,11 +565,13 @@ msgstr "<emphasis role=\"pkg\">mrtg-contrib</emphasis> 和 <emphasis role=\"pkg\
 msgid "Avoiding Intrusion"
 msgstr "避免入侵"
 
+#, fuzzy
 msgid "Attackers try to get access to servers by guessing passwords, which is why strong passwords must always be used. Even then, you should also establish measures against brute-force attacks. A brute-force attack is an attempt to log in to an unauthorised software system by performing multiple login attempts in a short period of time."
-msgstr ""
+msgstr "攻击者试图通过猜测密码来访问服务器，这就是为什么必须始终使用强密码。即便如此，你也应该制定措施，防止暴力攻击。暴力攻击是试图通过在短时间内多次登录尝试登录到未经授权的软件系统。"
 
+#, fuzzy
 msgid "The best way to stop a brute-force atack is to limit the number of login attempts coming from the same origin, usually by temporarily banning an IP address."
-msgstr ""
+msgstr "阻止暴力攻击的最佳方法是限制来自同一源的登录尝试次数，通常是通过暂时禁止 IP 地址。"
 
 msgid "Fail2Ban is an intrusion prevention software suite that can be configured to monitor any service that writes login attemps to a log file. It can be found in the package <emphasis role=\"pkg\">fail2ban</emphasis>."
 msgstr ""
@@ -587,6 +594,7 @@ msgstr ""
 msgid "Let us have a look at the configuration of <command>sshd</command> in <filename>/etc/fail2ban/jail.conf</filename> to better understand how Fail2Ban works..."
 msgstr ""
 
+#, fuzzy
 msgid ""
 "[...]\n"
 "[DEFAULT]\n"
@@ -599,7 +607,7 @@ msgid ""
 "port    = ssh\n"
 "logpath = %(sshd_log)s\n"
 "backend = %(sshd_backend)s"
-msgstr ""
+msgstr "[...]\n[DEFAULT]\n[...]\nbantime  = 10m\n[...]\nmaxretry = 5\n[...]\n[sshd]\nport    = ssh\nlogpath = %(sshd_log)s\nbackend = %(sshd_backend)s"
 
 msgid "Fail2Ban will check for failed login attepts for <command>sshd</command> using Python regular expressions defined in <filename>/etc/fail2ban/filters.d/sshd.conf</filename> against the log file of <command>sshd</command>, which is defined in the variable <literal>sshd_log</literal> in the file <filename>/etc/fail2ban/paths_common.conf</filename>. If Fail2Ban detects five failed login attempts in a row, it will ban the IP address where those attempts originated."
 msgstr ""
