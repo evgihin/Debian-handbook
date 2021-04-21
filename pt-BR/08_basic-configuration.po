@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-21 14:37+0000\nLast-Translator: Felipe Viggiano <felipeviggiano@libreoffice.org>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/08_basic-configuration/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-22 00:38+0000\nLast-Translator: Thiago Pezzo (tico) <tico@dismail.de>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/08_basic-configuration/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
 
 msgid "Configuration"
 msgstr "Configuração"
@@ -433,15 +433,11 @@ msgstr "É possível associar não só várias interfaces de rede a uma única p
 msgid "As you can guess, the configurations can be rather complex, but these options are only used in very special cases. The examples cited here are typical of the usual configurations."
 msgstr "Como você pode imaginar, as configurações podem ser complexas, mas estas opções são usadas somente em casos especiais. Os exemplos citados aqui são configurações habituais típicas."
 
-#, fuzzy
-#| msgid "Ethernet Interface"
 msgid "Wireless Interface"
-msgstr "Interface de Rede"
+msgstr "Interface sem fio"
 
-#, fuzzy
-#| msgid "<primary>tilde</primary>"
 msgid "<primary>wireless</primary>"
-msgstr "<primary>til</primary>"
+msgstr "<primary>sem fio</primary>"
 
 msgid "Getting wireless network cards to work can be a bit more challenging. First of all, they often require the installation of proprietary firmwares which are not installed by default in Debian. Then wireless networks rely on cryptography to restrict access to authorized users only, this implies storing some secret key in the network configuration. Let's tackle those topics one by one."
 msgstr "Colocar placas de rede sem fio para funcionar pode ser um pouco mais desafiador. Primeiramente, elas frequentemente precisam da instalação de firmware proprietário que não vem instalado no Debian. além disso, redes sem fio dependem de criptografia para restringir o acesso a usuários autorizados apenas, o que implica em guardar alguma chave secreta nas configurações de rede. Vamos remexer nestes tópicos um por um."
@@ -449,15 +445,11 @@ msgstr "Colocar placas de rede sem fio para funcionar pode ser um pouco mais des
 msgid "Installing the required firmwares"
 msgstr "Instalando os firmwares necessários"
 
-#, fuzzy
-#| msgid "<primary>tilde</primary>"
 msgid "<primary>firmware</primary>"
-msgstr "<primary>til</primary>"
+msgstr "<primary>firmware</primary>"
 
-#, fuzzy
-#| msgid "<primary>shell</primary>"
 msgid "<primary>isenkram</primary>"
-msgstr "<primary>shell</primary>"
+msgstr "<primary>isenkram</primary>"
 
 msgid "First you have to enable the non-free repository in APT's sources.list file: see <xref linkend=\"sect.apt-sources.list\" /> for details about this file. Many firmware are proprietary and are thus located in this repository. You can try to skip this step if you want, but if the next step doesn't find the required firmware, retry after having enabled the non-free section."
 msgstr "Primeiro você tem que habilitar o repositório não-livre no arquivo sources.list do APT: veja em <xref linkend=\"sect.apt-sources.list\" /> para detalhes sobre este arquivo. Muitos firmwares são proprietários e portanto localizados neste repositório. Você pode tentar pular este passo se quiser, mas caso o próximo passo não encontre o firmware necessário, tente novamente após habilitar a seção não-livre."
@@ -468,10 +460,8 @@ msgstr "Então você tem que instalar os pacotes <literal>firmware-*</literal> a
 msgid "Wireless specific entries in <filename>/etc/network/interfaces</filename>"
 msgstr "Entradas específicas de rede sem fio em <filename>/etc/network/interfaces</filename>"
 
-#, fuzzy
-#| msgid "<primary>PAM</primary>"
 msgid "<primary>WPA</primary>"
-msgstr "<primary>PAM</primary>"
+msgstr "<primary>WPA</primary>"
 
 msgid "<emphasis>ifupdown</emphasis> is able to manage wireless interfaces but it needs the help of the <emphasis role=\"pkg\">wpasupplicant</emphasis> package which provides the required integration between <emphasis>ifupdown</emphasis> and the <command>wpa_supplicant</command> command used to configure the wireless interfaces (when using WPA/WPA2 encryption). The usual entry in <filename>/etc/network/interfaces</filename> needs to be extended with two supplementary parameters to specify the name of the wireless network (aka its SSID) and the <emphasis>Pre-Shared Key</emphasis> (PSK)."
 msgstr "<emphasis>ifupdown</emphasis> é capaz de gerenciar redes sem fio, mas precisa de um auxílio do pacote <emphasis role=\"pkg\">wpasupplicant</emphasis> , que fornece a integração necessária entre os comandos <emphasis>ifupdown</emphasis> e <command>wpa_supplicant</command>, utilizados para configurar a interface de rede sem fio (quando usando criptografia WPA/WPA2). A entrada normal em <filename>/etc/network/interfaces</filename> precisa ser estendida com dois parâmetros suplementares para especificar o nome da rede sem fio (também conhecido como SSID) e a chave <emphasis>Pre-Shared Key</emphasis> (PSK)."
@@ -485,26 +475,22 @@ msgid ""
 "iface wlp4s0 inet dhcp\n"
 "  wpa-ssid Falcot\n"
 "  wpa-psk ccb290fd4fe6b22935cbae31449e050edd02ad44627b16ce0151668f5f53c01b"
-msgstr ""
+msgstr "\nauto wlp4s0\niface wlp4s0 inet dhcp\n  wpa-ssid Falcot\n  wpa-psk ccb290fd4fe6b22935cbae31449e050edd02ad44627b16ce0151668f5f53c01b"
 
 msgid "The <literal>wpa-psk</literal> parameter can contain either the plain text passphrase or its hashed version generated with <command>wpa_passphrase <replaceable>SSID</replaceable> <replaceable>passphrase</replaceable></command>. If you use an unencrypted wireless connection, then you should put a <literal>wpa-key-mgmt NONE</literal> and no <literal>wpa-psk</literal> entry. For more information about the possible configuration options, have a look at <filename>/usr/share/doc/wpasupplicant/README.Debian.gz</filename>."
-msgstr ""
+msgstr "O parâmetro  <literal>wpa-psk</literal> pode conter tanto a senha em texto puro ou sua versão hash gerada com <command>wpa_passphrase <replaceable>SSID</replaceable> <replaceable>senha</replaceable></command>. Se você usa uma conexão sem fio não criptografada, então você deve colocar <literal>wpa-key-mgmt NONE</literal> e não uma entrada <literal>wpa-psk</literal>. Para mais informações sobre as opções de configuração possíveis, dê uma olhada em <filename>/usr/share/doc/wpasupplicant/README.Debian.gz</filename>."
 
 msgid "At this point, you should consider restricting the read permissions on <filename>/etc/network/interfaces</filename> to the root user only since the file contains a private key that not all users should have access to."
-msgstr ""
+msgstr "Neste ponto você deve considerar restringir as permissões de leitura de  <filename>/etc/network/interfaces</filename>  para o usuário root somente, já que o arquivo contém uma chave privada que nem todos(as) os(as) usuários(as) devem ter acesso."
 
-#, fuzzy
-#| msgid "<emphasis>NOTE</emphasis> Security updates"
 msgid "<emphasis>HISTORY</emphasis> WEP encryption"
-msgstr "<emphasis>NOTA</emphasis> Atualizações de segurança"
+msgstr "<emphasis>HISTÓRIA</emphasis> criptografia WEP"
 
-#, fuzzy
-#| msgid "<primary>PPP</primary>"
 msgid "<primary>WEP</primary>"
-msgstr "<primary>PPP</primary>"
+msgstr "<primary>WEP</primary>"
 
 msgid "Usage of the deprecated WEP encryption protocol is possible with the <emphasis role=\"pkg\">wireless-tools</emphasis> package. See <filename>/usr/share/doc/wireless-tools/README.Debian</filename> for instructions."
-msgstr ""
+msgstr "O uso do obsoleto protocolo de criptografia WEP é possível com o pacote <emphasis role=\"pkg\">wireless-tools</emphasis> . Veja <filename>/usr/share/doc/wireless-tools/README.Debian</filename> para instruções."
 
 msgid "Connecting with PPP through a PSTN Modem"
 msgstr "Conectando com PPP através de um modem PSTN"
@@ -587,10 +573,8 @@ msgstr "<primary><command>init</command></primary>"
 msgid "PPP connections over ADSL are, by definition, intermittent. Since they are usually not billed according to time, there are few downsides to the temptation of keeping them always open. The standard means to do so is to use the init system."
 msgstr "As conexões PPP sobre ADSL são, por definição, intermitentes. Como elas normalmente não são cobradas por tempo, existem poucos problemas com relação a tentação de mantê-las abertas sempre. O padrão para se fazer isto é usar o sistema init."
 
-#, fuzzy
-#| msgid "The default init system on <emphasis role=\"distribution\">Jessie</emphasis> is <command>systemd</command>. Adding an automatically restarting task for the ADSL connection is a simple matter of creating a “unit file” such as <filename>/etc/systemd/system/adsl-connection.service</filename>, with contents such as the following:"
 msgid "With systemd, adding an automatically restarting task for the ADSL connection is a simple matter of creating a “unit file” such as <filename>/etc/systemd/system/adsl-connection.service</filename>, with contents such as the following:"
-msgstr "O sistema init padrão na <emphasis role=\"distribution\">Jessie</emphasis> é o <command>systemd</command>. Adicionar uma tarefa de reinício automático para uma conexão ADSL é uma simples questão de criar um “arquivo unit” tal como <filename>/etc/systemd/system/adsl-connection.service</filename>, com conteúdo tal como o seguinte:"
+msgstr "Com systemd, adicionar uma tarefa de reinício automático para uma conexão ADSL é uma simples questão de criar um “arquivo unit” tal como <filename>/etc/systemd/system/adsl-connection.service</filename>, com conteúdo tal como o seguinte:"
 
 msgid ""
 "[Unit]\n"
@@ -655,8 +639,6 @@ msgstr "<primary>cabo de par trançado</primary>"
 msgid "Computer network cards expect to receive data on specific wires in the cable, and send their data on others. When you connect a computer to a local network, you usually connect a cable (straight or crossover) between the network card and a repeater or switch. However, if you want to connect two computers directly (without an intermediary switch or repeater), you must route the signal sent by one card to the receiving side of the other card, and vice-versa. This is the purpose of a crossover cable, and the reason it is used."
 msgstr "Placas de rede de computadores esperam receber dados em certos fios do cabo, e enviar por outros. Quando você conecta um computador em uma rede local, você normalmente conecta um cabo (normal ou crossover) entre a placa de rede e o repetidor ou switch. Entretanto, se você quer conectar dois computadores diretamente (sem um switch ou repetidor intermediário), você deve rotear o sinal enviado por uma placa para o lado receptor da outra placa, e vice-versa. Este é o objetivo de um cabo crossover, e a razão para usá-lo."
 
-#, fuzzy
-#| msgid "Note that this distinction has become almost irrelevant over time, as modern network cards are able do detect the type of cable present and adapt accordingly, so it won't be unusual that both kinds of cable will work in a given location."
 msgid "Note that this distinction has become almost irrelevant over time, as modern network cards are able to detect the type of cable present and adapt accordingly, so it won't be unusual that both kinds of cable will work in a given location."
 msgstr "Note que esta distinção tem se tornado quase que irrelevante com o passar do tempo, já que placas de rede modernas são capazes de detectar o tipo de cabo presente e se adaptar a ele. Portanto, não é raro que ambos os tipos de cabo funcionem em vários locais."
 
@@ -678,10 +660,8 @@ msgstr "Para evitar ter que conectar ou desconectar manualmente as interface de 
 msgid "In order to do this, the program is structured in two parts: a daemon running as root handles activation and configuration of network interfaces and a user interface controls this daemon. PolicyKit handles the required authorizations to control this program and Debian configured PolicyKit in such a way so that members of the netdev group can add or change Network Manager connections."
 msgstr "Para fazer isto, o programa é estruturado em duas partes: um daemon rodando como root cuida da ativação e configuração das interfaces de rede e uma interface de usuário controla este daemon. O PolicyKit cuida das autorizações necessárias para controlar este programa e o Debian configura o PolicyKit de forma que os membros do grupo netdev possam adicionar ou mudar as conexões do Network Manager."
 
-#, fuzzy
-#| msgid "Network Manager knows how to handle various types of connections (DHCP, manual configuration, local network), but only if the configuration is set with the program itself. This is why it will systematically ignore all network interfaces in <filename>/etc/network/interfaces</filename> for which it is not suited. Since Network Manager doesn't give details when no network connections are shown, the easy way is to delete from <filename>/etc/network/interfaces</filename> any configuration for all interfaces that must be managed by Network Manager."
 msgid "Network Manager knows how to handle various types of connections (DHCP, manual configuration, local network), but only if the configuration is set with the program itself. This is why it will systematically ignore all network interfaces in <filename>/etc/network/interfaces</filename> and <filename>/etc/network/interfaces.d/</filename> for which it is not suited. Since Network Manager doesn't give details when no network connections are shown, the easy way is to delete from <filename>/etc/network/interfaces</filename> any configuration for all interfaces that must be managed by Network Manager."
-msgstr "O Network Manager sabe como manipular vários tipos de conexões (DHCP, manual, rede local), mas apenas se a configuração for ajustada com o próprio programa. É por isto que ele vai ignorar sistematicamente todas as interfaces de rede no <filename>/etc/network/interfaces</filename> para as quais ele não foi projetado. Já que o Network Manager não dá detalhes quando nenhuma conexão de rede é mostrada, a forma fácil é apagar do <filename>/etc/network/interfaces</filename> quaisquer configurações de todas as interfaces que devem ser gerenciadas pelo Network Manager."
+msgstr "O Network Manager sabe como manipular vários tipos de conexões (DHCP, manual, rede local), mas apenas se a configuração for ajustada com o próprio programa. É por isto que ele vai ignorar sistematicamente todas as interfaces de rede em <filename>/etc/network/interfaces</filename> e <filename>/etc/network/interfaces.d/</filename> para as quais ele não foi projetado. Já que o Network Manager não dá detalhes quando nenhuma conexão de rede é mostrada, a forma fácil é apagar do <filename>/etc/network/interfaces</filename> quaisquer configurações de todas as interfaces que devem ser gerenciadas pelo Network Manager."
 
 msgid "Note that this program is installed by default when the “Desktop Environment” task is chosen during initial installation."
 msgstr "Note que este programa já é instalado por padrão quando a tarefa \"Desktop Environment\" é escolhida durante a instalação."
@@ -722,10 +702,8 @@ msgstr "<primary><filename>sys</filename></primary>"
 msgid "The <filename>/proc/</filename> and <filename>/sys/</filename> file trees are generated by “virtual” filesystems. This is a practical means of recovering information from the kernel (by listing virtual files) and communicating them to it (by writing to virtual files)."
 msgstr "As árvores de arquivos <filename>/proc/</filename> e <filename>/sys/</filename> são geradas por sistemas de arquivos \"virtuais\". Esta é uma forma prática de recuperar informações do núcleo (listando arquivos virtuais) e comunicando-os para o núcleo (escrevendo para arquivos virtuais)."
 
-#, fuzzy
-#| msgid "<filename>/sys/</filename> in particular is designed to provide access to internal kernel objects, especially those representing the various devices in the system. The kernel can, thus, share various pieces of information: the status of each device (for example, if it is in energy saving mode), whether it is a removable device, etc. Note that <filename>/sys/</filename> has only existed since kernel version 2.6."
 msgid "<filename>/sys/</filename> in particular is designed to provide access to internal kernel objects, especially those representing the various devices in the system. The kernel can, thus, share various pieces of information: the status of each device (for example, if it is in energy saving mode), whether it is a removable device, etc. Note that <filename>/sys/</filename> has only existed since kernel version 2.6. <filename>/proc/</filename> describes the current state of the kernel: the files in this directory contain information about the processes running on the system and its hardware."
-msgstr "<filename>/sys/</filename> em particular, é projetado para fornecer acesso a objetos de kernel interno, especialmente aqueles que representam os diversos dispositivos no sistema. O kernel pode, assim, partilhar vários pedaços de informação: o status de cada dispositivo (por exemplo, se está no modo de poupança de energia), seja um dispositivo removível, etc. Note-se que <filename>/sys/</filename> só existe desde a versão do kernel 2.6."
+msgstr "<filename>/sys/</filename> em particular, é projetado para fornecer acesso a objetos de kernel interno, especialmente aqueles que representam os diversos dispositivos no sistema. O kernel pode, assim, partilhar vários pedaços de informação: o status de cada dispositivo (por exemplo, se está no modo de poupança de energia), seja um dispositivo removível, etc. Note-se que <filename>/sys/</filename> só existe desde a versão do kernel 2.6. Em <filename>/proc/</filename> está descrito o estado atual do kernel: os arquivos neste diretório contêm informações sobre os processos executando no sistema e seus hardwares."
 
 msgid "Surprisingly, the domain name is not managed in the same way, but comes from the complete name of the machine, acquired through name resolution. You can change it in the <filename>/etc/hosts</filename> file; simply write a complete name for the machine there at the beginning of the list of names associated with the address of the machine, as in the following example:"
 msgstr "Surpreendentemente, o nome de domínio não é gerenciado da mesma forma, mas vem de um nome de máquina completo, adquirido através de resolução de nome. Você pode mudá-lo no arquivo <filename>/etc/hosts</filename>; simplesmente escreva um nome completo para a máquina no começo da lista de nomes associada com o endereço da máquina, como no exemplo seguinte:"
@@ -813,10 +791,8 @@ msgstr "Note que o arquivo <filename>/etc/resolv.conf</filename> pode ser manipu
 msgid "The <filename>/etc/hosts</filename> file"
 msgstr "O arquivo <filename>/etc/hosts</filename>"
 
-#, fuzzy
-#| msgid "If there is no name server on the local network, it is still possible to establish a small table mapping IP addresses and machine hostnames in the <filename>/etc/hosts</filename> file, usually reserved for local network stations. The syntax of this file is very simple: each line indicates a specific IP address followed by the list of any associated names (the first being “completely qualified”, meaning it includes the domain name)."
 msgid "If there is no name server on the local network, it is still possible to establish a small table mapping IP addresses and machine hostnames in the <filename>/etc/hosts</filename> file, usually reserved for local network stations. The syntax of this file as described in <citerefentry><refentrytitle>hosts</refentrytitle> <manvolnum>5</manvolnum></citerefentry> is very simple: each line indicates a specific IP address followed by the list of any associated names (the first being “completely qualified”, meaning it includes the domain name)."
-msgstr "Se não houver nenhum nome do servidor na rede local, é ainda possível estabelecer uma pequena tabela de mapeamento de endereços IP e nomes de máquina no <filename>/etc/hosts</filename>, normalmente reservados para as estações da rede local. A sintaxe deste arquivo é muito simples: cada linha indica um endereço IP específico, seguido pela lista de quaisquer denominações associadas (sendo o primeiro \"completamente qualificado\", ou seja, inclui o nome de domínio)."
+msgstr "Se não houver nenhum nome do servidor na rede local, é ainda possível estabelecer uma pequena tabela de mapeamento de endereços IP e nomes de máquina no <filename>/etc/hosts</filename>, normalmente reservados para as estações da rede local. A sintaxe deste arquivo, como descrito em  <citerefentry><refentrytitle>hosts</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, é muito simples: cada linha indica um endereço IP específico, seguido pela lista de quaisquer denominações associadas (sendo o primeiro \"completamente qualificado\", ou seja, inclui o nome de domínio)."
 
 msgid "This file is available even during network outages or when DNS servers are unreachable, but will only really be useful when duplicated on all the machines on the network. The slightest alteration in correspondence will require the file to be updated everywhere. This is why <filename>/etc/hosts</filename> generally only contains the most important entries."
 msgstr "Este arquivo está disponível mesmo durante interrupções de rede ou quando os servidores DNS são inacessíveis, mas realmente só serão úteis quando duplicados em todas as máquinas na rede. A menor alteração em correspondência exigirá o arquivo a ser atualizado em todos os lugares. É por isso que <filename>/etc/hosts</filename> geralmente contém apenas as entradas mais importantes."
@@ -851,10 +827,8 @@ msgstr "<primary>banco de dados</primary><secondary>de usuários</secondary>"
 msgid "<primary>database</primary><secondary>of groups</secondary>"
 msgstr "<primary>banco de dados</primary><secondary>de grupos</secondary>"
 
-#, fuzzy
-#| msgid "The list of users is usually stored in the <filename>/etc/passwd</filename> file, while the <filename>/etc/shadow</filename> file stores encrypted passwords. Both are text files, in a relatively simple format, which can be read and modified with a text editor. Each user is listed there on a line with several fields separated with a colon (“<literal>:</literal>”)."
 msgid "The list of users is usually stored in the <filename>/etc/passwd</filename> file, while the <filename>/etc/shadow</filename> file stores hashed passwords. Both are text files, in a relatively simple format, which can be read and modified with a text editor. Each user is listed there on a line with several fields separated with a colon (“<literal>:</literal>”)."
-msgstr "A lista de usuários é normalmente armazenada no <filename>/etc/passwd</filename>, enquanto o <filename>/etc/shadow</filename> armazena senhas criptografadas. Ambos são arquivos de texto, em um formato relativamente simples, que podem ser lidos e modificados com um editor de texto. Cada usuário está listado lá em uma linha com vários campos separados por dois-pontos (“<literal>:</literal>”)."
+msgstr "A lista de usuários é normalmente armazenada no <filename>/etc/passwd</filename>, enquanto o <filename>/etc/shadow</filename> armazena senhas em hash. Ambos são arquivos de texto, em um formato relativamente simples, que podem ser lidos e modificados com um editor de texto. Cada usuário está listado lá em uma linha com vários campos separados por dois-pontos (“<literal>:</literal>”)."
 
 msgid "<emphasis>NOTE</emphasis> Editing system files"
 msgstr "<emphasis>NOTA</emphasis> Editando arquivos do sistema"
@@ -952,10 +926,8 @@ msgstr "diversos campos controlam a expiração da senha."
 msgid "<emphasis>SECURITY</emphasis> <filename>/etc/shadow</filename> file security"
 msgstr "<emphasis>SEGURANÇA</emphasis> <filename>/etc/shadow</filename> segurança de arquivos"
 
-#, fuzzy
-#| msgid "<filename>/etc/shadow</filename>, unlike its alter-ego, <filename>/etc/passwd</filename>, cannot be read by regular users. Any encrypted password stored in <filename>/etc/passwd</filename> is readable by anybody; a cracker could try to “break” (or reveal) a password by one of several “brute force” methods which, simply put, guess at commonly used combinations of characters. This attack — called a \"dictionary attack\" — is no longer possible on systems using <filename>/etc/shadow</filename>."
 msgid "<filename>/etc/shadow</filename>, unlike its alter-ego, <filename>/etc/passwd</filename>, cannot be read by regular users. Any hashed password stored in <filename>/etc/passwd</filename> is readable by anybody; a cracker could try to “break” (or reveal) a password by one of several “brute force” methods which, simply put, guess at commonly used combinations of characters. This attack — called a \"dictionary attack\" — is no longer possible on systems using <filename>/etc/shadow</filename>."
-msgstr "<filename>/etc/shadow</filename>, ao contrário do seu alter-ego, <filename>/etc/passwd</filename>, não pode ser lido por usuários normais. Qualquer senha criptografada armazenada em <filename>/etc/passwd</filename> pode ser lida por todo mundo; um cracker pode tentar \"quebrar\" (ou revelar) uma senha através de um dos vários métodos \"força bruta\" que, de forma geral, tantam adivinhar uma combinação muito usada de caracteres. Este ataque — chamado de \"ataque de dicionário\" — não é mais possível em sistemas usando o <filename>/etc/shadow</filename>."
+msgstr "<filename>/etc/shadow</filename>, ao contrário do seu alter-ego, <filename>/etc/passwd</filename>, não pode ser lido por usuários normais. Qualquer senha em hash armazenada em <filename>/etc/passwd</filename> pode ser lida por todo mundo; um cracker pode tentar \"quebrar\" (ou revelar) uma senha através de um dos vários métodos \"força bruta\" que, de forma geral, tantam adivinhar uma combinação muito usada de caracteres. Este ataque — chamado de \"ataque de dicionário\" — não é mais possível em sistemas usando o <filename>/etc/shadow</filename>."
 
 msgid "<emphasis>DOCUMENTATION</emphasis> <filename>/etc/passwd</filename>, <filename>/etc/shadow</filename> and <filename>/etc/group</filename> file formats"
 msgstr "<emphasis>DOCUMENTAÇÃO</emphasis> formatos de arquivos de <filename>/etc/passwd</filename>, <filename>/etc/shadow</filename> e <filename>/etc/group</filename>"
@@ -978,10 +950,8 @@ msgstr "<primary><command>chage</command></primary>"
 msgid "<primary>password</primary>"
 msgstr "<primary>senha</primary>"
 
-#, fuzzy
-#| msgid "The following commands allow modification of the information stored in specific fields of the user databases: <command>passwd</command> permits a regular user to change their password, which in turn, updates the <filename>/etc/shadow</filename> file; <command>chfn</command> (CHange Full Name), reserved for the super-user (root), modifies the <literal>GECOS</literal> field. <command>chsh</command> (CHange SHell) allows the user to change their login shell, however available choices will be limited to those listed in <filename>/etc/shells</filename>; the administrator, on the other hand, is not bound by this restriction and can set the shell to any program of their choosing."
 msgid "The following commands allow modification of the information stored in specific fields of the user databases: <command>passwd</command> permits a regular user to change their password, which in turn, updates the <filename>/etc/shadow</filename> file; <command>chfn</command> (CHange Full Name), reserved for the super-user (root), modifies the <literal>GECOS</literal> field. <command>chsh</command> (CHange SHell) allows the user to change their login shell; however, available choices will be limited to those listed in <filename>/etc/shells</filename>; the administrator, on the other hand, is not bound by this restriction and can set the shell to any program of their choosing."
-msgstr "Os seguintes comandos permitem a modificação das informações armazenadas em campos específicos do banco de dados do usuário: <command>passwd</command> permite que um usuário comum altere sua senha, que por sua vez, atualiza o arquivo <filename>/etc/shadow</filename>; <command>chfn</command>(CHange Full Name), reservado para o superusuário (root), modifica o campo <literal>GECOS</literal>.<command>chsh</command> (CHange SHell) permite que o usuário altere seu shell de login, contudo, as opções disponíveis estarão limitadas as opções listadas em <filename>/etc/shells</filename>; o administrador, por outro lado, não tem essa restrição e pode definir o shell para qualquer programa de sua escolha."
+msgstr "Os seguintes comandos permitem a modificação das informações armazenadas em campos específicos do banco de dados do usuário: <command>passwd</command> permite que um usuário comum altere sua senha, que por sua vez, atualiza o arquivo <filename>/etc/shadow</filename>; <command>chfn</command>(CHange Full Name), reservado para o superusuário (root), modifica o campo <literal>GECOS</literal>.<command>chsh</command> (CHange SHell) permite que o usuário altere seu shell de login; contudo, as opções disponíveis estarão limitadas as opções listadas em <filename>/etc/shells</filename>; o administrador, por outro lado, não tem essa restrição e pode definir o shell para qualquer programa de sua escolha."
 
 msgid "Finally, the <command>chage</command> (CHange AGE) command allows the administrator to change the password expiration settings (the <literal>-l <replaceable>user</replaceable></literal> option will list the current settings). You can also force the expiration of a password using the <command>passwd -e <replaceable>user</replaceable></command> command, which will require the user to change their password the next time they log in."
 msgstr "Finalmente, o comando <command>chage</command> (CHange AGE) permite ao administrador alterar as configurações de expiração da senha (a opção <literal>-l <replaceable>user</replaceable></literal> irá listar as configurações corrente). Vocẽ também pode forçar a expiração da senha usando o comando <command>passwd -e <replaceable>user</replaceable></command>, o qual irá requerer que o usuário altere sua senha na próxima vez que iniciar uma sessão."
@@ -1055,10 +1025,8 @@ msgstr "<primary><filename>group</filename></primary>"
 msgid "<primary><filename>/etc/group</filename></primary>"
 msgstr "<primary><filename>/etc/group</filename></primary>"
 
-#, fuzzy
-#| msgid "The <command>addgroup</command> and <command>delgroup</command> commands add or delete a group, respectively. The <command>groupmod</command> command modifies a group's information (its <literal>gid</literal> or identifier). The command <command>passwd -g <replaceable>group</replaceable></command> changes the password for the group, while the <command>passwd -r -g <replaceable>group</replaceable></command> command deletes it."
 msgid "The <command>addgroup</command> and <command>delgroup</command> commands add or delete a group, respectively. The <command>groupmod</command> command modifies a group's information (its <literal>gid</literal> or identifier). The command <command>gpasswd <replaceable>group</replaceable></command> changes the password for the group, while the <command>gpasswd -r <replaceable>group</replaceable></command> command deletes it."
-msgstr "Os comandos <command>addgroup</command> e <command>delgroup</command> adicionam ou apagam um grupo, respectivamente. O comando <command>groupmod</command> modifica a informação do grupo (seu <literal>gid</literal> ou identificador). O comando <command>passwd -g <replaceable>grupo</replaceable></command> altera a senha para o grupo, enquanto o comando <command>passwd -r -g <replaceable>grupo</replaceable></command> o apaga."
+msgstr "Os comandos <command>addgroup</command> e <command>delgroup</command> adicionam ou apagam um grupo, respectivamente. O comando <command>groupmod</command> modifica a informação do grupo (seu <literal>gid</literal> ou identificador). O comando <command>gpasswd<replaceable>grupo</replaceable></command> altera a senha para o grupo, enquanto o comando <command>gpasswd -r<replaceable>grupo</replaceable></command> o apaga."
 
 msgid "<primary><command>addgroup</command></primary>"
 msgstr "<primary><command>addgroup</command></primary>"
@@ -1069,10 +1037,8 @@ msgstr "<primary><command>delgroup</command></primary>"
 msgid "<primary><command>groupmod</command></primary>"
 msgstr "<primary><command>groupmod</command></primary>"
 
-#, fuzzy
-#| msgid "<primary><command>passwd</command></primary>"
 msgid "<primary><command>gpasswd</command></primary>"
-msgstr "<primary><command>passwd</command></primary>"
+msgstr "<primary><command>gpasswd</command></primary>"
 
 msgid "<primary>group</primary><secondary>creation</secondary>"
 msgstr "<primary>grupo</primary><secondary>criação</secondary>"
@@ -1167,10 +1133,8 @@ msgstr "Cada dispositivo periférico de hardware é representado sob o Unix como
 msgid "The permissions of a special file map to the permissions necessary to access the device itself. Thus, a file such as <filename>/dev/mixer</filename>, representing the audio mixer, only has read/write permissions for the root user and members of the <literal>audio</literal> group. Only these users can operate the audio mixer."
 msgstr "As permissões de um arquivo especial mapeiam as permissões necessárias para acessar o próprio dispositivo. Assim,,um arquivo como o <filename>/dev/mixer</filename>, representando o mixador de audio, apenas tem permissões de leitura/escrita para o usuário root e membros do grupo <literal>audio</literal>. Apenas esses usuários podem operar o mixador de audio."
 
-#, fuzzy
-#| msgid "It should be noted that the combination of <emphasis role=\"pkg\">udev</emphasis>, <emphasis role=\"pkg\">consolekit</emphasis> and <emphasis role=\"pkg\">policykit</emphasis> can add additional permissions to allow users physically connected to the console (and not through the network) to access to certain devices."
 msgid "It should be noted that the combination of <emphasis role=\"pkg\">udev</emphasis> and <emphasis role=\"pkg\">policykit</emphasis> can add additional permissions to allow users physically connected to the console (and not through the network) to access to certain devices."
-msgstr "Deve ser notado que a combinação de <emphasis role=\"pkg\">udev</emphasis>, <emphasis role=\"pkg\">consolekit</emphasis> e <emphasis role=\"pkg\">policykit</emphasis> pode somar permissões adicionais a usuários fisicamente conectados ao console (e não através da rede) acessarem certos dispositivos."
+msgstr "Deve ser notado que a combinação de <emphasis role=\"pkg\">udev</emphasis> e <emphasis role=\"pkg\">policykit</emphasis> pode somar permissões adicionais a usuários fisicamente conectados ao console (e não através da rede) acessarem certos dispositivos."
 
 msgid "Shell Environment"
 msgstr "Ambiente Shell"
@@ -1202,18 +1166,14 @@ msgstr "Em termos simples, um shell de login é invocado quando você se autenti
 msgid "<emphasis>DISCOVERY</emphasis> Other shells, other scripts"
 msgstr "<emphasis>DISCOVERY</emphasis> Outros shells, outros scripts"
 
-#, fuzzy
-#| msgid "Each command interpreter has a specific syntax and its own configuration files. Thus, <command>zsh</command> uses <filename>/etc/zshrc</filename> and <filename>/etc/zshenv</filename>; <command>csh</command> uses <filename>/etc/csh.cshrc</filename>, <filename>/etc/csh.login</filename> and <filename>/etc/csh.logout</filename>. The man pages for these programs document which files they use."
 msgid "Each command interpreter has a specific syntax and its own configuration files. Thus, <command>zsh</command> uses <filename>/etc/zshrc</filename> and <filename>/etc/zshenv</filename>; <command>tcsh</command> uses <filename>/etc/csh.cshrc</filename>, <filename>/etc/csh.login</filename> and <filename>/etc/csh.logout</filename>. The man pages for these programs document which files they use."
-msgstr "Cada interpretador de comando tem uma sintaxe específica e seus próprios arquivos de configuração. Assim, <command>zsh</command> usa <filename>/etc/zshrc</filename> e <filename>/etc/zshenv</filename>; <command>csh</command> usa <filename>/etc/csh.cshrc</filename>, <filename>/etc/csh.login</filename> e <filename>/etc/csh.logout</filename>. As páginas de manual desses programas documentam quais arquivos eles usam."
+msgstr "Cada interpretador de comando tem uma sintaxe específica e seus próprios arquivos de configuração. Assim, <command>zsh</command> usa <filename>/etc/zshrc</filename> e <filename>/etc/zshenv</filename>; <command>tcsh</command> usa <filename>/etc/csh.cshrc</filename>, <filename>/etc/csh.login</filename> e <filename>/etc/csh.logout</filename>. As páginas de manual desses programas documentam quais arquivos eles usam."
 
 msgid "<primary><command>zsh</command></primary>"
 msgstr "<primary><command>zsh</command></primary>"
 
-#, fuzzy
-#| msgid "<primary><command>csh</command></primary>"
 msgid "<primary><command>tcsh</command></primary>"
-msgstr "<primary><command>csh</command></primary>"
+msgstr "<primary><command>tcsh</command></primary>"
 
 msgid "For <command>bash</command>, it is useful to activate “automatic completion” in the <filename>/etc/bash.bashrc</filename> file (simply uncomment a few lines)."
 msgstr "Para o <command>bash</command>, é útil ativar “preenchimento automático” no arquivo <filename>/etc/bash.bashrc</filename> (simplesmente descomentando algumas linhas)."
@@ -1227,13 +1187,11 @@ msgstr "<primary>preenchimento automático</primary>"
 msgid "Many command interpreters provide a completion feature, which allows the shell to automatically complete a partially typed command name or argument when the user hits the <keycap>Tab</keycap> key. This lets users work more efficiently and be less error-prone."
 msgstr "Muitos interpretadores de comando fornecem o recurso de complementação, o qual permite ao shell completar automaticamente um nome de comando parcialmente digitado ou argumento quando o usuário pressiona a tecla <keycap>Tab</keycap>. Isso faz com que os usuários trabalhem com mais eficiência e sejam menos propensos a erros."
 
-#, fuzzy
-#| msgid "This function is very powerful and flexible. It is possible to configure its behavior according to each command. Thus, the first argument following <command>apt-get</command> will be proposed according to the syntax of this command, even if it does not match any file (in this case, the possible choices are <literal>install</literal>, <literal>remove</literal>, <literal>upgrade</literal>, etc.)."
 msgid "This function is very powerful and flexible. It is possible to configure its behavior according to each command. Thus, the first argument following <command>apt</command> will be proposed according to the syntax of this command, even if it does not match any file (in this case, the possible choices are <literal>install</literal>, <literal>remove</literal>, <literal>upgrade</literal>, etc.)."
-msgstr "Essa função é muito poderosa e flexível. É possível configurar seu comportamento de acordo com cada comando. Assim, o primeiro argumento seguido de <command>apt-get</command> irá ser proposto de acordo com a sintaxe deste comando, mesmo que não coincida com nenhum arquivo (neste caso, as opções possíveis são <literal>install</literal>, <literal>remove</literal>, <literal>upgrade</literal>, etc.)."
+msgstr "Essa função é muito poderosa e flexível. É possível configurar seu comportamento de acordo com cada comando. Assim, o primeiro argumento seguido de <command>apt</command> irá ser proposto de acordo com a sintaxe deste comando, mesmo que não coincida com nenhum arquivo (neste caso, as opções possíveis são <literal>install</literal>, <literal>remove</literal>, <literal>upgrade</literal>, etc.)."
 
 msgid "The package <emphasis role=\"pkg\">bash-completion</emphasis> contains completions for most common programs."
-msgstr ""
+msgstr "O pacote <emphasis role=\"pkg\">bash-completion</emphasis> contém completações para a maioria dos programas comuns."
 
 msgid "<emphasis>BACK TO BASICS</emphasis> The tilde, a shortcut to HOME"
 msgstr "<emphasis>DE VOLTA AO BÁSICO</emphasis> O til, um atalho para o HOME"
@@ -1283,10 +1241,8 @@ msgstr "<primary>configuração</primary><secondary>imprimindo</secondary>"
 msgid "<primary>printing</primary><secondary>configuration</secondary>"
 msgstr "<primary>imprimindo</primary><secondary>configuração</secondary>"
 
-#, fuzzy
-#| msgid "Printer configuration used to cause a great many headaches for administrators and users alike. These headaches are now mostly a thing of the past, thanks to <emphasis role=\"pkg\">cups</emphasis>, the free print server using the IPP protocol (Internet Printing Protocol)."
 msgid "Printer configuration used to cause a great many headaches for administrators and users alike. These headaches are now mostly a thing of the past, thanks to CUPS, the free print server using the IPP (Internet Printing Protocol)."
-msgstr "A configuração de impressora geralmente causava muitas dores de cabeça para administradores e usuários. Essas dores de cabeça são agora quase que uma coisa do passado, obrigado ao <emphasis role=\"pkg\">cups</emphasis>, o servidor de impressão usando o protocolo IPP (Internet Printing Protocol)."
+msgstr "A configuração de impressora geralmente causava muitas dores de cabeça para administradores e usuários. Essas dores de cabeça são agora quase que uma coisa do passado, obrigado ao CUPS, o servidor de impressão usando o IPP (Internet Printing Protocol)."
 
 msgid "<primary>IPP</primary>"
 msgstr "<primary>IPP</primary>"
@@ -1298,7 +1254,7 @@ msgid "<primary>CUPS</primary>"
 msgstr "<primary>CUPS</primary>"
 
 msgid "Debian distributes CUPS divided between several packages. The heart of the system is the scheduler, cupsd, which is in the <emphasis role=\"pkg\">cups-daemon</emphasis> package. <emphasis role=\"pkg\">cups-client</emphasis> contains utility programs to interact with the server, cupsd. lpadmin is probably the most important utility, as it is crucial for setting up a printer, but there are also facilities to disable or enable a printer queue, view or delete print jobs and display or set printer options. The CUPS framework is based on the System V printing system, but there is a compatibility package, <emphasis role=\"pkg\">cups-bsd</emphasis>, allowing use of commands such as <command>lpr</command>, <command>lpq</command> and <command>lprm</command> from the traditional BSD printing system."
-msgstr ""
+msgstr "O Debian distribui o CUPS dividido entre diversos pacotes. O coração do sistema é seu agendador, cupsd, uqe está no pacote <emphasis role=\"pkg\">cups-daemon</emphasis>. O pacote  <emphasis role=\"pkg\">cups-client</emphasis>  contém programas utilitários para interagir com o servidor, cupsd. O lpadmin é provavelmente o utilitário mais importante, já que é crucial para configurar uma impressora, mas também há recursos para desabilitar ou habilitar uma fila de impressora, ver o apagar trabalhos de impressão, e exibir ou definir opções de impressora. O framework CUPS é baseado no sistema de impressão System V, mas existe um pacote de compatibilidade, <emphasis role=\"pkg\">cups-bsd</emphasis>, que permite o uso de comandos como  <command>lpr</command>, <command>lpq</command> e <command>lprm</command> do sistema de impressão BSD tradicional."
 
 msgid "<primary><command>lpr</command></primary>"
 msgstr "<primary><command>lpr</command></primary>"
@@ -1315,27 +1271,23 @@ msgstr "<emphasis>COMUNIDADE</emphasis> CUPS"
 msgid "<primary>Common Unix Printing System</primary>"
 msgstr "<primary>Common Unix Printing System</primary>"
 
-#, fuzzy
-#| msgid "CUPS (Common Unix Printing System) is a project (and a trademark) managed by Apple, Inc. <ulink type=\"block\" url=\"http://www.cups.org/\" />"
 msgid "CUPS is a project and a trademark owned and managed by Apple, Inc. Prior to its acquisition by Apple it was known as the Commmon Unix Printing System. <ulink type=\"block\" url=\"https://www.cups.org/\" />"
-msgstr "CUPS (Common Unix Printing System) é um projeto (e uma marca registrada) gerenciado pela Apple, Inc. <ulink type=\"block\" url=\"http://www.cups.org/\" />"
+msgstr "CUPS é um projeto e uma marca registrada, de propriedade e gerenciado pela Apple, Inc. Anteriormente à sua aquisição pela Apple, era conhecido como Commmon Unix Printing System. <ulink type=\"block\" url=\"https://www.cups.org/\" />"
 
 msgid "The scheduler manages print jobs and these jobs traverse a filtering system to produce a file that the printer will understand and print. The filtering system is provided by the <emphasis role=\"pkg\">cups-filters</emphasis> (<ulink url=\"https://salsa.debian.org/printing-team/cups-filters\" />) package in conjunction with <emphasis role=\"pkg\">printer-driver-*</emphasis> packages. CUPS in combination with <emphasis role=\"pkg\">cups-filters</emphasis> and <emphasis role=\"pkg\">printer-driver-*</emphasis> is the basis for the Debian printing system."
-msgstr ""
+msgstr "O agendador gerencia trabalhos de impressão e esses trabalhos atravessam um sistema de filtragem para produzir um arquivo que a impressora poderá entender e imprimir. O sistema de filtragem é fornecido pelo pacote <emphasis role=\"pkg\">cups-filters</emphasis> (<ulink url=\"https://salsa.debian.org/printing-team/cups-filters\" />) em conjunção com os pacotes  <emphasis role=\"pkg\">printer-driver-*</emphasis>. O CUPS, em combinação com  <emphasis role=\"pkg\">cups-filters</emphasis> e <emphasis role=\"pkg\">printer-driver-*</emphasis>, é a base para o sistema de impressão do Debian."
 
 msgid "Modern printers manufactured and sold within the last ten years are nearly always AirPrint-capable, and CUPS and cups-filters on Debian <emphasis role=\"distribution\">Buster</emphasis> have everything which is needed to take advantage of this facility on the network. In essence, these printers are IPP printers and an excellent fit for a driverless printing system, reducing the system to CUPS plus cups-filters. A printer-driver package can be dispensed with, and non-free printing software from vendors like Canon and Brother is no longer required. A USB-connected printer can take advantage of a modern printer with the <emphasis role=\"pkg\">ippusbxd</emphasis> package."
-msgstr ""
+msgstr "Impressoras modernas manufaturadas e vendidas dentro dos últimos dez anos são quase sempre habilitadas para AirPrint, e CUPS e cups-filters no Debian <emphasis role=\"distribution\">Buster</emphasis> têm tudo o que é preciso para se aproveitar deste recurso na rede. Em essência, essas impressoras são impressoras IPP e excelentes escolhas par um sistema de impressão sem drivers, reduzindo o sistema para CUPS mais cups-filters. Um pacote impressora-driver pode ser dispensado e um software de impressão não livre de fornecedores(as) como Canon e Brother não é mais necessário. Uma impressora conectada por USB pode se aproveitar de uma impressora moderna com o pacote  <emphasis role=\"pkg\">ippusbxd</emphasis>."
 
 msgid "The command <command>apt install cups</command> will install CUPS and cups-filters. It will also install the recommended <emphasis role=\"pkg\">printer-driver-gutenprint</emphasis> to provide a driver for a wide range of printers, but, unless the printer is being operated driverlessly, an alternative printer-driver might be needed for the particular device."
-msgstr ""
+msgstr "O comando <command>apt install cups</command> instalará CUPS e cups-filters. Também instalará o pacote recomendados <emphasis role=\"pkg\">printer-driver-gutenprint</emphasis> para fornecer um driver para uma vasta gama de impressoras, mas, a menos que a impressora esteja sendo operada sem drivers, um pacote impressora-driver alternativo podem ser necessário para um dispositivo particular."
 
 msgid "As a package recommended by <emphasis role=\"pkg\">cups-daemon</emphasis>, <emphasis role=\"pkg\">cups-browsed</emphasis> will be on the system and networked print queues, and modern printers can be automatically discovered and set up from their DNS-SD broadcasts (Bonjour). USB printers will have to be set up manually as described in the next paragraph."
-msgstr ""
+msgstr "Como um pacote recomendado por <emphasis role=\"pkg\">cups-daemon</emphasis>, <emphasis role=\"pkg\">cups-browsed</emphasis> estará no sistema, e filas de impressão em rede e impressoras modernas podem ser descobertas automaticamente e configuradas a partir de seus DNS-SD broadcasts (Bonjour). Impressoras USB terão que ser configuradas manualmente com descrito no próximo parágrafo."
 
-#, fuzzy
-#| msgid "After installation of these different packages, <command>cups</command> is administered easily through a web interface accessible at the local address: <literal>http://localhost:631/</literal>. There you can add printers (including network printers), remove, and administer them. You can also administer <command>cups</command> with the graphical interface provided by the desktop environment. Finally, there is also the <command>system-config-printer</command> graphical interface (from the Debian package of the same name)."
 msgid "The printing system is administered easily through a web interface accessible at the local address <literal>http://localhost:631/</literal>. There you can add and remove USB and network printers and administer most aspects of their behavior. Similar administration tasks can also be carried out via the graphical interface provided by a desktop environment or the <command>system-config-printer</command> graphical interface (from the homonym Debian package)."
-msgstr "Após a instalação desses diferentes pacotes, <command>cups</command> é facilmente administrado através da interface web acessível pelo endereço local: <literal>http://localhost:631/</literal>. Lá você pode adicionar impressoras (incluindo impressoras na rede), remover, e administrá-las. Você também pode administrar o <command>cups</command> com a interface gráfica fornecida pelo ambiente de área de trabalho. Finalmente, existe também a interface gráfica <command>system-config-printer</command> (a partir do pacote Debian de mesmo nome)."
+msgstr "O sistema de impressão é facilmente administrado através da interface web acessível pelo endereço local <literal>http://localhost:631/</literal>. Lá você pode adicionar ou remover impressoras USB e de rede, e administrar a maior parte de seu comportamento. Tarefas administrativas similares também podem ser realizadas via interface gráfica fornecida pelo ambiente de área de trabalho ou pela interface gráfica <command>system-config-printer</command> (do pacote Debian de mesmo nome)."
 
 msgid "<primary><command>cups</command></primary><secondary>administration</secondary>"
 msgstr "<primary><command>cups</command></primary><secondary>administração</secondary>"
@@ -1373,10 +1325,8 @@ msgstr "<emphasis>CULTURA</emphasis> <emphasis>udev</emphasis> e <filename>/dev/
 msgid "The <filename>/dev/</filename> directory traditionally houses so-called “special” files, intended to represent system peripherals (see sidebar <xref linkend=\"sidebar.special-files\" />). Once upon a time, it used to contain all special files that could potentially be used. This approach had a number of drawbacks among which the fact that it restricted the number of devices that one could use (due to the hardcoded list of names), and that it was impossible to know which special files were actually useful."
 msgstr "O diretório <filename>/dev/</filename> tradicionalmente hospeda os chamados arquivos “especiais”, destinados a representar os periféricos do sistema (veja barra lateral <xref linkend=\"sidebar.special-files\" />). Tempos atrás, era usado para armazenar todos os arquivos especiais que potencialmente poderiam ser usados. Essa abordagem tinha uma série de inconvenientes entre os quais o fato de restringir o número de dispositivos que alguém poderia usar (devido a lista de nomes codificados), e que era impossível saber quais arquivos especiais eram realmente úteis."
 
-#, fuzzy
-#| msgid "Nowadays, the management of special files is entirely dynamic and matches better the nature of hot-swappable computer devices. The kernel cooperates with <emphasis>udev</emphasis> to create and delete them as needed when the corresponding devices appear and disappear. For this reason, <filename>/dev/</filename> doesn't need to be persistent and is thus a RAM-based filesystem that starts empty and contains only the relevant entries."
 msgid "Nowadays, the management of special files is entirely dynamic and matches better the nature of hot-swappable computer devices. The kernel cooperates with <emphasis>udev</emphasis> (<xref linkend=\"sect.udev\" />) to create and delete them as needed when the corresponding devices appear and disappear. For this reason, <filename>/dev/</filename> doesn't need to be persistent and is thus a RAM-based filesystem that starts empty and contains only the relevant entries."
-msgstr "Atualmente, o gerenciamento de arquivos especiais é completamente dinâmico e combina mais com a natureza de encaixe a quente dos dispositivos. O núcleo coopera com o <emphasis>udev</emphasis> para criar e apagar os dispositovs quando necessário a medida em que tais dispositivos aparecem ou desaparecem. Por esta razão, <filename>/dev/</filename> não precisa ser persistente e é portanto um sistema de arquivos em RAM que inicia vazio e contém apenas entradas relevantes."
+msgstr "Atualmente, o gerenciamento de arquivos especiais é completamente dinâmico e combina mais com a natureza de encaixe a quente dos dispositivos. O núcleo coopera com o <emphasis>udev</emphasis> (<xref linkend=\"sect.udev\" />) para criar e apagar os dispositovs quando necessário a medida em que tais dispositivos aparecem ou desaparecem. Por esta razão, <filename>/dev/</filename> não precisa ser persistente e é portanto um sistema de arquivos em RAM que inicia vazio e contém apenas entradas relevantes."
 
 msgid "The kernel communicates lots of information about any newly added device and hands out a pair of major/minor numbers to identify it. With this <command>udevd</command> can create the special file under the name and with the permissions that it wants. It can also create aliases and perform additional actions (such as initialization or registration tasks). <command>udevd</command>'s behavior is driven by a large set of (customizable) rules."
 msgstr "O kernel comunica um monte de informação sobre qualquer novo dispositivo adicionado e define um par de números major/minor para identificá-lo. Com isso, o <command>udevd</command> pode criar um arquivo especial sob o nome e com as permissões que ele quiser. Ele também pode criar apelidos (aliases) e realizar ações adicionais (tais como inicialização ou tarefas de registro). O comportamento do <command>udevd</command> é comandado por um grande conjunto de regras (customizáveis)."
