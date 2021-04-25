@@ -33,7 +33,7 @@
     driver that makes efficient use of the video card. The features offered
     to the graphical applications are exported through a standard
     interface, <emphasis>X11</emphasis> (<emphasis
-    role="distribution">Buster</emphasis> contains version
+    role="distribution">Bullseye</emphasis> contains version
     <emphasis>X11R7.7</emphasis>).</para>
 
     <sidebar>
@@ -53,7 +53,7 @@
       drivers. That situation, along with a very controversial license
       change, led to the X.org fork in 2004. This is now the reference
       implementation, and Debian <emphasis
-      role="distribution">Buster</emphasis> uses X.org version 7.7.</para>
+      role="distribution">Bullseye</emphasis> uses X.org version 7.7.</para>
     </sidebar>
 
     <para>Current versions of X.org are able to autodetect the available
@@ -378,8 +378,8 @@
       <title>GNOME</title>
 
       <!-- MAY CHANGE: distribution name and GNOME version -->
-      <para>Debian <emphasis role="distribution">Buster</emphasis>
-      includes GNOME version 3.30, which can be installed by a simple
+      <para>Debian <emphasis role="distribution">Bullseye</emphasis>
+      includes GNOME version 3.38, which can be installed by a simple
       <command>apt install gnome</command> (it can also be installed by
       selecting the “Debian desktop environment” task).</para>
 
@@ -425,8 +425,8 @@
       <title>KDE and Plasma</title>
 
       <!-- MAY CHANGE: distribution name and KDE Plasma version -->
-      <para>Debian <emphasis role="distribution">Buster</emphasis>
-      includes version 5.14 of KDE Plasma, which can be installed with
+      <para>Debian <emphasis role="distribution">Bullseye</emphasis>
+      includes version 5.20 of KDE Plasma, which can be installed with
       <command>apt install kde-standard</command>.</para>
 
       <para>Plasma has had a rapid evolution based on a very hands-on
@@ -579,12 +579,7 @@
 
       <para>An extension to Evolution allows integration with a Microsoft
       Exchange email system; the required package is <emphasis
-      role="pkg">evolution-ews</emphasis><footnote><para>The <emphasis
-      role="pkg">evolution-ews</emphasis> package is not part of Debian
-      <emphasis role="distribution">Buster</emphasis>. It was removed during
-      the release process due to a security issue. But at the time of writing a
-      recent version is available as backport (see <xref
-      linkend="sect.apt-sources.list.stable.backports"/>).</para></footnote>.</para>
+      role="pkg">evolution-ews</emphasis>.</para>
 
       <indexterm><primary><emphasis role="pkg">evolution-ews</emphasis></primary></indexterm>
     </section>
@@ -655,12 +650,14 @@
     package, is KDE's web browser (but can also assume the role of a file
     manager). It uses the KDE-specific KHTML rendering engine; KHTML is an
     excellent engine, as witnessed by the fact that Apple's WebKit is based on
-    KHTML.</para>
+    KHTML. KDE also has a newer browser called Falkon, available in the
+    <emphasis role="pkg">falkon</emphasis> package. It uses the QtWebEngine.</para>
 
+    <indexterm><primary>Falkon</primary></indexterm>
     <indexterm><primary>Konqueror</primary></indexterm>
     <indexterm><primary>browser, Web</primary><secondary><emphasis role="pkg">konqueror</emphasis></secondary></indexterm>
 
-    <para>Users not satisfied by either of the above can use Firefox.
+    <para>Users not satisfied by any of the above can use Firefox.
     This browser, available in the <emphasis
     role="pkg">firefox-esr</emphasis> package, uses the Mozilla project's
     Gecko renderer, with a thin and extensible interface on top.</para>
@@ -843,15 +840,13 @@
       by “groupware” software are increasingly integrated into “standard”
       software. This is reducing the requirement for specific, specialized
       groupware software. On the other hand, this usually requires a specific
-      server. Citadel (in the <emphasis role="pkg">citadel-suite</emphasis>
-      package), Sogo (in the <emphasis role="pkg">sogo</emphasis> package) and
-      Kopano (in the <emphasis role="pkg">kopano-core</emphasis> package) are
+      server. Citadel (only the client from <emphasis role="pkg">citadel-client</emphasis>
+      package) and Sogo (in the <emphasis role="pkg">sogo</emphasis> package) are
       alternatives that are available in Debian <emphasis
-      role="distribution">Buster</emphasis>.</para>
+      role="distribution">Bullseye</emphasis>.</para>
 
-      <indexterm><primary>groupware</primary><secondary><emphasis role="pkg">citadel-suite</emphasis></secondary></indexterm>
+      <indexterm><primary>groupware</primary><secondary><emphasis role="pkg">citadel-client</emphasis></secondary></indexterm>
       <indexterm><primary>groupware</primary><secondary><emphasis role="pkg">sogo</emphasis></secondary></indexterm>
-      <indexterm><primary>groupware</primary><secondary><emphasis role="pkg">kopano-core</emphasis></secondary></indexterm>
     </section>
 
     <section>
@@ -910,9 +905,8 @@
 
       <para>FusionForge is not part of Debian <emphasis
       role="distribution">Stable</emphasis>. It is a large software stack that
-      is hard to maintain properly and benefits only few users who are usually
-      expert enough to be able to backport the package from Debian <emphasis
-      role="distribution">Unstable</emphasis>.</para>
+      is hard to maintain properly and benefits only few users. For that reason
+      it is no longer included as a package.</para>
 
       <indexterm><primary><emphasis role="pkg">fusionforge</emphasis></primary></indexterm>
 
@@ -990,11 +984,7 @@
 
     <para>LibreOffice and Calligra Suite are available in the <emphasis
     role="pkg">libreoffice</emphasis> and <emphasis
-    role="pkg">calligra</emphasis> Debian packages, respectively.
-    Although the <emphasis role="pkg">gnome-office</emphasis> package was
-    previously used to install a collection of office tools such as AbiWord and
-    Gnumeric, this package is no longer part of Debian, with the individual
-    packages now standing on their own.</para>
+    role="pkg">calligra</emphasis> Debian packages, respectively.</para>
     <para>Language-specific packs for LibreOffice are
     distributed in separate packages, most notably <emphasis
     role="pkg">libreoffice-l10n-*</emphasis> and <emphasis
@@ -1108,7 +1098,7 @@
       machine. This allows running any operating system. <xref
       linkend="advanced-administration"/> describes several virtualization
       systems, most notably Xen and KVM (but also QEMU, VMWare and
-      Bochs).</para>
+      VirtualBox).</para>
     </sidebar>
 
     <sidebar id="sidebar.wts-or-vnc">
@@ -1177,14 +1167,19 @@
     <indexterm><primary>Telepathy</primary></indexterm>
 
     <para>Popular alternatives to Empathy/Telepathy include Ekiga,
-    Linphone, Psi and Jami (formerly known as Ring).</para>
+    Linphone, Psi, Jitsi and Jami (formerly known as Ring).</para>
 
     <indexterm><primary>Ekiga</primary></indexterm>
     <indexterm><primary>Linphone</primary></indexterm>
     <indexterm><primary>Psi</primary></indexterm>
     <indexterm><primary>Jami (soft-phone)</primary></indexterm>
+    <indexterm><primary>Jitsi</primary></indexterm>
     <indexterm><primary>SFLphone</primary></indexterm>
 
+    <para>Jitsi requires no client other than a web browser. It
+    support encrypted calls, and there is a huge list of public
+    instances. There is no official Debian package for Jitsi, but
+    it can be downloaded from their official website.</para>
     <para>Some of these applications can also interact with mobile users
     using apps such as Lumicall on Android.
     <ulink type="block" url="https://lumicall.org"/>
@@ -1217,15 +1212,6 @@
       <para>If the client software is only intended for instant messaging,
       there is no requirement for ICE or TURN support.</para>
     </sidebar>
-
-    <para>Debian Developers operate a community SIP service at
-    <ulink url="https://rtc.debian.org">rtc.debian.org</ulink>.
-    The community maintains a wiki with documentation about setting
-    up many of the client applications packaged in Debian. The wiki articles
-    and screenshots are a useful resource for anybody setting up a similar
-    service on their own domain.
-    <ulink type="block" url="https://wiki.debian.org/UnifiedCommunications/DebianDevelopers/UserGuide"/>
-    </para>
 
     <sidebar>
      <title><emphasis>ALTERNATIVE</emphasis> Internet Relay Chat</title>
