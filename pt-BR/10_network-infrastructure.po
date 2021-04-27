@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 10:32+0000\nLast-Translator: Ricardo Berlim Fonseca <eblues@disroot.org>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.7-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 10:32+0000\nLast-Translator: Carlos Henrique Lima Melara <charlesmelara@outlook.com>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.7-dev\n"
 
 msgid "Network"
 msgstr "Rede"
@@ -382,8 +382,6 @@ msgstr ""
 "<computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot\n"
 "</userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>"
 
-#, fuzzy
-#| msgid "They then store the required parameters into the <filename>vars</filename> file, especially those named with a <literal>KEY_</literal> prefix; these variables are then integrated into the environment:"
 msgid "They then store the required parameters into the <filename>vars</filename> file, which can be uncommented and edited:"
 msgstr "Eles então armazenam os parâmetros requeridos dentro do arquivo <filename>vars</filename>, o qual pode ser descomentado e editado:"
 
@@ -608,7 +606,7 @@ msgid "By default, the OpenVPN initialization script tries starting all virtual 
 msgstr "Por padrão, o script de inicialização do OpenVPN tenta iniciar todas as redes virtuais privadas definidas em <filename>/etc/openvpn/*.conf</filename>. A configuração de um servidor VPN é portanto uma questão de armazenar o arquivo de configuração correspondente neste diretório. Um bom ponto de partida é o <filename>/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz</filename>, que orienta em como ter um servidor padrão. Claro que alguns parâmetros precisam ser adaptados: <literal>ca</literal>, <literal>cert</literal>, <literal>key</literal> e <literal>dh</literal> precisam descrever as localizações selecionadas (respectivamente, <literal>/etc/ssl/certs/Falcot_CA.crt</literal>, <literal>/etc/ssl/vpn.falcot.com.crt</literal>, <literal>/etc/ssl/private/vpn.falcot.com.key</literal> e <literal>/etc/openvpn/dh.pem</literal>). A diretiva <literal>server 10.8.0.0 255.255.255.0</literal> define a sub-rede a ser usada pela VPN; o servidor usa o primeiro endereço IP nesse intervalo (<literal>10.8.0.1</literal>) e o resto dos endereços são alocados para os clientes."
 
 msgid "With this configuration, starting OpenVPN creates the virtual network interface, usually under the <literal>tun0</literal> name. However, firewalls are often configured at the same time as the real network interfaces, which happens before OpenVPN starts. Good practice therefore recommends creating a persistent virtual network interface, and configuring OpenVPN to use this pre-existing interface. This further allows choosing the name for this interface. To this end, <command>openvpn --mktun --dev vpn --dev-type tun</command> creates a virtual network interface named <literal>vpn</literal> with type <literal>tun</literal>; this command can easily be integrated in the firewall configuration script, or in an <literal>up</literal> directive of the <filename>/etc/network/interfaces</filename> file, or a <emphasis role=\"package\">udev</emphasis> rule can be added to that end. The OpenVPN configuration file must also be updated accordingly, with the <literal>dev vpn</literal> and <literal>dev-type tun</literal> directives."
-msgstr "Com essa configuração, ao iniciar o OpenVPN, é criada uma interface de rede virtual, usualmente sob o nome de <literal>tun0</literal>. Contudo, firewalls são geralmente configurados ao mesmo tempo que interfaces de rede reais, o que acontece antes do OpenVPN ser iniciado. A boa prática então recomenda a criação de uma interface de rede virtual persistente, e configurar o OpenVPN para usar essa interface preexistente. Isso inclusive permite a escolha do nome dessa interface. Para esse fim, <command>openvpn --mktun --dev vpn --dev-type tun</command> cria uma interface de rede virtual de nome <literal>vpn</literal> do tipo <literal>tun</literal>; esse comando pode ser facilmente integrado ao script de configuração do firewall, ou na diretiva <literal>up</literal> do arquivo <filename>/etc/network/interfaces</filename>, ou ainda uma regra <emphasis role=\"package\">udev</emphasis> pode ser adicionada com esta finalidade. O arquivo de configuração do OpenVPN deve também ser atualizado em conformidade com as diretivas <literal>dev vpn</literal> e <literal>dev-type tun</literal>."
+msgstr "Com essa configuração, ao iniciar o OpenVPN, é criada uma interface de rede virtual, usualmente sob o nome de <literal>tun0</literal>. Contudo, firewalls são geralmente configurados ao mesmo tempo que interfaces de rede reais, o que acontece antes do OpenVPN ser iniciado. A boa prática então recomenda a criação de uma interface de rede virtual persistente, e configurar o OpenVPN para usar essa interface pré-existente. Isso inclusive permite a escolha do nome dessa interface. Para esse fim, <command>openvpn --mktun --dev vpn --dev-type tun</command> cria uma interface de rede virtual de nome <literal>vpn</literal> do tipo <literal>tun</literal>; esse comando pode ser facilmente integrado ao script de configuração do firewall, ou na diretiva <literal>up</literal> do arquivo <filename>/etc/network/interfaces</filename>, ou ainda uma regra <emphasis role=\"package\">udev</emphasis> pode ser adicionada com esta finalidade. O arquivo de configuração do OpenVPN deve também ser atualizado em conformidade com as diretivas <literal>dev vpn</literal> e <literal>dev-type tun</literal>."
 
 msgid "Barring further action, VPN clients can only access the VPN server itself by way of the <literal>10.8.0.1</literal> address. Granting the clients access to the local network (192.168.0.0/24), requires adding a <literal>push route 192.168.0.0 255.255.255.0</literal> directive to the OpenVPN configuration so that VPN clients automatically get a network route telling them that this network is reachable by way of the VPN. Furthermore, machines on the local network also need to be informed that the route to the VPN goes through the VPN server (this automatically works when the VPN server is installed on the gateway). Alternatively, the VPN server can be configured to perform IP masquerading so that connections coming from VPN clients appear as if they are coming from the VPN server instead (see <xref linkend=\"sect.gateway\" />)."
 msgstr "Salvo ações posteriores, clientes VPN só podem acessar o próprio servidor VPN pelo caminho do endereço <literal>10.8.0.1</literal>. Permitir que os clientes acessem a rede local (192.168.0.0/24) requer a adição da diretiva <literal>push route 192.168.0.0 255.255.255.0</literal> na configuração do OpenVPN para que os clientes VPN automaticamente recebam o roteamento dizendo a eles que essa rede é alcançável através da VPN. Além do mais, máquinas na rede local também precisam ser informadas que a rota para a VPN passa pelo servidor VPN (isso funciona de maneira automática quando o servidor VPN é instalado no gateway). Alternativamente, o servidor VPN pode ser configurado para desempenhar um mascaramento IP, e assim as conexões vidas de clientes VPN aparecem com se elas viessem do servidor VPN (see <xref linkend=\"sect.gateway\" />)."
@@ -1150,17 +1148,13 @@ msgid "Standard Configuration"
 msgstr "Configuração Padrão"
 
 msgid "Barring a specific QoS configuration, the Linux kernel uses the <literal>pfifo_fast</literal> queue scheduler, which provides a few interesting features by itself. The priority of each processed IP packet is based on the DSCP field (<emphasis>Differentiated of Services Code Point</emphasis>) of this packet; modifying this 6-bit field is enough to take advantage of the scheduling features. Refer to <ulink url=\"https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector\" /> for more information."
-msgstr "Salvo uma configuração de QoS específica, o núcleo Linux usa o agendador de fila <literal>pfifo_fast</literal>, que fornece, ele mesmo, alguns recursos interessantes. A prioridade de cada pacote IP processado é baseada no campo DSCP (<emphasis>Differentiated of Services Code Point</emphasis>) desse pacote; modicar esse campo de 6-bit é o suficiente para tirar vantagem dos recursos de agendamento. Consulte <ulink url=\"https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector\" /> para mais informações."
+msgstr "Salvo uma configuração de QoS específica, o núcleo Linux usa o escalonador de fila <literal>pfifo_fast</literal>, que fornece, ele mesmo, alguns recursos interessantes. A prioridade de cada pacote IP processado é baseada no campo DSCP (<emphasis>Differentiated of Services Code Point</emphasis>) desse pacote; modificar esse campo de 6-bit é o suficiente para tirar vantagem dos recursos de agendamento. Consulte <ulink url=\"https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector\" /> para mais informações."
 
-#, fuzzy
-#| msgid "<primary>DHCP</primary>"
 msgid "<primary>DSCP</primary>"
-msgstr "<primary>DHCP</primary>"
+msgstr "<primary>DSCP</primary>"
 
-#, fuzzy
-#| msgid "<primary>reverse zone</primary>"
 msgid "<primary>Differentiated Services Code Point</primary>"
-msgstr "<primary>zona reversa</primary>"
+msgstr "<primary>Differentiated Services Code Point</primary>"
 
 msgid "The DSCP field can be set by applications that generate IP packets, or modified on the fly by <emphasis>netfilter</emphasis>. The following rules are sufficient to increase responsiveness for a server's SSH service, note that the DSCP field must be set in hexadecimal:"
 msgstr "O campo DSCP pode ser configurado por aplicações que geram pacotes IP, ou modificado em tempo de execução pelo <emphasis>netfilter</emphasis>. As regras a seguir são suficientes para aumentar a capacidade de resposta para o serviço de um servidor SSH, observe que o campo DSCP deve ser definido em hexadecimal:"
@@ -1193,23 +1187,17 @@ msgstr "<emphasis>DE VOLTA AO BÁSICO</emphasis> Roteamento dinâmico"
 msgid "Dynamic routing allows routers to adjust, in real time, the paths used for transmitting IP packets. Each protocol involves its own method of defining routes (shortest path, use routes advertised by peers, and so on)."
 msgstr "O roteamento dinâmico permite que os roteadores ajustem, em tempo real, os caminhos usados para transmitir pacotes IP. Cada protocolo envolve um método próprio para definir rotas (caminhos mais curtos, usam rotas anunciadas pelos pares, e assim por diante)."
 
-#, fuzzy
-#| msgid "In the Linux kernel, a route links a network device to a set of machines that can be reached through this device. The <command>route</command> command defines new routes and displays existing ones."
 msgid "In the Linux kernel, a route links a network device to a set of machines that can be reached through this device. The <command>ip</command> command, when <literal>route</literal> is used as the first argument, defines new routes and displays existing ones. The <command>route</command> command was used for that purpose, but it is deprecated in favor of <command>ip</command>."
-msgstr "No núcleo Linux, uma rota \"liga\" um dispositivo de rede a um conjunto de máquinas que podem ser alcançadas através desse dispositivo. O comando <command>route</command> define novas rotas e exibe as existentes."
+msgstr "No núcleo Linux, uma rota \"liga\" um dispositivo de rede a um conjunto de máquinas que podem ser alcançadas através desse dispositivo. O comando <command>ip</command>, quando <literal>route</literal> é utilizado como primeiro argumento, define novas rotas e exibe as existentes. O comando <command>route</command> era usado para esse propósito, mas foi descontinuado em favor do <command>ip</command>."
 
 msgid "<primary><command>route</command></primary>"
 msgstr "<primary><command>route</command></primary>"
 
-#, fuzzy
-#| msgid "<primary><command>route</command></primary>"
 msgid "<primary><command>ip route</command></primary>"
-msgstr "<primary><command>route</command></primary>"
+msgstr "<primary><command>ip route</command></primary>"
 
-#, fuzzy
-#| msgid "Quagga is a set of daemons cooperating to define the routing tables to be used by the Linux kernel; each routing protocol (most notably BGP, OSPF and RIP) provides its own daemon. The <command>zebra</command> daemon collects information from other daemons and handles static routing tables accordingly. The other daemons are known as <command>bgpd</command>, <command>ospfd</command>, <command>ospf6d</command>, <command>ripd</command>, <command>ripngd</command>, <command>isisd</command>, and <command>babeld</command>."
 msgid "Quagga is a set of daemons cooperating to define the routing tables to be used by the Linux kernel; each routing protocol (most notably BGP, OSPF and RIP) provides its own daemon. The <command>zebra</command> daemon collects information from other daemons and handles static routing tables accordingly. The other daemons are known as <command>bgpd</command>, <command>ospfd</command>, <command>ospf6d</command>, <command>ripd</command>, <command>ripngd</command>, and <command>isisd</command>."
-msgstr "Quagga é um conjunto de daemons que cooperam para definir as tabelas de roteamento a serem usadas pelo núcleo Linux; cada protocolo de roteamento (mais notadamente BGP, OSPF e RIP) provê seu próprio daemon. O daemon <command>zebra</command> coleta informações a partir de outros daemons e lida com as tabelas de roteamento estático em conformidade. Os outros daemons são conhecidos como <command>bgpd</command>, <command>ospfd</command>, <command>ospf6d</command>, <command>ripd</command>, <command>ripngd</command>, <command>isisd</command>, e <command>babeld</command>."
+msgstr "Quagga é um conjunto de daemons que cooperam para definir as tabelas de roteamento a serem usadas pelo núcleo Linux; cada protocolo de roteamento (mais notadamente BGP, OSPF e RIP) provê seu próprio daemon. O daemon <command>zebra</command> coleta informações a partir de outros daemons e lida com as tabelas de roteamento estático em conformidade. Os outros daemons são conhecidos como <command>bgpd</command>, <command>ospfd</command>, <command>ospf6d</command>, <command>ripd</command>, <command>ripngd</command> e <command>isisd</command>."
 
 msgid "<primary>OSPF</primary>"
 msgstr "<primary>OSPF</primary>"
@@ -1245,7 +1233,7 @@ msgid "Daemons are enabled by creating the <filename>/etc/quagga/<replaceable>da
 msgstr "Daemons são ativados pela criação do arquivo de configuração <filename>/etc/quagga/<replaceable>daemon</replaceable>.conf</filename>, daemon sendo o nome que o daemon utilizará; Este arquivo deve pertencer ao usuário e grupo <literal>quagga</literal> de forma que o script <filename>/etc/init.d/zebra</filename> possa invocar o daemon. O pacote <emphasis role=\"pkg\">quagga-core</emphasis>disponibiliza exemplos de configurações em <filename>/usr/share/doc/quagga-core/examples/</filename>."
 
 msgid "The configuration of each of these daemons requires knowledge of the routing protocol in question. These protocols cannot be described in detail here, but <emphasis role=\"pkg\">quagga-doc</emphasis> provides ample explanation in the form of an <command>info</command> file. The same contents may be more easily browsed as HTML on the Quagga website: <ulink type=\"block\" url=\"http://www.nongnu.org/quagga/docs/docs-info.html\" />"
-msgstr "A configuração de cada um desses daemons requer conhecimento do protocolo de roteamento em questão. Esses protocolos não podem ser descritos em detalhes aqui, mas <emphasis role=\"pkg\">quagga-doc</emphasis> provê uma ampla explanação na forma de um arquivo <command>info</command>. O mesmo conteúdo talvez seja mais fácil de manusear em HTML no site web do Quagga: <ulink type=\"block\" url=\"http://www.nongnu.org/quagga/docs/docs-info.html\" />"
+msgstr "A configuração de cada um desses daemons requer conhecimento do protocolo de roteamento em questão. Esses protocolos não podem ser descritos em detalhes aqui, mas <emphasis role=\"pkg\">quagga-doc</emphasis> provê uma ampla explicação na forma de um arquivo <command>info</command>. O mesmo conteúdo talvez seja mais fácil de manusear em HTML no site web do Quagga: <ulink type=\"block\" url=\"http://www.nongnu.org/quagga/docs/docs-info.html\" />"
 
 msgid "In addition, the syntax is very close to a standard router's configuration interface, and network administrators will adapt quickly to <command>quagga</command>."
 msgstr "Adicionalmente, a sintaxe é muito próxima a uma interface de configuração de um roteador padrão, e administradores de rede irão se adaptar rapidamente ao <command>quagga</command>."
@@ -1253,10 +1241,8 @@ msgstr "Adicionalmente, a sintaxe é muito próxima a uma interface de configura
 msgid "<emphasis>IN PRACTICE</emphasis> OSPF, BGP or RIP?"
 msgstr "<emphasis>NA PRÁTICA</emphasis> OSPF, BGP ou RIP?"
 
-#, fuzzy
-#| msgid "OSPF is generally the best protocol to use for dynamic routing on private networks, but BGP is more common for Internet-wide routing. RIP is rather ancient, and hardly used anymore."
 msgid "<acronym>OSPF</acronym> (Open Shortest Path First) is generally the best protocol to use for dynamic routing on private networks, but <acronym>BGP</acronym> (Border Gateway Protocol) is more common for Internet-wide routing. <acronym>RIP</acronym> (Routing Information Protocol) is rather ancient, and hardly used anymore."
-msgstr "OSPF é geralmente o melhor protocolo a se usar para roteamento dinâmico em redes privadas, mas BGP é mais comum para o amplo roteamento da Internet. RIP é bem antigo, e raramente usado."
+msgstr "<acronym>OSPF</acronym> (Open Shortest Path First) é geralmente o melhor protocolo a se usar para roteamento dinâmico em redes privadas, mas o <acronym>BGP</acronym> (Border Gateway Protocol) é mais comum para o amplo roteamento da Internet. <acronym>RIP</acronym> (Routing Information Protocol) é bem antigo, e raramente usado."
 
 msgid "IPv6, successor to IPv4, is a new version of the IP protocol designed to fix its flaws, most notably the scarcity of available IP addresses. This protocol handles the network layer; its purpose is to provide a way to address machines, to convey data to their intended destination, and to handle data fragmentation if needed (in other words, to split packets into chunks with a size that depends on the network links to be used on the path and to reassemble the chunks in their proper order on arrival)."
 msgstr "IPv6, sucessor do IPv4, é a nova versão do protocolo IP projetada para consertar suas falhas, mais notadamente a escassez de endereços IP disponíveis. Esse protocolo lida com a camada de rede; seu propósito é fornecer uma maneira de endereçar máquinas, para direcionar dados para o destino pretendido, e lidar com fragmentação de dados se necessário (em outras palavras, dividir pacotes em pedaços de tamanho que depende dos links de rede a serem usados pelo caminho e juntar esses pedaços na ordem apropriada na chegada)."
@@ -1279,17 +1265,6 @@ msgstr "A rede IPv6 é configurada de maneira similar a IPv4, em <filename>/etc/
 msgid "Example of IPv6 configuration"
 msgstr "Exemplo de configuração IPv6"
 
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "iface eth0 inet6 static\n"
-#| "    address 2001:db8:1234:5::1:1\n"
-#| "    netmask 64\n"
-#| "    # Disabling auto-configuration\n"
-#| "    # autoconf 0\n"
-#| "    # The router is auto-configured and has no fixed address\n"
-#| "    # (accept_ra 1). If it had:\n"
-#| "    # gateway 2001:db8:1234:5::1"
 msgid ""
 "\n"
 "iface eth0 inet6 static\n"
@@ -1299,16 +1274,7 @@ msgid ""
 "    # The router is auto-configured and has no fixed address\n"
 "    # (accept_ra 1). If it had:\n"
 "    # gateway 2001:db8:1234:5::1"
-msgstr ""
-"\n"
-"iface eth0 inet6 static\n"
-"    address 2001:db8:1234:5::1:1\n"
-"    netmask 64\n"
-"    # Disabling auto-configuration\n"
-"    # autoconf 0\n"
-"    # The router is auto-configured and has no fixed address\n"
-"    # (accept_ra 1). If it had:\n"
-"    # gateway 2001:db8:1234:5::1"
+msgstr "\niface eth0 inet6 static\n    address 2001:db8:1234:5::1:1/64\n    # Disabling auto-configuration\n    # autoconf 0\n    # The router is auto-configured and has no fixed address\n    # (accept_ra 1). If it had:\n    # gateway 2001:db8:1234:5::1"
 
 msgid "IPv6 subnets usually have a netmask of 64 bits. This means that 2<superscript>64</superscript> distinct addresses exist within the subnet. This allows Stateless Address Autoconfiguration (<acronym>SLAAC</acronym>) to pick an address based on the network interface's MAC address. By default, if <acronym>SLAAC</acronym> is activated in your network and IPv6 on your computer, the kernel will automatically find IPv6 routers and configure the network interfaces."
 msgstr "Sub-redes IPv6 geralmente tem uma máscara de rede de 64 bits. Isso significa que endereços distintos 2<superscript>64</superscript> existem dentro da sub-rede. Isso permite a \"Stateless Address Autoconfiguration\" (<acronym>SLAAC</acronym>) pegar um endereço baseando-se no endereço MAC da interface de rede. Por padrão, se <acronym>SLAAC</acronym> estiver ativada em sua rede e o IPv6 em seu computador, o núcleo irá automaticamente encontrar os roteadores IPv6 e configurar as interfaces de rede."
@@ -1333,10 +1299,8 @@ msgstr ""
 msgid "<emphasis>TIP</emphasis> Programs built with IPv6"
 msgstr "<emphasis>DICA</emphasis> Programas construídos com IPv6"
 
-#, fuzzy
-#| msgid "Many pieces of software need to be adapted to handle IPv6. Most of the packages in Debian have been adapted already, but not all. If your favorite package does not work with IPv6 yet, you can ask for help on the <emphasis>debian-ipv6</emphasis> mailing-list. They might know about an IPv6-aware replacement and could file a bug to get the issue properly tracked. <ulink type=\"block\" url=\"http://lists.debian.org/debian-ipv6/\" />"
 msgid "Many pieces of software need to be adapted to handle IPv6. Most of the packages in Debian have been adapted already, but not all. If your favorite package does not work with IPv6 yet, you can ask for help on the <emphasis>debian-ipv6</emphasis> mailing-list. They might know about an IPv6-aware replacement and could file a bug to get the issue properly tracked. <ulink type=\"block\" url=\"https://lists.debian.org/debian-ipv6/\" />"
-msgstr "Muitos software precisam ser adaptados para lidar com IPv6. A maioria dos pacotes no Debian já foram adaptados, mas não todos. Se o seu pacote favorito ainda não funciona com IPv6, você pode pedir ajuda na lista de email <emphasis>debian-ipv6</emphasis>. Eles podem saber sobre a substituição IPv6 consciente e podem reportar um bug para ter o assunto rastreado de maneira apropriada. <ulink type=\"block\" url=\"http://lists.debian.org/debian-ipv6/\" />"
+msgstr "Muitas aplicações precisam ser adaptadas para lidar com IPv6. A maioria dos pacotes no Debian já foram adaptados, mas não todos. Se o seu pacote favorito ainda não funciona com IPv6, você pode pedir ajuda na lista de email <emphasis>debian-ipv6</emphasis>. Eles podem saber sobre a substituição IPv6 consciente e podem reportar um bug para ter o assunto rastreado de maneira apropriada. <ulink type=\"block\" url=\"https://lists.debian.org/debian-ipv6/\" />"
 
 msgid "<primary>IPv6 firewall</primary>"
 msgstr "<primary>IPv6 firewall</primary>"
@@ -1359,40 +1323,29 @@ msgstr "<emphasis>ATENÇÃO</emphasis> Tunelamento IPv6 e firewalls"
 msgid "IPv6 tunneling over IPv4 (as opposed to native IPv6) requires the firewall to accept the traffic, which uses IPv4 protocol number 41."
 msgstr "O encapsulamento do IPv6 sobre o IPv4 (ao contrário do IPv6 nativo) requer que o firewall aceite o tráfego, o qual usa o protocolo número 41 do IPv4."
 
-#, fuzzy
-#| msgid "If a native IPv6 connection is not available, the fallback method is to use a tunnel over IPv4. Gogo6 is one (free) provider of such tunnels: <ulink type=\"block\" url=\"http://www.gogo6.com/freenet6/tunnelbroker\" />"
 msgid "If a native IPv6 connection is not available, the fallback method is to use a tunnel over IPv4. Hurricane Electric is one (free) provider of such tunnels: <ulink type=\"block\" url=\"https://tunnelbroker.net\" />"
-msgstr "Se uma conexão IPv6 nativa não está disponível, o método de recuperação (fallback) é usar o encapsulamento sobre o IPv4. Gogo6 é um fornecedor (livre) desses encapsulamentos: <ulink type=\"block\" url=\"http://www.gogo6.com/freenet6/tunnelbroker\" />"
+msgstr "Se uma conexão IPv6 nativa não está disponível, o método de recuperação (fallback) é usar o encapsulamento sobre o IPv4. Hurricane Electric é um fornecedor (livre) desses encapsulamentos: <ulink type=\"block\" url=\"https://tunnelbroker.net\" />"
 
-#, fuzzy
-#| msgid "<primary>traffic control</primary>"
 msgid "<primary>Hurricane Electric</primary>"
-msgstr "<primary>controle de tráfego</primary>"
+msgstr "<primary>Hurricane Electric</primary>"
 
-#, fuzzy
-#| msgid "<primary>router</primary>"
 msgid "<primary>tunnel broker</primary>"
-msgstr "<primary>roteador</primary>"
+msgstr "<primary>tunnel broker</primary>"
 
-#, fuzzy
 msgid "To use a Hurricane Electric tunnel, you need to register an account, login, select a free tunnel and edit the file <filename>/etc/network/interfaces</filename> with the generated code."
-msgstr "para utilizar um túnel Hurricane Electric, você precisa registrar uma conta, acessa-la, selecionar um túnel livre e editar o arquivo<filename>/etc/network/interfaces</filename>com o código gerado."
+msgstr "Para utilizar um túnel Hurricane Electric, você precisa registrar uma conta, acessá-la, selecionar um túnel livre e editar o arquivo<filename>/etc/network/interfaces</filename> com o código gerado."
 
 msgid "You can install and configure the <command>radvd</command> daemon (from the similarly-named package) if you want to use the configured computer as a router for a local network. This IPv6 configuration daemon has a role similar to <command>dhcpd</command> in the IPv4 world."
 msgstr "Você pode instalar e configurar o daemon <command>radvd</command> (do pacote com nome similar) se você quiser usar o computador configurado como um roteador para uma rede local. Esse daemon de configuração IPv6 desempenha papel similar ao do <command>dhcpd</command> no mundo IPv4."
 
-#, fuzzy
-#| msgid "The <filename>/etc/radvd.conf</filename> configuration file must then be created (see <filename>/usr/share/doc/radvd/examples/simple-radvd.conf</filename> as a starting point). In our case, the only required change is the prefix, which needs to be replaced with the one provided by Freenet6; it can be found in the output of the <command>ifconfig</command> command, in the block concerning the <literal>tun</literal> interface."
 msgid "The <filename>/etc/radvd.conf</filename> configuration file must then be created (see <filename>/usr/share/doc/radvd/examples/simple-radvd.conf</filename> as a starting point). In our case, the only required change is the prefix, which needs to be replaced with the one provided by Hurricane Electric; it can be found in the output of the <command>ip a</command> command, in the block concerning the <literal>he-ipv6</literal> interface."
-msgstr "O arquivo de configuração <filename>/etc/radvd.conf</filename> deve então ser criado (veja <filename>/usr/share/doc/radvd/examples/simple-radvd.conf</filename> como um ponto de partida). No nosso caso, a única alteração necessária é o prefixo, o qual precisa se substituído pelo fornecido pela Freenet6; ele pode ser encontrado pela resultado do comando <command>ifconfig</command> no bloco referente à interface <literal>tun</literal>."
+msgstr "O arquivo de configuração <filename>/etc/radvd.conf</filename> deve então ser criado (veja <filename>/usr/share/doc/radvd/examples/simple-radvd.conf</filename> como um ponto de partida). No nosso caso, a única alteração necessária é o prefixo, o qual precisa se substituído pelo fornecido pela Hurricane Electric; ele pode ser encontrado na saída do comando <command>ip a</command> no bloco referente à interface <literal>he-ipv6</literal>."
 
 msgid "<primary><command>radvd</command></primary>"
 msgstr "<primary><command>radvd</command></primary>"
 
-#, fuzzy
-#| msgid "Then run <command>service gogoc restart</command> and <command>service radvd start</command>, and the IPv6 network should work."
 msgid "Then run <command>systemctl start radvd</command>. The IPv6 network should now work."
-msgstr "Então execute <command>service gogoc restart</command> e <command>service radvd start</command>, e a rede IPv6 deve funcionar."
+msgstr "Então execute <command>systemctl start radvd</command>. A rede IPv6 deve funcionar agora."
 
 msgid "Domain Name Servers (DNS)"
 msgstr "Servidores de Nomes de Domínio (DNS)"
@@ -1415,10 +1368,8 @@ msgstr "<primary>zona</primary><secondary>DNS</secondary>"
 msgid "<primary>DNS</primary><secondary>zone</secondary>"
 msgstr "<primary>DNS</primary><secondary>zona</secondary>"
 
-#, fuzzy
-#| msgid "Each zone can contain records of various kinds (<emphasis>Resource Records</emphasis>):"
 msgid "Each zone can contain records of various kinds (<emphasis>Resource Records</emphasis>), these are some of the most common:"
-msgstr "Cada zona pode conter registros de vários tipos (<emphasis>Resource Records</emphasis>):"
+msgstr "Cada zona pode conter registros de vários tipos (<emphasis>Resource Records</emphasis>), estes são alguns dos mais comuns:"
 
 msgid "<literal>A</literal>: IPv4 address. <indexterm><primary>A, DNS record</primary></indexterm>"
 msgstr "<literal>A</literal>: endereço IPv4. <indexterm><primary>A, registro DNS</primary></indexterm>"
@@ -1468,15 +1419,11 @@ msgstr "<emphasis>CULTURA</emphasis> DNSSEC"
 msgid "<primary>DNSSEC</primary>"
 msgstr "<primary>DNSSEC</primary>"
 
-#, fuzzy
-#| msgid "The DNSSEC norm is quite complex; this partly explains why it is not in widespread usage yet (even if it perfectly coexists with DNS servers unaware of DNSSEC). To understand all the ins and outs, you should check the following article. <ulink type=\"block\" url=\"http://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions\" />"
 msgid "The DNSSEC norm is quite complex; this partly explains why it is not in widespread usage yet (even if it perfectly coexists with DNS servers unaware of DNSSEC). To understand all the ins and outs, you should check the following article. <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions\" />"
-msgstr "A norma DNSSEC é bem complexa; isso explica um pouco porque ela ainda não é amplamente usada (mesmo que ela coexista perfeitamente com servidores DNS que não estejam cientes da DNSSEC). Para entender todos os meandros, você deveria ver o seguinte artigo. <ulink type=\"block\" url=\"http://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions\" />"
+msgstr "A norma DNSSEC é bem complexa; isso explica um pouco porque ela ainda não é amplamente usada (mesmo que ela coexista perfeitamente com servidores DNS que não estejam cientes da DNSSEC). Para entender todos os meandros, você deveria ver o seguinte artigo. <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions\" />"
 
-#, fuzzy
-#| msgid "Configuring"
 msgid "Configuring bind"
-msgstr "Configurando"
+msgstr "Configurando bind"
 
 msgid "Configuration files for <command>bind</command>, irrespective of version, have the same structure."
 msgstr "Arquivos de configuração para o <command>bind</command>, independente da versão, têm a mesma estrutura."
@@ -1709,10 +1656,8 @@ msgstr "A Internet Software Consortium (também envolvida no desenvolvimento do 
 msgid "Configuring"
 msgstr "Configurando"
 
-#, fuzzy
-#| msgid "The first elements that need to be edited in the DHCP server configuration file (<filename>/etc/dhcp/dhcpd.conf</filename>) are the domain name and the DNS servers. If this server is alone on the local network (as defined by the broadcast propagation), the <literal>authoritative</literal> directive must also be enabled (or uncommented). One also needs to create a <literal>subnet</literal> section describing the local network and the configuration information to be provided. The following example fits a <literal>192.168.0.0/24</literal> local network with a router at <literal>192.168.0.1</literal> serving as the gateway. Available IP addresses are in the range <literal>192.168.0.128</literal> to <literal>192.168.0.254</literal>."
 msgid "The first elements that need to be edited in the DHCP server configuration files (<filename>/etc/dhcp/dhcpd.conf</filename>, and <filename>/etc/dhcp/dhcpd6.conf</filename> for IPv6) are the domain name and the DNS servers. If this server is alone on the local network (as defined by the broadcast propagation), the <literal>authoritative</literal> directive must also be enabled (or uncommented). One also needs to create a <literal>subnet</literal> section describing the local network and the configuration information to be provided. The following example fits a <literal>192.168.0.0/24</literal> local network with a router at <literal>192.168.0.1</literal> serving as the gateway. Available IP addresses are in the range <literal>192.168.0.128</literal> to <literal>192.168.0.254</literal>."
-msgstr "Os primeiros elementos que precisam ser editados no arquivo de configuração de um servidor DHCP (<filename>/etc/dhcp/dhcpd.conf</filename>) são o nome de domínio e os servidores DNS. Se esse servidor é o único na rede local (como definido pela propagação broadcast), a diretiva <literal>authoritative</literal> também tem que ser ativada (ou descomentada). Também é necessário criar uma seção <literal>subnet</literal> descrevendo a rede local e a informação de configuração a ser fornecida. O exemplo a seguir descreve uma rede local <literal>192.168.0.0/24</literal> com um roteador em <literal>192.168.0.1</literal> servindo de gateway. Endereços IP disponíveis estão no intervalo de <literal>192.168.0.128</literal> até <literal>192.168.0.254</literal>."
+msgstr "Os primeiros elementos que precisam ser editados nos arquivos de configuração de um servidor DHCP (<filename>/etc/dhcp/dhcpd.conf</filename> e <filename>/etc/dhcp/dhcpd6.conf</filename> para IPv6) são o nome de domínio e os servidores DNS. Se esse servidor é o único na rede local (como definido pela propagação broadcast), a diretiva <literal>authoritative</literal> também tem que ser ativada (ou descomentada). Também é necessário criar uma seção <literal>subnet</literal> descrevendo a rede local e a informação de configuração a ser fornecida. O exemplo a seguir descreve uma rede local <literal>192.168.0.0/24</literal> com um roteador em <literal>192.168.0.1</literal> servindo de gateway. Endereços IP disponíveis estão no intervalo de <literal>192.168.0.128</literal> até <literal>192.168.0.254</literal>."
 
 msgid "Excerpt of <filename>/etc/dhcp/dhcpd.conf</filename>"
 msgstr "Trecho do <filename>/etc/dhcp/dhcpd.conf</filename>"
@@ -1795,10 +1740,8 @@ msgstr "<primary>DNS</primary><secondary>atualizações automáticas</secondary>
 msgid "A nice feature is the automated registering of DHCP clients in the DNS zone, so that each machine gets a significant name (rather than something impersonal such as <literal>machine-192-168-0-131.internal.falcot.com</literal>). Using this feature requires configuring the DNS server to accept updates to the <literal>internal.falcot.com</literal> DNS zone from the DHCP server, and configuring the latter to submit updates for each registration."
 msgstr "Um recurso legal é o registro automatizado de clientes DHCP em uma zona DNS, para que cada máquina receba um nome significativo (ao invés de alguma coisa impessoal como <literal>machine-192-168-0-131.internal.falcot.com</literal>). Usar esse recurso requer a configuração do servidor DNS para aceitar atualizações para a zona DNS <literal>internal.falcot.com</literal> a partir do servidor DHCP, e configurar esse último para submeter atualizações para cada registro."
 
-#, fuzzy
-#| msgid "In the <command>bind</command> case, the <literal>allow-update</literal> directive needs to be added to each of the zones that the DHCP server is to edit (the one for the <literal>internal.falcot.com</literal> domain, and the reverse zone). This directive lists the IP addresses allowed to perform these updates; it should therefore contain the possible addresses of the DHCP server (both the local address and the public address, if appropriate)."
 msgid "In the <command>bind</command> case (see <xref linkend=\"sect.dns-software\" />), the <literal>allow-update</literal> directive needs to be added to each of the zones that the DHCP server is to edit (the one for the <literal>internal.falcot.com</literal> domain, and the reverse zone). This directive lists the IP addresses allowed to perform these updates; it should therefore contain the possible addresses of the DHCP server (both the local address and the public address, if appropriate)."
-msgstr "No caso do <command>bind</command>, a diretiva <literal>allow-update</literal> precisa ser adicionada a cada uma das zonas que o servidor DHCP deve editar (uma para o domínio <literal>internal.falcot.com</literal>, e uma para a zona reversa). Essa diretiva lista o endereço IP que tem permissão para realizar essas atualizações; ela deve então conter os possíveis endereços do servidor DHCP (tanto o endereço local quanto o endereço público, se apropriado)."
+msgstr "No caso do <command>bind</command> (veja <xref linkend=\"sect.dns-software\" />), a diretiva <literal>allow-update</literal> precisa ser adicionada a cada uma das zonas que o servidor DHCP deve editar (uma para o domínio <literal>internal.falcot.com</literal>, e uma para a zona reversa). Essa diretiva lista o endereço IP que tem permissão para realizar essas atualizações; ela deve então conter os possíveis endereços do servidor DHCP (tanto o endereço local quanto o endereço público, se apropriado)."
 
 msgid ""
 "\n"
@@ -1810,10 +1753,8 @@ msgstr ""
 msgid "Beware! A zone that can be modified <emphasis>will</emphasis> be changed by <command>bind</command>, and the latter will overwrite its configuration files at regular intervals. Since this automated procedure produces files that are less human-readable than manually-written ones, the Falcot administrators handle the <literal>internal.falcot.com</literal> domain with a delegated DNS server; this means the <literal>falcot.com</literal> zone file stays firmly under their manual control."
 msgstr "Esteja atento! Uma zona que pode ser modificada <emphasis>será</emphasis> alterada pelo <command>bind</command>, e esse último irá sobrescrever seus arquivos de configuração em intervalos regulares. Como esse procedimento automatizado produz arquivos que são menos legíveis por humanos que os escritos manualmente, os administradores da Falcot lidam com o domínio <literal>internal.falcot.com</literal> com um servidor DNS delegado; isso significa que o arquivo de zona <literal>falcot.com</literal> continua firmemente sob controle manual."
 
-#, fuzzy
-#| msgid "The DHCP server configuration excerpt above already includes the directives required for DNS zone updates: they are the <literal>ddns-update-style interim;</literal> and <literal>ddns-domain-name \"internal.falcot.com\";</literal> lines in the block describing the subnet."
 msgid "The DHCP server configuration excerpt above already includes the directives required for DNS zone updates: they are the <literal>ddns-update-style interim;</literal> and <literal>ddns-domain-name \"internal.falcot.com\";</literal> lines."
-msgstr "O trecho da configuração do servidor DHCP acima inclui as diretivas necessárias para atualização da zona DNS: elas são as linhas <literal>ddns-update-style interim;</literal> e <literal>ddns-domain-name \"internal.falcot.com\";</literal> no bloco que descreve a subrede."
+msgstr "O trecho da configuração do servidor DHCP acima inclui as diretivas necessárias para atualização da zona DNS: elas são as linhas <literal>ddns-update-style interim;</literal> e <literal>ddns-domain-name \"internal.falcot.com\";</literal>."
 
 msgid "Network Diagnosis Tools"
 msgstr "Ferramentas de Diagnóstico de Rede"
@@ -1944,51 +1885,6 @@ msgstr "<command>nmap</command> (em pacote de nome similar) é, de certa forma, 
 msgid "A typical <command>nmap</command> invocation only uses the <literal>-A</literal> option (so that <command>nmap</command> attempts to identify the versions of the server software it finds) followed by one or more IP addresses or DNS names of machines to scan. Again, many more options exist to finely control the behavior of <command>nmap</command>; please refer to the documentation in the <citerefentry> <refentrytitle>nmap</refentrytitle> <manvolnum>1</manvolnum> </citerefentry> manual page."
 msgstr "Uma invocação típica do <command>nmap</command> usa apenas a opção <literal>-A</literal> (para que o <command>nmap</command> tente identificar as versões dos softwares no servidor que ele encontrar) seguido de um ou mais endereços IP ou nomes DNS das máquinas a escanear. Novamente, existem muitas outras opções para refinar o comportamento do <command>nmap</command>; por favor veja a documentação na página de manual <citerefentry> <refentrytitle>nmap</refentrytitle> <manvolnum>1</manvolnum> </citerefentry>."
 
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "<computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>\n"
-#| "<computeroutput>\n"
-#| "Starting Nmap 6.47 ( http://nmap.org ) at 2015-03-09 16:46 CET\n"
-#| "Nmap scan report for mirtuel (192.168.1.242)\n"
-#| "Host is up (0.000013s latency).\n"
-#| "rDNS record for 192.168.1.242: mirtuel.internal.placard.fr.eu.org\n"
-#| "Not shown: 998 closed ports\n"
-#| "PORT    STATE SERVICE\n"
-#| "22/tcp  open  ssh\n"
-#| "111/tcp open  rpcbind\n"
-#| "\n"
-#| "Nmap done: 1 IP address (1 host up) scanned in 2.41 seconds\n"
-#| "# </computeroutput><userinput>nmap -A localhost</userinput>\n"
-#| "<computeroutput>\n"
-#| "Starting Nmap 6.47 ( http://nmap.org ) at 2015-03-09 16:46 CET\n"
-#| "Nmap scan report for localhost (127.0.0.1)\n"
-#| "Host is up (0.000013s latency).\n"
-#| "Other addresses for localhost (not scanned): 127.0.0.1\n"
-#| "Not shown: 997 closed ports\n"
-#| "PORT    STATE SERVICE VERSION\n"
-#| "22/tcp  open  ssh     OpenSSH 6.7p1 Debian 3 (protocol 2.0)\n"
-#| "|_ssh-hostkey: ERROR: Script execution failed (use -d to debug)\n"
-#| "25/tcp  open  smtp    Exim smtpd 4.84\n"
-#| "| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, HELP, \n"
-#| "|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA NOOP QUIT RSET HELP \n"
-#| "111/tcp open  rpcbind 2-4 (RPC #100000)\n"
-#| "| rpcinfo: \n"
-#| "|   program version   port/proto  service\n"
-#| "|   100000  2,3,4        111/tcp  rpcbind\n"
-#| "|   100000  2,3,4        111/udp  rpcbind\n"
-#| "|   100024  1          36568/tcp  status\n"
-#| "|_  100024  1          39172/udp  status\n"
-#| "Device type: general purpose\n"
-#| "Running: Linux 3.X\n"
-#| "OS CPE: cpe:/o:linux:linux_kernel:3\n"
-#| "OS details: Linux 3.7 - 3.15\n"
-#| "Network Distance: 0 hops\n"
-#| "Service Info: Host: mirtuel; OS: Linux; CPE: cpe:/o:linux:linux_kernel\n"
-#| "\n"
-#| "OS and Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .\n"
-#| "Nmap done: 1 IP address (1 host up) scanned in 11.54 seconds\n"
-#| "</computeroutput>"
 msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>\n"
@@ -2036,50 +1932,7 @@ msgid ""
 "OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .\n"
 "Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds\n"
 "</computeroutput>"
-msgstr ""
-"\n"
-"<computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>\n"
-"<computeroutput>\n"
-"Starting Nmap 6.47 ( http://nmap.org ) at 2015-03-09 16:46 CET\n"
-"Nmap scan report for mirtuel (192.168.1.242)\n"
-"Host is up (0.000013s latency).\n"
-"rDNS record for 192.168.1.242: mirtuel.internal.placard.fr.eu.org\n"
-"Not shown: 998 closed ports\n"
-"PORT    STATE SERVICE\n"
-"22/tcp  open  ssh\n"
-"111/tcp open  rpcbind\n"
-"\n"
-"Nmap done: 1 IP address (1 host up) scanned in 2.41 seconds\n"
-"# </computeroutput><userinput>nmap -A localhost</userinput>\n"
-"<computeroutput>\n"
-"Starting Nmap 6.47 ( http://nmap.org ) at 2015-03-09 16:46 CET\n"
-"Nmap scan report for localhost (127.0.0.1)\n"
-"Host is up (0.000013s latency).\n"
-"Other addresses for localhost (not scanned): 127.0.0.1\n"
-"Not shown: 997 closed ports\n"
-"PORT    STATE SERVICE VERSION\n"
-"22/tcp  open  ssh     OpenSSH 6.7p1 Debian 3 (protocol 2.0)\n"
-"|_ssh-hostkey: ERROR: Script execution failed (use -d to debug)\n"
-"25/tcp  open  smtp    Exim smtpd 4.84\n"
-"| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, HELP, \n"
-"|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA NOOP QUIT RSET HELP \n"
-"111/tcp open  rpcbind 2-4 (RPC #100000)\n"
-"| rpcinfo: \n"
-"|   program version   port/proto  service\n"
-"|   100000  2,3,4        111/tcp  rpcbind\n"
-"|   100000  2,3,4        111/udp  rpcbind\n"
-"|   100024  1          36568/tcp  status\n"
-"|_  100024  1          39172/udp  status\n"
-"Device type: general purpose\n"
-"Running: Linux 3.X\n"
-"OS CPE: cpe:/o:linux:linux_kernel:3\n"
-"OS details: Linux 3.7 - 3.15\n"
-"Network Distance: 0 hops\n"
-"Service Info: Host: mirtuel; OS: Linux; CPE: cpe:/o:linux:linux_kernel\n"
-"\n"
-"OS and Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .\n"
-"Nmap done: 1 IP address (1 host up) scanned in 11.54 seconds\n"
-"</computeroutput>"
+msgstr "\n<computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>\n<computeroutput>\nStarting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:05 CET\nNmap scan report for mirtuel (192.168.1.242)\nHost is up (0.000013s latency).\nrDNS record for 192.168.1.242: mirtuel.internal.placard.fr.eu.org\nNot shown: 998 closed ports\nPORT    STATE SERVICE\n22/tcp  open  ssh\n111/tcp open  rpcbind\n\nNmap done: 1 IP address (1 host up) scanned in 2.41 seconds\n# </computeroutput><userinput>nmap -A localhost</userinput>\n<computeroutput>\nStarting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:17 CEST\nNmap scan report for localhost (127.0.0.1)\nHost is up (0.000039s latency).\nOther addresses for localhost (not scanned): ::1\nNot shown: 997 closed ports\nPORT    STATE SERVICE VERSION\n22/tcp  open  ssh     OpenSSH 7.9p1 Debian 10 (protocol 2.0)\n| ssh-hostkey: \n|   2048 33:a1:d8:b1:e5:5b:b2:0d:15:1b:8e:76:7f:e4:d7:3d (RSA)\n|   256 8f:83:cf:fa:b3:58:54:9a:1d:1b:4c:db:b1:e2:58:76 (ECDSA)\n|_  256 fa:3d:58:62:49:92:93:90:52:fe:f4:26:ca:dc:4c:40 (ED25519)\n25/tcp  open  smtp    Exim smtpd 4.92\n| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, CHUNKING, PRDR, HELP, \n|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA BDAT NOOP QUIT RSET HELP \n631/tcp open  ipp     CUPS 2.2\n| http-methods: \n|_  Potentially risky methods: PUT\n| http-robots.txt: 1 disallowed entry \n|_/\n|_http-server-header: CUPS/2.2 IPP/2.1\n|_http-title: Home - CUPS 2.2.10\nDevice type: general purpose\nRunning: Linux 3.X\nOS CPE: cpe:/o:linux:linux_kernel:3\nOS details: Linux 3.7 - 3.10\nNetwork Distance: 0 hops\nService Info: Host: debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel\n\nOS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .\nNmap done: 1 IP address (1 host up) scanned in 12.33 seconds\n</computeroutput>"
 
 msgid "As expected, the SSH and Exim4 applications are listed. Note that not all applications listen on all IP addresses; since Exim4 is only accessible on the <literal>lo</literal> loopback interface, it only appears during an analysis of <literal>localhost</literal> and not when scanning <literal>mirtuel</literal> (which maps to the <literal>eth0</literal> interface on the same machine)."
 msgstr "Como esperado, as aplicações SSH e Exim4 estão listadas. Note que nem todas as aplicações escutam em todos os endereços IP; como o Exim4 só é acessível pela interface loopback <literal>lo</literal>, ele só aparece durante uma análise do <literal>localhost</literal> e não quando se escaneia o <literal>mirtuel</literal> (que é mapeado na interface <literal>eth0</literal> na mesma máquina)."
@@ -2105,10 +1958,8 @@ msgstr "Uma ferramenta mais recente (e mais moderna), <command>wireshark</comman
 msgid "The <command>wireshark</command> network traffic analyzer"
 msgstr "O analisador de tráfego de rede <command>wireshark</command>"
 
-#, fuzzy
-#| msgid "In our example, the packets traveling over SSH are filtered out (with the <literal>!tcp.port == 22</literal> filter). The packet currently displayed was developed at the HTTP layer."
 msgid "In our example, the packets traveling over SSH are filtered out (with the <literal>!tcp.port == 22</literal> filter). The packet currently displayed was developed at the transport layer of the SSHv2 protocol."
-msgstr "Em nosso exemplo, os pacotes que viajam pelo SSH são filtrados (pelo filtro <literal>!tcp.port == 22</literal>). O pacote exibido no momento foi desenvolvido na camada HTTP."
+msgstr "Em nosso exemplo, os pacotes que viajam pelo SSH são filtrados (pelo filtro <literal>!tcp.port == 22</literal>). O pacote exibido no momento foi desenvolvido na camada de transporte do protocolo SSHv2."
 
 msgid "<emphasis>TIP</emphasis> <command>wireshark</command> with no graphical interface: <command>tshark</command>"
 msgstr "<emphasis>DICA</emphasis> <command>wireshark</command> sem interface gráfica: <command>tshark</command>"
