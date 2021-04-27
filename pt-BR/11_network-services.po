@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 00:33+0000\nLast-Translator: Gabriel Santos <gth1ago@outlook.com>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 00:33+0000\nLast-Translator: Fred Maranhão <fred.maranhao@gmail.com>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -1184,7 +1184,7 @@ msgid ""
 "TTL:  3600\n"
 "Data: v=spf1 a mx -all\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\nName: example.org\nType: TXT\nTTL:  3600\nData: v=spf1 a mx -all\n]]>"
 
 msgid "Let's take a quick look at the <literal>falcot.org</literal> entry."
 msgstr ""
@@ -1193,7 +1193,7 @@ msgid ""
 "\n"
 "<computeroutput># </computeroutput><userinput>host -t TXT falcot.org</userinput><computeroutput><![CDATA[\n"
 "falcot.org descriptive text \"v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.234 +ip4:209.222.96.251 ~all\"]]></computeroutput>"
-msgstr ""
+msgstr "\n<computeroutput># </computeroutput><userinput>host -t TXT falcot.org</userinput><computeroutput><![CDATA[\nfalcot.org descriptive text \"v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.234 +ip4:209.222.96.251 ~all\"]]></computeroutput>"
 
 msgid "It states that the IP of the sender must match the A record for the sending domain, or must be listed as one of the Mail Exchange Resource Records for the current domain, or must be one of the three mentioned IP4 addresses. All other hosts should be marked as not being allowed to send email for the sender domain. The latter is called a \"soft fail\" and is intended to mark the email accordingly, but still accept it."
 msgstr ""
@@ -1221,7 +1221,7 @@ msgid "<primary>spamassassin</primary><secondary>SPF</secondary>"
 msgstr "<primary>cliente</primary><secondary>NFS</secondary>"
 
 msgid "Integrating DomainKeys (DKIM) Signing and Checking"
-msgstr ""
+msgstr "Assinando e verificando DKIM (Integrating DomainKeys -- chaves de domínio integradas)"
 
 #, fuzzy
 #| msgid "<primary>MX</primary><secondary>server</secondary>"
@@ -1239,7 +1239,7 @@ msgid "<primary><emphasis role=\"pkg\">opendkim</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">nginx</emphasis></primary>"
 
 msgid "The Domain Keys Identified Mail (<acronym>DKIM</acronym>) standard is a sender authentication system. The mail transport agent, here <command>postfix</command>, adds a digital signature associated with the domain name to the header of outgoing emails. The receiving party can validate the message body and header fields by checking the signature against a public key, which is retrieved from the senders DNS records. <ulink type=\"block\" url=\"http://dkim.org/\" />"
-msgstr ""
+msgstr "O padrão <acronym>DKIM</acronym> (Domain Keys Identified Mail) é um sistema de autenticação de emissário. O agente de transporte de email, no caso, o <command>postfix</command>, adiciona uma assinatura digital associada com o nome de domínio ao cabeçalho do emails de saída. O receptor pode validar os campos do corpo e cabeçalho da mensagem comparando a assinatura com uma chave pública, que é recuperada de registros de DNS de emissários. <ulink type=\"block\" url=\"http://dkim.org/\" />"
 
 #, fuzzy
 #| msgid "The client features in Samba allow a Linux machine to access Windows shares and shared printers. The required programs are available in the <emphasis role=\"pkg\">cifs-utils</emphasis> and <emphasis role=\"pkg\">smbclient</emphasis> packages."
@@ -1285,7 +1285,7 @@ msgstr ""
 "<computeroutput># </computeroutput><userinput>LDAPADD=\"/usr/bin/ldapadd -c\" ETC_ALIASES=/dev/null ./migrate_all_online.sh</userinput>"
 
 msgid "This will create the files <filename>/etc/dkimkeys/mail.private</filename> and <filename>/etc/dkimkeys/mail.txt</filename> and set the appropriate ownership. The first file contains the private key, and the latter the public key that needs to be added to the DNS:"
-msgstr ""
+msgstr "Isto criará os arquivos <filename>/etc/dkimkeys/mail.private</filename> e <filename>/etc/dkimkeys/mail.txt</filename> e atribuirá a propriedade apropriada. O primeiro arquivo contém a chave privada, e o último a chave pública que precisa ser adicionada ao DNS:"
 
 msgid ""
 "<![CDATA[\n"
@@ -1294,10 +1294,10 @@ msgid ""
 "TTL:  3600\n"
 "Data: \"v=DKIM1; h=sha256; k=rsa; s=email; p=[...]\"\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\nName: mail._domainkey\nType: TXT\nTTL:  3600\nData: \"v=DKIM1; h=sha256; k=rsa; s=email; p=[...]\"\n]]>"
 
 msgid "The <emphasis role=\"pkg\">opendkim</emphasis> package in Debian defaults to a keysize of 2048 bit. Unfortunately some DNS servers can only handle text entries with a maximum length of 255 characters, which is exceeded by the chosen default keysize. In this case use the option <command>-b 1024</command> to chose a smaller keysize. If <command>opendkim-testkey</command> succeeds, the entry has been successfully set up. The syntax of the entry is explained here: <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc6376\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/DKIM\" />"
-msgstr ""
+msgstr "O pacote <emphasis role=\"pkg\">opendkim</emphasis> no Debian tem um tamanho de chave predeterminado de 2048 bits. Infelizmente alguns servidores DNS só lidam com entradas de texto com tamanho máximo de 255 caracteres, que é ultrapassado pelo pelo tamanho de chave predeterminado. Neste caso, use a opção <command>-b 1024</command> para optar por um tamanho de chave menor. Se o <command>opendkim-testkey</command> tiver exito, a entrada se ajusta corretamente. Aqui se explica a sintaxe: <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc6376\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/DKIM\" />"
 
 msgid "To configure <emphasis role=\"pkg\">opendkim</emphasis>, <literal>SOCKET</literal> and <literal>RUNDIR</literal> must be chosen in <filename>/etc/default/opendkim</filename>. Please note that <literal>SOCKET</literal> must be accessible from <literal>postfix</literal> in its chrooted environment. The further configuration is done in <filename>/etc/opendkim.conf</filename>. The following is a configuration excerpt, which makes sure that the <literal>Domain</literal> \"falcot.com\" and all subdomains (<literal>SubDomain</literal>) are signed by the <literal>Selector</literal> \"mail\" and the single private key (<literal>KeyFile</literal>) <filename>/etc/dkimkeys/mail.private</filename>. The \"relaxed\" <literal>Canonicalization</literal> for both the header and the body tolerates mild modification (by a mailing list software, for example). The filter runs both in signing (\"s\") and verification (\"v\") <literal>Mode</literal>. If a signature fails to validate (<literal>On-BadSignature</literal>), the mail should be quarantined (\"q\")."
 msgstr ""
@@ -1321,7 +1321,7 @@ msgid ""
 "[...]\n"
 "UserID                  opendkim\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\n[...]\nDomain                  falcot.com\nKeyFile                 /etc/dkimkeys/mail.private\nSelector                mail\n\n[...]\nCanonicalization        relaxed/relaxed\nMode                    sv\nOn-BadSignature         q\nSubDomains              yes\n\n[...]\nSocket                  inet:12345@localhost\n\n[...]\nUserID                  opendkim\n]]>"
 
 msgid "It is also possible to use multiple selectors/keys (<literal>KeyTable</literal>), domains (<literal>SigningTable</literal>) and to specify internal or trusted hosts (<literal>InternalHosts</literal>, <literal>ExternalIgnoreList</literal>), which may send mail through the server as one of the signing domains without credentials."
 msgstr "Também é possível usar os seletores/chaves (<literal>KeyTable</literal>), domains (<literal>SigningTable</literal>) e para especificar hosts internos ou de confiança (<literal>InternalHosts</literal>, <literal>ExternalIgnoreList</literal>), que podem enviar e-mails através do servidor como um dos domínios de assinatura sem credenciais."
@@ -1356,10 +1356,10 @@ msgid "To differentiate signing and verification it is sometimes more useful to 
 msgstr "Para diferenciar entre assinatura e a verificação, às vezes é mais útil adicionar diretivas aos serviços em <filename>/etc/postfix/master.cf</filename> em vez disso."
 
 msgid "More information is available in the <filename>/usr/share/doc/opendkim/</filename> directory and the manual pages <citerefentry><refentrytitle>opendkim</refentrytitle> <manvolnum>8</manvolnum></citerefentry> and <citerefentry><refentrytitle>opendkim.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
-msgstr ""
+msgstr "Há mais informações disponíveis no diretório <filename>/usr/share/doc/opendkim/</filename> e nas páginas de manual <citerefentry><refentrytitle>opendkim</refentrytitle> <manvolnum>8</manvolnum></citerefentry> e <citerefentry><refentrytitle>opendkim.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 
 msgid "Note that <emphasis role=\"pkg\">spamassassin</emphasis> contains a plugin to check the DKIM record."
-msgstr ""
+msgstr "Tenha em conta que <emphasis role=\"pkg\">spamassassin</emphasis> contém um <foreignphrase>plugin</foreignphrase> para comprovar o registro DKIM."
 
 #, fuzzy
 #| msgid "<primary>server</primary><secondary>MX</secondary>"
@@ -1367,24 +1367,25 @@ msgid "<primary>spamassassin</primary><secondary>DKIM</secondary>"
 msgstr "<primary>servidor</primary><secondary>MX</secondary>"
 
 msgid "Integrating Domain-based Message Authentication, Reporting and Conformance (DMARC)"
-msgstr ""
+msgstr "Integrando Autenticação de Mensagens Basada em Domínios, relatórios e Conformidade (DMARC, en inglés)"
 
 msgid "<primary>DMARC</primary><see>Domain-based Message Authentication, Reporting and Conformance</see>"
-msgstr ""
+msgstr "<primary>DMARC</primary><see>Autenticação de Mensagens Basada en Domínios, Relatórios e Conformidade</see>"
 
 msgid "<primary>Domain-based Message Authentication, Reporting and Conformance</primary>"
-msgstr ""
+msgstr "<primary>Autenticação de Mensagens Basada em Domínios, Relatórios e Conformidade</primary>"
 
 #, fuzzy
 #| msgid "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">opendmarc</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 
+#, fuzzy
 msgid "The Domain-based Message Authentication, Reporting and Conformance (<acronym>DMARC</acronym>) standard can be used to define a DNS TXT entry with the name <literal>_dmarc</literal> and the action that should be taken when emails that contain your domain as the sending host fail to validate using DKIM and SPF. <ulink type=\"block\" url=\"https://dmarc.org/overview/\" />"
-msgstr ""
+msgstr "O padrão de Autenticação de Mensagens Baseada en Domínios, Relatórios e Conformidade (<acronym>DMARC</acronym>, en inglés) é usado para definir uma entrada DNS TXT com o nome <literal>_dmarc</literal> e a ação a fazer  la acción que se debería tomar cuando los correos que contienen su dominio como el equipo remitente fallen al validar usando DKIM y SPF. <ulink type=\"block\" url=\"https://dmarc.org/overview/\" />"
 
 msgid "Let's have a look at the entries of two large providers:"
-msgstr ""
+msgstr "Vamos dar uma olhada nas entradas de dois grandes provedores:"
 
 msgid ""
 "\n"
@@ -1392,7 +1393,7 @@ msgid ""
 "_dmarc.gmail.com descriptive text \"v=DMARC1; p=none; sp=quarantine; rua=mailto:mailauth-reports@google.com\"]]></computeroutput>\n"
 "<computeroutput># </computeroutput><userinput>host -t TXT _dmarc.yahoo.com</userinput><computeroutput><![CDATA[\n"
 "_dmarc.yahoo.com descriptive text \"v=DMARC1; p=reject; pct=100; rua=mailto:dmarc_y_rua@yahoo.com;\"]]></computeroutput>"
-msgstr ""
+msgstr "\n<computeroutput># </computeroutput><userinput>host -t TXT _dmarc.gmail.com</userinput><computeroutput><![CDATA[\n_dmarc.gmail.com descriptive text \"v=DMARC1; p=none; sp=quarantine; rua=mailto:mailauth-reports@google.com\"]]></computeroutput>no\n<computeroutput># </computeroutput><userinput>host -t TXT _dmarc.yahoo.com</userinput><computeroutput><![CDATA[\n_dmarc.yahoo.com descriptive text \"v=DMARC1; p=reject; pct=100; rua=mailto:dmarc_y_rua@yahoo.com;\"]]></computeroutput>"
 
 msgid "Yahoo has a strict policy to <literal>reject</literal> all emails pretending to be sent from a Yahoo account but missing or failing DKIM and SPF checks. Google Mail (Gmail) propagates a very relaxed policy, in which such messages from the main domain should still be accepted (<literal>p=none</literal>). For subdomains they should be marked as spam (<literal>sp=quarantine</literal>). The addresses given in the <literal>rua</literal> key can be used to send aggregated DMARC reports to. The full syntax is explained here: <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc7489\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/DMARC\" />"
 msgstr ""
@@ -1401,7 +1402,7 @@ msgid "The <command>postfix</command> mail server can use this information too. 
 msgstr ""
 
 msgid "The milter is then added to <literal>smtpd_milters</literal> and <literal>non_smtpd_milters</literal>. If we configured the opendkim and opendmarc milters to run on ports 12345 and 54321, the entry in <filename>/etc/postfix/main.cf</filename> looks like this:"
-msgstr ""
+msgstr "O filtro de correio se adiciona a <literal>smtpd_milters</literal> e <literal>non_smtpd_milters</literal>. Se cpnfiguramos os filtros de correio opendkim e opendmarc para funcionar nas portas 12345 y 54321, a entrada en <filename>/etc/postfix/main.cf</filename> tem este aspecto:"
 
 #, fuzzy
 #| msgid "<primary>server</primary><secondary>MX</secondary>"
@@ -1423,12 +1424,10 @@ msgid ""
 "non_smtpd_milters = inet:localhost:12345,inet:localhost:54321\n"
 "smtpd_milters = inet:localhost:12345,inet:localhost:54321\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[\nnon_smtpd_milters = inet:localhost:12345,inet:localhost:54321\nsmtpd_milters = inet:localhost:12345,inet:localhost:54321\n]]>"
 
-#, fuzzy
-#| msgid "Directives to add in the <filename>/etc/postfix/main.cf</filename> file"
 msgid "The milter can also be selectively applied to a service in <filename>/etc/postfix/master.cf</filename> instead."
-msgstr "Diretivas para serem adicionadas no arquivo <filename>/etc/postfix/main.cf</filename>"
+msgstr "Diretivas para serem adicionadas no arquivo <filename>/etc/postfix/main.cf</filename>."
 
 msgid "Authenticated SMTP"
 msgstr "SMTP autenticado"
@@ -1474,7 +1473,7 @@ msgid ""
 msgstr "\n# Enable SASL authentication\nsmtpd_sasl_auth_enable = yes\n# Define the SASL authentication domain to use\nsmtpd_sasl_local_domain = $myhostname\n[...]\n# Adding permit_sasl_authenticated before reject_unauth_destination\n# allows relaying mail sent by SASL-authenticated users\nsmtpd_recipient_restrictions =\n    permit_sasl_authenticated,\n    permit_mynetworks,\n    reject_unauth_destination,\n[...]"
 
 msgid "It is usually a good idea to not send passwords over an unencrypted connection. <emphasis>Postfix</emphasis> allows to use different configurations for each port (service) it runs on. All these can be configured with different rules and directives in the <filename>/etc/postfix/master.cf</filename> file. To turn off authentication at all for port 25 (<literal>smtpd</literal> service) add the following directive:"
-msgstr ""
+msgstr "Normalmente é boa ideia não enviar senhas em uma conexão sem criptografia.  <emphasis>Postfix</emphasis> permite usar diferentes configurações para cada porta (serviço) onde executa. Todas elas podem se configurar com diferentes regras e diretivas no arquivo <filename>/etc/postfix/master.cf</filename>. Para desativar a autenticação por completo para a porta 25 (serviço <literal>smtpd</literal>) adicione a seguinte directiva:"
 
 msgid ""
 "<![CDATA[smtp      inet  n       -       y       -       -       smtpd\n"
@@ -1482,10 +1481,10 @@ msgid ""
 "    -o smtpd_sasl_auth_enable=no\n"
 "    [..]\n"
 "]]>"
-msgstr ""
+msgstr "<![CDATA[smtp      inet  n       -       y       -       -       smtpd\n    [..]\n    -o smtpd_sasl_auth_enable=no\n    [..]\n]]>"
 
 msgid "If for some reason clients use an outdated <literal>AUTH</literal> command (some very old mail clients do), interoperability with them can be enabled using the <literal>broken_sasl_auth_clients</literal> directive."
-msgstr ""
+msgstr "Se por alguma razão os clientes usam um comando <literal>AUTH</literal> desatualizado (alguns clientes de correio muito velhos o fazem), se pode habilitar la interoperabilidade com eles usando a diretiva <literal>broken_sasl_auth_clients</literal>."
 
 msgid "<emphasis>EXTRA</emphasis> Authenticated SMTP client"
 msgstr "<emphasis>EXTRA</emphasis> Cliente SMTP autenticado"
@@ -1640,13 +1639,13 @@ msgid "<primary>Apache</primary><secondary>mod_info</secondary>"
 msgstr "<primary>NFS</primary><secondary>opções</secondary>"
 
 msgid "The <literal>mod_info</literal> module (<command>a2enmod info</command>) allows to access the comprehensive Apache server configuration and information via browser visiting <literal>http://localhost/server-info</literal>. Because it might contain sensitive information, access is only allowed from the local host by default. <ulink type=\"block\" url=\"https://httpd.apache.org/docs/2.4/mod/mod_info.html\" />"
-msgstr ""
+msgstr "O módulo <literal>mod_info</literal> (<command>a2enmod info</command>) permite acessar a ampla configuração e informação do servidor Apache num navegador visitando <literal>http://localhost/server-info</literal>. Como pode conter informações confidenciais, o padrão ésó ser acessível da máquina local. <ulink type=\"block\" url=\"https://httpd.apache.org/docs/2.4/mod/mod_info.html\" />"
 
 msgid "With its default configuration, the web server listens on port 80 (as configured in <filename>/etc/apache2/ports.conf</filename>), and serves pages from the <filename>/var/www/html/</filename> directory (as configured in <filename>/etc/apache2/sites-enabled/000-default.conf</filename>)."
 msgstr "Com sua configuração padrão, o servidor web ouve na porta 80 (como configurado em <filename>/etc/apache2/ports.conf</filename>), e serve páginas a partir do diretório <filename>/var/www/html/</filename> (como configurado em <filename>/etc/apache2/sites-enabled/000-default.conf</filename>)."
 
 msgid "Adding support for SSL"
-msgstr ""
+msgstr "Adicionando suporte a SSL"
 
 msgid "<primary>HTTPS</primary>"
 msgstr "<primary>HTTPS</primary>"
@@ -1670,7 +1669,7 @@ msgid "Apache 2.4 includes the SSL module (<literal>mod_ssl</literal>) required 
 msgstr "O Apache 2.4 inclui o módulo SSL, necessário para HTTP seguro (HTTPS) \"de fábrica\". Ele apenas precisa ser habilitado com <command>a2enmod ssl</command>, e então as diretivas necesssárias têm que ser adicionadas aos arquivos de configuração. Um exemplo de configuração é fornecido em <filename>/etc/apache2/sites-available/default-ssl.conf</filename>. <ulink type=\"block\" url=\"http://httpd.apache.org/docs/2.4/mod/mod_ssl.html\" />"
 
 msgid "If you want to generate trusted certificates, you can follow section <xref linkend=\"sect.trusted-certs\" /> and then adjust the following variables:"
-msgstr ""
+msgstr "Se queres gerar certificados de confiança, vá para a seção <xref linkend=\"sect.trusted-certs\" /> e então ajuste as seguintes variáveis:"
 
 msgid ""
 "\n"
@@ -1678,7 +1677,7 @@ msgid ""
 "SSLCertificateKeyFile   /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/privkey.pem\n"
 "SSLCertificateChainFile /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/chain.pem\n"
 "SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt"
-msgstr ""
+msgstr "\nSSLCertificateFile      /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/fullchain.pem\nSSLCertificateKeyFile   /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/privkey.pem\nSSLCertificateChainFile /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/chain.pem\nSSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt"
 
 #, fuzzy
 #| msgid "Some extra care must be taken if you want to favor SSL connections with <emphasis>Perfect Forward Secrecy</emphasis> (those connections use ephemeral session keys ensuring that a compromission of the server's secret key does not result in the compromission of old encrypted traffic that could have been stored while sniffing on the network). Have a look at Mozilla's recommandations in particular: <ulink type=\"block\" url=\"https://wiki.mozilla.org/Security/Server_Side_TLS#Apache\" />"
@@ -1917,10 +1916,8 @@ msgstr "<primary><literal>Opções</literal>, diretivas do Apache</primary>"
 msgid "<primary><literal>AllowOverride</literal>, Apache directive</primary>"
 msgstr "<primary><literal>AllowOverride</literal>, diretiva Apache</primary>"
 
-#, fuzzy
-#| msgid "<literal>ExecCGI</literal> indicates that CGI scripts can be executed. <indexterm><primary><literal>ExecCGI</literal>, Apache directive</primary></indexterm>"
 msgid "<literal>ExecCGI</literal> indicates that CGI scripts can be executed."
-msgstr "<literal>ExecCGI</literal> indica que scripts CGI podem ser executados. <indexterm><primary><literal>ExecCGI</literal>, diretiva Apache</primary></indexterm>"
+msgstr "<literal>ExecCGI</literal> indica que scripts CGI podem ser executados."
 
 #, fuzzy
 #| msgid "<primary><literal>Order</literal>, Apache directive</primary>"
@@ -1932,10 +1929,8 @@ msgstr "<primary><literal>Order</literal>, diretivas do Apache</primary>"
 msgid "<primary>Apache</primary><secondary><literal>ExecCGI</literal></secondary>"
 msgstr "<primary>correio</primary><secondary>eletrônico</secondary>"
 
-#, fuzzy
-#| msgid "<literal>FollowSymlinks</literal> tells the server that symbolic links can be followed, and that the response should contain the contents of the target of such links. <indexterm><primary><literal>FollowSymlinks</literal>, Apache directive</primary></indexterm>"
 msgid "<literal>FollowSymlinks</literal> tells the server that symbolic links can be followed, and that the response should contain the contents of the target of such links."
-msgstr "<literal>FollowSymlinks</literal> diz ao servidor que ligações simbólicas podem ser seguidas, e que a resposta deve conter o conteúdo do alvo de uma ligação como essa. <indexterm><primary><literal>FollowSymlinks</literal>, diretiva Apache</primary></indexterm>"
+msgstr "<literal>FollowSymlinks</literal> diz ao servidor que ligações simbólicas podem ser seguidas, e que a resposta deve conter o conteúdo do alvo dessas ligações."
 
 #, fuzzy
 #| msgid "<primary><literal>Allow from</literal>, Apache directive</primary>"
@@ -1947,10 +1942,8 @@ msgstr "<primary><literal>Allow from</literal>, diretivas do Apache</primary>"
 msgid "<primary>Apache</primary><secondary><literal>FollowSymlinks</literal></secondary>"
 msgstr "<primary>e-mail</primary><secondary>filtrando</secondary>"
 
-#, fuzzy
-#| msgid "<literal>SymlinksIfOwnerMatch</literal> also tells the server to follow symbolic links, but only when the link and the its target have the same owner. <indexterm><primary><literal>SymlinksIfOwnerMatch</literal>, Apache directive</primary></indexterm>"
 msgid "<literal>SymlinksIfOwnerMatch</literal> also tells the server to follow symbolic links, but only when the link and the its target have the same owner."
-msgstr "<literal>SymlinksIfOwnerMatch</literal> também diz ao servidor para seguir ligações simbólicas, mas apenas quando a ligação e seu alvo são do mesmo dono. <indexterm><primary><literal>SymlinksIfOwnerMatch</literal>, diretiva Apache</primary></indexterm>"
+msgstr "<literal>SymlinksIfOwnerMatch</literal> também diz ao servidor para seguir ligações simbólicas, mas apenas quando a ligação e seu alvo são do mesmo dono."
 
 #, fuzzy
 #| msgid "<primary><literal>Order</literal>, Apache directive</primary>"
@@ -1962,10 +1955,8 @@ msgstr "<primary><literal>Order</literal>, diretivas do Apache</primary>"
 msgid "<primary>Apache</primary><secondary><literal>SymlinksIfOwnerMatch</literal></secondary>"
 msgstr "<primary>arquivo</primary><secondary>servidor</secondary>"
 
-#, fuzzy
-#| msgid "<literal>Includes</literal> enables <emphasis>Server Side Includes</emphasis> (<emphasis>SSI</emphasis> for short). These are directives embedded in HTML pages and executed on the fly for each request. <indexterm><primary><literal>Includes</literal>, Apache directive</primary></indexterm>"
 msgid "<literal>Includes</literal> enables <emphasis>Server Side Includes</emphasis> (<emphasis>SSI</emphasis> for short). These are directives embedded in HTML pages and executed on the fly for each request."
-msgstr "<literal>Includes</literal> habilita <emphasis>Server Side Includes</emphasis> (<emphasis>SSI</emphasis> para abreviar). Essas são diretivas embutidas nas páginas HTML e executadas em tempo de execução de cada requisição. <indexterm><primary><literal>Includes</literal>, diretiva Apache</primary></indexterm>"
+msgstr "<literal>Includes</literal> habilita <emphasis>Server Side Includes</emphasis> (<emphasis>SSI</emphasis> para abreviar). Essas são diretivas embutidas nas páginas HTML e executadas em tempo de execução para cada requisição."
 
 #, fuzzy
 #| msgid "<primary><literal>Order</literal>, Apache directive</primary>"
@@ -1977,10 +1968,8 @@ msgstr "<primary><literal>Order</literal>, diretivas do Apache</primary>"
 msgid "<primary>Apache</primary><secondary><literal>Includes</literal></secondary>"
 msgstr "<primary>NFS</primary><secondary>cliente</secondary>"
 
-#, fuzzy
-#| msgid "<literal>Includes</literal> enables <emphasis>Server Side Includes</emphasis> (<emphasis>SSI</emphasis> for short). These are directives embedded in HTML pages and executed on the fly for each request. <indexterm><primary><literal>Includes</literal>, Apache directive</primary></indexterm>"
 msgid "<literal>IncludesNOEXEC</literal> allows <emphasis>Server Side Includes</emphasis> (<emphasis>SSI</emphasis>) but disables the <literal>exec</literal> command and limits the <literal>include</literal> directive to text/markup files."
-msgstr "<literal>Includes</literal> habilita <emphasis>Server Side Includes</emphasis> (<emphasis>SSI</emphasis> para abreviar). Essas são diretivas embutidas nas páginas HTML e executadas em tempo de execução de cada requisição. <indexterm><primary><literal>Includes</literal>, diretiva Apache</primary></indexterm>"
+msgstr "<literal>IncludesNOEXEC</literal> permite <emphasis>inclusões no lado do servidor</emphasis> (<emphasis>SSI</emphasis>: «Server Side Includes»), mas desabilita a ordem <literal>exec</literal> e limita a diretiva <literal>include</literal> a arquivos de texto/marcado."
 
 #, fuzzy
 #| msgid "<primary><literal>Order</literal>, Apache directive</primary>"
