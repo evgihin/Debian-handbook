@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 00:33+0000\nLast-Translator: Fred Maranhão <fred.maranhao@gmail.com>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 00:33+0000\nLast-Translator: Ricardo Berlim Fonseca <eblues@disroot.org>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -1154,7 +1154,7 @@ msgid "Like any other tool, the following standards have limits and real effects
 msgstr "Como qualquer outra ferramenta, os seguintes padrões tem limites e efeitos reais ao serem usados. Podem (e devem) levar a rejeição ou até mesmo descarte de emails. Se isto ocorre com alguns emails legítimos (às vezes enviados de um servidor SMTP mal-configurado), normalmente causa a ira e incompreensão do usuário. Por isto, estas regras se aplicam normalmente como uma «falha suave» o «rejeição suave», que normalmente significa que as comprovações que falham--------------- solo hacen que se añada una marca (de cabecera) al correo afectado. Hay gente que piensa que esto vuelve a estos estándares «rotos por defecto». Decida por sí mismo y sea cuidadoso sobre cuán estrictamente decide aplicar estos estándares."
 
 msgid "Integrating the Sender Policy Framework (SPF)"
-msgstr ""
+msgstr "Integrando a Sender Policy Framework (SPF)"
 
 #, fuzzy
 #| msgid "<primary>SIP</primary><secondary>server</secondary>"
@@ -1172,10 +1172,10 @@ msgid "<primary><emphasis role=\"pkg\">postfix-policyd-spf-python</emphasis></pr
 msgstr "<primary><emphasis role=\"pkg\">vsftpd</emphasis></primary>"
 
 msgid "The Sender Policy Framework (<acronym>SPF</acronym>) is used to validate if a certain mail server is allowed to send emails for a given domain. It is mostly configured through DNS. The syntax for the entry to make is explained in detail at: <ulink type=\"block\" url=\"http://www.open-spf.org/SPF_Record_Syntax\" /> <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc7208\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Sender_Policy_Framework\" />"
-msgstr ""
+msgstr "A Sender Policy Framework (<acronym>SPF</acronym>) é utilizada para validar se um servidor de correio eletrônico tem permissão para enviar e-mails por um determinado domínio. É normalmente configurado através do DNS. A sintaxe para fazer uma entrada é explicada em detalhes em: <ulink type=\"block\" url=\"http://www.open-spf.org/SPF_Record_Syntax\" /> <ulink type=\"block\" url=\"https://tools.ietf.org/html/rfc7208\" /> <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Sender_Policy_Framework\" />"
 
 msgid "The following is a sample DNS entry which states that all the domain's Mail Exchange Resource Records (MX-RRs) are allowed to email the current domain, and all others are prohibited. The DNS entry does not need to be given a name. But to use the <literal>include</literal> directive it must have one."
-msgstr ""
+msgstr "O seguinte é um exemplo e entrada DNS que declara que todos os registros de recursos de troca de mensagens (MX-RRs) do domínio tem permissão para enviar e-mails através do domínio atual, e que todos os outros são proíbidos. A entrada DNS não precisa receber um nome. Porém, para utilizar a diretiva <literal>include</literal>, ela deve ter um."
 
 msgid ""
 "<![CDATA[\n"
@@ -1187,7 +1187,7 @@ msgid ""
 msgstr "<![CDATA[\nName: example.org\nType: TXT\nTTL:  3600\nData: v=spf1 a mx -all\n]]>"
 
 msgid "Let's take a quick look at the <literal>falcot.org</literal> entry."
-msgstr ""
+msgstr "Vamos dar uma rápida olhada na entrada <literal>falcot.org</literal>."
 
 msgid ""
 "\n"
@@ -1196,7 +1196,7 @@ msgid ""
 msgstr "\n<computeroutput># </computeroutput><userinput>host -t TXT falcot.org</userinput><computeroutput><![CDATA[\nfalcot.org descriptive text \"v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.234 +ip4:209.222.96.251 ~all\"]]></computeroutput>"
 
 msgid "It states that the IP of the sender must match the A record for the sending domain, or must be listed as one of the Mail Exchange Resource Records for the current domain, or must be one of the three mentioned IP4 addresses. All other hosts should be marked as not being allowed to send email for the sender domain. The latter is called a \"soft fail\" and is intended to mark the email accordingly, but still accept it."
-msgstr ""
+msgstr "Ele afirma que o IP do remetente deve corresponder ao registro A para o domínio de envio, ou deve ser listado com um dos registros de recursos de troca para o domínio atual, ou deve ser um dos três endereços IPv4 mencionados. Todos os outros hosts devem ser marcados como não autorizados a enviar e-mail para o domínio remetente. Este último é chamado de \"falha leve\" e destina-se a marcar o e-mail de acordo, mas ainda assim aceitá-lo."
 
 msgid "The <command>postfix</command> mail server can check the SPF record for incoming emails using the <emphasis role=\"pkg\">postfix-policyd-spf-python</emphasis> package, a policy agent written in Python. The file <filename>/usr/share/doc/postfix-policyd-spf-python/README.Debian</filename> describes the necessary steps to integrate the agent into postfix, so we won't repeat it here."
 msgstr "O servidor de email <command>postfix</command> pode checar o registro SPF dos emails de entrada usando o pacote <emphasis role=\"pkg\">postfix-policyd-spf-python</emphasis>, um agente de política escrito em Python. O arquivo <filename>/usr/share/doc/postfix-policyd-spf python/README.Debian</filename> descreve os passos necessários para integrar o agente ao postfix, então nós não iremos repetí-los aqui."
