@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 10:32+0000\nLast-Translator: Gabriel Santos <gth1ago@outlook.com>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2021-04-28 13:46+0000\nLast-Translator: Thiago Pezzo (tico) <tico@dismail.de>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/debian-handbook/11_network-services/pt_BR/>\nLanguage: pt-BR\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.7-dev\n"
 
 msgid "Postfix"
 msgstr "Postfix"
@@ -513,10 +513,8 @@ msgstr "A terceira diretiva permite ao administrador criar uma lista negra e uma
 msgid "<primary>Postfix</primary><secondary><literal>check_client_access</literal></secondary>"
 msgstr "<primary>Postfix</primary><secondary><literal>check_client_access</literal></secondary>"
 
-#, fuzzy
-#| msgid "The last two rules reject any message coming from a server listed in one of the indicated blacklists. RBL is an acronym for <emphasis>Remote Black List</emphasis>; there are several such lists, but they all list badly configured servers that spammers use to relay their emails, as well as unexpected mail relays such as machines infected with worms or viruses."
 msgid "The last four rules reject any message coming from a server listed in one of the indicated blacklists. <acronym>RBL</acronym> is an acronym for <emphasis>Remote Black List</emphasis>, and <acronym>RHSBL</acronym> stands for <emphasis>Right-Hand Side Black List</emphasis>. The difference is that the former lists IP addresses, whereas the latter lists domain names. There are several such services. They list domains and IP addresses with poor reputation, badly configured servers that spammers use to relay their emails, as well as unexpected mail relays such as machines infected with worms or viruses."
-msgstr "As últimas duas regras rejeitam qualquer mensagem proveniente de um servidor listados em uma das listas negras indicadas. RBL é um acrônimo para <emphasis>Remote Black List</emphasis> (Lista Negra Remota); existem várias dessas listas, mas todas elas listam servidores mal configurados em que os spammers usam para transmitir seus e-mails, bem como encaminham e-mails inesperados bem como máquinas infectadas com worms ou vírus."
+msgstr "As últimas quatro regras rejeitam qualquer mensagem proveniente de um servidor relacionado em uma das listas bloqueadas indicadas. <acronym>RBL</acronym> é um acrônimo para <emphasis>Remote Block List</emphasis> (Lista Bloqueada Remota) e <acronym>RHSBL</acronym> significa <emphasis>Right-Hand Side Block List</emphasis> (Lista Bloqueada de Confiança). A diferença é que a primeira lista endereços IP e a última lista nomes de domínio. Existem diversos desses serviços. Eles listam domínios e endereços IP de baixa reputação, servidores mal configurados em que spammers usam para transmitir seus e-mails, bem como relays de e-mails inesperados como máquinas infectadas com worms ou vírus."
 
 msgid "<primary>Postfix</primary><secondary><literal>reject_rbl_client</literal></secondary>"
 msgstr "<primary>Postfix</primary><secondary><literal>reject_rbl_client</literal></secondary>"
@@ -545,10 +543,8 @@ msgstr "Verificando a Validade dos Comandos <literal>EHLO</literal> ou <literal>
 msgid "<primary>Postfix</primary><secondary><literal>smtpd_helo_restrictions</literal></secondary>"
 msgstr "<primary>Postfix</primary><secondary><literal>smtpd_helo_restrictions</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on the sender</secondary>"
 msgid "<primary>email</primary><secondary>filtering on the mail host</secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtrando pelo remetente</secondary>"
+msgstr "<primary>e-mail</primary><secondary>host de e-mail</secondary>"
 
 msgid "Each SMTP exchange starts with a <literal>HELO</literal> (or <literal>EHLO</literal>) command, followed by the name of the sending email server. Checking the validity of this name can be interesting. To fully enforce the restrictions listed in <literal>smtpd_helo_restrictions</literal> the <literal>smtpd_helo_required</literal> option needs to be enabled. Otherwise clients could skip the restrictions by not sending any <literal>HELO</literal>/<literal>EHLO</literal> command."
 msgstr "Cada troca SMTP inicia com um comando <literal>HELO</literal> (ou <literal>EHLO</literal>), seguido do nome do servidor de email remetente. Checar a validade deste nome pode ser interessante. Para garantir completamente as restrições listadas em <literal>smtpd_helo_restrictions</literal> a opção <literal>smtpd_helo_required</literal> precisa estar habilitada. Caso contrário os clientes podem pular as restrições não enviando nenhum comando <literal>HELO</literal>/<literal>EHLO</literal>."
@@ -586,44 +582,32 @@ msgstr "A primeira diretiva <literal>permit_mynetworks</literal> permite que tod
 msgid "<primary>Postfix</primary><secondary><literal>permit_mynetworks</literal></secondary>"
 msgstr "<primary>Postfix</primary><secondary><literal>permit_mynetworks</literal></secondary>"
 
-#, fuzzy
-#| msgid "The <literal>reject_invalid_hostname</literal> rule rejects emails when the <literal>EHLO</literal> announce lists a syntactically incorrect hostname. The <literal>reject_non_fqdn_hostname</literal> rule rejects messages when the announced hostname is not a fully-qualified domain name (including a domain name as well as a host name). The <literal>reject_unknown_hostname</literal> rule rejects messages if the announced name does not exist in the DNS. Since this last rule unfortunately leads to too many rejections, the administrators turned its effect to a simple warning with the <literal>warn_if_reject</literal> modifier as a first step; they may decide to remove this modifier at a later stage, after auditing the results of this rule."
 msgid "The <literal>reject_invalid_helo_hostname</literal> rule rejects emails when the <literal>EHLO</literal> announce lists a syntactically incorrect hostname. The <literal>reject_non_fqdn_helo_hostname</literal> rule rejects messages when the announced hostname is not a fully-qualified domain name (including a domain name as well as a host name). The <literal>reject_unknown_helo_hostname</literal> rule rejects messages if the announced name does not exist in the DNS. Since this last rule unfortunately leads to too many rejections, the administrators turned its effect to a simple warning with the <literal>warn_if_reject</literal> modifier as a first step; they may decide to remove this modifier at a later stage, after auditing the results of this rule."
-msgstr "A regra <literal>reject_invalid_hostname</literal> rejeita e-mails quando o anuncio <literal>EHLO</literal> lista um nome de host incorreto sintaticamente. A regra <literal>reject_non_fqdn_hostname</literal> rejeita mensagens quando o nome do host anunciado não é um nome de domínio totalmente qualificado (incluindo um nome de domínio, bem como um nome de host). A regra <literal>reject_unknown_hostname</literal> rejeita mensagens se o nome anunciado não existe no DNS. Uma vez que esta última regra infelizmente leva a muitas rejeições,os administradores converteram seu efeito em uma simples advertência com o modificador <literal>warn_if_reject</literal> como um primeiro passo; eles podem decidir remover este modificador em uma etapa posterior, após a auditoria dos resultados desta regra."
+msgstr "A regra <literal>reject_invalid_helo_hostname</literal> rejeita e-mails quando o anúncio <literal>EHLO</literal> lista um nome de host incorreto sintaticamente. A regra <literal>reject_non_fqdn_helo_hostname</literal> rejeita mensagens quando o nome do host anunciado não é um nome de domínio totalmente qualificado (incluindo nome de domínio e nome de host). A regra <literal>reject_unknown_helo_hostname</literal> rejeita mensagens se o nome anunciado não existe no DNS. Uma vez que esta última regra infelizmente leva a muitas rejeições, os(as) administradores(as) converteram seu efeito em uma simples advertência com o modificador <literal>warn_if_reject</literal> como um primeiro passo; eles(as) podem decidir remover este modificador em uma etapa posterior após a auditoria dos resultados desta regra."
 
 msgid "<primary>Postfix</primary><secondary><literal>reject_invalid_helo_hostname</literal></secondary>"
 msgstr "<primary>Postfix</primary><secondary><literal>reject_invalid_helo_hostname</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on the sender</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_helo_hostname</literal></secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtrando pelo remetente</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_helo_hostname</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>logs</primary><secondary>web logs analyzer</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_unknown_helo_hostname</literal></secondary>"
-msgstr "<primary>registros</primary><secondary>analisador de registros web</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_unknown_helo_hostname</literal></secondary>"
 
 msgid "The <literal>reject_rhsbl_helo</literal> allows to specify a black list to check the hostname against an RHSBL."
 msgstr "O <literal>reject_rhsbl_helo</literal> permite especificar uma lista negra para verificar o nome da máquina num RHSBL."
 
-#, fuzzy
-#| msgid "Using <literal>permit_mynetworks</literal> as the first rule has an interesting side effect: the following rules only apply to hosts outside the local network. This allows blacklisting all hosts that announce themselves as part of the <literal>falcot.com</literal>, for instance by adding a <literal>falcot.com REJECT You are not in our network!</literal> line to the <filename>/etc/postfix/access_helo</filename> file."
 msgid "Using <literal>permit_mynetworks</literal> as the first rule has an interesting side effect: the following rules only apply to hosts outside the local network. This allows blacklisting all hosts that announce themselves as part of the <literal>falcot.com</literal> network, for instance by adding a <literal>falcot.com REJECT You are not in our network!</literal> line to the <filename>/etc/postfix/access_helo</filename> file."
-msgstr "Usando <literal>permit_mynetworks</literal> como a primeira regra tem um efeito colateral interessante: as regras seguintes aplicam-se apenas aos hosts fora da rede local. Isso permite bloquear todos os hosts que se anunciam como parte do <literal>falcot.com</literal>, por exemplo, adicionando uma linha <literal>falcot.com REJECT Você não é da nossa rede!</literal> no arquivo <filename>/etc/postfix/access_helo</filename>."
+msgstr "Usando <literal>permit_mynetworks</literal> como a primeira regra tem um efeito colateral interessante: as regras seguintes aplicam-se apenas aos hosts fora da rede local. Isso permite bloquear todos os hosts que se anunciam como parte da rede <literal>falcot.com</literal>, por exemplo adicionando uma linha <literal>falcot.com REJECT Você não é da nossa rede!</literal> no arquivo <filename>/etc/postfix/access_helo</filename>."
 
-#, fuzzy
-#| msgid "<primary>file</primary><secondary>server</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>check_helo_access</literal></secondary>"
-msgstr "<primary>arquivo</primary><secondary>servidor</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>check_helo_access</literal></secondary>"
 
 msgid "Accepting or Refusing Based on the Announced Sender"
 msgstr "Aceitando ou recusando baseado em remetente anunciado"
 
-#, fuzzy
-#| msgid "<primary>mail</primary><secondary>electronic</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>smtpd_sender_restrictions</literal></secondary>"
-msgstr "<primary>correio</primary><secondary>eletrônico</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>smtpd_sender_restrictions</literal></secondary>"
 
 msgid "<primary>email</primary><secondary>filtering on the sender</secondary>"
 msgstr "<primary>e-mail</primary><secondary>filtrando pelo remetente</secondary>"
@@ -634,10 +618,8 @@ msgstr "Toda mensagem tem um remetente, anunciado pelo comando <literal>MAIL FRO
 msgid "<primary><literal>MAIL FROM</literal></primary>"
 msgstr "<primary><literal>MAIL FROM</literal></primary>"
 
-#, fuzzy
-#| msgid "<primary>server</primary><secondary>MX</secondary>"
 msgid "<primary><literal>SMTP</literal></primary><secondary>MAIL FROM</secondary>"
-msgstr "<primary>servidor</primary><secondary>MX</secondary>"
+msgstr "<primary><literal>SMTP</literal></primary><secondary>MAIL FROM</secondary>"
 
 msgid "Sender checks"
 msgstr "Verificações do Remetente"
@@ -655,47 +637,35 @@ msgstr "\nsmtpd_sender_restrictions =\n    check_sender_access hash:/etc/postfix
 msgid "The <filename>/etc/postfix/access_sender</filename> table maps some special treatment to some senders. This usually means listing some senders into a white list or a black list."
 msgstr "A tabela <filename>/etc/postfix/access_sender</filename> mapeia algum tratamento especial a alguns remetentes. Isso geralmente significa listar alguns remetentes em uma lista branca ou uma lista negra."
 
-#, fuzzy
-#| msgid "<primary>file</primary><secondary>server</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>check_sender_access</literal></secondary>"
-msgstr "<primary>arquivo</primary><secondary>servidor</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>check_sender_access</literal></secondary>"
 
 msgid "The <literal>reject_unknown_sender_domain</literal> rule requires a valid sender domain, since it is needed for a valid address. The <literal>reject_unlisted_sender</literal> rule rejects local senders if the address does not exist; this prevents emails from being sent from an invalid address in the <literal>falcot.com</literal> domain, and messages emanating from <literal>joe.bloggs@falcot.com</literal> are only accepted if such an address really exists."
 msgstr "A regra <literal>reject_unknown_sender_domain</literal> exige um domínio de remetente válido, já que tal domínio é necessário para um endereço válido. A regra <literal>reject_unlisted_sender</literal> rejeita remetentes locais se o endereço não existe; isso impede que emails sejam enviados a partir de um endereço inválido no domínio <literal>falcot.com</literal>, e as mensagens que se originam de <literal>joe.bloggs@falcot.com</literal> são apenas aceitas se tal endereço realmente existe."
 
-#, fuzzy
-#| msgid "<primary>mail</primary><secondary>electronic</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_unknown_sender_domain</literal></secondary>"
-msgstr "<primary>correio</primary><secondary>eletrônico</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_unknown_sender_domain</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on the sender</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_unlisted_sender</literal></secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtrando pelo remetente</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_unlisted_sender</literal></secondary>"
 
 msgid "Finally, the <literal>reject_non_fqdn_sender</literal> rule rejects emails purporting to come from addresses without a fully-qualified domain name. In practice, this means rejecting emails coming from <literal>user@machine</literal>: the address must be announced as either <literal>user@machine.example.com</literal> or <literal>user@example.com</literal>."
 msgstr "Finalmente, a regra <literal>reject_non_fqdn_sender</literal> rejeita e-mails que pretendem vir de endereços sem um nome de domínio totalmente qualificado. Na prática, isso significa rejeitar e-mails vindos de um usuário <literal>@máquina</literal>: o endereço deve ser anunciado como <literal>user@machine.example.com</literal> ou <literal>user@example.com</literal>."
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on the sender</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_sender</literal></secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtrando pelo remetente</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_sender</literal></secondary>"
 
 msgid "The <literal>reject_rhsbl_sender</literal> rule reject senders based on a (domain-based) RHSBL service."
 msgstr "A regra <literal>reject_rhsbl_sender</literal> rejeita remetentes baseada num serviço RHSBL (baseado em domínio)."
 
-#, fuzzy
-#| msgid "<primary>mail</primary><secondary>electronic</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_rhsbl_sender</literal></secondary>"
-msgstr "<primary>correio</primary><secondary>eletrônico</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_rhsbl_sender</literal></secondary>"
 
 msgid "Accepting or Refusing Based on the Recipient"
 msgstr "Aceitando e Rejeitando Baseado no Destinatário"
 
-#, fuzzy
-#| msgid "<primary>mail</primary><secondary>electronic</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>smtpd_recipient_restrictions</literal></secondary>"
-msgstr "<primary>correio</primary><secondary>eletrônico</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>smtpd_recipient_restrictions</literal></secondary>"
 
 msgid "<primary>email</primary><secondary>filtering on the recipient</secondary>"
 msgstr "<primary>e-mail</primary><secondary>filtrando pelo destinatário</secondary>"
@@ -722,23 +692,17 @@ msgstr "\nsmtpd_recipient_restrictions =\n    permit_mynetworks,\n    reject_una
 msgid "<literal>reject_unauth_destination</literal> is the basic rule that requires outside messages to be addressed to us; messages sent to an address not served by this server are rejected. Without this rule, a server becomes an open relay that allows spammers to send unsolicited emails; this rule is therefore mandatory, and it will be best included near the beginning of the list, so that no other rules may authorize the message before its destination has been checked."
 msgstr "<literal>reject_unauth_destination</literal> é a regra básica que exige que mensagens externas sejam endereçadas para nós; mensagens enviadas para um endereço não servido por este servidor são rejeitadas. Sem esta regra, um servidor se torna um retransmissor (\"relay\") aberto que permite que spammers enviem e-mails não solicitados; esta regra é, portanto, obrigatória, e vai ser melhor incluí-la perto do início da lista, de forma que nenhuma outra regra possa autorizar a mensagem antes de seu destino ser verificado."
 
-#, fuzzy
-#| msgid "<primary>mail</primary><secondary>electronic</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_unauth_destination</literal></secondary>"
-msgstr "<primary>correio</primary><secondary>eletrônico</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_unauth_destination</literal></secondary>"
 
 msgid "The <literal>reject_unlisted_recipient</literal> rule rejects messages sent to non-existing local users, which makes sense. Finally, the <literal>reject_non_fqdn_recipient</literal> rule rejects non-fully-qualified addresses; this makes it impossible to send an email to <literal>jean</literal> or <literal>jean@machine</literal>, and requires using the full address instead, such as <literal>jean@machine.falcot.com</literal> or <literal>jean@falcot.com</literal>."
 msgstr "A regra <literal>reject_unlisted_recipient</literal> rejeita mensagens enviadas para usuários locais não-existentes, o que faz sentido. Finalmente, a regra <literal>reject_non_fqdn_recipient</literal> rejeita endereços não totalmente qualificados; isso faz com que seja impossível enviar um e-mail para <literal>jean</literal> ou <literal>jean@machine</literal>, e em vez disso requer o uso do endereço completo, como <literal>jean@machine.falcot.com</literal> ou <literal>jean@falcot.com</literal>."
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on the recipient</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_unlisted_recipient</literal></secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtrando pelo destinatário</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_unlisted_recipient</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on the recipient</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_recipient</literal></secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtrando pelo destinatário</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_non_fqdn_recipient</literal></secondary>"
 
 msgid "The <literal>permit</literal> directive at the end is not necessary. But it can be useful at the end of a restriction list to make the default policy explicit."
 msgstr "A directiva <literal>permit</literal> no final não é necessária. Mas pode ser útil no final de uma lista de restrições para deixar explícita a política predeterminada."
@@ -746,15 +710,11 @@ msgstr "A directiva <literal>permit</literal> no final não é necessária. Mas 
 msgid "Restrictions Associated with the <literal>DATA</literal> Command"
 msgstr "Restrições Associadas ao Comando <literal>DATA</literal>"
 
-#, fuzzy
-#| msgid "<primary>mail</primary><secondary>electronic</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>smtpd_data_restrictions</literal></secondary>"
-msgstr "<primary>correio</primary><secondary>eletrônico</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>smtpd_data_restrictions</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on contents</secondary>"
 msgid "<primary>email</primary><secondary>filtering on SMTP commands</secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtro de conteúdo</secondary>"
+msgstr "<primary>e-mail</primary><secondary>filtro de comandos SMTP</secondary>"
 
 msgid "The <literal>DATA</literal> command of SMTP is emitted before the contents of the message. It doesn't provide any information per se, apart from announcing what comes next. It can still be subjected to checks."
 msgstr "O comando <literal>DATA</literal> do SMTP é emitido antes do conteúdo da mensagem. Ele não fornece qualquer informação, por si só, além de anunciar o que vem a seguir. Pode ainda ser submetidos a verificações."
@@ -762,10 +722,8 @@ msgstr "O comando <literal>DATA</literal> do SMTP é emitido antes do conteúdo 
 msgid "<primary><literal>DATA</literal></primary>"
 msgstr "<primary><literal>DATA</literal></primary>"
 
-#, fuzzy
-#| msgid "<primary>server</primary><secondary>SMTP</secondary>"
 msgid "<primary><literal>SMTP</literal></primary><secondary>DATA</secondary>"
-msgstr "<primary>server</primary><secondary>SMTP</secondary>"
+msgstr "<primary><literal>SMTP</literal></primary><secondary>DATA</secondary>"
 
 msgid "<literal>DATA</literal> checks"
 msgstr "Verificações pelo <literal>DATA</literal>"
@@ -776,23 +734,17 @@ msgstr "smtpd_data_restrictions = reject_unauth_pipelining"
 msgid "The <literal>reject_unauth_pipelining</literal> directives causes the message to be rejected if the sending party sends a command before the reply to the previous command has been sent. This guards against a common optimization used by spammer robots, since they usually don't care a fig about replies and only focus on sending as many emails as possible in as short a time as possible."
 msgstr "A diretiva <literal>reject_unauth_pipelining</literal> faz com que a mensagem seja rejeitada se o remetente envia um comando antes da resposta ao comando anterior foi enviado. Isso evita uma otimização comum usada por robôs de spammers, uma vez que eles geralmente não se importam em nada pelas respostas e se concentram apenas no envio de tantos e-mails quanto possível em tão curto espaço de tempo possível."
 
-#, fuzzy
-#| msgid "<primary>domain</primary><secondary>virtual</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>reject_unauth_pipelining</literal></secondary>"
-msgstr "<primary>domínio</primary><secondary>virtual</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>reject_unauth_pipelining</literal></secondary>"
 
 msgid "Applying Restrictions"
 msgstr "Aplicando as Restrições"
 
-#, fuzzy
-#| msgid "<primary>file</primary><secondary>server</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>smtpd_delay_reject</literal></secondary>"
-msgstr "<primary>arquivo</primary><secondary>servidor</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>smtpd_delay_reject</literal></secondary>"
 
-#, fuzzy
-#| msgid "Although the above commands validate information at various stages of the SMTP exchange, Postfix only sends the actual rejection as a reply to the <literal>RCPT TO</literal> command."
 msgid "Although the above commands validate information at various stages of the SMTP exchange, Postfix sends the actual rejection as a reply to the <literal>RCPT TO</literal> command by default."
-msgstr "Embora os comandos acima validam as informações em vários estágios de troca SMTP, o Postfix só envia uma rejeição real como uma resposta ao comando <literal>RCPT TO</literal>."
+msgstr "Embora os comandos acima validem as informações em vários estágios de troca SMTP, o Postfix envia por padrão uma rejeição real como uma resposta ao comando <literal>RCPT TO</literal>."
 
 msgid "This means that even if the message is rejected due to an invalid <literal>EHLO</literal> command, Postfix knows the sender and the recipient when announcing the rejection. It can then log a more explicit message than it could if the transaction had been interrupted from the start. In addition, a number of SMTP clients do not expect failures on the early SMTP commands, and these clients will be less disturbed by this late rejection."
 msgstr "Isto significa que mesmo se a mensagem for rejeitada devido a um comando <literal>EHLO</literal> inválido, o Postfix conhece o remetente e o destinatário ao anunciar a rejeição. Então ele pode registrar uma mensagem mais explícita do que ele poderia se a transação havia sido interrompida desde o início. Além disso, um número de clientes SMTP não esperam falhas nos comandos SMTP iniciais, e esses clientes serão menos perturbados por esta rejeição tardia."
@@ -806,23 +758,17 @@ msgstr "O comportamento padrão é controlado pela regra <literal>smtpd_delay_re
 msgid "Filtering Based on the Message Contents"
 msgstr "Filtrando Baseado no Conteúdo da Mensagem"
 
-#, fuzzy
-#| msgid "<primary>email</primary><secondary>filtering on contents</secondary>"
 msgid "<primary>email</primary><secondary>filtering on content inspection</secondary>"
-msgstr "<primary>e-mail</primary><secondary>filtro de conteúdo</secondary>"
+msgstr "<primary>e-mail</primary><secondary>filtro de inspeção de conteúdo</secondary>"
 
 msgid "<primary>email</primary><secondary>filtering on contents</secondary>"
 msgstr "<primary>e-mail</primary><secondary>filtro de conteúdo</secondary>"
 
-#, fuzzy
-#| msgid "<primary>file</primary><secondary>server</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>body_checks</literal></secondary>"
-msgstr "<primary>arquivo</primary><secondary>servidor</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>body_checks</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>file</primary><secondary>server</secondary>"
 msgid "<primary>Postfix</primary><secondary><literal>header_checks</literal></secondary>"
-msgstr "<primary>arquivo</primary><secondary>servidor</secondary>"
+msgstr "<primary>Postfix</primary><secondary><literal>header_checks</literal></secondary>"
 
 msgid "The validation and restriction system would not be complete without a way to apply checks to the message contents. Postfix differentiates the checks applying to the email headers from those applying to the email body."
 msgstr "O sistema de validação e restrição não seria completo sem uma maneira de aplicar verificações para o conteúdo da mensagem. O Postfix diferencia as verificações praticadas nos cabeçalhos de e-mail das que se aplicam ao corpo do e-mail."
@@ -845,10 +791,8 @@ msgstr "Ambos os arquivos contêm uma lista de expressões regulares (comumente 
 msgid "<emphasis>QUICK LOOK</emphasis> Regexp tables"
 msgstr "<emphasis>OLHADA RÁPIDA</emphasis> Tabelas de expressões regulares (regexp)"
 
-#, fuzzy
-#| msgid "The <filename>/usr/share/doc/postfix-doc/examples/header_checks.gz</filename> file contains many explanatory comments and can be used as a starting point for creating the <filename>/etc/postfix/header_checks</filename> and <filename>/etc/postfix/body_checks</filename> files."
 msgid "The file <filename>/usr/share/doc/postfix/examples/header_checks.gz</filename> (from the <emphasis role=\"pkg\">postfix-doc</emphasis> package) and <citerefentry><refentrytitle>header_checks</refentrytitle><manvolnum>5</manvolnum></citerefentry> contain many explanatory comments and can be used as a starting point for creating the <filename>/etc/postfix/header_checks</filename> and <filename>/etc/postfix/body_checks</filename> files."
-msgstr "O arquivo <filename>/usr/share/doc/postfix-doc/examples/header_checks.gz</filename> contém muitos comentários explicativos e podem ser usados como ponto de partida para a criação dos arquivos <filename>/etc/postfix/header_checks</filename> e <filename>/etc/postfix/body_checks</filename>."
+msgstr "O arquivo <filename>/usr/share/doc/postfix/examples/header_checks.gz</filename> (do pacote <emphasis role=\"pkg\">postfix-doc</emphasis>) e <citerefentry><refentrytitle>header_checks</refentrytitle><manvolnum>5</manvolnum></citerefentry> contêm muitos comentários explicativos e podem ser usados como ponto de partida para a criação dos arquivos <filename>/etc/postfix/header_checks</filename> e <filename>/etc/postfix/body_checks</filename>."
 
 msgid "Example <filename>/etc/postfix/header_checks</filename> file"
 msgstr "Exemplos do arquivo <filename>/etc/postfix/header_checks</filename>"
@@ -865,20 +809,14 @@ msgstr ""
 msgid "<emphasis>BACK TO BASICS</emphasis> Regular expression"
 msgstr "<emphasis>DE VOLTA AO BÁSICO</emphasis> Expressão regular"
 
-#, fuzzy
-#| msgid "<primary>repro</primary>"
 msgid "<primary>regular expressions</primary>"
-msgstr "<primary>repro</primary>"
+msgstr "<primary>expressões regulares</primary>"
 
-#, fuzzy
-#| msgid "<primary>NFS</primary><secondary>options</secondary>"
 msgid "<primary>regex</primary><see>regular expressions</see>"
-msgstr "<primary>NFS</primary><secondary>opções</secondary>"
+msgstr "<primary>regex</primary><see>expressões regulares</see>"
 
-#, fuzzy
-#| msgid "<primary>NFS</primary><secondary>options</secondary>"
 msgid "<primary>regexp</primary><see>regular expressions</see>"
-msgstr "<primary>NFS</primary><secondary>opções</secondary>"
+msgstr "<primary>regexp</primary><see>expressões regulares</see>"
 
 #, fuzzy
 #| msgid "The <emphasis>regular expression</emphasis> term (shortened to <emphasis>regexp</emphasis> or <emphasis>regex</emphasis>) references a generic notation for expressing a description of the contents and/or structure of a string of characters. Certain special characters allow defining alternatives (for instance, <literal>foo|bar</literal> matches either “foo” or “bar”), sets of allowed characters (for instance, <literal>[0-9]</literal> means any digit, and <literal>.</literal> — a dot — means any character), quantifications (<literal>s?</literal> matches either <literal>s</literal> or the empty string, in other words 0 or 1 occurrence of <literal>s</literal>; <literal>s+</literal> matches one or more consecutive <literal>s</literal> characters; and so on). Parentheses allow grouping search results."
@@ -4164,7 +4102,7 @@ msgid "WebRTC uses a simple API to provide browsers and mobile applications with
 msgstr "O WebRTC usa uma API simples para fornecer navegadores e aplicativos móveis com RTC, é um software livre e está sendo desenvolvido pelo Google. <ulink type=\"block\" url=\"https://webrtc.org\" />"
 
 msgid "A very flexible approach is using GStreamer's WebRTC implementation. It enables pipeline-based multimedia applications, which allows developing interesting and highly efficient applications. A good starting point is the following demo by Centricular, the main company that is developing it: <ulink type=\"block\" url=\"https://github.com/centricular/gstwebrtc-demos\" />"
-msgstr ""
+msgstr "Uma abordagem muito flexível é usar a implementação WebRTC do GStreamer. Ela habilita aplicações multimídia baseadas em pipeline, o que permite o desenvolvimento de aplitcativos interessantes e muito eficientes. Um bom ponto de partida é a seguinte demonstração da Centricular, a principal companhia que a desenvolve: <ulink type=\"block\" url=\"https://github.com/centricular/gstwebrtc-demos\" />"
 
 #, fuzzy
 #| msgid "<primary>Samba</primary>"
