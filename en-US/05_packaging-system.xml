@@ -85,8 +85,9 @@
       keeping dependencies satisfied), updating and upgrading the system,
       listing the available packages, etc.</para>
 
-      <para>As for the <command>ar</command> program, it allows handling
-      files of the same name: <command>ar t
+      <para>As for the <command>ar</command> program, provided by the
+      <emphasis role="pkg">binutils</emphasis> package, it allows
+      handling files of the same name: <command>ar t
       <replaceable>archive</replaceable></command> displays the list of
       files contained in such an archive, <command>ar x
       <replaceable>archive</replaceable></command> extracts the files from
@@ -165,7 +166,6 @@ $ </computeroutput><userinput>tar tJf control.tar.xz</userinput>
 ./conffiles
 ./control
 ./md5sums
-./postinst
 ./postrm
 $ </computeroutput><userinput>cat debian-binary</userinput>
 <computeroutput>2.0</computeroutput>
@@ -180,7 +180,7 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
         <listitem>
           <para>This is a text file which simply indicates the version of the
           <filename>.deb</filename> file package format version. In Debian
-          <emphasis role="distribution">Buster</emphasis> it is still
+          <emphasis role="distribution">Bullseye</emphasis> it is still
           version 2.0.</para>
         </listitem>
       </varlistentry>
@@ -251,13 +251,13 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
       <screen>
 <computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput><computeroutput><![CDATA[
 Package: apt
-Version: 1.8.2
-Installed-Size: 4064
+Version: 2.2.3
+Installed-Size: 4337
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: amd64
 Replaces: apt-transport-https (<< 1.5~alpha4~), apt-utils (<< 1.3~exp2~)
-Provides: apt-transport-https (= 1.8.2)
-Depends: adduser, gpgv | gpgv2 | gpgv1, debian-archive-keyring, libapt-pkg5.0 (>= 1.7.0~alpha3~), libc6 (>= 2.15), libgcc1 (>= 1:3.0), libgnutls30 (>= 3.6.6), libseccomp2 (>= 1.0.1), libstdc++6 (>= 5.2)
+Provides: apt-transport-https (= 2.2.3)
+Depends: adduser, gpgv | gpgv2 | gpgv1, libapt-pkg6.0 (>= 2.2.3), debian-archive-keyring, libc6 (>= 2.15), libgcc-s1 (>= 3.0), libgnutls30 (>= 3.7.0), libseccomp2 (>= 2.4.2), libstdc++6 (>= 9), libsystemd0
 Recommends: ca-certificates
 Suggests: apt-doc, aptitude | synaptic | wajig, dpkg-dev (>= 1.17.2), gnupg | gnupg2 | gnupg1, powermgmt-base
 Breaks: apt-transport-https (<< 1.5~alpha4~), apt-utils (<< 1.3~exp2~), aptitude (<< 0.8.10)
@@ -285,10 +285,10 @@ Tag: admin::package-management, devel::lang:ruby, hardware::storage,
  works-with::audio, works-with::software:package, works-with::text
 Section: admin
 Priority: required
-Filename: pool/main/a/apt/apt_1.8.2_amd64.deb
-Size: 1418108
-MD5sum: 0e80dedab6ec1e66a8f6c15f1925d2d3
-SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
+Filename: pool/main/a/apt/apt_2.2.3_amd64.deb
+Size: 1490972
+MD5sum: 61b9849b70b6b9d11a7422e577871ab3
+SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
 ]]></computeroutput>
 </screen>
 
@@ -365,7 +365,7 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
         not tolerate parentheses that change the order of priorities
         between the logical operators “or” and “and”. It would thus
         be written <command>A | B, A | C</command>. <ulink type="block"
-        url="https://www.debian.org/doc/debian-policy/#document-ch-relationships"/></para>
+        url="https://www.debian.org/doc/debian-policy/ch-relationships.html#syntax-of-relationship-fields"/></para>
 
         <indexterm><primary>meta-package</primary></indexterm>
 
@@ -591,7 +591,7 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
             managers.</para>
 
             <para>The full list can be found on the Web.
-            <ulink type="block" url="http://www.debian.org/doc/packaging-manuals/virtual-package-names-list.txt"/>
+            <ulink type="block" url="https://sources.debian.org/src/debian-policy/4.5.1.0/virtual-package-names-list.yaml/"/>
             </para>
           </sidebar>
         </section>
@@ -605,8 +605,8 @@ SHA256: 80e9600822c4943106593ca5b0ec75d5aafa74c6130ba1071b013c42c507475e
           For example, the <emphasis
           role="pkg">libdigest-md5-perl</emphasis> Perl module was an
           optional module in Perl 5.6, and has been integrated as standard
-          in Perl 5.8 (and later versions, such as 5.28 present in
-          <emphasis role="distribution">Buster</emphasis>). As such, the
+          in Perl 5.8 (and later versions, such as 5.32.1 present in
+          <emphasis role="distribution">Bullseye</emphasis>). As such, the
           package <emphasis role="pkg">perl</emphasis> has since version
           5.8 declared <literal>Provides: libdigest-md5-perl</literal> so
           that the dependencies on this package are met if the user has
@@ -1150,37 +1150,37 @@ Format: 3.0 (quilt)
 Source: zim
 Binary: zim
 Architecture: all
-Version: 0.68-1
+Version: 0.73.5-1
 Maintainer: Zim Package Maintainers <zim@packages.debian.org>
 Uploaders: Raphaël Hertzog <hertzog@debian.org>
-Homepage: http://zim-wiki.org
-Standards-Version: 4.1.3
+Homepage: https://zim-wiki.org
+Standards-Version: 4.5.1
 Vcs-Browser: https://salsa.debian.org/debian/zim
 Vcs-Git: https://salsa.debian.org/debian/zim.git
-Build-Depends: debhelper (>= 11), xdg-utils, python (>= 2.6.6-3~), libgtk2.0-0 (>= 2.6), python-gtk2, python-xdg, dh-python
+Build-Depends: debhelper-compat (= 13), python3, python3-gi, python3-xdg, gir1.2-gtk-3.0, dh-python
 Package-List:
  zim deb x11 optional arch=all
 Checksums-Sha1:
- a3b50aa8e44126cc7edd2c1912adf9820f50ad58 2044224 zim_0.68.orig.tar.gz
- 4e13b37625789334da2d95b93e51e41ffd3b6b01 9300 zim_0.68-1.debian.tar.xz
+ 80d43d5c1c6a47c695079eb02bc8ad36b84d6e57 2159901 zim_0.73.5.orig.tar.gz
+ b1cd86dc4819a80126efbf6ee6eba17a33f451d3 10124 zim_0.73.5-1.debian.tar.xz
 Checksums-Sha256:
- d91518e010f6a6e951a75314138b5545a4c51151fc99f513aa7768a18858df15 2044224 zim_0.68.orig.tar.gz
- 23f4ddc69af74509932acc3b5f0d4cd2af943016e4fd5740b9d98ec4d49fd8c2 9300 zim_0.68-1.debian.tar.xz
+ a36f15d92c3994c0d55b07f83253b3d8b826beb3714865edbabc14f1cc91d63a 2159901 zim_0.73.5.orig.tar.gz
+ 6c2db642d9ac1c2440ed08e0cd584006045b342b255f37ffe42bd5459fb5cb76 10124 zim_0.73.5-1.debian.tar.xz
 Files:
- 336041a16687abb66fd9f604b98407e8 2044224 zim_0.68.orig.tar.gz
- 1714f67b35ab69e709849ad707206ca8 9300 zim_0.68-1.debian.tar.xz
+ fa76ceb8ac7d7354fb0e2bc5607e9faa 2159901 zim_0.73.5.orig.tar.gz
+ a0c824d979efb196cde0176d3cb9c719 10124 zim_0.73.5-1.debian.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 Comment: Signed by Raphael Hertzog
 
-iQEzBAEBCgAdFiEE1823g1EQnhJ1LsbSA4gdq+vCmrkFAlqyOxkACgkQA4gdq+vC
-mrnCqAf/Ww9wg97VragtVhSFvehoVoJ0ZhoqNaSuCP/W1Fuf+P0YklzL2BlkVRXW
-X23c8Qs1v6VE2iRY3mEkdWwgBs1QwF0MX7H1jjQfPHCynGHKlH5dfo5fqLizgCeu
-c9Pug3ZisjF90CgsseO7SVDqHVmO6QsfAaGWpHAw92HDz/xwjrS/4Ejntqjy0b+r
-Gmw2AZuBdhp+7C6p7In/Gg6DHPBLQGMLCKypoZKQdl+L0fWjjeykOzMIbjry2sRH
-H0J4FLVGAGumh3zIZlm/t3ehGfP9Dg8FvzMaCNsf8OtYCSAEutrQEDBaskcTSIpq
-L0GQhKlViDuu8gzsqm7efPEhPcsF1A==
-=6jGR
+iQEzBAEBCgAdFiEE1823g1EQnhJ1LsbSA4gdq+vCmrkFAmAa3ooACgkQA4gdq+vC
+mrkq1gf/cs7irmbCSDrADVqsqYBrFJ1FyprE3jiHLNs0OQLryhFj9tzDuilX35VE
+HkCfxSaKkzgvQLYtpuw1VBfhOdngTdHO39U6eljkaScnfLWU8Z5n/q+YeedxItoY
+X3TtzMexFmb4WJqlylfjbXeqbLdYvsILQ3NVnE48AzkaBQlCC2d9bqecZhWiKfzq
+gNxIDVDDhqCXMPe7QCErCBiFPUVpGN7b+6QWN0RxOTLZdj/slRD73rT++VmY+xN1
+L8BSLcjXie+ES11MhQNYaLpCv2vqImlZaxkFWvsKBo9ndRFSbE3/RNK479a4KGve
+KrdpGUJXy9uLPuAMyn5WphwXJ7OZXQ==
+=YFDk
 -----END PGP SIGNATURE-----
 ]]></programlisting>
       </example>
@@ -1293,10 +1293,10 @@ L0GQhKlViDuu8gzsqm7efPEhPcsF1A==
         <emphasis role="pkg">dpkg-dev</emphasis> package) to decompress it:</para>
 
         <informalexample>
-          <screen><computeroutput>$ </computeroutput><userinput>dpkg-source -x zim_0.68-1.dsc</userinput>
-<computeroutput>dpkg-source: info: extracting zim in zim-0.68
-dpkg-source: info: unpacking zim_0.68.orig.tar.gz
-dpkg-source: info: unpacking zim_0.68-1.debian.tar.xz</computeroutput>
+          <screen><computeroutput>$ </computeroutput><userinput>dpkg-source -x zim_0.73.5-1.dsc</userinput>
+<computeroutput>dpkg-source: info: extracting zim in zim-0.73.5
+dpkg-source: info: unpacking zim_0.73.5.orig.tar.gz
+dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz</computeroutput>
 </screen>
         </informalexample>
 
@@ -1311,20 +1311,19 @@ dpkg-source: info: unpacking zim_0.68-1.debian.tar.xz</computeroutput>
 
         <screen><computeroutput>$ </computeroutput><userinput>apt source <replaceable>package</replaceable></userinput>
 <computeroutput><![CDATA[Reading package lists... Done
-Selected version '0.68-1' (stable) for zim
 NOTICE: 'zim' packaging is maintained in the 'Git' version control system at:
 https://salsa.debian.org/debian/zim.git
 Please use:
 git clone https://salsa.debian.org/debian/zim.git
 to retrieve the latest (possibly unreleased) updates to the package.
-Need to get 2055 kB of source archives.
-Get:1 https://cdn-aws.deb.debian.org/debian stable/main zim 0.68-1 (dsc) [1586 B]
-Get:2 https://cdn-aws.deb.debian.org/debian stable/main zim 0.68-1 (tar) [2044 kB]
-Get:3 https://cdn-aws.deb.debian.org/debian stable/main zim 0.68-1 (diff) [9300 B]
-Fetched 2055 kB in 1s (3356 kB/s)
-dpkg-source: info: extracting zim in zim-0.68
-dpkg-source: info: unpacking zim_0.68.orig.tar.gz
-dpkg-source: info: unpacking zim_0.68-1.debian.tar.xz
+Need to get 2,172 kB of source archives.
+Get:1 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (dsc) [1,580 B]
+Get:2 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (tar) [2,160 kB]
+Get:3 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (diff) [10.1 kB]
+Fetched 2,172 kB in 0s (8,048 kB/s)
+dpkg-source: info: extracting zim in zim-0.73.5
+dpkg-source: info: unpacking zim_0.73.5.orig.tar.gz
+dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz
 ]]></computeroutput></screen>
       </sidebar>
     </section>
@@ -1403,13 +1402,14 @@ dpkg-source: info: unpacking zim_0.68-1.debian.tar.xz
         <title>Installation of a package with <command>dpkg</command></title>
 
         <screen role="scale">
-<computeroutput># </computeroutput><userinput>dpkg -i man-db_2.8.5-2_amd64.deb</userinput>
-<computeroutput>(Reading database ... 14913 files and directories currently installed.)
-Preparing to unpack .../man-db_2.8.5-2_amd64.deb ...
-Unpacking man-db (2.8.5-2) over (2.8.5-2) ...
-Setting up man-db (2.8.5-2) ...
+<computeroutput># </computeroutput><userinput>dpkg -i man-db_2.9.4-2_amd64.deb</userinput>
+<computeroutput>(Reading database ... 227466 files and directories currently installed.)
+Preparing to unpack man-db_2.9.4-2_amd64.deb ...
+Unpacking man-db (2.9.4-2) over (2.9.4-2) ...
+Setting up man-db (2.9.4-2) ...
 Updating database of manual pages ...
-Processing triggers for mime-support (3.62) ...</computeroutput>
+man-db.service is a disabled or a static unit not running, not starting it.
+Processing triggers for mailcap (3.69) ...</computeroutput>
 </screen>
       </example>
 
@@ -1426,14 +1426,16 @@ Processing triggers for mime-support (3.62) ...</computeroutput>
         <title>Separate unpacking and configuration</title>
 
         <screen role="scale">
-<computeroutput># </computeroutput><userinput>dpkg --unpack man-db_2.8.5-2_amd64.deb</userinput>
-<computeroutput>(Reading database ... 14937 files and directories currently installed.)
-Preparing to unpack man-db_2.8.5-2_amd64.deb ...
-Unpacking man-db (2.8.5-2) over (2.8.5-2) ...
-Processing triggers for mime-support (3.62) ...
+<computeroutput># </computeroutput><userinput>dpkg --unpack man-db_2.9.4-2_amd64.deb</userinput>
+<computeroutput>(Reading database ... 227466 files and directories currently installed.)
+Preparing to unpack man-db_2.9.4-2_amd64.deb ...
+Unpacking man-db (2.9.4-2) over (2.9.4-2) ...
+Processing triggers for mailcap (3.69) ...
 # </computeroutput><userinput>dpkg --configure man-db</userinput>
-<computeroutput>Setting up man-db (2.8.5-2) ...
+<computeroutput>Setting up man-db (2.9.4-2) ...
 Updating database of manual pages ...
+man-db.service is a disabled or a static unit not running, not starting it.
+
 </computeroutput>
 </screen>
       </example>
@@ -1539,11 +1541,11 @@ E: Unmet dependencies. Try using -f.</computeroutput></screen>
         <title>Removal and purge of the <emphasis role="pkg">debian-cd</emphasis> package</title>
 
         <screen><computeroutput># </computeroutput><userinput>dpkg -r debian-cd</userinput>
-<computeroutput>(Reading database ... 15915 files and directories currently installed.)
-Removing debian-cd (3.1.25) ...
+<computeroutput>(Reading database ... 228705 files and directories currently installed.)
+Removing debian-cd (3.1.33) ...
 # </computeroutput><userinput>dpkg -P debian-cd</userinput>
-<computeroutput>(Reading database ... 15394 files and directories currently installed.)
-Purging configuration files for debian-cd (3.1.25) ...
+<computeroutput>(Reading database ... 228049 files and directories currently installed.)
+Purging configuration files for debian-cd (3.1.33) ...
 </computeroutput>
 </screen>
       </example>
@@ -1670,12 +1672,13 @@ Essential: yes
 Status: install ok installed
 Priority: required
 Section: utils
-Installed-Size: 15719
+Installed-Size: 17478
 Maintainer: Michael Stone <mstone@debian.org>
 Architecture: amd64
 Multi-Arch: foreign
-Version: 8.30-3
-Pre-Depends: libacl1 (>= 2.2.23), libattr1 (>= 1:2.4.44), libc6 (>= 2.28), libselinux1 (>= 2.1.13)
+Source: coreutils (8.32-4)
+Version: 8.32-4+b1
+Pre-Depends: libacl1 (>= 2.2.23), libattr1 (>= 1:2.4.44), libc6 (>= 2.28), libgmp10, libselinux1 (>= 3.1~)
 Description: GNU core utilities
  This package contains the basic file, shell and text manipulation
  utilities which are expected to exist on every operating system.
@@ -1694,75 +1697,62 @@ $ </computeroutput><userinput>dpkg -l 'b*'</userinput>
 <computeroutput><![CDATA[Desired=Unknown/Install/Remove/Purge/Hold
 | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
 |/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
-||/ Name                       Version              Architecture Description
-+++-====================-===============-===============-==================================================
-un  backupninja          <none>          <none>          (no description available)
-un  backuppc             <none>          <none>          (no description available)
-un  baobab               <none>          <node>          (no description available)
-un  base                 <none>          <none>          (no description available)
-un  base-config          <none>          <none>          (no description available)
-ii  base-files           11              amd64           Debian base system miscellaneous files
-ii  base-passwd          3.5.46          amd64           Debian base system master password and group files
-ii  bash                 5.0-4           amd64           GNU Bourne Again SHell
+||/ Name                       Version       Architecture Description
++++-==========================-=============-============-=====================>
+un  backupninja                <none>        <none>       (no description avail>
+un  backuppc                   <none>        <none>       (no description avail>
+ii  baloo-kf5                  5.78.0-3      amd64        framework for searchi>
+un  balsa                      <none>        <none>       (no description avail>
+ii  baobab                     3.38.0-1      amd64        GNOME disk usage anal>
+un  base                       <none>        <none>       (no description avail>
+un  base-config                <none>        <none>       (no description avail>
+ii  base-files                 11            amd64        Debian base system mi>
+ii  base-passwd                3.5.49        amd64        Debian base system ma>
+ii  bash                       5.1-2+b1      amd64        GNU Bourne Again SHell
 [..]]]>
-$ </computeroutput><userinput>dpkg -c /var/cache/apt/archives/gnupg-utils_2.2.12-1_amd64.deb</userinput>
-<computeroutput><![CDATA[drwxr-xr-x root/root         0 2018-12-15 02:17 ./
-drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/
-drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/bin/
--rwxr-xr-x root/root      3516 2018-12-15 02:17 ./usr/bin/gpg-zip
--rwxr-xr-x root/root    866256 2018-12-15 02:17 ./usr/bin/gpgcompose
--rwxr-xr-x root/root     30792 2018-12-15 02:17 ./usr/bin/gpgparsemail
--rwxr-xr-x root/root     84432 2018-12-15 02:17 ./usr/bin/gpgsplit
--rwxr-xr-x root/root    154952 2018-12-15 02:17 ./usr/bin/gpgtar
--rwxr-xr-x root/root    166568 2018-12-15 02:17 ./usr/bin/kbxutil
--rwxr-xr-x root/root      1081 2017-08-28 12:22 ./usr/bin/lspgpot
--rwxr-xr-x root/root      2194 2018-11-18 23:37 ./usr/bin/migrate-pubring-from-classic-gpg
--rwxr-xr-x root/root    121576 2018-12-15 02:17 ./usr/bin/symcryptrun
--rwxr-xr-x root/root     18424 2018-12-15 02:17 ./usr/bin/watchgnupg
-drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/sbin/
--rwxr-xr-x root/root      3075 2018-12-15 02:17 ./usr/sbin/addgnupghome
--rwxr-xr-x root/root      2217 2018-12-15 02:17 ./usr/sbin/applygnupgdefaults
-drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/share/
-drwxr-xr-x root/root         0 2018-12-15 02:17 ./usr/share/doc/
+$ </computeroutput><userinput>dpkg -c /var/cache/apt/archives/python3-minimal_3.9.2-3_amd64.deb</userinput>
+<computeroutput><![CDATA[drwxr-xr-x root/root         0 2021-04-05 14:00 ./
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/bin/
+-rwxr-xr-x root/root      7806 2021-04-05 14:00 ./usr/bin/py3clean
+-rwxr-xr-x root/root     13184 2021-04-05 14:00 ./usr/bin/py3compile
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/doc/
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/doc/python3-minimal/
+-rw-r--r-- root/root       462 2018-06-05 23:35 ./usr/share/doc/python3-minimal/README.Debian
+-rw-r--r-- root/root     15215 2021-04-05 14:00 ./usr/share/doc/python3-minimal/changelog.Debian.gz
+-rw-r--r-- root/root     16122 2018-06-05 23:35 ./usr/share/doc/python3-minimal/copyright
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/man/
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/man/man1/
+-rw-r--r-- root/root       590 2021-04-05 14:00 ./usr/share/man/man1/py3clean.1.gz
+-rw-r--r-- root/root      1015 2021-04-05 14:00 ./usr/share/man/man1/py3compile.1.gz
+-rw-r--r-- root/root       707 2021-04-05 14:00 ./usr/share/man/man1/py3versions.1.gz
+drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/python3/
 [...]]]>
-$ </computeroutput><userinput>dpkg -I /var/cache/apt/archives/gnupg-utils_2.2.12-1_amd64.deb</userinput>
+$ </computeroutput><userinput>dpkg -I /dpkg -c /var/cache/apt/archives/python3-minimal_3.9.2-3_amd64.deb</userinput>
 <computeroutput><![CDATA[ new Debian package, version 2.0.
- size 857408 bytes: control archive=1844 bytes.
-    1564 bytes,    32 lines      control              
-    1804 bytes,    28 lines      md5sums              
- Package: gnupg-utils
- Source: gnupg2
- Version: 2.2.12-1
+ size 38248 bytes: control archive=1212 bytes.
+     617 bytes,    17 lines      control              
+    1048 bytes,    15 lines      md5sums              
+     117 bytes,     8 lines   *  postinst             #!/bin/sh
+     108 bytes,     7 lines   *  prerm                #!/bin/sh
+ Package: python3-minimal
+ Source: python3-defaults
+ Version: 3.9.2-3
  Architecture: amd64
- Maintainer: Debian GnuPG Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>
- Installed-Size: 1845
- Depends: libassuan0 (>= 2.0.1), libbz2-1.0, libc6 (>= 2.25), libgcrypt20 (>= 1.8.0), libgpg-error0 (>= 1.26-2~), libksba8 (>= 1.3.4), libreadline7 (>= 6.0), zlib1g (>= 1:1.1.4)
- Recommends: gpg, gpg-agent, gpgconf, gpgsm
- Breaks: gnupg (<< 2.1.21-4), gnupg-agent (<< 2.1.21-4)
- Replaces: gnupg (<< 2.1.21-4), gnupg-agent (<< 2.1.21-4)
- Section: utils
+ Maintainer: Matthias Klose <doko@debian.org>
+ Installed-Size: 121
+ Pre-Depends: python3.9-minimal (>= 3.9.2-0~)
+ Depends: dpkg (>= 1.13.20)
+ Section: python
  Priority: optional
- Multi-Arch: foreign
- Homepage: https://www.gnupg.org/
- Description: GNU privacy guard - utility programs
-  GnuPG is GNU's tool for secure communication and data storage.
-  .
-  This package contains several useful utilities for manipulating
-  OpenPGP data and other related cryptographic elements.  It includes:
-  .
-   * addgnupghome -- create .gnupg home directories
-   * applygnupgdefaults -- run gpgconf --apply-defaults for all users
-   * gpgcompose -- an experimental tool for constructing arbitrary
-                   sequences of OpenPGP packets (e.g. for testing)
-   * gpgparsemail -- parse an e-mail message into annotated format
-   * gpgsplit -- split a sequence of OpenPGP packets into files
-   * gpgtar -- encrypt or sign files in an archive
-   * kbxutil -- list, export, import Keybox data
-   * lspgpot -- convert PGP ownertrust values to GnuPG
-   * migrate-pubring-from-classic-gpg -- use only "modern" formats
-   * symcryptrun -- use simple symmetric encryption tool in GnuPG framework
-   * watchgnupg -- watch socket-based logs
-[..]]]></computeroutput>
+ Multi-Arch: allowed
+ Homepage: https://www.python.org/
+ Description: minimal subset of the Python language (default python3 version)
+  This package contains the interpreter and some essential modules.  It's used
+  in the boot process for some basic tasks.
+  See /usr/share/doc/python3.9-minimal/README.Debian for a list of the modules
+  contained in this package.]]></computeroutput>
 </screen>
       </example>
 
