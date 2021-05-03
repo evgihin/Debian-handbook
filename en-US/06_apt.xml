@@ -235,36 +235,36 @@ deb-src url distribution component1 component2 component3 [..] componentX
 
         <!-- TODO: <programlistingco> ? -->
         <programlisting># Security updates
-deb http://security.debian.org/ buster/updates main contrib non-free
-deb-src http://security.debian.org/ buster/updates main contrib non-free
+deb http://security.debian.org/ bullseye/updates main contrib non-free
+deb-src http://security.debian.org/ bullseye/updates main contrib non-free
 
 ## Debian mirror
 
 # Base repository
-deb https://deb.debian.org/debian buster main contrib non-free
-deb-src https://deb.debian.org/debian buster main contrib non-free
+deb https://deb.debian.org/debian bullseye main contrib non-free
+deb-src https://deb.debian.org/debian bullseye main contrib non-free
 
 # Stable updates
-deb https://deb.debian.org/debian buster-updates main contrib non-free
-deb-src https://deb.debian.org/debian buster-updates main contrib non-free
+deb https://deb.debian.org/debian bullseye-security main contrib non-free
+deb-src https://deb.debian.org/debian bullseye-security main contrib non-free
 
 # Stable backports
-deb https://deb.debian.org/debian buster-backports main contrib non-free
-deb-src https://deb.debian.org/debian buster-backports main contrib non-free
+deb https://deb.debian.org/debian bullseye-backports main contrib non-free
+deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
 </programlisting>
       </example>
 
       <para>This file lists all sources of packages associated with the
-      <emphasis role="distribution">Buster</emphasis> version of Debian (the
+      <emphasis role="distribution">Bullseye</emphasis> version of Debian (the
       current <emphasis role="distribution">Stable</emphasis> suite as of this
-      writing). In the example above, we opted to name “buster” explicitly
+      writing). In the example above, we opted to name “bullseye” explicitly
       instead of using the corresponding “stable“ aliases
       (<literal>stable</literal>, <literal>stable-updates</literal>,
       <literal>stable-backports</literal>) because we don't want to have the
       underlying distribution changed outside of our control when the next
       stable release comes out.</para>
 
-      <para>Most packages will come from the “base repository” which contains
+      <para>Most packages will come from the “base repository”, which contains
       all packages but is seldom updated (about once every 2 months for a
       “point release”). The other repositories are partial (they do not contain
       all packages) and can host updates (packages with newer version) that APT
@@ -359,7 +359,7 @@ deb-src https://deb.debian.org/debian buster-backports main contrib non-free
 
         <indexterm><primary>mailing lists</primary><secondary><email>debian-stable-announce@lists.debian.org</email></secondary></indexterm>
 
-        <programlisting>deb https://deb.debian.org/debian buster-updates main contrib non-free
+        <programlisting>deb https://deb.debian.org/debian bullseye-updates main contrib non-free
 </programlisting>
       </section>
 
@@ -384,12 +384,12 @@ deb-src https://deb.debian.org/debian buster-backports main contrib non-free
 
         <para>Anyone can use this repository to test those updates before their
         official publication. The extract below uses the
-        <literal>buster-proposed-updates</literal> alias which is both more
+        <literal>bullseye-proposed-updates</literal> alias which is both more
         explicit and more consistent since
-        <literal>stretch-proposed-updates</literal> also exists (for the
+        <literal>buster-proposed-updates</literal> also exists (for the
         <emphasis role="distribution">Oldstable</emphasis> updates):</para>
 
-        <programlisting>deb https://deb.debian.org/debian buster-proposed-updates main contrib non-free
+        <programlisting>deb https://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
 </programlisting>
       </section>
 
@@ -431,8 +431,8 @@ deb-src https://deb.debian.org/debian buster-backports main contrib non-free
         instructions to do so (or unless you have already done so with a former
         version of the given backport):</para>
 
-        <screen><computeroutput>$ </computeroutput><userinput>sudo apt-get install <replaceable>package</replaceable>/buster-backports
-</userinput><computeroutput>$ </computeroutput><userinput>sudo apt-get install -t buster-backports <replaceable>package</replaceable>
+        <screen><computeroutput>$ </computeroutput><userinput>sudo apt-get install <replaceable>package</replaceable>/bullseye-backports
+</userinput><computeroutput>$ </computeroutput><userinput>sudo apt-get install -t bullseye-backports <replaceable>package</replaceable>
 </userinput></screen>
 
       </section>
@@ -467,8 +467,8 @@ deb https://deb.debian.org/debian stable main contrib non-free
 deb-src https://deb.debian.org/debian stable main contrib non-free
 
 # Stable security updates
-deb http://security.debian.org/ stable/updates main contrib non-free
-deb-src http://security.debian.org/ stable/updates main contrib non-free
+deb http://security.debian.org/ stable-security main contrib non-free
+deb-src http://security.debian.org/ stable-security main contrib non-free
 </programlisting>
       </example>
 
@@ -708,8 +708,8 @@ security http://security.debian.org
 
       <informalexample>
         <programlisting># Sample sources.list pointing to a local approx server
-deb http://localhost:9999/security buster/updates main contrib non-free
-deb http://localhost:9999/debian buster main contrib non-free
+deb http://localhost:9999/security bullseye-security main contrib non-free
+deb http://localhost:9999/debian bullseye main contrib non-free
         </programlisting>
       </informalexample>
 
@@ -781,7 +781,7 @@ deb http://localhost:9999/debian buster main contrib non-free
         However, even after a <command>xz</command> compression, these files
         can remain rather large (the <filename>Packages.xz</filename> for the
         <foreignphrase>main</foreignphrase> section of <emphasis
-        role="distribution">Buster</emphasis> takes more than 7 MB). If you
+        role="distribution">Bullseye</emphasis> takes more than 7 MB). If you
         wish to update regularly, these downloads can take up a lot of
         time.</para>
 
@@ -1313,7 +1313,7 @@ deb http://localhost:9999/debian buster main contrib non-free
       role="distribution">Unstable</emphasis> or <emphasis
       role="distribution">Experimental</emphasis> for the standard
       distributions provided by Debian) together with its version (for example,
-      10 for Debian <emphasis role="distribution">Buster</emphasis>).  Let's
+      11 for Debian <emphasis role="distribution">Bullseye</emphasis>).  Let's
       have a look at its syntax through some realistic case studies of this
       mechanism.</para>
 
@@ -1698,18 +1698,17 @@ p   apt-xapian-index Depends  python-debian (&gt;= 0.1.14)
 
       <screen>$ <userinput>axi-cache search package use::searching</userinput>
 <![CDATA[
-100 results found.
-Results 1-20:
+13 results found.
+Results 1-13:
 100% packagesearch - GUI for searching packages and viewing package information
-99% apt-utils - package management related utility programs
-98% whohas - query multiple distributions' package archives
-98% dpkg-awk - Gawk script to parse /var/lib/dpkg/{status,available} and Packages
-97% apt-file - search for files within Debian packages (command-line interface)
-[..]
-90% wajig - unified package management front-end for Debian
-More terms: debtags debian paket dpkg search pakete tools
-More tags: role::program interface::commandline works-with::software:package suite::debian admin::package-management scope::utility network::client
-`axi-cache more' will give more results
+87% debtags - Debian Package Tags support tools
+86% whohas - query multiple distributions' package archives
+84% recoll - Personal full text search package
+82% apt-forktracer - utility for tracking non-official package versions
+[...]
+66% apt - commandline package manager
+More terms: debian dpkg search debtags whohas forktracer dctrl
+More tags: role::program admin::package-management suite::debian works-with::software:package interface::commandline scope::utility protocol::http
 ]]></screen>
     </sidebar>
 
@@ -1743,23 +1742,23 @@ More tags: role::program interface::commandline works-with::software:package sui
 <computeroutput>Package files:
  100 /var/lib/dpkg/status
      release a=now
- 100 https://deb.debian.org/debian buster-backports/contrib amd64 Packages
-     release o=Debian Backports,a=buster-backports,n=buster-backports,l=Debian Backports,c=contrib,b=amd64
+ 100 https://deb.debian.org/debian bullseye-backports/contrib amd64 Packages
+     release o=Debian Backports,a=bullseye-backports,n=buster-backports,l=Debian Backports,c=contrib,b=amd64
      origin deb.debian.org
- 100 https://deb.debian.org/debian buster-backports/main amd64 Packages
-     release o=Debian Backports,a=buster-backports,n=buster-backports,l=Debian Backports,c=main,b=amd64
+ 100 https://deb.debian.org/debian bullseye-backports/main amd64 Packages
+     release o=Debian Backports,a=bullseye-backports,n=buster-backports,l=Debian Backports,c=main,b=amd64
      origin deb.debian.org
- 990 https://deb.debian.org/debian buster/non-free amd64 Packages
-     release v=10.0,o=Debian,a=stable,n=buster,l=Debian,c=non-free,b=amd64
+ 990 https://deb.debian.org/debian bullseye/non-free amd64 Packages
+     release v=10.0,o=Debian,a=stable,n=bullseye,l=Debian,c=non-free,b=amd64
      origin deb.debian.org
- 990 https://deb.debian.org/debian buster/contrib amd64 Packages
-     release v=10.0,o=Debian,a=stable,n=buster,l=Debian,c=contrib,b=amd64
+ 990 https://deb.debian.org/debian bullseye/contrib amd64 Packages
+     release v=10.0,o=Debian,a=stable,n=bullseye,l=Debian,c=contrib,b=amd64
      origin deb.debian.org
- 990 https://deb.debian.org/debian buster/main amd64 Packages
-     release v=10.0,o=Debian,a=stable,n=buster,l=Debian,c=main,b=amd64
+ 990 https://deb.debian.org/debian bullseye/main amd64 Packages
+     release v=10.0,o=Debian,a=stable,n=bullseye,l=Debian,c=main,b=amd64
      origin deb.debian.org
- 990 http://security.debian.org buster/updates/main amd64 Packages
-     release v=10,o=Debian,a=stable,n=buster,l=Debian-Security,c=main,b=amd64
+ 990 http://security.debian.org bullseye-security/main amd64 Packages
+     release v=10,o=Debian,a=stable,n=bullseye,l=Debian-Security,c=main,b=amd64
      origin security.debian.org</computeroutput>
 </screen>
       </informalexample>
@@ -1774,18 +1773,18 @@ More tags: role::program interface::commandline works-with::software:package sui
   Installed: 1.8.2-4
   Candidate: 1.8.2-4
   Version table:
-     1.8.3-2~bpo10+1 100
-        100 https://deb.debian.org/debian buster-backports/main amd64 Packages
- *** 1.8.2-4 990
-        990 https://deb.debian.org/debian buster/main amd64 Packages
+     1.8.8-2~bpo10+1 100
+        100 https://deb.debian.org/debian bullseye-backports/main amd64 Packages
+ *** 1.8.7-1 990
+        990 https://deb.debian.org/debian bullseye/main amd64 Packages
         100 /var/lib/dpkg/status</computeroutput></screen>
       </informalexample>
 
       <para>Although there is a newer version of <emphasis
-      role="pkg">iptables</emphasis> in the <literal>buster-backports</literal>
+      role="pkg">iptables</emphasis> in the <literal>bullseye-backports</literal>
       repository, APT will not install it automatically based on the priority.
       One would have to use <command>apt install
-      iptables/buster-backports</command> or add a higher pinning priority to
+      iptables/bullseye-backports</command> or add a higher pinning priority to
       <filename>/etc/apt/preferences.d/iptables</filename>:</para>
 
       <informalexample>
@@ -2178,7 +2177,7 @@ apt-xapian-index: /usr/bin/axi-cache
     <indexterm><primary><filename>/etc/apt/trusted.gpg.d/</filename></primary></indexterm>
     <indexterm><primary><filename>/etc/apt/trusted.gpg</filename></primary></indexterm>
     <indexterm><primary><filename>Release.gpg</filename></primary></indexterm>
-    <indexterm><primary><filename>InRelease</filename></primary></indexterm>
+    <indexterm><primary><filename>InRelease</filename></primary></sindexterm>
 
     <para>APT needs a set of trusted GnuPG public keys to verify signatures in
     the <filename>InRelease</filename> and <filename>Release.gpg</filename>
@@ -2195,65 +2194,16 @@ apt-xapian-index: /usr/bin/axi-cache
     of imported keys before trusting them to install new packages:</para>
 
     <!-- MAY CHANGE: archive keys -->
-    <screen role="scale"><computeroutput># </computeroutput><userinput>apt-key fingerprint
-</userinput><![CDATA[/etc/apt/trusted.gpg.d/debian-archive-buster-automatic.gpg
-----------------------------------------------------------
-pub   rsa4096 2019-04-14 [SC] [expires: 2027-04-12]
-      80D1 5823 B7FD 1561 F9F7  BCDD DC30 D7C2 3CBB ABEE
-uid           [ unknown] Debian Archive Automatic Signing Key (10/buster) <ftpmaster@debian.org>
-sub   rsa4096 2019-04-14 [S] [expires: 2027-04-12]
-
-/etc/apt/trusted.gpg.d/debian-archive-buster-security-automatic.gpg
--------------------------------------------------------------------
-pub   rsa4096 2019-04-14 [SC] [expires: 2027-04-12]
-      5E61 B217 265D A980 7A23  C5FF 4DFA B270 CAA9 6DFA
-uid           [ unknown] Debian Security Archive Automatic Signing Key (10/buster) <ftpmaster@debian.org>
-sub   rsa4096 2019-04-14 [S] [expires: 2027-04-12]
-
-/etc/apt/trusted.gpg.d/debian-archive-buster-stable.gpg
--------------------------------------------------------
-pub   rsa4096 2019-02-05 [SC] [expires: 2027-02-03]
-      6D33 866E DD8F FA41 C014  3AED DCC9 EFBF 77E1 1517
-uid           [ unknown] Debian Stable Release Key (10/buster) <debian-release@lists.debian.org>
-
-/etc/apt/trusted.gpg.d/debian-archive-jessie-automatic.gpg
-----------------------------------------------------------
-pub   rsa4096 2014-11-21 [SC] [expires: 2022-11-19]
-      126C 0D24 BD8A 2942 CC7D  F8AC 7638 D044 2B90 D010
-uid           [ unknown] Debian Archive Automatic Signing Key (8/jessie) <ftpmaster@debian.org>
-
-/etc/apt/trusted.gpg.d/debian-archive-jessie-security-automatic.gpg
--------------------------------------------------------------------
-pub   rsa4096 2014-11-21 [SC] [expires: 2022-11-19]
-      D211 6914 1CEC D440 F2EB  8DDA 9D6D 8F6B C857 C906
-uid           [ unknown] Debian Security Archive Automatic Signing Key (8/jessie) <ftpmaster@debian.org>
-
-/etc/apt/trusted.gpg.d/debian-archive-jessie-stable.gpg
--------------------------------------------------------
-pub   rsa4096 2013-08-17 [SC] [expires: 2021-08-15]
-      75DD C3C4 A499 F1A1 8CB5  F3C8 CBF8 D6FD 518E 17E1
-uid           [ unknown] Jessie Stable Release Key <debian-release@lists.debian.org>
-
-/etc/apt/trusted.gpg.d/debian-archive-stretch-automatic.gpg
------------------------------------------------------------
-pub   rsa4096 2017-05-22 [SC] [expires: 2025-05-20]
-      E1CF 20DD FFE4 B89E 8026  58F1 E0B1 1894 F66A EC98
-uid           [ unknown] Debian Archive Automatic Signing Key (9/stretch) <ftpmaster@debian.org>
-sub   rsa4096 2017-05-22 [S] [expires: 2025-05-20]
-
-/etc/apt/trusted.gpg.d/debian-archive-stretch-security-automatic.gpg
---------------------------------------------------------------------
-pub   rsa4096 2017-05-22 [SC] [expires: 2025-05-20]
-      6ED6 F5CB 5FA6 FB2F 460A  E88E EDA0 D238 8AE2 2BA9
-uid           [ unknown] Debian Security Archive Automatic Signing Key (9/stretch) <ftpmaster@debian.org>
-sub   rsa4096 2017-05-22 [S] [expires: 2025-05-20]
-
-/etc/apt/trusted.gpg.d/debian-archive-stretch-stable.gpg
---------------------------------------------------------
-pub   rsa4096 2017-05-20 [SC] [expires: 2025-05-18]
-      067E 3C45 6BAE 240A CEE8  8F6F EF0F 382A 1A7B 6500
-uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@lists.debian.org>
-
+    <screen role="scale"><computeroutput># </computeroutput><userinput>ls /etc/apt/trusted.gpg.d/
+</userinput><![CDATA[debian-archive-bullseye-automatic.gpg
+debian-archive-bullseye-security-automatic.gpg
+debian-archive-bullseye-stable.gpg
+debian-archive-buster-automatic.gpg
+debian-archive-buster-security-automatic.gpg
+debian-archive-buster-stable.gpg
+debian-archive-stretch-automatic.gpg
+debian-archive-stretch-security-automatic.gpg
+debian-archive-stretch-stable.gpg
 ]]></screen>
 
     <sidebar>
@@ -2324,14 +2274,14 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
         current stable release have a dedicated URL, while older release
         notes can be found with their codenames:
         <ulink type="block" url="https://www.debian.org/releases/stable/releasenotes"/>
-        <ulink type="block" url="https://www.debian.org/releases/stretch/releasenotes"/></para>
+        <ulink type="block" url="https://www.debian.org/releases/buster/releasenotes"/></para>
 
       </sidebar>
 
       <!-- MAY CHANGE: codenames -->
       <para>In this section, we will focus on upgrading a <emphasis
-      role="distribution">Stretch</emphasis> system to <emphasis
-      role="distribution">Buster</emphasis>. This is a major operation on
+      role="distribution">Buster</emphasis> system to <emphasis
+      role="distribution">Bullseye</emphasis>. This is a major operation on
       a system; as such, it is never 100% risk-free, and should not be
       attempted before all important data has been backed up.</para>
 
@@ -2361,8 +2311,8 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
 
       <para>Now for the upgrading itself. First, you need to change the
       <filename>/etc/apt/sources.list</filename> file to tell APT to get
-      its packages from <emphasis role="distribution">Buster</emphasis>
-      instead of <emphasis role="distribution">Stretch</emphasis>. If the
+      its packages from <emphasis role="distribution">Bullseye</emphasis>
+      instead of <emphasis role="distribution">Buster</emphasis>. If the
       file only contains references to <emphasis
       role="distribution">Stable</emphasis> rather than explicit codenames,
       the change isn't even required, since <emphasis
@@ -2404,7 +2354,7 @@ uid           [ unknown] Debian Stable Release Key (9/stretch) <debian-release@l
       packages or deselect packages which are only recommended and known
       not to be useful. In any case, the front-end should come up with a
       scenario ending in a coherent and up-to-date <emphasis
-      role="distribution">Buster</emphasis> system. Then, all you need is
+      role="distribution">Bullseye</emphasis> system. Then, all you need is
       to do is wait while the required packages are downloaded, answer the
       debconf questions and possibly those about locally modified
       configuration files, and sit back while APT does its magic.</para>
@@ -2830,7 +2780,7 @@ yes '' | apt-get -y -o DPkg::options::="--force-confdef" -o DPkg::options::="--f
         most relevant solution for each computer.</para>
 
         <para>In practice, the servers running <emphasis
-        role="distribution">Buster</emphasis> are configured with the
+        role="distribution">Bullseye</emphasis> are configured with the
         “miracle combination” above, and are kept up to date
         automatically. Only the most critical servers (the firewalls, for
         instances) are set up with <command>apticron</command>, so that
@@ -2838,7 +2788,7 @@ yes '' | apt-get -y -o DPkg::options::="--force-confdef" -o DPkg::options::="--f
         administrator.</para>
 
         <para>The office workstations in the administrative services also
-        run <emphasis role="distribution">Buster</emphasis>, but they are
+        run <emphasis role="distribution">Bullseye</emphasis>, but they are
         equipped with <emphasis role="pkg">gnome-packagekit</emphasis>,
         so that users trigger the upgrades themselves. The
         rationale for this decision is that if upgrades happen without an
