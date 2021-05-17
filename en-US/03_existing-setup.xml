@@ -35,7 +35,7 @@
 
       <para>Samba's SMB/CIFS support ensures excellent communication within
       a Windows context. It shares files and print queues to Windows
-      clients and includes software that allow a Linux machine to use
+      clients and includes software that allows a Linux machine to use
       resources available on Windows servers.</para>
 
       <sidebar>
@@ -51,12 +51,12 @@
       </sidebar>
     </section>
     <section>
-      <title>Integration with OS X machines</title>
+      <title>Integration with macOS machines</title>
 
       <indexterm><primary>Zeroconf</primary></indexterm>
       <indexterm><primary>Bonjour</primary></indexterm>
       <indexterm><primary>Avahi</primary></indexterm>
-      <para>OS X machines provide, and are able to use, network
+      <para>macOS machines provide, and are able to use, network
       services such as file servers and printer sharing.  These
       services are published on the local network, which allows other
       machines to discover them and make use of them without any
@@ -69,10 +69,10 @@
       <indexterm><primary>AFP</primary></indexterm>
       <indexterm><primary>AppleShare</primary></indexterm>
       <para>In the other direction, the Netatalk daemon can be used to
-      provide file servers to OS X machines on the network.  It
+      provide file servers to macOS machines on the network.  It
       implements the AFP (AppleShare) protocol as well as the required
-      notifications so that the servers can be automatically discovered 
-      by the OS X clients.</para>
+      notifications so that the servers can be automatically discovered
+      by the macOS clients.</para>
 
       <indexterm><primary>AppleTalk</primary></indexterm>
       <para>Older Mac OS networks (before OS X) used a different protocol
@@ -105,9 +105,9 @@
     <title>How To Migrate</title>
     <indexterm><primary>migration</primary></indexterm>
 
-    <para>In order to guarantee continuity of the services, each computer 
-    migration must be planned and executed according to the plan. This 
-    principle applies whatever operating system is used.</para>
+    <para>In order to guarantee continuity of the services, each computer
+    migration must be planned and executed according to the plan. This
+    principle applies regardless of which operating system is used.</para>
     <section>
       <title>Survey and Identify Services</title>
 
@@ -127,7 +127,7 @@
       <section>
         <title>Network and Processes</title>
         <indexterm><primary><command>nmap</command></primary></indexterm>
-       
+
 	<para>The <command>nmap</command> tool (in the package with the same
 	name) will quickly identify Internet services hosted by a network
 	connected machine without even requiring to log in to it. Simply
@@ -154,11 +154,11 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
 </screen>
 
         <sidebar>
-          <title><emphasis>ALTERNATIVE</emphasis> Use <command>netstat</command> to find the list of available services</title>
+          <title><emphasis>ALTERNATIVE</emphasis> Use <command>ss</command> to find the list of available services</title>
 
-	  <para>On a Linux machine, the <command>netstat -tupan</command>
+	  <para>On a Linux machine, the <command>ss -anptu</command>
 	  command will show the list of active or pending TCP sessions, as
-	  well UDP ports on which running programs are listening. This
+	  well as UDP ports on which running programs are listening. This
 	  facilitates identification of services offered on the
 	  network.</para>
         </sidebar>
@@ -168,7 +168,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
 
 	  <para>Some network commands may work either with IPv4 (the
 	  default usually) or with IPv6.  These include the
-	  <command>nmap</command> and <command>netstat</command>
+	  <command>nmap</command> and <command>ss</command>
 	  commands, but also others, such as <command>route</command>
 	  or <command>ip</command>. The convention is that this
 	  behavior is enabled by the <parameter>-6</parameter>
@@ -261,19 +261,19 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
       completely reinstall the computer's system to ensure optimal
       compatibility with the software provided by Debian.</para>
 
-      <para>The <filename>sources.list</filename> file is often a good 
+      <para>The <filename>sources.list</filename> file is often a good
       indicator: the majority of administrators keep, at least in comments,
-      the list of APT sources that were previously used. But you should 
-      not forget that sources used in the past might have been deleted, and 
-      that some random packages grabbed on the Internet might have been 
-      manually installed (with the help of the <command>dpkg</command> 
-      command). In this case, the machine is misleading in its appearance of 
-      being a “standard” Debian system. This is why you should pay attention to any 
-      indication that will give away the presence of external packages 
-      (appearance of <filename>deb</filename> files in unusual directories, 
-      package version numbers with a special suffix indicating that it 
-      originated from outside the Debian project, such as <literal>ubuntu</literal> 
-      or <literal>lmde</literal>, etc.)</para>
+      the list of APT sources that were previously used. But you should
+      not forget that sources used in the past might have been deleted, and
+      that some random packages grabbed on the Internet might have been
+      manually installed (with the help of the <command>dpkg</command>
+      command). In this case, the machine is misleading in its appearance of
+      being a “standard” Debian system. This is why you should pay attention to any
+      indication that will give away the presence of external packages
+      (appearance of <filename>deb</filename> files in unusual directories,
+      package version numbers with a special suffix indicating that it
+      originated from outside the Debian project, such as <literal>ubuntu</literal>
+      or <literal>lmde</literal>, etc.).</para>
 
       <para>Likewise, it is interesting to analyze the contents of the
       <filename>/usr/local/</filename> directory, whose purpose is to contain
