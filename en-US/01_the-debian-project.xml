@@ -1933,6 +1933,7 @@
       topic).</para>
     </section>
   </section>
+
   <section id="sect.release-lifecycle">
     <title>Lifecycle of a Release</title>
     <indexterm><primary>lifecycle</primary></indexterm>
@@ -1942,6 +1943,7 @@
     <indexterm><primary><emphasis role="distribution">Experimental</emphasis></primary></indexterm>
     <indexterm><primary><emphasis role="distribution">Oldstable</emphasis></primary></indexterm>
     <indexterm><primary><emphasis role="distribution">Oldoldstable</emphasis></primary></indexterm>
+    <indexterm><primary>Debian Project</primary><secondary>release lifecycle</secondary></indexterm>
 
     <para>The project will simultaneously have three to six different
     versions of each program, named <emphasis
@@ -1958,6 +1960,7 @@
     <sidebar>
       <title><emphasis>VOCABULARY</emphasis> Release</title>
       <indexterm><primary>release</primary></indexterm>
+      <indexterm><primary>Debian Project</primary><secondary>release</secondary></indexterm>
 
       <para>The term “release”, in the Debian project, indicates a
       particular version of a distribution (e.g., “unstable release”
@@ -2007,20 +2010,17 @@
       maintainer. The maintainer then regularly prepares corrected
       versions, which they upload to the server.</para>
 
-      <para>Every newly updated package is updated on all Debian mirrors
-      around the world within six hours. The users then test the
-      corrections and search for other problems resulting from the
-      modifications. Several updates may then occur rapidly. During these
-      times, autobuilder robots come into action. Most frequently, the
-      maintainer has only one traditional PC and has compiled their package
-      on the amd64 (or i386) architecture (or they opted for a source-only
-      upload, thus without any precompiled package); the autobuilders take over and
-      automatically compile versions for all the other architectures. Some
-      compilations may fail; the maintainer will then receive a bug report
-      indicating the problem, which is then to be corrected in the next
-      versions. When the bug is discovered by a specialist for the
-      architecture in question, the bug report may come with a patch ready
-      to use.</para>
+      <para>Every newly updated package is updated on all Debian mirrors around
+      the world within six hours. The users then test the corrections and
+      search for other problems resulting from the modifications. Several
+      updates may then occur rapidly. During these times, autobuilder robots
+      come into action. The maintainer uploads the package sources (without any
+      precompiled package). The autobuilders take over and automatically
+      compile versions for all supported architectures. Some compilations may
+      fail; the maintainer will then receive a bug report indicating the
+      problem, which is then to be corrected in the next versions. When the bug
+      is discovered by a specialist for the architecture in question, the bug
+      report may come with a patch ready to use.</para>
       <indexterm><primary>autobuilder</primary></indexterm>
 
       <figure>
@@ -2037,23 +2037,23 @@
         <indexterm><primary><command>buildd</command></primary></indexterm>
         <indexterm><primary>build daemon</primary></indexterm>
 
-	<para><emphasis>buildd</emphasis> is the abbreviation of “build
-	daemon”. This program automatically recompiles new versions of
-	Debian packages on the architectures on which it is hosted
-	(cross-compilation is avoided as much as possible).</para>
+        <para><emphasis>buildd</emphasis> is the abbreviation of “build
+        daemon”. This program automatically recompiles new versions of
+        Debian packages on the architectures on which it is hosted
+        (cross-compilation is avoided as much as possible).</para>
 
-	<para>Thus, to produce binaries for the <literal>arm64</literal>
-	architecture, the project has <literal>arm64</literal> machines
-	available. The <emphasis>buildd</emphasis> program
-	runs on them continuously and creates
-	binary packages for <literal>arm64</literal> from source packages
-	sent by Debian developers.</para>
+        <para>Thus, to produce binaries for the <literal>arm64</literal>
+        architecture, the project has <literal>arm64</literal> machines
+        available. The <emphasis>buildd</emphasis> program
+        runs on them continuously and creates
+        binary packages for <literal>arm64</literal> from source packages
+        sent by Debian developers.</para>
 
-	<para>This software is used on all the computers serving as
-	autobuilders for Debian. By extension, the term
-	<emphasis>buildd</emphasis> frequently is used to refer to these
-	machines, which are generally reserved solely for this
-	purpose.</para>
+        <para>This software is used on all the computers serving as
+        autobuilders for Debian. By extension, the term
+        <emphasis>buildd</emphasis> frequently is used to refer to these
+        machines, which are generally reserved solely for this
+        purpose.</para>
       </sidebar>
     </section>
     <section>
@@ -2070,29 +2070,29 @@
       guaranteeing a certain level of quality:</para>
       <orderedlist>
         <listitem>
-	  <para>lack of critical bugs, or, at least fewer than the version
-	  currently included in <emphasis
-	  role="distribution">Testing</emphasis>;</para>
+          <para>successful compilation on all officially supported
+          architectures;</para>
+        </listitem>      
+        <listitem>
+          <para>lack of critical bugs, or, at least fewer than the version
+          currently included in <emphasis
+          role="distribution">Testing</emphasis>;</para>
         </listitem>
         <listitem>
-	  <para>at least 5 days spent in <emphasis
-	  role="distribution">Unstable</emphasis>, which is usually sufficient time
-	  to find and report any serious problems (successfully passing the package's
-	  own test suite, if it has one, reduces that time);</para>
+          <para>at least 5 days spent in <emphasis
+          role="distribution">Unstable</emphasis>, which is usually sufficient time
+          to find and report any serious problems (successfully passing the package's
+          own test suite, if it has one, reduces that time);</para>
         </listitem>
         <listitem>
-	  <para>successful compilation on all officially supported
-	  architectures;</para>
+          <para>dependencies that can be satisfied in <emphasis
+          role="distribution">Testing</emphasis>, or that can at least be
+          moved there together with the package in question;</para>
         </listitem>
         <listitem>
-	  <para>dependencies that can be satisfied in <emphasis
-	  role="distribution">Testing</emphasis>, or that can at least be
-	  moved there together with the package in question;</para>
-        </listitem>
-        <listitem>
-	  <para>automatic quality tests of the package
+          <para>automatic quality tests of the package
           (<emphasis role="pkg">autopkgtest</emphasis>) —
-	  if defined — don't show any regression.</para>
+          if defined — don't show any regression.</para>
         </listitem>
       </orderedlist>
 
@@ -2107,49 +2107,51 @@
       <sidebar>
         <title><emphasis>NOTE</emphasis> Limitations of <emphasis role="distribution">Testing</emphasis></title>
 
-	<para>While very interesting in principle, <emphasis
-	role="distribution">Testing</emphasis> does have some practical
-	problems: the tangle of cross-dependencies between packages is such
-	that a package can rarely move there completely on its own. With
-	packages all depending upon each other, it is sometimes necessary to migrate a
-	large number of packages simultaneously, which is impossible when some are
-	uploading updates regularly. On the other hand, the script
-	identifying the families of related packages works hard to create
-	them (this would be an NP-complete problem, for which, fortunately,
-	we know some good heuristics). This is why we can manually interact
-	with and guide this script by suggesting groups of packages, or
-	imposing the inclusion of certain packages in a group, even if this
-	temporarily breaks some dependencies. This functionality is
-	accessible to the Release Managers and their assistants.</para>
+        <para>While very interesting in principle, <emphasis
+        role="distribution">Testing</emphasis> does have some practical
+        problems: the tangle of cross-dependencies between packages is such
+        that a package can rarely move there completely on its own. With
+        packages all depending upon each other, it is sometimes necessary to migrate a
+        large number of packages simultaneously, which is impossible when some are
+        uploading updates regularly. On the other hand, the script
+        identifying the families of related packages works hard to create
+        them (this would be an NP-complete problem, for which, fortunately,
+        we know some good heuristics). This is why we can manually interact
+        with and guide this script by suggesting groups of packages, or
+        imposing the inclusion of certain packages in a group, even if this
+        temporarily breaks some dependencies. This functionality is
+        accessible to the Release Managers and their assistants.</para>
 
-	<para>Recall that an NP-complete problem is of an exponential
-	algorithmic complexity according to the size of the data, here
-	being the length of the code (the number of figures) and the
-	elements involved. The only way to resolve it is frequently to
-	examine all possible configurations, which could require enormous
-	means. A heuristic is an approximate, but satisfying,
-	solution.</para>
+        <para>Recall that an NP-complete problem is of an exponential
+        algorithmic complexity according to the size of the data, here
+        being the length of the code (the number of figures) and the
+        elements involved. The only way to resolve it is frequently to
+        examine all possible configurations, which could require enormous
+        means. A heuristic is an approximate, but satisfying,
+        solution.</para>
       </sidebar>
 
       <sidebar id="srm-team">
         <title><emphasis>COMMUNITY</emphasis> The Release Manager</title>
         <indexterm><primary>Release Manager</primary></indexterm>
         <indexterm><primary>Stable Release Manager</primary></indexterm>
+        <indexterm><primary>SRM</primary><seealso>Stable Release Manager</seealso></indexterm>
+        <indexterm><primary>Debian Project</primary><secondary>release manager</secondary></indexterm>
 
-	<para>Release Manager is an important title, associated with heavy
-	responsibilities. The bearer of this title must, in effect, manage
-	the release of a new, stable version of Debian, and define the
-	process for development of <emphasis
-	role="distribution">Testing</emphasis> until it meets the quality
-	criteria for <emphasis role="distribution">Stable</emphasis>. They
-	also define a tentative schedule (not always followed).</para>
+        <para>Release Manager is an important title, associated with heavy
+        responsibilities. The bearer of this title must, in effect, manage
+        the release of a new, stable version of Debian, and define the
+        process for development of <emphasis
+        role="distribution">Testing</emphasis> until it meets the quality
+        criteria for <emphasis role="distribution">Stable</emphasis>. They
+        also define a tentative schedule (not always followed).</para>
 
-	<para>We also have Stable Release Managers, often abbreviated SRM,
-	who manage and select updates for the current stable version of
-	Debian. They systematically include security patches and examine
-	all other proposals for inclusion, on a case by case basis, sent by
-	Debian developers eager to update their package in the stable
-	version.</para>
+        <para>We also have Stable Release Managers, often abbreviated <acronym>SRM</acronym>,
+        who manage and select updates for the current stable version of
+        Debian. They systematically include security patches and examine
+        all other proposals for inclusion, on a case by case basis, sent by
+        Debian developers eager to update their package in the stable
+        version.</para>
       </sidebar>
     </section>
     <section>
@@ -2194,18 +2196,19 @@
         <title><emphasis>VOCABULARY</emphasis> Freeze: the home straight</title>
         <indexterm><primary>freeze</primary></indexterm>
 
-	<para>During the freeze period, development of the <emphasis
-	role="distribution">Testing</emphasis> distribution is blocked; no
-	more automatic updates are allowed. Only the Release Managers are
-	then authorized to change packages, according to their own
-	criteria. The purpose is to prevent the appearance of new bugs by
-	introducing new versions; only thoroughly examined updates are
-	authorized when they correct significant bugs.</para>
+        <para>During the freeze period, development of the <emphasis
+        role="distribution">Testing</emphasis> distribution is blocked; no
+        more automatic updates are allowed. Only the Release Managers are
+        then authorized to change packages, according to their own
+        criteria. The purpose is to prevent the appearance of new bugs by
+        introducing new versions; only thoroughly examined updates are
+        authorized when they correct significant bugs.</para>
       </sidebar>
 
+      <!-- MAYCHANGE: Use a recent release number. -->
       <para>After the release of a new stable version, the Stable Release
       Managers manage all further development (called “revisions”, ex:
-      7.1, 7.2, 7.3 for version 7). These updates systematically
+      10.1, 10.2, 10.3 for version 10). These updates systematically
       include all security patches. They will also include the most
       important corrections (the maintainer of a package must prove the
       gravity of the problem that they wish to correct in order to have
@@ -2233,23 +2236,22 @@
       <sidebar>
         <title><emphasis>CULTURE</emphasis> GNOME and KDE Plasma, graphical desktop environments</title>
 
-	<para>GNOME (GNU Network Object Model Environment) and Plasma by KDE
-        (formerly known as K Desktop Environment) are the two most popular
-        graphical desktop
-	environments in the free software world, and will be presented in
-	greater detail in <xref linkend="sect.graphical-desktops"/>.</para>
+        <para>GNOME (originally an acronym for GNU Network Object Model
+        Environment) and Plasma by KDE (formerly known as K Desktop
+        Environment) are the two most popular/established graphical desktop
+        environments in the free software world, and will be presented in
+        greater detail in <xref linkend="sect.graphical-desktops"/>.</para>
 
-	<para>A desktop environment is a
-	set of programs grouped together to allow easy management of the
-	most common operations through a graphical interface. They
-	generally include a file manager, office suite, web browser, e-mail
-	program, multimedia accessories, etc. The most visible difference
-	resides in the choice of the graphical library used: GNOME has
-	chosen GTK+ (free software licensed under the LGPL), and the KDE community
-	has selected Qt (a company-backed project, available nowadays both
-	under the GPL and a commercial license).
-	<ulink type="block" url="https://www.gnome.org/"/>
-	<ulink type="block" url="https://kde.org/"/></para>
+        <para>A desktop environment is a set of programs grouped together to
+        allow easy management of the most common operations through a graphical
+        interface. They generally include a file manager, office suite, web
+        browser, e-mail program, multimedia accessories, etc. The most visible
+        difference resides in the choice of the graphical library used: GNOME
+        has chosen GTK+ (free software licensed under the LGPL), and the KDE
+        community has selected Qt (a company-backed project, available nowadays
+        both under the GPL and a commercial license).
+        <ulink type="block" url="https://www.gnome.org/"/>
+        <ulink type="block" url="https://kde.org/"/></para>
       </sidebar>
 
       <figure>
@@ -2263,8 +2265,10 @@
     </section>
     <section>
       <title>The <emphasis role="distribution">Oldstable</emphasis> and <emphasis role="distribution">Oldoldstable</emphasis> Status</title>
-      <indexterm><primary>Long Term Support (LTS)</primary></indexterm>
+      <indexterm><primary>Long Term Support</primary></indexterm>
+      <indexterm><primary>LTS</primary><seealso>Long Term Support</seealso></indexterm>
       <indexterm><primary>support</primary><secondary>Long Term Support (LTS)</secondary></indexterm>
+
       <para>Each <emphasis role="distribution">Stable</emphasis> release
       has an expected lifetime of about 5 years and given that releases tend
       to happen every 2 years, there can be up to 3 supported releases
@@ -2272,36 +2276,40 @@
       release becomes <emphasis role="distribution">Oldstable</emphasis>
       and the one even before becomes <emphasis role="distribution">Oldoldstable</emphasis>.
       </para>
+
       <para>This Long Term Support (LTS) of Debian releases is a recent
       initiative: individual contributors and companies joined forces to create
       the Debian LTS team. Older releases which are no longer supported by
       the Debian security team fall under the responsibility of this new team.
       </para>
-      <para>
-      The Debian security team handles security support in the current
-      <emphasis role="distribution">Stable</emphasis>
-      release and also in the <emphasis
-      role="distribution">Oldstable</emphasis> release (but only for as long
-      as is needed to ensure one year of overlap with the current stable release).
-      This amounts roughly to three years of support for each release. The
-      Debian LTS team handles the last (two) years of security support so that
-      each release benefits from at least 5 years of support and so that
-      users can upgrade from version N to N+2, for example, from Debian 9
-      <emphasis role="distribution">Stretch</emphasis> to Debian 11
+
+      <para>The Debian security team handles security support in the current
+      <emphasis role="distribution">Stable</emphasis> release and also in the
+      <emphasis role="distribution">Oldstable</emphasis> release (but only for
+      as long as is needed to ensure one year of overlap with the current
+      stable release).  This amounts roughly to three years of support for each
+      release. The Debian LTS team handles the last (two) years of security
+      support so that each release benefits from at least 5 years of support
+      and so that users can upgrade from version N to N+2, for example, from
+      Debian 9 <emphasis role="distribution">Stretch</emphasis> to Debian 11
       <emphasis role="distribution">Bullseye</emphasis>.
       <ulink type="block" url="https://wiki.debian.org/LTS"/>
       </para>
+
       <sidebar>
         <title><emphasis>COMMUNITY</emphasis> Companies sponsoring the LTS effort</title>
+
         <para>Long Term Support is a difficult commitment to make in Debian because
         volunteers tend to avoid the work that is not very fun. And providing security
         support for 5 year old software is — for many contributors — a
         lot less fun than packaging new upstream versions or developing new features.
         </para>
+
         <para>To bring this project to life, the project counted on the fact that
         long term support was particularly relevant for companies and that they would
         be willing to mutualize the cost of this security support.
         </para>
+
         <para>The project started in June 2014: some organizations
         allowed their employees to contribute part-time to Debian LTS
         while others preferred to sponsor the project with money so that
@@ -2311,10 +2319,12 @@
         Freexian (Raphaël Hertzog's company):
         <ulink type="block" url="https://www.freexian.com/services/debian-lts.html"/>
         </para>
+
         <para>In the Debian LTS team, the volunteers work on packages they care about
         while the paid contributors prioritize packages used by their
         sponsors.
         </para>
+
         <para>The project is always looking for new sponsors:
         What about your company? Can you let an employee work part-time on
         long term support? Can you allocate a small budget for security
