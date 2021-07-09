@@ -44,10 +44,10 @@
 
         <para>The latest version of Samba can replace most of
         the Windows features: from those of a simple Windows NT server
-	(authentication, files, print queues, downloading printer
+      	(authentication, files, print queues, downloading printer
         drivers, DFS, etc.) to the most advanced one (a domain controller
         compatible with Active Directory).
-	</para>
+	      </para>
       </sidebar>
     </section>
     <section>
@@ -66,13 +66,14 @@
       functionality.
       </para>
 
-      <indexterm><primary>AFP</primary></indexterm>
+      <indexterm><primary>AFP</primary><seealso>Apple Filing Protocol</seealso></indexterm>
+      <indexterm><primary>Apple Filing Protocol</primary></indexterm>
       <indexterm><primary>AppleShare</primary></indexterm>
-      <para>In the other direction, the Netatalk daemon can be used to
-      provide file servers to macOS machines on the network.  It
-      implements the AFP (AppleShare) protocol as well as the required
-      notifications so that the servers can be automatically discovered
-      by the macOS clients.</para>
+      <para>In the other direction, the Netatalk daemon can be used to provide
+      file servers to macOS machines on the network.  It implements the AFP
+      protocol (Apple Filing Protocol, now AppleShare) as well as the required
+      notifications so that the servers can be automatically discovered by the
+      macOS clients.</para>
 
       <indexterm><primary>AppleTalk</primary></indexterm>
       <para>Older Mac OS networks (before OS X) used a different protocol
@@ -86,10 +87,15 @@
     <section>
       <title>Integration with Other Linux/Unix Machines</title>
 
-      <para>Finally, NFS and NIS, both included, guarantee interaction with
-      Unix systems. NFS ensures file server functionality, while NIS
-      creates user directories. The BSD printing layer, used by most Unix
-      systems, also allows sharing of print queues.</para>
+      <indexterm><primary>NFS</primary><seealso>Network File System</seealso></indexterm>
+      <indexterm><primary>Network File System</primary></indexterm>
+      <indexterm><primary>NIS</primary><seealso>Network Information Service</seealso></indexterm>
+      <indexterm><primary>Network Information Service</primary></indexterm>
+      <para>Finally, NFS (Network File System) and NIS (Network Information
+      Service), both included, guarantee interaction with Unix systems. NFS
+      ensures file server functionality, while NIS creates user directories.
+      The BSD printing layer, used by most Unix systems, also allows sharing of
+      print queues.</para>
 
       <figure>
         <title>Coexistence of Debian with OS X, Windows and Unix systems</title>
@@ -127,12 +133,13 @@
       <section>
         <title>Network and Processes</title>
         <indexterm><primary><command>nmap</command></primary></indexterm>
+        <indexterm><primary>network</primary><secondary><command>nmap</command></secondary></indexterm>
 
-	<para>The <command>nmap</command> tool (in the package with the same
-	name) will quickly identify Internet services hosted by a network
-	connected machine without even requiring to log in to it. Simply
-	call the following command on another machine connected to the same
-	network:</para>
+        <para>The <command>nmap</command> tool (in the package with the same
+        name) will quickly identify Internet services hosted by a network
+        connected machine without even requiring to log in to it. Simply
+        call the following command on another machine connected to the same
+        network:</para>
 
         <screen>
 <computeroutput>$ </computeroutput><userinput>nmap mirwiz</userinput>
@@ -155,43 +162,49 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
 
         <sidebar>
           <title><emphasis>ALTERNATIVE</emphasis> Use <command>ss</command> to find the list of available services</title>
+          <indexterm><primary>network</primary><secondary><command>ss</command></secondary></indexterm>
 
-	  <para>On a Linux machine, the <command>ss -anptu</command>
-	  command will show the list of active or pending TCP sessions, as
-	  well as UDP ports on which running programs are listening. This
-	  facilitates identification of services offered on the
-	  network.</para>
+          <para>On a Linux machine, the <command>ss -anptu</command>
+          command will show the list of active or pending TCP sessions, as
+          well as UDP ports on which running programs are listening. This
+          facilitates identification of services offered on the
+          network.</para>
         </sidebar>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> IPv6</title>
+          <indexterm><primary>network</primary><secondary>IPv6</secondary></indexterm>
 
-	  <para>Some network commands may work either with IPv4 (the
-	  default usually) or with IPv6.  These include the
-	  <command>nmap</command> and <command>ss</command>
-	  commands, but also others, such as <command>route</command>
-	  or <command>ip</command>. The convention is that this
-	  behavior is enabled by the <parameter>-6</parameter>
-	  command-line option.</para>
+          <para>Some network commands may work either with IPv4 (the
+          default usually) or with IPv6.  These include the
+          <command>nmap</command> and <command>ss</command>
+          commands, but also others, such as <command>route</command>
+          or <command>ip</command>. The convention is that this
+          behavior is enabled by the <parameter>-6</parameter>
+          command-line option.</para>
         </sidebar>
 
-	<para>If the server is a Unix machine offering shell accounts to
-	users, it is interesting to determine if processes are executed in
-	the background in the absence of their owner. The command
-	<command>ps auxw</command> displays a list of all processes with
-	their user identity. By checking this information against the
-	output of the <command>who</command> command, which gives a list of
-	logged in users, it is possible to identify rogue or undeclared servers or
-	programs running in the background. Looking at
-	<filename>crontabs</filename> (tables listing automatic actions
-	scheduled by users) will often provide interesting information on
-	functions fulfilled by the server (a complete explanation of
-	<command>cron</command> is available in <xref
-	linkend="sect.task-scheduling-cron-atd"/>).</para>
+        <indexterm><primary><command>ps</command></primary></indexterm>
+        <indexterm><primary><command>who</command></primary></indexterm>
+        <indexterm><primary>system</primary><secondary><command>ps</command></secondary></indexterm>
+        <indexterm><primary>system</primary><secondary><command>who</command></secondary></indexterm>
+        <para>If the server is a Unix machine offering shell accounts to users,
+        it is interesting to determine if processes are executed in the
+        background in the absence of their owner. The command <command>ps
+        auxw</command> displays a list of all processes with their user
+        identity. By checking this information against the output of the
+        <command>who</command> or <command>w</command> commands, which give a
+        list of logged in users, it is possible to identify rogue or undeclared
+        servers or programs running in the background. Looking at
+        <filename>crontabs</filename> (tables listing automatic actions
+        scheduled by users) will often provide interesting information on
+        functions fulfilled by the server (a complete explanation of
+        <command>cron</command> is available in <xref
+        linkend="sect.task-scheduling-cron-atd"/>).</para>
 
-	<para>In any case, it is essential to backup your servers: this
-	allows recovery of information after the fact, when users will
-	report specific problems due to the migration.</para>
+        <para>In any case, it is essential to backup your servers: this
+        allows recovery of information after the fact, when users will
+        report specific problems due to the migration.</para>
       </section>
     </section>
     <section>
@@ -202,6 +215,9 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
       updated server. The bare minimum is to make a backup copy of the
       configuration files.</para>
 
+      <indexterm><primary><filename>/etc/</filename></primary></indexterm>
+      <indexterm><primary><filename>/usr/local/</filename></primary></indexterm>
+      <indexterm><primary><filename>/opt/</filename></primary></indexterm>
       <para>For Unix machines, the configuration files are usually
       found in <filename>/etc/</filename>, but they may be located in
       a sub-directory of <filename>/usr/local/</filename>. This is the
@@ -240,6 +256,8 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
       <para>To effectively take over its maintenance, one may analyze a
       machine already running with Debian.</para>
 
+      <indexterm><primary><filename>/etc/debian_version</filename></primary></indexterm>
+      <indexterm><primary><filename>debian_version</filename></primary></indexterm>
       <para>The first file to check is
       <filename>/etc/debian_version</filename>, which usually contains the
       version number for the installed Debian system (it is part of the
@@ -254,6 +272,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
       <command>aptitude</command> can also be used for these tasks, albeit
       in a less systematic manner.</para>
 
+      <indexterm><primary><filename>sources.list</filename></primary></indexterm>
       <para>A glance at the <filename>/etc/apt/sources.list</filename> file
       (and <filename>/etc/apt/sources.list.d/</filename> directory)
       will show where the installed Debian packages likely came from. If
@@ -283,32 +302,36 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
       package exists.</para>
 
       <sidebar>
-        <title><emphasis>QUICK LOOK</emphasis> <emphasis role="pkg">cruft</emphasis>/<emphasis role="pkg">cruft-ng</emphasis>, <emphasis role="pkg">debsums</emphasis> and <emphasis role="pkg">apt-show-versions</emphasis></title>
+        <title><emphasis>QUICK LOOK</emphasis> <emphasis role="pkg">cruft</emphasis>/<emphasis role="pkg">cruft-ng</emphasis>, <emphasis role="pkg">debsums</emphasis>, and <emphasis role="pkg">apt-show-versions</emphasis></title>
+        <indexterm><primary><emphasis role="pkg">cruft</emphasis></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">cruft-ng</emphasis></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">debsums</emphasis></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">apt-show-versions</emphasis></primary></indexterm>
 
-	<para>The <emphasis role="pkg">cruft</emphasis> and
-	<emphasis role="pkg">cruft-ng</emphasis> packages propose to
-	list the available files that are not owned by any package. They have
-	some filters (more or less effective, and more or less up to date)
-	to avoid reporting some legitimate files (files generated by Debian
-	packages, or generated configuration files not managed by
-	<command>dpkg</command>, etc.).</para>
+        <para>The <emphasis role="pkg">cruft</emphasis> and
+        <emphasis role="pkg">cruft-ng</emphasis> packages propose to
+        list the available files that are not owned by any package. They have
+        some filters (more or less effective, and more or less up to date)
+        to avoid reporting some legitimate files (files generated by Debian
+        packages, or generated configuration files not managed by
+        <command>dpkg</command>, etc.).</para>
 
-	<para>Be careful to not blindly delete everything that
-	<command>cruft</command> and <command>cruft-ng</command> might
-	list!</para>
+        <para>Be careful to not blindly delete everything that
+        <command>cruft</command> and <command>cruft-ng</command> might
+        list!</para>
 
-	<para>The <emphasis role="pkg">debsums</emphasis> package allows to
-	check the MD5 hashsum of each file installed by a package against a
-	reference hashsum and can help to determine, which files might have
-	been altered (see <xref linkend="sidebar.debsums"/>). Be aware
-	that created files (files generated by Debian packages, or
-	generated configuration files not managed by
-	<command>dpkg</command>, etc.) are not subject to this check.</para>
+        <para>The <emphasis role="pkg">debsums</emphasis> package allows to
+        check the MD5 hashsum of each file installed by a package against a
+        reference hashsum and can help to determine, which files might have
+        been altered (see <xref linkend="sidebar.debsums"/>). Be aware
+        that created files (files generated by Debian packages, or
+        generated configuration files not managed by
+        <command>dpkg</command>, etc.) are not subject to this check.</para>
 
-	<para>The <emphasis role="pkg">apt-show-versions</emphasis> package
-	provides a tool to check for installed packages without a package
-	source and can help to determine third party packages (see
-	<xref linkend="sect.apt-show-versions"/>).</para>
+        <para>The <emphasis role="pkg">apt-show-versions</emphasis> package
+        provides a tool to check for installed packages without a package
+        source and can help to determine third party packages (see
+        <xref linkend="sect.apt-show-versions"/>).</para>
       </sidebar>
     </section>
     <section>
@@ -406,14 +429,14 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
         <indexterm><primary>amd64</primary></indexterm>
         <indexterm><primary>i386</primary></indexterm>
 
-	<para>Most recent computers have 64 bit Intel or AMD
-	processors, compatible with older 32 bit processors; the
-	software compiled for “i386” architecture thus works. On the
-	other hand, this compatibility mode does not fully exploit the
-	capabilities of these new processors. This is why Debian
-	provides the “amd64” architecture, which works for recent AMD
-	chips as well as Intel “em64t” processors (including most of
-	the Core series), which are very similar to AMD64.</para>
+        <para>Most recent computers have 64 bit Intel or AMD
+        processors, compatible with older 32 bit processors; the
+        software compiled for “i386” architecture thus works. On the
+        other hand, this compatibility mode does not fully exploit the
+        capabilities of these new processors. This is why Debian
+        provides the “amd64” architecture, which works for recent AMD
+        chips as well as Intel “em64t” processors (including most of
+        the Core series), which are very similar to AMD64.</para>
       </sidebar>
     </section>
     <section>
@@ -443,3 +466,4 @@ Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</computeroutput>
     </section>
   </section>
 </chapter>
+<!-- vim: set ft=xml tw=79 ts=2 sw=2 ai si et: -->
