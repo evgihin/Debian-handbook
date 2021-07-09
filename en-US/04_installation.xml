@@ -46,17 +46,19 @@
   <indexterm><primary><command>debian-installer</command></primary></indexterm>
 
   <!-- MAYCHANGE: hardware requirements -->
-  <para>Installation requires 128 MB of RAM (Random Access Memory) and at
+  <!-- https://www.debian.org/releases/bullseye/amd64/ch03s04 -->
+  <para>Installation requires 256 MB of RAM (Random Access Memory) and at
   least 2 GB of hard drive space. All Falcot computers meet these
   criteria. Note, however, that these figures apply to the installation of
-  a very limited system without a graphical desktop. A minimum of 1 GB
+  a very limited system without a graphical desktop. A minimum of 2 GB
   of RAM and 10 GB of hard drive space are really recommended for a basic
   office desktop workstation.</para>
 
   <sidebar>
-    <title><emphasis>BEWARE</emphasis> Upgrading from Stretch</title>
+    <!-- MAYCHANGE: codename of the previous stable release -->
+    <title><emphasis>BEWARE</emphasis> Upgrading from Buster</title>
 
-    <para>If you already have Debian <emphasis role="distribution">Stretch</emphasis>
+    <para>If you already have Debian <emphasis role="distribution">Buster</emphasis>
     installed on your computer, this chapter is not for you! Unlike other
     distributions, Debian allows updating a system from one version to the
     next without having to reinstall the system. Reinstalling, in addition
@@ -65,6 +67,11 @@
 
     <para>The upgrade process will be described in <xref
     linkend="sect.dist-upgrade"/>.</para>
+
+    <para>Upgrading from even older Debian systems directly is not supported.
+    In this case you need to update gradually to the stable release which
+    followed your Debian version, and so on. Previous versions of this book
+    will assist you in that matter.</para>
   </sidebar>
   <section id="sect.installation-methods">
     <title>Installation Methods</title>
@@ -73,10 +80,12 @@
     long as the BIOS of the machine allows it. You can for instance boot
     with a CD-ROM, a USB key, or even through a network.</para>
 
-    <sidebar>
-      <title><emphasis>BACK TO BASICS</emphasis> BIOS, the hardware/software interface</title>
-      <indexterm><primary>BIOS</primary></indexterm>
-      <indexterm><primary>Basic Input/Output System</primary></indexterm>
+  <sidebar>
+    <title><emphasis>BACK TO BASICS</emphasis> BIOS and UEFI, the hardware/software interface</title>
+    <indexterm><primary>BIOS</primary></indexterm>
+    <indexterm><primary>Basic Input/Output System</primary></indexterm>
+    <indexterm><primary>UEFI</primary><seealso>Unified Extensible Firmware Interface</seealso></indexterm>
+    <indexterm><primary>Unified Extensible Firmware Interface</primary></indexterm>
 
       <para>BIOS (which stands for Basic Input/Output System) is a software
       that is included in the motherboard (the electronic board connecting
@@ -84,16 +93,29 @@
       to load an operating system (via an adapted bootloader). It stays in
       the background to provide an interface between the hardware and the
       software (in our case, the Linux kernel).</para>
+
+      <para>In 2005/2006 its successor, the UEFI (Unified Extensible Firmware
+      Interface) specification, has been published. This specification defines
+      an interface that has the same purpose as the BIOS, but tries to provide
+      more usability, extensibility, and flexibility, a graphical user
+      interface, and true 64bit support. Several manufacturers have either
+      announced to cease support for the legacy BIOS mode in their UEFI
+      implementation, or they already did. So many new computers only support
+      UEFI. This transition, however, has not been without discussion nor
+      without criticism.</para>
     </sidebar>
     <section id="sect.install-cd">
       <title>Installing from a CD-ROM/DVD-ROM</title>
+      <indexterm><primary>installation</primary><secondary>from a CD-ROM/DVD-ROM</secondary></indexterm>
 
       <para>The most widely used installation method is from a CD-ROM
       (or DVD-ROM, which behaves exactly the same way): the computer
       is booted from this media, and the installation program takes
       over.</para>
 
-      <!-- MAYCHANGE: number of CD-ROM, DVD-ROM, Blu-ray -->
+      <!-- MAYCHANGE: number of CD-ROM, DVD-ROM, Blu-ray; use jigdo files -->
+      <indexterm><primary><filename>netinst.iso</filename></primary></indexterm>
+      <indexterm><primary>installation</primary><secondary>netinst</secondary></indexterm>
       <para>Various CD-ROM families have different purposes:
       <emphasis>netinst</emphasis> (network installation) contains the
       installer and the base Debian system; all other programs are
@@ -102,7 +124,7 @@
       about 150 to 280 MB (depending on the architecture).
       On the other hand, the complete set offers all packages and
       allows for installation on a computer that has no Internet access;
-      it requires around 17 DVD-ROMs (or 4 Blu-ray disks). There is no
+      it requires around 19 DVD-ROMs (or 4 Blu-ray disks). There is no
       more official CD-ROMs set as they were really huge, rarely used and
       now most of the computers use DVD-ROMs as well as CD-ROMs. But the
       programs are divided among the disks
@@ -124,16 +146,16 @@
       <sidebar>
         <title><emphasis>TIP</emphasis> Multi-architecture disks</title>
 
-	<para>Most installation CD- and DVD-ROMs work only with a specific
-	hardware architecture. If you wish to download the complete images,
-	you must take care to choose those which work on the hardware of
-	the computer on which you wish to install them.</para>
+        <para>Most installation CD- and DVD-ROMs work only with a specific
+        hardware architecture. If you wish to download the complete images,
+        you must take care to choose those which work on the hardware of
+        the computer on which you wish to install them.</para>
 
-	<para>Some CD/DVD-ROM images can work on several
-	architectures. We thus have a CD-ROM image combining the
-	<emphasis>netinst</emphasis> images of the
-	<emphasis>i386</emphasis> and <emphasis>amd64</emphasis>
-	architectures.</para>
+        <para>Some CD/DVD-ROM images can work on several
+        architectures. We thus have a CD-ROM image combining the
+        <emphasis>netinst</emphasis> images of the
+        <emphasis>i386</emphasis> and <emphasis>amd64</emphasis>
+        architectures.</para>
       </sidebar>
       <indexterm><primary>CD-ROM</primary><secondary>installation CD-ROM</secondary></indexterm>
       <indexterm><primary>CD-ROM</primary><secondary><emphasis>netinst CD-ROM</emphasis></secondary></indexterm>
@@ -144,12 +166,13 @@
       them and burn them to disk. You may also purchase them, and, thus,
       provide the project with a little financial support. Check the
       website to see the list of DVD-ROM image vendors and download sites.
-      <ulink type="block" url="https://www.debian.org/CD/index.html"/>
+      <ulink type="block" url="https://www.debian.org/CD/"/>
       </para>
     </section>
     <section id="sect.install-usb">
       <title>Booting from a USB Key</title>
       <indexterm><primary>USB key</primary></indexterm>
+      <indexterm><primary>installation</primary><secondary>from a USB key</secondary></indexterm>
 
       <para>Since most computers are able to boot from USB devices, you
       can also install Debian from a USB key (this is nothing more than a
@@ -160,6 +183,7 @@
       is very simple because ISO images for i386 and amd64 are hybrid
       images that can boot from a CD-ROM as well as from a USB key.</para>
 
+      <!-- MAYCHANGE: version number in iso name -->
       <para>You must first identify the device name of the USB key
       (ex: <literal>/dev/sdb</literal>); the simplest means to do this
       is to check the messages issued by the kernel using the
@@ -183,6 +207,9 @@
       <indexterm><primary>installation</primary><secondary><emphasis>netboot installation</emphasis></secondary></indexterm>
       <indexterm><primary>installation</primary><secondary><emphasis>PXE installation</emphasis></secondary></indexterm>
       <indexterm><primary>installation</primary><secondary><emphasis>TFTP installation</emphasis></secondary></indexterm>
+      <indexterm><primary>PXE</primary></indexterm>
+      <indexterm><primary>TFTP</primary><seealso>Trivial File Transfer Protocol</seealso></indexterm>
+      <indexterm><primary>Trivial File Transfer Protocol</primary></indexterm>
 
       <para>Many BIOSes allow booting directly from the network by
       downloading a kernel and a minimal filesystem image. This method
@@ -213,6 +240,7 @@
     <section id="sect.install-auto">
       <title>Other Installation Methods</title>
 
+      <indexterm><primary>installation</primary><secondary>custom installation</secondary></indexterm>
       <para>When we have to deploy customized installations for a large
       number of computers, we generally choose an automated rather than a
       manual installation method. Depending on the situation and the
@@ -220,6 +248,13 @@
       Automatic Installer, described in <xref linkend="sect.fai"/>), or even a
       customized installation DVD with preseeding (see <xref
       linkend="sect.d-i-preseeding"/>).</para>
+
+      <indexterm><primary>installation</primary><secondary>remote installation</secondary></indexterm>
+      <para>It should also be noted that the installer can load and run an SSH
+      server and thus provides the ability to install Debian remotely via an SSH
+      session. The release notes also describe how to run the installer from an
+      existing system using <emphasis>grub</emphasis> to replace it
+      completely.</para>
     </section>
   </section>
   <section id="sect.installation-steps">
@@ -1362,3 +1397,4 @@
     </section>
   </section>
 </chapter>
+<!-- vim: set ft=xml tw=79 ts=2 sw=2 ai si et: -->
