@@ -1,6 +1,6 @@
 # wing.W <dabouw@google.com>, 2013.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2021-06-17 17:33+0000\nLast-Translator: Biukang <n765162585@gmail.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/13_workstation/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.7\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-05-17 17:54+0200\nPO-Revision-Date: 2021-07-11 12:33+0000\nLast-Translator: Paulman <paulman@danwin1210.me>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/debian-handbook/13_workstation/zh_Hans/>\nLanguage: zh-CN\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.8-dev\n"
 
 msgid "Workstation"
 msgstr "工作站"
@@ -64,10 +64,8 @@ msgstr "<primary>服务</primary><secondary>X</secondary>"
 msgid "<primary><emphasis role=\"pkg\">xserver-xorg</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">xserver-xorg</emphasis></primary>"
 
-#, fuzzy
-#| msgid "Note that if the detected video card is not handled by any of the available drivers, X.org tries using the VESA and fbdev drivers. The former is a generic driver that should work everywhere, but with limited capabilities (fewer available resolutions, no hardware acceleration for games and visual effects for the desktop, and so on) while the latter works on top of the kernel's framebuffer device. The X server writes its messages to the <filename>/var/log/Xorg.0.log</filename> log file, which is where one would look to know what driver is currently in use. For example, the following snippet matches what the <literal>intel</literal> driver outputs when it is loaded:"
 msgid "Note that if the detected video card is not handled by any of the available drivers, X.org tries using the <literal>vesa</literal> and <literal>fbdev</literal> drivers. VESA is a generic driver that should work everywhere, but with limited capabilities (fewer available resolutions, no hardware acceleration for games and visual effects for the desktop, and so on) while <literal>fbdev</literal> works on top of the kernel's framebuffer device. Nowadays the X server can run without any administrative privileges (this used to be required to be able to configure the screen) and its log file is then stored in the user's home directory in <filename>~/.local/share/xorg/Xorg.0.log</filename>, whereas it is <filename>/var/log/Xorg.0.log</filename> for X servers started with root privileges and for versions older than Debian 9 <emphasis role=\"distribution\">Stetch</emphasis>. That log file is where one would look to know what driver is currently in use. For example, the following snippet matches what the <literal>intel</literal> driver outputs when it is loaded:"
-msgstr "请注意，如果侦测到的显卡不能被任何可用的驱动所支持， X.org 会尝试使用 VESA 和 fbdev 驱动。前者基本上是万能驱动，但是能力有限（分辨率小，不支持硬件加速等），而后者则基于内核缓冲区（framebuffer）设备。X 服务将其消息写入<filename>/var/log/Xorg.0.log</filename> 日志文件，在其中可以找到正在使用中的驱动。如下的片段与加载 <literal>intel</literal> 驱动程序时的输出相似："
+msgstr "请注意，如果侦测到的显卡不能被任何可用的驱动所支持， X.org 会尝试使用 <literal>VESA</literal> 和 <literal>fbdev</literal> 驱动。前者基本上是万能驱动，但是能力有限（分辨率小，不支持硬件加速等），而后者则基于内核缓冲区（framebuffer）设备。X 服务将其消息写入<filename>/var/log/Xorg.0.log</filename> 日志文件，在其中可以找到正在使用中的驱动。如下的片段与加载 <literal>intel</literal> 驱动程序时的输出相似："
 
 msgid "<primary>VESA</primary>"
 msgstr "<primary>VESA</primary>"
@@ -108,15 +106,11 @@ msgstr "<emphasis>其他</emphasis> 专利驱动"
 msgid "Some video card makers (most notably NVIDIA) refuse to publish the hardware specifications that would be required to implement good free drivers. They do, however, provide proprietary drivers that allow using their hardware. This policy is nefarious, because even when the provided driver exists, it is usually not as polished as it should be; more importantly, it does not necessarily follow the X.org updates, which may prevent the latest available driver from loading correctly (or at all). We cannot condone this behavior, and we recommend you avoid these makers and favor more cooperative manufacturers."
 msgstr "有些显卡制造商（特别是 NVIDIA）拒绝发布其产品的硬件规格，而编写良好的自由驱动程序需要这些规格。他们提供专用驱动支持其硬件。这种政策是极其恶毒的，因为即使有驱动，但是却不能很好的工作；更重要的是，它不会随着 X.org 更新而更新，这就会导致最新的驱动加载出问题（并非所有）。建议尽量避免选择这些生产商，选择那些更合作的厂家。"
 
-#, fuzzy
-#| msgid "If you still end up with such a card, you will find the required packages in the <emphasis>non-free</emphasis> section: <emphasis role=\"pkg\">nvidia-glx</emphasis> for nVidia cards, and <emphasis role=\"pkg\">fglrx-driver</emphasis> for some ATI cards. Both cases require matching kernel modules. Building these modules can be automated by installing the <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (for nVidia), or <emphasis role=\"pkg\">fglrx-modules-dkms</emphasis> (for ATI) packages."
 msgid "If you still end up with such a card, you will find the required packages in the <emphasis>non-free</emphasis> section: <emphasis role=\"pkg\">nvidia-driver</emphasis> for NVIDIA cards. It requires a matching kernel module. Building the module can be automated by installing the package <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> (for NVIDIA)."
-msgstr "如果你还是使用了这样的显卡，就需要使用 <emphasis>non-free</emphasis> 中的软件包： <emphasis role=\"pkg\">nvidia-glx</emphasis> 用于nVidia 显卡， <emphasis role=\"pkg\">fglrx-driver</emphasis> 用于ATI 显卡。两者都需要与之相匹配的内核。这些模块可以通过安装 <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> ( nVidia), 或 <emphasis role=\"pkg\">fglrx-modules-dkms</emphasis> (ATI)自动创建。"
+msgstr "如果你还是使用了这样的显卡，就需要使用 <emphasis>non-free</emphasis> 中的软件包： <emphasis role=\"pkg\">nvidia-glx</emphasis> 用于 NVDIA 显卡， <emphasis role=\"pkg\">fglrx-driver</emphasis> 用于ATI 显卡。两者都需要与之相匹配的内核。这些模块可以通过安装 <emphasis role=\"pkg\">nvidia-kernel-dkms</emphasis> ( nVidia), 或 <emphasis role=\"pkg\">fglrx-modules-dkms</emphasis> (ATI)自动创建。"
 
-#, fuzzy
-#| msgid "The “nouveau” project aims to develop a free software driver for nVidia cards. As of <emphasis role=\"distribution\">Jessie</emphasis>, its feature set does not match the proprietary driver. In the developers' defense, we should mention that the required information can only be gathered by reverse engineering, which makes things difficult. The free driver for ATI video cards, called “radeon”, is much better in that regard although it often requires a non-free firmware."
 msgid "The “nouveau” project aims to develop a free software driver for NVIDIA cards and is the default driver that you get for those cards in Debian. In general, its feature set and performance do not match the proprietary driver. In the developers' defense, we should mention that the required information can only be gathered by reverse engineering, which makes things difficult. The free drivers for ATI video cards, called “radeon” and \"amdgpu\", are much better in that regard although it often requires non-free firmware from the <emphasis role=\"pkg\">firmware-amd-graphics</emphasis> package."
-msgstr "“nouveau”项目的目的是为 nVidia 显卡开发自由软件。在 <emphasis role=\"distribution\">Jessie</emphasis>中，它的特性不比专有驱动。由于原始开发者的抵触，所需要的信息只能通过逆向工程来获取，这增加了难度。用于 ATI 显卡的自由驱动，称为“radeon”，在这方面要好的多，虽然它需要非自由（non-free）固件的支持。"
+msgstr "“nouveau”项目的目的是为 NVDIA 显卡开发自由软件。在 <emphasis role=\"distribution\">Jessie</emphasis>中，它的特性不比专有驱动。由于原始开发者的抵触，所需要的信息只能通过逆向工程来获取，这增加了难度。用于 ATI 显卡的自由驱动，称为“radeon”，在这方面要好的多，虽然它需要非自由（non-free）固件的支持。"
 
 msgid "<primary>ATI</primary>"
 msgstr "<primary>ATI</primary>"
@@ -176,25 +170,17 @@ msgstr "选择窗口管理器"
 msgid "<primary>manager</primary><secondary>window</secondary>"
 msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>window</secondary>"
 msgid "<primary>window manager</primary><secondary>mutter</secondary>"
-msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>mutter</secondary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>window</secondary>"
 msgid "<primary>window manager</primary><secondary>kwin</secondary>"
-msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>kwin</secondary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>window</secondary>"
 msgid "<primary>window manager</primary><secondary>xfwm</secondary>"
-msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>xfwm</secondary>"
 
-#, fuzzy
-#| msgid "Since each graphical desktop provides its own window manager, choosing the former usually implies software selections from the latter. GNOME uses the <command>mutter</command> window manager, KDE uses <command>kwin</command>, and Xfce (which we present later) has <command>xfwm</command>. The Unix philosophy always allows using one's window manager of choice, but following the recommendations allows an administrator to best take advantage of the integration efforts led by each project."
 msgid "Since each graphical desktop provides its own window manager, which window manager you choose is usually influenced by which desktop you have selected. GNOME uses the <command>mutter</command> window manager, Plasma uses <command>kwin</command>, and Xfce (which we present later) has <command>xfwm</command>. The Unix philosophy always allows using one's window manager of choice, but following the recommendations allows an administrator to best take advantage of the integration efforts led by each project."
-msgstr "既然每个图形桌面提供自己的窗口管理器，选择了前者也就意味着选择了后者。GNOME 使用 <command>metacity</command> 窗口管理器，KDE 使用<command>kwin</command>，而Xfce （随后会提到）是 <command>xfwm</command>。Unix 的哲学是允许自己选择窗口管理器，但是按照推荐配置，管理员能充分利用每个项目集成而带来的优势。"
+msgstr "既然每个图形桌面提供自己的窗口管理器，选择了前者也就意味着选择了后者。GNOME 使用 <command>mutter</command> 窗口管理器，KDE 使用<command>kwin</command>，而Xfce （随后会提到）是 <command>xfwm</command>。Unix 的哲学是允许自己选择窗口管理器，但是按照推荐配置，管理员能充分利用每个项目集成而带来的优势。"
 
 msgid "<primary><command>mutter</command></primary>"
 msgstr "<primary><command>mutter</command></primary>"
@@ -211,10 +197,8 @@ msgstr "<emphasis>回到基础</emphasis> 窗口管理器"
 msgid "<primary><emphasis>window manager</emphasis></primary>"
 msgstr "<primary><emphasis>窗口管理器</emphasis></primary>"
 
-#, fuzzy
-#| msgid "True to the Unix tradition of doing one thing only but doing it well, the window manager displays the “decorations” around the windows belonging to the currently running applications, which includes frames and the title bar. It also allows reducing, restoring, maximizing, and hiding windows. Most window managers also provide a menu that pops up when the desktop is clicked in a specific way. This menu provides the means to close the window manager session, starting new applications, and in some cases, change to another window manager (if installed)."
 msgid "The window manager displays the “decorations” around the windows belonging to the currently running applications, which includes frames and the title bar. It also allows reducing, restoring, maximizing, and hiding windows. Most window managers also provide a menu that pops up when the desktop is clicked in a specific way. This menu provides the means to close the window manager session, start new applications, and in some cases, change to another window manager (if installed)."
-msgstr "窗口管理器装饰当前运行程序的窗口，包括框架和标题栏。也允许减小，恢复，最大化，和隐藏窗口。大多数窗口管理器提供弹出菜单。这些弹出菜单提供了关闭窗口会话，启动新程序的方法，或者切换到其他的窗口管理器。"
+msgstr "窗口管理器装饰当前运行程序的窗口，包括框架和标题栏。也允许减小，恢复，最大化，和隐藏窗口。大多数窗口管理器提供弹出菜单。这些弹出菜单提供了关闭窗口会话，启动新程序的方法，或者切换到其他的窗口管理器（如果已经安装了）。"
 
 #, fuzzy
 #| msgid "Older computers may, however, have a hard time running heavyweight graphical desktop environments. In these cases, a lighter configuration should be used. “Light” (or small footprint) window managers include WindowMaker (in the <emphasis role=\"pkg\">wmaker</emphasis> package), Afterstep, fvwm, icewm, blackbox, fluxbox, or openbox. In these cases, the system should be configured so that the appropriate window manager gets precedence; the standard way is to change the <command>x-window-manager</command> alternative with the <command>update-alternatives --config x-window-manager</command> command."
@@ -224,50 +208,38 @@ msgstr "老式的计算机，运行重量级的图形桌面环境很吃力。这
 msgid "<primary>WindowMaker</primary>"
 msgstr "<primary>WindowMaker</primary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>window</secondary>"
 msgid "<primary>window manager</primary><secondary>windowmaker</secondary>"
-msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>windowmaker</secondary>"
 
 msgid "<primary>Afterstep</primary>"
 msgstr "<primary>Afterstep</primary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>display</secondary>"
 msgid "<primary>window manager</primary><secondary>afterstep</secondary>"
-msgstr "<primary>管理</primary><secondary>显示</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>afterstep</secondary>"
 
 msgid "<primary>Blackbox</primary>"
 msgstr "<primary>Blackbox</primary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>display</secondary>"
 msgid "<primary>window manager</primary><secondary>blackbox</secondary>"
-msgstr "<primary>管理</primary><secondary>显示</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>blackbox</secondary>"
 
 msgid "<primary>Icewm</primary>"
 msgstr "<primary>Icewm</primary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>window</secondary>"
 msgid "<primary>window manager</primary><secondary>icewm</secondary>"
-msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>icewm</secondary>"
 
 msgid "<primary>Fluxbox</primary>"
 msgstr "<primary>Fluxbox</primary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>window</secondary>"
 msgid "<primary>window manager</primary><secondary>fluxbox</secondary>"
-msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>fluxbox</secondary>"
 
 msgid "<primary>Openbox</primary>"
 msgstr "<primary>Openbox</primary>"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>window</secondary>"
 msgid "<primary>window manager</primary><secondary>openbox</secondary>"
-msgstr "<primary>管理器</primary><secondary>窗口</secondary>"
+msgstr "<primary>窗口管理器</primary><secondary>openbox</secondary>"
 
 msgid "<primary><command>x-window-manager</command></primary>"
 msgstr "<primary><command>x-window-manager</command></primary>"
@@ -327,7 +299,7 @@ msgid "Modern desktop environments and many window managers provide menus listin
 msgstr "现代桌面环境和许多窗口管理器提供用户应用程序菜单列表。为了保持菜单与实际的应用程序更新一致，每个软件包提供一个 <filename> .desktop</filename>文件放到 <filename>/usr/share/applications</filename>目录。这些文件的格式由 FreeDesktop.org:<ulink type=\"block\" url=\"https://standards.freedesktop.org/desktop-entry-spec/latest/\" /> 标准化"
 
 msgid "The applications menus can be further customized by administrators through system-wide configuration files as described by the “Desktop Menu Specification”. End-users can also customize the menus with graphical tools such as <emphasis role=\"pkg\">kmenuedit</emphasis> (in Plasma), <emphasis role=\"pkg\">alacarte</emphasis> (in GNOME) or <emphasis role=\"pkg\">menulibre</emphasis>. <ulink type=\"block\" url=\"https://standards.freedesktop.org/menu-spec/latest/\" />"
-msgstr ""
+msgstr "管理员可以进一步地在系统配置文件里定制应用菜单，见 “桌面菜单标准”。终端用户可以使用图形化工具定制菜单，如 <emphasis role=\"pkg\">kmenuedit</emphasis> (在 Plasma)， <emphasis role=\"pkg\">alacarte</emphasis> 或者 <emphasis role=\"pkg\">menulibre</emphasis>（在 GNOME）。<ulink type=\"block\" url=\"https://standards.freedesktop.org/menu-spec/latest/\" />"
 
 msgid "<emphasis>HISTORY</emphasis> The Debian menu system"
 msgstr "<emphasis>历史</emphasis> Debian 菜单系统"
@@ -361,10 +333,8 @@ msgstr "<primary>GTK+</primary>"
 msgid "<primary>Qt</primary>"
 msgstr "<primary>Qt</primary>"
 
-#, fuzzy
-#| msgid "This diversity is rooted in history. KDE was the first graphical desktop project, but it chose the Qt graphical toolkit and that choice wasn't acceptable for a large number of developers. Qt was not free software at the time, and GNOME was started based on the GTK+ toolkit. Qt became free software in the interval, but the projects haven't merged and evolved in parallel instead."
 msgid "This diversity is rooted in history. Plasma (initially only KDE, which is now the name of the community) was the first graphical desktop project, but it chose the Qt graphical toolkit and that choice wasn't acceptable for a large number of developers. Qt was not free software at the time, and GNOME was started based on the GTK+ toolkit. Qt has since become free software, but the projects still evolved in parallel."
-msgstr "这种分歧有历史原因。KDE 是第一个图形桌面项目，但是它使用Qt 图形工具，这对大量的开发者来说是不可接受的。Qt 当时不是自由软件，GNOME 则基于 GTK+ 工具包。 Qt 后来也成为自由软件，但是两个项目没有合并而是并行发展。"
+msgstr "这种分歧有历史原因。Plasma（开始仅限于 KDE，现在已经是社区的名字）是第一个图形桌面项目，但是它使用Qt 图形工具，这对大量的开发者来说是不可接受的。Qt 当时不是自由软件，GNOME 则基于 GTK+ 工具包。 Qt 后来也成为自由软件，但是两个项目依旧并行发展。"
 
 #, fuzzy
 #| msgid "GNOME and KDE still work together: under the FreeDesktop.org umbrella, the projects collaborated in defining standards for interoperability across applications."
@@ -899,8 +869,9 @@ msgstr ""
 msgid "<emphasis>TIP</emphasis> Working around a winecfg failure"
 msgstr "<emphasis>技巧</emphasis>winecfg 失败处理"
 
+#, fuzzy
 msgid "In some cases, <command>winecfg</command> (which is just a wrapper) might fail. As a work-around, it is possible to try to run the underlying command manually: <command>wine64 /usr/lib/x86_64-linux-gnu/wine/wine/winecfg.exe.so</command> or <command>wine32 /usr/lib/i386-linux-gnu/wine/wine/winecfg.exe.so</command>."
-msgstr ""
+msgstr "有的时候，运行<command>winecfg</command>（仅仅只是一层封装）可能会失败。不失为一种解决方法，可以尝试手动运行底层的命令：<command>wine64 /usr/lib/x86_64-linux/gnu/wine/winecfg.exe.so</command> 或者 <command>wine32 /usr/lib/i386-linux-gnu/wine/wine/winecfg.exe.so</command>。"
 
 msgid "Note that you should not rely on Wine (or similar solutions) without actually testing the particular software: only a real-use test will determine conclusively whether emulation is fully functional."
 msgstr "注意，如果没有实际进行测试，那么不能完全指望 Wine（或类似的方案）：只有真正的使用测试才能决定模拟是否完全工作正常。"
@@ -947,11 +918,12 @@ msgstr "<primary>用户代理 (SIP)</primary>"
 msgid "<primary>SIP</primary><secondary>user agent</secondary>"
 msgstr "<primary>SIP</primary><secondary>用户代理</secondary>"
 
+#, fuzzy
 msgid "Each client application varies in functionality. Some applications are more convenient for intensive chat users while other applications are more stable for webcam users. It may be necessary to test several applications to identify those which are most satisfactory. A user may finally decide that they need more than one application, for example, an XMPP application for messaging with customers and an IRC application for collaboration with some online communities."
-msgstr ""
+msgstr "每个客户端程序在功能上都有些许的差异。有些应用程序更适合密集型的聊天用户群体，而另外一些却对于使用网络摄像头的用户群体来说更加稳定。测试不同的程序并在它们之中选择最合适的，这是很有必要的。用户可以决定使用不止一个应用程序，比如说，和客户使用 XMPP 应用程序而使用 IRC 程序和在线的社区协同工作。"
 
 msgid "To maximize the ability of users to communicate with the wider world, it is recommended to configure both SIP and XMPP clients or a single client that supports both protocols."
-msgstr ""
+msgstr "为了最大化的提升用户在宽广的世界里沟通联络，建议同时配置 SIP 客户端程序和 XMPP 的客户端程序，或者是一个单独的同时支持两种协议的客户端程序。"
 
 msgid "<primary>Session Initiation Protocol</primary>"
 msgstr "<primary>会话启动协议</primary>"
@@ -1005,7 +977,7 @@ msgid "<primary>Lumicall</primary>"
 msgstr "<primary>Lumicall</primary>"
 
 msgid "The <emphasis>Real-Time Communications Quick Start Guide</emphasis> has a chapter dedicated to client software. <ulink type=\"block\" url=\"http://rtcquickstart.org/guide/multi/useragents.html\" />"
-msgstr ""
+msgstr "<emphasis>实时通讯快速上手指南</emphasis> 专门有一章讲述客户端软件。 <ulink type=\"block\" url=\"http://rtcquickstart.org/guide/multi/useragents.html\" />"
 
 msgid "<emphasis>TIP</emphasis> Look for clients supporting ICE and TURN"
 msgstr ""
@@ -1025,16 +997,16 @@ msgid "<primary>ICE</primary><see>Interactive Connectivity Establishment</see>"
 msgstr ""
 
 msgid "Some RTC clients have significant problems sending voice and video through firewalls and NAT networks. Users may receive ghost calls (their phone rings but they don't hear the other person) or they may not be able to call at all."
-msgstr ""
+msgstr "有些 RTC 客户端在通过防火墙或者 NAT 网络传输时音频和视频存在很大的问题。用户可能会接听到幽灵电话（电话接通了但是却听不到另一方的声音）或者干脆是无法拨通。"
 
 msgid "The ICE and TURN protocols were developed to resolve these issues. Operating a TURN server with public IP addresses in each site and using client software that supports both ICE and TURN gives the best user experience."
-msgstr ""
+msgstr "ICE 和 TURN 协议是为了解决这些问题而开发的。 在两边同时运行 TURN 服务器，且使用同时支持 ICE 和 TURN的客户端，可以获得最好的用户体验。"
 
 msgid "If the client software is only intended for instant messaging, there is no requirement for ICE or TURN support."
-msgstr ""
+msgstr "如果客户端软件仅仅是专注于即使通信，那么就不要求支持 ICE 和 TURN。"
 
 msgid "Debian Developers operate a community SIP service at <ulink url=\"https://rtc.debian.org\">rtc.debian.org</ulink>. The community maintains a wiki with documentation about setting up many of the client applications packaged in Debian. The wiki articles and screenshots are a useful resource for anybody setting up a similar service on their own domain. <ulink type=\"block\" url=\"https://wiki.debian.org/UnifiedCommunications/DebianDevelopers/UserGuide\" />"
-msgstr ""
+msgstr "Debian 开发人员了在 <ulink url=\"https://rtc.debian.org\">rtc.debian.org</ulink>.运行了社区 SIP 服务。社区还维护了一个 wiki，包含了如何构建使用Debian 打包的应用程序的文档。对于任何想在他们自己的域里搭建相关服务的人来说，wiki里的文章和截图都是很有用的资源。 <ulink type=\"block\" url=\"https://wiki.debian.org/UnifiedCommunications/DebianDevelopers/UserGuide\" />"
 
 msgid "<emphasis>ALTERNATIVE</emphasis> Internet Relay Chat"
 msgstr "<emphasis>选择</emphasis> 互联网聊天室（IRC）"
