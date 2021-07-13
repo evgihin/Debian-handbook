@@ -283,55 +283,54 @@
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> 32 or 64 bits?</title>
-        <indexterm><primary>PAE</primary></indexterm>
+        <indexterm><primary>PAE</primary><seealso>Physical Address Extension</seealso></indexterm>
         <indexterm><primary>Physical Address Extension</primary></indexterm>
         <indexterm><primary>32/64 bits, choice</primary></indexterm>
 
-	<para>The fundamental difference between 32- and 64-bit systems is
-	the size of memory addresses. In theory, a 32-bit system can not
-	work with more than 4 GB of RAM (2<superscript>32</superscript>
-	bytes). In practice, it is possible to work around this limitation
-	by using the <literal>686-pae</literal> kernel variant, so long
-	as the processor handles the PAE (Physical Address Extension)
-	functionality. Using it does have a notable influence on system
-	performance, however. This is why it is useful to use the 64-bit
-	mode on a server with a large amount of RAM.</para>
+        <para>The fundamental difference between 32- and 64-bit systems is
+        the size of memory addresses. In theory, a 32-bit system cannot
+        work with more than 4 GB of RAM (2<superscript>32</superscript>
+        bytes). In practice, it is possible to work around this limitation
+        by using the <literal>686-pae</literal> kernel variant, so long
+        as the processor handles the PAE (Physical Address Extension)
+        functionality. Using it does have a notable influence on system
+        performance, however. This is why it is useful to use the 64-bit
+        mode on a server with a large amount of RAM.</para>
 
-	<para>For an office computer (where a few percent difference in
-	performance is negligible), you must keep in mind that some
-	proprietary programs are not available in 64-bit versions.
-        It is technically possible to make them work
-        on 64-bit systems, but you have to install the 32-bit versions of
-        all the necessary libraries (see <xref linkend="sect.multi-arch" />),
-        and sometimes to use <command>setarch</command> or
-        <command>linux32</command> (in the <emphasis
-          role="pkg">util-linux</emphasis> package) to trick applications
-	regarding the nature of the system.
-	<indexterm><primary><command>setarch</command></primary></indexterm>
-	<indexterm><primary><command>linux32</command></primary></indexterm></para>
+        <para>For an office computer (where a few percent difference in
+        performance is negligible), you must keep in mind that some proprietary
+        programs are not available in 64-bit versions.  It is technically
+        possible to make them work on 64-bit systems, but you have to install
+        the 32-bit versions of all the necessary libraries (see <xref
+        linkend="sect.multi-arch" />), and sometimes to use
+        <command>setarch</command> or <command>linux32</command> (in the
+        <emphasis role="pkg">util-linux</emphasis> package) to trick
+        applications regarding the nature of the system.</para>
+        <indexterm><primary><command>setarch</command></primary></indexterm>
+        <indexterm><primary><command>linux32</command></primary></indexterm>
       </sidebar>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Installation alongside an existing Windows system</title>
         <indexterm><primary>dual boot</primary></indexterm>
 
-	<para>If the computer is already running Windows, it is not
-	necessary to delete the system in order to install Debian. You can
-	have both systems at once, each installed on a separate disk or
-	partition, and choose which to start when booting the computer.
-	This configuration is often called “dual boot”, and the Debian
-	installation system can set it up. This is done during the hard
-	drive partitioning stage of installation and while setting up the
-	bootloader (see the sidebars <xref linkend="sidebar.shrinking-partition"/>
-	and <xref linkend="sidebar.bootloader-dual-boot"/>).</para>
+        <para>If the computer is already running Windows, it is not
+        necessary to delete the system in order to install Debian. You can
+        have both systems at once, each installed on a separate disk or
+        partition, and choose which to start when booting the computer.
+        This configuration is often called “dual boot”, and the Debian
+        installation system can set it up. This is done during the hard
+        drive partitioning stage of installation and while setting up the
+        bootloader (see the sidebars <xref linkend="sidebar.shrinking-partition"/>
+        and <xref linkend="sidebar.bootloader-dual-boot"/>).</para>
 
-	<para>If you already have a working Windows system, you can even
-	avoid using a CD-ROM; Debian offers a Windows program that
-	will download a light Debian installer and set it up on the hard
-	disk. You then only need to reboot the computer and choose between
-	normal Windows boot or booting the installation program. You can
-	also find it on a dedicated website with a rather explicit title…
-	<ulink type="block" url="http://ftp.debian.org/debian/tools/win32-loader/stable/"/>
+        <para>If you already have a working Windows system, you can even
+        avoid using a CD-ROM; Debian offers a Windows program that
+        will download a light Debian installer and set it up on the hard
+        disk. You then only need to reboot the computer and choose between
+        normal Windows boot or booting the installation program. You can
+        also find it on a dedicated website with a rather explicit title…
+        <ulink type="block" url="https://deb.debian.org/debian/tools/win32-loader/stable/"/>
         <ulink type="block" url="https://people.debian.org/~rmh/goodbye-microsoft/"/>
         </para>
       </sidebar>
@@ -342,14 +341,14 @@
         <indexterm><primary>bootloader</primary></indexterm>
         <indexterm><primary>boot</primary><secondary>loader</secondary></indexterm>
 
-	<para>The bootloader is a low-level program that is
-	responsible for booting the Linux kernel just after the BIOS
-	passes off its control. To handle this task, it must be able to
-	locate the Linux kernel to boot on the disk. On the i386 and
-	amd64 architectures, the two most used programs to perform this
-	task are <acronym>LILO</acronym>, the older of the two, and
-	<acronym>GRUB</acronym>, its modern replacement. Isolinux and Syslinux
-	are alternatives frequently used to boot from removable media.</para>
+        <para>The bootloader is a low-level program that is
+        responsible for booting the Linux kernel just after the BIOS
+        passes off its control. To handle this task, it must be able to
+        locate the Linux kernel to boot on the disk. On the i386 and
+        amd64 architectures, the two most used programs to perform this
+        task are <acronym>LILO</acronym>, the older of the two, and
+        <acronym>GRUB</acronym>, its modern replacement. Isolinux and Syslinux
+        are alternatives frequently used to boot from removable media.</para>
       </sidebar>
 
       <para>Each menu entry hides a specific boot command line, which can
@@ -368,6 +367,14 @@
       mode can be confusing due to the multitude of configuration choices
       that it offers.</para>
 
+      <para>The "rescue" mode, also accessible in the “Advanced options” menu,
+      allows to recover a broken system or fix the bootloader. After presenting
+      the first few screens of the installer, it will allow to enter a shell
+      prompt in the file system you selected to perform any necessary actions,
+      or allow to re-install the bootloader.
+      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch08s06.en.html"/>
+      </para>
+
       <figure>
         <title>Boot screen</title>
         <mediaobject>
@@ -380,8 +387,8 @@
       <para>Once booted, the installation program guides you step by
       step throughout the process. This section presents each of these
       steps in detail. Here we follow the process of an installation
-      from an amd64 DVD-ROM (more specifically, the rc1 version
-      of the installer for <emphasis role="distribution">Buster</emphasis>);
+      from an amd64 DVD-ROM (more specifically, the RC2 version
+      of the installer for <emphasis role="distribution">Bullseye</emphasis>);
       <emphasis>netinst</emphasis> installations, as well as the final
       release of the installer, may look slightly different. We will also
       address installation in graphical mode, but the only difference from
@@ -402,14 +409,15 @@
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Navigating with the keyboard</title>
 
-	<para>Some steps in the installation process require you to enter
-	information. These screens have several areas that may “have
-	focus” (text entry area, checkboxes, list of choices, OK and
-	Cancel buttons), and the <keycap>TAB</keycap> key allows you to
-	move from one to another.</para>
+        <para>Some steps in the installation process require you to enter
+        information. These screens have several areas that may “have focus”
+        (text entry area, checkboxes, list of choices,
+        <guibutton>OK</guibutton> and <guibutton>Cancel</guibutton> buttons),
+        and the <keycap>TAB</keycap> key allows you to move from one to
+        another.</para>
 
-	<para>In graphical mode, you can use the mouse as you would
-	normally on an installed graphical desktop.</para>
+        <para>In graphical mode, you can use the mouse as you would
+        normally on an installed graphical desktop.</para>
       </sidebar>
 
       <figure role="flow.inline">
@@ -455,6 +463,7 @@
       <title>Selecting the keyboard layout</title>
       <indexterm><primary>keyboard layout</primary></indexterm>
       <indexterm><primary>layout, keyboard</primary></indexterm>
+      <indexterm><primary>choice</primary><secondary>of keyboard layout</secondary></indexterm>
 
       <para>The proposed “American English” keyboard corresponds to the
       usual QWERTY layout.</para>
@@ -509,7 +518,9 @@
       possible to load a specific module from a removable device. This
       last solution is usually only needed if the appropriate driver is not
       included in the standard Linux kernel, but available elsewhere, such
-      as the manufacturer's website.</para>
+      as the manufacturer's website or in firmware archives/packages.
+      <ulink type="block" url="https://www.debian.org/devel/debian-installer/#firmware_nonfree"/>
+      </para>
 
       <para>This step must absolutely be successful for
       <emphasis>netinst</emphasis> installations, since the Debian
