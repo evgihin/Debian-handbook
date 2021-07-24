@@ -218,9 +218,9 @@ Created symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /l
       <title>nftables Behavior</title>
 
       <para>As the kernel is processing a network packet it pauses and allows
-      us to inspect the packet and decide what to do with that package.
-      For example, we might want to drop or discard certain incoming packages,
-      modify other packages in various ways, block certain outgoing packets
+      us to inspect the packet and decide what to do with that packet.
+      For example, we might want to drop or discard certain incoming packets,
+      modify other packets in various ways, block certain outgoing packets
       to control against malware or redirect some packets at the earliest
       possible stage to bridge network interfaces or to spread the load of
       incoming packets between systems.</para>
@@ -285,8 +285,8 @@ Created symlink /etc/systemd/system/sysinit.target.wants/nftables.service → /l
       <para>There are two types of chains: <emphasis>base chains</emphasis> and
       <emphasis>regular chains</emphasis>. A base chain is an entry
       point for packets from the networking stack. Base chains are registered into
-      the Netfilter hooks, i.e. they see packets flowing through
-      the TCP/IP stack. On the other hand a regular chain is not
+      the Netfilter hooks, e.g. they see packets flowing through
+      the TCP/IP stack. On the other hand, a regular chain is not
       attached to any hook so it does not see any traffic. But it
       may be used as a jump target for better organization of the rules.</para>
       <indexterm><primary>chain</primary></indexterm>
@@ -589,7 +589,7 @@ table ip mangle {
       <para>To enable a default firewall in Debian, you need to store the
       rules in <filename>/etc/nftables.conf</filename> and execute
       <command>systemctl enable nftables.service</command> as root. You
-      can stop the firewall executing <command>nft flush ruleset</command>
+      can stop the firewall by executing <command>nft flush ruleset</command>
       as root.</para>
 
       <para>In other cases, the recommended way is to register the
