@@ -484,6 +484,7 @@
     </section>
     <section id="sect.install-detect-hardware">
       <title>Detecting Hardware</title>
+      <indexterm><primary>detecting</primary><secondary>hardware</secondary></indexterm>
 
       <para>This step is completely automatic in the vast majority of
       cases. The installer detects your hardware, and tries to identify the
@@ -511,6 +512,7 @@
     </section>
     <section id="sect.install-detect-network">
       <title>Detecting Network Hardware</title>
+      <indexterm><primary>detecting</primary><secondary>network hardware</secondary></indexterm>
 
       <para>This automatic step tries to identify the network card and load
       the corresponding module. If automatic detection fails, you can
@@ -545,61 +547,65 @@
       <sidebar>
         <title><emphasis>TIP</emphasis> Configuration without DHCP</title>
 
-	<para>If the local network is equipped with a DHCP server that you
-	do not wish to use because you prefer to define a static IP address
-	for the machine during installation, you can add the
-	<userinput>netcfg/use_dhcp=false</userinput> option when booting
-	from the CD-ROM. You just need to go to the desired menu entry by
-	pressing the <keycap>TAB</keycap> key and add the desired option
-	before pressing the <keycap>Enter</keycap> key.</para>
+        <para>If the local network is equipped with a DHCP server that you
+        do not wish to use, because you prefer to define a static IP address
+        for the machine during installation, you can add the
+        <userinput>netcfg/use_dhcp=false</userinput> option when booting
+        from the installation media. You just need to go to the desired menu entry by
+        pressing the <keycap>TAB</keycap> key and add the desired option
+        before pressing the <keycap>Enter</keycap> key.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>BEWARE</emphasis> Do not improvise</title>
 
-	<para>Many local area networks are based on an implicit assumption
-	that all machines can be trusted, and inadequate configuration of a
-	single computer will often perturb the whole network. As a result,
-	do not connect your machine to a network without first agreeing
-	with its administrator on the appropriate settings (for example,
-	the IP address, netmask, and broadcast address).</para>
+        <para>Many local area networks are based on an implicit assumption
+        that all machines can be trusted, and inadequate configuration of a
+        single computer will often perturb the whole network. As a result,
+        do not connect your machine to a network without first agreeing
+        with its administrator on the appropriate settings (for example,
+        the IP address, netmask, and broadcast address).</para>
       </sidebar>
     </section>
     <section>
       <title>Administrator Password</title>
       <indexterm><primary>account</primary><secondary>administrator account</secondary></indexterm>
+      <indexterm><primary>account</primary><secondary>root account</secondary></indexterm>
+      <indexterm><primary>administrator</primary><seealso>root</seealso></indexterm>
+      <indexterm><primary>super-user</primary><seealso>root</seealso></indexterm>
+      <indexterm><primary>root</primary></indexterm>
 
       <para>The super-user root account, reserved for the machine's
-      administrator, is automatically created during installation; this is
-      why a password is requested. The installer also asks for a
-      confirmation of the password to prevent any input error which would
-      later be difficult to amend. Note that you can leave both fields empty
-      if you want the root account to be disabled. In that case, the first
-      regular user — that will be created by the installer in the next step —
-      will have administrative rights through <command>sudo</command>
-      (see <xref linkend="sect.sharing-admin-rights" />).
-      </para>
+      administrator, is automatically created during installation; this is why
+      a password is requested. The installer also asks for a confirmation of
+      the password to prevent any input error, which would later be difficult to
+      amend. Note that you can leave both fields empty if you want the root
+      account to be disabled. In that case, the login for the root user will be
+      deactivated and the first regular user — that will be created by the
+      installer in the next step — will have administrative rights through
+      <command>sudo</command> (see <xref linkend="sect.sharing-admin-rights"
+      />).</para>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Administrator password</title>
 
-	<para>The root user's password should be long (12 characters or
-	more) and impossible to guess. Indeed, any computer (and a fortiori
-	any server) connected to the Internet is regularly targeted by
-	automated connection attempts with the most obvious passwords.
-	Sometimes it may even be subject to dictionary attacks, in which
-	many combinations of words and numbers are tested as password.
-	Avoid using the names of children or parents, dates of birth, etc.:
-	many of your co-workers might know them, and you rarely want to
-	give them free access to the computer in question.</para>
+        <para>The root user's password should be long (12 characters or
+        more) and impossible to guess. Indeed, any computer (and a fortiori
+        any server) connected to the Internet is regularly targeted by
+        automated connection attempts with the most obvious passwords.
+        Sometimes it may even be subject to dictionary attacks, in which
+        many combinations of words and numbers are tested as password.
+        Avoid using the names of children or parents, dates of birth, etc.:
+        many of your co-workers might know them, and you rarely want to
+        give them free access to the computer in question.</para>
 
-	<para>These remarks are equally applicable for other user
-	passwords, but the consequences of a compromised account are less
-	drastic for users without administrative rights.</para>
+        <para>These remarks are equally applicable for other user
+        passwords, but the consequences of a compromised account are less
+        drastic for users without administrative rights.</para>
 
-	<para>If inspiration is lacking, do not hesitate to use password
-	generators, such as <command>pwgen</command> (in the package of the
-	same name).</para>
+        <para>If inspiration is lacking, do not hesitate to use password
+        generators, such as <command>pwgen</command> (in the package of the
+        same name).</para>
       </sidebar>
 
       <figure>
@@ -643,6 +649,7 @@
     </section>
     <section id="sect.install-detect-disks">
       <title>Detecting Disks and Other Devices</title>
+      <indexterm><primary>detecting</primary><secondary>disks</secondary></indexterm>
 
       <para>This step automatically detects the hard drives on which Debian
       may be installed. They will be presented in the next step:
@@ -655,13 +662,13 @@
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Uses of partitioning</title>
 
-	<para>Partitioning, an indispensable step in installation, consists
-	in dividing the available space on the hard drives (each
-	subdivision thereof being called a “partition”) according to
-	the data to be stored on it and the use for which the computer is
-	intended. This step also includes choosing the filesystems to be
-	used. All of these decisions will have an influence on performance,
-	data security, and the administration of the server.</para>
+        <para>Partitioning, an indispensable step in installation, consists
+        in dividing the available space on the hard drives (each
+        subdivision thereof being called a “partition”) according to
+        the data to be stored on it and the use for which the computer is
+        intended. This step also includes choosing the filesystems to be
+        used. All of these decisions will have an influence on performance,
+        data security, and the administration of the server.</para>
       </sidebar>
 
       <para>The partitioning step is traditionally difficult for new users.
@@ -712,12 +719,13 @@
 
       <para>In other cases, when Linux must work alongside other already
       existing partitions, you need to choose manual partitioning.</para>
+
       <section id="sect.install-autopartman-mode">
         <title>Guided partitioning</title>
         <indexterm><primary>partitioning</primary><secondary>guided partitioning</secondary></indexterm>
 
-	<para>The guided partitioning tool offers three partitioning
-	methods, which correspond to different usages.</para>
+        <para>The guided partitioning tool offers three partitioning
+        methods, which correspond to different usages.</para>
 
         <figure>
           <title>Guided partitioning</title>
@@ -728,86 +736,87 @@
           </mediaobject>
         </figure>
 
-	<para>The first method is called “All files in one partition”. The
-	entire Linux system tree is stored in a single filesystem,
-	corresponding to the root <filename>/</filename> directory. This
-	simple and robust partitioning fits perfectly for personal or
-	single-user systems. In fact, two partitions will be created: the
-	first will house the complete system, the second the virtual memory
-	(swap).</para>
+        <para>The first method is called “All files in one partition”. The
+        entire Linux system tree is stored in a single filesystem,
+        corresponding to the root <filename>/</filename> directory. This
+        simple and robust partitioning fits perfectly for personal or
+        single-user systems. In fact, two partitions will be created: the
+        first will house the complete system, the second the virtual memory
+        (swap).</para>
 
-	<para>The second method, “Separate <filename>/home</filename>
-	partition”, is similar, but splits the file hierarchy in two: one
-	partition contains the Linux system (<filename>/</filename>), and
-	the second contains “home directories” (meaning user data, in
-	files and subdirectories available under
-	<filename>/home/</filename>).</para>
+        <para>The second method, “Separate <filename>/home</filename>
+        partition”, is similar, but splits the file hierarchy in two: one
+        partition contains the Linux system (<filename>/</filename>), and
+        the second contains “home directories” (meaning user data, in
+        files and subdirectories available under
+        <filename>/home/</filename>).</para>
 
-	<para>The last partitioning method, called “Separate
-	<filename>/home</filename>,
-	<filename>/var</filename>, and <filename>/tmp</filename>
-	partitions”, is appropriate for servers and multi-user systems.
-	It divides the file tree into many partitions: in addition to the
-	root (<filename>/</filename>) and user accounts
-	(<filename>/home/</filename>) partitions, it also has partitions
-	for server software data (<filename>/var/</filename>), and temporary files
-	(<filename>/tmp/</filename>). These divisions have several
-	advantages. Users can not lock up the server by consuming all
-	available hard drive space (they can only fill up
-	<filename>/tmp/</filename> and <filename>/home/</filename>). The
-	daemon data (especially logs) can no longer clog up the rest of the
-	system.</para>
+        <para>The last partitioning method, called “Separate
+        <filename>/home</filename>,
+        <filename>/var</filename>, and <filename>/tmp</filename>
+        partitions”, is appropriate for servers and multi-user systems.
+        It divides the file tree into many partitions: in addition to the
+        root (<filename>/</filename>) and user accounts
+        (<filename>/home/</filename>) partitions, it also has partitions
+        for server software data (<filename>/var/</filename>), and temporary files
+        (<filename>/tmp/</filename>). These divisions have several
+        advantages. Users can not lock up the server by consuming all
+        available hard drive space (they can only fill up
+        <filename>/tmp/</filename> and <filename>/home/</filename>). The
+        daemon data (especially logs) can no longer clog up the rest of the
+        system.</para>
 
         <sidebar>
           <title><emphasis>BACK TO BASICS</emphasis> Choosing a filesystem</title>
           <indexterm><primary>system</primary><secondary>filesystem</secondary></indexterm>
           <indexterm><primary>file</primary><secondary>system</secondary></indexterm>
+          <indexterm><primary>filesystem</primary></indexterm>
 
-	  <para>A filesystem defines the way in which data is
-	  organized on the hard drive. Each existing filesystem has
-	  its merits and limitations. Some are more robust, others
-	  more effective: if you know your needs well, choosing the
-	  most appropriate filesystem is possible. Various comparisons
+          <para>A filesystem defines the way in which data is
+          organized on the hard drive. Each existing filesystem has
+          its merits and limitations. Some are more robust, others
+          more effective: if you know your needs well, choosing the
+          most appropriate filesystem is possible. Various comparisons
           have already been made; it seems that <emphasis>ReiserFS</emphasis> is
-	  particularly efficient for reading many small files;
-	  <emphasis>XFS</emphasis>, in turn, works faster with large
-	  files. <emphasis>Ext4</emphasis>, the default filesystem for
-	  Debian, is a good compromise, based on the three previous
-	  versions of filesystems historically used in Linux
-	  (<emphasis>ext</emphasis>, <emphasis>ext2</emphasis> and
-	  <emphasis>ext3</emphasis>). <emphasis>Ext4</emphasis>
-	  overcomes certain limitations of <emphasis>ext3</emphasis>
-	  and is particularly appropriate for very large capacity hard
-	  drives.  Another option would be to experiment with the very
-	  promising <emphasis>btrfs</emphasis>, which includes
-	  numerous features that require, to this day, the use of LVM
-	  and/or RAID.</para>
+          particularly efficient for reading many small files;
+          <emphasis>XFS</emphasis>, in turn, works faster with large
+          files. <emphasis>Ext4</emphasis>, the default filesystem for
+          Debian, is a good compromise, based on the three previous
+          versions of filesystems historically used in Linux
+          (<emphasis>ext</emphasis>, <emphasis>ext2</emphasis> and
+          <emphasis>ext3</emphasis>). <emphasis>Ext4</emphasis>
+          overcomes certain limitations of <emphasis>ext3</emphasis>
+          and is particularly appropriate for very large capacity hard
+          drives.  Another option would be to experiment with the very
+          promising <emphasis>btrfs</emphasis>, which includes
+          numerous features that require, to this day, the use of LVM
+          and/or RAID.</para>
 
-	  <para>A journalized filesystem (such as
-	  <emphasis>ext3</emphasis>, <emphasis>ext4</emphasis>,
-	  <emphasis>btrfs</emphasis>, <emphasis>reiserfs</emphasis>, or
-	  <emphasis>xfs</emphasis>) takes special measures to make it
-	  possible to return to a prior consistent state after an abrupt
-	  interruption without completely analyzing the entire disk (as was
-	  the case with the <emphasis>ext2</emphasis> system). This
-	  functionality is carried out by filling in a journal that
-	  describes the operations to conduct prior to actually executing
-	  them. If an operation is interrupted, it will be possible to
-	  “replay” it from the journal. Conversely, if an interruption
-	  occurs during an update of the journal, the last requested change
-	  is simply ignored; the data being written could be lost, but
-	  since the data on the disk has not changed, they have remained
-	  coherent. This is nothing more nor less than a transactional
-	  mechanism applied to the filesystem.</para>
+          <para>A journalized filesystem (such as
+          <emphasis>ext3</emphasis>, <emphasis>ext4</emphasis>,
+          <emphasis>btrfs</emphasis>, <emphasis>reiserfs</emphasis>, or
+          <emphasis>xfs</emphasis>) takes special measures to make it
+          possible to return to a prior consistent state after an abrupt
+          interruption without completely analyzing the entire disk (as was
+          the case with the <emphasis>ext2</emphasis> system). This
+          functionality is carried out by filling in a journal that
+          describes the operations to conduct prior to actually executing
+          them. If an operation is interrupted, it will be possible to
+          “replay” it from the journal. Conversely, if an interruption
+          occurs during an update of the journal, the last requested change
+          is simply ignored; the data being written could be lost, but
+          since the data on the disk has not changed, they have remained
+          coherent. This is nothing more nor less than a transactional
+          mechanism applied to the filesystem.</para>
         </sidebar>
 
-	<para>After choosing the type of partition, the software calculates
-	a suggestion, and describes it on the screen; the user can then
-	modify it if needed. You can, in particular, choose another
-	filesystem if the standard choice (<emphasis>ext4</emphasis>) isn't
-	appropriate. In most cases, however, the proposed partitioning is
-	reasonable and it can be accepted by selecting the “Finish
-	partitioning and write changes to disk” entry.</para>
+        <para>After choosing the type of partition, the software calculates
+        a suggestion, and describes it on the screen; the user can then
+        modify it if needed. You can, in particular, choose another
+        filesystem if the standard choice (<emphasis>ext4</emphasis>) isn't
+        appropriate. In most cases, however, the proposed partitioning is
+        reasonable and it can be accepted by selecting the “Finish
+        partitioning and write changes to disk” entry.</para>
 
         <figure>
           <title>Validating partitioning</title>
@@ -822,63 +831,72 @@
         <title>Manual Partitioning</title>
         <indexterm><primary>partitioning</primary><secondary>manual partitioning</secondary></indexterm>
 
-	<para>Manual partitioning allows greater flexibility, allowing the
-	user to choose the purpose and size of each partition. Furthermore,
-	this mode is unavoidable if you wish to use software RAID.</para>
+        <para>Manual partitioning allows greater flexibility, allowing the
+        user to choose the purpose and size of each partition. Furthermore,
+        this mode is unavoidable if you wish to use software RAID.</para>
 
         <sidebar id="sidebar.shrinking-partition">
           <title><emphasis>IN PRACTICE</emphasis> Shrinking a Windows partition</title>
           <indexterm><primary>resize a partition</primary></indexterm>
           <indexterm><primary>shrink a partition</primary></indexterm>
 
-	  <para>To install Debian alongside an existing operating system
-	  (Windows or other), you must have some available hard drive space
-	  that is not being used by the other system in order to be able to
-	  create the partitions dedicated to Debian. In most cases, this
-	  means shrinking a Windows partition and reusing the freed
-	  space.</para>
+          <para>To install Debian alongside an existing operating system
+          (Windows or other), you must have some available hard drive space
+          that is not being used by the other system in order to be able to
+          create the partitions dedicated to Debian. In most cases, this
+          means shrinking a Windows partition and reusing the freed
+          space.</para>
 
-	  <para>The Debian installer allows this operation when using the
-	  manual mode for partitioning. You only need to choose the Windows
-	  partition and enter its new size (this works the same with both
-	  unencrypted FAT and NTFS partitions).</para>
+          <para>The Debian installer allows this operation when using the
+          manual mode for partitioning. You only need to choose the Windows
+          partition and enter its new size (this works the same with both
+          unencrypted FAT and NTFS partitions).</para>
 
-	  <para>If Windows is using BitLocker-encrypted partitions, the steps
-	  to resize them requires to use the BitLocker Management together
-	  with the Windows Disk Management tool.</para>
+          <para>If Windows is using BitLocker-encrypted partitions, the steps
+          to resize them requires to use the BitLocker Management together
+          with the Windows Disk Management tool.</para>
         </sidebar>
 
-	<para>The first screen displays the available disks, their
-	partitions, and any possible free space that has not yet been
-	partitioned. You can select each displayed element; pressing the
-	<keycap>Enter</keycap> key then gives a list of possible
-	actions.</para>
+        <para>The first screen displays the available disks, their
+        partitions, and any possible free space that has not yet been
+        partitioned. You can select each displayed element; pressing the
+        <keycap>Enter</keycap> key then gives a list of possible
+        actions.</para>
 
-	<para>You can erase all partitions on a disk by selecting
-	it.</para>
+        <para>You can erase all partitions on a disk by selecting
+        it.</para>
 
-	<para>When selecting free space on a disk, you can manually create
-	a new partition. You can also do this with guided partitioning,
-	which is an interesting solution for a disk that already contains
-	another operating system, but which you may wish to partition for
+        <para>When selecting free space on a disk, you can manually create
+        a new partition. You can also do this with guided partitioning,
+        which is an interesting solution for a disk that already contains
+        another operating system, but which you may wish to partition for
         Linux in a standard manner. See <xref
-          linkend="sect.install-autopartman-mode"/> for more details on
+        linkend="sect.install-autopartman-mode"/> for more details on
         guided partitioning.</para>
+
+        <figure>
+          <title>Editing/creating a partition</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/inst-partman-partition.png" scalefit="1" width="60%"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
 
         <sidebar>
           <title><emphasis>BACK TO BASICS</emphasis> Mount point</title>
           <indexterm><primary>mount point</primary></indexterm>
           <indexterm><primary>point, mount point</primary></indexterm>
 
-	  <para>The mount point is the directory tree that will house the
-	  contents of the filesystem on the selected partition. Thus, a
-	  partition mounted at <filename>/home/</filename> is traditionally
-	  intended to contain user data.</para>
+          <para>The mount point is the directory tree that will house the
+          contents of the filesystem on the selected partition. Thus, a
+          partition mounted at <filename>/home/</filename> is traditionally
+          intended to contain user data.</para>
 
-	  <para>When this directory is named “<filename>/</filename>”,
-	  it is known as the <emphasis>root</emphasis> of the file tree,
-	  and therefore the root of the partition that will actually host
-	  the Debian system.</para>
+          <para>When this directory is named “<filename>/</filename>”,
+          it is known as the <emphasis>root</emphasis> of the file tree,
+          and therefore the root of the partition that will actually host
+          the Debian system.</para>
         </sidebar>
 
         <sidebar>
@@ -887,44 +905,47 @@
           <indexterm><primary>swap</primary></indexterm>
           <indexterm><primary>partition</primary><secondary>swap partition</secondary></indexterm>
           <indexterm><primary>swap partition</primary></indexterm>
+          <indexterm><primary>swap file</primary></indexterm>
 
-	  <para>Virtual memory allows the Linux kernel, when lacking
-	  sufficient memory (RAM), to free a bit of memory by storing the
-	  parts of the RAM that have been inactive for some time on the
-	  swap partition of the hard disk.</para>
+          <para>Virtual memory allows the Linux kernel, when lacking
+          sufficient memory (RAM), to free a bit of memory by storing the
+          parts of the RAM that have been inactive for some time on the
+          swap partition of the hard disk. It is also fundamental to the
+          "Suspend" and "Hibernate" features of a system.</para>
 
-	  <para>To simulate the additional memory, Windows uses a swap file
-	  that is directly contained in a filesystem. Conversely, Linux
-	  uses a partition dedicated to this purpose, hence the term
-	  “swap partition”.</para>
+          <para>To simulate the additional memory, Windows uses a swap file
+          that is directly contained in a filesystem. Conversely, Linux
+          uses a partition dedicated to this purpose, hence the term
+          “swap partition”. But it is also able to use a swap file as
+          well.</para>
         </sidebar>
 
-	<para>When choosing a partition, you can indicate the manner in
-	which you are going to use it:</para>
+        <para>When choosing a partition, you can indicate the manner in
+        which you are going to use it:</para>
         <itemizedlist>
           <listitem>
-	    <para>format it and include it in the file tree by choosing a
-	    mount point;</para>
+            <para>format it and include it in the file tree by choosing a
+            mount point;</para>
           </listitem>
           <listitem>
-	    <para>use it as a swap partition;</para>
+            <para>use it as a swap partition;</para>
           </listitem>
           <listitem>
-	    <para>make it into a “physical volume for encryption” (to
-	    protect the confidentiality of data on certain partitions, see
-	    below);</para>
+            <para>make it into a “physical volume for encryption” (to
+            protect the confidentiality of data on certain partitions, see
+            below);</para>
           </listitem>
           <listitem>
-	    <para>make it a “physical volume for LVM” (this concept is
-	    discussed in greater detail later in this chapter);</para>
+            <para>make it a “physical volume for LVM” (this concept is
+            discussed in greater detail later in this chapter);</para>
           </listitem>
           <listitem>
-	    <para>use it as a RAID device (see later in this
-	    chapter);</para>
+            <para>use it as a RAID device (see later in this
+            chapter);</para>
           </listitem>
           <listitem>
-	    <para>you can also choose not to use it, and therefore
-	    leave it unchanged.</para>
+            <para>you can also choose not to use it, and therefore
+            leave it unchanged.</para>
           </listitem>
         </itemizedlist>
       </section>
@@ -934,87 +955,87 @@
         <indexterm><primary>Software RAID</primary></indexterm>
         <indexterm><primary>device</primary><secondary>multi-disk device</secondary></indexterm>
 
-	<para>Some types of RAID allow the duplication of information
-	stored on hard drives to prevent data loss in the event of a
-	hardware problem affecting one of them. Level 1 RAID keeps a
-	simple, identical copy (mirror) of a hard drive on another drive,
-	while level 5 RAID splits redundant data over several disks, thus
-	allowing the complete reconstruction of a failing drive.</para>
+        <para>Some types of RAID allow the duplication of information
+        stored on hard drives to prevent data loss in the event of a
+        hardware problem affecting one of them. Level 1 RAID keeps a
+        simple, identical copy (mirror) of a hard drive on another drive,
+        while level 5 or 6 RAID splits redundant data over several disks, thus
+        allowing the complete reconstruction of a failing drive.</para>
 
-	<para>We will only describe level 1 RAID, which is the simplest to
-	implement. The first step involves creating two partitions of
-	identical size located on two different hard drives, and to label
-	them “physical volume for RAID”.</para>
+        <para>We will only describe level 1 RAID, which is the simplest to
+        implement. The first step involves creating two partitions of
+        identical size located on two different hard drives, and to label
+        them “physical volume for RAID”.</para>
 
-	<para>You must then choose “Configure software RAID” in the
-	partitioning tool to combine these two partitions into a new
-	virtual disk and select “Create MD device” in the configuration
-	screen. You then need to answer a series of questions about this
-	new device. The first question asks about the RAID level to use,
-	which in our case will be “RAID1”. The second question asks
-	about the number of active devices — two in our case, which is
-	the number of partitions that need to be included in this MD
-	device. The third question is about the number of spare devices —
-	0; we have not planned any additional disk to take over for a
-	possible defective disk. The last question requires you to choose
-	the partitions for the RAID device — these would be the two
-	that we have set aside for this purpose (make sure you only select
-	the partitions that explicitly mention “raid”).</para>
+        <para>You must then choose “Configure software RAID” in the
+        partitioning tool to combine these two partitions into a new
+        virtual disk and select “Create MD device” in the configuration
+        screen. You then need to answer a series of questions about this
+        new device. The first question asks about the RAID level to use,
+        which in our case will be “RAID1”. The second question asks
+        about the number of active devices — two in our case, which is
+        the number of partitions that need to be included in this MD
+        device. The third question is about the number of spare devices —
+        0; we have not planned any additional disk to take over for a
+        possible defective disk. The last question requires you to choose
+        the partitions for the RAID device — these would be the two
+        that we have set aside for this purpose (make sure you only select
+        the partitions that explicitly mention “raid”).</para>
 
-	<para>Back to the main menu, a new virtual “RAID” disk appears.
-	This disk is presented with a single partition which can not be
-	deleted, but whose use we can choose (just like for any other
-	partition).</para>
+        <para>Back to the main menu, a new virtual “RAID” disk appears.
+        This disk is presented with a single partition which can not be
+        deleted, but whose use we can choose (just like for any other
+        partition).</para>
 
-	<para>For further details on RAID functions, please refer to <xref
-	linkend="sect.raid-soft"/>.</para>
+        <para>For further details on RAID functions, please refer to <xref
+        linkend="sect.raid-soft"/>.</para>
       </section>
       <section id="sect.install-lvm">
         <title>Configuring the Logical Volume Manager (LVM)</title>
-        <indexterm><primary>LVM</primary><secondary>during installation</secondary></indexterm>
+        <indexterm><primary>LVM</primary><seealso>Logical Volume Manager</seealso></indexterm>
         <indexterm><primary>Logical Volume Manager</primary><secondary>during installation</secondary></indexterm>
 
-	<para>LVM allows you to create “virtual” partitions that span
-	over several disks. The benefits are twofold: the size of the
-	partitions are no longer limited by individual disks but by
-	their cumulative volume, and you can resize existing
-	partitions at any time, possibly after adding an additional
-	disk when needed.</para>
+        <para>LVM allows you to create “virtual” partitions that span
+        over several disks. The benefits are twofold: the size of the
+        partitions are no longer limited by individual disks but by
+        their cumulative volume, and you can resize existing
+        partitions at any time, possibly after adding an additional
+        disk when needed.</para>
 
-	<para>LVM uses a particular terminology: a virtual partition is a
-	“logical volume”, which is part of a “volume group”, or an
-	association of several “physical volumes”. Each of these terms
-	in fact corresponds to a “real” partition (or a software RAID
-	device).</para>
+        <para>LVM uses a particular terminology: a virtual partition is a
+        “logical volume”, which is part of a “volume group”, or an
+        association of several “physical volumes”. Each of these terms
+        in fact corresponds to a “real” partition (or a software RAID
+        device).</para>
         <indexterm><primary>volume</primary><secondary>logical volume</secondary></indexterm>
         <indexterm><primary>volume</primary><secondary>physical volume</secondary></indexterm>
         <indexterm><primary>group</primary><secondary>of volumes</secondary></indexterm>
         <indexterm><primary>volume</primary><secondary>group</secondary></indexterm>
 
-	<para>This technique works in a very simple way: each volume,
-	whether physical or logical, is split into blocks of the same size,
-	which are made to correspond by LVM. The addition of a new disk
-	will cause the creation of a new physical volume, and these new
-	blocks can be associated to any volume group. All of the partitions
-	in the volume group that is thus expanded will have additional
-	space into which they can extend.</para>
+        <para>This technique works in a very simple way: each volume,
+        whether physical or logical, is split into blocks of the same size,
+        which are made to correspond by LVM. The addition of a new disk
+        will cause the creation of a new physical volume, and these new
+        blocks can be associated to any volume group. All of the partitions
+        in the volume group that is thus expanded will have additional
+        space into which they can extend.</para>
 
-	<para>The partitioning tool configures LVM in several
-	steps. First you must create on the existing disks the
-	partitions that will be “physical volumes for LVM”. To
-	activate LVM, you need to choose “Configure the Logical Volume
-	Manager (LVM)”, then on the same configuration screen “Create
-	a volume group”, to which you will associate the existing
-	physical volumes. Finally, you can create logical volumes
-	within this volume group. Note that the automatic partitioning
-	system can perform all these steps automatically.</para>
+        <para>The partitioning tool configures LVM in several
+        steps. First you must create on the existing disks the
+        partitions that will be “physical volumes for LVM”. To
+        activate LVM, you need to choose “Configure the Logical Volume
+        Manager (LVM)”, then on the same configuration screen “Create
+        a volume group”, to which you will associate the existing
+        physical volumes. Finally, you can create logical volumes
+        within this volume group. Note that the automatic partitioning
+        system can perform all these steps automatically.</para>
 
-	<para>In the partitioning menu, each physical volume will appear as
-	a disk with a single partition which can not be deleted, but that
-	you can use as desired.</para>
+        <para>In the partitioning menu, each physical volume will appear as
+        a disk with a single partition which can not be deleted, but that
+        you can use as desired.</para>
 
-	<para>The usage of LVM is described in further detail in <xref
-	linkend="sect.lvm"/>.</para>
+        <para>The usage of LVM is described in further detail in <xref
+        linkend="sect.lvm"/>.</para>
       </section>
       <section>
         <title>Setting Up Encrypted Partitions</title>
@@ -1025,56 +1046,57 @@
         <indexterm><primary>confidentiality</primary><secondary>files</secondary></indexterm>
         <indexterm><primary>file</primary><secondary>confidentiality</secondary></indexterm>
 
-	<para>To guarantee the confidentiality of your data, for instance
-	in the event of the loss or theft of your computer or a hard drive,
-	it is possible to encrypt the data on some partitions. This feature
-	can be added underneath any filesystem, since, as for LVM, Linux
-	(and more particularly the dm-crypt driver) uses the Device Mapper
-	to create a virtual partition (whose content is protected) based on
-	an underlying partition that will store the data in an encrypted
-	form (thanks to LUKS, Linux Unified Key Setup, a standard format
-	that enables the storage of encrypted data as well as
-	meta-information that indicates the encryption algorithms
-	used).</para>
+        <para>To guarantee the confidentiality of your data, for instance
+        in the event of the loss or theft of your computer or a hard drive,
+        it is possible to encrypt the data on some partitions. This feature
+        can be added underneath any filesystem, since, as for LVM, Linux
+        (and more particularly the dm-crypt driver) uses the Device Mapper
+        to create a virtual partition (whose content is protected) based on
+        an underlying partition that will store the data in an encrypted
+        form (thanks to LUKS, Linux Unified Key Setup, a standard format
+        that enables the storage of encrypted data as well as
+        meta-information that indicates the encryption algorithms
+        used).</para>
 
         <sidebar id="sidebar.encrypted-swap-partition">
           <title><emphasis>SECURITY</emphasis> Encrypted swap partition</title>
+          <indexterm><primary>swap</primary><secondary>encrypted</secondary></indexterm>
 
-	  <para>When an encrypted partition is used, the encryption key is
-	  stored in memory (RAM). Since retrieving this key allows the
-	  decryption of the data, it is of utmost importance to avoid
-	  leaving a copy of this key that would be accessible to the
-	  possible thief of the computer or hard drive, or to a maintenance
-	  technician. This is, however, something that can easily occur with
-	  a laptop, since when hibernating the contents of RAM is stored on
-	  the swap partition. If this partition isn't encrypted, the thief
-	  may access the key and use it to decrypt the data from the
-	  encrypted partitions. This is why, when you use encrypted
-	  partitions, it is imperative to also encrypt the swap
-	  partition!</para>
+          <para>When an encrypted partition is used, the encryption key is
+          stored in memory (RAM). Since retrieving this key allows the
+          decryption of the data, it is of utmost importance to avoid
+          leaving a copy of this key that would be accessible to the
+          possible thief of the computer or hard drive, or to a maintenance
+          technician. This is, however, something that can easily occur with
+          a laptop, since when hibernating the contents of RAM is stored on
+          the swap partition. If this partition isn't encrypted, the thief
+          may access the key and use it to decrypt the data from the
+          encrypted partitions. This is why, when you use encrypted
+          partitions, it is imperative to also encrypt the swap
+          partition!</para>
 
-	  <para>The Debian installer will warn the user if they try to make
-	  an encrypted partition while the swap partition isn't
-	  encrypted.</para>
+          <para>The Debian installer will warn the user if they try to make
+          an encrypted partition while the swap partition isn't
+          encrypted.</para>
         </sidebar>
 
-	<para>To create an encrypted partition, you must first assign an
-	available partition for this purpose. To do so, select a partition
-	and indicate that it is to be used as a “physical volume for
-	encryption”. After partitioning the disk containing the physical
-	volume to be made, choose “Configure encrypted volumes”. The
-	software will then propose to initialize the physical volume with
-	random data (making the localization of the real data more
-	difficult), and will ask you to enter an “encryption
-	passphrase”, which you will have to enter every time you boot
-	your computer in order to access the content of the encrypted
-	partition. Once this step has been completed, and you have returned
-	to the partitioning tool menu, a new partition will be available in
-	an “encrypted volume”, which you can then configure just like
-	any other partition. In most cases, this partition is used as a
-	physical volume for LVM so as to protect several partitions (LVM
-	logical volumes) with the same encryption key, including the swap
-	partition (see sidebar <xref linkend="sidebar.encrypted-swap-partition"/>).</para>
+        <para>To create an encrypted partition, you must first assign an
+        available partition for this purpose. To do so, select a partition
+        and indicate that it is to be used as a “physical volume for
+        encryption”. After partitioning the disk containing the physical
+        volume to be made, choose “Configure encrypted volumes”. The
+        software will then propose to initialize the physical volume with
+        random data (making the localization of the real data more
+        difficult), and will ask you to enter an “encryption
+        passphrase”, which you will have to enter every time you boot
+        your computer in order to access the content of the encrypted
+        partition. Once this step has been completed, and you have returned
+        to the partitioning tool menu, a new partition will be available in
+        an “encrypted volume”, which you can then configure just like
+        any other partition. In most cases, this partition is used as a
+        physical volume for LVM so as to protect several partitions (LVM
+        logical volumes) with the same encryption key, including the swap
+        partition (see sidebar <xref linkend="sidebar.encrypted-swap-partition"/>).</para>
       </section>
     </section>
     <section>
