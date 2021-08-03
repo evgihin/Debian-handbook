@@ -1125,26 +1125,24 @@
 
       <para>In order to be able to install additional software, APT needs
       to be configured and told where to find Debian packages. This step is
-      as automated as possible. It starts with a question asking if it must
-      use a network source for packages, or if it should only look for
-      packages on the CD-ROM.</para>
+      as automated as possible.</para>
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> Debian CD-ROM in the drive</title>
 
-	<para>If the installer detects a Debian installation disk in the
-	CD/DVD reader, it is not necessary to configure APT to go looking
-	for packages on the network: APT is automatically configured to
-	read packages from a removable media drive. If the disk is part of
-	a set, the software will offer to “explore” other disks in
-	order to reference all of the packages stored on them.</para>
+        <para>If the installer detects a Debian installation disk in the
+        CD/DVD reader, it is not necessary to configure APT to go looking
+        for packages on the network: APT is automatically configured to
+        read packages from a removable media drive. If the disk is part of
+        a set, the software will offer to “explore” other disks in
+        order to reference all of the packages stored on them.</para>
       </sidebar>
 
-      <para>If getting packages from the network is requested, the next two
-      questions allow to choose a server from which to download these
+      <para>If getting packages from the network is requested, the installer
+      allows to choose a server from which to download these
       packages, by choosing first a country, then a mirror available
-      in that country (a mirror is a public server hosting copies of all
-      the files of the Debian master archive).</para>
+      in that country. A mirror is a public server hosting copies of all
+      the files of the Debian master archive.</para>
 
       <figure>
         <title>Selecting a Debian mirror</title>
@@ -1174,21 +1172,23 @@
         <indexterm><primary>cache, proxy</primary></indexterm>
         <indexterm><primary>Squid</primary></indexterm>
 
-	<para>An HTTP proxy is a server that forwards an HTTP request for
-	network users. It sometimes helps to speed up downloads by keeping
-	a copy of files that have been transferred through it (we then
-	speak of proxy/cache). In some cases, it is the only means of
-	accessing an external web server; in such cases it is essential to
-	answer the corresponding question during installation for the
-	program to be able to download the Debian packages through
-	it.</para>
+        <para>An HTTP proxy is a server that forwards an HTTP request for
+        network users. It sometimes helps to speed up downloads by keeping
+        a copy of files that have been transferred through it (we then
+        speak of proxy/cache). In some cases, it is the only means of
+        accessing an external web server; in such cases it is essential to
+        answer the corresponding question during installation for the
+        program to be able to download the Debian packages through
+        it.</para>
 
-	<para>Squid is the name of the server software used by Falcot Corp
-	to offer this service.</para>
+        <para>Squid is the name of the server software used by Falcot Corp
+        to offer this service.</para>
       </sidebar>
     </section>
     <section>
       <title>Debian Package Popularity Contest</title>
+      <indexterm><primary><emphasis role="pkg">popularity-contest</emphasis></primary></indexterm>
+      <indexterm><primary>package</primary><secondary>popularity</secondary></indexterm>
 
       <para>The Debian system contains a package called <emphasis
       role="pkg">popularity-contest</emphasis>, whose purpose is to compile
@@ -1213,6 +1213,9 @@
       lists of packages to be installed. The list of the packages that will
       actually be installed will be fine-tuned and completed later on, but
       this provides a good starting point in a simple manner.</para>
+
+      <para>This step can require a full set of installation media or an
+      internet connection and a working mirror setup as described above.</para>
 
       <para>Some packages are also automatically installed according to the
       hardware detected (thanks to the program
@@ -1243,19 +1246,19 @@
         <title><emphasis>BEWARE</emphasis> Bootloader and dual boot</title>
         <indexterm><primary>dual boot</primary></indexterm>
 
-	<para>This phase in the Debian installation process detects the
-	operating systems that are already installed on the computer, and
-	automatically adds corresponding entries in the boot menu, but not
-	all installation programs do this.</para>
+        <para>This phase in the Debian installation process detects the
+        operating systems that are already installed on the computer, and
+        automatically adds corresponding entries in the boot menu, but not
+        all installation programs do this.</para>
 
-	<para>In particular, if you install (or reinstall) Windows
-	thereafter, the bootloader will be erased. Debian will still be on
-	the hard drive, but will no longer be accessible from the boot
-	menu (except for Windows 10, where it will still be accessible
-	through	the Windows recovery console). You would then have to
-	boot the Debian installation system in
-	<userinput>rescue</userinput> mode to set up a less exclusive
-	bootloader. This operation is described in detail in the
+        <para>In particular, if you install (or reinstall) Windows
+        thereafter, the bootloader will be erased. Debian will still be on
+        the hard drive, but will no longer be accessible from the boot
+        menu (except for Windows 10, where it will still be accessible
+        through	the Windows recovery console). You would then have to
+        boot the Debian installation system in
+        <userinput>rescue</userinput> mode to set up a less exclusive
+        bootloader. This operation is described in detail in the
         installation manual.
         <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch08s06"/>
         </para>
@@ -1318,7 +1321,7 @@
         of the system.
         </para>
 
-        <para>Debian 10 is the first release supporting Secure Boot. Before,
+        <para>Debian 10 (Buster) is the first release supporting Secure Boot. Before,
         you had to disable that feature in the system setup screen offered
         by the BIOS or the UEFI.
         </para>
@@ -1329,6 +1332,20 @@
 
       <para>The installation is now complete, the program invites you to
       remove the CD-ROM from the reader and to restart the computer.</para>
+
+      <figure role="flow.inline">
+        <title>Installation complete</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/inst-complete.png" scalefit="1" width="65%"/>
+          </imageobject>
+        </mediaobject>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/inst-complete-txt.png" scalefit="1" width="65%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
   </section>
   <section id="sect.after-first-boot">
@@ -1351,6 +1368,8 @@
     working immediately.</para>
     <section>
       <title>Installing Additional Software</title>
+      <indexterm><primary><command>apt</command></primary></indexterm>
+      <indexterm><primary><command>synaptic</command></primary></indexterm>
 
       <para>The installed packages correspond to the profiles selected
       during installation, but not necessarily to the use that will
@@ -1372,6 +1391,8 @@
       <guimenu>Edit</guimenu> <guimenuitem>Mark Packages by
       Task…</guimenuitem> </menuchoice>).</para>
 
+     <indexterm><primary><command>aptitude</command></primary></indexterm>
+
       <para>Aptitude is an interface to APT in full-screen text mode. It
       allows the user to browse the list of available packages according to
       various categories (installed or not-installed packages, by task, by
@@ -1384,35 +1405,35 @@
       If you have forgotten some programs, no worries; you will be able to
       run <command>aptitude</command> again once the initial installation
       has been completed.</para>
-      <indexterm><primary>aptitude</primary></indexterm>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Debian thinks of speakers of non-English languages</title>
 
-	<para>Several tasks are dedicated to the localization of the system
-	in other languages beyond English. They include translated
-	documentation, dictionaries, and various other packages useful for
-	speakers of different languages. The appropriate task is
-	automatically selected if a non-English language was chosen during
-	installation.</para>
+        <para>Several tasks are dedicated to the localization of the system
+        in other languages beyond English. They include translated
+        documentation, dictionaries, and various other packages useful for
+        speakers of different languages. The appropriate task is
+        automatically selected if a non-English language was chosen during
+        installation.</para>
       </sidebar>
 
-      <para>Of course, it is possible not to select any task to be
-      installed. In this case, you can manually install the desired
-      software with the <command>apt</command> or
-      <command>aptitude</command> command (which are both accessible from
-      the command line).</para>
+      <para>Of course, it is possible not to select any task to be installed.
+      In this case, you can manually install the desired software with the
+      <command>apt</command> or <command>aptitude</command> command (which are
+      both accessible from the command line). The packages can be found using
+      the <command>apt-cache search task
+      <replaceable>keyword</replaceable></command> command.</para>
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Package dependencies, conflicts</title>
 
-	<para>In the Debian packaging lingo, a “dependency” is another
-	package necessary for the proper functioning of the package in
-	question. Conversely, a “conflict” is a package that can not be
-	installed side-by-side with another.</para>
+        <para>In the Debian packaging lingo, a “dependency” is another
+        package necessary for the proper functioning of the package in
+        question. Conversely, a “conflict” is a package that can not be
+        installed side-by-side with another.</para>
 
-	<para>These concepts are discussed in greater detail in <xref
-	linkend="packaging-system"/>.</para>
+        <para>These concepts are discussed in greater detail in <xref
+        linkend="packaging-system"/>.</para>
       </sidebar>
     </section>
     <section>
