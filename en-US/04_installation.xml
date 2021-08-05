@@ -46,17 +46,19 @@
   <indexterm><primary><command>debian-installer</command></primary></indexterm>
 
   <!-- MAYCHANGE: hardware requirements -->
-  <para>Installation requires 128 MB of RAM (Random Access Memory) and at
+  <!-- https://www.debian.org/releases/bullseye/amd64/ch03s04 -->
+  <para>Installation requires 256 MB of RAM (Random Access Memory) and at
   least 2 GB of hard drive space. All Falcot computers meet these
   criteria. Note, however, that these figures apply to the installation of
-  a very limited system without a graphical desktop. A minimum of 1 GB
+  a very limited system without a graphical desktop. A minimum of 2 GB
   of RAM and 10 GB of hard drive space are really recommended for a basic
   office desktop workstation.</para>
 
   <sidebar>
-    <title><emphasis>BEWARE</emphasis> Upgrading from Stretch</title>
+    <!-- MAYCHANGE: codename of the previous stable release -->
+    <title><emphasis>BEWARE</emphasis> Upgrading from Buster</title>
 
-    <para>If you already have Debian <emphasis role="distribution">Stretch</emphasis>
+    <para>If you already have Debian <emphasis role="distribution">Buster</emphasis>
     installed on your computer, this chapter is not for you! Unlike other
     distributions, Debian allows updating a system from one version to the
     next without having to reinstall the system. Reinstalling, in addition
@@ -65,6 +67,11 @@
 
     <para>The upgrade process will be described in <xref
     linkend="sect.dist-upgrade"/>.</para>
+
+    <para>Upgrading from even older Debian systems directly is not supported.
+    In this case you need to update gradually to the stable release which
+    followed your Debian version, and so on. Previous versions of this book
+    will assist you in that matter.</para>
   </sidebar>
   <section id="sect.installation-methods">
     <title>Installation Methods</title>
@@ -73,10 +80,12 @@
     long as the BIOS of the machine allows it. You can for instance boot
     with a CD-ROM, a USB key, or even through a network.</para>
 
-    <sidebar>
-      <title><emphasis>BACK TO BASICS</emphasis> BIOS, the hardware/software interface</title>
-      <indexterm><primary>BIOS</primary></indexterm>
-      <indexterm><primary>Basic Input/Output System</primary></indexterm>
+  <sidebar>
+    <title><emphasis>BACK TO BASICS</emphasis> BIOS and UEFI, the hardware/software interface</title>
+    <indexterm><primary>BIOS</primary></indexterm>
+    <indexterm><primary>Basic Input/Output System</primary></indexterm>
+    <indexterm><primary>UEFI</primary><seealso>Unified Extensible Firmware Interface</seealso></indexterm>
+    <indexterm><primary>Unified Extensible Firmware Interface</primary></indexterm>
 
       <para>BIOS (which stands for Basic Input/Output System) is a software
       that is included in the motherboard (the electronic board connecting
@@ -84,16 +93,29 @@
       to load an operating system (via an adapted bootloader). It stays in
       the background to provide an interface between the hardware and the
       software (in our case, the Linux kernel).</para>
+
+      <para>In 2005/2006 its successor, the UEFI (Unified Extensible Firmware
+      Interface) specification, has been published. This specification defines
+      an interface that has the same purpose as the BIOS, but tries to provide
+      more usability, extensibility, and flexibility, a graphical user
+      interface, and true 64bit support. Several manufacturers have either
+      announced to cease support for the legacy BIOS mode in their UEFI
+      implementation, or they already did. So many new computers only support
+      UEFI. This transition, however, has not been without discussion nor
+      without criticism.</para>
     </sidebar>
     <section id="sect.install-cd">
       <title>Installing from a CD-ROM/DVD-ROM</title>
+      <indexterm><primary>installation</primary><secondary>from a CD-ROM/DVD-ROM</secondary></indexterm>
 
       <para>The most widely used installation method is from a CD-ROM
       (or DVD-ROM, which behaves exactly the same way): the computer
       is booted from this media, and the installation program takes
       over.</para>
 
-      <!-- MAYCHANGE: number of CD-ROM, DVD-ROM, Blu-ray -->
+      <!-- MAYCHANGE: number of CD-ROM, DVD-ROM, Blu-ray; use jigdo files -->
+      <indexterm><primary><filename>netinst.iso</filename></primary></indexterm>
+      <indexterm><primary>installation</primary><secondary>netinst</secondary></indexterm>
       <para>Various CD-ROM families have different purposes:
       <emphasis>netinst</emphasis> (network installation) contains the
       installer and the base Debian system; all other programs are
@@ -102,7 +124,7 @@
       about 150 to 280 MB (depending on the architecture).
       On the other hand, the complete set offers all packages and
       allows for installation on a computer that has no Internet access;
-      it requires around 17 DVD-ROMs (or 4 Blu-ray disks). There is no
+      it requires around 19 DVD-ROMs (or 4 Blu-ray disks). There is no
       more official CD-ROMs set as they were really huge, rarely used and
       now most of the computers use DVD-ROMs as well as CD-ROMs. But the
       programs are divided among the disks
@@ -124,16 +146,16 @@
       <sidebar>
         <title><emphasis>TIP</emphasis> Multi-architecture disks</title>
 
-	<para>Most installation CD- and DVD-ROMs work only with a specific
-	hardware architecture. If you wish to download the complete images,
-	you must take care to choose those which work on the hardware of
-	the computer on which you wish to install them.</para>
+        <para>Most installation CD- and DVD-ROMs work only with a specific
+        hardware architecture. If you wish to download the complete images,
+        you must take care to choose those which work on the hardware of
+        the computer on which you wish to install them.</para>
 
-	<para>Some CD/DVD-ROM images can work on several
-	architectures. We thus have a CD-ROM image combining the
-	<emphasis>netinst</emphasis> images of the
-	<emphasis>i386</emphasis> and <emphasis>amd64</emphasis>
-	architectures.</para>
+        <para>Some CD/DVD-ROM images can work on several
+        architectures. We thus have a CD-ROM image combining the
+        <emphasis>netinst</emphasis> images of the
+        <emphasis>i386</emphasis> and <emphasis>amd64</emphasis>
+        architectures.</para>
       </sidebar>
       <indexterm><primary>CD-ROM</primary><secondary>installation CD-ROM</secondary></indexterm>
       <indexterm><primary>CD-ROM</primary><secondary><emphasis>netinst CD-ROM</emphasis></secondary></indexterm>
@@ -144,12 +166,13 @@
       them and burn them to disk. You may also purchase them, and, thus,
       provide the project with a little financial support. Check the
       website to see the list of DVD-ROM image vendors and download sites.
-      <ulink type="block" url="https://www.debian.org/CD/index.html"/>
+      <ulink type="block" url="https://www.debian.org/CD/"/>
       </para>
     </section>
     <section id="sect.install-usb">
       <title>Booting from a USB Key</title>
       <indexterm><primary>USB key</primary></indexterm>
+      <indexterm><primary>installation</primary><secondary>from a USB key</secondary></indexterm>
 
       <para>Since most computers are able to boot from USB devices, you
       can also install Debian from a USB key (this is nothing more than a
@@ -160,6 +183,7 @@
       is very simple because ISO images for i386 and amd64 are hybrid
       images that can boot from a CD-ROM as well as from a USB key.</para>
 
+      <!-- MAYCHANGE: version number in iso name -->
       <para>You must first identify the device name of the USB key
       (ex: <literal>/dev/sdb</literal>); the simplest means to do this
       is to check the messages issued by the kernel using the
@@ -183,6 +207,9 @@
       <indexterm><primary>installation</primary><secondary><emphasis>netboot installation</emphasis></secondary></indexterm>
       <indexterm><primary>installation</primary><secondary><emphasis>PXE installation</emphasis></secondary></indexterm>
       <indexterm><primary>installation</primary><secondary><emphasis>TFTP installation</emphasis></secondary></indexterm>
+      <indexterm><primary>PXE</primary></indexterm>
+      <indexterm><primary>TFTP</primary><seealso>Trivial File Transfer Protocol</seealso></indexterm>
+      <indexterm><primary>Trivial File Transfer Protocol</primary></indexterm>
 
       <para>Many BIOSes allow booting directly from the network by
       downloading a kernel and a minimal filesystem image. This method
@@ -213,6 +240,7 @@
     <section id="sect.install-auto">
       <title>Other Installation Methods</title>
 
+      <indexterm><primary>installation</primary><secondary>custom installation</secondary></indexterm>
       <para>When we have to deploy customized installations for a large
       number of computers, we generally choose an automated rather than a
       manual installation method. Depending on the situation and the
@@ -220,6 +248,13 @@
       Automatic Installer, described in <xref linkend="sect.fai"/>), or even a
       customized installation DVD with preseeding (see <xref
       linkend="sect.d-i-preseeding"/>).</para>
+
+      <indexterm><primary>installation</primary><secondary>remote installation</secondary></indexterm>
+      <para>It should also be noted that the installer can load and run an SSH
+      server and thus provides the ability to install Debian remotely via an SSH
+      session. The release notes also describe how to run the installer from an
+      existing system using <emphasis>grub</emphasis> to replace it
+      completely.</para>
     </section>
   </section>
   <section id="sect.installation-steps">
@@ -248,55 +283,54 @@
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> 32 or 64 bits?</title>
-        <indexterm><primary>PAE</primary></indexterm>
+        <indexterm><primary>PAE</primary><seealso>Physical Address Extension</seealso></indexterm>
         <indexterm><primary>Physical Address Extension</primary></indexterm>
         <indexterm><primary>32/64 bits, choice</primary></indexterm>
 
-	<para>The fundamental difference between 32- and 64-bit systems is
-	the size of memory addresses. In theory, a 32-bit system can not
-	work with more than 4 GB of RAM (2<superscript>32</superscript>
-	bytes). In practice, it is possible to work around this limitation
-	by using the <literal>686-pae</literal> kernel variant, so long
-	as the processor handles the PAE (Physical Address Extension)
-	functionality. Using it does have a notable influence on system
-	performance, however. This is why it is useful to use the 64-bit
-	mode on a server with a large amount of RAM.</para>
+        <para>The fundamental difference between 32- and 64-bit systems is
+        the size of memory addresses. In theory, a 32-bit system cannot
+        work with more than 4 GB of RAM (2<superscript>32</superscript>
+        bytes). In practice, it is possible to work around this limitation
+        by using the <literal>686-pae</literal> kernel variant, so long
+        as the processor handles the PAE (Physical Address Extension)
+        functionality. Using it does have a notable influence on system
+        performance, however. This is why it is useful to use the 64-bit
+        mode on a server with a large amount of RAM.</para>
 
-	<para>For an office computer (where a few percent difference in
-	performance is negligible), you must keep in mind that some
-	proprietary programs are not available in 64-bit versions.
-        It is technically possible to make them work
-        on 64-bit systems, but you have to install the 32-bit versions of
-        all the necessary libraries (see <xref linkend="sect.multi-arch" />),
-        and sometimes to use <command>setarch</command> or
-        <command>linux32</command> (in the <emphasis
-          role="pkg">util-linux</emphasis> package) to trick applications
-	regarding the nature of the system.
-	<indexterm><primary><command>setarch</command></primary></indexterm>
-	<indexterm><primary><command>linux32</command></primary></indexterm></para>
+        <para>For an office computer (where a few percent difference in
+        performance is negligible), you must keep in mind that some proprietary
+        programs are not available in 64-bit versions.  It is technically
+        possible to make them work on 64-bit systems, but you have to install
+        the 32-bit versions of all the necessary libraries (see <xref
+        linkend="sect.multi-arch" />), and sometimes to use
+        <command>setarch</command> or <command>linux32</command> (in the
+        <emphasis role="pkg">util-linux</emphasis> package) to trick
+        applications regarding the nature of the system.</para>
+        <indexterm><primary><command>setarch</command></primary></indexterm>
+        <indexterm><primary><command>linux32</command></primary></indexterm>
       </sidebar>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Installation alongside an existing Windows system</title>
         <indexterm><primary>dual boot</primary></indexterm>
 
-	<para>If the computer is already running Windows, it is not
-	necessary to delete the system in order to install Debian. You can
-	have both systems at once, each installed on a separate disk or
-	partition, and choose which to start when booting the computer.
-	This configuration is often called “dual boot”, and the Debian
-	installation system can set it up. This is done during the hard
-	drive partitioning stage of installation and while setting up the
-	bootloader (see the sidebars <xref linkend="sidebar.shrinking-partition"/>
-	and <xref linkend="sidebar.bootloader-dual-boot"/>).</para>
+        <para>If the computer is already running Windows, it is not
+        necessary to delete the system in order to install Debian. You can
+        have both systems at once, each installed on a separate disk or
+        partition, and choose which to start when booting the computer.
+        This configuration is often called “dual boot”, and the Debian
+        installation system can set it up. This is done during the hard
+        drive partitioning stage of installation and while setting up the
+        bootloader (see the sidebars <xref linkend="sidebar.shrinking-partition"/>
+        and <xref linkend="sidebar.bootloader-dual-boot"/>).</para>
 
-	<para>If you already have a working Windows system, you can even
-	avoid using a CD-ROM; Debian offers a Windows program that
-	will download a light Debian installer and set it up on the hard
-	disk. You then only need to reboot the computer and choose between
-	normal Windows boot or booting the installation program. You can
-	also find it on a dedicated website with a rather explicit title…
-	<ulink type="block" url="http://ftp.debian.org/debian/tools/win32-loader/stable/"/>
+        <para>If you already have a working Windows system, you can even
+        avoid using a CD-ROM; Debian offers a Windows program that
+        will download a light Debian installer and set it up on the hard
+        disk. You then only need to reboot the computer and choose between
+        normal Windows boot or booting the installation program. You can
+        also find it on a dedicated website with a rather explicit title…
+        <ulink type="block" url="https://deb.debian.org/debian/tools/win32-loader/stable/"/>
         <ulink type="block" url="https://people.debian.org/~rmh/goodbye-microsoft/"/>
         </para>
       </sidebar>
@@ -307,14 +341,14 @@
         <indexterm><primary>bootloader</primary></indexterm>
         <indexterm><primary>boot</primary><secondary>loader</secondary></indexterm>
 
-	<para>The bootloader is a low-level program that is
-	responsible for booting the Linux kernel just after the BIOS
-	passes off its control. To handle this task, it must be able to
-	locate the Linux kernel to boot on the disk. On the i386 and
-	amd64 architectures, the two most used programs to perform this
-	task are <acronym>LILO</acronym>, the older of the two, and
-	<acronym>GRUB</acronym>, its modern replacement. Isolinux and Syslinux
-	are alternatives frequently used to boot from removable media.</para>
+        <para>The bootloader is a low-level program that is
+        responsible for booting the Linux kernel just after the BIOS
+        passes off its control. To handle this task, it must be able to
+        locate the Linux kernel to boot on the disk. On the i386 and
+        amd64 architectures, the two most used programs to perform this
+        task are <acronym>LILO</acronym>, the older of the two, and
+        <acronym>GRUB</acronym>, its modern replacement. Isolinux and Syslinux
+        are alternatives frequently used to boot from removable media.</para>
       </sidebar>
 
       <para>Each menu entry hides a specific boot command line, which can
@@ -333,6 +367,14 @@
       mode can be confusing due to the multitude of configuration choices
       that it offers.</para>
 
+      <para>The "rescue" mode, also accessible in the “Advanced options” menu,
+      allows to recover a broken system or fix the bootloader. After presenting
+      the first few screens of the installer, it will allow to enter a shell
+      prompt in the file system you selected to perform any necessary actions,
+      or allow to re-install the bootloader.
+      <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch08s06.en.html"/>
+      </para>
+
       <figure>
         <title>Boot screen</title>
         <mediaobject>
@@ -345,8 +387,8 @@
       <para>Once booted, the installation program guides you step by
       step throughout the process. This section presents each of these
       steps in detail. Here we follow the process of an installation
-      from an amd64 DVD-ROM (more specifically, the rc1 version
-      of the installer for <emphasis role="distribution">Buster</emphasis>);
+      from an amd64 DVD-ROM (more specifically, the RC3 version
+      of the installer for <emphasis role="distribution">Bullseye</emphasis>);
       <emphasis>netinst</emphasis> installations, as well as the final
       release of the installer, may look slightly different. We will also
       address installation in graphical mode, but the only difference from
@@ -367,14 +409,15 @@
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Navigating with the keyboard</title>
 
-	<para>Some steps in the installation process require you to enter
-	information. These screens have several areas that may “have
-	focus” (text entry area, checkboxes, list of choices, OK and
-	Cancel buttons), and the <keycap>TAB</keycap> key allows you to
-	move from one to another.</para>
+        <para>Some steps in the installation process require you to enter
+        information. These screens have several areas that may “have focus”
+        (text entry area, checkboxes, list of choices,
+        <guibutton>OK</guibutton> and <guibutton>Cancel</guibutton> buttons),
+        and the <keycap>TAB</keycap> key allows you to move from one to
+        another.</para>
 
-	<para>In graphical mode, you can use the mouse as you would
-	normally on an installed graphical desktop.</para>
+        <para>In graphical mode, you can use the mouse as you would
+        normally on an installed graphical desktop.</para>
       </sidebar>
 
       <figure role="flow.inline">
@@ -420,6 +463,7 @@
       <title>Selecting the keyboard layout</title>
       <indexterm><primary>keyboard layout</primary></indexterm>
       <indexterm><primary>layout, keyboard</primary></indexterm>
+      <indexterm><primary>choice</primary><secondary>of keyboard layout</secondary></indexterm>
 
       <para>The proposed “American English” keyboard corresponds to the
       usual QWERTY layout.</para>
@@ -440,6 +484,7 @@
     </section>
     <section id="sect.install-detect-hardware">
       <title>Detecting Hardware</title>
+      <indexterm><primary>detecting</primary><secondary>hardware</secondary></indexterm>
 
       <para>This step is completely automatic in the vast majority of
       cases. The installer detects your hardware, and tries to identify the
@@ -467,6 +512,7 @@
     </section>
     <section id="sect.install-detect-network">
       <title>Detecting Network Hardware</title>
+      <indexterm><primary>detecting</primary><secondary>network hardware</secondary></indexterm>
 
       <para>This automatic step tries to identify the network card and load
       the corresponding module. If automatic detection fails, you can
@@ -474,7 +520,9 @@
       possible to load a specific module from a removable device. This
       last solution is usually only needed if the appropriate driver is not
       included in the standard Linux kernel, but available elsewhere, such
-      as the manufacturer's website.</para>
+      as the manufacturer's website or in firmware archives/packages.
+      <ulink type="block" url="https://www.debian.org/devel/debian-installer/#firmware_nonfree"/>
+      </para>
 
       <para>This step must absolutely be successful for
       <emphasis>netinst</emphasis> installations, since the Debian
@@ -499,61 +547,65 @@
       <sidebar>
         <title><emphasis>TIP</emphasis> Configuration without DHCP</title>
 
-	<para>If the local network is equipped with a DHCP server that you
-	do not wish to use because you prefer to define a static IP address
-	for the machine during installation, you can add the
-	<userinput>netcfg/use_dhcp=false</userinput> option when booting
-	from the CD-ROM. You just need to go to the desired menu entry by
-	pressing the <keycap>TAB</keycap> key and add the desired option
-	before pressing the <keycap>Enter</keycap> key.</para>
+        <para>If the local network is equipped with a DHCP server that you
+        do not wish to use, because you prefer to define a static IP address
+        for the machine during installation, you can add the
+        <userinput>netcfg/use_dhcp=false</userinput> option when booting
+        from the installation media. You just need to go to the desired menu entry by
+        pressing the <keycap>TAB</keycap> key and add the desired option
+        before pressing the <keycap>Enter</keycap> key.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>BEWARE</emphasis> Do not improvise</title>
 
-	<para>Many local area networks are based on an implicit assumption
-	that all machines can be trusted, and inadequate configuration of a
-	single computer will often perturb the whole network. As a result,
-	do not connect your machine to a network without first agreeing
-	with its administrator on the appropriate settings (for example,
-	the IP address, netmask, and broadcast address).</para>
+        <para>Many local area networks are based on an implicit assumption
+        that all machines can be trusted, and inadequate configuration of a
+        single computer will often perturb the whole network. As a result,
+        do not connect your machine to a network without first agreeing
+        with its administrator on the appropriate settings (for example,
+        the IP address, netmask, and broadcast address).</para>
       </sidebar>
     </section>
     <section>
       <title>Administrator Password</title>
       <indexterm><primary>account</primary><secondary>administrator account</secondary></indexterm>
+      <indexterm><primary>account</primary><secondary>root account</secondary></indexterm>
+      <indexterm><primary>administrator</primary><seealso>root</seealso></indexterm>
+      <indexterm><primary>super-user</primary><seealso>root</seealso></indexterm>
+      <indexterm><primary>root</primary></indexterm>
 
       <para>The super-user root account, reserved for the machine's
-      administrator, is automatically created during installation; this is
-      why a password is requested. The installer also asks for a
-      confirmation of the password to prevent any input error which would
-      later be difficult to amend. Note that you can leave both fields empty
-      if you want the root account to be disabled. In that case, the first
-      regular user — that will be created by the installer in the next step —
-      will have administrative rights through <command>sudo</command>
-      (see <xref linkend="sect.sharing-admin-rights" />).
-      </para>
+      administrator, is automatically created during installation; this is why
+      a password is requested. The installer also asks for a confirmation of
+      the password to prevent any input error, which would later be difficult to
+      amend. Note that you can leave both fields empty if you want the root
+      account to be disabled. In that case, the login for the root user will be
+      deactivated and the first regular user — that will be created by the
+      installer in the next step — will have administrative rights through
+      <command>sudo</command> (see <xref linkend="sect.sharing-admin-rights"
+      />).</para>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Administrator password</title>
 
-	<para>The root user's password should be long (12 characters or
-	more) and impossible to guess. Indeed, any computer (and a fortiori
-	any server) connected to the Internet is regularly targeted by
-	automated connection attempts with the most obvious passwords.
-	Sometimes it may even be subject to dictionary attacks, in which
-	many combinations of words and numbers are tested as password.
-	Avoid using the names of children or parents, dates of birth, etc.:
-	many of your co-workers might know them, and you rarely want to
-	give them free access to the computer in question.</para>
+        <para>The root user's password should be long (12 characters or
+        more) and impossible to guess. Indeed, any computer (and a fortiori
+        any server) connected to the Internet is regularly targeted by
+        automated connection attempts with the most obvious passwords.
+        Sometimes it may even be subject to dictionary attacks, in which
+        many combinations of words and numbers are tested as password.
+        Avoid using the names of children or parents, dates of birth, etc.:
+        many of your co-workers might know them, and you rarely want to
+        give them free access to the computer in question.</para>
 
-	<para>These remarks are equally applicable for other user
-	passwords, but the consequences of a compromised account are less
-	drastic for users without administrative rights.</para>
+        <para>These remarks are equally applicable for other user
+        passwords, but the consequences of a compromised account are less
+        drastic for users without administrative rights.</para>
 
-	<para>If inspiration is lacking, do not hesitate to use password
-	generators, such as <command>pwgen</command> (in the package of the
-	same name).</para>
+        <para>If inspiration is lacking, do not hesitate to use password
+        generators, such as <command>pwgen</command> (in the package of the
+        same name).</para>
       </sidebar>
 
       <figure>
@@ -597,6 +649,7 @@
     </section>
     <section id="sect.install-detect-disks">
       <title>Detecting Disks and Other Devices</title>
+      <indexterm><primary>detecting</primary><secondary>disks</secondary></indexterm>
 
       <para>This step automatically detects the hard drives on which Debian
       may be installed. They will be presented in the next step:
@@ -609,13 +662,13 @@
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Uses of partitioning</title>
 
-	<para>Partitioning, an indispensable step in installation, consists
-	in dividing the available space on the hard drives (each
-	subdivision thereof being called a “partition”) according to
-	the data to be stored on it and the use for which the computer is
-	intended. This step also includes choosing the filesystems to be
-	used. All of these decisions will have an influence on performance,
-	data security, and the administration of the server.</para>
+        <para>Partitioning, an indispensable step in installation, consists
+        in dividing the available space on the hard drives (each
+        subdivision thereof being called a “partition”) according to
+        the data to be stored on it and the use for which the computer is
+        intended. This step also includes choosing the filesystems to be
+        used. All of these decisions will have an influence on performance,
+        data security, and the administration of the server.</para>
       </sidebar>
 
       <para>The partitioning step is traditionally difficult for new users.
@@ -666,12 +719,13 @@
 
       <para>In other cases, when Linux must work alongside other already
       existing partitions, you need to choose manual partitioning.</para>
+
       <section id="sect.install-autopartman-mode">
         <title>Guided partitioning</title>
         <indexterm><primary>partitioning</primary><secondary>guided partitioning</secondary></indexterm>
 
-	<para>The guided partitioning tool offers three partitioning
-	methods, which correspond to different usages.</para>
+        <para>The guided partitioning tool offers three partitioning
+        methods, which correspond to different usages.</para>
 
         <figure>
           <title>Guided partitioning</title>
@@ -682,86 +736,87 @@
           </mediaobject>
         </figure>
 
-	<para>The first method is called “All files in one partition”. The
-	entire Linux system tree is stored in a single filesystem,
-	corresponding to the root <filename>/</filename> directory. This
-	simple and robust partitioning fits perfectly for personal or
-	single-user systems. In fact, two partitions will be created: the
-	first will house the complete system, the second the virtual memory
-	(swap).</para>
+        <para>The first method is called “All files in one partition”. The
+        entire Linux system tree is stored in a single filesystem,
+        corresponding to the root <filename>/</filename> directory. This
+        simple and robust partitioning fits perfectly for personal or
+        single-user systems. In fact, two partitions will be created: the
+        first will house the complete system, the second the virtual memory
+        (swap).</para>
 
-	<para>The second method, “Separate <filename>/home</filename>
-	partition”, is similar, but splits the file hierarchy in two: one
-	partition contains the Linux system (<filename>/</filename>), and
-	the second contains “home directories” (meaning user data, in
-	files and subdirectories available under
-	<filename>/home/</filename>).</para>
+        <para>The second method, “Separate <filename>/home</filename>
+        partition”, is similar, but splits the file hierarchy in two: one
+        partition contains the Linux system (<filename>/</filename>), and
+        the second contains “home directories” (meaning user data, in
+        files and subdirectories available under
+        <filename>/home/</filename>).</para>
 
-	<para>The last partitioning method, called “Separate
-	<filename>/home</filename>,
-	<filename>/var</filename>, and <filename>/tmp</filename>
-	partitions”, is appropriate for servers and multi-user systems.
-	It divides the file tree into many partitions: in addition to the
-	root (<filename>/</filename>) and user accounts
-	(<filename>/home/</filename>) partitions, it also has partitions
-	for server software data (<filename>/var/</filename>), and temporary files
-	(<filename>/tmp/</filename>). These divisions have several
-	advantages. Users can not lock up the server by consuming all
-	available hard drive space (they can only fill up
-	<filename>/tmp/</filename> and <filename>/home/</filename>). The
-	daemon data (especially logs) can no longer clog up the rest of the
-	system.</para>
+        <para>The last partitioning method, called “Separate
+        <filename>/home</filename>,
+        <filename>/var</filename>, and <filename>/tmp</filename>
+        partitions”, is appropriate for servers and multi-user systems.
+        It divides the file tree into many partitions: in addition to the
+        root (<filename>/</filename>) and user accounts
+        (<filename>/home/</filename>) partitions, it also has partitions
+        for server software data (<filename>/var/</filename>), and temporary files
+        (<filename>/tmp/</filename>). These divisions have several
+        advantages. Users can not lock up the server by consuming all
+        available hard drive space (they can only fill up
+        <filename>/tmp/</filename> and <filename>/home/</filename>). The
+        daemon data (especially logs) can no longer clog up the rest of the
+        system.</para>
 
         <sidebar>
           <title><emphasis>BACK TO BASICS</emphasis> Choosing a filesystem</title>
           <indexterm><primary>system</primary><secondary>filesystem</secondary></indexterm>
           <indexterm><primary>file</primary><secondary>system</secondary></indexterm>
+          <indexterm><primary>filesystem</primary></indexterm>
 
-	  <para>A filesystem defines the way in which data is
-	  organized on the hard drive. Each existing filesystem has
-	  its merits and limitations. Some are more robust, others
-	  more effective: if you know your needs well, choosing the
-	  most appropriate filesystem is possible. Various comparisons
+          <para>A filesystem defines the way in which data is
+          organized on the hard drive. Each existing filesystem has
+          its merits and limitations. Some are more robust, others
+          more effective: if you know your needs well, choosing the
+          most appropriate filesystem is possible. Various comparisons
           have already been made; it seems that <emphasis>ReiserFS</emphasis> is
-	  particularly efficient for reading many small files;
-	  <emphasis>XFS</emphasis>, in turn, works faster with large
-	  files. <emphasis>Ext4</emphasis>, the default filesystem for
-	  Debian, is a good compromise, based on the three previous
-	  versions of filesystems historically used in Linux
-	  (<emphasis>ext</emphasis>, <emphasis>ext2</emphasis> and
-	  <emphasis>ext3</emphasis>). <emphasis>Ext4</emphasis>
-	  overcomes certain limitations of <emphasis>ext3</emphasis>
-	  and is particularly appropriate for very large capacity hard
-	  drives.  Another option would be to experiment with the very
-	  promising <emphasis>btrfs</emphasis>, which includes
-	  numerous features that require, to this day, the use of LVM
-	  and/or RAID.</para>
+          particularly efficient for reading many small files;
+          <emphasis>XFS</emphasis>, in turn, works faster with large
+          files. <emphasis>Ext4</emphasis>, the default filesystem for
+          Debian, is a good compromise, based on the three previous
+          versions of filesystems historically used in Linux
+          (<emphasis>ext</emphasis>, <emphasis>ext2</emphasis> and
+          <emphasis>ext3</emphasis>). <emphasis>Ext4</emphasis>
+          overcomes certain limitations of <emphasis>ext3</emphasis>
+          and is particularly appropriate for very large capacity hard
+          drives.  Another option would be to experiment with the very
+          promising <emphasis>btrfs</emphasis>, which includes
+          numerous features that require, to this day, the use of LVM
+          and/or RAID.</para>
 
-	  <para>A journalized filesystem (such as
-	  <emphasis>ext3</emphasis>, <emphasis>ext4</emphasis>,
-	  <emphasis>btrfs</emphasis>, <emphasis>reiserfs</emphasis>, or
-	  <emphasis>xfs</emphasis>) takes special measures to make it
-	  possible to return to a prior consistent state after an abrupt
-	  interruption without completely analyzing the entire disk (as was
-	  the case with the <emphasis>ext2</emphasis> system). This
-	  functionality is carried out by filling in a journal that
-	  describes the operations to conduct prior to actually executing
-	  them. If an operation is interrupted, it will be possible to
-	  “replay” it from the journal. Conversely, if an interruption
-	  occurs during an update of the journal, the last requested change
-	  is simply ignored; the data being written could be lost, but
-	  since the data on the disk has not changed, they have remained
-	  coherent. This is nothing more nor less than a transactional
-	  mechanism applied to the filesystem.</para>
+          <para>A journalized filesystem (such as
+          <emphasis>ext3</emphasis>, <emphasis>ext4</emphasis>,
+          <emphasis>btrfs</emphasis>, <emphasis>reiserfs</emphasis>, or
+          <emphasis>xfs</emphasis>) takes special measures to make it
+          possible to return to a prior consistent state after an abrupt
+          interruption without completely analyzing the entire disk (as was
+          the case with the <emphasis>ext2</emphasis> system). This
+          functionality is carried out by filling in a journal that
+          describes the operations to conduct prior to actually executing
+          them. If an operation is interrupted, it will be possible to
+          “replay” it from the journal. Conversely, if an interruption
+          occurs during an update of the journal, the last requested change
+          is simply ignored; the data being written could be lost, but
+          since the data on the disk has not changed, they have remained
+          coherent. This is nothing more nor less than a transactional
+          mechanism applied to the filesystem.</para>
         </sidebar>
 
-	<para>After choosing the type of partition, the software calculates
-	a suggestion, and describes it on the screen; the user can then
-	modify it if needed. You can, in particular, choose another
-	filesystem if the standard choice (<emphasis>ext4</emphasis>) isn't
-	appropriate. In most cases, however, the proposed partitioning is
-	reasonable and it can be accepted by selecting the “Finish
-	partitioning and write changes to disk” entry.</para>
+        <para>After choosing the type of partition, the software calculates
+        a suggestion, and describes it on the screen; the user can then
+        modify it if needed. You can, in particular, choose another
+        filesystem if the standard choice (<emphasis>ext4</emphasis>) isn't
+        appropriate. In most cases, however, the proposed partitioning is
+        reasonable and it can be accepted by selecting the “Finish
+        partitioning and write changes to disk” entry.</para>
 
         <figure>
           <title>Validating partitioning</title>
@@ -776,63 +831,72 @@
         <title>Manual Partitioning</title>
         <indexterm><primary>partitioning</primary><secondary>manual partitioning</secondary></indexterm>
 
-	<para>Manual partitioning allows greater flexibility, allowing the
-	user to choose the purpose and size of each partition. Furthermore,
-	this mode is unavoidable if you wish to use software RAID.</para>
+        <para>Manual partitioning allows greater flexibility, allowing the
+        user to choose the purpose and size of each partition. Furthermore,
+        this mode is unavoidable if you wish to use software RAID.</para>
 
         <sidebar id="sidebar.shrinking-partition">
           <title><emphasis>IN PRACTICE</emphasis> Shrinking a Windows partition</title>
           <indexterm><primary>resize a partition</primary></indexterm>
           <indexterm><primary>shrink a partition</primary></indexterm>
 
-	  <para>To install Debian alongside an existing operating system
-	  (Windows or other), you must have some available hard drive space
-	  that is not being used by the other system in order to be able to
-	  create the partitions dedicated to Debian. In most cases, this
-	  means shrinking a Windows partition and reusing the freed
-	  space.</para>
+          <para>To install Debian alongside an existing operating system
+          (Windows or other), you must have some available hard drive space
+          that is not being used by the other system in order to be able to
+          create the partitions dedicated to Debian. In most cases, this
+          means shrinking a Windows partition and reusing the freed
+          space.</para>
 
-	  <para>The Debian installer allows this operation when using the
-	  manual mode for partitioning. You only need to choose the Windows
-	  partition and enter its new size (this works the same with both
-	  unencrypted FAT and NTFS partitions).</para>
+          <para>The Debian installer allows this operation when using the
+          manual mode for partitioning. You only need to choose the Windows
+          partition and enter its new size (this works the same with both
+          unencrypted FAT and NTFS partitions).</para>
 
-	  <para>If Windows is using BitLocker-encrypted partitions, the steps
-	  to resize them requires to use the BitLocker Management together
-	  with the Windows Disk Management tool.</para>
+          <para>If Windows is using BitLocker-encrypted partitions, the steps
+          to resize them requires to use the BitLocker Management together
+          with the Windows Disk Management tool.</para>
         </sidebar>
 
-	<para>The first screen displays the available disks, their
-	partitions, and any possible free space that has not yet been
-	partitioned. You can select each displayed element; pressing the
-	<keycap>Enter</keycap> key then gives a list of possible
-	actions.</para>
+        <para>The first screen displays the available disks, their
+        partitions, and any possible free space that has not yet been
+        partitioned. You can select each displayed element; pressing the
+        <keycap>Enter</keycap> key then gives a list of possible
+        actions.</para>
 
-	<para>You can erase all partitions on a disk by selecting
-	it.</para>
+        <para>You can erase all partitions on a disk by selecting
+        it.</para>
 
-	<para>When selecting free space on a disk, you can manually create
-	a new partition. You can also do this with guided partitioning,
-	which is an interesting solution for a disk that already contains
-	another operating system, but which you may wish to partition for
+        <para>When selecting free space on a disk, you can manually create
+        a new partition. You can also do this with guided partitioning,
+        which is an interesting solution for a disk that already contains
+        another operating system, but which you may wish to partition for
         Linux in a standard manner. See <xref
-          linkend="sect.install-autopartman-mode"/> for more details on
+        linkend="sect.install-autopartman-mode"/> for more details on
         guided partitioning.</para>
+
+        <figure>
+          <title>Editing/creating a partition</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/inst-partman-partition.png" scalefit="1" width="60%"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
 
         <sidebar>
           <title><emphasis>BACK TO BASICS</emphasis> Mount point</title>
           <indexterm><primary>mount point</primary></indexterm>
           <indexterm><primary>point, mount point</primary></indexterm>
 
-	  <para>The mount point is the directory tree that will house the
-	  contents of the filesystem on the selected partition. Thus, a
-	  partition mounted at <filename>/home/</filename> is traditionally
-	  intended to contain user data.</para>
+          <para>The mount point is the directory tree that will house the
+          contents of the filesystem on the selected partition. Thus, a
+          partition mounted at <filename>/home/</filename> is traditionally
+          intended to contain user data.</para>
 
-	  <para>When this directory is named “<filename>/</filename>”,
-	  it is known as the <emphasis>root</emphasis> of the file tree,
-	  and therefore the root of the partition that will actually host
-	  the Debian system.</para>
+          <para>When this directory is named “<filename>/</filename>”,
+          it is known as the <emphasis>root</emphasis> of the file tree,
+          and therefore the root of the partition that will actually host
+          the Debian system.</para>
         </sidebar>
 
         <sidebar>
@@ -841,44 +905,47 @@
           <indexterm><primary>swap</primary></indexterm>
           <indexterm><primary>partition</primary><secondary>swap partition</secondary></indexterm>
           <indexterm><primary>swap partition</primary></indexterm>
+          <indexterm><primary>swap file</primary></indexterm>
 
-	  <para>Virtual memory allows the Linux kernel, when lacking
-	  sufficient memory (RAM), to free a bit of memory by storing the
-	  parts of the RAM that have been inactive for some time on the
-	  swap partition of the hard disk.</para>
+          <para>Virtual memory allows the Linux kernel, when lacking
+          sufficient memory (RAM), to free a bit of memory by storing the
+          parts of the RAM that have been inactive for some time on the
+          swap partition of the hard disk. It is also fundamental to the
+          "Suspend" and "Hibernate" features of a system.</para>
 
-	  <para>To simulate the additional memory, Windows uses a swap file
-	  that is directly contained in a filesystem. Conversely, Linux
-	  uses a partition dedicated to this purpose, hence the term
-	  “swap partition”.</para>
+          <para>To simulate the additional memory, Windows uses a swap file
+          that is directly contained in a filesystem. Conversely, Linux
+          uses a partition dedicated to this purpose, hence the term
+          “swap partition”. But it is also able to use a swap file as
+          well.</para>
         </sidebar>
 
-	<para>When choosing a partition, you can indicate the manner in
-	which you are going to use it:</para>
+        <para>When choosing a partition, you can indicate the manner in
+        which you are going to use it:</para>
         <itemizedlist>
           <listitem>
-	    <para>format it and include it in the file tree by choosing a
-	    mount point;</para>
+            <para>format it and include it in the file tree by choosing a
+            mount point;</para>
           </listitem>
           <listitem>
-	    <para>use it as a swap partition;</para>
+            <para>use it as a swap partition;</para>
           </listitem>
           <listitem>
-	    <para>make it into a “physical volume for encryption” (to
-	    protect the confidentiality of data on certain partitions, see
-	    below);</para>
+            <para>make it into a “physical volume for encryption” (to
+            protect the confidentiality of data on certain partitions, see
+            below);</para>
           </listitem>
           <listitem>
-	    <para>make it a “physical volume for LVM” (this concept is
-	    discussed in greater detail later in this chapter);</para>
+            <para>make it a “physical volume for LVM” (this concept is
+            discussed in greater detail later in this chapter);</para>
           </listitem>
           <listitem>
-	    <para>use it as a RAID device (see later in this
-	    chapter);</para>
+            <para>use it as a RAID device (see later in this
+            chapter);</para>
           </listitem>
           <listitem>
-	    <para>you can also choose not to use it, and therefore
-	    leave it unchanged.</para>
+            <para>you can also choose not to use it, and therefore
+            leave it unchanged.</para>
           </listitem>
         </itemizedlist>
       </section>
@@ -888,87 +955,87 @@
         <indexterm><primary>Software RAID</primary></indexterm>
         <indexterm><primary>device</primary><secondary>multi-disk device</secondary></indexterm>
 
-	<para>Some types of RAID allow the duplication of information
-	stored on hard drives to prevent data loss in the event of a
-	hardware problem affecting one of them. Level 1 RAID keeps a
-	simple, identical copy (mirror) of a hard drive on another drive,
-	while level 5 RAID splits redundant data over several disks, thus
-	allowing the complete reconstruction of a failing drive.</para>
+        <para>Some types of RAID allow the duplication of information
+        stored on hard drives to prevent data loss in the event of a
+        hardware problem affecting one of them. Level 1 RAID keeps a
+        simple, identical copy (mirror) of a hard drive on another drive,
+        while level 5 or 6 RAID splits redundant data over several disks, thus
+        allowing the complete reconstruction of a failing drive.</para>
 
-	<para>We will only describe level 1 RAID, which is the simplest to
-	implement. The first step involves creating two partitions of
-	identical size located on two different hard drives, and to label
-	them “physical volume for RAID”.</para>
+        <para>We will only describe level 1 RAID, which is the simplest to
+        implement. The first step involves creating two partitions of
+        identical size located on two different hard drives, and to label
+        them “physical volume for RAID”.</para>
 
-	<para>You must then choose “Configure software RAID” in the
-	partitioning tool to combine these two partitions into a new
-	virtual disk and select “Create MD device” in the configuration
-	screen. You then need to answer a series of questions about this
-	new device. The first question asks about the RAID level to use,
-	which in our case will be “RAID1”. The second question asks
-	about the number of active devices — two in our case, which is
-	the number of partitions that need to be included in this MD
-	device. The third question is about the number of spare devices —
-	0; we have not planned any additional disk to take over for a
-	possible defective disk. The last question requires you to choose
-	the partitions for the RAID device — these would be the two
-	that we have set aside for this purpose (make sure you only select
-	the partitions that explicitly mention “raid”).</para>
+        <para>You must then choose “Configure software RAID” in the
+        partitioning tool to combine these two partitions into a new
+        virtual disk and select “Create MD device” in the configuration
+        screen. You then need to answer a series of questions about this
+        new device. The first question asks about the RAID level to use,
+        which in our case will be “RAID1”. The second question asks
+        about the number of active devices — two in our case, which is
+        the number of partitions that need to be included in this MD
+        device. The third question is about the number of spare devices —
+        0; we have not planned any additional disk to take over for a
+        possible defective disk. The last question requires you to choose
+        the partitions for the RAID device — these would be the two
+        that we have set aside for this purpose (make sure you only select
+        the partitions that explicitly mention “raid”).</para>
 
-	<para>Back to the main menu, a new virtual “RAID” disk appears.
-	This disk is presented with a single partition which can not be
-	deleted, but whose use we can choose (just like for any other
-	partition).</para>
+        <para>Back to the main menu, a new virtual “RAID” disk appears.
+        This disk is presented with a single partition which can not be
+        deleted, but whose use we can choose (just like for any other
+        partition).</para>
 
-	<para>For further details on RAID functions, please refer to <xref
-	linkend="sect.raid-soft"/>.</para>
+        <para>For further details on RAID functions, please refer to <xref
+        linkend="sect.raid-soft"/>.</para>
       </section>
       <section id="sect.install-lvm">
         <title>Configuring the Logical Volume Manager (LVM)</title>
-        <indexterm><primary>LVM</primary><secondary>during installation</secondary></indexterm>
+        <indexterm><primary>LVM</primary><seealso>Logical Volume Manager</seealso></indexterm>
         <indexterm><primary>Logical Volume Manager</primary><secondary>during installation</secondary></indexterm>
 
-	<para>LVM allows you to create “virtual” partitions that span
-	over several disks. The benefits are twofold: the size of the
-	partitions are no longer limited by individual disks but by
-	their cumulative volume, and you can resize existing
-	partitions at any time, possibly after adding an additional
-	disk when needed.</para>
+        <para>LVM allows you to create “virtual” partitions that span
+        over several disks. The benefits are twofold: the size of the
+        partitions are no longer limited by individual disks but by
+        their cumulative volume, and you can resize existing
+        partitions at any time, possibly after adding an additional
+        disk when needed.</para>
 
-	<para>LVM uses a particular terminology: a virtual partition is a
-	“logical volume”, which is part of a “volume group”, or an
-	association of several “physical volumes”. Each of these terms
-	in fact corresponds to a “real” partition (or a software RAID
-	device).</para>
+        <para>LVM uses a particular terminology: a virtual partition is a
+        “logical volume”, which is part of a “volume group”, or an
+        association of several “physical volumes”. Each of these terms
+        in fact corresponds to a “real” partition (or a software RAID
+        device).</para>
         <indexterm><primary>volume</primary><secondary>logical volume</secondary></indexterm>
         <indexterm><primary>volume</primary><secondary>physical volume</secondary></indexterm>
         <indexterm><primary>group</primary><secondary>of volumes</secondary></indexterm>
         <indexterm><primary>volume</primary><secondary>group</secondary></indexterm>
 
-	<para>This technique works in a very simple way: each volume,
-	whether physical or logical, is split into blocks of the same size,
-	which are made to correspond by LVM. The addition of a new disk
-	will cause the creation of a new physical volume, and these new
-	blocks can be associated to any volume group. All of the partitions
-	in the volume group that is thus expanded will have additional
-	space into which they can extend.</para>
+        <para>This technique works in a very simple way: each volume,
+        whether physical or logical, is split into blocks of the same size,
+        which are made to correspond by LVM. The addition of a new disk
+        will cause the creation of a new physical volume, and these new
+        blocks can be associated to any volume group. All of the partitions
+        in the volume group that is thus expanded will have additional
+        space into which they can extend.</para>
 
-	<para>The partitioning tool configures LVM in several
-	steps. First you must create on the existing disks the
-	partitions that will be “physical volumes for LVM”. To
-	activate LVM, you need to choose “Configure the Logical Volume
-	Manager (LVM)”, then on the same configuration screen “Create
-	a volume group”, to which you will associate the existing
-	physical volumes. Finally, you can create logical volumes
-	within this volume group. Note that the automatic partitioning
-	system can perform all these steps automatically.</para>
+        <para>The partitioning tool configures LVM in several
+        steps. First you must create on the existing disks the
+        partitions that will be “physical volumes for LVM”. To
+        activate LVM, you need to choose “Configure the Logical Volume
+        Manager (LVM)”, then on the same configuration screen “Create
+        a volume group”, to which you will associate the existing
+        physical volumes. Finally, you can create logical volumes
+        within this volume group. Note that the automatic partitioning
+        system can perform all these steps automatically.</para>
 
-	<para>In the partitioning menu, each physical volume will appear as
-	a disk with a single partition which can not be deleted, but that
-	you can use as desired.</para>
+        <para>In the partitioning menu, each physical volume will appear as
+        a disk with a single partition which can not be deleted, but that
+        you can use as desired.</para>
 
-	<para>The usage of LVM is described in further detail in <xref
-	linkend="sect.lvm"/>.</para>
+        <para>The usage of LVM is described in further detail in <xref
+        linkend="sect.lvm"/>.</para>
       </section>
       <section>
         <title>Setting Up Encrypted Partitions</title>
@@ -979,56 +1046,57 @@
         <indexterm><primary>confidentiality</primary><secondary>files</secondary></indexterm>
         <indexterm><primary>file</primary><secondary>confidentiality</secondary></indexterm>
 
-	<para>To guarantee the confidentiality of your data, for instance
-	in the event of the loss or theft of your computer or a hard drive,
-	it is possible to encrypt the data on some partitions. This feature
-	can be added underneath any filesystem, since, as for LVM, Linux
-	(and more particularly the dm-crypt driver) uses the Device Mapper
-	to create a virtual partition (whose content is protected) based on
-	an underlying partition that will store the data in an encrypted
-	form (thanks to LUKS, Linux Unified Key Setup, a standard format
-	that enables the storage of encrypted data as well as
-	meta-information that indicates the encryption algorithms
-	used).</para>
+        <para>To guarantee the confidentiality of your data, for instance
+        in the event of the loss or theft of your computer or a hard drive,
+        it is possible to encrypt the data on some partitions. This feature
+        can be added underneath any filesystem, since, as for LVM, Linux
+        (and more particularly the dm-crypt driver) uses the Device Mapper
+        to create a virtual partition (whose content is protected) based on
+        an underlying partition that will store the data in an encrypted
+        form (thanks to LUKS, Linux Unified Key Setup, a standard format
+        that enables the storage of encrypted data as well as
+        meta-information that indicates the encryption algorithms
+        used).</para>
 
         <sidebar id="sidebar.encrypted-swap-partition">
           <title><emphasis>SECURITY</emphasis> Encrypted swap partition</title>
+          <indexterm><primary>swap</primary><secondary>encrypted</secondary></indexterm>
 
-	  <para>When an encrypted partition is used, the encryption key is
-	  stored in memory (RAM). Since retrieving this key allows the
-	  decryption of the data, it is of utmost importance to avoid
-	  leaving a copy of this key that would be accessible to the
-	  possible thief of the computer or hard drive, or to a maintenance
-	  technician. This is, however, something that can easily occur with
-	  a laptop, since when hibernating the contents of RAM is stored on
-	  the swap partition. If this partition isn't encrypted, the thief
-	  may access the key and use it to decrypt the data from the
-	  encrypted partitions. This is why, when you use encrypted
-	  partitions, it is imperative to also encrypt the swap
-	  partition!</para>
+          <para>When an encrypted partition is used, the encryption key is
+          stored in memory (RAM). Since retrieving this key allows the
+          decryption of the data, it is of utmost importance to avoid
+          leaving a copy of this key that would be accessible to the
+          possible thief of the computer or hard drive, or to a maintenance
+          technician. This is, however, something that can easily occur with
+          a laptop, since when hibernating the contents of RAM is stored on
+          the swap partition. If this partition isn't encrypted, the thief
+          may access the key and use it to decrypt the data from the
+          encrypted partitions. This is why, when you use encrypted
+          partitions, it is imperative to also encrypt the swap
+          partition!</para>
 
-	  <para>The Debian installer will warn the user if they try to make
-	  an encrypted partition while the swap partition isn't
-	  encrypted.</para>
+          <para>The Debian installer will warn the user if they try to make
+          an encrypted partition while the swap partition isn't
+          encrypted.</para>
         </sidebar>
 
-	<para>To create an encrypted partition, you must first assign an
-	available partition for this purpose. To do so, select a partition
-	and indicate that it is to be used as a “physical volume for
-	encryption”. After partitioning the disk containing the physical
-	volume to be made, choose “Configure encrypted volumes”. The
-	software will then propose to initialize the physical volume with
-	random data (making the localization of the real data more
-	difficult), and will ask you to enter an “encryption
-	passphrase”, which you will have to enter every time you boot
-	your computer in order to access the content of the encrypted
-	partition. Once this step has been completed, and you have returned
-	to the partitioning tool menu, a new partition will be available in
-	an “encrypted volume”, which you can then configure just like
-	any other partition. In most cases, this partition is used as a
-	physical volume for LVM so as to protect several partitions (LVM
-	logical volumes) with the same encryption key, including the swap
-	partition (see sidebar <xref linkend="sidebar.encrypted-swap-partition"/>).</para>
+        <para>To create an encrypted partition, you must first assign an
+        available partition for this purpose. To do so, select a partition
+        and indicate that it is to be used as a “physical volume for
+        encryption”. After partitioning the disk containing the physical
+        volume to be made, choose “Configure encrypted volumes”. The
+        software will then propose to initialize the physical volume with
+        random data (making the localization of the real data more
+        difficult), and will ask you to enter an “encryption
+        passphrase”, which you will have to enter every time you boot
+        your computer in order to access the content of the encrypted
+        partition. Once this step has been completed, and you have returned
+        to the partitioning tool menu, a new partition will be available in
+        an “encrypted volume”, which you can then configure just like
+        any other partition. In most cases, this partition is used as a
+        physical volume for LVM so as to protect several partitions (LVM
+        logical volumes) with the same encryption key, including the swap
+        partition (see sidebar <xref linkend="sidebar.encrypted-swap-partition"/>).</para>
       </section>
     </section>
     <section>
@@ -1057,26 +1125,24 @@
 
       <para>In order to be able to install additional software, APT needs
       to be configured and told where to find Debian packages. This step is
-      as automated as possible. It starts with a question asking if it must
-      use a network source for packages, or if it should only look for
-      packages on the CD-ROM.</para>
+      as automated as possible.</para>
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> Debian CD-ROM in the drive</title>
 
-	<para>If the installer detects a Debian installation disk in the
-	CD/DVD reader, it is not necessary to configure APT to go looking
-	for packages on the network: APT is automatically configured to
-	read packages from a removable media drive. If the disk is part of
-	a set, the software will offer to “explore” other disks in
-	order to reference all of the packages stored on them.</para>
+        <para>If the installer detects a Debian installation disk in the
+        CD/DVD reader, it is not necessary to configure APT to go looking
+        for packages on the network: APT is automatically configured to
+        read packages from a removable media drive. If the disk is part of
+        a set, the software will offer to “explore” other disks in
+        order to reference all of the packages stored on them.</para>
       </sidebar>
 
-      <para>If getting packages from the network is requested, the next two
-      questions allow to choose a server from which to download these
+      <para>If getting packages from the network is requested, the installer
+      allows to choose a server from which to download these
       packages, by choosing first a country, then a mirror available
-      in that country (a mirror is a public server hosting copies of all
-      the files of the Debian master archive).</para>
+      in that country. A mirror is a public server hosting copies of all
+      the files of the Debian master archive.</para>
 
       <figure>
         <title>Selecting a Debian mirror</title>
@@ -1106,21 +1172,23 @@
         <indexterm><primary>cache, proxy</primary></indexterm>
         <indexterm><primary>Squid</primary></indexterm>
 
-	<para>An HTTP proxy is a server that forwards an HTTP request for
-	network users. It sometimes helps to speed up downloads by keeping
-	a copy of files that have been transferred through it (we then
-	speak of proxy/cache). In some cases, it is the only means of
-	accessing an external web server; in such cases it is essential to
-	answer the corresponding question during installation for the
-	program to be able to download the Debian packages through
-	it.</para>
+        <para>An HTTP proxy is a server that forwards an HTTP request for
+        network users. It sometimes helps to speed up downloads by keeping
+        a copy of files that have been transferred through it (we then
+        speak of proxy/cache). In some cases, it is the only means of
+        accessing an external web server; in such cases it is essential to
+        answer the corresponding question during installation for the
+        program to be able to download the Debian packages through
+        it.</para>
 
-	<para>Squid is the name of the server software used by Falcot Corp
-	to offer this service.</para>
+        <para>Squid is the name of the server software used by Falcot Corp
+        to offer this service.</para>
       </sidebar>
     </section>
     <section>
       <title>Debian Package Popularity Contest</title>
+      <indexterm><primary><emphasis role="pkg">popularity-contest</emphasis></primary></indexterm>
+      <indexterm><primary>package</primary><secondary>popularity</secondary></indexterm>
 
       <para>The Debian system contains a package called <emphasis
       role="pkg">popularity-contest</emphasis>, whose purpose is to compile
@@ -1145,6 +1213,9 @@
       lists of packages to be installed. The list of the packages that will
       actually be installed will be fine-tuned and completed later on, but
       this provides a good starting point in a simple manner.</para>
+
+      <para>This step can require a full set of installation media or an
+      internet connection and a working mirror setup as described above.</para>
 
       <para>Some packages are also automatically installed according to the
       hardware detected (thanks to the program
@@ -1175,19 +1246,19 @@
         <title><emphasis>BEWARE</emphasis> Bootloader and dual boot</title>
         <indexterm><primary>dual boot</primary></indexterm>
 
-	<para>This phase in the Debian installation process detects the
-	operating systems that are already installed on the computer, and
-	automatically adds corresponding entries in the boot menu, but not
-	all installation programs do this.</para>
+        <para>This phase in the Debian installation process detects the
+        operating systems that are already installed on the computer, and
+        automatically adds corresponding entries in the boot menu, but not
+        all installation programs do this.</para>
 
-	<para>In particular, if you install (or reinstall) Windows
-	thereafter, the bootloader will be erased. Debian will still be on
-	the hard drive, but will no longer be accessible from the boot
-	menu (except for Windows 10, where it will still be accessible
-	through	the Windows recovery console). You would then have to
-	boot the Debian installation system in
-	<userinput>rescue</userinput> mode to set up a less exclusive
-	bootloader. This operation is described in detail in the
+        <para>In particular, if you install (or reinstall) Windows
+        thereafter, the bootloader will be erased. Debian will still be on
+        the hard drive, but will no longer be accessible from the boot
+        menu (except for Windows 10, where it will still be accessible
+        through	the Windows recovery console). You would then have to
+        boot the Debian installation system in
+        <userinput>rescue</userinput> mode to set up a less exclusive
+        bootloader. This operation is described in detail in the
         installation manual.
         <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch08s06"/>
         </para>
@@ -1250,7 +1321,7 @@
         of the system.
         </para>
 
-        <para>Debian 10 is the first release supporting Secure Boot. Before,
+        <para>Debian 10 (Buster) is the first release supporting Secure Boot. Before,
         you had to disable that feature in the system setup screen offered
         by the BIOS or the UEFI.
         </para>
@@ -1261,6 +1332,20 @@
 
       <para>The installation is now complete, the program invites you to
       remove the CD-ROM from the reader and to restart the computer.</para>
+
+      <figure role="flow.inline">
+        <title>Installation complete</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/inst-complete.png" scalefit="1" width="65%"/>
+          </imageobject>
+        </mediaobject>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/inst-complete-txt.png" scalefit="1" width="65%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </section>
   </section>
   <section id="sect.after-first-boot">
@@ -1283,6 +1368,8 @@
     working immediately.</para>
     <section>
       <title>Installing Additional Software</title>
+      <indexterm><primary><command>apt</command></primary></indexterm>
+      <indexterm><primary><command>synaptic</command></primary></indexterm>
 
       <para>The installed packages correspond to the profiles selected
       during installation, but not necessarily to the use that will
@@ -1304,6 +1391,8 @@
       <guimenu>Edit</guimenu> <guimenuitem>Mark Packages by
       Task…</guimenuitem> </menuchoice>).</para>
 
+     <indexterm><primary><command>aptitude</command></primary></indexterm>
+
       <para>Aptitude is an interface to APT in full-screen text mode. It
       allows the user to browse the list of available packages according to
       various categories (installed or not-installed packages, by task, by
@@ -1316,35 +1405,35 @@
       If you have forgotten some programs, no worries; you will be able to
       run <command>aptitude</command> again once the initial installation
       has been completed.</para>
-      <indexterm><primary>aptitude</primary></indexterm>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Debian thinks of speakers of non-English languages</title>
 
-	<para>Several tasks are dedicated to the localization of the system
-	in other languages beyond English. They include translated
-	documentation, dictionaries, and various other packages useful for
-	speakers of different languages. The appropriate task is
-	automatically selected if a non-English language was chosen during
-	installation.</para>
+        <para>Several tasks are dedicated to the localization of the system
+        in other languages beyond English. They include translated
+        documentation, dictionaries, and various other packages useful for
+        speakers of different languages. The appropriate task is
+        automatically selected if a non-English language was chosen during
+        installation.</para>
       </sidebar>
 
-      <para>Of course, it is possible not to select any task to be
-      installed. In this case, you can manually install the desired
-      software with the <command>apt</command> or
-      <command>aptitude</command> command (which are both accessible from
-      the command line).</para>
+      <para>Of course, it is possible not to select any task to be installed.
+      In this case, you can manually install the desired software with the
+      <command>apt</command> or <command>aptitude</command> command (which are
+      both accessible from the command line). The packages can be found using
+      the <command>apt-cache search task
+      <replaceable>keyword</replaceable></command> command.</para>
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Package dependencies, conflicts</title>
 
-	<para>In the Debian packaging lingo, a “dependency” is another
-	package necessary for the proper functioning of the package in
-	question. Conversely, a “conflict” is a package that can not be
-	installed side-by-side with another.</para>
+        <para>In the Debian packaging lingo, a “dependency” is another
+        package necessary for the proper functioning of the package in
+        question. Conversely, a “conflict” is a package that can not be
+        installed side-by-side with another.</para>
 
-	<para>These concepts are discussed in greater detail in <xref
-	linkend="packaging-system"/>.</para>
+        <para>These concepts are discussed in greater detail in <xref
+        linkend="packaging-system"/>.</para>
       </sidebar>
     </section>
     <section>
@@ -1362,3 +1451,4 @@
     </section>
   </section>
 </chapter>
+<!-- vim: set ft=xml tw=79 ts=2 sw=2 ai si et: -->
