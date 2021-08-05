@@ -9,6 +9,7 @@
     <keywordset>
       <keyword>Binary package</keyword>
       <keyword>Source package</keyword>
+      <keyword>package</keyword>
       <keyword>dpkg</keyword>
       <keyword>deb</keyword>
       <keyword>dependencies</keyword>
@@ -87,27 +88,39 @@
 
       <para>As for the <command>ar</command> program, provided by the
       <emphasis role="pkg">binutils</emphasis> package, it allows
-      handling files of the same name: <command>ar t
-      <replaceable>archive</replaceable></command> displays the list of
-      files contained in such an archive, <command>ar x
-      <replaceable>archive</replaceable></command> extracts the files from
-      the archive into the current working directory, <command>ar d
-      <replaceable>archive</replaceable>
-      <replaceable>file</replaceable></command> deletes a file from the
-      archive, etc. Its man page
+      handling files of the same name:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><command>ar t <replaceable>archive</replaceable></command>
+          displays the list of files contained in such an archive,</para>
+        </listitem>
+        <listitem>
+          <para><command>ar x <replaceable>archive</replaceable></command>
+          extracts the files from the archive into the current working
+          directory,</para> 
+        </listitem>
+        <listitem>
+          <para><command>ar d <replaceable>archive</replaceable>
+          <replaceable>file</replaceable></command> deletes a file from the
+          archive, etc.</para> 
+        </listitem>
+      </itemizedlist>
+
+      <para>Its man page
       (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>)
       documents all its other features. <command>ar</command> is a very
       rudimentary tool that a Unix administrator would only use on rare
       occasions, but admins routinely use <command>tar</command>, a more
-      evolved archive and file management program. This is why it is easy
-      to restore <command>dpkg</command> in the event of an erroneous
-      deletion. You would only have to download the Debian package and
-      extract the content from the <filename>data.tar.xz</filename> archive
-      in the system's root (<filename>/</filename>):</para>
+      evolved archive and file management program. This is why it is easy to
+      restore <command>dpkg</command> in the event of an erroneous deletion.
+      You would only have to download the Debian package and extract the
+      content from the <filename>data.tar.xz</filename> archive in the system's
+      root (<filename>/</filename>):</para>
 
       <!-- MAY CHANGE: dpkg version number -->
       <screen>
-<computeroutput># </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>
+<computeroutput># </computeroutput><userinput>ar x dpkg_1.20.9_amd64.deb</userinput>
 <computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>
 </screen>
     </sidebar>
@@ -136,16 +149,15 @@
     file:</para>
 
     <!-- MAY CHANGE: dpkg contents and version number -->
-    <screen><computeroutput>$ </computeroutput><userinput>ar t dpkg_1.19.7_amd64.deb</userinput>
+    <screen><computeroutput>$ </computeroutput><userinput>ar t dpkg_1.20.9_amd64.deb</userinput>
 <computeroutput>debian-binary
 control.tar.gz
 data.tar.xz
-$ </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>
+$ </computeroutput><userinput>ar x dpkg_1.20.9_amd64.deb</userinput>
 <computeroutput>$ </computeroutput><userinput>ls</userinput>
-<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.19.7_amd64.deb
+<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.20.9_amd64.deb
 $ </computeroutput><userinput>tar tJf data.tar.xz | head -n 16</userinput>
 <computeroutput>./
-./
 ./etc/
 ./etc/alternatives/
 ./etc/alternatives/README
@@ -178,6 +190,7 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
       <varlistentry>
         <term><filename>debian-binary</filename></term>
         <listitem>
+          <!-- MAY CHANGE: Debian stable release name -->
           <para>This is a text file which simply indicates the version of the
           <filename>.deb</filename> file package format version. In Debian
           <emphasis role="distribution">Bullseye</emphasis> it is still
