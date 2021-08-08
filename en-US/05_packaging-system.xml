@@ -90,6 +90,10 @@
       <emphasis role="pkg">binutils</emphasis> package, it allows
       handling files of the same name:</para>
 
+      <indexterm><primary>decompressing, binary package</primary></indexterm>
+      <indexterm><primary>uncompressing, binary package</primary></indexterm>
+      <indexterm><primary>unpacking</primary><secondary>binary package</secondary></indexterm>
+
       <itemizedlist>
         <listitem>
           <para><command>ar t <replaceable>archive</replaceable></command>
@@ -1180,7 +1184,10 @@ DPkg::options {
       <indexterm><primary><filename>dsc</filename> file</primary></indexterm>
       <indexterm><primary><filename>diff.gz</filename> file</primary></indexterm>
       <indexterm><primary><filename>debian.tar.gz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>debian.tar.xz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>orig.tar.bz2</filename> file</primary></indexterm>
       <indexterm><primary><filename>orig.tar.gz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>orig.tar.xz</filename> file</primary></indexterm>
       <indexterm><primary><filename>.dsc</filename></primary></indexterm>
       <indexterm><primary>Debian Source Control</primary><see><filename>.dsc</filename></see></indexterm>
 
@@ -1249,6 +1256,7 @@ KrdpGUJXy9uLPuAMyn5WphwXJ7OZXQ==
 
       <indexterm><primary><literal>Build-Depends</literal>, header field</primary></indexterm>
       <indexterm><primary>package</primary><secondary>build dependencies</secondary></indexterm>
+      <indexterm><primary><filename>.dsc</filename></primary><secondary>Build-Depends</secondary></indexterm>
 
       <para>Note that the source package also has dependencies
       (<literal>Build-Depends</literal>) completely distinct from those of
@@ -1340,7 +1348,7 @@ KrdpGUJXy9uLPuAMyn5WphwXJ7OZXQ==
       <para>The <filename>.debian.tar.xz</filename> contains all of the
       modifications made by the Debian maintainer, especially the addition
       of a <filename>debian</filename> directory containing the instructions to
-      execute to construct a Debian package.</para>
+      execute to construct one or more Debian binary packages.</para>
 
       <sidebar>
         <title><emphasis>TOOL</emphasis> Decompressing a source package</title>
@@ -1372,17 +1380,18 @@ dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz</computeroutput>
         hosted).</para>
 
         <screen><computeroutput>$ </computeroutput><userinput>apt source <replaceable>package</replaceable></userinput>
-<computeroutput><![CDATA[Reading package lists... Done
+<computeroutput><![CDATA[
+Reading package lists... Done
 NOTICE: 'zim' packaging is maintained in the 'Git' version control system at:
 https://salsa.debian.org/debian/zim.git
 Please use:
 git clone https://salsa.debian.org/debian/zim.git
 to retrieve the latest (possibly unreleased) updates to the package.
 Need to get 2,172 kB of source archives.
-Get:1 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (dsc) [1,580 B]
-Get:2 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (tar) [2,160 kB]
-Get:3 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (diff) [10.1 kB]
-Fetched 2,172 kB in 0s (8,048 kB/s)
+Get:1 https://deb.debian.org/debian bullseye/main zim 0.73.5-1 (dsc) [1,580 B]
+Get:2 https://deb.debian.org/debian bullseye/main zim 0.73.5-1 (tar) [2,160 kB]
+Get:3 https://deb.debian.org/debian bullseye/main zim 0.73.5-1 (diff) [10.1 kB]
+Fetched 2,172 kB in 0s (7,176 kB/s)
 dpkg-source: info: extracting zim in zim-0.73.5
 dpkg-source: info: unpacking zim_0.73.5.orig.tar.gz
 dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz
@@ -1400,27 +1409,28 @@ dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz
       knowing, however, the consequences of their actions on the binary
       packages. The fruits of their labors are thus found in the source
       packages available from Debian: you can easily go back to them and
-      everything stems from them.</para>
+      everything stems from them. <xref linkend="debian-packaging"/> contains
+      some examples.</para>
 
-      <para>When a new version of a package (source package and one or more
-      binary packages) arrives on the Debian server, the source package is
-      the most important. Indeed, it will then be used by a network of
-      machines of different architectures for compilation on the various
-      architectures supported by Debian. The fact that the developer also
-      sends one or more binary packages for a given architecture (usually
-      i386 or amd64) is relatively unimportant, since these could just as
-      well have been automatically generated. <ulink type="block"
-      url="https://buildd.debian.org/"/></para>
+      <para>When a new version of a source package arrives on the Debian
+      server, it will then be used by a network of machines of different
+      architectures for compilation on the various architectures supported by
+      Debian.
+      <ulink type="block" url="https://buildd.debian.org/"/>
+      </para>
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Source only maintainer uploads</title>
 
         <para>Right after the release of Debian 10 <emphasis
         role="distribution">Buster</emphasis> the <link
-        linkend="srm-team">Release Team</link> announced that maintainer
-        binary uploads will no longer be accepted for <literal>main</literal>
-        and all binary packages in this component will be built automatically
-        from mandatory source-only uploads.</para>
+        linkend="srm-team">Release Team</link> announced that maintainer binary
+        uploads will no longer be accepted for <literal>main</literal> and all
+        binary packages in this component must be built automatically from
+        mandatory source-only uploads. While binary uploads are still allowed
+        for the <literal>contrib</literal> and <literal>non-free</literal>
+        components, we will not focus on this possibility as it should only
+        be the exception.</para>
       </sidebar>
     </section>
   </section>
