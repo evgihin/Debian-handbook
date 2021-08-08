@@ -1014,9 +1014,10 @@ SHA256: 75f07c4965ff0813f26623a1164e162538f5e94defba6961347527ed71bc4f3d
     </section>
 
     <section id="sect.conffiles">
-      <title>Checksums, List of Configuration Files</title>
+      <title>Checksums, List of Configuration Files, et al.</title>
       <indexterm><primary><filename>md5sums</filename></primary></indexterm>
       <indexterm><primary><filename>conffiles</filename></primary></indexterm>
+      <indexterm><primary><filename>triggers</filename></primary></indexterm>
       <indexterm><primary>checksums</primary></indexterm>
       <indexterm><primary>files</primary><secondary>configuration files</secondary></indexterm>
       <indexterm><primary>configuration</primary><secondary>files</secondary></indexterm>
@@ -1024,18 +1025,21 @@ SHA256: 75f07c4965ff0813f26623a1164e162538f5e94defba6961347527ed71bc4f3d
       <para>In addition to the maintainer scripts and control data already
       mentioned in the previous sections, the
       <filename>control.tar.gz</filename> archive of a Debian package may
-      contain other interesting files. The first, <filename>md5sums</filename>,
+      contain other interesting files.</para>
+
+      <para>The first, <filename>md5sums</filename>,
       contains the MD5 checksums for all of the package's files. Its main
       advantage is that it allows <command>dpkg --verify</command> (which we
       will study in <xref linkend="sect.dpkg-verify"/>) and
       <command>debsums</command> (from the package of the same name; see <xref
       linkend="sect.debsums"/>) to check if these files have been modified
-      since their installation. Note that when this file doesn't exist,
-      <command>dpkg</command> will generate it dynamically at installation time
-      (and store it in the dpkg database just like other control files).</para>
+      since their installation. Note that when this file doesn't exist, which
+      might be the case for some older packages, <command>dpkg</command> will
+      generate it dynamically at installation time (and store it in the dpkg
+      database just like other control files).</para>
 
-      <para><filename>conffiles</filename> lists package files that must be
-      handled as configuration files (see also
+      <para>The file <filename>conffiles</filename> lists package files that
+      must be handled as configuration files (see also
       <citerefentry><refentrytitle>deb-conffiles</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
       Configuration files can be modified by the administrator, and
       <command>dpkg</command> will try to preserve those changes during a
@@ -1077,6 +1081,9 @@ SHA256: 75f07c4965ff0813f26623a1164e162538f5e94defba6961347527ed71bc4f3d
         re-installation won't work, because <command>dpkg</command> considers
         removal as a form of legitimate modification, and, thus, doesn't
         install the desired configuration file.</para>
+
+        <para>See the sidebar <xref linkend="sidebar.questions-conffiles"/> for
+        how to use these options with <literal>APT</literal>.</para>
       </sidebar>
 
       <sidebar id="sidebar.questions-conffiles">
@@ -1118,12 +1125,15 @@ SHA256: 75f07c4965ff0813f26623a1164e162538f5e94defba6961347527ed71bc4f3d
 <computeroutput># </computeroutput><userinput>apt -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" full-upgrade</userinput>
 </screen>
 
-        <para>These options can be stored directly in <command>apt</command>'s
-        configuration. To do so, simply write the following line
+        <para>These options can also be stored directly in <command>apt</command>'s
+        configuration. To do so, simply write the following lines
         in the <filename>/etc/apt/apt.conf.d/local</filename> file:</para>
         <informalexample>
           <programlisting>
-DPkg::options { "--force-confdef"; "--force-confold"; }
+DPkg::options {
+  "--force-confdef";
+  "--force-confold";
+}
 </programlisting>
         </informalexample>
 
@@ -1131,6 +1141,31 @@ DPkg::options { "--force-confdef"; "--force-confold"; }
         will also be used in a graphical interface such as
         <command>aptitude</command>.</para>
       </sidebar>
+
+      <para>The control archive frequently contains other files as well, like
+      <filename>triggers</filename>, <filename>shlibs</filename>, or
+      <filename>symbols</filename>. These files are well described in
+      <citerefentry><refentrytitle>deb-triggers</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>deb-shlibs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      and
+      <citerefentry><refentrytitle>deb-symbols</refentrytitle><manvolnum>5</manvolnum></citerefentry>.
+      </para>
+
+      <para>Triggers werde introduced to reduce the amount of duplicated events
+      during package installation, such as file registration or
+      catalog/database update tasks. Packages can define their own or activate
+      defined triggers. A more comprehensive documentation can be found in
+      <ulink
+      url="https://git.dpkg.org/cgit/dpkg/dpkg.git/tree/doc/triggers.txt"
+      ><filename>/usr/share/doc/dpkg/triggers.txt.gz</filename></ulink>.</para>
+
+      <para>The <filename>shlibs</filename> system is an older and simpler
+      alternative to the <filename>symbols</filename> system for declaring
+      dependencies for shared libraries. It defines the package name and
+      version in which to find a specific SONAME-version of a shared library.
+      The newer <filename>symbols</filename> system allows to define the
+      dependency by tracking the symbols and and when they have been introduced
+      or changed in the library instead.</para>
     </section>
   </section>
 
