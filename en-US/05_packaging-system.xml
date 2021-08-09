@@ -9,6 +9,7 @@
     <keywordset>
       <keyword>Binary package</keyword>
       <keyword>Source package</keyword>
+      <keyword>package</keyword>
       <keyword>dpkg</keyword>
       <keyword>deb</keyword>
       <keyword>dependencies</keyword>
@@ -87,27 +88,43 @@
 
       <para>As for the <command>ar</command> program, provided by the
       <emphasis role="pkg">binutils</emphasis> package, it allows
-      handling files of the same name: <command>ar t
-      <replaceable>archive</replaceable></command> displays the list of
-      files contained in such an archive, <command>ar x
-      <replaceable>archive</replaceable></command> extracts the files from
-      the archive into the current working directory, <command>ar d
-      <replaceable>archive</replaceable>
-      <replaceable>file</replaceable></command> deletes a file from the
-      archive, etc. Its man page
-      (<citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>)
+      handling files of the same name:</para>
+
+      <indexterm><primary>decompressing, binary package</primary></indexterm>
+      <indexterm><primary>uncompressing, binary package</primary></indexterm>
+      <indexterm><primary>unpacking</primary><secondary>binary package</secondary></indexterm>
+
+      <itemizedlist>
+        <listitem>
+          <para><command>ar t <replaceable>archive</replaceable></command>
+          displays the list of files contained in such an archive,</para>
+        </listitem>
+        <listitem>
+          <para><command>ar x <replaceable>archive</replaceable></command>
+          extracts the files from the archive into the current working
+          directory,</para> 
+        </listitem>
+        <listitem>
+          <para><command>ar d <replaceable>archive</replaceable>
+          <replaceable>file</replaceable></command> deletes a file from the
+          archive, etc.</para> 
+        </listitem>
+      </itemizedlist>
+
+      <para>Its man page
+      <citerefentry><refentrytitle>ar</refentrytitle><manvolnum>1</manvolnum></citerefentry>
       documents all its other features. <command>ar</command> is a very
       rudimentary tool that a Unix administrator would only use on rare
       occasions, but admins routinely use <command>tar</command>, a more
-      evolved archive and file management program. This is why it is easy
-      to restore <command>dpkg</command> in the event of an erroneous
-      deletion. You would only have to download the Debian package and
-      extract the content from the <filename>data.tar.xz</filename> archive
-      in the system's root (<filename>/</filename>):</para>
+      evolved archive and file management program. This is why it is easy to
+      restore <command>dpkg</command> in the event of an erroneous deletion.
+      You would only have to download the Debian package and extract the
+      content from the <filename>data.tar.xz</filename> archive in the system's
+      root (<filename>/</filename>):</para>
 
-      <!-- MAY CHANGE: dpkg version number -->
+      <!-- MAYCHANGE: dpkg version number -->
       <screen>
-<computeroutput># </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>
+<computeroutput># </computeroutput><userinput>ar x dpkg_1.20.9_amd64.deb</userinput>
 <computeroutput># </computeroutput><userinput>tar -C / -p -xJf data.tar.xz</userinput>
 </screen>
     </sidebar>
@@ -135,17 +152,16 @@
     <para>Have a look at the content of a <filename>.deb</filename>
     file:</para>
 
-    <!-- MAY CHANGE: dpkg contents and version number -->
-    <screen><computeroutput>$ </computeroutput><userinput>ar t dpkg_1.19.7_amd64.deb</userinput>
+    <!-- MAYCHANGE: dpkg contents and version number -->
+    <screen><computeroutput>$ </computeroutput><userinput>ar t dpkg_1.20.9_amd64.deb</userinput>
 <computeroutput>debian-binary
 control.tar.gz
 data.tar.xz
-$ </computeroutput><userinput>ar x dpkg_1.19.7_amd64.deb</userinput>
+$ </computeroutput><userinput>ar x dpkg_1.20.9_amd64.deb</userinput>
 <computeroutput>$ </computeroutput><userinput>ls</userinput>
-<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.19.7_amd64.deb
+<computeroutput>control.tar.gz  data.tar.xz  debian-binary  dpkg_1.20.9_amd64.deb
 $ </computeroutput><userinput>tar tJf data.tar.xz | head -n 16</userinput>
 <computeroutput>./
-./
 ./etc/
 ./etc/alternatives/
 ./etc/alternatives/README
@@ -178,6 +194,7 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
       <varlistentry>
         <term><filename>debian-binary</filename></term>
         <listitem>
+          <!-- MAYCHANGE: Debian stable release name -->
           <para>This is a text file which simply indicates the version of the
           <filename>.deb</filename> file package format version. In Debian
           <emphasis role="distribution">Bullseye</emphasis> it is still
@@ -225,15 +242,16 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
     conflicts, suggestions). It also provides scripts that enable the
     execution of commands at different stages in the package's
     lifecycle (installation, upgrade, removal). These data are used
-    by the package management tools but are not part of the packaged
+    by the package management tools, but are not part of the packaged
     software; they are, within the package, what is called its
-    “meta-information” (information about other information).</para>
+    “meta-information” - information about other information.</para>
 
     <section id="sect.control">
       <title>Description: the <filename>control</filename> File</title>
       <indexterm><primary>package meta-information</primary></indexterm>
       <indexterm><primary>package</primary><secondary><filename>control</filename></secondary></indexterm>
       <indexterm><primary>package</primary><secondary>meta-information</secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary></indexterm>
       <indexterm><primary><filename>control</filename></primary><seealso>package meta-information</seealso></indexterm>
 
       <para>This file uses a structure similar to email headers (as defined by
@@ -248,16 +266,17 @@ $ </computeroutput><userinput>cat debian-binary</userinput>
       <para>For example, for <emphasis role="pkg">apt</emphasis>, the
       <filename>control</filename> file looks like the following:</para>
 
+      <!-- MAYCHANGE: output of command -->
       <screen>
 <computeroutput>$ </computeroutput><userinput>apt-cache show apt</userinput><computeroutput><![CDATA[
 Package: apt
-Version: 2.2.3
+Version: 2.2.4
 Installed-Size: 4337
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: amd64
 Replaces: apt-transport-https (<< 1.5~alpha4~), apt-utils (<< 1.3~exp2~)
-Provides: apt-transport-https (= 2.2.3)
-Depends: adduser, gpgv | gpgv2 | gpgv1, libapt-pkg6.0 (>= 2.2.3), debian-archive-keyring, libc6 (>= 2.15), libgcc-s1 (>= 3.0), libgnutls30 (>= 3.7.0), libseccomp2 (>= 2.4.2), libstdc++6 (>= 9), libsystemd0
+Provides: apt-transport-https (= 2.2.4)
+Depends: adduser, gpgv | gpgv2 | gpgv1, libapt-pkg6.0 (>= 2.2.4), debian-archive-keyring, libc6 (>= 2.15), libgcc-s1 (>= 3.0), libgnutls30 (>= 3.7.0), libseccomp2 (>= 2.4.2), libstdc++6 (>= 9), libsystemd0
 Recommends: ca-certificates
 Suggests: apt-doc, aptitude | synaptic | wajig, dpkg-dev (>= 1.17.2), gnupg | gnupg2 | gnupg1, powermgmt-base
 Breaks: apt-transport-https (<< 1.5~alpha4~), apt-utils (<< 1.3~exp2~), aptitude (<< 0.8.10)
@@ -285,17 +304,22 @@ Tag: admin::package-management, devel::lang:ruby, hardware::storage,
  works-with::audio, works-with::software:package, works-with::text
 Section: admin
 Priority: required
-Filename: pool/main/a/apt/apt_2.2.3_amd64.deb
-Size: 1490972
-MD5sum: 61b9849b70b6b9d11a7422e577871ab3
-SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
+Filename: pool/main/a/apt/apt_2.2.4_amd64.deb
+Size: 1491328
+MD5sum: 24d53e8dd75095640a167f40476c0442
+SHA256: 75f07c4965ff0813f26623a1164e162538f5e94defba6961347527ed71bc4f3d
 ]]></computeroutput>
 </screen>
 
+      <para>Let us have a closer look at the purpose of some of the fields
+      listed by the previous command.</para>
+
       <sidebar id="sidebar.rfc">
         <title><emphasis>BACK TO BASICS</emphasis> RFC — Internet standards</title>
-        <indexterm><primary>RFC</primary></indexterm>
-        <indexterm><primary>Request For Comments</primary><seealso>RFC</seealso></indexterm>
+        <indexterm><primary>RFC</primary><seealso>Request For Comments</seealso></indexterm>
+        <indexterm><primary>Request For Comments</primary></indexterm>
+        <indexterm><primary>IETF</primary><seealso>Internet Engineering Task Force</seealso></indexterm>
+        <indexterm><primary>Internet Engineering Task Force</primary></indexterm>
 
         <para><acronym>RFC</acronym> is the abbreviation of “Request For Comments”.
         An RFC is generally a technical document that describes what will become
@@ -314,17 +338,16 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
         <title>Dependencies: the <literal>Depends</literal> Field</title>
         <indexterm><primary>dependency</primary></indexterm>
         <indexterm><primary><literal>Depends</literal>, header field</primary><seealso>APT</seealso></indexterm>
-        <indexterm><primary><filename>control</filename></primary><secondary>Depends</secondary></indexterm>
         <indexterm><primary>package</primary><secondary>dependency</secondary></indexterm>
-        <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Depends</literal></tertiary></indexterm>
+        <indexterm><primary><filename>control</filename></primary><secondary><literal>Depends</literal></secondary></indexterm>
 
         <para>The dependencies are defined in the
         <literal>Depends</literal> field in the package header. It
         is a list of conditions to be met for the package to work
         correctly. This information is used by tools such as
         <command>apt</command> in order to install the required libraries,
-        tools, drivers, etc. in appropriate versions fulfilling the
-        dependencies of the package to be installed. For each dependency,
+        tools, drivers, etc., in appropriate versions fulfilling the
+        dependencies of the package to be installed. For each dependency
         it is possible to restrict the range of versions that meet that
         condition. In other words, it is possible to express the fact
         that we need the package <emphasis role="pkg">libc6</emphasis>
@@ -388,8 +411,8 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
           <indexterm><primary><literal>Suggests</literal>, header field</primary></indexterm>
           <indexterm><primary>package</primary><secondary>recommendations</secondary></indexterm>
           <indexterm><primary>package</primary><secondary>suggestions</secondary></indexterm>
-          <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Recommends</literal></tertiary></indexterm>
-          <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Suggests</literal></tertiary></indexterm>
+          <indexterm><primary><filename>control</filename></primary><secondary><literal>Recommends</literal></secondary></indexterm>
+          <indexterm><primary><filename>control</filename></primary><secondary><literal>Suggests</literal></secondary></indexterm>
 
           <para>The <literal>Recommends</literal> and
           <literal>Suggests</literal> fields describe dependencies that are
@@ -409,7 +432,9 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
           you know exactly why you do not need them. This is now also the
           default for APT unless configured otherwise. Conversely, it is not
           necessary to install “suggested” packages unless you know why you
-          need them.  The behavior of <command>apt</command> can be controlled
+          need them (the package description or its documentation may contain
+          information which extra functionality they will activate).
+          The behavior of <command>apt</command> can be controlled
           by using the <literal>APT::Install-Recommends</literal> and
           <literal>APT::Install-Suggests</literal> configuration options or the
           corresponding command line options
@@ -418,7 +443,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
 
           <indexterm><primary><literal>Enhances</literal>, header field</primary></indexterm>
           <indexterm><primary>package</primary><secondary>enhancements</secondary></indexterm>
-          <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Enhances</literal></tertiary></indexterm>
+          <indexterm><primary><filename>control</filename></primary><secondary><literal>Enhances</literal></secondary></indexterm>
 
           <para>The <literal>Enhances</literal> field also describes a
           suggestion, but in a different context. It is indeed located in
@@ -441,7 +466,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
           <indexterm><primary><literal>Pre-Depends</literal>, header field</primary></indexterm>
           <indexterm><primary>package</primary><secondary>pre-dependency</secondary></indexterm>
           <indexterm><primary>pre-dependency</primary></indexterm>
-          <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Pre-Depends</literal></tertiary></indexterm>
+          <indexterm><primary><filename>control</filename></primary><secondary><literal>Pre-Depends</literal></secondary></indexterm>
 
           <para>“Pre-dependencies”, which are listed in the
           “<literal>Pre-Depends</literal>” field in the package
@@ -452,6 +477,8 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
           package in question must be unpacked and configured before
           execution of the pre-installation script of the package declaring
           the pre-dependency, that is before its installation.</para>
+
+          <indexterm><primary>mailing lists</primary><secondary><email>debian-devel@lists.debian.org</email></secondary></indexterm>
 
           <para>A pre-dependency is very demanding for
           <command>apt</command>, because it adds a strict constraint on
@@ -469,7 +496,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
         <indexterm><primary>conflicts</primary></indexterm>
         <indexterm><primary><literal>Conflicts</literal>, header field</primary></indexterm>
         <indexterm><primary>package</primary><secondary>conflict</secondary></indexterm>
-        <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Conflicts</literal></tertiary></indexterm>
+        <indexterm><primary><filename>control</filename></primary><secondary><literal>Conflicts</literal></secondary></indexterm>
 
         <para>The <literal>Conflicts</literal> field indicates when a
         package cannot be installed simultaneously with another. The most
@@ -492,7 +519,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
         <indexterm><primary>incompatibilities</primary></indexterm>
         <indexterm><primary><literal>Breaks</literal>, header field</primary></indexterm>
         <indexterm><primary>package</primary><secondary>incompatibility</secondary></indexterm>
-        <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Breaks</literal></tertiary></indexterm>
+        <indexterm><primary><filename>control</filename></primary><secondary><literal>Breaks</literal></secondary></indexterm>
 
         <para>The <literal>Breaks</literal> field has an effect similar to
         that of the <literal>Conflicts</literal> field, but with a special
@@ -519,7 +546,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
       <section>
         <title>Provided Items: the <literal>Provides</literal> Field</title>
         <indexterm><primary><literal>Provides</literal>, header field</primary></indexterm>
-        <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Provides</literal></tertiary></indexterm>
+        <indexterm><primary><filename>control</filename></primary><secondary><literal>Provides</literal></secondary></indexterm>
 
         <para>This field introduces the very interesting concept of a
         “virtual package”. It has many roles, but two are of particular
@@ -535,6 +562,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
           <title><emphasis>VOCABULARY</emphasis> Meta-package and virtual package</title>
           <indexterm><primary>meta-package</primary></indexterm>
           <indexterm><primary>package</primary><secondary>virtual package</secondary></indexterm>
+          <indexterm><primary>package</primary><secondary>meta-package</secondary></indexterm>
           <indexterm><primary>virtual package</primary></indexterm>
 
           <para>It is essential to clearly distinguish meta-packages from
@@ -591,7 +619,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
             managers.</para>
 
             <para>The full list can be found on the Web.
-            <ulink type="block" url="https://sources.debian.org/src/debian-policy/4.5.1.0/virtual-package-names-list.yaml/"/>
+            <ulink type="block" url="https://www.debian.org/doc/packaging-manuals/virtual-package-names-list.yaml"/>
             </para>
           </sidebar>
         </section>
@@ -599,7 +627,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
         <section>
           <title>Interchangeability with Another Package</title>
 
-          <!-- MAY CHANGE: perl version -->
+          <!-- MAYCHANGE: perl version and stable release name -->
           <para>The <literal>Provides</literal> field is also interesting
           when the content of a package is included in a larger package.
           For example, the <emphasis
@@ -657,16 +685,19 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
           number. To return to the previous example, a dependency such
           as <literal>Depends: libdigest-md5-perl (&gt;=
           1.6)</literal>, despite the presence of Perl 5.10, would
-          never be considered as satisfied by the packaging system —
-          while in fact it most likely is satisfied. Unaware of this,
+          have never been considered as satisfied by the packaging system —
+          while in fact it most likely was satisfied. Unaware of this,
           the package system chose the least risky option, assuming
           that the versions do not match.</para>
 
+          <!-- MAYCHANGE: Perl and libdigest-md5-perl version -->
+
           <para>This limitation has been lifted in <emphasis
           role="pkg">dpkg</emphasis> 1.17.11, and is no longer relevant.
-          Packages can assign a version to the virtual packages they provide
-          with a dependency such as <literal>Provides: libdigest-md5-perl (=
-          1.8)</literal>.</para>
+          Packages, like <emphasis role="pkg">perl</emphasis> 5.32.1, can
+          assign a version to the virtual packages they provide, such as
+          <literal>Provides: libdigest-md5-perl (= 2.55.01)</literal>, and thus
+          allow other packages to use versioned dependencies.</para>
         </section>
       </section>
 
@@ -675,13 +706,13 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
         <indexterm><primary>replacement</primary></indexterm>
         <indexterm><primary><literal>Replaces</literal>, header field</primary></indexterm>
         <indexterm><primary>package</primary><secondary>replacement</secondary></indexterm>
-        <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Replaces</literal></tertiary></indexterm>
+        <indexterm><primary><filename>control</filename></primary><secondary><literal>Replaces</literal></secondary></indexterm>
 
         <para>The <literal>Replaces</literal> field indicates that the
         package contains files that are also present in another
         package, but that the package is legitimately entitled to
         replace them.  Without this specification,
-        <command>dpkg</command> fails, stating that it can not
+        <command>dpkg</command> fails to install the package, stating that it cannot
         overwrite the files of another package (technically, it is
         possible to force it to do so with the
         <literal>--force-overwrite</literal> option, but that is not
@@ -703,10 +734,10 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
 
         <sidebar id="sidebar.debtags">
           <title><emphasis>GOING FURTHER</emphasis> The <literal>Tag</literal> field</title>
-          <indexterm><primary>APT</primary><secondary><filename>control</filename></secondary><tertiary><literal>Tag</literal></tertiary></indexterm>
+          <indexterm><primary><filename>control</filename></primary><secondary><literal>Tag</literal></secondary></indexterm>
 
-          <para>In the <emphasis role="pkg">apt</emphasis> example above,
-          we can see the presence of a field that we have not yet
+          <para>In the <emphasis role="pkg">apt</emphasis> example at the
+          beginning, we can see the presence of a field that we have not yet
           described, the <literal>Tag</literal> field. This field does not
           describe a relationship between packages, but is simply a way of
           categorizing a package in a thematic taxonomy. This
@@ -737,18 +768,18 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
       <filename>control.tar.gz</filename> archive for each Debian package may
       contain a number of scripts, called by <command>dpkg</command> at
       different stages in the processing of a package. The Debian Policy
-      describes the possible cases <ulink
-      url="https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html">in
-      detail</ulink>, specifying the scripts called and the arguments that they
-      receive. These sequences may be complicated, since if one of the scripts
-      fails, <command>dpkg</command> will try to return to a satisfactory state
-      by canceling the installation or removal in progress (insofar as it is
-      possible).</para>
+      describes the possible cases in detail, specifying the scripts called and
+      the arguments that they receive. These sequences may be complicated,
+      since if one of the scripts fails, <command>dpkg</command> will try to
+      return to a satisfactory state by canceling the installation or removal
+      in progress (insofar as it is possible).  <ulink type="block"
+      url="https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html"/></para>
 
       <sidebar id="sidebar.dpkg-database">
         <title><emphasis>GOING FURTHER</emphasis> <command>dpkg</command>'s database</title>
         <indexterm><primary><filename>/var/lib/dpkg/</filename></primary></indexterm>
         <indexterm><primary>dpkg</primary><secondary>database</secondary></indexterm>
+        <indexterm><primary>database</primary><secondary>dpkg</secondary></indexterm>
 
         <para>All of the configuration scripts for installed packages are
         stored in the <filename>/var/lib/dpkg/info/</filename> directory,
@@ -791,11 +822,11 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
 
         <para>Manoj Srivastava and Margarita Manterola made the following
         diagrams explaining how the configuration scripts are called by
-        <command>dpkg</command>. <ulink type="block"
+        <command>dpkg</command>.
+        <ulink type="block"
         url="https://people.debian.org/~srivasta/MaintainerScripts.html"/>
         <ulink type="block"
         url="https://www.debian.org/doc/debian-policy/ap-flowcharts.html"/></para>
-
       </sidebar>
 
       <section>
@@ -804,7 +835,7 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
         <indexterm><primary>package</primary><secondary>installation</secondary></indexterm>
 
         <para>During the initial installation and for each upgrade of a package,
-        <command>dpkg</command> calls so called <emphasis>maintainer scripts</emphasis> such as the
+        <command>dpkg</command> calls the so called <emphasis>maintainer scripts</emphasis> such as the
         <command>prerm</command> or <command>preinst</command> scripts. These
         scripts can perform additional actions during the different stages of
         a package's life-cycle. Script names preceded by <literal>new-</literal>
@@ -987,9 +1018,10 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
     </section>
 
     <section id="sect.conffiles">
-      <title>Checksums, List of Configuration Files</title>
+      <title>Checksums, List of Configuration Files, et al.</title>
       <indexterm><primary><filename>md5sums</filename></primary></indexterm>
       <indexterm><primary><filename>conffiles</filename></primary></indexterm>
+      <indexterm><primary><filename>triggers</filename></primary></indexterm>
       <indexterm><primary>checksums</primary></indexterm>
       <indexterm><primary>files</primary><secondary>configuration files</secondary></indexterm>
       <indexterm><primary>configuration</primary><secondary>files</secondary></indexterm>
@@ -997,18 +1029,21 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
       <para>In addition to the maintainer scripts and control data already
       mentioned in the previous sections, the
       <filename>control.tar.gz</filename> archive of a Debian package may
-      contain other interesting files. The first, <filename>md5sums</filename>,
+      contain other interesting files.</para>
+
+      <para>The first, <filename>md5sums</filename>,
       contains the MD5 checksums for all of the package's files. Its main
       advantage is that it allows <command>dpkg --verify</command> (which we
       will study in <xref linkend="sect.dpkg-verify"/>) and
       <command>debsums</command> (from the package of the same name; see <xref
       linkend="sect.debsums"/>) to check if these files have been modified
-      since their installation. Note that when this file doesn't exist,
-      <command>dpkg</command> will generate it dynamically at installation time
-      (and store it in the dpkg database just like other control files).</para>
+      since their installation. Note that when this file doesn't exist, which
+      might be the case for some older packages, <command>dpkg</command> will
+      generate it dynamically at installation time (and store it in the dpkg
+      database just like other control files).</para>
 
-      <para><filename>conffiles</filename> lists package files that must be
-      handled as configuration files (see also
+      <para>The file <filename>conffiles</filename> lists package files that
+      must be handled as configuration files (see also
       <citerefentry><refentrytitle>deb-conffiles</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
       Configuration files can be modified by the administrator, and
       <command>dpkg</command> will try to preserve those changes during a
@@ -1050,6 +1085,9 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
         re-installation won't work, because <command>dpkg</command> considers
         removal as a form of legitimate modification, and, thus, doesn't
         install the desired configuration file.</para>
+
+        <para>See the sidebar <xref linkend="sidebar.questions-conffiles"/> for
+        how to use these options with <literal>APT</literal>.</para>
       </sidebar>
 
       <sidebar id="sidebar.questions-conffiles">
@@ -1091,12 +1129,15 @@ SHA256: dd9c666b4fa3aeb6e020ea5735e0507da50383a8734e5d15adfa0092906aa6b7
 <computeroutput># </computeroutput><userinput>apt -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" full-upgrade</userinput>
 </screen>
 
-        <para>These options can be stored directly in <command>apt</command>'s
-        configuration. To do so, simply write the following line
+        <para>These options can also be stored directly in <command>apt</command>'s
+        configuration. To do so, simply write the following lines
         in the <filename>/etc/apt/apt.conf.d/local</filename> file:</para>
         <informalexample>
           <programlisting>
-DPkg::options { "--force-confdef"; "--force-confold"; }
+DPkg::options {
+  "--force-confdef";
+  "--force-confold";
+}
 </programlisting>
         </informalexample>
 
@@ -1104,6 +1145,31 @@ DPkg::options { "--force-confdef"; "--force-confold"; }
         will also be used in a graphical interface such as
         <command>aptitude</command>.</para>
       </sidebar>
+
+      <para>The control archive frequently contains other files as well, like
+      <filename>triggers</filename>, <filename>shlibs</filename>, or
+      <filename>symbols</filename>. These files are well described in
+      <citerefentry><refentrytitle>deb-triggers</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>deb-shlibs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      and
+      <citerefentry><refentrytitle>deb-symbols</refentrytitle><manvolnum>5</manvolnum></citerefentry>.
+      </para>
+
+      <para>Triggers werde introduced to reduce the amount of duplicated events
+      during package installation, such as file registration or
+      catalog/database update tasks. Packages can define their own or activate
+      defined triggers. A more comprehensive documentation can be found in
+      <ulink
+      url="https://git.dpkg.org/cgit/dpkg/dpkg.git/tree/doc/triggers.txt"
+      ><filename>/usr/share/doc/dpkg/triggers.txt.gz</filename></ulink>.</para>
+
+      <para>The <filename>shlibs</filename> system is an older and simpler
+      alternative to the <filename>symbols</filename> system for declaring
+      dependencies for shared libraries. It defines the package name and
+      version in which to find a specific SONAME-version of a shared library.
+      The newer <filename>symbols</filename> system allows to define the
+      dependency by tracking the symbols and and when they have been introduced
+      or changed in the library instead.</para>
     </section>
   </section>
 
@@ -1118,7 +1184,10 @@ DPkg::options { "--force-confdef"; "--force-confold"; }
       <indexterm><primary><filename>dsc</filename> file</primary></indexterm>
       <indexterm><primary><filename>diff.gz</filename> file</primary></indexterm>
       <indexterm><primary><filename>debian.tar.gz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>debian.tar.xz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>orig.tar.bz2</filename> file</primary></indexterm>
       <indexterm><primary><filename>orig.tar.gz</filename> file</primary></indexterm>
+      <indexterm><primary><filename>orig.tar.xz</filename> file</primary></indexterm>
       <indexterm><primary><filename>.dsc</filename></primary></indexterm>
       <indexterm><primary>Debian Source Control</primary><see><filename>.dsc</filename></see></indexterm>
 
@@ -1141,7 +1210,7 @@ DPkg::options { "--force-confdef"; "--force-confold"; }
       <example>
         <title>A <filename>.dsc</filename> file</title>
 
-        <!-- MAY CHANGE: contents of .dsc file-->
+        <!-- MAYCHANGE: contents of .dsc file-->
         <programlisting><![CDATA[
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
@@ -1187,6 +1256,7 @@ KrdpGUJXy9uLPuAMyn5WphwXJ7OZXQ==
 
       <indexterm><primary><literal>Build-Depends</literal>, header field</primary></indexterm>
       <indexterm><primary>package</primary><secondary>build dependencies</secondary></indexterm>
+      <indexterm><primary><filename>.dsc</filename></primary><secondary>Build-Depends</secondary></indexterm>
 
       <para>Note that the source package also has dependencies
       (<literal>Build-Depends</literal>) completely distinct from those of
@@ -1278,7 +1348,7 @@ KrdpGUJXy9uLPuAMyn5WphwXJ7OZXQ==
       <para>The <filename>.debian.tar.xz</filename> contains all of the
       modifications made by the Debian maintainer, especially the addition
       of a <filename>debian</filename> directory containing the instructions to
-      execute to construct a Debian package.</para>
+      execute to construct one or more Debian binary packages.</para>
 
       <sidebar>
         <title><emphasis>TOOL</emphasis> Decompressing a source package</title>
@@ -1310,17 +1380,18 @@ dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz</computeroutput>
         hosted).</para>
 
         <screen><computeroutput>$ </computeroutput><userinput>apt source <replaceable>package</replaceable></userinput>
-<computeroutput><![CDATA[Reading package lists... Done
+<computeroutput><![CDATA[
+Reading package lists... Done
 NOTICE: 'zim' packaging is maintained in the 'Git' version control system at:
 https://salsa.debian.org/debian/zim.git
 Please use:
 git clone https://salsa.debian.org/debian/zim.git
 to retrieve the latest (possibly unreleased) updates to the package.
 Need to get 2,172 kB of source archives.
-Get:1 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (dsc) [1,580 B]
-Get:2 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (tar) [2,160 kB]
-Get:3 http://deb.debian.org/debian bullseye/main zim 0.73.5-1 (diff) [10.1 kB]
-Fetched 2,172 kB in 0s (8,048 kB/s)
+Get:1 https://deb.debian.org/debian bullseye/main zim 0.73.5-1 (dsc) [1,580 B]
+Get:2 https://deb.debian.org/debian bullseye/main zim 0.73.5-1 (tar) [2,160 kB]
+Get:3 https://deb.debian.org/debian bullseye/main zim 0.73.5-1 (diff) [10.1 kB]
+Fetched 2,172 kB in 0s (7,176 kB/s)
 dpkg-source: info: extracting zim in zim-0.73.5
 dpkg-source: info: unpacking zim_0.73.5.orig.tar.gz
 dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz
@@ -1338,27 +1409,28 @@ dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz
       knowing, however, the consequences of their actions on the binary
       packages. The fruits of their labors are thus found in the source
       packages available from Debian: you can easily go back to them and
-      everything stems from them.</para>
+      everything stems from them. <xref linkend="debian-packaging"/> contains
+      some examples.</para>
 
-      <para>When a new version of a package (source package and one or more
-      binary packages) arrives on the Debian server, the source package is
-      the most important. Indeed, it will then be used by a network of
-      machines of different architectures for compilation on the various
-      architectures supported by Debian. The fact that the developer also
-      sends one or more binary packages for a given architecture (usually
-      i386 or amd64) is relatively unimportant, since these could just as
-      well have been automatically generated. <ulink type="block"
-      url="https://buildd.debian.org/"/></para>
+      <para>When a new version of a source package arrives on the Debian
+      server, it will then be used by a network of machines of different
+      architectures for compilation on the various architectures supported by
+      Debian.
+      <ulink type="block" url="https://buildd.debian.org/"/>
+      </para>
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Source only maintainer uploads</title>
 
         <para>Right after the release of Debian 10 <emphasis
         role="distribution">Buster</emphasis> the <link
-        linkend="srm-team">Release Team</link> announced that maintainer
-        binary uploads will no longer be accepted for <literal>main</literal>
-        and all binary packages in this component will be built automatically
-        from mandatory source-only uploads.</para>
+        linkend="srm-team">Release Team</link> announced that maintainer binary
+        uploads will no longer be accepted for <literal>main</literal> and all
+        binary packages in this component must be built automatically from
+        mandatory source-only uploads. While binary uploads are still allowed
+        for the <literal>contrib</literal> and <literal>non-free</literal>
+        components, we will not focus on this possibility as it should only
+        be the exception.</para>
       </sidebar>
     </section>
   </section>
@@ -1392,6 +1464,7 @@ dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz
       <title>Installing Packages</title>
       <indexterm><primary>installation</primary><secondary>package installation</secondary></indexterm>
       <indexterm><primary>package</primary><secondary>installation</secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary>--install</secondary></indexterm>
 
       <para><command>dpkg</command> is, above all, the tool for installing an
       already available Debian package (because it does not download
@@ -1401,11 +1474,12 @@ dpkg-source: info: unpacking zim_0.73.5-1.debian.tar.xz
       <example>
         <title>Installation of a package with <command>dpkg</command></title>
 
+        <!-- MAYCHANGE: man-db version -->
         <screen role="scale">
 <computeroutput># </computeroutput><userinput>dpkg -i man-db_2.9.4-2_amd64.deb</userinput>
 <computeroutput>(Reading database ... 227466 files and directories currently installed.)
 Preparing to unpack man-db_2.9.4-2_amd64.deb ...
-Unpacking man-db (2.9.4-2) over (2.9.4-2) ...
+Unpacking man-db (2.9.4-2) over (2.8.5-2) ...
 Setting up man-db (2.9.4-2) ...
 Updating database of manual pages ...
 man-db.service is a disabled or a static unit not running, not starting it.
@@ -1424,6 +1498,8 @@ Processing triggers for mailcap (3.69) ...</computeroutput>
 
       <example>
         <title>Separate unpacking and configuration</title>
+        <indexterm><primary><command>dpkg</command></primary><secondary>--unpack</secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary>--configure</secondary></indexterm>
 
         <screen role="scale">
 <computeroutput># </computeroutput><userinput>dpkg --unpack man-db_2.9.4-2_amd64.deb</userinput>
@@ -1468,12 +1544,12 @@ dpkg: error processing /var/cache/apt/archives/libgdm_3.8.3-2_amd64.deb (--unpac
       file.</para>
 
       <para>While there are many available <literal>--force-*</literal>
-      options, only <literal>--force-overwrite</literal> is likely to be
-      used regularly. These options only exist for exceptional situations,
-      and it is better to leave them alone as much as possible in order to
-      respect the rules imposed by the packaging mechanism. Do not forget,
-      these rules ensure the consistency and stability of your
-      system.</para>
+      options, only <literal>--force-overwrite</literal> is likely to be used
+      regularly. These options only exist for exceptional situations, rarely
+      encountered in Debian <emphasis role="distribution">Stable</emphasis>. It
+      is better to leave them alone as much as possible in order to respect the
+      rules imposed by the packaging mechanism. Do not forget, these rules
+      ensure the consistency and stability of your system.</para>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Effective use of <literal>--force-*</literal></title>
@@ -1525,6 +1601,8 @@ E: Unmet dependencies. Try using -f.</computeroutput></screen>
       <indexterm><primary>purging a package</primary></indexterm>
       <indexterm><primary>package</primary><secondary>removal</secondary></indexterm>
       <indexterm><primary>package</primary><secondary>purge</secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary>--remove</secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary>--purge</secondary></indexterm>
 
       <para>Invoking <command>dpkg</command> with the <literal>-r</literal>
       or <literal>--remove</literal> option, followed by the name of a
@@ -1542,10 +1620,10 @@ E: Unmet dependencies. Try using -f.</computeroutput></screen>
 
         <screen><computeroutput># </computeroutput><userinput>dpkg -r debian-cd</userinput>
 <computeroutput>(Reading database ... 228705 files and directories currently installed.)
-Removing debian-cd (3.1.33) ...
+Removing debian-cd (3.1.35) ...
 # </computeroutput><userinput>dpkg -P debian-cd</userinput>
 <computeroutput>(Reading database ... 228049 files and directories currently installed.)
-Purging configuration files for debian-cd (3.1.33) ...
+Purging configuration files for debian-cd (3.1.35) ...
 </computeroutput>
 </screen>
       </example>
@@ -1556,6 +1634,12 @@ Purging configuration files for debian-cd (3.1.33) ...
       <indexterm><primary>package</primary><secondary>status</secondary></indexterm>
       <indexterm><primary>package</primary><secondary>file list</secondary></indexterm>
       <indexterm><primary>package</primary><secondary>content inspection</secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--contents</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--info</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--list</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--listfiles</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--search</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--status</literal></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Option syntax</title>
@@ -1571,27 +1655,48 @@ Purging configuration files for debian-cd (3.1.33) ...
       <command>dpkg</command> options that query the internal database in
       order to obtain information. Giving first the long options and then
       corresponding short options (that will evidently take the same
-      possible arguments) we cite <literal>--listfiles
-      <replaceable>package</replaceable></literal> (or
-      <literal>-L</literal>), which lists the files installed by this
-      package; <literal>--search <replaceable>file</replaceable></literal>
-      (or <literal>-S</literal>), which finds the package(s) containing the
-      file; <literal>--status
-      <replaceable>package</replaceable></literal> (or
-      <literal>-s</literal>), which displays the headers of an installed
-      package; <literal>--list</literal> (or <literal>-l</literal>), which
-      displays the list of packages known to the system and their
-      installation status; <literal>--contents
-      <replaceable>file.deb</replaceable></literal> (or
-      <literal>-c</literal>), which lists the files in the Debian package
-      specified; <literal>--info<replaceable> file.deb
-      </replaceable></literal> (or <literal>-I</literal>), which displays
-      the headers of this Debian package.</para>
+      possible arguments) we cite</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><literal>--listfiles
+          <replaceable>package</replaceable></literal> (or
+          <literal>-L</literal>), which lists the files installed by this
+          package; </para>
+        </listitem>
+        <listitem>
+          <para><literal>--search <replaceable>file</replaceable></literal>
+          (or <literal>-S</literal>), which finds the package(s) containing the
+          file;</para>
+        </listitem>
+        <listitem>
+          <para><literal>--status <replaceable>package</replaceable></literal>
+          (or <literal>-s</literal>), which displays the headers of an
+          installed package;</para>
+        </listitem>
+        <listitem>
+          <para><literal>--list</literal> (or <literal>-l</literal>), which
+          displays the list of packages known to the system and their
+          installation status;</para>
+        </listitem>
+        <listitem>
+          <para><literal>--contents
+          <replaceable>file.deb</replaceable></literal> (or
+          <literal>-c</literal>), which lists the files in the Debian package
+          specified;</para>
+        </listitem>
+        <listitem>
+          <para><literal>--info<replaceable> file.deb </replaceable></literal>
+          (or <literal>-I</literal>), which displays the headers of this Debian
+          package.</para>
+        </listitem>
+      </itemizedlist>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> <command>dpkg --search</command> and merged <filename>/usr</filename></title>
         <indexterm><primary>merged <filename>/usr</filename></primary></indexterm>
         <indexterm><primary><filename>/usr</filename></primary></indexterm>
+
         <para>
           For <ulink url="https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/">various
           reasons</ulink>, Debian now installs by default a few top-level directories
@@ -1600,12 +1705,14 @@ Purging configuration files for debian-cd (3.1.33) ...
           are now symlinks to, respectively, <filename>/usr/bin</filename>,
           <filename>/usr/sbin</filename> and <filename>/usr/lib</filename>.
         </para>
+
         <para>
           While this does provide desirable benefits, it can also be a source
           of confusion. For example, when you query <command>dpkg</command> which
           package is owning a given file, it will only be able to answer when you
           ask for its original path:
         </para>
+
         <screen>
 $ <userinput>dpkg --search /bin/mount</userinput>
 mount: /bin/mount
@@ -1616,6 +1723,9 @@ dpkg-query: no path found matching pattern /bin/apt
 $ <userinput>dpkg --search /usr/bin/apt</userinput>
 apt: /usr/bin/apt
         </screen>
+
+        <para>This issue is currently tracked as bug #858331
+        <ulink type="block" url="https://bugs.debian.org/858331"/></para>
       </sidebar>
 
       <example>
@@ -1698,62 +1808,74 @@ $ </computeroutput><userinput>dpkg -l 'b*'</userinput>
 | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
 |/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
 ||/ Name                       Version       Architecture Description
-+++-==========================-=============-============-=====================>
-un  backupninja                <none>        <none>       (no description avail>
-un  backuppc                   <none>        <none>       (no description avail>
-ii  baloo-kf5                  5.78.0-3      amd64        framework for searchi>
-un  balsa                      <none>        <none>       (no description avail>
-ii  baobab                     3.38.0-1      amd64        GNOME disk usage anal>
-un  base                       <none>        <none>       (no description avail>
-un  base-config                <none>        <none>       (no description avail>
-ii  base-files                 11            amd64        Debian base system mi>
-ii  base-passwd                3.5.49        amd64        Debian base system ma>
-ii  bash                       5.1-2+b1      amd64        GNU Bourne Again SHell
++++-==========================-==============-============-==================================
+un  backupninja                <none>         <none>       (no description available)
+un  backuppc                   <none>         <none>       (no description available)
+ii  baloo-kf5                  5.78.0-3       amd64        framework for searching and manag>
+un  balsa                      <none>         <none>       (no description available)
+ii  baobab                     3.38.0-1       amd64        GNOME disk usage analyzer
+un  base                       <none>         <none>       (no description available)
+un  base-config                <none>         <none>       (no description available)
+ii  base-files                 11.1           amd64        Debian base system miscellaneous >
+ii  base-passwd                3.5.51         amd64        Debian base system master passwor>
+ii  bash                       5.1-2+b1       amd64        GNU Bourne Again SHell
 [..]]]>
-$ </computeroutput><userinput>dpkg -c /var/cache/apt/archives/python3-minimal_3.9.2-3_amd64.deb</userinput>
-<computeroutput><![CDATA[drwxr-xr-x root/root         0 2021-04-05 14:00 ./
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/bin/
--rwxr-xr-x root/root      7806 2021-04-05 14:00 ./usr/bin/py3clean
--rwxr-xr-x root/root     13184 2021-04-05 14:00 ./usr/bin/py3compile
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/doc/
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/doc/python3-minimal/
--rw-r--r-- root/root       462 2018-06-05 23:35 ./usr/share/doc/python3-minimal/README.Debian
--rw-r--r-- root/root     15215 2021-04-05 14:00 ./usr/share/doc/python3-minimal/changelog.Debian.gz
--rw-r--r-- root/root     16122 2018-06-05 23:35 ./usr/share/doc/python3-minimal/copyright
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/man/
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/man/man1/
--rw-r--r-- root/root       590 2021-04-05 14:00 ./usr/share/man/man1/py3clean.1.gz
--rw-r--r-- root/root      1015 2021-04-05 14:00 ./usr/share/man/man1/py3compile.1.gz
--rw-r--r-- root/root       707 2021-04-05 14:00 ./usr/share/man/man1/py3versions.1.gz
-drwxr-xr-x root/root         0 2021-04-05 14:00 ./usr/share/python3/
-[...]]]>
-$ </computeroutput><userinput>dpkg -I /dpkg -c /var/cache/apt/archives/python3-minimal_3.9.2-3_amd64.deb</userinput>
+$ </computeroutput><userinput>dpkg -c /var/cache/apt/archives/bash_5.1-3+b1_amd64.deb</userinput>
+<computeroutput><![CDATA[drwxr-xr-x root/root         0 2021-07-25 20:43 ./
+drwxr-xr-x root/root         0 2021-07-25 20:43 ./bin/
+-rwxr-xr-x root/root   1234376 2021-07-25 20:43 ./bin/bash
+drwxr-xr-x root/root         0 2021-07-25 20:43 ./etc/
+-rw-r--r-- root/root      1994 2021-07-25 20:43 ./etc/bash.bashrc
+drwxr-xr-x root/root         0 2021-07-25 20:43 ./etc/skel/
+-rw-r--r-- root/root       220 2021-07-25 20:43 ./etc/skel/.bash_logout
+-rw-r--r-- root/root      3526 2021-07-25 20:43 ./etc/skel/.bashrc
+-rw-r--r-- root/root       807 2021-07-25 20:43 ./etc/skel/.profile
+drwxr-xr-x root/root         0 2021-07-25 20:43 ./usr/
+drwxr-xr-x root/root         0 2021-07-25 20:43 ./usr/bin/
+-rwxr-xr-x root/root      6759 2021-07-25 20:43 ./usr/bin/bashbug
+-rwxr-xr-x root/root     14648 2021-07-25 20:43 ./usr/bin/clear_console
+drwxr-xr-x root/root         0 2021-07-25 20:43 ./usr/share/
+drwxr-xr-x root/root         0 2021-07-25 20:43 ./usr/share/doc/
+[..]]]>
+$ </computeroutput><userinput>dpkg -I /var/cache/apt/archives/bash_5.1-3+b1_amd64.deb</userinput>
 <computeroutput><![CDATA[ new Debian package, version 2.0.
- size 38248 bytes: control archive=1212 bytes.
-     617 bytes,    17 lines      control
-    1048 bytes,    15 lines      md5sums
-     117 bytes,     8 lines   *  postinst             #!/bin/sh
-     108 bytes,     7 lines   *  prerm                #!/bin/sh
- Package: python3-minimal
- Source: python3-defaults
- Version: 3.9.2-3
+ size 1416600 bytes: control archive=7256 bytes.
+      77 bytes,     4 lines      conffiles
+    1030 bytes,    27 lines      control
+    4511 bytes,    64 lines      md5sums
+     603 bytes,    31 lines   *  postinst             #!/bin/bash
+     500 bytes,    25 lines   *  postrm               #!/bin/sh
+   14536 bytes,    33 lines   *  preinst              
+     289 bytes,    22 lines   *  prerm                #!/bin/bash
+ Package: bash
+ Source: bash (5.1-3)
+ Version: 5.1-3+b1
  Architecture: amd64
+ Essential: yes
  Maintainer: Matthias Klose <doko@debian.org>
- Installed-Size: 121
- Pre-Depends: python3.9-minimal (>= 3.9.2-0~)
- Depends: dpkg (>= 1.13.20)
- Section: python
- Priority: optional
- Multi-Arch: allowed
- Homepage: https://www.python.org/
- Description: minimal subset of the Python language (default python3 version)
-  This package contains the interpreter and some essential modules.  It's used
-  in the boot process for some basic tasks.
-  See /usr/share/doc/python3.9-minimal/README.Debian for a list of the modules
-  contained in this package.]]></computeroutput>
-</screen>
+ Installed-Size: 6470
+ Pre-Depends: libc6 (>= 2.25), libtinfo6 (>= 6)
+ Depends: base-files (>= 2.1.12), debianutils (>= 2.15)
+ Recommends: bash-completion (>= 20060301-0)
+ Suggests: bash-doc
+ Conflicts: bash-completion (<< 20060301-0)
+ Replaces: bash-completion (<< 20060301-0), bash-doc (<= 2.05-1)
+ Section: shells
+ Priority: required
+ Multi-Arch: foreign
+ Homepage: http://tiswww.case.edu/php/chet/bash/bashtop.html
+ Description: GNU Bourne Again SHell
+  Bash is an sh-compatible command language interpreter that executes
+  commands read from the standard input or from a file.  Bash also
+  incorporates useful features from the Korn and C shells (ksh and csh).
+  .
+  Bash is ultimately intended to be a conformant implementation of the
+  IEEE POSIX Shell and Tools specification (IEEE Working Group 1003.2).
+  .
+  The Programmable Completion Code, by Ian Macdonald, is now found in
+  the bash-completion package.]]>
+</computeroutput>
+        </screen>
       </example>
 
       <sidebar>
@@ -1761,6 +1883,7 @@ $ </computeroutput><userinput>dpkg -I /dpkg -c /var/cache/apt/archives/python3-m
         <indexterm><primary>version, comparison</primary></indexterm>
         <indexterm><primary>comparison of versions</primary></indexterm>
         <indexterm><primary>package</primary><secondary>version, comparison</secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary><literal>--compare-versions</literal></secondary></indexterm>
 
         <para>Since <command>dpkg</command> is the program for handling
         Debian packages, it also provides the reference implementation of
@@ -1800,6 +1923,9 @@ $ </computeroutput><userinput>dpkg --compare-versions 2.6.0pre3-1 lt 2.6.0-1</us
         to indicate that it is a pre-release, we use the tilde character,
         “<literal>~</literal>”:</para>
 
+        <indexterm><primary><literal>~</literal></primary></indexterm>
+        <indexterm><primary>tilde, usage</primary><secondary>in versions</secondary></indexterm>
+
         <screen>
 <computeroutput>$ </computeroutput><userinput>dpkg --compare-versions 2.6.0~pre3-1 lt 2.6.0-1</userinput>
 <computeroutput>$ </computeroutput><userinput>echo $?</userinput>
@@ -1811,6 +1937,7 @@ $ </computeroutput><userinput>dpkg --compare-versions 2.6.0pre3-1 lt 2.6.0-1</us
     <section id="sect.dpkg-log">
       <title><command>dpkg</command>'s Log File</title>
       <indexterm><primary><command>dpkg</command></primary><secondary><filename>/var/log/dpkg.log</filename></secondary></indexterm>
+      <indexterm><primary><filename>/var/log</filename></primary><secondary><filename>dpkg.log</filename></secondary></indexterm>
 
       <para><command>dpkg</command> keeps a log of all of its actions in
       <filename>/var/log/dpkg.log</filename>. This log is extremely
@@ -1830,6 +1957,9 @@ $ </computeroutput><userinput>dpkg --compare-versions 2.6.0pre3-1 lt 2.6.0-1</us
       <title>Multi-Arch Support</title>
       <indexterm><primary>Multi-Arch</primary></indexterm>
       <indexterm><primary>architecture</primary><secondary>multi-arch support</secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--print-architecture</literal></secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Architecture</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary>multi-arch support</secondary></indexterm>
 
       <para>All Debian packages have an <literal>Architecture</literal>
       field in their control information. This field can contain either
@@ -1856,25 +1986,26 @@ $ </computeroutput><userinput>dpkg --compare-versions 2.6.0pre3-1 lt 2.6.0-1</us
         to drop support of a foreign architecture, but it can only be used
         when no packages of this architecture remain.</para>
 
+        <!-- MAYCHANGE: package name and version -->
         <screen>
 <computeroutput># </computeroutput><userinput>dpkg --print-architecture</userinput>
 <computeroutput>amd64
 # </computeroutput><userinput>dpkg --print-foreign-architectures</userinput>
-<computeroutput># </computeroutput><userinput>dpkg -i gcc-8-base_8.3.0-6_armhf.deb</userinput>
-<computeroutput>dpkg: error processing archive gcc-8-base_8.3.0-6_armhf.deb (--install):
+<computeroutput># </computeroutput><userinput>dpkg -i gcc-9-base_9.3.0-22_armhf.deb</userinput>
+<computeroutput>dpkg: error processing archive gcc-9-base_9.3.0-22_armhf.deb (--install):
  package architecture (armhf) does not match system (amd64)
 Errors were encountered while processing:
- gcc-8-base_8.3.0-6_armhf.deb
+ gcc-9-base_9.3.0-22_armhf.deb
 # </computeroutput><userinput>dpkg --add-architecture armhf</userinput>
 <computeroutput># </computeroutput><userinput>dpkg --add-architecture armel</userinput>
 <computeroutput># </computeroutput><userinput>dpkg --print-foreign-architectures</userinput>
 <computeroutput>armhf
 armel
-# </computeroutput><userinput>dpkg -i gcc-8-base_8.3.0-6_armhf.deb</userinput>
-<computeroutput>(Reading database ... 14319 files and directories currently installed.)
-Preparing to unpack gcc-8-base_8.3.0-6_armhf.deb ...
-Unpacking gcc-8-base:armhf (8.3.0-6) ...
-Setting up gcc-8-base:armhf (8.3.0-6) ...
+# </computeroutput><userinput>dpkg -i gcc-9-base_9.3.0-22_armhf.deb</userinput>
+<computeroutput>(Reading database ... 456367 files and directories currently installed.)
+Preparing to unpack gcc-9-base_9.3.0-22_armhf.deb ...
+Unpacking gcc-9-base:armhf (9.3.0-22) ...
+Setting up gcc-9-base:armhf (9.3.0-22) ...
 # </computeroutput><userinput>dpkg --remove-architecture armhf</userinput>
 <computeroutput>dpkg: error: cannot remove architecture 'armhf' currently in use by the database
 # </computeroutput><userinput>dpkg --remove-architecture armel</userinput>
@@ -1884,6 +2015,7 @@ Setting up gcc-8-base:armhf (8.3.0-6) ...
 
         <sidebar>
           <title><emphasis>NOTE</emphasis> APT's multi-arch support</title>
+          <indexterm><primary>APT</primary><secondary>multi-arch support</secondary></indexterm>
 
           <para>APT will automatically detect when dpkg has been configured
           to support foreign architectures and will start downloading the
@@ -1892,7 +2024,8 @@ Setting up gcc-8-base:armhf (8.3.0-6) ...
 
           <para>Foreign packages can then be installed with <command>apt
           install
-          <replaceable>package</replaceable>:<replaceable>architecture</replaceable></command>.</para>
+          <replaceable>package</replaceable>:<replaceable>architecture</replaceable></command>.
+          </para>
         </sidebar>
 
         <sidebar>
@@ -1923,17 +2056,18 @@ Setting up gcc-8-base:armhf (8.3.0-6) ...
         specifically requests it (through a bug report for example).
         </para>
 
-        <screen><computeroutput>$ </computeroutput><userinput>dpkg -s gcc-8-base
-</userinput><computeroutput>dpkg-query: error: --status needs a valid package name but 'gcc-8-base' is not: ambiguous package name 'gcc-8-base' with more than one installed instance
+        <!-- MAYCHANGE: package names and version -->
+        <screen><computeroutput>$ </computeroutput><userinput>dpkg -s gcc-9-base
+</userinput><computeroutput>dpkg-query: error: --status needs a valid package name but 'gcc-9-base' is not: ambiguous package name 'gcc-9-base' with more than one installed instance
 
 Use --help for help about querying packages.
-$ </computeroutput><userinput>dpkg -s gcc-8-base:amd64 gcc-8-base:armhf | grep ^Multi
+$ </computeroutput><userinput>dpkg -s gcc-9-base:amd64 gcc-9-base:armhf | grep ^Multi
 </userinput><computeroutput>Multi-Arch: same
 Multi-Arch: same
-$ </computeroutput><userinput>dpkg -L libgcc1:amd64 |grep .so
+$ </computeroutput><userinput>dpkg -L libgcc-s1:amd64 |grep .so
 </userinput><computeroutput>/lib/x86_64-linux-gnu/libgcc_s.so.1
-$ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-8-base/copyright
-</userinput><computeroutput>gcc-8-base:amd64, gcc-8-base:armhf: /usr/share/doc/gcc-8-base/copyright
+$ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-9-base/copyright
+</userinput><computeroutput>gcc-9-base:amd64, gcc-9-base:armhf: /usr/share/doc/gcc-9-base/copyright
 </computeroutput></screen>
 
         <para>It is worth noting that <literal>Multi-Arch: same</literal> packages
@@ -1962,8 +2096,9 @@ $ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-8-base/copyright
 
   <section id="sect.coexistence-with-other-packaging-systems">
     <title>Coexistence with Other Packaging Systems</title>
-    <indexterm><primary>RPM</primary></indexterm>
-    <indexterm><primary>Red Hat Package Manager</primary></indexterm>
+    <indexterm><primary>RPM</primary><seealso>RPM Package Manager</seealso></indexterm>
+    <indexterm><primary>Red Hat Package Manager</primary><seealso>RPM Package Manager</seealso></indexterm>
+    <indexterm><primary>RPM Package Manager</primary></indexterm>
     <indexterm><primary><command>alien</command></primary></indexterm>
 
     <para>Debian packages are not the only software packages used in the
@@ -1990,6 +2125,7 @@ $ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-8-base/copyright
     <sidebar>
       <title><emphasis>COMMUNITY</emphasis> Encouraging the adoption of <filename>.deb</filename></title>
 
+      <!-- MAYCHANGE: Debian stable release name -->
       <para>If you regularly use the <command>alien</command> program to
       install RPM packages coming from one of your providers, do not
       hesitate to write to them and amicably express your strong preference
@@ -1999,14 +2135,56 @@ $ </computeroutput><userinput>dpkg -S /usr/share/doc/gcc-8-base/copyright
       different than that which you use, or even for a derivative distribution
       like Ubuntu, would probably not offer the same level of quality and
       integration as a package specifically developed for Debian <emphasis
-      role="distribution">Buster</emphasis>.</para>
+      role="distribution">Bullseye</emphasis>.</para>
     </sidebar>
 
     <screen>
-<computeroutput>$ </computeroutput><userinput>fakeroot alien --to-deb phpMyAdmin-4.7.5-2.fc28.noarch.rpm</userinput>
-<computeroutput>phpmyadmin_4.7.5-3_all.deb generated
-$ </computeroutput><userinput>ls -s phpmyadmin_4.7.5-3_all.deb</userinput>
-<computeroutput>  4356 phpmyadmin_4.7.5-3_all.deb</computeroutput>
+<computeroutput>$ </computeroutput><userinput>fakeroot alien --to-deb phpMyAdmin-5.1.1-2.fc35.noarch.rpm</userinput>
+<computeroutput>[..]
+Warning: Skipping conversion of scripts in package phpMyAdmin: postinst
+Warning: Use the --scripts parameter to include the scripts.
+[..]
+phpmyadmin_5.1.1-3_all.deb generated
+$ </computeroutput><userinput>ls -sh phpmyadmin_5.1.1-3_all.deb</userinput>
+<computeroutput>  6,0M phpmyadmin_5.1.1-3_all.deb
+$ </computeroutput><userinput>dpkg -c phpmyadmin_5.1.1-3_all.deb</userinput>
+<computeroutput><![CDATA[drwxr-xr-x root/root         0 2021-08-09 02:02 ./
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./etc/
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./etc/httpd/
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./etc/httpd/conf.d/
+-rw-r--r-- root/root      1181 2021-07-27 09:32 ./etc/httpd/conf.d/phpMyAdmin.conf
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./etc/nginx/
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./etc/nginx/default.d/
+-rw-r--r-- root/root       430 2021-07-27 09:32 ./etc/nginx/default.d/phpMyAdmin.conf
+drwxr-x--- root/root         0 2021-08-09 02:02 ./etc/phpMyAdmin/
+-rw-r----- root/root      4546 2021-07-27 09:34 ./etc/phpMyAdmin/config.inc.php
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./usr/
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./usr/share/
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./usr/share/doc/
+drwxr-xr-x root/root         0 2021-08-09 02:02 ./usr/share/doc/phpMyAdmin/
+[..]]]>
+$ </computeroutput><userinput>dpkg -I phpmyadmin_5.1.1-3_all.deb</userinput>
+<computeroutput><![CDATA[ new Debian package, version 2.0.
+ size 6195324 bytes: control archive=44444 bytes.
+     102 bytes,     3 lines      conffiles
+     593 bytes,    15 lines      control
+  180405 bytes,  1919 lines      md5sums
+     448 bytes,    11 lines   *  postinst             #!/bin/sh
+ Package: phpmyadmin
+ Version: 5.1.1-3
+ Architecture: all
+ Maintainer: Daniel Leidert <dleidert@debian.org>
+ Installed-Size: 40693
+ Section: alien
+ Priority: extra
+ Description: A web interface for MySQL and MariaDB
+  phpMyAdmin is a tool written in PHP intended to handle the administration of
+  MySQL over the Web. Currently it can create and drop databases,
+  create/drop/alter tables, delete/edit/add fields, execute any SQL statement,
+  manage keys on fields, manage privileges,export data into various formats and
+  is available in 50 languages
+  .
+  (Converted from a rpm package by alien version 8.95.4.)]]></computeroutput>
 </screen>
 
     <para>You will find that this process is extremely simple. You must
