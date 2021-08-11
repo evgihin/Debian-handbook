@@ -140,7 +140,14 @@ deb-src url distribution component1 component2 component3 [..] componentX
       <literal>ftps://</literal> for a source available on an FTP server. The
       URL can also start with <literal>cdrom:</literal> for CD-ROM/DVD/Blu-ray
       disc based installations, although this is less frequent, since
-      network-based installation methods are eventually more common.</para>
+      network-based installation methods are eventually more common. More
+      methods like <literal>ssh://</literal> or
+      <literal>tor+http(s)://</literal> are supported and are either described
+      in
+      <citerefentry><refentrytitle>sources.list</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+      or their respective <emphasis
+      role="pkg">apt-transport-<replaceable>method</replaceable></emphasis>
+      package documentation.</para>
 
       <para>The syntax of the last field depends on the structure of the
       repository. In the simplest case, you can simply indicate a
@@ -152,7 +159,7 @@ deb-src url distribution component1 component2 component3 [..] componentX
       having multiple components. In those cases, name the chosen
       distribution by its “codename” — see the list in sidebar <xref
       linkend="sidebar.bruce-perens"/> — or by the corresponding “suite”
-      (<literal>oldstable</literal>, <literal>stable</literal>,
+      (<literal>oldoldstable</literal>, <literal>oldstable</literal>, <literal>stable</literal>,
       <literal>testing</literal>, <literal>unstable</literal>) and then the
       components to enable. A typical Debian mirror provides the components
       <literal>main</literal>, <literal>contrib</literal>, and
@@ -171,9 +178,8 @@ deb-src url distribution component1 component2 component3 [..] componentX
         <para>Debian uses three components to differentiate packages according
         to the licenses chosen by the authors of each work.
         <literal>Main</literal> gathers all packages which fully comply with
-        the <ulink
-        url="https://www.debian.org/social_contract.html#guidelines">Debian
-        Free Software Guidelines</ulink>.</para>
+        the <link linkend="sect.dfsg">Debian Free Software Guidelines</link>.
+        </para>
 
         <para>The <literal>non-free</literal> component is different because it
         contains software which does not (entirely) conform to these principles
@@ -208,6 +214,7 @@ deb-src url distribution component1 component2 component3 [..] componentX
       </sidebar>
 
       <indexterm><primary><command>apt-cdrom</command></primary></indexterm>
+
       <para>The <literal>cdrom</literal> entries describe the CD/DVD-ROMs you
       have. Contrary to other entries, a CD-ROM is not always available since
       it has to be inserted into the drive and since only one disc can be read
@@ -224,19 +231,30 @@ deb-src url distribution component1 component2 component3 [..] componentX
 
     <section id="sect.apt-sources.list.stable">
       <title>Repositories for <emphasis role="distribution">Stable</emphasis> Users</title>
+      <indexterm><primary><filename>sources.list</filename></primary><secondary><literal>stable</literal></secondary></indexterm>
+      <indexterm><primary><literal>stable</literal></primary></indexterm>
+      <indexterm><primary><literal>stable-security</literal></primary></indexterm>
+      <indexterm><primary><literal>stable-backports</literal></primary></indexterm>
+      <indexterm><primary><literal>stable-updates</literal></primary></indexterm>
+      <!-- MAYCHANGE: default codename -->
+      <indexterm><primary><literal>bullseye</literal></primary></indexterm>
+      <indexterm><primary><literal>bullseye-security</literal></primary></indexterm>
+      <indexterm><primary><literal>bullseye-backports</literal></primary></indexterm>
+      <indexterm><primary><literal>bullseye-updates</literal></primary></indexterm>
 
       <para>Here is a standard <filename>sources.list</filename> for a system running
       the <emphasis role="distribution">Stable</emphasis> version of Debian:</para>
 
-      <!-- MAY CHANGE: default codename -->
+      <!-- MAYCHANGE: default codename -->
       <example id="example.stable-sources-list">
         <title><filename>/etc/apt/sources.list</filename> file for users of Debian Stable</title>
         <indexterm><primary><filename>/etc/apt/sources.list</filename></primary><secondary>Example</secondary><tertiary><literal>stable</literal></tertiary></indexterm>
+        <indexterm><primary><literal>deb.debian.org</literal></primary></indexterm>
 
         <!-- TODO: <programlistingco> ? -->
         <programlisting># Security updates
-deb http://security.debian.org/ bullseye/updates main contrib non-free
-deb-src http://security.debian.org/ bullseye/updates main contrib non-free
+deb http://security.debian.org/ bullseye-security main contrib non-free
+deb-src http://security.debian.org/ bullseye-security main contrib non-free
 
 ## Debian mirror
 
@@ -245,8 +263,8 @@ deb https://deb.debian.org/debian bullseye main contrib non-free
 deb-src https://deb.debian.org/debian bullseye main contrib non-free
 
 # Stable updates
-deb https://deb.debian.org/debian bullseye-security main contrib non-free
-deb-src https://deb.debian.org/debian bullseye-security main contrib non-free
+deb https://deb.debian.org/debian bullseye-updates main contrib non-free
+deb-src https://deb.debian.org/debian bullseye-updates main contrib non-free
 
 # Stable backports
 deb https://deb.debian.org/debian bullseye-backports main contrib non-free
@@ -286,12 +304,17 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
         <title>Security Updates</title>
         <indexterm><primary><literal>security.debian.org</literal></primary></indexterm>
         <indexterm><primary>security updates</primary></indexterm>
+        <!-- MAYCHANGE: stable release name -->
         <indexterm><primary>updates</primary><secondary>security updates</secondary></indexterm>
-        <indexterm><primary>CVE</primary><secondary>Common Vulnerabilities and Exposures</secondary></indexterm>
-        <indexterm><primary>DSA</primary><secondary>Debian Security Advisory</secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>stable-security</literal></secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>bullseye-security</literal></secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>stable</literal>, security</secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>bullseye</literal>, security</secondary></indexterm>
+        <indexterm><primary><literal>stable-security</literal></primary></indexterm>
+        <indexterm><primary><literal>bullseye-security</literal></primary></indexterm>
+
+        <indexterm><primary><acronym>CVE</acronym></primary><seealso>Common Vulnerabilities and Exposures</seealso></indexterm>
         <indexterm><primary>Common Vulnerabilities and Exposures</primary><seealso>CVE</seealso></indexterm>
-        <indexterm><primary>Debian Security Advisory</primary><seealso>DSA</seealso></indexterm>
-        <indexterm><primary>debian-security-announce</primary></indexterm>
 
         <para>Debian takes security seriously. Known software vulnerabilities
         in Debian are tracked in the <ulink
@@ -307,10 +330,12 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
 
         <para>The server can also host security updates for <emphasis
         role="distribution">Testing</emphasis> but this doesn't happen very
-        often since those updates tend to reach the <emphasis
-        role="distribution">Testing</emphasis> suite via the regular flow of
+        often since those updates tend to reach that suite via the regular flow of
         updates coming from <emphasis
         role="distribution">Unstable</emphasis>.</para>
+
+        <indexterm><primary><acronym>DSA</acronym></primary><seealso>Debian Security Advisory</seealso></indexterm>
+        <indexterm><primary>Debian Security Advisory</primary></indexterm>
 
         <para>For serious issues, the security team issues a <literal>Debian
         Security Advisory</literal> (<acronym>DSA</acronym>) and announces it
@@ -326,10 +351,11 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
       <section id="sect.apt-sources.list.stable.updates">
         <title>Stable Updates</title>
         <indexterm><primary>stable updates</primary></indexterm>
+        <!-- MAYCHANGE: stable release name -->
+        <indexterm><primary>updates</primary><secondary><literal>stable</literal></secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>bullseye</literal></secondary></indexterm>
         <indexterm><primary><literal>stable-updates</literal></primary></indexterm>
-        <indexterm><primary><literal>buster-updates</literal></primary></indexterm>
-        <indexterm><primary>updates</primary><secondary>buster</secondary></indexterm>
-        <indexterm><primary>updates</primary><secondary>stable</secondary></indexterm>
+        <indexterm><primary><literal>bullseye-updates</literal></primary></indexterm>
 
         <para>Stable updates are not security sensitive but are deemed
         important enough to be pushed to users before the next stable
@@ -347,6 +373,9 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
         keyrings like <emphasis
         role="pkg">debian-archive-keyring</emphasis>.</para>
 
+        <indexterm><primary><acronym>ESR</acronym></primary><seealso>Extended Support Release</seealso></indexterm>
+        <indexterm><primary>Extended Support Release</primary></indexterm>
+
         <para>In practice, this repository is a subset of the
         <literal>proposed-updates</literal> repository, carefully selected by
         the <link linkend="srm-team">Stable Release Managers</link>. All
@@ -358,18 +387,22 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
         role="distribution">Stable</emphasis> point release anyway.</para>
 
         <indexterm><primary>mailing lists</primary><secondary><email>debian-stable-announce@lists.debian.org</email></secondary></indexterm>
-
-        <programlisting>deb https://deb.debian.org/debian bullseye-updates main contrib non-free
-</programlisting>
       </section>
 
       <section id="sect.apt-sources.list.stable.proposed-updates">
         <title>Proposed Updates</title>
+        <!-- MAYCHANGE: stable release name -->
+        <indexterm><primary>proposed updates</primary></indexterm>
         <indexterm><primary><literal>proposed-updates</literal></primary></indexterm>
         <indexterm><primary><literal>stable-proposed-updates</literal></primary></indexterm>
+        <indexterm><primary><literal>bullsey-proposed-updates</literal></primary></indexterm>
         <indexterm><primary>updates</primary><secondary>proposed</secondary></indexterm>
         <indexterm><primary>updates</primary><secondary><literal>stable-proposed</literal></secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>bullseye-proposed</literal></secondary></indexterm>
         <indexterm><primary>updates</primary><secondary><literal>stable</literal>, proposed</secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>bullseye</literal>, proposed</secondary></indexterm>
+        <indexterm><primary><literal>stable-updates</literal>, proposed</primary></indexterm>
+        <indexterm><primary><literal>bullseye-updates</literal>, proposed</primary></indexterm>
 
         <para>Once published, the <emphasis
         role="distribution">Stable</emphasis> distribution is only updated
@@ -389,17 +422,22 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
         <literal>buster-proposed-updates</literal> also exists (for the
         <emphasis role="distribution">Oldstable</emphasis> updates):</para>
 
+        <!-- MAYCHANGE: stable release name -->
         <programlisting>deb https://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
 </programlisting>
       </section>
 
       <section id="sect.apt-sources.list.stable.backports">
         <title>Stable Backports</title>
-        <indexterm><primary><literal>stable-backports</literal></primary></indexterm>
         <indexterm><primary>backport</primary></indexterm>
         <indexterm><primary>updates</primary><secondary>backports</secondary></indexterm>
+        <!-- MAYCHANGE: stable release name -->
         <indexterm><primary>updates</primary><secondary><literal>stable-backports</literal></secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>bullseye-backports</literal></secondary></indexterm>
         <indexterm><primary>updates</primary><secondary><literal>stable</literal>, backports</secondary></indexterm>
+        <indexterm><primary>updates</primary><secondary><literal>bullseye</literal>, backports</secondary></indexterm>
+        <indexterm><primary><literal>stable-backports</literal></primary></indexterm>
+        <indexterm><primary><literal>bullseye-backports</literal></primary></indexterm>
 
         <para>The <literal>stable-backports</literal> repository hosts “package
         backports”. The term refers to a package of some recent software which
@@ -418,6 +456,7 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
         and system administrators to limit potential instability to a small
         number of chosen packages. The page <ulink
         url="https://backports.debian.org"/> provides more information.</para>
+
         <indexterm><primary><literal>backports.debian.org</literal></primary><seealso>backports</seealso></indexterm>
 
         <para>Backports from <literal>stable-backports</literal> are only
@@ -431,6 +470,7 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
         instructions to do so (or unless you have already done so with a former
         version of the given backport):</para>
 
+        <!-- MAYCHANGE: stable release name -->
         <screen><computeroutput>$ </computeroutput><userinput>sudo apt-get install <replaceable>package</replaceable>/bullseye-backports
 </userinput><computeroutput>$ </computeroutput><userinput>sudo apt-get install -t bullseye-backports <replaceable>package</replaceable>
 </userinput></screen>
@@ -440,6 +480,8 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
 
     <section id="sect.apt-sources.list.testing">
       <title>Repositories for <emphasis role="distribution">Testing</emphasis>/<emphasis role="distribution">Unstable</emphasis> Users</title>
+      <indexterm><primary><filename>sources.list</filename></primary><secondary><literal>testing</literal></secondary></indexterm>
+      <indexterm><primary><filename>sources.list</filename></primary><secondary><literal>unstable</literal></secondary></indexterm>
 
       <para>Here is a standard <filename>sources.list</filename> for a system
       running the <emphasis role="distribution">Testing</emphasis> or <emphasis
@@ -447,6 +489,8 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
 
       <example id="example.testing-sources-list">
         <title><filename>/etc/apt/sources.list</filename> file for users of Debian <emphasis role="distribution">Testing</emphasis>/<emphasis role="distribution">Unstable</emphasis></title>
+        <indexterm><primary><literal>deb.debian.org</literal></primary></indexterm>
+        <indexterm><primary><filename>/etc/apt/sources.list</filename></primary><secondary>Example</secondary><tertiary><literal>testing</literal></tertiary></indexterm>
         <indexterm><primary><filename>/etc/apt/sources.list</filename></primary><secondary>Example</secondary><tertiary><literal>unstable</literal></tertiary></indexterm>
 
         <programlisting>
@@ -474,15 +518,18 @@ deb-src http://security.debian.org/ stable-security main contrib non-free
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> Layout of security repositories</title>
-        <para>
-          Starting with Debian 11 <emphasis role="distribution">Bullseye</emphasis>,
-          the codename of the repository providing security updates has been renamed
-          from <literal><replaceable>codename</replaceable>/updates</literal>
-          into <literal><replaceable>codename</replaceable>-security</literal>
-          to avoid the confusion with
-          <literal><replaceable>codename</replaceable>-updates</literal>
-          (see <xref linkend="sect.apt-sources.list.stable.updates" />).
-        </para>
+        <indexterm><primary><literal>stable/updates</literal></primary><seealso><literal>stable-security</literal></seealso></indexterm>
+        <indexterm><primary><literal>bullseye/updates</literal></primary><seealso><literal>bullseye-security</literal></seealso></indexterm>
+
+        <para>Starting with Debian 11 <emphasis
+        role="distribution">Bullseye</emphasis>, the codename of the repository
+        providing security updates has been renamed from
+        <literal><replaceable>codename</replaceable>/updates</literal> into
+        <literal><replaceable>codename</replaceable>-security</literal> to
+        avoid the confusion with
+        <literal><replaceable>codename</replaceable>-updates</literal> (see
+        <xref linkend="sect.apt-sources.list.stable.updates" />).</para>
+
       </sidebar>
 
       <indexterm><primary>APT</primary><secondary><literal>APT::Default-Release</literal></secondary></indexterm>
