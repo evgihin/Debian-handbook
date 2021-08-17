@@ -697,17 +697,33 @@ deb-src http://security.debian.org/ stable-security main contrib non-free
       package.</para>
 
       <sidebar id="sidebar.snapshot.debian.org">
-        <title><emphasis>GOING FURTHER</emphasis> Old package versions: <literal>snapshot.debian.org</literal></title>
-        <indexterm><primary><literal>snapshot.debian.org</literal></primary></indexterm>
+        <title><emphasis>GOING FURTHER</emphasis> Old package versions: <literal>snapshot.debian.org</literal> and <literal>archive.debian.org</literal></title>
+        <indexterm><primary><literal>archive.debian.org</literal></primary></indexterm>
+        <indexterm><primary>old releases</primary></indexterm>
+        <indexterm><primary>package history</primary></indexterm>
+        <indexterm><primary>archive</primary><secondary>old releases</secondary><seealso><literal>archive.debian.org</literal></seealso></indexterm>
+        <indexterm><primary>archive</primary><secondary>old packages</secondary><seealso><literal>snapshot.debian.org</literal></seealso></indexterm>
+
+        <para>The Debian project frequently releases new stable versions of
+        their distribution, rendering old releases eventually outdated and
+        unsupported (see <xref linkend="sect.release-lifecycle"/>). The
+        repositories belonging to these releases are then removed from the
+        official mirrors, but can still be accessed using the service at <ulink
+        url="https://www.debian.org/distrib/archive.en"><literal>archive.debian.org</literal></ulink>.
+        Note, that this service allows access to any of the old Debian
+        releases, but does not provide the source package for every binary
+        package offered.</para>
 
         <para>The <ulink
         url="https://snapshot.debian.org"><literal>snapshot.debian.org</literal></ulink>
         service, introduced in April 2010, can be used to “go backwards in
-        time” and to find an old version of a package not longer contained in
+        time” and to find an old binary or source version of a package not longer contained in
         the Debian archives. It can be used, for example, to identify which
         version of a package introduced a regression, and more concretely, to
         come back to the former version while waiting for the regression
-        fix.</para>
+        fix. This service does not only offer source and binary packages from
+        older releases, but also versions superseeded by regular maintainer
+        uploads.</para>
       </sidebar>
     </section>
 
@@ -748,9 +764,9 @@ deb-src http://security.debian.org/ stable-security main contrib non-free
       <filename>/etc/approx/approx.conf</filename>:</para>
 
       <informalexample>
-        <programlisting># &lt;name&gt; &lt;repository-base-url&gt;
-debian   https://deb.debian.org/debian
-security http://security.debian.org
+        <programlisting># &lt;name&gt;   &lt;repository-base-url&gt;
+debian     https://deb.debian.org/debian
+security   http://security.debian.org/debian-security
         </programlisting>
       </informalexample>
 
@@ -759,13 +775,13 @@ security http://security.debian.org
       <filename>sources.list</filename> file to point to the approx
       server:</para>
 
+      <!-- MAYCHANGE: Debian stable release name -->
       <informalexample>
         <programlisting># Sample sources.list pointing to a local approx server
 deb http://localhost:9999/security bullseye-security main contrib non-free
-deb http://localhost:9999/debian bullseye main contrib non-free
+deb http://localhost:9999/debian   bullseye main contrib non-free
         </programlisting>
       </informalexample>
-
     </section>
   </section>
 
