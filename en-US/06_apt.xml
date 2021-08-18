@@ -1310,6 +1310,9 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
 
     <section id="sect.apt.priorities">
       <title>Managing Package Priorities</title>
+      <indexterm><primary>pinning, APT pinning</primary></indexterm>
+      <indexterm><primary>package</primary><secondary>priority</secondary></indexterm>
+      <indexterm><primary>priority</primary><secondary>package priority</secondary></indexterm>
 
       <para>One of the most important aspects in the configuration of APT is
       the management of the priorities associated with each package source. For
@@ -1324,22 +1327,24 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       version is older than the installed one and if its priority is less
       than 1000).</para>
 
-      <indexterm><primary>APT</primary><secondary><foreignphrase>pinning</foreignphrase></secondary></indexterm>
-      <indexterm><primary>pinning, APT pinning</primary></indexterm>
-      <indexterm><primary>package</primary><secondary>priority</secondary></indexterm>
-      <indexterm><primary>priority</primary><secondary>package priority</secondary></indexterm>
-      <indexterm><primary>APT</primary><secondary>preferences</secondary></indexterm>
+      <indexterm><primary><citerefentry><refentrytitle>apt_preferences</refentrytitle><manvolnum>5</manvolnum></citerefentry></primary></indexterm>
       <indexterm><primary><filename>preferences</filename></primary></indexterm>
       <indexterm><primary><filename>/etc/apt/preferences</filename></primary></indexterm>
       <indexterm><primary><filename>/etc/apt/preferences.d/</filename></primary></indexterm>
-      <indexterm><primary><citerefentry><refentrytitle>apt_preferences</refentrytitle><manvolnum>5</manvolnum></citerefentry></primary></indexterm>
+      <indexterm><primary>APT</primary><secondary><foreignphrase>pinning</foreignphrase></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary>preferences</secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary><literal>APT::Default-Release</literal></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary><filename>/etc/apt/preferences</filename></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary><filename>/etc/apt/preferences.d/</filename></secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>-t <replaceable>release</replaceable></literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>-t <replaceable>release</replaceable></literal></secondary></indexterm>
 
       <para>APT defines several default priorities. Each installed package
-      version has a priority of 100. A non-installed version has a
-      priority of 500 by default, but it can jump to 990 if it is part of
-      the target release (defined with the <literal>-t</literal>
-      command-line option or the <literal>APT::Default-Release</literal>
-      configuration directive).</para>
+      version has a priority of 100. A non-installed version has a priority
+      of 500 by default, but it can jump to 990 if it is part of the target
+      release (defined with the <literal>-t</literal> command-line option or
+      the <literal>APT::Default-Release</literal> configuration
+      directive).</para>
 
       <para>You can modify the priorities by adding entries in a file in
       <filename>/etc/apt/preferences.d/</filename> or the
@@ -1360,6 +1365,8 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       the increment of the revision number, which is usually required).</para>
 
       <para>In more concrete terms, a package whose priority is</para>
+
+      <indexterm><primary>APT</primary><secondary>package priority</secondary></indexterm>
 
       <variablelist>
         <varlistentry>
@@ -1404,6 +1411,7 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         </varlistentry>
       </variablelist>
 
+      <!-- MAYCHANGE: Debian stable release name and number -->
       <para>When APT checks <filename>/etc/apt/preferences</filename> and
       <filename>/etc/apt/preferences.d/</filename>, it first takes into account
       the most specific entries (often those specifying the concerned package),
@@ -1496,16 +1504,18 @@ Pin-Priority: 500
       -->
 
       <para>Let's now assume that you have a server with several local
-      programs depending on the version 5.24 of Perl and that you want to
+      programs depending on the version 5.28 of Perl and that you want to
       ensure that upgrades will not install another version of it. You
       could use this entry:</para>
 
       <informalexample>
         <programlisting>Package: perl
-Pin: version 5.24*
+Pin: version 5.28*
 Pin-Priority: 1001
 </programlisting>
       </informalexample>
+
+      <indexterm><primary><command>apt-cache</command></primary><secondary><literal>policy</literal></secondary></indexterm>
 
       <para>To gain a better understanding of the mechanisms of priority and
       distribution or repository properties to pin do not hesitate to execute
@@ -1527,6 +1537,10 @@ Pin-Priority: 1001
         <indexterm><primary><literal>Explanation</literal></primary></indexterm>
         <indexterm><primary><literal>Pin</literal></primary></indexterm>
         <indexterm><primary><literal>Pin-Priority</literal></primary></indexterm>
+        <indexterm><primary>APT</primary><secondary>preferences</secondary><tertiary><literal>Explanation</literal></tertiary></indexterm>
+        <indexterm><primary>APT</primary><secondary>preferences</secondary><tertiary><literal>Package</literal></tertiary></indexterm>
+        <indexterm><primary>APT</primary><secondary>preferences</secondary><tertiary><literal>Pin</literal></tertiary></indexterm>
+        <indexterm><primary>APT</primary><secondary>preferences</secondary><tertiary><literal>Pin-Priority</literal></tertiary></indexterm>
 
         <para>There is no official syntax to put comments in the
         <filename>/etc/apt/preferences</filename> file, but some textual
@@ -1584,8 +1598,8 @@ Pin-Priority: 500
       testing</literal> parameter. The same obviously applies to <emphasis
       role="distribution">Unstable</emphasis>.</para>
 
-      <para>In this situation, upgrades (<command>upgrade</command> and
-      <command>full-upgrade</command>) are done within <emphasis
+      <para>In this situation, upgrades (<literal>upgrade</literal> and
+      <literal>full-upgrade</literal>) are done within <emphasis
       role="distribution">Stable</emphasis> except for packages already
       upgraded to another distribution: those will follow updates available in
       the other distributions. We will explain this behavior with the help of
@@ -1624,7 +1638,7 @@ Pin-Priority: 500
       version, the one from <emphasis
       role="distribution">Unstable</emphasis>. If you don't want a package
       installed from <emphasis role="distribution">Testing</emphasis> to
-      migrate to <emphasis role="distribution">Unstable</emphasis>, you
+      migrate to the version in <emphasis role="distribution">Unstable</emphasis>, you
       have to assign a priority lower than 500 (490 for example) to
       packages coming from <emphasis
       role="distribution">Unstable</emphasis>. You can modify
@@ -1644,8 +1658,8 @@ Pin-Priority: 490
       only through dependencies. These packages are called “automatic”,
       and often include libraries.</para>
 
-      <indexterm><primary><command>apt autoremove</command></primary></indexterm>
-      <indexterm><primary><command>apt-get autoremove</command></primary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>autoremove</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>autoremove</literal></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary>automatic removal</secondary></indexterm>
       <indexterm><primary>package</primary><secondary>automatic removal</secondary></indexterm>
 
@@ -1660,10 +1674,10 @@ Pin-Priority: 490
       In all cases, the tools display a clear message listing the affected
       packages.</para>
 
-      <indexterm><primary><command>apt-mark auto</command></primary></indexterm>
-      <indexterm><primary><command>apt-mark manual</command></primary></indexterm>
-      <indexterm><primary><command>aptitude markauto</command></primary></indexterm>
-      <indexterm><primary><command>aptitude unmarkauto</command></primary></indexterm>
+      <indexterm><primary><command>apt-mark</command></primary><secondary><literal>auto</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-mark</command></primary><secondary><literal>manual</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>markauto</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>unmarkauto</literal></secondary></indexterm>
 
       <para>It is a good habit to mark as automatic any package that you
       don't need directly so that they are automatically removed when they
@@ -1678,7 +1692,7 @@ Pin-Priority: 490
       interactive interface of <command>aptitude</command> also
       makes it easy to review the “automatic flag” on many packages.</para>
 
-      <indexterm><primary><command>aptitude why</command></primary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>why</literal></secondary></indexterm>
 
       <para>People might want to know why an automatically installed
       package is present on the system. To get this information from the
@@ -1687,9 +1701,9 @@ Pin-Priority: 490
       (<command>apt</command> and <command>apt-get</command> have no
       similar feature):</para>
 
-      <screen><computeroutput>$ </computeroutput><userinput>aptitude why python-debian
+      <screen><computeroutput>$ </computeroutput><userinput>aptitude why python3-debian
 </userinput><computeroutput>i   aptitude         Suggests apt-xapian-index
-p   apt-xapian-index Depends  python-debian (&gt;= 0.1.14)
+p   apt-xapian-index Depends  python3-debian (&gt;= 0.1.14)
 </computeroutput></screen>
 
       <sidebar id="sidebar.deborphan-debfoster">
@@ -1705,8 +1719,8 @@ p   apt-xapian-index Depends  python-debian (&gt;= 0.1.14)
         <command>debfoster</command>. Both can still be useful.</para>
 
         <para><command>deborphan</command> scans the <literal>libs</literal>
-        and <literal>oldlibs</literal> sections (in the absence of
-        supplementary instructions) by default looking for the packages that
+        and <literal>oldlibs</literal> sections by default (in the absence of
+        supplementary instructions) looking for the packages that
         are currently installed and that no other package depends on. The
         resulting list can then serve as a basis to remove unneeded
         packages.</para>
@@ -1726,7 +1740,9 @@ p   apt-xapian-index Depends  python-debian (&gt;= 0.1.14)
     <section id="sect.apt-patterns">
       <title>APT Patterns</title>
       <indexterm><primary>APT</primary><secondary>patterns</secondary></indexterm>
-      <indexterm><primary>apt-patterns</primary></indexterm>
+      <indexterm><primary><citerefentry><refentrytitle>apt-patterns</refentrytitle><manvolnum>7</manvolnum></citerefentry></primary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>list</literal></secondary></indexterm>
+
       <para>Patterns allow you to specify complex search queries to select
       the packages you want to install or show. They were first implemented
       for aptitude (see <xref linkend="sect.apt-frontends" />), but now
@@ -1740,7 +1756,10 @@ p   apt-xapian-index Depends  python-debian (&gt;= 0.1.14)
       <para>Logic patterns can be combined with other packages to form more
       complex expressions. For instance, we could use a pattern like
       <command>?and(<replaceable>PATTERN, PATTERN</replaceable>)</command>.
-      See <citerefentry><refentrytitle>apt-patterns</refentrytitle><manvolnum></manvolnum></citerefentry>
+      See
+      <citerefentry><refentrytitle>apt-patterns</refentrytitle><manvolnum>7</manvolnum></citerefentry>
+      and
+      <citerefentry><refentrytitle>glob</refentrytitle><manvolnum>7</manvolnum></citerefentry>
       for all the patterns you can use and the complex expressions you can
       create with them.</para>
 
