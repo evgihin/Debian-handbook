@@ -700,7 +700,7 @@ deb-src http://security.debian.org/ stable-security main contrib non-free
         <title><emphasis>GOING FURTHER</emphasis> Old package versions: <literal>snapshot.debian.org</literal> and <literal>archive.debian.org</literal></title>
         <indexterm><primary><literal>archive.debian.org</literal></primary></indexterm>
         <indexterm><primary>old releases</primary></indexterm>
-        <indexterm><primary>package history</primary></indexterm>
+        <indexterm><primary>package</primary><secondary>wayback machine</secondary></indexterm>
         <indexterm><primary>archive</primary><secondary>old releases</secondary><seealso><literal>archive.debian.org</literal></seealso></indexterm>
         <indexterm><primary>archive</primary><secondary>old packages</secondary><seealso><literal>snapshot.debian.org</literal></seealso></indexterm>
 
@@ -808,6 +808,9 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
     backwards incompatible way. It is thus the tool that you want to use when
     you need to script package installation requests.</para>
 
+    <indexterm><primary><command>synaptic</command></primary></indexterm>
+    <indexterm><primary><command>wajig</command></primary></indexterm>
+
     <para>Numerous other graphical interfaces then appeared as external
     projects: <command>synaptic</command>, <command>aptitude</command> (which
     includes both a text mode interface and a graphical one — even if not
@@ -821,7 +824,7 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
     <section>
       <title>Initialization</title>
 
-      <!-- MAY CHANGE: size of Packages/Sources/Translation files Packages: 7Mb Translation: 3Mb -->
+      <!-- MAY CHANGE: size of Packages/Sources/Translation files Packages: 8Mb Translation: 6Mb -->
 
       <para>For any work with APT, the list of available packages needs to be
       updated; this can be done simply through <command>apt update</command>.
@@ -831,18 +834,19 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       <filename>Sources</filename>,
       <filename>Translation-<replaceable>language-code</replaceable></filename>),
       which have gradually become bigger and bigger as Debian has developed (at
-      least 10 MB of data for the <literal>main</literal> section). Of course,
+      least 10-16 MB of data for the <literal>main</literal> section). Of course,
       installing from a CD-ROM/DVD set does not require any downloading — in
       this case, the operation is very fast.</para>
 
-      <indexterm><primary><command>apt update</command></primary></indexterm>
-      <indexterm><primary><command>apt-get update</command></primary></indexterm>
-      <indexterm><primary><command>aptitude update</command></primary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary>update package list</secondary></indexterm>
 
       <sidebar id="sidebar.apt-pdiff">
         <title><emphasis>TIP</emphasis> Incremental updates</title>
 
-        <!-- MAY CHANGE: size of Packages file -->
+        <!-- MAY CHANGE: size of Packages file, stable release name -->
 
         <para>The aim of the <command>apt update</command> command is to
         download for each package source the corresponding
@@ -850,11 +854,11 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         However, even after a <command>xz</command> compression, these files
         can remain rather large (the <filename>Packages.xz</filename> for the
         <foreignphrase>main</foreignphrase> section of <emphasis
-        role="distribution">Bullseye</emphasis> takes more than 7 MB). If you
+        role="distribution">Unstable</emphasis> takes more than 8 MB). If you
         wish to update regularly, these downloads can take up a lot of
         time.</para>
 
-        <para>To speed up the process APT can download “diff” files containing
+        <para>To speed up the process, APT can download “diff” files containing
         the changes since the previous update, as opposed to the entire file.
         To achieve this, official Debian mirrors distribute different files
         which list the differences between one version of the
@@ -901,11 +905,15 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
 
     <section id="sect.apt.install">
       <title>Installing and Removing</title>
-
+      <indexterm><primary>APT</primary><secondary>package installation</secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary>package removal</secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary>package purge</secondary></indexterm>
       <indexterm><primary>package</primary><secondary>installation</secondary></indexterm>
       <indexterm><primary>package</primary><secondary>removal</secondary></indexterm>
+      <indexterm><primary>package</primary><secondary>purge</secondary></indexterm>
       <indexterm><primary>installation</primary><secondary>package installation</secondary></indexterm>
       <indexterm><primary>removal of a package</primary></indexterm>
+      <indexterm><primary>removal</primary><secondary>package removal</secondary></indexterm>
 
       <para>With APT, packages can be added or removed from the system,
       respectively with <command>apt install
@@ -916,15 +924,15 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       <replaceable>package</replaceable></command> command involves a complete
       uninstallation by deleting the configuration files as well.</para>
 
-      <indexterm><primary><command>apt install</command></primary></indexterm>
-      <indexterm><primary><command>apt remove</command></primary></indexterm>
-      <indexterm><primary><command>apt purge</command></primary></indexterm>
-      <indexterm><primary><command>apt-get install</command></primary></indexterm>
-      <indexterm><primary><command>apt-get remove</command></primary></indexterm>
-      <indexterm><primary><command>apt-get purge</command></primary></indexterm>
-      <indexterm><primary><command>aptitude install</command></primary></indexterm>
-      <indexterm><primary><command>aptitude remove</command></primary></indexterm>
-      <indexterm><primary><command>aptitude purge</command></primary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>remove</literal></secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>purge</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>remove</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>purge</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>install</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>remove</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>purge</literal></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Installing the same selection of packages several times</title>
@@ -934,6 +942,11 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
 
         <para>First, retrieve the list of packages installed on the computer
         which will serve as the “model” to copy.</para>
+
+        <indexterm><primary><command>dpkg</command></primary><secondary><literal>--get-selections</literal></secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary><literal>--set-selections</literal></secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary><literal>--merge-avail</literal></secondary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary><secondary><literal>dselect-upgrade</literal></secondary></indexterm>
 
         <screen><computeroutput>$ </computeroutput><userinput>dpkg --get-selections &gt;pkg-list</userinput></screen>
 
@@ -963,6 +976,12 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
 
       <sidebar id="sidebar.apt-install-and-remove">
         <title><emphasis>TIP</emphasis> Removing and installing at the same time</title>
+        <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable><literal>+</literal></tertiary></indexterm>
+        <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable><literal>-</literal></tertiary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable><literal>+</literal></tertiary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable><literal>-</literal></tertiary></indexterm>
+        <indexterm><primary><command>aptitude</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable><literal>+</literal></tertiary></indexterm>
+        <indexterm><primary><command>aptitude</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable><literal>-</literal></tertiary></indexterm>
 
         <para>It is possible to ask <command>apt</command> (or
         <command>apt-get</command>, or <command>aptitude</command>) to install
@@ -982,6 +1001,8 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
           <screen># <userinput>apt remove <replaceable>package1</replaceable>+ <replaceable>package2</replaceable></userinput></screen>
         </informalexample>
 
+        <indexterm><primary>dependency solver</primary></indexterm>
+
         <para>This can also be used to exclude packages which would otherwise
         be installed, for example, due to an automatic installation of
         <literal>Recommends</literal>. In general, the dependency solver will
@@ -992,10 +1013,12 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
 
       <sidebar id="sidebar.apt-install-reinstall">
         <title><emphasis>TIP</emphasis> <command>apt --reinstall</command> and <command>aptitude reinstall</command></title>
+        <indexterm><primary>APT</primary><secondary>package reinstallation</secondary></indexterm>
         <indexterm><primary>reinstallation</primary></indexterm>
-        <indexterm><primary><command>apt install --reinstall</command></primary></indexterm>
-        <indexterm><primary><command>apt-get install --reinstall</command></primary></indexterm>
-        <indexterm><primary><command>aptitude install --reinstall</command></primary></indexterm>
+        <indexterm><primary>package</primary><secondary>reinstallation</secondary></indexterm>
+        <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary><tertiary><literal>--reinstall</literal></tertiary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary><tertiary><literal>--reinstall</literal></tertiary></indexterm>
+        <indexterm><primary><command>aptitude</command></primary><secondary><literal>reinstall</literal></secondary></indexterm>
 
         <para>The system can sometimes be damaged after the removal or
         modification of files in a package. The easiest way to retrieve these
@@ -1024,8 +1047,8 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         linkend="sect.dealing-with-compromised-machine"/> details the necessary
         steps to take with a compromised system.</para>
 
-        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confask</command></secondary></indexterm>
-        <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confmiss</command></secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary><literal>--force-confask</literal></secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary><literal>--force-confmiss</literal></secondary></indexterm>
 
         <para>These commands will not restore the configuration files. But as
         you have learned in <xref linkend="sect.conffiles"/> (see also sidebar
@@ -1044,6 +1067,11 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         copy of <filename>/usr/share/readline/inputrc</filename>. In such cases
         the commands shown above won't work.</para>
       </sidebar>
+
+      <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable>=<replaceable>version</replaceable></tertiary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable>/<replaceable>distribution</replaceable></tertiary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable>=<replaceable>version</replaceable></tertiary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary><tertiary><replaceable>package</replaceable>/<replaceable>distribution</replaceable></tertiary></indexterm>
 
       <para>If the file <filename>sources.list</filename> mentions several
       distributions, it is possible to give the version of the package to
@@ -1067,6 +1095,9 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         <screen><computeroutput># </computeroutput><userinput>apt install spamassassin/unstable</userinput></screen>
       </example>
 
+      <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary><tertiary>.deb file</tertiary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary><tertiary>.deb file</tertiary></indexterm>
+
       <para>If the package to install has been made available to you under the
       form of a simple <filename>.deb</filename> file without any associated
       package repository, it is still possible to use APT to install it
@@ -1081,8 +1112,9 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> The cache of <filename>.deb</filename> files</title>
         <indexterm><primary><filename>/var/cache/apt/archives/</filename></primary></indexterm>
-        <indexterm><primary><command>apt-get clean</command></primary></indexterm>
-        <indexterm><primary><command>apt-get autoclean</command></primary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary><secondary><literal>clean</literal></secondary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary><secondary><literal>autoclean</literal></secondary></indexterm>
+        <indexterm><primary>APT</primary><secondary>download archive</secondary></indexterm>
         <indexterm><primary>APT</primary><secondary><filename>/var/cache/apt/archives/</filename></secondary></indexterm>
         <indexterm><primary>APT</primary><secondary><literal>APT::Clean-Installed</literal></secondary></indexterm>
 
@@ -1104,10 +1136,11 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
     <section id="sect.apt-upgrade">
       <title>System Upgrade</title>
       <indexterm><primary>upgrade</primary><secondary>system upgrade</secondary></indexterm>
-
-      <indexterm><primary><command>apt upgrade</command></primary></indexterm>
-      <indexterm><primary><command>apt-get upgrade</command></primary></indexterm>
-      <indexterm><primary><command>aptitude safe-upgrade</command></primary></indexterm>
+      <indexterm><primary>APT</primary><secondary>system update</secondary></indexterm>
+      <indexterm><primary>package</primary><secondary>upgrade</secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>safe-upgrade</literal></secondary></indexterm>
 
       <para>Regular upgrades are recommended, because they include the latest
       security updates. To upgrade, use <command>apt upgrade</command>,
@@ -1144,11 +1177,12 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       <literal>APT::Default-Release "stable";</literal> in the file
       <filename>/etc/apt/apt.conf.d/local</filename>.</para>
 
-      <indexterm><primary><command>apt full-upgrade</command></primary></indexterm>
-      <indexterm><primary><command>apt dist-upgrade</command></primary></indexterm>
-      <indexterm><primary><command>apt-get dist-upgrade</command></primary></indexterm>
-      <indexterm><primary><command>aptitude dist-upgrade</command></primary></indexterm>
-      <indexterm><primary><command>aptitude full-upgrade</command></primary></indexterm>
+      <indexterm><primary>APT</primary><secondary>system upgrade</secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>full-upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>dist-upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>dist-upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>full-upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>dist-upgrade</literal></secondary></indexterm>
 
       <para>For more important upgrades, such as the change from one major
       Debian version to the next, you need to use <command>apt
@@ -1212,8 +1246,8 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       "ftp://<replaceable>yourproxy</replaceable>"</literal>. To discover more
       configuration options, read the
       <citerefentry><refentrytitle>apt.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-      manual page with the <command>man apt.conf</command> command (for details
-      on manual pages, see <xref linkend="sect.manual-pages" />).</para>
+      manual page (for details on manual pages, see <xref
+      linkend="sect.manual-pages" />).</para>
 
       <sidebar id="sidebar.directory.d">
         <title><emphasis>BACK TO BASICS</emphasis> Directories ending in <filename>.d</filename></title>
@@ -1241,11 +1275,18 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         of the file would trigger that request, which would disturb the
         administrator, who is sure not to have changed anything.</para>
 
+        <indexterm><primary><command>dpkg-divert</command></primary></indexterm>
+
         <para>Without a <filename>.d</filename> directory, it is impossible for
-        an external package to change the settings of a program without
-        modifying its configuration file. Instead it must invite the user to do
-        it themselves and lists the operations to be done in the file
-        <filename>/usr/share/doc/<replaceable>package</replaceable>/README.Debian</filename>.</para>
+        an external package to change the settings of a program by modifying
+        its configuration file directly. Instead it must either invite the user
+        to do it themselves and lists the operations to be done in the file
+        <filename>/usr/share/doc/<replaceable>package</replaceable>/README.Debian</filename>,
+        or it must create a file diversion for the configuration file using the
+        <command>dpkg-divert</command> command and then install its own
+        configuration file for the software in question. The latter is
+        sometimes used by third party packages which try to handle
+        configuration files of software components they use.</para>
 
         <para>Depending on the application, the <filename>.d</filename>
         directory is used directly or managed by an external script which will
@@ -1264,9 +1305,7 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         concatenated into
         <filename>/var/lib/exim4/config.autogenerated</filename> by the
         <command>update-exim4.conf</command> command.</para>
-
       </sidebar>
-
     </section>
 
     <section id="sect.apt.priorities">
