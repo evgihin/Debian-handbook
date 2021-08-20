@@ -1976,16 +1976,20 @@ Pin-Priority: 1001</programlisting>
     all the files shipped with them. This information is stored in files named
     <filename>Contents-<replaceable>arch</replaceable>.gz</filename> and
     <filename>Contents-udeb-<replaceable>arch</replaceable>.gz</filename>.
-    This information is not automatically downloaded by APT. Instead it
-    needs the <command>apt-file update</command> command (from the similar
-    named package) to retrieve the contents of all package sources mentioned in
-    <filename>/etc/apt/sources.list</filename>. To update the database on a
-    weekly base, the following entry can be added to
-    <filename>/etc/crontab</filename> if convenient.</para>
+    This information is not automatically downloaded by APT. Instead it needs
+    the <command>apt-file update</command> command (from the similar named
+    package) to retrieve the contents of all package sources mentioned in
+    <filename>/etc/apt/sources.list</filename>. By default it downloads
+    <filename>Contents*.pdiff</filename> files as described in sidebar <xref
+    linkend="sidebar.apt-pdiff"/> to reduce the amount of data necessary to be
+    downloaded. To update the database on a weekly base, the following entry
+    can be added to <filename>/etc/crontab</filename> if convenient.</para>
 
     <informalexample>
       <programlisting><![CDATA[@weekly root test -x /usr/bin/apt-file && /usr/bin/apt-file update >> /dev/null 2>&1]]></programlisting>
     </informalexample>
+
+    <indexterm><primary><command>apt-file</command></primary><secondary><literal>search</literal></secondary></indexterm>
 
     <para>After the database has been updated, the command <command>apt-file
     search <replaceable>pattern</replaceable></command> will list all packages,
@@ -1997,12 +2001,19 @@ apt-xapian-index: /usr/bin/axi-cache
 </screen>
     </informalexample>
 
+    <indexterm><primary><command>apt-file</command></primary><secondary><literal>list</literal></secondary></indexterm>
+
     <para>The command <command>apt-file list
     <replaceable>package</replaceable></command> will list all files shipped
     with the package instead.</para>
 
     <sidebar>
       <title><emphasis>TIP</emphasis> Listing a package contents and finding a file's package</title>
+      <indexterm><primary><command>apt-file</command></primary><secondary><literal>list</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--listfiles</literal></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><literal>--search</literal></secondary></indexterm>
+      <indexterm><primary><emphasis role="pkg">cruft</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">cruft-ng</emphasis></primary></indexterm>
 
       <para>Similar to <command>apt-file list</command> the command
       <command>dpkg -L <replaceable>package</replaceable></command> lists all
