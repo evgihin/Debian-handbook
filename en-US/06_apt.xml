@@ -2447,6 +2447,24 @@ debian-archive-stretch-stable.gpg
     <para>Note, that binary packages are usually not signed. The integrity of a
     package can only be confirmed by checking its hashsums against a trusted
     (and possibly signed) hashsum source.</para>
+
+    <sidebar>
+      <title><emphasis>SPECIFIC CASE</emphasis> Unsigned repositories</title>
+      <indexterm><primary><filename>sources.list</filename></primary><secondary><literal>Trusted</literal></secondary></indexterm>
+      <indexterm><primary><filename>sources.list</filename></primary><secondary><literal>Allow-Insecure</literal></secondary></indexterm>
+
+      <para>While in general unsigned repositories shouldn't be used, some
+      users might still require them, for example to provide some locally built
+      packages. APT can be forced to accept such a repository by prepending
+      the repository URL using <literal>allow-insecure=yes</literal> or
+      <literal>trusted=yes</literal>. We will demonstrate it using the example
+      from <xref linkend="sect.setup-apt-package-repository"/>:</para>
+
+      <informalexample>
+        <programlisting>deb [ trusted=yes ] http://packages.falcot.com/ updates/
+deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
+      </informalexample>
+    </sidebar>
   </section>
 
   <section id="sect.dist-upgrade">
