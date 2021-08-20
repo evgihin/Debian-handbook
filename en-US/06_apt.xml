@@ -2310,11 +2310,10 @@ apt-xapian-index: /usr/bin/axi-cache
     <indexterm><primary>package</primary><secondary>signature</secondary></indexterm>
     <indexterm><primary>signature</primary><secondary>package signature</secondary></indexterm>
     <indexterm><primary>authentication</primary><secondary>package authentication</secondary></indexterm>
-    <indexterm><primary>APT</primary><secondary><filename>Release</filename></secondary></indexterm>
-    <indexterm><primary>APT</primary><secondary><filename>Release.gpg</filename></secondary></indexterm>
-    <indexterm><primary>APT</primary><secondary><filename>InRelease</filename></secondary></indexterm>
-    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary></indexterm>
-    <indexterm><primary>APT</primary><secondary><literal>apt-secure</literal></secondary></indexterm>
+    <indexterm><primary><filename>Release</filename></primary></indexterm>
+    <indexterm><primary><filename>Release.gpg</filename></primary></indexterm>
+    <indexterm><primary><filename>InRelease</filename></primary></indexterm>
+    <indexterm><primary>APT</primary><secondary><citerefentry><refentrytitle>apt-secure</refentrytitle><manvolnum>8</manvolnum></citerefentry></secondary></indexterm>
     <indexterm><primary>APT</primary><secondary>archive authentification</secondary></indexterm>
 
     <para>Security is very important for Falcot Corp administrators.
@@ -2349,19 +2348,23 @@ apt-xapian-index: /usr/bin/axi-cache
     <sidebar>
       <title><emphasis>NOTE</emphasis> The future of <filename>Release</filename> and <filename>Release.gpg</filename></title>
 
-      <para>Probably with the release of Debian 11 <emphasis
-      role="distribution">Bullseye</emphasis> APT will remove support for the legacy
-      files <filename>Release</filename> and <filename>Release.gpg</filename>,
-      used since APT 0.6, which introduced support for an archive
-      authentication.</para>
+      <para>After the release of Debian 10 <emphasis
+      role="distribution">Buster</emphasis> the intention has been announced to
+      remove support for the legacy files <filename>Release</filename> and
+      <filename>Release.gpg</filename> in APT, used since version 0.6, which
+      introduced support for an archive authentication.</para>
     </sidebar>
 
+    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/trusted.gpg.d</filename></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>Release</filename></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>Release.gpg</filename></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>InRelease</filename></secondary></indexterm>
     <indexterm><primary><command>apt-key</command></primary></indexterm>
+    <indexterm><primary><command>apt-key</command></primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary></indexterm>
     <indexterm><primary><emphasis role="pkg">debian-archive-keyring</emphasis></primary></indexterm>
     <indexterm><primary><filename>/etc/apt/trusted.gpg.d/</filename></primary></indexterm>
     <indexterm><primary><filename>/etc/apt/trusted.gpg</filename></primary></indexterm>
-    <indexterm><primary><filename>Release.gpg</filename></primary></indexterm>
-    <indexterm><primary><filename>InRelease</filename></primary></indexterm>
 
     <para>APT needs a set of trusted GnuPG public keys to verify signatures in
     the <filename>InRelease</filename> and <filename>Release.gpg</filename>
@@ -2371,13 +2374,9 @@ apt-xapian-index: /usr/bin/axi-cache
     <command>apt-key</command> command). The official Debian keys are provided
     and kept up-to-date by the <emphasis
     role="pkg">debian-archive-keyring</emphasis> package which puts them in
-    <filename>/etc/apt/trusted.gpg.d/</filename>.  Note, however, that the
-    first installation of this particular package requires caution: even if the
-    package is signed like any other, the signature cannot be verified
-    externally. Cautious administrators should therefore check the fingerprints
-    of imported keys before trusting them to install new packages:</para>
+    <filename>/etc/apt/trusted.gpg.d/</filename>:</para>
 
-    <!-- MAY CHANGE: archive keys -->
+    <!-- MAYCHANGE: archive keys -->
     <screen role="scale"><computeroutput># </computeroutput><userinput>ls /etc/apt/trusted.gpg.d/
 </userinput><![CDATA[debian-archive-bullseye-automatic.gpg
 debian-archive-bullseye-security-automatic.gpg
@@ -2394,6 +2393,8 @@ debian-archive-stretch-stable.gpg
       <title><emphasis>IN PRACTICE</emphasis> Adding trusted keys</title>
       <indexterm><primary>trusted key</primary></indexterm>
       <indexterm><primary>key</primary><secondary>APT's authentication keys</secondary></indexterm>
+      <indexterm><primary><command>apt-key</command></primary><secondary><literal>add</literal></secondary></indexterm>
+      <indexterm><primary><filename>sources.list</filename></primary><secondary><literal>Signed-By</literal></secondary></indexterm>
 
       <para>When a third-party package source is added to the
       <filename>sources.list</filename> file, APT needs to be told to trust
@@ -2404,12 +2405,38 @@ debian-archive-stretch-stable.gpg
       which we will call <filename>key.asc</filename> in the following
       examples.</para>
 
-      <para> To add the key to the trusted keyring, the administrator can just
+      <para>To add the key to APT's trusted keyring, the administrator can just
       put it in a <filename>*.asc</filename> file in
       <filename>/etc/apt/trusted.gpg.d/</filename>. This is supported since
       Debian <emphasis role="distribution">Stretch</emphasis>. With older
       releases, you had to run <command>apt-key add &lt;
       key.asc</command>.</para>
+
+      <para>While this is very common behavior, it also creates a possible
+      issue. APT does not know which key belongs to which repository. If one of
+      the keys in APT's keyring matches the signature of an archive, APT
+      considers the archive as authenticated. Once a key has been added to the
+      keyring, a malicious attacker could actually provide its own "version" of
+      a Debian mirror signed by the same key too. It might therefor actually be
+      better to put the key (as <filename>*.asc</filename> or
+      <filename>*.gpg</filename> file) into
+      <filename>/usr/share/keyrings/</filename> and use the
+      <literal>Signed-By</literal> field in <filename>sources.list</filename>
+      for third party repositories as shown in the example blow.</para>
+
+      <informalexample>
+        <para>Imagine, that the Falcot Corp. runs their own public repository
+        and you want to use it. They have signed it and provide a publicly
+        available key(ring) as well via download. To restrict the key to the
+        repository you can simply do this:</para>
+
+        <screen role="scale" width="80"><computeroutput>$ </computeroutput><userinput>sudo wget -O <replaceable>falcot-keyring.gpg</replaceable> -P /usr/share/keyrings https://packages.falcot.com/debian/repository.gpg</userinput></screen>
+
+        <programlisting>deb [ signed-by=/usr/share/keyrings/falcot-keyring.gpg ] https://packages.falcot.com/debian bullseye main</programlisting>
+      </informalexample>
+
+      <para>Beware that adding third party repositories always poses a security
+      risk!</para>
     </sidebar>
 
     <para>Once the appropriate keys are in the keyring, APT will check the
@@ -2417,6 +2444,9 @@ debian-archive-stretch-stable.gpg
     a warning if asked to install a package whose authenticity can't be
     ascertained.</para>
 
+    <para>Note, that binary packages are usually not signed. The integrity of a
+    package can only be confirmed by checking its hashsums against a trusted
+    (and possibly signed) hashsum source.</para>
   </section>
 
   <section id="sect.dist-upgrade">
