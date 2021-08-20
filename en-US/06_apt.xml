@@ -1109,7 +1109,7 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       referring to a filename and not to the name of a package available in one
       of the repositories.  </para>
 
-      <sidebar>
+      <sidebar id="sidebar.apt-clean">
         <title><emphasis>GOING FURTHER</emphasis> The cache of <filename>.deb</filename> files</title>
         <indexterm><primary><filename>/var/cache/apt/archives/</filename></primary></indexterm>
         <indexterm><primary><command>apt-get</command></primary><secondary><literal>clean</literal></secondary></indexterm>
@@ -1523,7 +1523,7 @@ Pin-Priority: 1001
       associated with each package source, or <command>apt-cache policy
       <replaceable>package</replaceable></command> to display the default
       priority for each available version and source of a package as explained
-      in <xref linkend="sidebar.apt-cache-policy"/>.</para>
+      in <xref linkend="sect.apt-cache-policy"/>.</para>
 
       <para>The reference documentation for the files
       <filename>/etc/apt/preferences</filename> and
@@ -1604,8 +1604,8 @@ Pin-Priority: 500
       upgraded to another distribution: those will follow updates available in
       the other distributions. We will explain this behavior with the help of
       the default priorities set by APT below. Do not hesitate to use
-      <command>apt-cache policy</command> (see sidebar <xref
-      linkend="sidebar.apt-cache-policy"/>) to verify the given
+      <command>apt-cache policy</command> (<xref
+      linkend="sect.apt-cache-policy"/>) to verify the given
       priorities.</para>
 
       <para>Everything centers around the fact that APT only considers
@@ -1771,6 +1771,7 @@ p   apt-xapian-index Depends  python3-debian (&gt;= 0.1.14)
     <indexterm><primary><command>apt-cache</command></primary></indexterm>
     <indexterm><primary>APT</primary><secondary>package search</secondary></indexterm>
     <indexterm><primary>APT</primary><secondary>header display</secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary>cache</secondary></indexterm>
     <indexterm><primary>search of packages</primary></indexterm>
     <indexterm><primary>package</primary><secondary>search</secondary></indexterm>
 
@@ -1791,15 +1792,15 @@ p   apt-xapian-index Depends  python3-debian (&gt;= 0.1.14)
       up to high-end storage systems.</para>
 
       <para>In the case of APT, the reference <filename>Packages</filename>
-      files are those located on Debian mirrors. That said, it would be
-      very ineffective to go through the network for every search that we
-      might want to do in the database of available packages. That is why
-      APT stores a copy of those files (in
-      <filename>/var/lib/apt/lists/</filename>) and searches are done
-      within those local files. Similarly,
-      <filename>/var/cache/apt/archives/</filename> contains a cache of
-      already downloaded packages to avoid downloading them again if you
-      need to reinstall them after a removal.</para>
+      files are those located on Debian mirrors. That said, it would be very
+      ineffective to go through the network for every search that we might want
+      to do in the database of available packages. That is why APT stores a
+      copy of those files (in <filename>/var/lib/apt/lists/</filename>) and
+      searches are done within those local files. Similarly,
+      <filename>/var/cache/apt/archives/</filename> contains a cache of already
+      downloaded packages (see sidebar <xref linkend="sidebar.apt-clean"/>) to
+      avoid downloading them again if you need to reinstall them after a
+      removal.</para>
 
       <para>On the other hand, it is mandatory to run <command>apt
       update</command> regularly to update the cache. Otherwise your package
@@ -1808,12 +1809,12 @@ p   apt-xapian-index Depends  python3-debian (&gt;= 0.1.14)
 
     </sidebar>
 
-    <indexterm><primary><command>apt show</command></primary></indexterm>
-    <indexterm><primary><command>apt search</command></primary></indexterm>
-    <indexterm><primary><command>apt-cache show</command></primary></indexterm>
-    <indexterm><primary><command>apt-cache search</command></primary></indexterm>
-    <indexterm><primary><command>aptitude show</command></primary></indexterm>
-    <indexterm><primary><command>aptitude search</command></primary></indexterm>
+    <indexterm><primary><command>apt</command></primary><secondary><literal>search</literal></secondary></indexterm>
+    <indexterm><primary><command>apt</command></primary><secondary><literal>show</literal></secondary></indexterm>
+    <indexterm><primary><command>apt-cache</command></primary><secondary><literal>search</literal></secondary></indexterm>
+    <indexterm><primary><command>apt-cache</command></primary><secondary><literal>show</literal></secondary></indexterm>
+    <indexterm><primary><command>aptitude</command></primary><secondary><literal>search</literal></secondary></indexterm>
+    <indexterm><primary><command>aptitude</command></primary><secondary><literal>show</literal></secondary></indexterm>
 
     <para>The <command>apt-cache</command> command can do keyword-based
     package searches with <command>apt-cache search
@@ -1836,6 +1837,8 @@ p   apt-xapian-index Depends  python3-debian (&gt;= 0.1.14)
       descriptions. It often returns too many results or none at all when
       you include too many keywords.</para>
 
+      <indexterm><primary><command>axi-cache</command></primary><secondary><literal>search</literal></secondary></indexterm>
+
       <para><command>axi-cache search <replaceable>term</replaceable></command>,
       on the other hand, provides better results, sorted by relevancy. It
       uses the <emphasis>Xapian</emphasis> search engine and is part of
@@ -1846,7 +1849,7 @@ p   apt-xapian-index Depends  python3-debian (&gt;= 0.1.14)
       of milliseconds.</para>
 
       <screen>$ <userinput>axi-cache search package use::searching</userinput>
-<![CDATA[
+<![CDATA[axi-cache search package use::searching
 13 results found.
 Results 1-13:
 100% packagesearch - GUI for searching packages and viewing package information
@@ -1854,28 +1857,31 @@ Results 1-13:
 86% whohas - query multiple distributions' package archives
 84% recoll - Personal full text search package
 82% apt-forktracer - utility for tracking non-official package versions
-[...]
+[..]
 66% apt - commandline package manager
 More terms: debian dpkg search debtags whohas forktracer dctrl
 More tags: role::program admin::package-management suite::debian works-with::software:package interface::commandline scope::utility protocol::http
 ]]></screen>
     </sidebar>
 
-    <indexterm><primary><command>apt-cache policy</command></primary></indexterm>
-    <indexterm><primary><command>apt-cache dumpavail</command></primary></indexterm>
-    <indexterm><primary><command>apt-cache pkgnames</command></primary></indexterm>
+    <indexterm><primary><command>apt-cache</command></primary><secondary><literal>dumpavail</literal></secondary></indexterm>
+    <indexterm><primary><command>apt-cache</command></primary><secondary><literal>pkgnames</literal></secondary></indexterm>
 
-    <para>Some features are more rarely used. For instance,
-    <command>apt-cache policy</command> displays the priorities of package
-    sources as well as those of individual packages. Another example is
-    <command>apt-cache dumpavail</command> which displays the headers of
-    all available versions of all packages. <command>apt-cache
-    pkgnames</command> displays the list of all the packages which appear
-    at least once in the cache.</para>
+    <para>Some features are more rarely used. For instance, <command>apt-cache
+    dumpavail</command> displays the headers of all available versions of all
+    packages. <command>apt-cache pkgnames</command> displays the list of all
+    the packages which appear at least once in the cache.</para>
 
-    <sidebar id="sidebar.apt-cache-policy">
-      <title><emphasis>TIP</emphasis> <command>apt-cache policy</command></title>
+    <para>One of the features which might come in handy more often is
+    <command>apt-cache policy</command>, described in the following
+    section.</para>
 
+    <section id="sect.apt-cache-policy">
+      <title>The <command>apt-cache policy</command> Command</title>
+      <indexterm><primary><command>apt-cache</command></primary><secondary><literal>policy</literal></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary><foreignphrase>pinning</foreignphrase></secondary><tertiary>priorities</tertiary></indexterm>
+
+      <!-- MAYCHANGE: Stable release name -->
       <para>The <command>apt-cache policy</command> command displays the
       pinning priorities and distribution properties of each package source as
       explained in <xref linkend="sect.apt.priorities"/>. It can also show the
@@ -1883,7 +1889,7 @@ More tags: role::program admin::package-management suite::debian works-with::sof
       For the <filename>sources.list</filename> example used in <xref
       linkend="example.stable-sources-list"/> and
       <literal>APT::Default-Release</literal> set to
-      <literal>"buster"</literal>, the output will look like this:</para>
+      <literal>"bullseye"</literal>, the output will look like this:</para>
 
       <!-- MAY CHANGE: release names and versions -->
       <informalexample>
@@ -1891,24 +1897,22 @@ More tags: role::program admin::package-management suite::debian works-with::sof
 <computeroutput>Package files:
  100 /var/lib/dpkg/status
      release a=now
- 100 https://deb.debian.org/debian bullseye-backports/contrib amd64 Packages
-     release o=Debian Backports,a=bullseye-backports,n=buster-backports,l=Debian Backports,c=contrib,b=amd64
-     origin deb.debian.org
  100 https://deb.debian.org/debian bullseye-backports/main amd64 Packages
-     release o=Debian Backports,a=bullseye-backports,n=buster-backports,l=Debian Backports,c=main,b=amd64
+     release o=Debian Backports,a=bullseye-backports,n=bullseye-backports,l=Debian Backports,c=main,b=amd64
      origin deb.debian.org
  990 https://deb.debian.org/debian bullseye/non-free amd64 Packages
-     release v=10.0,o=Debian,a=stable,n=bullseye,l=Debian,c=non-free,b=amd64
+     release v=11.0,o=Debian,a=stable,n=bullseye,l=Debian,c=non-free,b=amd64
      origin deb.debian.org
  990 https://deb.debian.org/debian bullseye/contrib amd64 Packages
-     release v=10.0,o=Debian,a=stable,n=bullseye,l=Debian,c=contrib,b=amd64
+     release v=11.0,o=Debian,a=stable,n=bullseye,l=Debian,c=contrib,b=amd64
      origin deb.debian.org
  990 https://deb.debian.org/debian bullseye/main amd64 Packages
-     release v=10.0,o=Debian,a=stable,n=bullseye,l=Debian,c=main,b=amd64
+     release v=11.0,o=Debian,a=stable,n=bullseye,l=Debian,c=main,b=amd64
      origin deb.debian.org
- 990 http://security.debian.org bullseye-security/main amd64 Packages
-     release v=10,o=Debian,a=stable,n=bullseye,l=Debian-Security,c=main,b=amd64
-     origin security.debian.org</computeroutput>
+ 500 http://security.debian.org bullseye-security/main amd64 Packages
+     release v=11,o=Debian,a=stable-security,n=bullseye-security,l=Debian-Security,c=main,b=amd64
+     origin security.debian.org
+Pinned packages:</computeroutput>
 </screen>
       </informalexample>
 
@@ -1916,32 +1920,47 @@ More tags: role::program admin::package-management suite::debian works-with::sof
       priorities for all available versions and sources of a given
       package.</para>
 
+      <!-- MACHANGE: use example package with different versions -->
       <informalexample>
-        <screen role="scale" width="80"><computeroutput>$ </computeroutput><userinput>apt-cache policy iptables</userinput>
-<computeroutput>iptables:
-  Installed: 1.8.2-4
-  Candidate: 1.8.2-4
+        <screen role="scale" width="80"><computeroutput>$ </computeroutput><userinput>apt-cache policy limnoria</userinput>
+<computeroutput>limnoria:
+  Installed: 2021.06.15-1
+  Candidate: 2021.06.15-1
   Version table:
-     1.8.8-2~bpo10+1 100
+     2021.07.21-1~bpo11+1 100
         100 https://deb.debian.org/debian bullseye-backports/main amd64 Packages
- *** 1.8.7-1 990
+ *** 2021.06.15-1 990
         990 https://deb.debian.org/debian bullseye/main amd64 Packages
         100 /var/lib/dpkg/status</computeroutput></screen>
       </informalexample>
 
+      <indexterm><primary>APT</primary><secondary><filename>/etc/apt/preferences.d/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc/apt/preferences.d/</filename></primary></indexterm>
+
+      <!-- MAYCHANGE: stable release and package name -->
       <para>Although there is a newer version of <emphasis
-      role="pkg">iptables</emphasis> in the <literal>bullseye-backports</literal>
+      role="pkg">limnoria</emphasis> in the <literal>bullseye-backports</literal>
       repository, APT will not install it automatically based on the priority.
       One would have to use <command>apt install
-      iptables/bullseye-backports</command> or add a higher pinning priority to
-      <filename>/etc/apt/preferences.d/iptables</filename>:</para>
+      limnoria/bullseye-backports</command> or add a higher pinning priority to
+      <filename>/etc/apt/preferences.d/limnoria.pref</filename>:</para>
 
       <informalexample>
-        <programlisting>Package: iptables
-Pin: release o=Debian Backports, a=buster-backports
+        <programlisting>Package: limnoria
+Pin: release o=Debian Backports, a=bullseye-backports
 Pin-Priority: 1001</programlisting>
+        <screen role="scale" width="80"><computeroutput>$ </computeroutput><userinput>apt-cache policy limnoria</userinput>
+<computeroutput>limnoria:
+  Installed: 2021.06.15-1
+  Candidate: 2021.07.21-1~bpo11+1
+  Version table:
+     2021.07.21-1~bpo11+1 1001
+        100 https://deb.debian.org/debian bullseye-backports/main amd64 Packages
+ *** 2021.06.15-1 990
+        990 https://deb.debian.org/debian bullseye/main amd64 Packages
+        100 /var/lib/dpkg/status</computeroutput></screen>
       </informalexample>
-    </sidebar>
+    </section>
   </section>
 
   <section id="sect.apt-file">
