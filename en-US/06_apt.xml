@@ -824,7 +824,7 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
     similar command line syntax.  When there are major differences between
     these three commands, these will be detailed.</para>
 
-    <section>
+    <section id="sect.apt-update">
       <title>Initialization</title>
 
       <!-- MAY CHANGE: size of Packages/Sources/Translation files Packages: 8Mb Translation: 6Mb -->
@@ -1677,6 +1677,10 @@ Pin-Priority: 490
       In all cases, the tools display a clear message listing the affected
       packages.</para>
 
+      <indexterm><primary>package</primary><secondary>automatic</secondary></indexterm>
+      <indexterm><primary>package</primary><secondary>manual</secondary></indexterm>
+      <indexterm><primary>package</primary><secondary><literal>markauto</literal></secondary></indexterm>
+      <indexterm><primary>package</primary><secondary><literal>unmarkauto</literal></secondary></indexterm>
       <indexterm><primary><command>apt-mark</command></primary><secondary><literal>auto</literal></secondary></indexterm>
       <indexterm><primary><command>apt-mark</command></primary><secondary><literal>manual</literal></secondary></indexterm>
       <indexterm><primary><command>aptitude</command></primary><secondary><literal>markauto</literal></secondary></indexterm>
@@ -2501,11 +2505,12 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         versions, and sometimes errata.</para>
 
         <!-- MAY CHANGE: oldstable codename in URL -->
-        <para>Release notes are available online: the release notes for the
-        current stable release have a dedicated URL, while older release
-        notes can be found with their codenames:
+        <para>Release notes for Debian are available online: the release notes
+        for the current stable release have a dedicated URL, while older
+        release notes can be found with their codenames:
         <ulink type="block" url="https://www.debian.org/releases/stable/releasenotes"/>
-        <ulink type="block" url="https://www.debian.org/releases/buster/releasenotes"/></para>
+        <ulink type="block" url="https://www.debian.org/releases/buster/releasenotes"/>
+        </para>
 
       </sidebar>
 
@@ -2516,20 +2521,27 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       a system; as such, it is never 100% risk-free, and should not be
       attempted before all important data has been backed up.</para>
 
+      <indexterm><primary><command>aptitude</command></primary></indexterm>
+      <indexterm><primary><command>deborphan</command></primary></indexterm>
+      <indexterm><primary><command>debfoster</command></primary></indexterm>
+      <indexterm><primary><command>apt-show-versions</command></primary></indexterm>
+
       <para>Another good habit which makes the upgrade easier (and
       shorter) is to tidy your installed packages and keep only the ones
       that are really needed. Helpful tools to do that include
-      <command>aptitude</command>, <command>deborphan</command> and
-      <command>debfoster</command> (see <xref
+      <command>aptitude</command>, <command>deborphan</command>,
+      <command>debfoster</command>, and <command>apt-show-versions</command> (see <xref
       linkend="sect.automatic-tracking"/>). For example, you can use the
       following command, and then use <command>aptitude</command>'s interactive
       mode to double check and fine-tune the scheduled removals:</para>
 
-      <screen># <userinput>deborphan | xargs aptitude --schedule-only remove</userinput></screen>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>--schedule-only</literal></secondary></indexterm>
+      <screen><computeroutput>#</computeroutput> <userinput>deborphan | xargs aptitude --schedule-only remove</userinput></screen>
 
       <sidebar id="sidebar.debsums">
         <title><emphasis>TIP</emphasis> Finding changed files</title>
         <indexterm><primary><command>debsums</command></primary></indexterm>
+        <indexterm><primary><filename>md5sums</filename></primary></indexterm>
 
         <para>The <command>debsums</command> command can check if files on the
         local system, which are part of an installed package, have been
@@ -2540,6 +2552,17 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         whole system, use <command>debsums -c</command>.</para>
       </sidebar>
 
+      <indexterm><primary>updates</primary><secondary>system</secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary>update package list</secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary>system update</secondary></indexterm>
+      <indexterm><primary>system</primary><secondary><foreignphrase>update</foreignphrase></secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary><command>synaptic</command></primary></indexterm>
+
+      <!-- MAY CHANGE: stable codenames -->
+
       <para>Now for the upgrading itself. First, you need to change the
       <filename>/etc/apt/sources.list</filename> file to tell APT to get
       its packages from <emphasis role="distribution">Bullseye</emphasis>
@@ -2549,12 +2572,15 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       the change isn't even required, since <emphasis
       role="distribution">Stable</emphasis> always refers to the latest
       released version of Debian. In both cases, the database of available
-      packages must be refreshed (with the <command>apt
+      packages must be refreshed with the <command>apt
       update</command> command or the refresh button in
-      <command>synaptic</command>).</para>
+      <command>synaptic</command> (<xref linkend="sect.apt-update"/>).</para>
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> Repository information changes</title>
+        <indexterm><primary><command>apt</command></primary><secondary><literal>--allow-releaseinfo-change</literal></secondary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary><secondary><literal>--allow-releaseinfo-change</literal></secondary></indexterm>
+        <indexterm><primary>APT</primary><secondary><literal>Acquire::AllowReleaseInfoChange</literal></secondary></indexterm>
 
         <para>When a new stable version of Debian is released, some fields in
         the <filename>Release</filename> and <filename>InRelease</filename>
@@ -2569,30 +2595,39 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         option.</para>
       </sidebar>
 
-      <para>Once these new package sources are registered, you should
-      first do a minimal upgrade with <command>apt upgrade</command>.
-      By doing the upgrade in two steps, we ease the job of the
-      package management tools and often ensure that we have the latest
-      versions of those, which might have accumulated bugfixes and
-      improvements required to complete the full distribution upgrade.
-      </para>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>upgrade</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>safe-upgrade</literal></secondary></indexterm>
+      <indexterm><primary>system</primary><secondary><foreignphrase>upgrade</foreignphrase></secondary></indexterm>
 
-      <para>Once this first upgrade is done, it is time to handle the
-      upgrade itself, either with <command>apt full-upgrade</command>,
-      <command>aptitude</command>, or
-      <command>synaptic</command>. You should carefully check the suggested
-      actions before applying them: you might want to add suggested
-      packages or deselect packages which are only recommended and known
-      not to be useful. In any case, the front-end should come up with a
-      scenario ending in a coherent and up-to-date <emphasis
-      role="distribution">Bullseye</emphasis> system. Then, all you need is
-      to do is wait while the required packages are downloaded, answer the
-      debconf questions and possibly those about locally modified
-      configuration files, and sit back while APT does its magic.</para>
-    </section>
+      <para>Once these new package sources are registered, you should first do
+      a minimal upgrade with <command>apt upgrade</command> et al. as
+      described in <xref linkend="sect.apt-upgrade"/>). By doing the upgrade
+      in two steps, we ease the job of the package management tools and often
+      ensure that we have the latest versions of those, which might have
+      accumulated bugfixes and improvements required to complete the full
+      distribution upgrade.</para>
+
+      <indexterm><primary>system</primary><secondary><foreignphrase>dist-upgrade</foreignphrase></secondary></indexterm>
+      <indexterm><primary>system</primary><secondary><foreignphrase>full-upgrade</foreignphrase></secondary></indexterm>
+
+      <!-- MAYCHANGE: stable release code name -->
+      <para>Once this first upgrade is done, it is time to handle the upgrade
+      itself, either with <command>apt full-upgrade</command>,
+      <command>aptitude</command>, or <command>synaptic</command> (<xref
+      linkend="sect.dist-upgrade"/>). You should carefully check the suggested
+      actions before applying them: you might want to add suggested packages or
+      deselect packages which are only recommended and known not to be useful.
+      In any case, the front-end should come up with a scenario ending in a
+      coherent and up-to-date <emphasis role="distribution">Bullseye</emphasis>
+      system. Then, all you need is to do is wait while the required packages
+      are downloaded, answer the debconf questions and possibly those about
+      locally modified configuration files, and sit back while APT does its
+      magic.</para> </section>
 
     <section id="sect.dist-upgrade-problems">
       <title>Handling Problems after an Upgrade</title>
+      <indexterm><primary><emphasis role="pkg">apt-listchanges</emphasis></primary></indexterm>
 
       <para>In spite of the Debian maintainers' best efforts, a major
       system upgrade isn't always as smooth as you could wish. New software
@@ -2611,6 +2646,10 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       <emphasis role="pkg">apt-listchanges</emphasis>) should help you
       avoid bad surprises.</para>
 
+      <indexterm><primary><literal>bugs.debian.org</literal></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">apt-listbugs</emphasis></primary></indexterm>
+      <indexterm><primary><command>reportbug</command></primary></indexterm>
+
       <para>You might sometimes find that the new version of a software doesn't
       work at all. This generally happens if the application isn't particularly
       popular and hasn't been tested enough; a last-minute update can also
@@ -2619,7 +2658,7 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       system at <ulink
       url="https://bugs.debian.org"><literal>https://bugs.debian.org/<replaceable>package</replaceable></literal></ulink>,
       and check whether the problem has already been reported. If this is case,
-      it will be also listed before the upgrade begins, if you have <emphasis
+      it will be also listed before the upgrade begins if you have <emphasis
       role="pkg">apt-listbugs</emphasis> installed. If it hasn't, you should
       report it yourself with <command>reportbug</command>. If it is already
       known, the bug report and the associated messages are usually an
@@ -2653,6 +2692,8 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       installed with <command>apt</command> or
       <command>aptitude</command>.</para>
 
+      <indexterm><primary><literal>release.debian.org</literal></primary><secondary>proposed updates</secondary></indexterm>
+
       <para>Sometimes the fixed package isn't available in this section yet
       because it is pending a validation by the Stable Release Managers.
       You can verify if that is the case on their web page. Packages listed
@@ -2664,6 +2705,7 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
     <section>
       <title>Cleaning Up after an Upgrade</title>
       <indexterm><primary>upgrade</primary><secondary>cleaning</secondary></indexterm>
+      <indexterm><primary>system</primary><secondary>cleaning</secondary></indexterm>
 
       <para>APT usually ensures a clean upgrade, pulling in new and updated
       dependencies, or removing conflicting packages. But even being such a
@@ -2673,6 +2715,8 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       <section id="sect.apt-show-versions">
         <title>Packages removed from the Debian Archive</title>
         <indexterm><primary><command>apt-show-versions</command></primary></indexterm>
+        <indexterm><primary><command>aptitude</command></primary><secondary>obsolete packages</secondary></indexterm>
+        <indexterm><primary>package</primary><secondary>obsolete</secondary></indexterm>
 
         <para>Sometimes the Debian ftpmasters remove packages from the Debian
         archive, because they contain release critical bugs, were abandoned by
@@ -2695,6 +2739,11 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         <indexterm><primary>transitional package</primary></indexterm>
         <indexterm><primary>package</primary><secondary>transitional</secondary></indexterm>
         <indexterm><primary>package</primary><secondary>dummy</secondary></indexterm>
+        <indexterm><primary>package</primary><secondary>oldlibs</secondary></indexterm>
+        <indexterm><primary><literal>oldlibs</literal></primary></indexterm>
+        <indexterm><primary><command>aptitude</command></primary></indexterm>
+        <indexterm><primary><command>deboprhan</command></primary></indexterm>
+        <indexterm><primary><command>debfoster</command></primary></indexterm>
 
         <para>Sometimes, it might be necessary for a package to get a new name.
         In this case often the old package is kept as an (almost) empty package,
@@ -2717,6 +2766,10 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
         <screen><computeroutput>$ </computeroutput><userinput>dpkg -l | grep ^ii | grep -i -E "(transition|dummy)"</userinput></screen>
 
+        <indexterm><primary>package</primary><secondary>automatic</secondary></indexterm>
+        <indexterm><primary>package</primary><secondary><literal>markauto</literal></secondary></indexterm>
+        <indexterm><primary>package</primary><secondary><literal>unmarkauto</literal></secondary></indexterm>
+
         <para>Because the new package is pulled in as a dependency of the
         transitional package, it is usually marked as automatically installed
         and might be scheduled for removal if you try to purge the
@@ -2734,6 +2787,9 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         <indexterm><primary>configuration files</primary><secondary><filename>.ucf-old</filename></secondary></indexterm>
         <indexterm><primary>configuration files</primary><secondary><filename>.ucf-new</filename></secondary></indexterm>
         <indexterm><primary>configuration files</primary><secondary><filename>.ucf-dist</filename></secondary></indexterm>
+        <indexterm><primary>package</primary><secondary>purge</secondary></indexterm>
+        <indexterm><primary>apt</primary><secondary><literal>autoremove</literal></secondary></indexterm>
+        <indexterm><primary>apt-get</primary><secondary><literal>autoremove</literal></secondary></indexterm>
 
         <para>If the upgrade was successful there might be some configuration
         file cruft, either from dpkg (see <xref linkend="sect.conffiles"/>),
@@ -2742,9 +2798,9 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         --purge</command>.  The configuration files that were handled by
         <emphasis role="pkg">dpkg</emphasis> or <emphasis
         role="pkg">ucf</emphasis> during the upgrade process have left some
-        counterparts with a dedicated suffix (e.g.
+        counterparts with a dedicated suffix, e.g.
         <filename>.dpkg-dist</filename>, <filename>.dpkg-old</filename>,
-        <filename>.ucf-old</filename>). Using the <command>find</command> or
+        <filename>.ucf-old</filename>. Using the <command>find</command> or
         <command>locate</command> command can help to track them down. If they
         are no longer of any use, they can be deleted.</para>
       </section>
