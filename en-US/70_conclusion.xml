@@ -21,7 +21,7 @@
   <section id="sect.upcoming-developments">
     <title>Upcoming Developments</title>
 
-    <!-- MAYCHANGE: Release number and codename
+    <!-- MAYCHANGE: Stable release number and testing codename
          https://www.debian.org/releases/testing/releasenotes -->
     <para>Now that Debian version 11 is out, the developers are already
     busy working on the next version, codenamed <emphasis
@@ -35,40 +35,33 @@
     <para>Debian will continously improve to be used in container and cloud/VPS
     systems, as well as dedicated hardware.</para>
 
-    <para>Support for systems not using the merged-usr filesystem might not be
-    continued.</para>
+    <para>Support for systems not using the merged-usr filesystem is at
+    stake.</para>
 
-    <para>For some tasks the default software solution can change. As an
-    example <command>plocate</command> might be a faster and smaller
-    replacement for <command>mlocate</command>. Of course, all the main
+    <indexterm><primary><command>apt-key</command></primary></indexterm>
+    <para><command>apt-key</command> will become obsolete. The key management
+    for third party repositories should only rely on keys found in
+    <filename>/etc/apt/trusted.gpg.d</filename> or configured via
+    <literal>Signed-By</literal> as described in <xref
+    linkend="sect.package-authentication"/>.</para>
+
+    <para>For some tasks the default software solution will change. As an
+    example: <command>plocate</command> might be a faster and smaller
+    replacement for <command>mlocate</command>. Of course all the main
     software suites will have a major release. The latest version of the
     various desktops will bring better usability and new features.</para>
 
     <para>Further the question has been raised to introduce "private" home
-    directories by changing the default user permissions.</para>
+    directories by default by changing the default user permissions. Also using
+    crypto policies and saving energy consumption can become quite big topics
+    in the upcoming years.</para>
 
-    <para>Also using crypto policies and saving energy consumption can become
-    quite big topics in the upcoming years.</para>
-
-<!--    <para>In order to improve security and trust, an increasing number
-    of packages will be made to build reproducibly; that is to say, it
-    will be possible to rebuild byte-for-byte identical binary
-    packages from the source packages, thus allowing everyone to
-    verify that no tampering has happened during the builds. This feature
-    might even be required by the release managers for testing migration.
-    </para>
-
-    <para>In a related theme, a lot of effort will have gone into
-    improving security by default, with more packages shipping an
-    AppArmor profile.
-    </para> -->
-
-    <para>With the widespread use of continuous integration and the growth of
-    the archive (and of the biggest packages!), the constraints on release
-    architectures will be harder to meet and some architectures will be
-    dropped. One of the architectures at stake is i386.</para>
-
-    <para>Autopkgtests (when provided) will continue to be considered across
+    <para>Developments which already began will continue: Improve build
+    reproducibility and security for example. With the widespread use of
+    continuous integration and the growth of the archive (and of the biggest
+    packages!), the constraints on release architectures will be harder to meet
+    and architectures will be dropped. One of the architectures at stake is
+    i386. Autopkgtests (when provided) will continue to be considered across
     all architectures for migration to <emphasis
     role="distribution">Bookworm</emphasis>. In other words, the tests need to
     succeed on all release architectures for packages to migrate and improve
