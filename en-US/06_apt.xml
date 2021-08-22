@@ -2042,9 +2042,9 @@ apt-xapian-index: /usr/bin/axi-cache
 
     <para>APT is a C++ program whose code mainly resides in the
     <literal>libapt-pkg</literal> shared library. Using a shared library
-    facilitates the creation of user interfaces (front-ends), since the
+    facilitates the creation of user interfaces (frontends), since the
     code contained in the library can easily be reused. Historically,
-    <command>apt-get</command> was only designed as a test front-end for
+    <command>apt-get</command> was only designed as a test frontend for
     <literal>libapt-pkg</literal> but its success tends to obscure this
     fact.</para>
 
@@ -2271,7 +2271,7 @@ apt-xapian-index: /usr/bin/axi-cache
           upgrade.</para>
 
           <para>Beware, this logfile only contains a summary of operations
-          performed by <command>aptitude</command>. If other front-ends (or
+          performed by <command>aptitude</command>. If other frontends (or
           even <command>dpkg</command> itself) are occasionally used, then
           <command>aptitude</command>'s log will only contain a partial
           view of the operations, so you can't rely on it to build a
@@ -2443,7 +2443,7 @@ debian-archive-stretch-stable.gpg
       a security and stability risk!</para> </sidebar>
 
     <para>Once the appropriate keys are in the keyring, APT will check the
-    signatures before any risky operation, so that front-ends will display
+    signatures before any risky operation, so that frontends will display
     a warning if asked to install a package whose authenticity can't be
     ascertained.</para>
 
@@ -2618,7 +2618,7 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       linkend="sect.dist-upgrade"/>). You should carefully check the suggested
       actions before applying them: you might want to add suggested packages or
       deselect packages which are only recommended and known not to be useful.
-      In any case, the front-end should come up with a scenario ending in a
+      In any case, the frontend should come up with a scenario ending in a
       coherent and up-to-date <emphasis role="distribution">Bullseye</emphasis>
       system. Then, all you need is to do is wait while the required packages
       are downloaded, answer the debconf questions and possibly those about
@@ -2824,6 +2824,11 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
   <section id="sect.regular-upgrades">
     <title>Keeping a System Up to Date</title>
+    <indexterm><primary>system</primary><secondary><foreignphrase>update</foreignphrase></secondary><tertiary>unattended</tertiary></indexterm>
+    <indexterm><primary>system</primary><secondary><foreignphrase>upgrade</foreignphrase></secondary><tertiary>unattended</tertiary></indexterm>
+    <indexterm><primary>system</primary><secondary><foreignphrase>dist-upgrade</foreignphrase></secondary><tertiary>unattended</tertiary></indexterm>
+    <indexterm><primary>system</primary><secondary>periodic update</secondary></indexterm>
+    <indexterm><primary>system</primary><secondary>unattended upgrade</secondary></indexterm>
 
     <para>The Debian distribution is dynamic and changes continually. Most
     of the changes are in the <emphasis
@@ -2841,6 +2846,8 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
     automated, and a set of tools have already been developed to that
     effect.</para>
 
+    <indexterm><primary><emphasis role="pkg">apticron</emphasis></primary></indexterm>
+
     <para>The first of these tools is <command>apticron</command>, in the
     package of the same name. Its main effect is to run a script daily (via
     <command>cron</command>). The script updates the list of available
@@ -2854,6 +2861,11 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
     does not install them — the administrator will still do it — but
     having the packages already downloaded and available locally (in APT's
     cache) makes the job faster.</para>
+
+    <indexterm><primary>APT</primary><secondary><filename>/etc/cron.daily/apt-compat</filename></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf.d/10periodic</filename></secondary></indexterm>
+    <indexterm><primary>configuration files</primary><secondary><filename>/etc/cron.daily/apt-compat</filename></secondary></indexterm>
+    <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/apt.conf.d/10periodic</filename></secondary></indexterm>
 
     <para>Administrators in charge of several computers will no doubt
     appreciate being informed of pending upgrades, but the upgrades
@@ -2914,7 +2926,9 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         </term>
         <listitem>
           <indexterm><primary><emphasis role="pkg">unattended-upgrades</emphasis></primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
-          <indexterm><primary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></primary></indexterm>
+          <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
+          <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
+          <indexterm><primary><emphasis role="pkg">apt-listbugs</emphasis></primary></indexterm>
           <para>When this option is enabled, the daily script will
           execute <command>unattended-upgrade</command> (from the
           <emphasis role="pkg">unattended-upgrades</emphasis> package)
@@ -2931,6 +2945,8 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         </listitem>
       </varlistentry>
     </variablelist>
+
+    <indexterm><primary>APT</primary><secondary><filename>/usr/lib/apt/apt.systemd.daily</filename></secondary></indexterm>
 
     <para>Other options can allow you to control the cache cleaning
     behavior with more precision. They are not listed here, but they are
@@ -2967,7 +2983,10 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
   <section id="sect.automatic-upgrades">
     <title>Automatic Upgrades</title>
     <indexterm><primary>upgrade</primary><secondary>automatic system upgrade</secondary></indexterm>
+    <indexterm><primary>upgrade</primary><secondary>noninteractive</secondary></indexterm>
+    <indexterm><primary>system</primary><secondary>automatic upgrade</secondary></indexterm>
     <indexterm><primary>automatic upgrade</primary></indexterm>
+    <indexterm><primary>noninteractive upgrade</primary></indexterm>
 
     <para>Since Falcot Corp has many computers but only limited manpower,
     its administrators try to make upgrades as automatic as possible. The
@@ -2976,6 +2995,8 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
     <section>
       <title>Configuring <command>dpkg</command></title>
+      <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confdef</command></secondary></indexterm>
+      <indexterm><primary><command>dpkg</command></primary><secondary><command>--force-confold</command></secondary></indexterm>
 
       <para>As we have already mentioned (see sidebar <xref
       linkend="sidebar.questions-conffiles"/>), <command>dpkg</command> can
@@ -2990,6 +3011,9 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
     <section>
       <title>Configuring APT</title>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>--assume-yes</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>--assume-yes</literal></secondary></indexterm>
+      <indexterm><primary><command>aptitude</command></primary><secondary><literal>--assume-yes</literal></secondary></indexterm>
 
       <para>The case of APT is simple: the <literal>-y</literal> option (or
       <literal>--assume-yes</literal>) tells APT to consider the answer to
@@ -2998,6 +3022,7 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
     <section>
       <title>Configuring <command>debconf</command></title>
+      <indexterm><primary><command>debconf</command></primary><secondary>frontend</secondary><tertiary><literal>noninteractive</literal></tertiary></indexterm>
 
       <para>The case of <command>debconf</command> deserves more details.
       This program was, from its inception, designed to control the
@@ -3009,10 +3034,14 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
       which it decided to skip.</para>
 
       <para>The other relevant configuration element is the interface used
-      by the front-end. If you choose <literal>noninteractive</literal> out
+      by the frontend. If you choose <literal>noninteractive</literal> out
       of the choices, all user interaction is disabled. If a package tries
       to display an informative note, it will be sent to the administrator
       by email.</para>
+
+      <indexterm><primary><command>dpkg-reconfigure</command></primary></indexterm>
+      <indexterm><primary>APT</primary><secondary><varname>DEBIAN_FRONTEND</varname></secondary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>DEBIAN_FRONTEND</varname></secondary></indexterm>
 
       <para>To reconfigure <command>debconf</command>, use the
       <command>dpkg-reconfigure</command> tool from the <emphasis
