@@ -525,6 +525,7 @@ $ </computeroutput><userinput>ls travail/</userinput>
       <indexterm><primary>Dynamic Host Configuration Protocol</primary></indexterm>
       <indexterm><primary>network</primary><secondary>hostname</secondary></indexterm>
       <indexterm><primary>network</primary><secondary>ethernet</secondary></indexterm>
+      <indexterm><primary>network</primary><secondary>dynamic</secondary></indexterm>
 
       <para>If the computer has an Ethernet card, the IP network that is
       associated with it must be configured by choosing from one of two
@@ -553,14 +554,16 @@ iface enp0s31f6 inet dhcp
         <indexterm><primary><literal>wlan0</literal></primary></indexterm>
         <indexterm><primary><literal>wl*</literal></primary></indexterm>
         <indexterm><primary>network</primary><secondary>interfaces</secondary></indexterm>
+        <indexterm><primary>predictable network names</primary></indexterm>
+        <indexterm><primary>connection</primary><secondary>by ethernet card</secondary></indexterm>
         <para>
           By default, the kernel attributes generic names such as
           <literal>eth0</literal> (for wired Ethernet) or
           <literal>wlan0</literal> (for WiFi) to the network interfaces.
           The number in those names is a simple incremental counter
           representing the order in which they have been detected.
-          With modern hardware, that order might change for each reboot
-          and thus the default names are not reliable.
+          With modern hardware, that order (at least in theory) might change
+          for each reboot and thus the default names are not reliable.
         </para>
         <para>
           Fortunately, systemd and udev are able to rename the interfaces
@@ -576,7 +579,7 @@ iface enp0s31f6 inet dhcp
           above, the rest of the name indicates, in abbreviated form, a
           PCI (<literal>p</literal>) bus number (<literal>0</literal>),
           a slot number (<literal>s31</literal>), a function number
-          (<literal>f6</literal>).
+          (<literal>f6</literal>). Thus the name becomes predictable.
         </para>
         <indexterm><primary><command>ip</command></primary><secondary><literal>addr</literal></secondary></indexterm>
         <para>
@@ -591,12 +594,23 @@ iface enp0s31f6 inet dhcp
         <indexterm><primary>kernel</primary><secondary><literal>biosdevname</literal></secondary></indexterm>
         <para>
           In some corner cases it might be necessary to disable the
-          consistent/predictable naming of network devices as described above.
+          predictable naming of network devices as described above.
           Besides changing the default <emphasis role="pkg">udev</emphasis>
           rule it is also possible to boot the system using the
           <literal>net.ifnames=0</literal> (restores the default kernel
           behavior) and <literal>biosdevname=0</literal> kernel parameters to
           achieve that.
+        </para>
+        <indexterm><primary>persistent network names</primary></indexterm>
+        <para>
+          The predecessor of the predictable name scheme was called “persistent
+          name scheme”. It was done using a <emphasis
+          role="pkg">udev</emphasis> rule to assign the device name based on
+          the MAC address. This scheme has been abandoned and with the release
+          of Debian 10 <emphasis role="distribution">Buster</emphasis> users
+          have been encouraged to migrate to predictable network device names.
+          <ulink type="block"
+          url="https://www.debian.org/releases/buster/amd64/release-notes/ch-information.en.html#migrate-interface-names"/>
         </para>
       </sidebar>
 
@@ -646,6 +660,8 @@ iface enp0s31f6 inet static
     <section id="sect.interface-wireless">
       <title>Wireless Interface</title>
       <indexterm><primary>wireless</primary></indexterm>
+      <indexterm><primary>network</primary><secondary>wireless</secondary></indexterm>
+      <indexterm><primary>connection</primary><secondary>by wireless card</secondary></indexterm>
       <para>
         Getting wireless network cards to work can be a bit more
         challenging. First of all, they often require the installation
@@ -658,7 +674,9 @@ iface enp0s31f6 inet static
       <section>
         <title>Installing the required firmwares</title>
         <indexterm><primary>firmware</primary></indexterm>
+        <indexterm><primary>package</primary><secondary>firmware</secondary></indexterm>
         <indexterm><primary>isenkram</primary></indexterm>
+        <indexterm><primary><command>isenkram-autoinstall-firmware</command></primary></indexterm>
         <para>
           First you have to enable the non-free repository
           in APT's sources.list file: see <xref linkend="sect.apt-sources.list" />
@@ -686,7 +704,10 @@ iface enp0s31f6 inet static
       </section>
       <section>
         <title>Wireless specific entries in <filename>/etc/network/interfaces</filename></title>
+        <indexterm><primary>configuration files</primary><secondary><filename>/etc/network/interfaces</filename></secondary></indexterm>
         <indexterm><primary>WPA</primary></indexterm>
+        <indexterm><primary>Wi-Fi Protected Access</primary><see>WPA</see></indexterm>
+        <indexterm><primary><emphasis role="pkg">wpasupplicant</emphasis></primary></indexterm>
         <para>
           <emphasis>ifupdown</emphasis> is able to manage wireless
           interfaces but it needs the help of the <emphasis
@@ -701,6 +722,7 @@ iface enp0s31f6 inet static
         </para>
         <example id="example.config-wireless">
           <title>DHCP configuration for a wireless interface</title>
+          <indexterm><primary>network</primary><secondary><literal>wpa-ssid</literal></secondary></indexterm>
           <programlisting>
 auto wlp4s0
 iface wlp4s0 inet dhcp
@@ -708,6 +730,8 @@ iface wlp4s0 inet dhcp
   wpa-psk ccb290fd4fe6b22935cbae31449e050edd02ad44627b16ce0151668f5f53c01b
 </programlisting>
 </example>
+        <indexterm><primary>network</primary><secondary><literal>wpa-psk</literal></secondary></indexterm>
+        <indexterm><primary>network</primary><secondary><literal>wpa-key-mgmt</literal></secondary></indexterm>
         <para>
           The <literal>wpa-psk</literal> parameter can contain either the
           plain text passphrase or its hashed version generated with
@@ -728,6 +752,7 @@ iface wlp4s0 inet dhcp
         <sidebar>
           <title><emphasis>HISTORY</emphasis> WEP encryption</title>
           <indexterm><primary>WEP</primary></indexterm>
+          <indexterm><primary>Wired Equivalent Privacy</primary><see>WEP</see></indexterm>
           <para>
             Usage of the deprecated WEP encryption protocol is possible
             with the <emphasis role="pkg">wireless-tools</emphasis> package.
@@ -740,6 +765,7 @@ iface wlp4s0 inet dhcp
     <section id="sect.ppp-rtc">
       <title>Connecting with PPP through a PSTN Modem</title>
       <indexterm><primary>PPP</primary></indexterm>
+      <indexterm><primary>Point-to-Point Protocol</primary><see>PPP</see></indexterm>
       <indexterm><primary>point to point</primary></indexterm>
       <indexterm><primary>connection</primary><secondary>by PSTN modem</secondary></indexterm>
       <indexterm><primary>modem</primary><secondary>PSTN</secondary></indexterm>
@@ -761,6 +787,7 @@ iface wlp4s0 inet dhcp
 
       <indexterm><primary><command>pppconfig</command></primary></indexterm>
       <indexterm><primary>PAP</primary></indexterm>
+      <indexterm><primary>Password Authentication Protocol</primary><see>PPP</see></indexterm>
 
       <para>After configuration, it is possible to connect using the
       <command>pon</command> command (giving it the name of the connection
@@ -772,6 +799,7 @@ iface wlp4s0 inet dhcp
 
       <indexterm><primary><command>pon</command></primary></indexterm>
       <indexterm><primary><command>poff</command></primary></indexterm>
+      <indexterm><primary>group</primary><secondary><literal>dip</literal></secondary></indexterm>
 
     </section>
     <section id="sect.adsl">
@@ -790,40 +818,51 @@ iface wlp4s0 inet dhcp
       <section id="sect.adsl-pppoe">
         <title>Modems Supporting PPPOE</title>
         <indexterm><primary>PPPOE</primary></indexterm>
+        <indexterm><primary>PPP over Ethernet</primary><see>PPPOE</see></indexterm>
         <indexterm><primary><command>pppoeconf</command></primary></indexterm>
+        <indexterm><primary>connection</primary><secondary>by PPPOE</secondary></indexterm>
+        <indexterm><primary>configuration files</primary><secondary><filename>/etc/ppp/peers/dsl-provider</filename></secondary></indexterm>
+        <indexterm><primary>configuration files</primary><secondary><filename>/etc/ppp/pap-secrets</filename></secondary></indexterm>
+        <indexterm><primary>configuration files</primary><secondary><filename>/etc/ppp/chap-secrets</filename></secondary></indexterm>
 
-	<para>Some Ethernet modems work with the PPPOE protocol (Point to
-	Point Protocol over Ethernet). The <command>pppoeconf</command>
-	tool (from the package with the same name) will configure the
-	connection. To do so, it modifies the
-	<filename>/etc/ppp/peers/dsl-provider</filename> file with the
-	settings provided and records the login information in the
-	<filename>/etc/ppp/pap-secrets</filename> and
-	<filename>/etc/ppp/chap-secrets</filename> files. It is recommended
-	to accept all modifications that it proposes.</para>
+        <para>Some Ethernet modems work with the PPPOE protocol (Point to
+        Point Protocol over Ethernet). The <command>pppoeconf</command>
+        tool (from the package with the same name) will configure the
+        connection. To do so, it modifies the
+        <filename>/etc/ppp/peers/dsl-provider</filename> file with the
+        settings provided and records the login information in the
+        <filename>/etc/ppp/pap-secrets</filename> and
+        <filename>/etc/ppp/chap-secrets</filename> files. It is recommended
+        to accept all modifications that it proposes.</para>
 
-	<para>Once this configuration is complete, you can open the ADSL
-	connection with the command, <command>pon dsl-provider</command>
-	and disconnect with <command>poff dsl-provider</command>.</para>
+        <indexterm><primary><command>pon</command></primary></indexterm>
+        <indexterm><primary><command>poff</command></primary></indexterm>
+
+        <para>Once this configuration is complete, you can open the ADSL
+        connection with the command, <command>pon dsl-provider</command>
+        and disconnect with <command>poff dsl-provider</command>.</para>
         <indexterm><primary><literal>dsl-provider</literal></primary></indexterm>
 
         <sidebar>
           <title><emphasis>TIP</emphasis> Starting <command>ppp</command> at boot</title>
           <indexterm><primary><command>systemd</command></primary></indexterm>
           <indexterm><primary><command>init</command></primary></indexterm>
+          <indexterm><primary>configuration files</primary><secondary><filename>/etc/systemd/system/adsl-connection.service</filename></secondary></indexterm>
 
-	  <para>PPP connections over ADSL are, by definition,
-	  intermittent.  Since they are usually not billed according
-	  to time, there are few downsides to the temptation of
-	  keeping them always open.  The standard means to do so is to
-	  use the init system.</para>
+          <para>PPP connections over ADSL are, by definition,
+          intermittent.  Since they are usually not billed according
+          to time, there are few downsides to the temptation of
+          keeping them always open.  The standard means to do so is to
+          use the init system.</para>
 
           <para>With systemd, adding an automatically
-	  restarting task for the ADSL connection is a simple matter
-	  of creating a “unit file” such as
+          restarting task for the ADSL connection is a simple matter
+          of creating a “unit file” such as
           <filename>/etc/systemd/system/adsl-connection.service</filename>,
           with contents such as the following:
 </para>
+
+          <indexterm><primary><command>pppd</command></primary></indexterm>
 
 <programlisting>[Unit]
 Description=ADSL connection
@@ -836,6 +875,8 @@ Restart=always
 [Install]
 WantedBy=multi-user.target</programlisting>
 
+          <indexterm><primary><command>systemctl</command></primary></indexterm>
+
           <para>Once this unit file has been defined, it needs to be
           enabled with <command>systemctl enable
           adsl-connection</command>.  Then the loop can be started
@@ -843,6 +884,8 @@ WantedBy=multi-user.target</programlisting>
           adsl-connection</command>; it will also be started
           automatically on boot.
           </para>
+
+          <indexterm><primary>configuration files</primary><secondary><filename>/etc/inittab</filename></secondary></indexterm>
 
           <para>On systems not using <command>systemd</command>
           (including <emphasis role="distribution">Wheezy</emphasis>
@@ -853,46 +896,50 @@ WantedBy=multi-user.target</programlisting>
           connection is disconnected, <command>init</command> will
           reconnect it.</para>
 
+          <indexterm><primary><command>pppd</command></primary></indexterm>
+
           <programlisting>
 adsl:2345:respawn:/usr/sbin/pppd call dsl-provider
 </programlisting>
 
-	  <para>For ADSL connections that auto-disconnect on a daily basis, this
-	  method reduces the duration of the interruption.</para>
+          <para>For ADSL connections that auto-disconnect on a daily basis, this
+          method reduces the duration of the interruption.</para>
         </sidebar>
       </section>
       <section id="sect.adsl-pptp">
         <title>Modems Supporting PPTP</title>
         <indexterm><primary>PPTP</primary></indexterm>
+        <indexterm><primary>Point-to-Point Tunneling Protocol</primary><see>PPTP</see></indexterm>
+        <indexterm><primary>connection</primary><secondary>by PPTP</secondary></indexterm>
 
-	<para>The PPTP (Point-to-Point Tunneling Protocol) protocol was
-	created by Microsoft. Deployed at the beginning of ADSL, it was
-	quickly replaced by PPPOE. If this protocol is forced on you, see
-	<xref linkend="sect.pptp"/>.</para>
+        <para>The PPTP (Point-to-Point Tunneling Protocol) protocol was
+        created by Microsoft. Deployed at the beginning of ADSL, it was
+        quickly replaced by PPPOE. If this protocol is forced on you, see
+        <xref linkend="sect.pptp"/>.</para>
       </section>
       <section id="sect.adsl-dhcp">
         <title>Modems Supporting DHCP</title>
 
-	<para>When a modem is connected to the computer by an Ethernet
-	cable (crossover cable) you typically configure a network
-	connection by DHCP on the computer; the modem automatically acts as
-	a gateway by default and takes care of routing (meaning that it
-	manages the network traffic between the computer and the
-	Internet).</para>
+        <para>When a modem is connected to the computer by an Ethernet
+        cable (crossover cable) you typically configure a network
+        connection by DHCP on the computer; the modem automatically acts as
+        a gateway by default and takes care of routing (meaning that it
+        manages the network traffic between the computer and the
+        Internet).</para>
 
         <sidebar>
           <title><emphasis>BACK TO BASICS</emphasis> Crossover cable for a direct Ethernet connection</title>
           <indexterm><primary>crossover cable</primary></indexterm>
 
-	  <para>Computer network cards expect to receive data on specific
-	  wires in the cable, and send their data on others. When you
-	  connect a computer to a local network, you usually connect a
-	  cable (straight or crossover) between the network card and a
-	  repeater or switch. However, if you want to connect two computers
-	  directly (without an intermediary switch or repeater), you must
-	  route the signal sent by one card to the receiving side of the
-	  other card, and vice-versa. This is the purpose of a crossover
-	  cable, and the reason it is used.</para>
+          <para>Computer network cards expect to receive data on specific
+          wires in the cable, and send their data on others. When you
+          connect a computer to a local network, you usually connect a
+          cable (straight or crossover) between the network card and a
+          repeater or switch. However, if you want to connect two computers
+          directly (without an intermediary switch or repeater), you must
+          route the signal sent by one card to the receiving side of the
+          other card, and vice-versa. This is the purpose of a crossover
+          cable, and the reason it is used.</para>
 
           <para>Note that this distinction has become almost
           irrelevant over time, as modern network cards are able to
@@ -901,15 +948,16 @@ adsl:2345:respawn:/usr/sbin/pppd call dsl-provider
           given location.</para>
         </sidebar>
 
-	<para>Most “ADSL routers” on the market can be used like this, as
-	do most of the ADSL modems provided by Internet services
-	providers.</para>
+        <para>Most “ADSL routers” on the market can be used like this, as
+        do most of the ADSL modems provided by Internet services
+        providers.</para>
       </section>
     </section>
     <section id="sect.roaming-network-config">
       <title>Automatic Network Configuration for Roaming Users</title>
       <indexterm><primary><emphasis role="pkg">network-manager</emphasis></primary></indexterm>
       <indexterm><primary>network</primary><secondary>roaming configuration</secondary></indexterm>
+      <indexterm><primary>roaming</primary></indexterm>
 
       <para>Many Falcot engineers have a laptop computer that, for
       professional purposes, they also use at home. The network
@@ -936,6 +984,8 @@ adsl:2345:respawn:/usr/sbin/pppd call dsl-provider
       configured PolicyKit in such a way so that members of the netdev
       group can add or change Network Manager connections.
       </para>
+
+      <indexterm><primary>configuration files</primary><secondary><filename>/etc/network/interfaces</filename></secondary></indexterm>
 
       <para>Network Manager knows how to handle various types of
       connections (DHCP, manual configuration, local network), but only if
