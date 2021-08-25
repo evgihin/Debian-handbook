@@ -1194,10 +1194,14 @@ nameserver 8.8.8.8
 
   <section id="sect.user-group-databases">
     <title>User and Group Databases</title>
-    <indexterm><primary>user</primary><secondary>database</secondary></indexterm>
-    <indexterm><primary>group</primary><secondary>database</secondary></indexterm>
+    <indexterm><primary>user</primary><secondary>database</secondary><seealso><filename>/etc/passwd</filename></seealso></indexterm>
+    <indexterm><primary>group</primary><secondary>database</secondary><seealso><filename>/etc/group</filename></seealso></indexterm>
+    <indexterm><primary>account</primary></indexterm>
     <indexterm><primary>database</primary><secondary>of users</secondary></indexterm>
     <indexterm><primary>database</primary><secondary>of groups</secondary></indexterm>
+    <indexterm><primary>database</primary><secondary>of passwords</secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/passwd</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/shadow</filename></secondary></indexterm>
 
     <para>The list of users is usually stored in the
     <filename>/etc/passwd</filename> file, while the
@@ -1209,6 +1213,7 @@ nameserver 8.8.8.8
 
     <sidebar>
       <title><emphasis>NOTE</emphasis> Editing system files</title>
+      <indexterm><primary>files</primary><secondary>system files</secondary></indexterm>
 
       <para>The system files mentioned in this chapter are all plain text
       files, and can be edited with a text editor. Considering their
@@ -1218,6 +1223,11 @@ nameserver 8.8.8.8
       Second, on servers or machines where more than one person could
       potentially access the same file at the same time, take extra steps
       to guard against file corruption.</para>
+
+      <indexterm><primary><command>vipw</command></primary></indexterm>
+      <indexterm><primary><command>vigr</command></primary></indexterm>
+      <indexterm><primary><varname>EDITOR</varname></primary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>EDITOR</varname></secondary></indexterm>
 
       <para>For this purpose, it is enough to use the
       <command>vipw</command> command to edit the
@@ -1244,127 +1254,153 @@ nameserver 8.8.8.8
       (string <varname>A</varname>) and generates a string of 13,
       printable, ASCII characters (string <varname>B</varname>).</para>
     </sidebar>
+
     <section id="sect.etc-passwd">
       <title>User List: <filename>/etc/passwd</filename></title>
-
-      <para>Here is the list of fields in the
-      <filename>/etc/passwd</filename> file:</para>
+      <indexterm><primary>password</primary></indexterm>
       <indexterm><primary><command>passwd</command></primary></indexterm>
-      <indexterm><primary><filename>/etc/passwd</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/passwd</filename></secondary></indexterm>
+
+      <para>Here is the list of fields in the <filename>/etc/passwd</filename>
+      file:</para>
       <indexterm><primary><literal>uid</literal></primary></indexterm>
       <indexterm><primary><literal>gid</literal></primary></indexterm>
       <indexterm><primary><literal>GECOS</literal></primary></indexterm>
       <indexterm><primary><literal>login</literal></primary></indexterm>
       <itemizedlist>
         <listitem>
-	  <para>login, for example <literal>rhertzog</literal>;</para>
+          <para>login, for example <literal>rhertzog</literal>;</para>
         </listitem>
         <listitem>
-	  <para>password: this is a password encrypted by a one-way
-	  function (<command>crypt</command>), relying on <literal>DES</literal>,
-	  <literal>MD5</literal>, <literal>SHA-256</literal> or
-	  <literal>SHA-512</literal>. The special value
-	  “<literal>x</literal>” indicates that the encrypted password
-	  is stored in <filename>/etc/shadow</filename>;</para>
+          <para><literal>password</literal>: this is a password encrypted by a one-way
+          function (<command>crypt</command>), relying on <literal>DES</literal>,
+          <literal>MD5</literal>, <literal>SHA-256</literal> or
+          <literal>SHA-512</literal>. The special value
+          “<literal>x</literal>” indicates that the encrypted password
+          is stored in <filename>/etc/shadow</filename>;</para>
         </listitem>
         <listitem>
-	  <para><literal>uid</literal>: unique number identifying each
-	  user;</para>
+          <para><literal>uid</literal>: unique number identifying each
+          user;</para>
         </listitem>
         <listitem>
-	  <para><literal>gid</literal>: unique number for the user's main
-	  group (Debian creates a specific group for each user by
-	  default);</para>
+          <para><literal>gid</literal>: unique number for the user's main
+          group (Debian creates a specific group for each user by
+          default);</para>
         </listitem>
         <listitem>
-	  <para><literal>GECOS</literal>: data field usually containing the
-	  user's full name;</para>
+          <para><literal>GECOS</literal>: data field usually containing the
+          user's full name;</para>
         </listitem>
         <listitem>
-	  <para>login directory, assigned to the user for storage of their
-	  personal files (the environment variable <varname>$HOME</varname>
-	  generally points here);</para>
+          <indexterm><primary><varname>HOME</varname></primary></indexterm>
+          <indexterm><primary>environment variables</primary><secondary><varname>HOME</varname></secondary></indexterm>
+          <para>login directory, assigned to the user for storage of their
+          personal files (the environment variable <varname>$HOME</varname>
+          generally points here);</para>
         </listitem>
         <listitem>
-	  <para>program to execute upon login. This is usually a command
-	  interpreter (shell), giving the user free rein. If you specify
-	  <command>/bin/false</command> (which does nothing and returns
-	  control immediately), the user cannot login.</para>
+          <para>program to execute upon login. This is usually a command
+          interpreter (shell), giving the user free rein. If you specify
+          <command>/bin/false</command> (which does nothing and returns
+          control immediately), the user cannot login.</para>
         </listitem>
       </itemizedlist>
+      <para>As mentioned before, one can edit this file directly. But there are
+      more elegant ways to apply changes, which are described in <xref
+      linkend="sect.account-modification"/>.</para>
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Unix group</title>
         <indexterm><primary>group</primary></indexterm>
 
-	<para>A Unix group is an entity including several users so that
-	they can easily share files using the integrated permission system
-	(by benefiting from the same rights). You can also restrict use of
-	certain programs to a specific group.</para>
+        <para>A Unix group is an entity including several users so that
+        they can easily share files using the integrated permission system
+        (by benefiting from the same rights). You can also restrict use of
+        certain programs to a specific group.</para>
       </sidebar>
     </section>
     <section id="sect.etc-shadow">
       <title>The Hidden and Encrypted Password File: <filename>/etc/shadow</filename></title>
       <indexterm><primary><filename>shadow</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/shadow</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/shadow</filename></secondary></indexterm>
 
       <para>The <filename>/etc/shadow</filename> file contains the
       following fields:</para>
       <itemizedlist>
         <listitem>
-	  <para>login;</para>
+          <para>login;</para>
         </listitem>
         <listitem>
-	  <para>encrypted password;</para>
+          <para>encrypted password;</para>
         </listitem>
         <listitem>
-	  <para>several fields managing password expiration.</para>
+          <para>several fields managing password expiration.</para>
         </listitem>
       </itemizedlist>
+
+      <para>One can expire passwords using this file or set the time until the
+      account is disabled after the password has expired.</para>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> <filename>/etc/shadow</filename> file security</title>
 
-	<para><filename>/etc/shadow</filename>, unlike its alter-ego,
-	<filename>/etc/passwd</filename>, cannot be read by regular users.
-	Any hashed password stored in <filename>/etc/passwd</filename>
-	is readable by anybody; a cracker could try to “break” (or
-	reveal) a password by one of several “brute force” methods
-	which, simply put, guess at commonly used combinations of
-	characters. This attack — called a "dictionary attack" — is no
-	longer possible on systems using
-	<filename>/etc/shadow</filename>.</para>
+        <para><filename>/etc/shadow</filename>, unlike its alter-ego,
+        <filename>/etc/passwd</filename>, cannot be read by regular users.
+        Any hashed password stored in <filename>/etc/passwd</filename>
+        is readable by anybody; a cracker could try to “break” (or
+        reveal) a password by one of several “brute force” methods
+        which, simply put, guess at commonly used combinations of
+        characters. This attack — called a "dictionary attack" — is no
+        longer possible on systems using
+        <filename>/etc/shadow</filename>.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>DOCUMENTATION</emphasis> <filename>/etc/passwd</filename>, <filename>/etc/shadow</filename> and <filename>/etc/group</filename> file formats</title>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/group</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/passwd</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/shadow</filename></secondary></indexterm>
 
-	<para>These formats are documented in the following man pages:
-	<citerefentry><refentrytitle>passwd</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-	<citerefentry><refentrytitle>shadow</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-	and
-	<citerefentry><refentrytitle>group</refentrytitle><manvolnum>5</manvolnum></citerefentry>.</para>
+        <para>These formats are documented in the following man pages:
+        <citerefentry><refentrytitle>passwd</refentrytitle>
+        <manvolnum>5</manvolnum></citerefentry>,
+        <citerefentry><refentrytitle>shadow</refentrytitle>
+        <manvolnum>5</manvolnum></citerefentry>, and
+        <citerefentry><refentrytitle>group</refentrytitle>
+        <manvolnum>5</manvolnum></citerefentry>.</para>
+
       </sidebar>
     </section>
     <section id="sect.account-modification">
       <title>Modifying an Existing Account or Password</title>
+      <indexterm><primary><command>chage</command></primary></indexterm>
       <indexterm><primary><command>chsh</command></primary></indexterm>
       <indexterm><primary><command>chfn</command></primary></indexterm>
+      <indexterm><primary><command>chpasswd</command></primary></indexterm>
       <indexterm><primary><command>passwd</command></primary></indexterm>
-      <indexterm><primary><command>chage</command></primary></indexterm>
-      <indexterm><primary>password</primary></indexterm>
+      <indexterm><primary><command>usermod</command></primary></indexterm>
+      <indexterm><primary>password</primary><secondary>creation</secondary></indexterm>
+      <indexterm><primary>password</primary><secondary>modification</secondary></indexterm>
+      <indexterm><primary>account</primary><secondary>modification</secondary></indexterm>
+      <indexterm><primary>creation</primary><secondary>of passwords</secondary></indexterm>
+      <indexterm><primary>modification</primary><secondary>of passwords</secondary></indexterm>
+      <indexterm><primary>modification</primary><secondary>of user accounts</secondary></indexterm>
 
       <para>The following commands allow modification of the information
       stored in specific fields of the user databases:
       <command>passwd</command> permits a regular user to change their
       password, which in turn, updates the <filename>/etc/shadow</filename>
-      file; <command>chfn</command> (CHange Full Name), reserved for the
+      file (<command>chpasswd</command> allows administrators to update
+      passwords for a list
+      of users in batch mode); <command>chfn</command> (CHange Full Name), reserved for the
       super-user (root), modifies the <literal>GECOS</literal> field.
       <command>chsh</command> (CHange SHell) allows the user to change
       their login shell; however, available choices will be limited to those
       listed in <filename>/etc/shells</filename>; the administrator, on the
       other hand, is not bound by this restriction and can set the shell to
       any program of their choosing.</para>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/shells</filename></secondary></indexterm>
 
       <para>Finally, the <command>chage</command> (CHange AGE) command
       allows the administrator to change the password expiration settings
@@ -1373,41 +1409,78 @@ nameserver 8.8.8.8
       a password using the <command>passwd -e
       <replaceable>user</replaceable></command> command, which will require
       the user to change their password the next time they log in.</para>
+
+      <para>Besides these tools the <command>usermod</command> command allows
+      to modify all the details mentioned above.</para>
     </section>
     <section id="sect.disabling-account">
       <title>Disabling an Account</title>
-      <indexterm><primary>Disable an account</primary></indexterm>
+      <indexterm><primary>disable an account</primary></indexterm>
       <indexterm><primary>account</primary><secondary>disable</secondary></indexterm>
+      <indexterm><primary><command>passwd</command></primary></indexterm>
 
-      <para>You may find yourself needing to “disable an account” (lock
-      out a user), as a disciplinary measure, for the purposes of an
-      investigation, or simply in the event of a prolonged or definitive
-      absence of a user. A disabled account means the user cannot login or
-      gain access to the machine. The account remains intact on the machine
-      and no files or data are deleted; it is simply inaccessible. This is
-      accomplished by using the command <command>passwd -l
-      <replaceable>user</replaceable></command> (lock). Re-enabling the
-      account is done in similar fashion, with the <literal>-u</literal>
-      option (unlock).</para>
+      <para>You may find yourself needing to “disable an account” (lock out a
+      user), as a disciplinary measure, for the purposes of an investigation,
+      or simply in the event of a prolonged or definitive absence of a user. A
+      disabled account means the user cannot login or gain access to the
+      machine. The account remains intact on the machine and no files or data
+      are deleted; it is simply inaccessible. This is accomplished by using the
+      command <command>passwd -l <replaceable>user</replaceable></command>
+      (lock). Re-enabling the account is done in similar fashion, with the
+      <literal>-u</literal> option (unlock). This, however, only prevents
+      password-based logins by the user. The user might still be able to access
+      the system using an SSH key (if configured). To prevent even this
+      possibility you have to expire the account as well using either
+      <command>chage -E 1<replaceable>user</replaceable></command> or
+      <command>usermod -e 1 <replaceable>user</replaceable></command> (giving a
+      value of <literal>-1</literal> in either of these commands will reset the
+      expiration date to <literal>never</literal>). To (temporarily) disable
+      all user accounts just create the file
+      <filename>/etc/nologin</filename>.</para>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/nologin</filename></secondary></indexterm>
+
+      <indexterm><primary><command>nologin</command></primary></indexterm>
+      <indexterm><primary><command>false</command>, shell</primary></indexterm>
+      <indexterm><primary>shell</primary><secondary><command>nologin</command></secondary></indexterm>
+      <indexterm><primary>shell</primary><secondary><command>false</command></secondary></indexterm>
+
+      <para>You can disable a user account not only by locking it as described
+      above, but also by changing its default login shell (<command>chsh -s
+      <replaceable>shell</replaceable>
+      <replaceable>user</replaceable></command>). With the latter changed to
+      <command>/usr/sbin/nologin</command>, a user gets a polite message
+      informing that a login is not possible, while
+      <command>/bin/false</command> just exits while returning
+      <literal>false</literal>. There is no switch to restore the previous
+      shell. You have to get and keep that information before you change the
+      setting. These shells are often used for system users which do not
+      require any login availability.</para>
 
       <sidebar id="sidebar.intro-nss">
         <title><emphasis>GOING FURTHER</emphasis> NSS and system databases</title>
         <indexterm><primary>NSS</primary></indexterm>
-        <indexterm><primary>Name Service Switch</primary></indexterm>
+        <indexterm><primary>Name Service Switch</primary><see>NSS</see></indexterm>
+        <indexterm><primary>LDAP</primary></indexterm>
+        <indexterm><primary>Lightweight Directory Access Protocol</primary><see>LDAP</see></indexterm>
+        <indexterm><primary>system</primary><secondary>databases</secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/nsswitch.conf</filename></secondary></indexterm>
 
-	<para>Instead of using the usual files to manage lists of users and
-	groups, you could use other types of databases, such as LDAP or
-	<command>db</command>, by using an appropriate NSS (Name Service
-	Switch) module. The modules used are listed in the
-	<filename>/etc/nsswitch.conf</filename> file, under the
-	<literal>passwd</literal>, <literal>shadow</literal> and
-	<literal>group</literal> entries. See <xref
-	linkend="sect.config-nss"/> for a specific example of the use of
-	an NSS module by LDAP.</para>
+        <para>Instead of using the usual files to manage lists of users and
+        groups, you could use other types of databases, such as LDAP or
+        <command>db</command>, by using an appropriate NSS (Name Service
+        Switch) module. The modules used are listed in the
+        <filename>/etc/nsswitch.conf</filename> file, under the
+        <literal>passwd</literal>, <literal>shadow</literal> and
+        <literal>group</literal> entries. See <xref
+        linkend="sect.config-nss"/> for a specific example of the use of
+        an NSS module by LDAP.</para>
       </sidebar>
     </section>
     <section id="sect.etc-group">
       <title>Group List: <filename>/etc/group</filename></title>
+      <indexterm><primary><filename>group</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/group</filename></secondary></indexterm>
+      <indexterm><primary>group</primary></indexterm>
 
       <para>Groups are listed in the <filename>/etc/group</filename> file,
       a simple textual database in a format similar to that of the
@@ -1415,24 +1488,22 @@ nameserver 8.8.8.8
       fields:</para>
       <itemizedlist>
         <listitem>
-	  <para>group name;</para>
+          <para>group name;</para>
         </listitem>
         <listitem>
-	  <para>password (optional): This is only used to join a group when
-	  one is not a usual member (with the <command>newgrp</command> or
-	  <command>sg</command> commands, see sidebar <xref linkend="sidebar.working-with-several-groups"/>);</para>
+          <para>password (optional): This is only used to join a group when
+          one is not a usual member (with the <command>newgrp</command> or
+          <command>sg</command> commands, see sidebar <xref linkend="sidebar.working-with-several-groups"/>);</para>
         </listitem>
         <listitem>
-	  <para><literal>gid</literal>: unique group identification
-	  number;</para>
+          <para><literal>gid</literal>: unique group identification
+          number;</para>
         </listitem>
         <listitem>
-	  <para>list of members: list of names of users who are members of
-	  the group, separated by commas.</para>
+          <para>list of members: list of names of users who are members of
+          the group, separated by commas.</para>
         </listitem>
       </itemizedlist>
-
-      <para/>
 
       <sidebar id="sidebar.working-with-several-groups">
         <title><emphasis>BACK TO BASICS</emphasis> Working with several groups</title>
@@ -1441,33 +1512,34 @@ nameserver 8.8.8.8
         <indexterm><primary><command>id</command></primary></indexterm>
         <indexterm><primary>group</primary><secondary>change</secondary></indexterm>
 
-	<para>Each user may be a member of many groups; one of them is
-	their “main group”. A user's main group is, by default, created
-	during initial user configuration. By default, each file that a
-	user creates belongs to them, as well as to their main group. This
-	is not always desirable; for example, when the user needs to work
-	in a directory shared by a group other than their main group. In
-	this case, the user needs to change their main group using one of
-	the following commands: <command>newgrp</command>, which starts a
-	new shell, or <command>sg</command>, which simply executes a
-	command using the supplied alternate group. These commands also
-	allow the user to join a group to which they do not belong. If the
-	group is password protected, they will need to supply the
-	appropriate password before the command is executed.</para>
+        <para>Each user may be a member of many groups; one of them is
+        their “main group”. A user's main group is, by default, created
+        during initial user configuration. By default, each file that a
+        user creates belongs to them, as well as to their main group. This
+        is not always desirable; for example, when the user needs to work
+        in a directory shared by a group other than their main group. In
+        this case, the user needs to change their main group using one of
+        the following commands: <command>newgrp</command>, which starts a
+        new shell, or <command>sg</command>, which simply executes a
+        command using the supplied alternate group. These commands also
+        allow the user to join a group to which they do not belong. If the
+        group is password protected, they will need to supply the
+        appropriate password before the command is executed.</para>
 
-	<para>Alternatively, the user can set the <literal>setgid</literal>
-	bit on the directory, which causes files created in that directory
-	to automatically belong to the correct group. For more details, see
-	sidebar <xref linkend="sidebar.setgid-dir"/>.</para>
+        <para>Alternatively, the user can set the <literal>setgid</literal>
+        bit on the directory, which causes files created in that directory
+        to automatically belong to the correct group. For more details, see
+        sidebar <xref linkend="sidebar.setgid-dir"/>.</para>
 
-	<para>The <command>id</command> command displays the current state
-	of a user, with their personal identifier (<varname>uid</varname>
-	variable), current main group (<varname>gid</varname> variable),
-	and the list of groups to which they belong
-	(<varname>groups</varname> variable).</para>
+        <indexterm><primary><literal>gid</literal></primary></indexterm>
+        <indexterm><primary><literal>uid</literal></primary></indexterm>
+
+        <para>The <command>id</command> command displays the current state
+        of a user, with their personal identifier (<varname>uid</varname>
+        variable), current main group (<varname>gid</varname> variable),
+        and the list of groups to which they belong
+        (<varname>groups</varname> variable).</para>
       </sidebar>
-      <indexterm><primary><filename>group</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/group</filename></primary></indexterm>
 
       <para>The <command>addgroup</command> and <command>delgroup</command>
       commands add or delete a group, respectively. The
@@ -1481,22 +1553,24 @@ nameserver 8.8.8.8
       <indexterm><primary><command>groupmod</command></primary></indexterm>
       <indexterm><primary><command>gpasswd</command></primary></indexterm>
       <indexterm><primary>group</primary><secondary>creation</secondary></indexterm>
-      <indexterm><primary>creation</primary><secondary>of groups</secondary></indexterm>
       <indexterm><primary>group</primary><secondary>deletion</secondary></indexterm>
-      <indexterm><primary>deletion of a group</primary></indexterm>
+      <indexterm><primary>group</primary><secondary>modification</secondary></indexterm>
+      <indexterm><primary>creation</primary><secondary>of groups</secondary></indexterm>
+      <indexterm><primary>deletion</primary><secondary>of groups</secondary></indexterm>
+      <indexterm><primary>modification</primary><secondary>of groups</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> <command>getent</command></title>
         <indexterm><primary><command>getent</command></primary></indexterm>
 
-	<para>The <command>getent</command> (get entries) command checks
-	the system databases the standard way, using the appropriate
-	library functions, which in turn call the NSS modules configured in
-	the <filename>/etc/nsswitch.conf</filename> file. The command takes
-	one or two arguments: the name of the database to check, and a
-	possible search key. Thus, the command <command>getent passwd
-	rhertzog</command> will give the information from the user database
-	regarding the user <literal>rhertzog</literal>.</para>
+        <para>The <command>getent</command> (get entries) command checks
+        the system databases the standard way, using the appropriate
+        library functions, which in turn call the NSS modules configured in
+        the <filename>/etc/nsswitch.conf</filename> file. The command takes
+        one or two arguments: the name of the database to check, and a
+        possible search key. Thus, the command <command>getent passwd
+        rhertzog</command> will give the information from the user database
+        regarding the user <literal>rhertzog</literal>.</para>
       </sidebar>
     </section>
   </section>
