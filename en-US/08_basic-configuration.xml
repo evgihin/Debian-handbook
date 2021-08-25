@@ -1667,6 +1667,7 @@ nameserver 8.8.8.8
   </section>
   <section id="sect.shell-environment">
     <title>Shell Environment</title>
+    <indexterm><primary>shell</primary></indexterm>
 
     <para>Command interpreters (or shells) can be a user's first
     point of contact with the computer, and they must therefore be rather
@@ -1675,47 +1676,60 @@ nameserver 8.8.8.8
     etc.).</para>
     <indexterm><primary>command line interface</primary></indexterm>
     <indexterm><primary>command interpreter</primary></indexterm>
-    <indexterm><primary>shell</primary></indexterm>
     <indexterm><primary><command>bash</command></primary></indexterm>
+    <indexterm><primary>shell</primary><secondary><command>bash</command></secondary></indexterm>
 
     <para><command>bash</command>, the standard shell, uses the
     <filename>/etc/bash.bashrc</filename> initialization script for
     “interactive” shells, and <filename>/etc/profile</filename> for
     “login” shells.</para>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/bash.bashrc</filename></secondary><seealso><command>bash</command></seealso></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/profile</filename></secondary></indexterm>
 
-    <sidebar>
-      <title><emphasis>BACK TO BASICS</emphasis> Login shell and (non) interactive shell</title>
-
-      <para>In simple terms, a login shell is invoked when you login to
-      the console either locally or remotely via
-      <command>ssh</command>, or when you run an explicit <command>bash
-      --login</command> command. Regardless of whether it is a login shell
-      or not, a shell can be interactive (in an
-      <command>xterm</command>-type terminal for instance); or
-      non-interactive (when executing a script).</para>
-    </sidebar>
+    <para>In simple terms, a login shell is invoked when you login to the
+    console either locally or remotely via <command>ssh</command>, or when you
+    run an explicit <command>bash --login</command> command. Regardless of
+    whether it is a login shell or not, a shell can be interactive (in an
+    <command>xterm</command>-type terminal for instance); or non-interactive
+    (when executing a script).</para>
+    <indexterm><primary>shell</primary><secondary>interactive</secondary></indexterm>
+    <indexterm><primary>shell</primary><secondary>login shell</secondary></indexterm>
 
     <sidebar>
       <title><emphasis>DISCOVERY</emphasis> Other shells, other scripts</title>
+      <indexterm><primary>shell</primary><secondary><command>zsh</command></secondary></indexterm>
+      <indexterm><primary>shell</primary><secondary><command>tcsh</command></secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/zsh/</filename></secondary><seealso><command>zsh</command></seealso></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/csh.*</filename></secondary><seealso><command>tcsh</command></seealso></indexterm>
 
       <para>Each command interpreter has a specific syntax and its own
-      configuration files. Thus, <command>zsh</command> uses
-      <filename>/etc/zshrc</filename> and <filename>/etc/zshenv</filename>;
-      <command>tcsh</command> uses <filename>/etc/csh.cshrc</filename>,
-      <filename>/etc/csh.login</filename> and
-      <filename>/etc/csh.logout</filename>. The man pages for these
+      configuration files. Thus, <command>zsh</command> uses the files in
+      <filename>/etc/zsh/</filename>; <command>tcsh</command> uses
+      <filename>/etc/csh.cshrc</filename>, <filename>/etc/csh.login</filename>
+      and <filename>/etc/csh.logout</filename>. The man pages for these
       programs document which files they use.</para>
       <indexterm><primary><command>zsh</command></primary></indexterm>
       <indexterm><primary><command>tcsh</command></primary></indexterm>
     </sidebar>
 
-    <para>For <command>bash</command>, it is useful to activate
-    “automatic completion” in the <filename>/etc/bash.bashrc</filename>
-    file (simply uncomment a few lines).</para>
+    <para>For <command>bash</command>, it is useful to install and activate
+    “automatic completion”. The package <emphasis
+    role="pkg">bash-completion</emphasis> contains these completions for most
+    common programs and is usually enabled if the the user's
+    <filename>.bashrc</filename> configuration file was copied from
+    <filename>/etc/skel/.bashrc</filename>. Otherwise it can be enabled via
+    <filename>/etc/bash.bashrc</filename> (simply uncomment a few lines) or
+    <filename>/etc/profile</filename>.</para>
+    <indexterm><primary><command>bash</command></primary><secondary>automatic completion</secondary></indexterm>
+    <indexterm><primary><emphasis role="pkg">bash-completion</emphasis></primary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/skel/.bashrc</secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/bash.bashrc</secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/profile</secondary></indexterm>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Automatic completion</title>
       <indexterm><primary>automatic completion</primary></indexterm>
+      <indexterm><primary>key</primary><secondary><keycap>Tab</keycap></secondary></indexterm>
 
       <para>Many command interpreters provide a completion feature, which
       allows the shell to automatically complete a partially typed command
@@ -1729,15 +1743,17 @@ nameserver 8.8.8.8
       any file (in this case, the possible choices are
       <literal>install</literal>, <literal>remove</literal>,
       <literal>upgrade</literal>, etc.).</para>
-
-      <para>The package <emphasis role="pkg">bash-completion</emphasis>
-      contains completions for most common programs.</para>
     </sidebar>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> The tilde, a shortcut to HOME</title>
       <indexterm><primary>~</primary></indexterm>
       <indexterm><primary>tilde, usage</primary><secondary>in paths</secondary></indexterm>
+      <indexterm><primary>account</primary><secondary>home directory</secondary></indexterm>
+      <indexterm><primary><varname>HOME</varname></primary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>HOME</varname></secondary></indexterm>
+      <indexterm><primary>key</primary><secondary><keycap>~</keycap></secondary></indexterm>
+      <indexterm><primary>key</primary><secondary><literal>Tilde</literal></secondary></indexterm>
 
       <para>The tilde is often used to indicate the directory to which the
       environment variable, <varname>HOME</varname>, points (being the
@@ -1751,20 +1767,24 @@ nameserver 8.8.8.8
       <filename>/home/rmas/bonjour.txt</filename>.</para>
     </sidebar>
 
-    <para>In addition to these common scripts, each user can create their
-    own <filename>~/.bashrc</filename> and
-    <filename>~/.bash_profile</filename> to configure their shell. The most
-    common changes are the addition of aliases; these are words that are
-    automatically replaced with the execution of a command, which makes it
-    faster to invoke that command. For instance, you could create the
-    <literal>la</literal> alias for the command <command>ls -la |
-    less</command> command; then you only have to type
-    <command>la</command> to inspect the contents of a directory in
-    detail.</para>
+    <para>In addition to these common scripts, each user can create their own
+    <filename>~/.bashrc</filename> and <filename>~/.bash_profile</filename> to
+    configure their shell. The most common changes are the addition of aliases;
+    these are words that are automatically replaced with the execution of a
+    command, which makes it faster to invoke that command. For instance, you
+    could create the <literal>la</literal> alias for the command <command>ls
+    -la | less</command> command; then you only have to type
+    <command>la</command> to inspect the contents of a directory in detail.
+    Please note that the shell needs to be reinitialized after adding an
+    alias, e.g. by starting a new shell.</para>
+    <indexterm><primary>bash</primary><secondary><literal>alias</literal></secondary></indexterm>
+    <indexterm><primary>bash</primary><secondary><filename>.bashrc</filename></secondary></indexterm>
+    <indexterm><primary>bash</primary><secondary><filename>.bash_profile</filename></secondary></indexterm>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Environment variables</title>
-      <indexterm><primary>environment</primary><secondary>environment variable</secondary></indexterm>
+      <indexterm><primary>environment</primary><secondary>environment variable</secondary><see>environment variable</see></indexterm>
+      <indexterm><primary>environment variable</primary></indexterm>
       <indexterm><primary>variable, environment</primary></indexterm>
 
       <para>Environment variables allow storage of global settings for the
@@ -1776,25 +1796,47 @@ nameserver 8.8.8.8
     </sidebar>
 
     <para>Setting default environment variables is an important element of
-    shell configuration. Leaving aside the variables specific to a shell,
-    it is preferable to place them in the
-    <filename>/etc/environment</filename> file, since it is used by the
-    various programs likely to initiate a shell session. Variables
-    typically defined there include <varname>ORGANIZATION</varname>, which
-    usually contains the name of the company or organization, and
-    <varname>HTTP_PROXY</varname>, which indicates the existence and
-    location of an HTTP proxy.</para>
+    shell configuration. Leaving aside the variables specific to a shell, it is
+    preferable to place system wide variables in the
+    <filename>/etc/environment</filename> file, since it is used by the various
+    programs likely to initiate a shell session. Variables typically defined
+    there include <varname>ORGANIZATION</varname>, which usually contains the
+    name of the company or organization, and <varname>HTTP_PROXY</varname>,
+    which indicates the existence and location of an HTTP proxy. Other options
+    include to set system wide variables via scripts in
+    <filename>/etc/profile.d</filename>, or session wide variables via
+    <filename>.pam_environment</filename> or <filename>.profile</filename>,
+    where the latter can override any definition contained in the first. The
+    file <filename>/etc/default/locale</filename> is meant to contain system
+    wide locale related environment variables.</para>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/environment</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/default/locale</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/profile.d</filename></secondary></indexterm>
+    <indexterm><primary><filename>.pam_environment</filename></primary></indexterm>
+    <indexterm><primary><filename>.profile</filename></primary></indexterm>
 
     <sidebar>
       <title><emphasis>TIP</emphasis> All shells configured identically</title>
+      <indexterm><primary><filename>.bashrc</filename></primary></indexterm>
+      <indexterm><primary><filename>.bash_profile</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/bash.bashrc</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/profile</filename></secondary></indexterm>
 
-      <para>Users often want to configure their login and interactive
-      shells in the same way. To do this, they choose to interpret (or
-      “source”) the content from <filename>~/.bashrc</filename> in the
-      <filename>~/.bash_profile</filename> file. It is possible to do the
+      <para>Users often want to configure their login and interactive shells in
+      the same way. To do this, they choose to interpret (or “source”) the
+      content from <filename>~/.bashrc</filename> in the
+      <filename>~/.bash_profile</filename> file. However, the default
+      <filename>~/.profile</filename> file is sourcing
+      <filename>~/.bashrc</filename> already and you don't need to create
+      <filename>~/.bash_profile</filename> for this purpose anymore, except you
+      want to customize your shell further (see
+      <citerefentry><refentrytitle>bash</refentrytitle>
+      <manvolnum>1</manvolnum></citerefentry> for which files are read by
+      <command>bash</command> for login shells). It is also possible to do the
       same with files common to all users (by calling
       <filename>/etc/bash.bashrc</filename> from
-      <filename>/etc/profile</filename>).</para>
+      <filename>/etc/profile</filename>, which is also done by default
+      now).</para>
     </sidebar>
   </section>
   <section id="sect.config-printing">
