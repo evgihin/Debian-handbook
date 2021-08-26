@@ -1951,7 +1951,7 @@ nameserver 8.8.8.8
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Master boot record</title>
       <indexterm><primary>MBR</primary></indexterm>
-      <indexterm><primary>Master Boot Record</primary></indexterm>
+      <indexterm><primary>Master Boot Record</primary><see>MBR</see></indexterm>
 
       <para>The Master Boot Record (MBR) occupies the first 512 bytes of
       the first hard disk, and is the first thing loaded by the BIOS to
@@ -1964,58 +1964,71 @@ nameserver 8.8.8.8
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> <emphasis>udev</emphasis> and <filename>/dev/</filename></title>
+        <indexterm><primary><filename>/dev/</filename></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">udev</emphasis></primary></indexterm>
 
-	<para>The <filename>/dev/</filename> directory traditionally houses
-	so-called “special” files, intended to represent system
-	peripherals (see sidebar <xref
-	linkend="sidebar.special-files"/>). Once upon a time, it used to contain
-	all special files that could potentially be used. This approach had a number
-	of drawbacks among which the fact that it restricted the number of devices
-	that one could use (due to the hardcoded list of names), and that it was
-	impossible to know which special files were actually useful.</para>
+        <para>The <filename>/dev/</filename> directory traditionally houses
+        so-called “special” files, intended to represent system
+        peripherals (see sidebar <xref
+        linkend="sidebar.special-files"/>). Once upon a time, it used to contain
+        all special files that could potentially be used. This approach had a number
+        of drawbacks among which the fact that it restricted the number of devices
+        that one could use (due to the hardcoded list of names), and that it was
+        impossible to know which special files were actually useful.</para>
 
-	<para>Nowadays, the management of special files is entirely
-	dynamic and matches better the nature of hot-swappable computer
-	devices. The kernel cooperates with <emphasis>udev</emphasis>
-	(<xref linkend="sect.udev"/>) to create and delete them as
-	needed when the corresponding devices appear and disappear.  For
-	this reason, <filename>/dev/</filename> doesn't need to be
-	persistent and is thus a RAM-based filesystem that starts
-	empty and contains only the relevant entries.</para>
+        <para>Nowadays, the management of special files is entirely
+        dynamic and matches better the nature of hot-swappable computer
+        devices. The kernel cooperates with <emphasis>udev</emphasis>
+        (<xref linkend="sect.udev"/>) to create and delete them as
+        needed when the corresponding devices appear and disappear.  For
+        this reason, <filename>/dev/</filename> doesn't need to be
+        persistent and is thus a RAM-based filesystem that starts
+        empty and contains only the relevant entries.</para>
 
-	<para>The kernel communicates lots of information about any
-	newly added device and hands out a pair of major/minor numbers
-	to identify it. With this <command>udevd</command> can create
-	the special file under the name and with the permissions that
-	it wants. It can also create aliases and perform additional
-	actions (such as initialization or registration
-	tasks). <command>udevd</command>'s behavior is driven by a
-	large set of (customizable) rules.</para>
+        <para>The kernel communicates lots of information about any
+        newly added device and hands out a pair of major/minor numbers
+        to identify it. With this <command>udevd</command> can create
+        the special file under the name and with the permissions that
+        it wants. It can also create aliases and perform additional
+        actions (such as initialization or registration
+        tasks). <command>udevd</command>'s behavior is driven by a
+        large set of (customizable) rules usually found in
+        <filename>/lib/udev/rules.d/</filename> and
+        <filename>/etc/udev/rules.d/</filename>.</para>
+        <indexterm><primary>daemon</primary><secondary><command>udevd</command></secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/udev/rules.d/</secondary></indexterm>
 
-	<para>With dynamically assigned names, you can thus keep the same name
-	for a given device, regardless of the connector used or the connection order, which is
-	especially useful when you use various USB peripherals. The
-	first partition on the first hard drive can then be called
-	<filename>/dev/sda1</filename> for backwards compatibility, or
-	<filename>/dev/root-partition</filename> if you prefer, or even
-	both at the same time since <command>udevd</command> can be
-	configured to automatically create a symbolic link.</para>
+        <para>With dynamically assigned names, you can thus keep the same name
+        for a given device, regardless of the connector used or the connection order, which is
+        especially useful when you use various USB peripherals. The
+        first partition on the first hard drive can then be called
+        <filename>/dev/sda1</filename> for backwards compatibility, or
+        <filename>/dev/root-partition</filename> if you prefer, or even
+        both at the same time since <command>udevd</command> can be
+        configured to automatically create a symbolic link.</para>
 
-	<para>In ancient times, some kernel modules did automatically
-	load when you tried to access the corresponding device file.
-	This is no longer the case, and the peripheral's special file
-	no longer exists prior to loading the module; this is no big
-	deal, since most modules are loaded on boot thanks to
-	automatic hardware detection. But for undetectable peripherals
-	(such as very old disk drives or PS/2 mice), this doesn't
-	work. Consider adding the modules, <literal>floppy</literal>,
-	<literal>psmouse</literal> and <literal>mousedev</literal> to
-	<filename>/etc/modules</filename> in order to force loading
-	them on boot.</para>
+        <para>In ancient times, some kernel modules did automatically
+        load when you tried to access the corresponding device file.
+        This is no longer the case, and the peripheral's special file
+        no longer exists prior to loading the module; this is no big
+        deal, since most modules are loaded on boot thanks to
+        automatic hardware detection. But for undetectable peripherals
+        (such as very old disk drives or PS/2 mice), this doesn't
+        work. Consider adding the modules, <literal>floppy</literal>,
+        <literal>psmouse</literal> and <literal>mousedev</literal> to
+        <filename>/etc/modules</filename> or
+        <filename>/etc/modules-load.d/</filename> in order to force loading
+        them on boot.</para>
+        <indexterm><primary>kernel</primary><secondary><literal>floppy</literal></secondary></indexterm>
+        <indexterm><primary>kernel</primary><secondary><literal>mousedev</literal></secondary></indexterm>
+        <indexterm><primary>kernel</primary><secondary><literal>psmouse</literal></secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/modules-load.d/</filename></secondary><seealso><filename>/etc/modules</filename></seealso></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/modules</filename></secondary><seealso><filename>/etc/modules-load.d/</filename></seealso></indexterm>
       </sidebar>
 
       <indexterm><primary>hard drive, names</primary></indexterm>
       <indexterm><primary>names</primary><secondary>of hard drives</secondary></indexterm>
+      <indexterm><primary>file</primary><secondary>special file</secondary><tertiary>block mode</tertiary></indexterm>
 
       <para>Configuration of the bootloader must identify the
       different hard drives and their partitions. Linux uses “block”
@@ -2026,6 +2039,7 @@ nameserver 8.8.8.8
       drives (IDE/PATA, SATA, SCSI, USB, IEEE 1394) are now
       represented by <filename>/dev/sd*</filename>.</para>
 
+      <indexterm><primary><filename>/dev/</filename></primary><secondary><filename>/dev/sd*</filename></secondary></indexterm>
       <para>Each partition is represented by its number on the disk on
       which it resides: for instance, <filename>/dev/sda1</filename> is the
       first partition on the first disk, and <filename>/dev/sdb3</filename>
@@ -2052,13 +2066,33 @@ nameserver 8.8.8.8
 
       <indexterm><primary>GPT</primary><secondary>partition table format</secondary></indexterm>
       <indexterm><primary>partition table</primary><secondary>GPT format</secondary></indexterm>
-      <para>A new partition table format called GPT loosens these
+      <indexterm><primary>GUID Partition Table</primary><see>GPT</see></indexterm>
+      <para>A new partition table format called GPT (GUID Partition Table) loosens these
       constraints on the number of partitions (it allows up to 128
       partitions when using standard settings) and on the size of the
-      disks (up to 8 ZiB, which is more than 8 billion terabytes).  If
+      disks (up to 8 ZiB, which is more than 8 billion terabytes). If
       you intend to create many physical partitions on the same disk,
       you should therefore ensure that you are creating the partition table
       in the GPT format when partitioning your disk.</para>
+
+      <sidebar>
+        <title><emphasis>QUICK LOOK</emphasis> The Globally Unique Identifier (<acronym>GUID</acronym>)</title>
+        <indexterm><primary>GUID</primary></indexterm>
+        <indexterm><primary>Globally Unique Identifier</primary><see>GUID</see></indexterm>
+        <indexterm><primary>UEFI</primary></indexterm>
+
+        <para>Using GPT the partition type is represented as a 16 bytes long
+        universally unique identifier, also known as Globally Unique Identifier
+        (GUID), which is part of the UEFI standard (see <xref
+        linkend="sidebar.bios-uefi"/>. Compared to the hex code used to
+        determine the partition type in the MS-DOS table format, you will have
+        a hard time trying to remember these identifiers. Fortunately there are
+        lists with all the IDs which you can use to create partition recipes to
+        use with <command>sfdisk</command> or for
+        <foreignphrase>preseeding</foreignphrase> the Debian installer.
+        <ulink type="block" url="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs"/>
+        </para>
+      </sidebar>
 
       <para>It is not always easy to remember what disk is connected to
       which SATA controller, or in third position in the SCSI chain,
@@ -2068,8 +2102,9 @@ nameserver 8.8.8.8
       addition to <filename>/dev/sd*</filename>, symbolic links with a
       fixed name, which you could then use if you wished to identify a hard
       drive in a non-ambiguous manner. These symbolic links are stored in
-      <filename>/dev/disk/by-id</filename>. On a machine with two physical
+      <filename>/dev/disk/by-id/</filename>. On a machine with two physical
       disks, for example, one could find the following:</para>
+      <indexterm><primary><filename>/dev/</filename></primary><secondary><filename>/dev/disk/by-id/</filename></secondary></indexterm>
 
       <screen><computeroutput>mirexpress:/dev/disk/by-id# </computeroutput><userinput>ls -l
 </userinput><computeroutput>total 0
@@ -2098,39 +2133,61 @@ lrwxrwxrwx 1 root root 10 23 jul. 08:58 wwn-0x5000c50015c4842f-part1 -&gt; ../..
 [...]
 mirexpress:/dev/disk/by-id# </computeroutput></screen>
 
-      <para>Note that some disks are listed several times (because they
-      behave simultaneously as ATA disks and SCSI disks), but the relevant
-      information is mainly in the model and serial numbers of the disks,
-      from which you can find the peripheral file.</para>
+      <para>Note that some disks are listed several times (because they behave
+      simultaneously as ATA disks and SCSI disks), but the relevant information
+      is mainly in the model and serial numbers of the disks, from which you
+      can find the peripheral file. While the links in
+      <filename>/dev/disk/by-id/</filename> are created using the device'
+      serial number and physical path, there are more convenience links in e.g.
+      <filename>/dev/disk/by-label/</filename> (based on given labels),
+      <filename>/dev/disk/by-uuid/</filename> (based on unique identifiers,
+      which can change when reformatting a device using
+      <command>mkfs.*</command> or <command>mkswap</command>),
+      <filename>/dev/disk/by-path/</filename> (based on shortest physical
+      path), and <filename>/dev/disk/by-partlabel/</filename> and
+      <filename>/dev/disk/by-partuuid/</filename> (only partitions with GPT
+      labels and their unique identifiers). If you use these links, e.g. in
+      <filename>/etc/fstab</filename>, always prefer unique identifiers over
+      labels. You can also obtain and change this information for each
+      partition or device using the <command>lsblk</command> and
+      <command>blkid</command> commands.</para>
+      <indexterm><primary><filename>/dev/</filename></primary><secondary><filename>/dev/disk/by-label/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/dev/</filename></primary><secondary><filename>/dev/disk/by-uuid/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/dev/</filename></primary><secondary><filename>/dev/disk/by-path/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/dev/</filename></primary><secondary><filename>/dev/disk/by-partlabel/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/dev/</filename></primary><secondary><filename>/dev/disk/by-partluuid/</filename></secondary></indexterm>
+      <indexterm><primary><command>lsblk</command></primary></indexterm>
+      <indexterm><primary><command>blkid</command></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
 
       <para>The example configuration files given in the following sections
       are based on the same setup: a single SATA disk, where the
       first partition is an old Windows installation and the second
       contains Debian GNU/Linux.</para>
-    </section>
-    <!-- TODO: get rid of this section on Lilo, needs to rewrite the start
-         of the grub section -->
-    <section id="sect.config-lilo">
-      <title>Configuring LILO</title>
-      <indexterm><primary>LILO</primary></indexterm>
-      <indexterm><primary>Linux Loader</primary></indexterm>
 
-      <para><emphasis>LILO</emphasis> (LInux LOader) is the oldest
-      bootloader — solid but rustic. It writes the physical address of
-      the kernel to boot on the MBR, which is why each update to LILO (or
-      its configuration file) must be followed by the command
-      <command>lilo</command>. Forgetting to do so will render a system
-      unable to boot if the old kernel was removed or replaced as the new
-      one will not be in the same location on the disk.</para>
+      <sidebar id="sidebar.lilo">
+        <title><emphasis>ALTERNATIVE</emphasis> The LILO bootloader</title>
+        <indexterm><primary>LILO</primary><seealso><command>lilo</command></seealso></indexterm>
+        <indexterm><primary>Linux Loader</primary><see>LILO</see></indexterm>
+        <indexterm><primary><command>lilo</command></primary></indexterm>
 
-      <para>LILO's configuration file is
-      <filename>/etc/lilo.conf</filename>; a simple file for standard
-      configuration is illustrated in the example below.</para>
+        <para><emphasis>LILO</emphasis> (LInux LOader) is the oldest
+        bootloader — solid but rustic. It writes the physical address of
+        the kernel to boot on the MBR, which is why each update to LILO (or
+        its configuration file) must be followed by the command
+        <command>lilo</command>. Forgetting to do so will render a system
+        unable to boot if the old kernel was removed or replaced as the new
+        one will not be in the same location on the disk.</para>
 
-      <example id="example.lilo.conf">
-        <title>LILO configuration file</title>
+        <para>LILO's configuration file is
+        <filename>/etc/lilo.conf</filename>; a simple file for standard
+        configuration is illustrated in the example below.</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/lilo.conf</filename></secondary><seealso><command>lilo</command></seealso></indexterm>
 
-        <programlisting>
+        <example id="example.lilo.conf">
+          <title>LILO configuration file</title>
+
+          <programlisting>
 # The disk on which LILO should be installed.
 # By indicating the disk and not a partition.
 # you order LILO to be installed on the MBR.
@@ -2157,71 +2214,167 @@ image=/vmlinuz.old
 other=/dev/sda1
   label=Windows
 </programlisting>
-      </example>
+        </example>
+
+        <para>As per request of the maintainer and upstream author of
+        <command>lilo</command>, the bootloader has been removed from Debian 11
+        <emphasis role="distribution">Bullseye</emphasis> and it is unlikely to
+        make a comeback.</para>
+      </sidebar>
     </section>
     <section id="sect.config-grub">
       <title>GRUB 2 Configuration</title>
       <indexterm><primary>GRUB</primary></indexterm>
+      <indexterm><primary>Grand Unified Bootloader</primary><see>GRUB</see></indexterm>
       <indexterm><primary>GRUB 2</primary></indexterm>
 
       <para><emphasis>GRUB</emphasis> (GRand Unified Bootloader) is more
-      recent. It is not necessary to invoke it after each update of the
-      kernel; <emphasis>GRUB</emphasis> knows how to read the filesystems
-      and find the position of the kernel on the disk by itself. To install
-      it on the MBR of the first disk, simply type <command>grub-install
-      /dev/sda</command>.
-      <indexterm><primary><command>grub-install</command></primary></indexterm></para>
+      recent. It is not necessary to invoke it after each update of the kernel;
+      <emphasis>GRUB</emphasis> knows how to read the filesystems and find the
+      position of the kernel on the disk by itself. To install it on the MBR of
+      the first disk, simply type <command>grub-install /dev/sda</command>.
+      This will overwrite the MBR, so be careful not to overwrite the wrong
+      location. While it is also possible to install <emphasis>GRUB</emphasis>
+      into a partiton boot record, beware that it is usually a mistake and
+      doing <command>grub-install /dev/sda1</command> has not the same meaning
+      as <command>grub-install /dev/sda</command>.</para>
+      <indexterm><primary>GRUB</primary><secondary><command>grub-install</command></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> Disk names for GRUB</title>
+        <indexterm><primary>GRUB</primary><secondary><literal>hdX</literal></secondary></indexterm>
+        <indexterm><primary>GRUB</primary><secondary>shell</secondary></indexterm>
+        <indexterm><primary>shell</primary><secondary>GRUB</secondary></indexterm>
 
-	<para>GRUB can only identify hard drives based on information
-	provided by the BIOS. <literal>(hd0)</literal> corresponds to
-	the first disk thus detected, <literal>(hd1)</literal> the
-	second, etc.  In most cases, this order corresponds exactly to
-	the usual order of disks under Linux, but problems can occur
-	when you associate SCSI and IDE disks. GRUB used to store the
-	correspondences that it detected in the file
-    <filename>/boot/grub/device.map</filename>. GRUB avoids this problem
-    nowadays by using UUIDs or file system labels when generating
-    <filename>grub.cfg</filename>. However, the device map file is not obsolete
-    yet, since it can be used to override when the current environment is
-    different from the one on boot. If you find errors
-	there (because you know that your BIOS detects drives in a
-	different order), correct them manually and run
-	<command>grub-install</command> again.
-	<command>grub-mkdevicemap</command> can help creating a
-	<filename>device.map</filename> file from which to
-	start.</para>
+        <para>GRUB can only identify hard drives based on information
+        provided by the BIOS. <literal>(hd0)</literal> corresponds to
+        the first disk thus detected, <literal>(hd1)</literal> the
+        second, etc.  In most cases, this order corresponds exactly to
+        the usual order of disks under Linux, but problems can occur
+        when you associate SCSI and IDE disks. GRUB used to store the
+        correspondences that it detected in the file
+        <filename>/boot/grub/device.map</filename>. Nowadays it avoids this problem
+        using universally unique identifier (UUIDs) or file system labels when generating
+        <filename>grub.cfg</filename>. However, the device map file is not obsolete
+        yet, since it can be used to override when the current environment is
+        different from the one on boot. If you find errors
+        there (because you know that your BIOS detects drives in a
+        different order), correct them manually and run
+        <command>grub-install</command> again.
+        <command>grub-mkdevicemap</command> can help creating a
+        <filename>device.map</filename> file from which to
+        start.</para>
+        <indexterm><primary>GRUB</primary><secondary><command>grub-mkdevicemap</command></secondary></indexterm>
+        <indexterm><primary>GRUB</primary><secondary><filename>/boot/grub/device.map</filename></secondary></indexterm>
+        <indexterm><primary>GRUB</primary><secondary><filename>/boot/grub/grub.cfg</filename></secondary></indexterm>
+        <indexterm><primary>GRUB</primary><secondary></secondary></indexterm>
 
-	<para>Partitions also have a specific name in GRUB. When you use
-	“classical” partitions in MS-DOS format, the first partition on
-	the first disk is labeled, <literal>(hd0,msdos1)</literal>, the
-	second <literal>(hd0,msdos2)</literal>, etc.</para>
+        <para>Partitions also have a specific name in GRUB. When you use
+        “classical” partitions in MS-DOS format, the first partition on
+        the first disk is labeled, <literal>(hd0,msdos1)</literal>, the
+        second <literal>(hd0,msdos2)</literal>, etc.</para>
+        <indexterm><primary>GRUB</primary><secondary><literal>hdX,msdosY</literal></secondary></indexterm>
       </sidebar>
 
+      <indexterm><primary><command>update-grub</command></primary></indexterm>
+      <indexterm><primary>GRUB</primary><secondary><command>update-grub</command></secondary></indexterm>
+      <indexterm><primary>GRUB</primary><secondary><command>configuration</command></secondary></indexterm>
+      <indexterm><primary>GRUB</primary><secondary><filename>/boot/grub/grub.cfg</filename></secondary></indexterm>
+      <indexterm><primary><filename>grub.cfg</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/default/grub</filename></secondary><seealso>GRUB</seealso></indexterm>
+      <indexterm><primary>GRUB</primary><secondary><filename>/etc/default/grub</filename></secondary></indexterm>
+      <indexterm><primary>GRUB</primary><secondary><filename>/boot/grub/custom.cfg</filename></secondary></indexterm>
+      <indexterm><primary>GRUB</primary><secondary><filename>/etc/grub.d/40_custom</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/grub.d/</filename></secondary><seealso>GRUB</seealso></indexterm>
       <para>GRUB 2 configuration is stored in
-      <filename>/boot/grub/grub.cfg</filename>, but this file (in Debian)
-      is generated from others. Be careful not to modify it by hand, since
-      such local modifications will be lost the next time
+      <filename>/boot/grub/grub.cfg</filename>, but this file (in Debian) is
+      generated from others. Be careful not to modify it by hand, since such
+      local modifications will be lost the next time
       <command>update-grub</command> is run (which may occur upon update of
       various packages). The most common modifications of the
       <filename>/boot/grub/grub.cfg</filename> file (to add command line
       parameters to the kernel or change the duration that the menu is
       displayed, for example) are made through the variables in
-      <filename>/etc/default/grub</filename>. To add entries to the menu,
-      you can either create a <filename>/boot/grub/custom.cfg</filename>
-      file or modify the <filename>/etc/grub.d/40_custom</filename> file.
-      For more complex configurations, you can modify other files in
-      <filename>/etc/grub.d</filename>, or add to them; these scripts
-      should return configuration snippets, possibly by making use of
-      external programs. These scripts are the ones that will update the
-      list of kernels to boot: <filename>10_linux</filename> takes into
-      consideration the installed Linux kernels;
-      <filename>20_linux_xen</filename> takes into account Xen virtual systems,
-      and <filename>30_os-prober</filename> lists other operating systems
-      (Windows, OS X, Hurd).</para>
+      <filename>/etc/default/grub</filename>. To add entries to the menu, you
+      can either create a <filename>/boot/grub/custom.cfg</filename> file or
+      modify the <filename>/etc/grub.d/40_custom</filename> file.  For more
+      complex configurations, you can modify other files in
+      <filename>/etc/grub.d</filename>, or add to them; these scripts should
+      return configuration snippets, possibly by making use of external
+      programs. These scripts are the ones that will update the list of kernels
+      to boot: <filename>10_linux</filename> takes into consideration the
+      installed Linux kernels; <filename>20_linux_xen</filename> takes into
+      account Xen virtual systems, and <filename>30_os-prober</filename> adds
+      other existing operating systems (Windows, OS X, Hurd), kernel images,
+      and BIOS/EFI access options to the menu.</para>
+
+      <sidebar>
+        <title><emphasis>CAUTION</emphasis> error: symbol `grub_*' not found</title>
+        <indexterm><primary>GRUB</primary><secondary><errortext>symbol not found</errortext></secondary></indexterm>
+        <indexterm><primary><command>dpkg-reconfigure</command></primary></indexterm>
+
+        <para>One of the most often reported issues when using
+        <emphasis>GRUB</emphasis> is, that users get an error like
+        <errortext>error symbol `grub_calloc' not found</errortext> and they
+        end up in the GRUB shell while the system does not boot anymore. Most
+        of the time this error is caused by installing an updated version of
+        GRUB that causes new modules in <filename>/boot/grub</filename> to be
+        incompatible with old core images in the boot sector that your firmware
+        jumps to when booting your machine. This happens on systems that are
+        configured to run <command>grub-install</command> to a target device
+        that is not actually the one that the firmware uses to boot your system
+        (e.g. after replacing disks or moving them around - one can see the
+        issue when running <command>dpkg-reconfigure grub-pc</command> showing
+        the wrong target device). With the release of Debian 11
+        <emphasis>Bullseye</emphasis> (the change was also populated to
+        <emphasis>Buster</emphasis>) the update process now checks for this
+        issue and exits with an error in case it finds such a constellation.
+
+        <ulink type="block" url="https://bugs.debian.org/bug=966575#95"/>
+        </para>
+
+        <screen><computeroutput>Setting up grub-pc (2.02+dfsg1-20+deb10u4) ...
+/dev/disk/by-id/[..] does not exist, so cannot grub-install to it!
+You must correct your GRUB install devices before proceeding:
+
+  DEBIAN_FRONTEND=dialog dpkg --configure grub-pc
+  dpkg --configure -a
+dpkg: error processing package grub-pc (--configure):
+ installed grub-pc package post-installation script subprocess returned error exit status 1
+</computeroutput></screen>
+
+        <para>To fix the issue and continue the upgrade procedure, just follow
+        the advice and run the command given by the error message as root.</para>
+      </sidebar>
     </section>
+
+    <section id="sect.config-grub-efi">
+      <title>Using GRUB 2 with EFI and <emphasis>Secure Boot</emphasis></title>
+      <indexterm><primary><emphasis role="pkg">grub-efi-<replaceable>arch</replaceable>-signed</emphasis></primary></indexterm>
+
+      <para>If you are using a system with “Secure Boot“ enabled and have
+      installed <emphasis role="pkg">shim-signed</emphasis> (see sidebar
+      <xref linkend="sidebar.secure-boot"/>), you must also install
+      <emphasis
+      role="pkg">grub-efi-<replaceable>arch</replaceable>-signed</emphasis>.
+      </para>
+    </section>
+
+    <section id="sect.config-grub-fix">
+      <title>Restoring and Fixing GRUB Installations</title>
+      
+      <para></para>
+    </section>
+
+    <section id="sect.config-grub-shell">
+      <title>Working with the GRUB Shell</title>
+      <indexterm><primary>GRUB</primary><secondary>shell</secondary></indexterm>
+      <indexterm><primary>shell</primary><secondary>GRUB</secondary></indexterm>
+
+      <para>The most common issue users are faced with
+      <emphasis>GRUB</emphasis> lead to , that instead of </para>
+    </section>
+
   </section>
   <section id="sect.config-misc">
     <title>Other Configurations: Time Synchronization, Logs, Sharing Access…</title>
