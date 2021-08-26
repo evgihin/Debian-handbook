@@ -299,7 +299,7 @@ actual page. By default the page is centered as required in this mode.
     </l:context>
   </l:l10n>
 
-  <l:l10n language="pt-BR">
+  <l:l10n language="pt_br">
     <l:gentext key="minitoc" text="Conteúdo"/>
     <l:gentext key="keywordset" text="Palavras chave"/>
     <l:context name="xref">
