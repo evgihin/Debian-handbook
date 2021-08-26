@@ -2344,26 +2344,56 @@ dpkg: error processing package grub-pc (--configure):
 </computeroutput></screen>
 
         <para>To fix the issue and continue the upgrade procedure, just follow
-        the advice and run the command given by the error message as root.</para>
+        the advice and run the commands given by the error message as root.</para>
       </sidebar>
     </section>
 
     <section id="sect.config-grub-efi">
       <title>Using GRUB 2 with EFI and <emphasis>Secure Boot</emphasis></title>
+      <indexterm><primary>UEFI</primary></indexterm>
+      <indexterm><primary>secure boot</primary></indexterm>
+      <indexterm><primary>ESP</primary><seealso>EFI System Partition</seealso></indexterm>
+      <indexterm><primary>EFI System Partition</primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">grub-pc</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">grub-efi-<replaceable>arch</replaceable></emphasis></primary></indexterm>
       <indexterm><primary><emphasis role="pkg">grub-efi-<replaceable>arch</replaceable>-signed</emphasis></primary></indexterm>
 
-      <para>If you are using a system with “Secure Boot“ enabled and have
-      installed <emphasis role="pkg">shim-signed</emphasis> (see sidebar
-      <xref linkend="sidebar.secure-boot"/>), you must also install
-      <emphasis
-      role="pkg">grub-efi-<replaceable>arch</replaceable>-signed</emphasis>.
+      <para>Using <emphasis>GRUB</emphasis> to boot either a traditional BIOS
+      system (legacy or UEFI-CSM) or a UEFI system is quite different.
+      Fortunately the user doesn't need to know the differences because Debian
+      provides different packages for each purpose and the installer
+      automatically cares about which one(s) to choose. The <emphasis
+      role="pkg">grub-pc</emphasis> package is chosen for legacy systems, where
+      <emphasis>GRUB</emphasis> is installed into the MBR, while UEFI systems
+      require <emphasis
+      role="pkg">grub-efi-<replaceable>arch</replaceable></emphasis>, where
+      <emphasis>GRUB</emphasis> is installed into the EFI System Partition
+      (ESP). The latter requires a GTP partition table as well as an EFI
+      partition.
+      <ulink type="block" url="https://wiki.debian.org/Grub2#UEFI_vs_BIOS_boot"/>
       </para>
+
+      <para>To switch an existing system (supporting UEFI) from legacy to UEFI
+      boot mode not only requires to switch the <emphasis>GRUB</emphasis>
+      packages on the system, but also to adjust the partition table and the to
+      create an EFI partition (probably including resizing existing partitions
+      to create the necessary free space). It is therefor quite an elaborate
+      process and we cannot cover it here. Fortunately, there are some manuals
+      by bloggers describing the necessary procedures.</para>
+
+      <para>If you are using a system with “Secure Boot“ enabled and have
+      installed <emphasis role="pkg">shim-signed</emphasis> (see sidebar <xref
+      linkend="sidebar.secure-boot"/>), you must also install <emphasis
+      role="pkg">grub-efi-<replaceable>arch</replaceable>-signed</emphasis>.
+      This package is not pulled in automatically, only if the installation of
+      recommended package has been enabled.</para>
     </section>
 
+    <!-- TODO
     <section id="sect.config-grub-fix">
       <title>Restoring and Fixing GRUB Installations</title>
       
-      <para></para>
+      <para>explain: rescue mode of installer and chroot-mode -> grub-install</para>
     </section>
 
     <section id="sect.config-grub-shell">
@@ -2372,8 +2402,10 @@ dpkg: error processing package grub-pc (--configure):
       <indexterm><primary>shell</primary><secondary>GRUB</secondary></indexterm>
 
       <para>The most common issue users are faced with
-      <emphasis>GRUB</emphasis> lead to , that instead of </para>
+      <emphasis>GRUB</emphasis> are systems not botting anymore and dropping
+      the user in the GRUB shell. ... example how to assemble system from shell</para>
     </section>
+    -->
 
   </section>
   <section id="sect.config-misc">
