@@ -1846,17 +1846,17 @@ nameserver 8.8.8.8
 
     <para>Printer configuration used to cause a great many headaches for
     administrators and users alike. These headaches are now mostly a thing
-    of the past, thanks to CUPS, the free print server using the IPP
-    (Internet Printing Protocol).</para>
+    of the past, thanks to CUPS, the free print server using IPP, the
+    Internet Printing Protocol.</para>
     <indexterm><primary>IPP</primary></indexterm>
-    <indexterm><primary>Internet Printing Protocol</primary></indexterm>
+    <indexterm><primary>Internet Printing Protocol</primary><see>IPP</see></indexterm>
     <indexterm><primary>CUPS</primary></indexterm>
 
     <para>Debian distributes CUPS divided between several packages. The heart
-    of the system is the scheduler, cupsd, which is in the
-    <emphasis role="pkg">cups-daemon</emphasis>
-    package. <emphasis role="pkg">cups-client</emphasis> contains utility
-    programs to interact with the server, cupsd. lpadmin is probably the most
+    of the system is the scheduler, cupsd, which is in the <emphasis
+    role="pkg">cups-daemon</emphasis> package. <emphasis
+    role="pkg">cups-client</emphasis> contains utility programs to interact
+    with the server, cupsd. <command>lpadmin</command> is probably the most
     important utility, as it is crucial for setting up a printer, but there are
     also facilities to disable or enable a printer queue, view or delete print
     jobs and display or set printer options. The CUPS framework is based on the
@@ -1864,6 +1864,11 @@ nameserver 8.8.8.8
     role="pkg">cups-bsd</emphasis>, allowing use of commands such as
     <command>lpr</command>, <command>lpq</command> and <command>lprm</command>
     from the traditional BSD printing system.</para>
+    <indexterm><primary>daemon</primary><secondary>cupsd</secondary></indexterm>
+    <indexterm><primary>CUPS</primary><secondary>daemon</secondary></indexterm>
+    <indexterm><primary><emphasis role="pkg">cups-client</emphasis></primary></indexterm>
+    <indexterm><primary><emphasis role="pkg">cups-daemon</emphasis></primary></indexterm>
+    <indexterm><primary><command>lpadmin</command></primary></indexterm>
     <indexterm><primary><command>lpr</command></primary></indexterm>
     <indexterm><primary><command>lpd</command></primary></indexterm>
     <indexterm><primary><command>lpq</command></primary></indexterm>
@@ -1871,7 +1876,7 @@ nameserver 8.8.8.8
     <sidebar>
       <title><emphasis>COMMUNITY</emphasis> CUPS</title>
       <indexterm><primary>CUPS</primary></indexterm>
-      <indexterm><primary>Common Unix Printing System</primary></indexterm>
+      <indexterm><primary>Common Unix Printing System</primary><see>CUPS</see></indexterm>
 
       <para>CUPS is a project and a trademark owned and managed by Apple, Inc.
       Prior to its acquisition by Apple it was known as the Common Unix
@@ -1880,50 +1885,57 @@ nameserver 8.8.8.8
     </sidebar>
 
     <para>The scheduler manages print jobs and these jobs traverse a filtering
-    system to produce a file that the printer will understand and print.
-    The filtering system is provided by the <emphasis
-        role="pkg">cups-filters</emphasis> (<ulink
-        url="https://salsa.debian.org/printing-team/cups-filters" />)
-    package in conjunction with <emphasis
-        role="pkg">printer-driver-*</emphasis> packages. CUPS in
-    combination with <emphasis role="pkg">cups-filters</emphasis> and
-    <emphasis role="pkg">printer-driver-*</emphasis> is the basis for the
-    Debian printing system.</para>
+    system to produce a file that the printer will understand and print. The
+    filtering system is provided by the <emphasis
+    role="pkg">cups-filters</emphasis> package in conjunction with <emphasis
+    role="pkg">printer-driver-*</emphasis> packages. CUPS in combination with
+    these packages is the basis for the Debian printing system.</para>
+    <indexterm><primary><emphasis role="pkg">cups-filters</emphasis></primary></indexterm>
+    <indexterm><primary>CUPS</primary><secondary>filters</secondary></indexterm>
+
+    <!-- MAYCHANGE: stable release name -->
 
     <para>Modern printers manufactured and sold within the last ten years are
-        nearly always AirPrint-capable, and CUPS and cups-filters on Debian
-        <emphasis role="distribution">Bullseye</emphasis> have everything which
-        is needed to take advantage of this facility on the network. In
-        essence, these printers are IPP printers and an excellent fit for a
-        driverless printing system, reducing the system to CUPS plus
-        cups-filters. A printer-driver package can be dispensed with, and
-        non-free printing software from vendors like Canon and Brother is no
-        longer required. A USB-connected printer can take advantage of a modern
-        printer with the <emphasis role="pkg">ippusbxd</emphasis> package.</para>
+    nearly always AirPrint-capable, and CUPS and cups-filters on Debian
+    <emphasis role="distribution">Bullseye</emphasis> have everything which is
+    needed to take advantage of this facility on the network. In essence, these
+    printers are IPP printers and an excellent fit for a driverless printing
+    system, reducing the system to CUPS plus <emphasis
+    role="pkg">cups-filters</emphasis>. A printer-driver package can be
+    dispensed with, and non-free printing software from vendors like Canon and
+    Brother is no longer required. A USB-connected printer can take advantage
+    of a modern printer with the <emphasis role="pkg">ippusbxd</emphasis>
+    package.</para>
+    <indexterm><primary><emphasis role="pkg">ippusbxd</emphasis></primary></indexterm>
 
     <para>The command <command>apt install cups</command> will install CUPS and
-        cups-filters. It will also install the
-        recommended <emphasis role="pkg">printer-driver-gutenprint</emphasis>
-        to provide a driver for a wide range of printers, but, unless the
-        printer is being operated driverlessly, an alternative printer-driver
-        might be needed for the particular device.</para>
+    the filters. It will also install the recommended <emphasis
+    role="pkg">printer-driver-gutenprint</emphasis> to provide a driver for a
+    wide range of printers, but, unless the printer is being operated
+    driverlessly, an alternative printer-driver might be needed for the
+    particular device.</para>
+    <indexterm><primary><emphasis role="pkg">printer-driver-gutenprint</emphasis></primary></indexterm>
 
     <para>As a package recommended by <emphasis
-            role="pkg">cups-daemon</emphasis>, <emphasis
-            role="pkg">cups-browsed</emphasis> will be on the system and
-        networked print queues, and modern printers can be automatically
-        discovered and set up from their DNS-SD broadcasts (Bonjour). USB
-        printers will have to be set up manually as described in the next
-        paragraph.</para>
+    role="pkg">cups-daemon</emphasis>, <emphasis
+    role="pkg">cups-browsed</emphasis> will be on the system and networked
+    print queues, and modern printers can be automatically discovered and set
+    up from their DNS-SD broadcasts (Bonjour). USB printers will have to be set
+    up manually as described in the next paragraph.</para>
+    <indexterm><primary><emphasis role="pkg">cups-browsed</emphasis></primary></indexterm>
 
     <para>The printing system is administered easily through a web interface
-        accessible at the local address <literal>http://localhost:631/</literal>.
-        There you can add and remove USB and network printers and administer
-        most aspects of their behavior. Similar administration tasks can also
-        be carried out via the graphical interface provided by a desktop
-        environment or the <command>system-config-printer</command> graphical
-        interface (from the homonym Debian package).</para>
-    <indexterm><primary><command>cups</command></primary><secondary>administration</secondary></indexterm>
+    accessible at the local address <literal>http://localhost:631/</literal>.
+    Members of the <literal>lpadmin</literal> group can add and remove USB and
+    network printers and administer most aspects of their behavior.  Similar
+    administration tasks can also be carried out via the graphical interface
+    provided by a desktop environment or the
+    <command>system-config-printer</command> graphical interface (from the
+    homonym Debian package).</para>
+    <indexterm><primary>group</primary><secondary><literal>lpadmin</literal></secondary></indexterm>
+    <indexterm><primary><command>system-config-printer</command></primary></indexterm>
+    <indexterm><primary>CUPS</primary><secondary>administration</secondary></indexterm>
+    <indexterm><primary>CUPS</primary><secondary>web interfacesudo</secondary></indexterm>
   </section>
   <section id="sect.config-bootloader">
     <title>Configuring the Bootloader</title>
