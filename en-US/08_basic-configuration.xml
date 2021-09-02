@@ -2419,116 +2419,129 @@ dpkg: error processing package grub-pc (--configure):
     <section id="sect.timezone">
       <title>Timezone</title>
       <indexterm><primary>timezone</primary></indexterm>
+      <indexterm><primary>clock</primary><secondary>timezone</secondary></indexterm>      
 
       <sidebar id="sidebar.symbolic-link">
         <title><emphasis>BACK TO BASICS</emphasis> Symbolic links</title>
         <indexterm><primary>link</primary><secondary>symbolic</secondary></indexterm>
         <indexterm><primary>symbolic link</primary></indexterm>
+        <indexterm><primary>file</primary><secondary>symbolic link</secondary><seealso>symbolic link</seealso></indexterm>
         <indexterm><primary><command>ln</command></primary></indexterm>
 
-	<para>A symbolic link is a pointer to another file. When you access
-	it, the file to which it points is opened. Removal of the link will
-	not cause deletion of the file to which it points. Likewise, it
-	does not have its own set of permissions, but rather retains the
-	permissions of its target. Finally, it can point to any type of
-	file: directories, special files (sockets, named pipes, device
-	files, etc.), even other symbolic links.</para>
+        <para>A symbolic link is a pointer to another file. When you access
+        it, the file to which it points is opened. Removal of the link will
+        not cause deletion of the file to which it points. Likewise, it
+        does not have its own set of permissions, but rather retains the
+        permissions of its target. Finally, it can point to any type of
+        file: directories, special files (sockets, named pipes, device
+        files, etc.), even other symbolic links.</para>
 
-	<para>The <command>ln -s <replaceable>target</replaceable>
-	<replaceable>link-name</replaceable></command> command creates a
-	symbolic link, named <replaceable>link-name</replaceable>, pointing
-	to <replaceable>target</replaceable>.</para>
+        <para>The <command>ln -s <replaceable>target</replaceable>
+        <replaceable>link-name</replaceable></command> command creates a
+        symbolic link, named <replaceable>link-name</replaceable>, pointing
+        to <replaceable>target</replaceable>.</para>
 
-	<para>If the target does not exist, then the link is “broken”
-	and accessing it will result in an error indicating that the target
-	file does not exist. If the link points to another link, you will
-	have a “chain” of links that turns into a “cycle” if one of
-	the targets points to one of its predecessors. In this case,
-	accessing one of the links in the cycle will result in a specific
-	error (“too many levels of symbolic links”); this means the
-	kernel gave up after several rounds of the cycle.</para>
+        <para>If the target does not exist, then the link is “broken”
+        and accessing it will result in an error indicating that the target
+        file does not exist. If the link points to another link, you will
+        have a “chain” of links that turns into a “cycle” if one of
+        the targets points to one of its predecessors. In this case,
+        accessing one of the links in the cycle will result in a specific
+        error (“too many levels of symbolic links”); this means the
+        kernel gave up after several rounds of the cycle.</para>
       </sidebar>
+
+      <indexterm><primary>dpkg-reconfigure</primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">tzdata</emphasis></primary></indexterm>
 
       <para>The timezone, configured during initial installation, is a
       configuration item for the <emphasis role="pkg">tzdata</emphasis>
-      package. To modify it, use the <command>dpkg-reconfigure
-      tzdata</command> command, which allows you to choose the timezone to
-      be used in an interactive manner. Its configuration is stored in the
-      <filename>/etc/timezone</filename> file. Additionally, the
-      corresponding file in the <filename>/usr/share/zoneinfo</filename>
-      directory is copied into <filename>/etc/localtime</filename>; this file
-      contains the rules governing the dates where daylight saving time is
-      active, for countries that use it.</para>
+      package. To modify it, use the <command>dpkg-reconfigure tzdata</command>
+      command, which allows you to choose the timezone to be used in an
+      interactive manner. Its configuration is stored in the
+      <filename>/etc/timezone</filename> file. Additionally,
+      <filename>/etc/localtime</filename> becomes a symbolic link to the
+      corresponding file in the <filename>/usr/share/zoneinfo</filename>; the
+      file that contains the rules governing the dates where daylight saving
+      time (<acronym>DST</acronym>) is active, for countries that use
+      it.</para>
       <indexterm><primary><filename>timezone</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/timezone</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/localtime</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/timezone</filename></secondary></indexterm>
       <indexterm><primary><filename>zoneinfo</filename></primary></indexterm>
       <indexterm><primary><filename>/usr/share/zoneinfo/</filename></primary></indexterm>
-      <indexterm><primary>DST</primary></indexterm>
-      <indexterm><primary>daylight saving time</primary></indexterm>
+      <indexterm><primary>DST</primary><see>Daylight Saving Time</see></indexterm>
+      <indexterm><primary>Daylight Saving Time</primary></indexterm>
 
       <para>When you need to temporarily change the timezone, use the
       <varname>TZ</varname> environment variable, which takes priority over
       the configured system default:</para>
       <indexterm><primary><varname>TZ</varname></primary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>TZ</varname></secondary></indexterm>
 
       <screen id="screen.tz">
 <computeroutput>$ </computeroutput><userinput>date</userinput>
-<computeroutput>Thu Feb 19 11:25:18 CET 2015</computeroutput>
+<computeroutput>Thu Sep  2 22:29:48 CEST 2021</computeroutput>
 <computeroutput>$ </computeroutput><userinput>TZ="Pacific/Honolulu" date</userinput>
-<computeroutput>Thu Feb 19 00:25:21 HST 2015</computeroutput></screen>
+<computeroutput>Thu 02 Sep 2021 10:31:01 AM HST</computeroutput></screen>
 
       <sidebar>
         <title><emphasis>NOTE</emphasis> System clock, hardware clock</title>
+        <indexterm><primary>clock</primary><secondary>hardware clock</secondary></indexterm>
+        <indexterm><primary>clock</primary><secondary>software clock</secondary></indexterm>
+        <indexterm><primary>clock</primary><secondary>CMOS clock</secondary></indexterm>
 
-	<para>There are two time sources in a computer. A computer's
-	motherboard has a hardware clock, called the “CMOS clock”. This
-	clock is not very precise, and provides rather slow access times.
-	The operating system kernel has its own, the software clock, which
-	it keeps up to date with its own means (possibly with the help of
-	time servers, see <xref linkend="sect.time-synchronization"/>). This
-	system clock is generally more accurate, especially since it
-	doesn't need access to hardware variables. However, since it only
-	exists in live memory, it is zeroed out every time the machine is
-	booted, contrary to the CMOS clock, which has a battery and
-	therefore “survives” rebooting or halting of the machine. The
-	system clock is, thus, set from the CMOS clock during boot, and the
-	CMOS clock is updated on shutdown (to take into account possible
-	changes or corrections if it has been improperly adjusted).</para>
+        <para>There are two time sources in a computer. A computer's
+        motherboard has a hardware clock, called the “CMOS clock”. This
+        clock is not very precise, and provides rather slow access times.
+        The operating system kernel has its own, the software clock, which
+        it keeps up to date with its own means (possibly with the help of
+        time servers, see <xref linkend="sect.time-synchronization"/>). This
+        system clock is generally more accurate, especially since it
+        doesn't need access to hardware variables. However, since it only
+        exists in live memory, it is zeroed out every time the machine is
+        booted, contrary to the CMOS clock, which has a battery and
+        therefore “survives” rebooting or halting of the machine. The
+        system clock is, thus, set from the CMOS clock during boot, and the
+        CMOS clock is updated on shutdown (to take into account possible
+        changes or corrections if it has been improperly adjusted).</para>
 
-	<para>In practice, there is a problem, since the CMOS clock is
-	nothing more than a counter and contains no information regarding
-	the time zone. There is a choice to make regarding its
-	interpretation: either the system considers it runs in universal
-	time (UTC, formerly GMT), or in local time. This choice could be a
-	simple shift, but things are actually more complicated: as a result
-	of daylight saving time, this offset is not constant. The result is
-	that the system has no way to determine whether the offset is
-	correct, especially around periods of time change. Since it is
-	always possible to reconstruct local time from universal time and
-	the timezone information, we strongly recommend using the CMOS
-	clock in universal time.</para>
+        <para>In practice, there is a problem, since the CMOS clock is
+        nothing more than a counter and contains no information regarding
+        the time zone. There is a choice to make regarding its
+        interpretation: either the system considers it runs in universal
+        time (UTC, formerly GMT), or in local time. This choice could be a
+        simple shift, but things are actually more complicated: as a result
+        of daylight saving time, this offset is not constant. The result is
+        that the system has no way to determine whether the offset is
+        correct, especially around periods of time change. Since it is
+        always possible to reconstruct local time from universal time and
+        the timezone information, we strongly recommend using the CMOS
+        clock in universal time.</para>
 
-	<para>Unfortunately, Windows systems in their default configuration
-	ignore this recommendation; they keep the CMOS clock on local time,
-	applying time changes when booting the computer by trying to guess
-	during time changes if the change has already been applied or not.
-	This works relatively well, as long as the system has only Windows
-	running on it. But when a computer has several systems (whether it
-	be a “dual-boot” configuration or running other systems via
-	virtual machine), chaos ensues, with no means to determine if the
-	time is correct. If you absolutely must retain Windows on a
-	computer, you should either configure it to keep the CMOS clock as
-	UTC (setting the registry key
-	<literal>HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation\RealTimeIsUniversal</literal>
-	to “1” as a DWORD), or use <command>hwclock --localtime --set</command>
-	on the Debian system to set the hardware clock and mark it as tracking
-	the local time (and make sure to manually check your clock in spring and
-	autumn).</para>
+        <indexterm><primary><command>hwclock</command></primary></indexterm>
+        <para>Unfortunately, some Windows systems in their default configuration
+        ignore this recommendation; they keep the CMOS clock on local time,
+        applying time changes when booting the computer by trying to guess
+        during time changes if the change has already been applied or not.
+        This works relatively well, as long as the system has only Windows
+        running on it. But when a computer has several systems (whether it
+        be a “dual-boot” configuration or running other systems via
+        virtual machine), chaos ensues, with no means to determine if the
+        time is correct. If you absolutely must retain Windows on a
+        computer, you should either configure it to keep the CMOS clock as
+        UTC (setting the registry key
+        <literal>HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation\RealTimeIsUniversal</literal>
+        to “1” as a DWORD), or use <command>hwclock --localtime --set</command>
+        on the Debian system to set the hardware clock and mark it as tracking
+        the local time (and make sure to manually check your clock in spring and
+        autumn).</para>
       </sidebar>
     </section>
     <section id="sect.time-synchronization">
       <title>Time Synchronization</title>
       <indexterm><primary>time synchronization</primary></indexterm>
+      <indexterm><primary>time</primary><see>clock</see></indexterm>
       <indexterm><primary>clock</primary><secondary>synchronization</secondary></indexterm>
 
       <para>Time synchronization, which may seem superfluous on a computer,
@@ -2546,74 +2559,86 @@ dpkg: error processing package grub-pc (--configure):
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> NTP</title>
         <indexterm><primary>NTP</primary></indexterm>
-        <indexterm><primary>Network</primary><secondary>Time Protocol</secondary></indexterm>
+        <indexterm><primary>NTP</primary><secondary>server</secondary></indexterm>
+        <indexterm><primary>Network Time Protocol</primary><see>NTP</see></indexterm>
+        <indexterm><primary>network</primary><secondary>Time Protocol</secondary><see>NTP</see></indexterm>
 
-	<para>NTP (Network Time Protocol) allows a machine to synchronize
-	with others fairly accurately, taking into consideration the delays
-	induced by the transfer of information over the network and other
-	possible offsets.</para>
+        <para>NTP (Network Time Protocol) allows a machine to synchronize
+        with others fairly accurately, taking into consideration the delays
+        induced by the transfer of information over the network and other
+        possible offsets.</para>
 
-	<para>While there are numerous NTP servers on the Internet, the
-	more popular ones may be overloaded. This is why we recommend using
-	the <emphasis>pool.ntp.org</emphasis> NTP server, which is, in
-	reality, a group of machines that have agreed to serve as public
-	NTP servers. You could even limit use to a sub-group specific to a
-	country, with, for example, <emphasis>us.pool.ntp.org</emphasis>
-	for the United States, or <emphasis>ca.pool.ntp.org</emphasis> for
-	Canada, etc.</para>
+        <para>While there are numerous NTP servers on the Internet, the
+        more popular ones may be overloaded. This is why we recommend using
+        the <emphasis>pool.ntp.org</emphasis> NTP server, which is, in
+        reality, a group of machines that have agreed to serve as public
+        NTP servers. You could even limit use to a sub-group specific to a
+        country, with, for example, <emphasis>us.pool.ntp.org</emphasis>
+        for the United States, or <emphasis>ca.pool.ntp.org</emphasis> for
+        Canada, etc.</para>
 
-	<para>However, if you manage a large network, it is recommended
-	that you install your own NTP server, which will synchronize with
-	the public servers. In this case, all the other machines on your
-	network can use your internal NTP server instead of increasing the
-	load on the public servers. You will also increase homogeneity with
-	your clocks, since all the machines will be synchronized on the
-	same source, and this source is very close in terms of network
-	transfer times.</para>
+        <para>However, if you manage a large network, it is recommended
+        that you install your own NTP server, which will synchronize with
+        the public servers. In this case, all the other machines on your
+        network can use your internal NTP server instead of increasing the
+        load on the public servers. You will also increase homogeneity with
+        your clocks, since all the machines will be synchronized on the
+        same source, and this source is very close in terms of network
+        transfer times.</para>
       </sidebar>
       <section id="sect.ntp-on-workstations">
         <title>For Workstations</title>
+        <indexterm><primary>NTP</primary><secondary><command>ntpdate</command></secondary></indexterm>
+        <indexterm><primary>NTP</primary><secondary>client</secondary></indexterm>
+        <indexterm><primary>NTP</primary><secondary>workstation</secondary></indexterm>
 
-	<para>Since work stations are regularly rebooted (even if only to
-	save energy), synchronizing them by NTP at boot is enough. To do
-	so, simply install the <emphasis role="pkg">ntpdate</emphasis>
-	package. You can change the NTP server used if needed by modifying
-	the <filename>/etc/default/ntpdate</filename> file.</para>
-        <indexterm><primary><filename>ntpdate</filename></primary></indexterm>
-        <indexterm><primary><filename>/etc/default/ntpdate</filename></primary></indexterm>
+        <para>Since work stations are regularly rebooted (even if only to
+        save energy), synchronizing them by NTP at boot is enough. To do
+        so, simply install the <emphasis role="pkg">ntpdate</emphasis>
+        package. You can change the NTP server used if needed by modifying
+        the <filename>/etc/default/ntpdate</filename> file.</para>
+        <indexterm><primary><command>ntpdate</command></primary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/default/ntpdate</filename></secondary><seealso><command>ntpdate</command></seealso></indexterm>
       </section>
       <section id="sect.ntp-on-servers">
         <title>For Servers</title>
+        <indexterm><primary>NTP</primary><secondary>server</secondary></indexterm>
+        <indexterm><primary>NTP</primary><secondary><emphasis role="pkg">ntp</emphasis></secondary></indexterm>
 
         <!-- TODO: sidebar on tlsdate as alternative -->
-	<para>Servers are only rarely rebooted, and it is very important
-	for their system time to be correct. To permanently maintain
-	correct time, you would install a local NTP server, a service
-	offered in the <emphasis role="pkg">ntp</emphasis> package. In its
-	default configuration, the server will synchronize with
-	<emphasis>pool.ntp.org</emphasis> and provide time in response to
-	requests coming from the local network. You can configure it by
-	editing the <filename>/etc/ntp.conf</filename> file, the most
-	significant alteration being the NTP server to which it refers. If
-	the network has a lot of servers, it may be interesting to have one
-	local time server which synchronizes with the public servers and is
-	used as a time source by the other servers of the network.</para>
+        <para>Servers are only rarely rebooted, and it is very important
+        for their system time to be correct. To permanently maintain
+        correct time, you would install a local NTP server, a service
+        offered in the <emphasis role="pkg">ntp</emphasis> package. In its
+        default configuration, the server will synchronize with
+        <emphasis>pool.ntp.org</emphasis> and provide time in response to
+        requests coming from the local network. You can configure it by
+        editing the <filename>/etc/ntp.conf</filename> file, the most
+        significant alteration being the NTP server to which it refers. If
+        the network has a lot of servers, it may be interesting to have one
+        local time server which synchronizes with the public servers and is
+        used as a time source by the other servers of the network.</para>
         <indexterm><primary><emphasis role="pkg">ntp</emphasis></primary></indexterm>
         <indexterm><primary>server</primary><secondary>NTP</secondary></indexterm>
         <indexterm><primary>NTP</primary><secondary>server</secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/ntp.conf</filename></secondary><seealso><emphasis role="pkg">ntp</emphasis></seealso></indexterm>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> GPS modules and other time sources</title>
           <indexterm><primary>GPS</primary></indexterm>
+          <indexterm><primary>Global Positioning System</primary><see>GPS</see></indexterm>
           <indexterm><primary>DCF-77</primary></indexterm>
+          <indexterm><primary>NTP</primary><secondary>GPS</secondary></indexterm>
+          <indexterm><primary>NTP</primary><secondary>DCF-77</secondary></indexterm>
+          <indexterm><primary>clock</primary><secondary>atomic clock</secondary></indexterm>
 
-	  <para>If time synchronization is particularly crucial to your
-	  network, it is possible to equip a server with a GPS module
-	  (which will use the time from GPS satellites) or a DCF-77 module
-	  (which will sync time with the atomic clock near Frankfurt,
-	  Germany). In this case, the configuration of the NTP server is a
-	  little more complicated, and prior consultation of the
-	  documentation is an absolute necessity.</para>
+          <para>If time synchronization is particularly crucial to your
+          network, it is possible to equip a server with a GPS module
+          (which will use the time from GPS satellites) or a DCF-77 module
+          (which will sync time with the atomic clock near Frankfurt,
+          Germany). In this case, the configuration of the NTP server is a
+          little more complicated, and prior consultation of the
+          documentation is an absolute necessity.</para>
         </sidebar>
       </section>
     </section>
@@ -2622,6 +2647,9 @@ dpkg: error processing package grub-pc (--configure):
       <indexterm><primary>file</primary><secondary>logs, rotation</secondary></indexterm>
       <indexterm><primary>logs</primary><secondary>files, rotation</secondary></indexterm>
       <indexterm><primary>rotation of log files</primary></indexterm>
+      <indexterm><primary>log files</primary><secondary>rotation</secondary></indexterm>
+      <indexterm><primary>log files</primary><secondary>archive</secondary></indexterm>
+      <indexterm><primary>log files</primary><seealso><filename>/var/log/</filename></seealso></indexterm>
       <indexterm><primary><command>logrotate</command></primary></indexterm>
 
       <para>Log files can grow, fast, and it is necessary to archive them.
@@ -2640,15 +2668,19 @@ dpkg: error processing package grub-pc (--configure):
       log files to a specific directory dedicated to archiving them rather
       than delete them. You could also send them by e-mail to archive them
       elsewhere.</para>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/logrotate.conf</filename></secondary><seealso><command>logrotate</command></seealso></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/logrotate.d/</filename></secondary><seealso><command>logrotate</command></seealso></indexterm>
 
       <para>The <command>logrotate</command> program is executed daily by
       the <command>cron</command> scheduling program (described in <xref
       linkend="sect.task-scheduling-cron-atd"/>).</para>
+      <indexterm><primary><command>cron</command></primary></indexterm>
     </section>
     <section id="sect.sharing-admin-rights">
       <title>Sharing Administrator Rights</title>
       <indexterm><primary>account</primary><secondary>administrator account</secondary></indexterm>
       <indexterm><primary>root</primary></indexterm>
+      <indexterm><primary>user</primary><secondary><literal>root</literal></secondary></indexterm>
       <indexterm><primary><command>sudo</command></primary></indexterm>
 
       <para>Frequently, several administrators work on the same network.
@@ -2662,25 +2694,32 @@ dpkg: error processing package grub-pc (--configure):
       <replaceable>command</replaceable></command> and authenticates using
       their personal password.</para>
 
-      <para>When installed, the <emphasis role="pkg">sudo</emphasis>
-      package gives full root rights to members of the
-      <literal>sudo</literal> Unix group. To delegate other rights, the
-      administrator must use the <command>visudo</command> command, which
-      allows them to modify the <filename>/etc/sudoers</filename>
-      configuration file (here again, this will invoke the
-      <command>vi</command> editor, or any other editor indicated in the
-      <varname>EDITOR</varname> environment variable). Adding a line with
-      <literal><replaceable>username</replaceable> ALL=(ALL) ALL</literal>
+      <para>When installed, the <emphasis role="pkg">sudo</emphasis> package
+      gives full root rights to members of the <literal>sudo</literal> Unix
+      group. To delegate other rights, the administrator can use the
+      <command>visudo</command> command, which allows them to modify the
+      <filename>/etc/sudoers</filename> configuration file (here again, this
+      will invoke the <command>vi</command> editor, or any other editor
+      indicated in the <varname>EDITOR</varname> environment variable).
+      Alternatively they might put rules in small files in
+      <filename>/etc/sudoers.d/</filename> as long as this directory is
+      included by <filename>/etc/sudoers</filename> via <code>@includedir
+      /etc/sudoers.d</code>, which is the default for Debian. Adding a line
+      with <literal><replaceable>username</replaceable> ALL=(ALL) ALL</literal>
       allows the user in question to execute any command as root.</para>
+      <indexterm><primary>group</primary><secondary><literal>sudo</literal></secondary></indexterm>
+      <indexterm><primary><varname>EDITOR</varname></primary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>EDITOR</varname></secondary></indexterm>
       <indexterm><primary><command>visudo</command></primary></indexterm>
       <indexterm><primary><filename>sudoers</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/sudoers</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/sudoers</filename></secondary><seealso><command>sudo</command></seealso></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/sudoers.d/</filename></secondary><seealso><command>sudo</command></seealso></indexterm>
 
       <para>More sophisticated configurations allow authorization of only
       specific commands to specific users. All the details of the various
       possibilities are given in the
       <citerefentry><refentrytitle>sudoers</refentrytitle>
-      <manvolnum>5</manvolnum></citerefentry> man page.</para>
+      <manvolnum>5</manvolnum></citerefentry> manual page.</para>
     </section>
     <section id="sect.fstab-mount-points">
       <title>List of Mount Points</title>
@@ -2689,228 +2728,276 @@ dpkg: error processing package grub-pc (--configure):
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Mounting and unmounting</title>
-
-	<para>In a Unix-like system such as Debian, files are organized in
-	a single tree-like hierarchy of directories. The
-	<filename>/</filename> directory is called the “root
-	directory”; all additional directories are sub-directories within
-	this root. “Mounting” is the action of including the content of
-	a peripheral device (often a hard drive) into the system's general
-	file tree. As a consequence, if you use a separate hard drive to
-	store users' personal data, this disk will have to be “mounted”
-	in the <filename>/home/</filename> directory. The root filesystem
-	is always mounted at boot by the kernel; other devices are often
-	mounted later during the startup sequence or manually with the
-	<command>mount</command> command.</para>
         <indexterm><primary><command>mount</command></primary></indexterm>
+        <indexterm><primary><command>umount</command></primary></indexterm>
 
-	<para>Some removable devices are automatically mounted when
-	connected, especially when using the GNOME, Plasma or other graphical
-	desktop environments. Others have to be mounted manually by the
-	user. Likewise, they must be unmounted (removed from the file
-	tree). Normal users do not usually have permission to execute the
-	<command>mount</command> and <command>umount</command> commands.
-	The administrator can, however, authorize these operations
-	(independently for each mount point) by including the
-	<literal>user</literal> option in the
-	<filename>/etc/fstab</filename> file.</para>
+        <para>In a Unix-like system such as Debian, files are organized in
+        a single tree-like hierarchy of directories. The
+        <filename>/</filename> directory is called the “root
+        directory”; all additional directories are sub-directories within
+        this root. “Mounting” is the action of including the content of
+        a peripheral device (often a hard drive) into the system's general
+        file tree. As a consequence, if you use a separate hard drive to
+        store users' personal data, this disk will have to be “mounted”
+        in the <filename>/home/</filename> directory (during installation
+        you already made relevant choices, see <xref
+        linkend="sect.install-autopartman-mode"/>) The root filesystem
+        is always mounted at boot by the kernel; other devices are often
+        mounted later during the startup sequence or manually with the
+        <command>mount</command> command.</para>
 
-	<para>The <command>mount</command> command can be used without
-	arguments to list all mounted filesystems; you can execute
-	<command>findmnt --fstab</command> to show only the filesystems
-	from <filename>/etc/fstab</filename>. The following
-	parameters are required to mount or unmount a device. For the
-	complete list, please refer to the corresponding man pages,
-	<citerefentry><refentrytitle>mount</refentrytitle>
-	<manvolnum>8</manvolnum></citerefentry> and
-	<citerefentry><refentrytitle>umount</refentrytitle>
-	<manvolnum>8</manvolnum></citerefentry>. For simple cases, the
-	syntax is simple too: for example, to mount the
-	<filename>/dev/sdc1</filename> partition, which has an ext3
-	filesystem, into the <filename>/mnt/tmp/</filename> directory, you
-	would simply run <command>mount -t ext3 /dev/sdc1
-	/mnt/tmp/</command>.</para>
+        <para>Some removable devices are automatically mounted when
+        connected, especially when using the GNOME, Plasma or other graphical
+        desktop environments. Others have to be mounted manually by the
+        user. Likewise, they must be unmounted (removed from the file
+        tree). Normal users do not usually have permission to execute the
+        <command>mount</command> and <command>umount</command> commands.
+        The administrator can, however, authorize these operations
+        (independently for each mount point) by including the
+        <literal>user</literal> option in the
+        <filename>/etc/fstab</filename> file.</para>
+
+        <indexterm><primary><filename>fstab</filename></primary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+        <indexterm><primary><command>findmnt</command></primary></indexterm>
+        <indexterm><primary><filename>/proc/</filename></primary><secondary><filename>/proc/mounts</filename></secondary></indexterm>
+
+        <para>The <command>mount</command> command can be used without
+        arguments to list all mounted filesystems (as found in
+        <filename>/proc/mounts</filename> as well); you can execute
+        <command>findmnt --fstab</command> to show only the filesystems
+        from <filename>/etc/fstab</filename>. The following
+        parameters are required to mount or unmount a device - for the
+        complete list, please refer to the corresponding man pages,
+        <citerefentry><refentrytitle>mount</refentrytitle>
+        <manvolnum>8</manvolnum></citerefentry> and
+        <citerefentry><refentrytitle>umount</refentrytitle>
+        <manvolnum>8</manvolnum></citerefentry>. For simple cases, the
+        syntax is simple too: for example, to mount the
+        <filename>/dev/sdc1</filename> partition, which has an ext3
+        filesystem, into the <filename>/mnt/tmp/</filename> directory, you
+        would simply run <command>mount -t ext3 /dev/sdc1
+        /mnt/tmp/</command>.</para>
       </sidebar>
 
       <para>The <filename>/etc/fstab</filename> file gives a list of all
       possible mounts that happen either automatically on boot or manually
       for removable storage devices. Each mount point is described by a
-      line with several space-separated fields:
+      line with several space-separated fields:</para>
+
       <indexterm><primary><filename>fstab</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/fstab</filename></primary></indexterm></para>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+
       <itemizedlist>
         <listitem>
           <para>file system: this indicates where the filesystem to be mounted can be found,
           it can be a local device (hard drive partition,
-	  CD-ROM) or a remote filesystem (such as NFS).</para>
+          CD-ROM) or a remote filesystem (such as NFS or even SSHFS).</para>
 
-	  <para>This field is frequently replaced with the unique ID of the
-	  filesystem (which you can determine with <command>blkid
-	  <userinput>device</userinput></command>) prefixed with
-	  <literal>UUID=</literal>. This guards against a change in the
-	  name of the device in the event of addition or removal of disks,
-	  or if disks are detected in a different order.</para>
+          <para>This field is frequently replaced with the unique ID of the
+          filesystem (which you can determine with <command>blkid
+          <userinput>device</userinput></command>) prefixed with
+          <literal>UUID=</literal>. This guards against a change in the
+          name of the device in the event of addition or removal of disks,
+          or if disks are detected in a different order. <xref
+          linkend="sect.identify-disks"/> covers this topic in more
+          detail.</para>
+          <indexterm><primary><command>mount</command></primary><secondary><literal>UUID</literal></secondary></indexterm>
+          <indexterm><primary>UUID</primary></indexterm>
         </listitem>
         <listitem>
-	  <para>mount point: this is the location on the local filesystem
-	  where the device, remote system, or partition will be
-	  mounted.</para>
+          <para>mount point: this is the location on the local filesystem
+          where the device, remote system, or partition will be
+          mounted.</para>
         </listitem>
         <listitem>
-	  <para>type: this field defines the filesystem used on the mounted
-	  device. <literal>ext4</literal>, <literal>ext3</literal>,
-	  <literal>vfat</literal>, <literal>ntfs</literal>,
-	  <literal>btrfs</literal>, <literal>xfs</literal> are a few
-	  examples.</para>
+          <para>type: this field defines the filesystem used on the mounted
+          device. <literal>ext4</literal>, <literal>ext3</literal>,
+          <literal>vfat</literal>, <literal>ntfs</literal>,
+          <literal>btrfs</literal>, <literal>xfs</literal> are a few
+          examples.</para>
 
           <sidebar>
             <title><emphasis>BACK TO BASICS</emphasis> NFS, a network filesystem</title>
+            <indexterm><primary>NFS</primary></indexterm>
+            <indexterm><primary>Network File System</primary><see>NFS</see></indexterm>
+            <indexterm><primary>network</primary><secondary>File System</secondary><see>NFS</see></indexterm>
 
-	    <para>NFS is a network filesystem; under Linux, it allows
-	    transparent access to remote files by including them in the
-	    local filesystem.</para>
+            <para>NFS is a network filesystem; under Linux, it allows
+            transparent access to remote files by including them in the
+            local filesystem.</para>
           </sidebar>
 
-	  <para>A complete list of known filesystems is available in the
-	  <citerefentry><refentrytitle>mount</refentrytitle>
-	  <manvolnum>8</manvolnum></citerefentry> man page. The
-	  <literal>swap</literal> special value is for swap partitions; the
-	  <literal>auto</literal> special value tells the
-	  <command>mount</command> program to automatically detect the
-	  filesystem (which is especially useful for disk readers and USB
-	  keys, since each one might have a different filesystem);</para>
+          <para>A complete list of known filesystems is available in the
+          <citerefentry><refentrytitle>mount</refentrytitle>
+          <manvolnum>8</manvolnum></citerefentry> manual page. The
+          <literal>swap</literal> special value is for swap partitions; the
+          <literal>auto</literal> special value tells the
+          <command>mount</command> program to automatically detect the
+          filesystem (which is especially useful for disk readers and USB
+          keys, since each one might have a different filesystem);</para>
+          <indexterm><primary><command>mount</command></primary><secondary><literal>auto</literal></secondary></indexterm>
+          <indexterm><primary><command>mount</command></primary><secondary><literal>swap</literal></secondary></indexterm>
         </listitem>
         <listitem>
-	  <para>options: there are many of them, depending on the
-	  filesystem, and they are documented in the
-	  <command>mount</command> man page. The most common are</para>
+          <para>options: there are many of them, depending on the
+          filesystem, and they are documented in the
+          <command>mount</command> man page. The most common are</para>
+
           <itemizedlist>
             <listitem>
-	      <para><literal>rw</literal> or <literal>ro</literal>,
-	      meaning, respectively, that the device will be mounted with
-	      read/write or read-only permissions.</para>
+              <para><literal>rw</literal> or <literal>ro</literal>,
+              meaning, respectively, that the device will be mounted with
+              read/write or read-only permissions.</para>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>rw</literal></secondary></indexterm>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>ro</literal></secondary></indexterm>
             </listitem>
             <listitem>
-	      <para><literal>noauto</literal> deactivates automatic
-	      mounting on boot.</para>
+              <para><literal>noauto</literal> deactivates automatic
+              mounting on boot.</para>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>noauto</literal></secondary></indexterm>
             </listitem>
             <listitem>
-              <para>
-                <literal>nofail</literal> allows the boot to proceed
-                even when the device is not present. Make sure to put this
-                option for external drives that might be unplugged
-                when you boot, because <command>systemd</command> really
-                ensures that all mount points that must be automatically
-                mounted are actually mounted before letting the boot
-                process continue to its end. Note that you can combine
-                this with <literal>x-systemd.device-timeout=5s</literal>
-                to tell <command>systemd</command> to not wait more than
-                5 seconds for the device to appear (see
-                <citerefentry><refentrytitle>systemd.mount</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
-	      </para>
+              <para><literal>nofail</literal> allows the boot to proceed even
+              when the device is not present. Make sure to put this option for
+              external drives that might be unplugged when you boot, because
+              <command>systemd</command> really ensures that all mount points
+              that must be automatically mounted are actually mounted before
+              letting the boot process continue to its end. Note that you can
+              combine this with <literal>x-systemd.device-timeout=5s</literal>
+              to tell <command>systemd</command> to not wait more than 5
+              seconds for the device to appear (see
+              <citerefentry><refentrytitle>systemd.mount</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
+              </para>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>nofail</literal></secondary></indexterm>
             </listitem>
             <listitem>
-	      <para><literal>user</literal> authorizes all users to mount
-	      this filesystem (an operation which would otherwise be
-	      restricted to the root user).</para>
+              <para><literal>user</literal> authorizes all users to mount
+              this filesystem (an operation which would otherwise be
+              restricted to the root user).</para>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>user</literal></secondary></indexterm>
             </listitem>
             <listitem>
-	      <para><literal>defaults</literal> means the group of default
-	      options: <literal>rw</literal>, <literal>suid</literal>,
-	      <literal>dev</literal>, <literal>exec</literal>,
-	      <literal>auto</literal>, <literal>nouser</literal> and
-	      <literal>async</literal>, each of which can be individually
-	      disabled after <literal>defaults</literal> by adding
-	      <literal>nosuid</literal>, <literal>nodev</literal> and so on
-	      to block <literal>suid</literal>, <literal>dev</literal> and
-	      so on. Adding the <literal>user</literal> option reactivates
-	      it, since <literal>defaults</literal> includes
-	      <literal>nouser</literal>.</para>
+              <para><literal>defaults</literal> means the group of default
+              options: <literal>rw</literal>, <literal>suid</literal>,
+              <literal>dev</literal>, <literal>exec</literal>,
+              <literal>auto</literal>, <literal>nouser</literal> and
+              <literal>async</literal>, each of which can be individually
+              disabled after <literal>defaults</literal> by adding
+              <literal>nosuid</literal>, <literal>nodev</literal> and so on
+              to block <literal>suid</literal>, <literal>dev</literal> and
+              so on. Adding the <literal>user</literal> option reactivates
+              it, since <literal>defaults</literal> includes
+              <literal>nouser</literal>.</para>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>defaults</literal></secondary></indexterm>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>auto</literal></secondary></indexterm>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>dev</literal></secondary></indexterm>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>suid</literal></secondary></indexterm>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>rw</literal></secondary></indexterm>
+              <indexterm><primary><command>mount</command></primary><secondary><literal>nouser</literal></secondary></indexterm>
             </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
-          <para>dump: this field is almost always set to
-	  <literal>0</literal>. When it is <literal>1</literal>, it tells
-	  the <command>dump</command> tool that the partition contains data
-	  that is to be backed up.</para>
+          <para>dump: this field is almost always set to <literal>0</literal>
+          and kind of a relic. When it is greater then zero, it tells the
+          <command>dump</command> tool that the partition contains data that is
+          to be backed up frequently. The tool supports Ext2/3/4 filesystems
+          only and will use the value here when run via <command>dump
+          -W</command> or <command>dump -w</command> to determine which
+          partitions need to be backed up. Consider the examples in
+          <filename>/usr/share/doc/dump/examples/</filename> if you want to use
+          this feature. But there are better alternatives to backup a
+          filesystem, like <command>fsarchiver</command>.</para>
+          <indexterm><primary><command>mount</command></primary><secondary><literal>dump</literal></secondary></indexterm>
+          <indexterm><primary><command>dump</command></primary></indexterm>
+          <indexterm><primary><command>fsarchiver</command></primary></indexterm>
         </listitem>
         <listitem>
           <para>pass: this last field indicates whether the
-	  integrity of the filesystem should be checked on boot, and in
-	  which order this check should be executed. If it is
-	  <literal>0</literal>, no check is conducted. The root filesystem
-	  should have the value <literal>1</literal>, while other permanent
-	  filesystems get the value <literal>2</literal>.</para>
+          integrity of the filesystem should be checked on boot, and in
+          which order this check should be executed. If it is
+          <literal>0</literal>, no check is conducted. The root filesystem
+          should have the value <literal>1</literal>, while other permanent
+          filesystems get the value <literal>2</literal>.</para>
         </listitem>
       </itemizedlist>
 
       <example id="example.fstab">
         <title>Example <filename>/etc/fstab</filename> file</title>
 
-        <programlisting>
+        <programlisting><![CDATA[
 # /etc/fstab: static file system information.
 #
-# &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
-proc            /proc           proc    defaults        0       0
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# systemd generates mount units based on this file, see systemd.mount(5).
+# Please run 'systemctl daemon-reload' after making changes here.
+#
+# <file system>                           <mount point>   <type>      <options>         <dump>  <pass>
 # / was on /dev/sda1 during installation
-UUID=c964222e-6af1-4985-be04-19d7c764d0a7 / ext3 errors=remount-ro 0 1
+UUID=7a250fb8-c16d-4a4e-9808-ec08ae92b6c6 /               ext4        errors=remount-ro 0       1
 # swap was on /dev/sda5 during installation
-UUID=ee880013-0f63-4251-b5c6-b771f53bd90e none swap sw  0       0
-/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto 0       0
-/dev/fd0        /media/floppy   auto    rw,user,noauto  0       0
-arrakis:/shared /shared         nfs     defaults        0       0
-</programlisting>
+UUID=13f367ae-dbaf-40ed-85c0-4072a2ebe426 none            swap        sw                0       0
+/dev/sr0                                  /media/cdrom0   udf,iso9660 user,noauto       0       0
+/dev/fd0                                  /media/floppy   auto        rw,user,noauto    0       0
+arrakis:/shared                           /shared         nfs         defaults          0       0
+]]></programlisting>
+
+        <para>The last entry in the example corresponds to a network filesystem
+        (NFS): the <filename>/shared/</filename> directory on the
+        <emphasis>arrakis</emphasis> server is mounted at
+        <filename>/shared/</filename> on the local machine.</para>
       </example>
 
-      <para>The last entry in this example corresponds to a network
-      filesystem (NFS): the <filename>/shared/</filename> directory on the
-      <emphasis>arrakis</emphasis> server is mounted at
-      <filename>/shared/</filename> on the local machine. The format of the
-      <filename>/etc/fstab</filename> file is documented on the
-      <citerefentry><refentrytitle>fstab</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-      man page.</para>
+      <para>The format of the <filename>/etc/fstab</filename> file is
+      documented in the <citerefentry><refentrytitle>fstab</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry> manual page.</para>
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Auto-mounting</title>
+        <indexterm><primary>automount points</primary></indexterm>
+        <indexterm><primary><command>systemd</command></primary><secondary><filename>.automount</filename></secondary></indexterm>
 
-        <para>
-          systemd is able to manage automount points: those are filesystems
-          that are mounted on-demand when a user attempts
-          to access their target mount points. It can also unmount these
-          filesystems when no process is accessing them any longer.
-        </para>
-        <para>
-          Like most concepts in systemd, automount points are managed with
-          dedicated units (using the <literal>.automount</literal> suffix).
-          See
-          <citerefentry><refentrytitle>systemd.automount</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-          for their precise syntax.
-        </para>
+        <para><literal>systemd</literal> is able to manage automount points:
+        those are filesystems that are mounted on-demand when a user attempts
+        to access their target mount points. It can also unmount these
+        filesystems when no process is accessing them any longer.</para>
 
-        <indexterm><primary><emphasis>am-utils</emphasis></primary></indexterm>
+        <para>Like most concepts in systemd, automount points are managed with
+        dedicated units, using the <filename>.automount</filename> suffix. See
+        <citerefentry><refentrytitle>systemd.automount</refentrytitle>
+        <manvolnum>5</manvolnum></citerefentry> for their precise
+        syntax.</para>
+
+        <indexterm><primary><emphasis role="pkg">am-utils</emphasis></primary></indexterm>
         <indexterm><primary><command>amd</command></primary></indexterm>
         <indexterm><primary><command>automount</command></primary></indexterm>
-        <indexterm><primary><emphasis>autofs</emphasis></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">autofs</emphasis></primary></indexterm>
         <indexterm><primary>automounter</primary></indexterm>
 
-        <para>
-          Other auto-mounting utilities exist, such as
-          <command>automount</command> in the <emphasis
-            role="pkg">autofs</emphasis> package or <command>amd</command>
-          in the <emphasis role="pkg">am-utils</emphasis> package.
-        </para>
+        <para>Other auto-mounting utilities exist, such as
+        <command>automount</command> in the <emphasis
+        role="pkg">autofs</emphasis> package or <command>amd</command> in the
+        <emphasis role="pkg">am-utils</emphasis> package.</para>
 
-	<para>Note also that GNOME, Plasma, and other graphical desktop
-	environments work together with <emphasis>udisks</emphasis>,
-	and can automatically mount removable media when they are connected.</para>
+        <indexterm><primary><emphasis role="pkg">udisks2</emphasis></primary></indexterm>
+        
+        <para>Note also that GNOME, Plasma, and other graphical desktop
+        environments work together with <emphasis
+        role="pkg">udisks2</emphasis>, and can automatically mount removable
+        media when they are connected.</para>
       </sidebar>
     </section>
     <section id="sect.locate-updatedb">
       <title><command>locate</command> and <command>updatedb</command></title>
-      <indexterm><primary><command>locate</command></primary></indexterm>
-      <indexterm><primary><command>updatedb</command></primary></indexterm>
+      <indexterm><primary><command>locate</command></primary><seealso><command>updatedb</command></seealso></indexterm>
+      <indexterm><primary><command>updatedb</command></primary><seealso><command>locate</command></seealso></indexterm>
       <indexterm><primary><command>mlocate</command></primary></indexterm>
+      <indexterm><primary><command>plocate</command></primary></indexterm>
+      <indexterm><primary>file</primary><secondary>locate</secondary></indexterm>
 
       <!-- MAYCHANGE: mlocate demoted to optional in stretch -->
       <para>The <command>locate</command> command can find the location of
@@ -2920,9 +3007,13 @@ arrakis:/shared /shared         nfs     defaults        0       0
       daily by the <command>updatedb</command> command. There are multiple
       implementations of the <command>locate</command> command and Debian
       picked <emphasis role="pkg">mlocate</emphasis> for its standard
-      system.</para>
+      system. If you want to consider an alternative you can try <emphasis
+      role="pkg">plocate</emphasis> which provides the same command line
+      options and can be considered a drop-in replacement.</para>
 
-      <para><command>mlocate</command> is smart enough to only return
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/updatedb.conf</filename></secondary></indexterm>
+
+      <para><command>locate</command> is smart enough to only return
       files which are accessible to the user running the command even
       though it uses a database that knows about all files on the system
       (since its <command>updatedb</command> implementation runs with
