@@ -3340,7 +3340,8 @@ Primary key fingerprint: 647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E]]></
           <term><emphasis role="pkg">linux-image-<replaceable>version</replaceable>-dbg</emphasis></term>
           <listitem>
             <para>contains the debugging symbols for the kernel image and its
-            modules, and</para>
+            modules (only created if <literal>CONFIG_DEBUG_INFO=y</literal>),
+            and</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -3382,6 +3383,16 @@ $ </computeroutput><userinput>ls ../*.deb
 ../linux-image-5.10.46-falcot-dbg_5.10.46-1_amd64.deb
 ../linux-libc-dev_5.10.46-1_amd64.deb
 </computeroutput></screen>
+
+      <para>The whole process requires around 20 GB of free space, at least 8
+      GB of RAM, and several hours of compilation (utilizing one core) for a
+      standard amd64 Debian kernel. These requirements can be drastically
+      reduced by disabling the debug information using
+      <literal>CONFIG_DEBUG_INFO=n</literal>, but this will make it impossible
+      to trace kernel errors (“oops”) using <command>gdb</command> and also
+      stop the creation of the <emphasis
+      role="pkg">linux-image-<replaceable>version</replaceable>-dbg</emphasis>
+      package.</para>
 
       <sidebar id="sidebar.kernel-config-keyring">
         <title><emphasis>TIP</emphasis> Missing <filename>debian/certs/debian-uefi-certs.pem</filename></title>
