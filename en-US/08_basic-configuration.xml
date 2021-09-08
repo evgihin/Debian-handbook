@@ -3427,17 +3427,20 @@ CONFIG_SYSTEM_BLACKLIST_HASH_LIST=""
     <section id="sect.modules-build">
       <title>Compiling External Modules</title>
       <indexterm><primary>kernel</primary><secondary>external modules</secondary></indexterm>
+      <indexterm><primary>kernel</primary><secondary>DKMS</secondary><seealso><command>dkms</command></seealso></indexterm>
       <indexterm><primary>modules</primary><secondary>external kernel modules</secondary></indexterm>
       <indexterm><primary><command>dkms</command></primary></indexterm>
+      <indexterm><primary>Dynamic Kernel Module Support</primary><see><command>dkms</command></see></indexterm>
 
-      <para>Some modules are maintained outside of the official Linux
-      kernel. To use them, they must be compiled alongside the
-      matching kernel. A number of common third party modules are
-      provided by Debian in dedicated packages, such as <emphasis
-      role="pkg">vpb-driver-source</emphasis> (extra modules for
-      Voicetronix telefony hardware) or <emphasis
+      <para>Some modules are maintained outside of the official Linux kernel.
+      To use them, they must be compiled alongside the matching kernel. A
+      number of common third party modules are provided by Debian in dedicated
+      packages, such as <emphasis role="pkg">vpb-driver-source</emphasis>
+      (extra modules for Voicetronix telefony hardware) or <emphasis
       role="pkg">leds-alix-source</emphasis> (driver of PCEngines ALIX 2/3
       boards).</para>
+
+      <indexterm><primary><command>apt-cache</command></primary><secondary><literal>rdepends</literal></secondary></indexterm>
 
       <para>These packages are many and varied,
       <command>apt-cache rdepends module-assistant$</command>
@@ -3447,28 +3450,38 @@ CONFIG_SYSTEM_BLACKLIST_HASH_LIST=""
       cases, the device's documentation will typically detail the specific
       module(s) it needs to function under Linux.</para>
 
+      <indexterm><primary>kernel</primary><secondary>headers</secondary></indexterm>
+
       <para>For example, let's look at the <emphasis
       role="pkg">dahdi-source</emphasis> package: after installation, a
       <filename>.tar.bz2</filename> of the module's sources is stored in
-      <filename>/usr/src/</filename>. While we could manually extract
-      the tarball and build the module, in practice we prefer to automate
-      all this using DKMS. Most modules offer the required DKMS integration
-      in a package ending with a <literal>-dkms</literal> suffix. In our case,
-      installing <emphasis role="pkg">dahdi-dkms</emphasis> is all that is
-      needed to compile the kernel module for the current kernel provided that
-      we have the <emphasis role="pkg">linux-headers-*</emphasis> package
-      matching the installed kernel. For instance, if you use
-      <emphasis role="pkg">linux-image-amd64</emphasis>, you would
-      also install <emphasis role="pkg">linux-headers-amd64</emphasis>.</para>
+      <filename>/usr/src/</filename>. While we could manually extract the
+      tarball and build the module, in practice we prefer to automate all this
+      using the DKMS framework (Dynamic Kernel Module Support). Most modules
+      offer the required DKMS integration in a package ending with a
+      <literal>-dkms</literal> suffix. In our case, installing <emphasis
+      role="pkg">dahdi-dkms</emphasis> is all that is needed to compile the
+      kernel module for the current kernel provided that we have the <emphasis
+      role="pkg">linux-headers-*</emphasis> package matching the installed
+      kernel. For instance, if you use <emphasis
+      role="pkg">linux-image-amd64</emphasis>, you would also install <emphasis
+      role="pkg">linux-headers-amd64</emphasis>.</para>
+
+      <!-- MAYCHANGE: update example -->
+      <indexterm><primary><command>dkms</command></primary><secondary><literal>status</literal></secondary></indexterm>
+      <indexterm><primary><command>modinfo</command></primary></indexterm>
 
       <screen>
 <computeroutput>$ </computeroutput><userinput>sudo apt install dahdi-dkms</userinput>
-<computeroutput>
-[...]
-Setting up xtables-addons-dkms (2.12-0.1) ...
-Loading new xtables-addons-2.12 DKMS files...
-Building for 4.19.0-5-amd64
-Building initial module for 4.19.0-5-amd64
+<computeroutput><![CDATA[[...]
+Setting up dkms (2.8.4-3) ...
+Setting up linux-headers-5.10.0-8-amd64 (5.10.46-4) ...
+/etc/kernel/header_postinst.d/dkms:
+dkms: running auto installation service for kernel 5.10.0-8-amd64:.
+Setting up dahdi-dkms (1:2.11.1.0.20170917~dfsg-7.4) ...
+Loading new dahdi-2.11.1.0.20170917~dfsg-7.4 DKMS files...
+Building for 5.10.0-8-amd64
+Building initial module for 5.10.0-8-amd64
 Done.
 
 dahdi_dummy.ko:
@@ -3476,34 +3489,48 @@ Running module version sanity check.
  - Original module
    - No original module exists within this kernel
  - Installation
-   - Installing to /lib/modules/4.19.0-5-amd64/updates/dkms/
+   - Installing to /lib/modules/5.10.0-8-amd64/updates/dkms/
+
+dahdi_dynamic_eth.ko:
+Running module version sanity check.
+ - Original module
+   - No original module exists within this kernel
+ - Installation
+   - Installing to /lib/modules/5.10.0-8-amd64/updates/dkms/
+
 [...]
-DKMS: install completed.
+DKMS: install completed.]]>
 $ </computeroutput><userinput>sudo dkms status</userinput>
-<computeroutput>dahdi, DEB_VERSION, 4.19.0-5-amd64, x86_64: installed
+<computeroutput>dahdi, 2.11.1.0.20170917~dfsg-7.4, 5.10.0-8-amd64, x86_64: installed
 $ </computeroutput><userinput>sudo modinfo dahdi_dummy</userinput>
-<computeroutput>filename:       /lib/modules/4.19.0-5-amd64/updates/dkms/dahdi_dummy.ko
+<computeroutput><![CDATA[filename:       /lib/modules/5.10.0-8-amd64/updates/dkms/dahdi_dummy.ko
 license:        GPL v2
-author:         Robert Pleh &lt;robert.pleh@hermes.si&gt;
+author:         Robert Pleh <robert.pleh@hermes.si>
 description:    Timing-Only Driver
-[...]
-</computeroutput>
+depends:        dahdi
+retpoline:      Y
+name:           dahdi_dummy
+vermagic:       5.10.0-8-amd64 SMP mod_unload modversions 
+parm:           debug:int
+]]></computeroutput>
 </screen>
 
       <sidebar>
         <title><emphasis>ALTERNATIVE</emphasis> module-assistant</title>
-        <indexterm><primary><emphasis role="pkg">module-assistant</emphasis></primary></indexterm>
+        <indexterm><primary>kernel</primary><secondary>module-assistant</secondary><see><command>module-assistant</command></see></indexterm>
+        <indexterm><primary><command>module-assistant</command></primary></indexterm>
+        <indexterm><primary><command>m-a</command></primary><see><command>module-assistant</command></see></indexterm>
 
-	<para>Before DKMS, <emphasis
-	role="pkg">module-assistant</emphasis> was the simplest
-	solution to build and deploy kernel modules. It can still be
-	used, in particular for packages lacking DKMS integration:
-	with a simple command like <command>module-assistant
-	auto-install dadhi</command> (or <command>m-a a-i
-	dahdi</command> for short), the modules are compiled
-	for the current kernel, put in a new Debian package, and that
-	package gets installed on the fly.
-	</para>
+        <para>Before DKMS, <emphasis
+        role="pkg">module-assistant</emphasis> was the simplest
+        solution to build and deploy kernel modules. It can still be
+        used, in particular for packages lacking DKMS integration:
+        with a simple command like <command>module-assistant
+        auto-install dadhi</command> (or <command>m-a a-i
+        dahdi</command> for short), the modules are compiled
+        for the current kernel, put in a new Debian package, and that
+        package gets installed on the fly.
+        </para>
       </sidebar>
     </section>
     <section id="sect.kernel-patch">
@@ -3516,18 +3543,18 @@ description:    Timing-Only Driver
       Such features may be distributed as patches that anyone is then free
       to apply to the kernel sources.</para>
 
-      <para>
-        Debian sometimes provides some of these patches in <emphasis
-          role="pkg">linux-patch-*</emphasis> packages, but they
-        often don't make it into stable releases (sometimes for the very
-        same reasons that they are not merged into the official upstream
-        kernel). These packages install files in the
-        <filename>/usr/src/kernel-patches/</filename> directory.
-      </para>
+      <para>Debian sometimes provides some of these patches in <emphasis
+      role="pkg">linux-patch-*</emphasis> packages, but they often don't make
+      it into stable releases (sometimes for the very same reasons that they
+      are not merged into the official upstream kernel). These packages install
+      files in the <filename>/usr/src/kernel-patches/</filename>
+      directory.</para>
 
       <para>To apply one or more of these installed patches, use the
       <command>patch</command> command in the sources directory then start
-      compilation of the kernel as described above.</para>
+      compilation of the kernel as described above. The following shows an old
+      example using <emphasis role="pkg">linux-patch-grsecurity2</emphasis> and
+      <emphasis role="pkg">linux-source-4.9</emphasis>.</para>
 
       <screen>
 <computeroutput>$ </computeroutput><userinput>cd ~/kernel/linux-source-4.9</userinput>
