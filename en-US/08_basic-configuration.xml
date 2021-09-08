@@ -3377,9 +3377,10 @@ Primary key fingerprint: 647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E]]></
       <screen><computeroutput>$ </computeroutput><userinput>make deb-pkg LOCALVERSION=-falcot KDEB_PKGVERSION=$(make kernelversion)-1
 </userinput><computeroutput>[...]
 $ </computeroutput><userinput>ls ../*.deb
-</userinput><computeroutput>../linux-headers-4.19.37-falcot_4.19.37-1_amd64.deb
-../linux-image-4.19.37-falcot_4.19.37-1_amd64.deb
-../linux-libc-dev_4.19.37-1_amd64.deb
+</userinput><computeroutput>../linux-headers-5.10.46-falcot_5.10.46-1_amd64.deb
+../linux-image-5.10.46-falcot_5.10.46-1_amd64.deb
+../linux-image-5.10.46-falcot-dbg_5.10.46-1_amd64.deb
+../linux-libc-dev_5.10.46-1_amd64.deb
 </computeroutput></screen>
 
       <sidebar id="sidebar.kernel-config-keyring">
@@ -3580,6 +3581,9 @@ parm:           debug:int
       <title>Features of a Debian Kernel Package</title>
 
       <indexterm><primary><filename>vmlinuz</filename></primary></indexterm>
+      <indexterm><primary>kernel</primary><secondary>image</secondary></indexterm>
+      <indexterm><primary>kernel</primary><secondary>configuration</secondary></indexterm>
+      <indexterm><primary>kernel</primary><secondary>symbols table</secondary></indexterm>
 
       <para>A Debian kernel package installs the kernel image
       (<filename>vmlinuz-<replaceable>version</replaceable></filename>),
@@ -3593,6 +3597,8 @@ parm:           debug:int
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> The symbols table</title>
+        <indexterm><primary>kernel</primary><secondary>symbols table</secondary></indexterm>
+        <indexterm><primary>kernel</primary><secondary>“oops”</secondary></indexterm>
 
         <para>The symbols table helps
         developers understand the meaning of a kernel error message; without
@@ -3604,6 +3610,9 @@ parm:           debug:int
         names.</para>
       </sidebar>
 
+      <indexterm><primary>kernel</primary><secondary><filename>vmlinuz</filename></secondary></indexterm>
+      <indexterm><primary>kernel</primary><secondary><filename>initrd</filename></secondary></indexterm>
+
       <para>The package's configuration scripts automatically generate an
       initrd image, which is a mini-system designed to be loaded in memory
       (hence the name, which stands for “init ramdisk”) by the
@@ -3612,10 +3621,13 @@ parm:           debug:int
       system (for example, the driver for SATA disks). Finally, the
       post-installation scripts update the symbolic links
       <filename>/vmlinuz</filename>, <filename>/vmlinuz.old</filename>,
-      <filename>/initrd.img</filename> and
+      <filename>/initrd.img</filename>, and
       <filename>/initrd.img.old</filename> so that they point to the latest
       two kernels installed, respectively, as well as the corresponding
       initrd images.</para>
+
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/kernel/*.d/</filename></secondary></indexterm>
+      <indexterm><primary><command>update-grub</command></primary></indexterm>
 
       <para>Most of those tasks are offloaded to hook scripts in
       the <filename>/etc/kernel/*.d/</filename> directories. For instance,
@@ -3627,6 +3639,7 @@ parm:           debug:int
     </section>
     <section id="sect.kernel-installation-with-dpkg">
       <title>Installing with <command>dpkg</command></title>
+      <indexterm><primary><emphasis role="pkg">linux-image-<replaceable>arch</replaceable></emphasis></primary></indexterm>
 
       <para>Using <command>apt</command> is so convenient that it makes
       it easy to forget about the lower-level tools, but the easiest way of
@@ -3635,7 +3648,7 @@ parm:           debug:int
       where <literal><replaceable>package</replaceable>.deb</literal> is
       the name of a <emphasis role="pkg">linux-image</emphasis> package
       such as
-      <filename>linux-image-4.19.37-falcot_1_amd64.deb</filename>.</para>
+      <filename>linux-image-5.10.46-falcot_5.10.46-1_amd64.deb</filename>.</para>
 
       <para>The configuration steps described in this chapter are basic and
       can lead both to a server system or a workstation, and it can be
