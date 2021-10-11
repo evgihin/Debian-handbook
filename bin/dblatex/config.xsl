@@ -323,9 +323,9 @@ actual page. By default the page is centered as required in this mode.
     </l:context>
     <l:context name="xref-number-and-title">
       <!-- Don't start with capital letters -->
-      <l:template name="chapter" text="kapittel %n, «%t»"/>
-      <l:template name="section" text="del %n, «%t»"/>
-      <l:template name="appendix" text="vedlegg %n, «%t»"/>
+      <l:template name="chapter" text="kapittel&#160;%n, «%t»"/>
+      <l:template name="section" text="avsnitt&#160;%n, «%t»"/>
+      <l:template name="appendix" text="tillegg&#160;%n, «%t»"/>
     </l:context>
   </l:l10n>
 

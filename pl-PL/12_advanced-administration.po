@@ -2,18 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr ""
-"Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-08-28 10:15+0200\n"
-"PO-Revision-Date: 2020-02-20 21:32+0000\n"
-"Last-Translator: Michal Biesiada <blade-14@o2.pl>\n"
-"Language-Team: Polish <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/pl/>\n"
-"Language: pl-PL\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.11.1\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-08-28 10:15+0200\nPO-Revision-Date: 2020-09-30 02:40+0000\nLast-Translator: Stanisław Krukowski <pet209a1@riseup.net>\nLanguage-Team: Polish <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/pl/>\nLanguage: pl-PL\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.3-dev\n"
 
 msgid "RAID"
 msgstr "RAID"
@@ -25,7 +14,7 @@ msgid "FAI"
 msgstr "FAI"
 
 msgid "Preseeding"
-msgstr "Przycięcie wstępne (ang. preseeding)"
+msgstr "Partycjonowanie wstępne"
 
 msgid "Monitoring"
 msgstr "Monitorowanie"
@@ -43,13 +32,13 @@ msgid "Advanced Administration"
 msgstr "Administracja zaawansowana"
 
 msgid "This chapter revisits some aspects we already described, with a different perspective: instead of installing one single computer, we will study mass-deployment systems; instead of creating RAID or LVM volumes at install time, we'll learn to do it by hand so we can later revise our initial choices. Finally, we will discuss monitoring tools and virtualization techniques. As a consequence, this chapter is more particularly targeting professional administrators, and focuses somewhat less on individuals responsible for their home network."
-msgstr "Ten rozdział dokonuje ponownego przeglądu — z innej perspektywy — niektórych wcześniej opisanych aspektów: zamiast instalacji na jednym komputerze, studiujemy masowe wdrożenia systemów; zamiast tworzenia woluminów RAID lub LVM podczas instalacji, nauczymy się tego robić ręcznie, dzięki czemu będziemy mogli później zweryfikować nasze wstępne wybory. Wreszcie omówimy narzędzia do monitorowania oraz techniki wirtualizacji. W rezultacie, ten rozdział jest bardziej nakierowany na profesjonalnych administratorów, a nieco mniej koncentruje się na osobach odpowiedzialnych za własne sieci domowe."
+msgstr "Ten rozdział dokonuje ponownego przeglądu niektórych wcześniej opisanych aspektów z innej perspektywy: zamiast instalacji na jednym komputerze, studiujemy masowe wdrożenia systemów; zamiast tworzenia woluminów RAID lub LVM podczas instalacji, nauczymy się tego robić ręcznie, dzięki czemu będziemy mogli później zweryfikować nasze wstępne wybory. Wreszcie omówimy narzędzia do monitorowania oraz techniki wirtualizacji. W rezultacie, ten rozdział jest bardziej nakierowany na profesjonalnych administratorów, a nieco mniej koncentruje się na osobach odpowiedzialnych za własne sieci domowe."
 
 msgid "RAID and LVM"
 msgstr "RAID i LVM"
 
 msgid "<xref linkend=\"installation\" /> presented these technologies from the point of view of the installer, and how it integrated them to make their deployment easy from the start. After the initial installation, an administrator must be able to handle evolving storage space needs without having to resort to an expensive reinstallation. They must therefore understand the required tools for manipulating RAID and LVM volumes."
-msgstr ""
+msgstr "<xref linkend=\"installation\" /> przedstawienie tych technologii z punktu widzenia instalatora i tego jak je zintegrować w ten sposób, aby stworzyć od początku łatwe ich rozmieszczenie. Administrator, po wstępnej instalacji, musi obsłużyć rosnące potrzeby przechowywania — bez przeprowadzania kosztownej reinstalacji. Tak więc, musi zrozumieć działanie narzędzi, niezbędnych do manipulacji macierzami dyskowymi RAID i woluminami LVM."
 
 msgid "RAID and LVM are both techniques to abstract the mounted volumes from their physical counterparts (actual hard-disk drives or partitions thereof); the former ensures the security and availability of the data in case of hardware failure by introducing redundancy, the latter makes volume management more flexible and independent of the actual size of the underlying disks. In both cases, the system ends up with new block devices, which can be used to create filesystems or swap space, without necessarily having them mapped to one physical disk. RAID and LVM come from quite different backgrounds, but their functionality can overlap somewhat, which is why they are often mentioned together."
 msgstr ""
@@ -70,7 +59,7 @@ msgid "Software RAID"
 msgstr "Oprogramowanie RAID"
 
 msgid "<primary>RAID</primary>"
-msgstr ""
+msgstr "<primary>RAID</primary>"
 
 msgid "RAID means <emphasis>Redundant Array of Independent Disks</emphasis>. The goal of this system is to prevent data loss and ensure availability in case of hard disk failure. The general principle is quite simple: data are stored on several physical disks instead of only one, with a configurable level of redundancy. Depending on this amount of redundancy, and even in the event of an unexpected disk failure, data can be losslessly reconstructed from the remaining disks."
 msgstr ""
@@ -88,21 +77,20 @@ msgid "When RAID is implemented by hardware, its configuration generally happens
 msgstr ""
 
 msgid "We only focus on software RAID in this book."
-msgstr "Skupiamy się tylko na oprogramowaniu RAID w tej książce."
+msgstr "W tej książce skupiamy się tylko na oprogramowaniu RAID."
 
 msgid "Different RAID Levels"
-msgstr ""
+msgstr "Różne poziomy RAID"
 
 msgid "RAID is actually not a single system, but a range of systems identified by their levels; the levels differ by their layout and the amount of redundancy they provide. The more redundant, the more failure-proof, since the system will be able to keep working with more failed disks. The counterpart is that the usable space shrinks for a given set of disks; seen the other way, more disks will be needed to store a given amount of data."
 msgstr ""
 
 msgid "Linear RAID"
-msgstr ""
+msgstr "Liniowa RAID"
 
 msgid "Even though the kernel's RAID subsystem allows creating “linear RAID”, this is not proper RAID, since this setup doesn't involve any redundancy. The kernel merely aggregates several disks end-to-end and provides the resulting aggregated volume as one virtual disk (one block device). That is about its only function. This setup is rarely used by itself (see later for the exceptions), especially since the lack of redundancy means that one disk failing makes the whole aggregate, and therefore all the data, unavailable."
 msgstr ""
 
-#, fuzzy
 msgid "RAID-0"
 msgstr "RAID-0"
 
@@ -115,7 +103,6 @@ msgstr ""
 msgid "RAID-0 use is shrinking, its niche being filled by LVM (see later)."
 msgstr ""
 
-#, fuzzy
 msgid "RAID-1"
 msgstr "RAID-1"
 
@@ -470,7 +457,7 @@ msgid "From then on, the drive can be physically removed when the server is next
 msgstr ""
 
 msgid "Backing up the Configuration"
-msgstr "Tworzenie kopii zapasowej dla konfiguracji"
+msgstr "Tworzenie kopii zapasowej konfiguracji"
 
 msgid "Most of the meta-data concerning RAID volumes are saved directly on the disks that make up these arrays, so that the kernel can detect the arrays and their components and assemble them automatically when the system starts up. However, backing up this configuration is encouraged, because this detection isn't fail-proof, and it is only expected that it will fail precisely in sensitive circumstances. In our example, if the <filename>sde</filename> disk failure had been real (instead of simulated) and the system had been restarted without removing this <filename>sde</filename> disk, this disk could start working again due to having been probed during the reboot. The kernel would then have three physical elements, each claiming to contain half of the same RAID volume. Another source of confusion can come when RAID volumes from two servers are consolidated onto one server only. If these arrays were running normally before the disks were moved, the kernel would be able to detect and reassemble the pairs properly; but if the moved disks had been aggregated into an <filename>md1</filename> on the old server, and the new server already has an <filename>md1</filename>, one of the mirrors would be renamed."
 msgstr ""
@@ -1277,10 +1264,10 @@ msgstr ""
 msgid ""
 "auto eth0\n"
 "iface eth0 inet dhcp"
-msgstr ""
+msgstr "auto eth0\niface eth0 inet dhcp"
 
 msgid "They should be disabled and replaced with the following:"
-msgstr ""
+msgstr "Powinny być wyłączone i zamienione w następujący sposób:"
 
 msgid ""
 "#auto eth0\n"
@@ -1289,7 +1276,7 @@ msgid ""
 "auto br0\n"
 "iface br0 inet dhcp\n"
 "  bridge-ports eth0"
-msgstr ""
+msgstr "#auto eth0\n#iface eth0 inet dhcp\n\nauto br0\niface br0 inet dhcp\n  bridge-ports eth0"
 
 msgid "The effect of this configuration will be similar to what would be obtained if the containers were machines plugged into the same physical network as the host. The “bridge” configuration manages the transit of Ethernet frames between all the bridged interfaces, which includes the physical <literal>eth0</literal> as well as the interfaces defined for the containers."
 msgstr ""
@@ -1743,7 +1730,7 @@ msgid "<emphasis>GOING FURTHER</emphasis> Debconf with a centralized database"
 msgstr ""
 
 msgid "<primary><command>debconf</command></primary>"
-msgstr ""
+msgstr "<primary><command>debconf</command></primary>"
 
 msgid "Preseeding allows to provide a set of answers to Debconf questions at installation time, but these answers are static and do not evolve as time passes. Since already-installed machines may need upgrading, and new answers may become required, the <filename>/etc/debconf.conf</filename> configuration file can be set up so that Debconf uses external data sources (such as an LDAP directory server, or a remote file accessed via NFS or Samba). Several external data sources can be defined at the same time, and they complement one another. The local database is still used (for read-write access), but the remote databases are usually restricted to reading. The <citerefentry><refentrytitle>debconf.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> manual page describes all the possibilities in detail (you need the <emphasis role=\"pkg\">debconf-doc</emphasis> package)."
 msgstr ""
@@ -1829,7 +1816,7 @@ msgid "Creating a CD-ROM Image"
 msgstr ""
 
 msgid "<primary>debian-cd</primary>"
-msgstr ""
+msgstr "<primary>debian-cd</primary>"
 
 msgid "A USB key is a read-write media, so it was easy for us to add a file there and change a few parameters. In the CD-ROM case, the operation is more complex, since we need to regenerate a full ISO image. This task is handled by <emphasis role=\"pkg\">debian-cd</emphasis>, but this tool is rather awkward to use: it needs a local mirror, and it requires an understanding of all the options provided by <filename>/usr/share/debian-cd/CONF.sh</filename>; even then, <command>make</command> must be invoked several times. <filename>/usr/share/debian-cd/README</filename> is therefore a very recommended read."
 msgstr ""
