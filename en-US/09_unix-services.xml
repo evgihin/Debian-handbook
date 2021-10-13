@@ -32,6 +32,11 @@
   <section id="sect.system-boot">
     <title>System Boot</title>
     <indexterm><primary>booting</primary><secondary>the system</secondary></indexterm>
+    <indexterm><primary>BIOS</primary></indexterm>
+    <indexterm><primary>MBR</primary></indexterm>
+    <indexterm><primary>ESP</primary></indexterm>
+    <indexterm><primary>Compatibility Support Module</primary><seealso>CSM</seealso></indexterm>
+    <indexterm><primary>CSM</primary></indexterm>
 
     <para>When you boot the computer, the many messages scrolling by on the
     console display many automatic initializations and configurations that
@@ -39,41 +44,63 @@
     stage works, which means that you need to understand it well. That is
     the purpose of this section.</para>
 
-    <!-- XXX: Next time we should document EFI... -->
-    <para>First, the BIOS takes control of the computer, detects the disks,
-    loads the <emphasis>Master Boot Record</emphasis>, and executes the
-    bootloader. The bootloader takes over, finds the kernel on the disk,
-    loads and executes it. The kernel is then initialized, and starts to
-    search for and mount the partition containing the root filesystem, and
-    finally executes the first program — <command>init</command>.
-    Frequently, this “root partition” and this <command>init</command>
-    are, in fact, located in a virtual filesystem that only exists in RAM
-    (hence its name, “initramfs”, formerly called “initrd” for
-    “initialization RAM disk”). This filesystem is loaded in memory by
-    the bootloader, often from a file on a hard drive or from the network.
-    It contains the bare minimum required by the kernel to load the
-    “true” root filesystem: this may be driver modules for the hard
-    drive, or other devices without which the system cannot boot, or, more
-    frequently, initialization scripts and modules for assembling RAID
-    arrays, opening encrypted partitions, activating LVM volumes, etc. Once
-    the root partition is mounted, the initramfs hands over control to the
-    real init, and the machine goes back to the standard boot
-    process.</para>
+    <para>On systems with a BIOS, first, the BIOS takes control of the
+    computer, initializes the controllers and hardware, detects the disks, and
+    bridges everything together. Then it looks up the <emphasis>Master Boot
+    Record</emphasis> (MBR) of the first disk in the boot order and loads the code
+    stored there (first stage). This code then launches the second stage and
+    finally executes the bootloader.</para>
 
-    <section id="sect.systemd"><title>The systemd init system</title>
+    <para>In contrast to the BIOS, UEFI is more sophisticated, it knows
+    filesystems and can read the partition tables. The interface searches the
+    system storage for a partition labeled with a specific globally unique
+    identifier (<acronym>GUID</acronym>) that marks it as the <acronym>EFI
+    System Partition</acronym> (<acronym>ESP</acronym>), where the bootloaders,
+    boot managers, UEFI shell, etc., are located, and launches the desired
+    bootloader. If Secure Boot is enabled, the boot process will verify
+    authenticity of the EFI binaries there by signature (thus <emphasis
+    role="pkg">grub-efi-<replaceable>arch</replaceable>-signed</emphasis> is
+    required in this case). The UEFI specification also defines support for
+    booting in legacy BIOS mode. This is called the <emphasis>Compatibility
+    Support Module</emphasis> (<acronym>CSM</acronym>). If CSM is enabled, it
+    will attempt to boot from a drive's MBR. However, many new systems do no
+    longer support the CSM mode.</para>
+
+    <para>In both cases then the actual bootloader takes over, finds either a
+    chained bootloader or the kernel on the disk, loads, and executes it.  The
+    kernel is then initialized, and starts to search for and mount the
+    partition containing the root filesystem, and finally executes the first
+    program — <command>init</command>.  Frequently, this “root partition” and
+    this <command>init</command> are, in fact, located in a virtual filesystem
+    that only exists in RAM (hence its name, “initramfs”, formerly called
+    “initrd” for “initialization RAM disk”). This filesystem is loaded in
+    memory by the bootloader, often from a file on a hard drive or from the
+    network.  It contains the bare minimum required by the kernel to load the
+    “true” root filesystem: this may be driver modules for the hard drive, or
+    other devices without which the system cannot boot, or, more frequently,
+    initialization scripts and modules for assembling RAID arrays, opening
+    encrypted partitions, activating LVM volumes, etc. Once the root partition
+    is mounted, the initramfs hands over control to the real init, and the
+    machine goes back to the standard boot process.</para>
+
+    <section id="sect.systemd">
+    <title>The systemd init system</title>
+    <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">systemd</emphasis></secondary></indexterm>
 
     <para>The “real init” is currently provided by <emphasis
     role="pkg">systemd</emphasis> and this section documents this init
-    system. </para>
+    system.</para>
 
     <sidebar>
       <title><emphasis>CULTURE</emphasis> Before <command>systemd</command></title>
+      <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">sysv-rc</emphasis></secondary><seealso>System V init</seealso></indexterm>
+      <indexterm><primary>System V init</primary></indexterm>
 
       <para><command>systemd</command> is a relatively recent “init
       system”, and although it was already available, to a certain
       extent, in <emphasis role="distribution">Wheezy</emphasis>, it
       has only become the default in Debian <emphasis
-      role="distribution">Jessie</emphasis>.  Previous releases
+      role="distribution">Jessie</emphasis>. Previous releases
       relied, by default, on the “System V init” (in the <emphasis
       role="pkg">sysv-rc</emphasis> package), a much more traditional
       system.  We describe the System V init later on.</para>
@@ -81,6 +108,7 @@
 
     <sidebar>
       <title><emphasis>ALTERNATIVE</emphasis> Other boot systems</title>
+      <indexterm><primary>boot</primary><secondary>systems</secondary><seealso><command>init</command></seealso></indexterm>
 
       <para>This book describes the boot system used by default in
       Debian <emphasis role="distribution">Buster</emphasis> (as
@@ -90,11 +118,15 @@
       from <emphasis>System V</emphasis> Unix systems; there are
       others.</para>
 
+      <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">file-rc</emphasis></secondary></indexterm>
+
       <para><emphasis role="pkg">file-rc</emphasis> is a boot system
       with a very simple process. It keeps the principle of runlevels, but
       replaces the directories and symbolic links with a configuration
       file, which indicates to <command>init</command> the processes that
       must be started and their launch order.</para>
+
+      <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">upstart</emphasis></secondary></indexterm>
 
       <para>The <command>upstart</command> system is still not
       perfectly tested on Debian. It is event based: init scripts are
@@ -125,12 +157,12 @@
     <sidebar>
       <title><emphasis>SPECIFIC CASE</emphasis> Booting from the network</title>
 
-      <para>In some configurations, the BIOS may be configured not to
-      execute the MBR, but to seek its equivalent on the network, making it
-      possible to build computers without a hard drive, or which are
-      completely reinstalled on each boot. This option is not available on
-      all hardware and it generally requires an appropriate combination of
-      BIOS and network card.</para>
+      <para>In some configurations, the system may be configured not to execute
+      code from the physical hardware, but to seek its equivalent on the
+      network, making it possible to build computers without a hard drive, or
+      which are completely reinstalled on each boot. This option is not
+      available on all hardware and it generally requires an appropriate
+      combination of firmware and network card.</para>
 
       <para>Booting from the network can be used to launch the
       <command>debian-installer</command> or FAI (see <xref
@@ -141,7 +173,7 @@
       <title><emphasis>BACK TO BASICS</emphasis> The process, a program instance</title>
       <indexterm><primary>process</primary></indexterm>
 
-      <para>A process is the representation in memory of a running program.
+      <para>A process is the representation of a running program in memory.
       It includes all of the information necessary for the proper execution
       of the software (the code itself, but also the data that it has in
       memory, the list of files that it has opened, the network connections
@@ -173,7 +205,7 @@
       removable media containing its own Linux system, which they could
       then use to access data on the computer's hard drives.</para>
 
-      <para>Finally, be aware that most BIOS have a generic password
+      <para>Finally, be aware that most BIOS/EFI implementations have a generic password
       available. Initially intended for troubleshooting for those who have
       forgotten their password, these passwords are now public and
       available on the Internet (see for yourself by searching for
@@ -186,113 +218,149 @@
       the BIOS memory to reset the password…</para>
     </sidebar>
 
+    <para>Systemd executes several processes, in charge of setting up the
+    system: keyboard, drivers, filesystems, network, services. It does
+    this while keeping a global view of the system as a whole, and the
+    requirements of the components. Each component is described by a
+    “unit file” (sometimes more); the general syntax is derived from the
+    widely-used “*.ini files“ syntax, with
+    <literal><replaceable>key</replaceable> =
+    <replaceable>value</replaceable></literal> pairs grouped between
+    <literal>[<replaceable>section</replaceable>]</literal> headers.  Unit
+    files are stored under <filename>/lib/systemd/system/</filename> and
+    <filename>/etc/systemd/system/</filename>; they come in several
+    flavors, but we will focus on “services” and “targets” here.
+    </para>
 
-<para>Systemd executes several processes, in charge of setting up the
-system: keyboard, drivers, filesystems, network, services.  It does
-this while keeping a global view of the system as a whole, and the
-requirements of the components.  Each component is described by a
-“unit file” (sometimes more); the general syntax is derived from the
-widely-used “*.ini files“ syntax, with
-<literal><replaceable>key</replaceable> =
-<replaceable>value</replaceable></literal> pairs grouped between
-<literal>[<replaceable>section</replaceable>]</literal> headers.  Unit
-files are stored under <filename>/lib/systemd/system/</filename> and
-<filename>/etc/systemd/system/</filename>; they come in several
-flavors, but we will focus on “services” and “targets” here.
-</para>
+    <indexterm><primary><command>systemd</command></primary><secondary><filename>.service</filename> file</secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/systemd/system/</filename></secondary><see><command>systemd</command></see></indexterm>
 
-<para>A systemd “service file” describes a process managed by systemd.
-It contains roughly the same information as old-style init-scripts,
-but expressed in a declaratory (and much more concise) way.
-Systemd handles the bulk of the repetitive tasks (starting and
-stopping the process, checking its status, logging, dropping
-privileges, and so on), and the service file only needs to fill in the
-specifics of the process.  For instance, here is the service file for SSH:</para>
+    <para>A systemd “<filename>.service</filename> file” describes a process
+    managed by systemd. It contains roughly the same information as old-style
+    init-scripts, but expressed in a declaratory (and much more concise) way.
+    Systemd handles the bulk of the repetitive tasks (starting and stopping the
+    process, checking its status, logging, dropping privileges, and so on), and
+    the service file only needs to fill in the specifics of the process. For
+    instance, here is the service file for SSH:</para>
 
-<programlisting>[Unit]
+    <!-- MAYCHANGE: contents of /lib/systemd/system/ssh.service -->
+    <programlisting>[Unit]
 Description=OpenBSD Secure Shell server
+Documentation=man:sshd(8) man:sshd_config(5)
 After=network.target auditd.service
 ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
 
 [Service]
 EnvironmentFile=-/etc/default/ssh
+ExecStartPre=/usr/sbin/sshd -t
 ExecStart=/usr/sbin/sshd -D $SSHD_OPTS
+ExecReload=/usr/sbin/sshd -t
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
+RestartPreventExitStatus=255
+Type=notify
+RuntimeDirectory=sshd
+RuntimeDirectoryMode=0755
 
 [Install]
 WantedBy=multi-user.target
 Alias=sshd.service
 </programlisting>
 
-<para>As you can see, there is very little code in there, only
-declarations.  Systemd takes care of displaying progress reports,
-keeping track of the processes, and even restarting them when
-needed.</para>
+    <para>As you can see, there is very little code in there, only
+    declarations. Systemd takes care of displaying progress reports, keeping
+    track of the processes, and even restarting them when needed. The syntax of
+    these files is fully described in several manual pages (e.g.
+    <citerefentry><refentrytitle>systemd.service</refentrytitle>
+    <manvolnum>5</manvolnum></citerefentry>,
+    <citerefentry><refentrytitle>systemd.unit</refentrytitle>
+    <manvolnum>5</manvolnum></citerefentry>,
+    <citerefentry><refentrytitle>systemd.exec</refentrytitle>
+    <manvolnum>5</manvolnum></citerefentry>, etc.).</para>
 
-<para>A systemd “target file” describes a state of the system, where a
-set of services are known to be operational.  It can be thought of as
-an equivalent of the old-style runlevel.  One of the targets is
-<literal>local-fs.target</literal>; when it is reached, the rest of
-the system can assume that all local filesystems are mounted and
-accessible.  Other targets include
-<literal>network-online.target</literal> and
-<literal>sound.target</literal>.  The dependencies of a target can be
-listed either within the target file (in the
-<literal>Requires=</literal> line), or using a symbolic link to a
-service file in the
-<literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal>
-directory.  For instance,
-<filename>/etc/systemd/system/printer.target.wants/</filename>
-contains a link to
-<filename>/lib/systemd/system/cups.service</filename>; systemd will
-therefore ensure CUPS is running in order to reach
-<literal>printer.target</literal>.
-</para>
+    <indexterm><primary><command>systemd</command></primary><secondary><filename>.target</filename> file</secondary></indexterm>
 
-<para>Since unit files are declarative rather than scripts or
-programs, they cannot be run directly, and they are only interpreted
-by systemd; several utilities therefore allow the administrator to
-interact with systemd and control the state of the system and of each
-component.</para>
+    <para>A systemd “<filename>.target</filename> file” describes a state of
+    the system where a set of services are known to be operational.  It can be
+    thought of as an equivalent of the old-style runlevel.  One of the
+    pre-defined targets is <literal>local-fs.target</literal>; when it is
+    reached, the rest of the system can assume that all local filesystems are
+    mounted and accessible.  Other targets include
+    <literal>network-online.target</literal> and
+    <literal>sound.target</literal> (for a full list of special targets see
+    <citerefentry><refentrytitle>systemd.special</refentrytitle>
+    <manvolnum>7</manvolnum></citerefentry>). The dependencies of a target can
+    be listed either within the target file (in the
+    <literal>Requires=</literal> line), or using a symbolic link to a service
+    file in the
+    <literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal>
+    directory.  For instance,
+    <filename>/etc/systemd/system/printer.target.wants/</filename> contains a
+    link to <filename>/lib/systemd/system/cups.service</filename>; systemd will
+    therefore ensure CUPS is running in order to reach
+    <literal>printer.target</literal>.</para>
 
-<para>The first such utility is <command>systemctl</command>.  When
-run without any arguments, it lists all the unit files known to
-systemd (except those that have been disabled), as well as their
-status.  <command>systemctl status</command> gives a better view of
-the services, as well as the related processes.  If given the name of
-a service (as in <command>systemctl status ntp.service</command>), it
-returns even more details, as well as the last few log lines related
-to the service (more on that later).</para>
+    <para>Since unit files are declarative rather than scripts or
+    programs, they cannot be run directly, and they are only interpreted
+    by systemd; several utilities therefore allow the administrator to
+    interact with systemd and control the state of the system and of each
+    component.</para>
 
-<para>Starting a service by hand is a simple matter of running
-<command>systemctl start
-<replaceable>servicename</replaceable>.service</command>.  As one can
-guess, stopping the service is done with <command>systemctl stop
-<replaceable>servicename</replaceable>.service</command>; other
-subcommands include <command>reload</command> and
-<command>restart</command>.</para>
+    <indexterm><primary><command>systemd</command></primary><secondary><command>systemctl</command></secondary><see><command>systemctl</command></see></indexterm>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>status</literal></secondary></indexterm>
 
-<para>To control whether a service is active (i.e. whether it will get
-started automatically on boot), use <command>systemctl enable
-<replaceable>servicename</replaceable>.service</command> (or
-<command>disable</command>).  <command>is-enabled</command> allows
-checking the status of the service.</para>
+    <para>The first such utility is <command>systemctl</command>.  When
+    run without any arguments, it lists all the unit files known to
+    systemd (except those that have been disabled), as well as their
+    status.  <command>systemctl status</command> gives a better view of
+    the services, as well as the related processes.  If given the name of
+    a service (as in <command>systemctl status ntp.service</command>), it
+    returns even more details, as well as the last few log lines related
+    to the service (more on that later).</para>
 
-<para>An interesting feature of systemd is that it includes a logging
-component named <command>journald</command>.  It comes as a complement
-to more traditional logging systems such as
-<command>syslogd</command>, but it adds interesting features such as a
-formal link between a service and the messages it generates, and the
-ability to capture error messages generated by its initialization
-sequence.  The messages can be displayed later on, with a little help
-from the <command>journalctl</command> command.  Without any
-arguments, it simply spews all log messages that occurred since system
-boot; it will rarely be used in such a manner.  Most of the time, it
-will be used with a service identifier:</para>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>start</literal></secondary></indexterm>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>stop</literal></secondary></indexterm>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>reload</literal></secondary></indexterm>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>restart</literal></secondary></indexterm>
 
-<screen><computeroutput># </computeroutput><userinput>journalctl -u ssh.service
+    <para>Starting a service by hand is a simple matter of running
+    <command>systemctl start
+    <replaceable>servicename</replaceable>.service</command>.  As one can
+    guess, stopping the service is done with <command>systemctl stop
+    <replaceable>servicename</replaceable>.service</command>; other
+    subcommands include <command>reload</command> and
+    <command>restart</command>.</para>
+
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>enable</literal></secondary></indexterm>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>disable</literal></secondary></indexterm>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>is-enabled</literal></secondary></indexterm>
+
+    <para>To control whether a service is active (i.e. whether it will get
+    started automatically on boot), use <command>systemctl enable
+    <replaceable>servicename</replaceable>.service</command> (or
+    <command>disable</command>).  <command>is-enabled</command> allows
+    checking the status of the service.</para>
+
+    <indexterm><primary><command>systemd</command></primary><secondary><command>journald</command></secondary><see><command>journald</command></see></indexterm>
+    <indexterm><primary><command>systemd</command></primary><secondary><command>journalctl</command></secondary><see><command>journalctl</command></see></indexterm>
+    <indexterm><primary><command>journald</command></primary></indexterm>
+    <indexterm><primary><command>syslogd</command></primary></indexterm>
+    <indexterm><primary><command>journalctl</command></primary></indexterm>
+
+    <para>An interesting feature of systemd is that it includes a logging
+    component named <command>journald</command>.  It comes as a complement
+    to more traditional logging systems such as
+    <command>syslogd</command>, but it adds interesting features such as a
+    formal link between a service and the messages it generates, and the
+    ability to capture error messages generated by its initialization
+    sequence.  The messages can be displayed later on, with a little help
+    from the <command>journalctl</command> command.  Without any
+    arguments, it simply spews all log messages that occurred since system
+    boot; it will rarely be used in such a manner.  Most of the time, it
+    will be used with a service identifier:</para>
+
+    <screen><computeroutput># </computeroutput><userinput>journalctl -u ssh.service
 </userinput><computeroutput>-- Logs begin at Tue 2015-03-31 10:08:49 CEST, end at Tue 2015-03-31 17:06:02 CEST. --
 Mar 31 10:08:55 mirtuel sshd[430]: Server listening on 0.0.0.0 port 22.
 Mar 31 10:08:55 mirtuel sshd[430]: Server listening on :: port 22.
@@ -303,17 +371,19 @@ Mar 31 10:09:32 mirtuel sshd[1151]: Accepted password for roland from 192.168.1.
 Mar 31 10:09:32 mirtuel sshd[1151]: pam_unix(sshd:session): session opened for user roland by (uid=0)
 </computeroutput></screen>
 
-<para>Another useful command-line flag is <command>-f</command>, which
-instructs <command>journalctl</command> to keep displaying new
-messages as they are emitted (much in the manner of <command>tail -f
-<replaceable>file</replaceable></command>).</para>
+    <para>Another useful command-line flag is <command>-f</command>, which
+    instructs <command>journalctl</command> to keep displaying new
+    messages as they are emitted (much in the manner of <command>tail -f
+    <replaceable>file</replaceable></command>).</para>
 
-<para>If a service doesn't seem to be working as expected, the first
-step to solve the problem is to check that the service is actually
-running with <command>systemctl status</command>; if it is not, and
-the messages given by the first command are not enough to diagnose the
-problem, check the logs gathered by journald about that service.  For
-instance, assume the SSH server doesn't work:</para>
+    <indexterm><primary><command>systemctl</command></primary><secondary><literal>status</literal></secondary></indexterm>
+
+    <para>If a service doesn't seem to be working as expected, the first
+    step to solve the problem is to check that the service is actually
+    running with <command>systemctl status</command>; if it is not, and
+    the messages given by the first command are not enough to diagnose the
+    problem, check the logs gathered by journald about that service.  For
+    instance, assume the SSH server doesn't work:</para>
 
 <screen><computeroutput># </computeroutput><userinput>systemctl status ssh.service
 </userinput><computeroutput>● ssh.service - OpenBSD Secure Shell server
@@ -368,46 +438,50 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
 # </computeroutput>
 </screen>
 
-<para>
-After checking the status of the service (failed), we went on to check
-the logs; they indicate an error in the configuration file.  After
-editing the configuration file and fixing the error, we restart the
-service, then verify that it is indeed running.</para>
+    <para>After checking the status of the service (failed), we went on to check
+    the logs; they indicate an error in the configuration file.  After
+    editing the configuration file and fixing the error, we restart the
+    service, then verify that it is indeed running.</para>
 
-<sidebar><title><emphasis>GOING FURTHER</emphasis> Other types of unit files</title>
+    <sidebar>
+      <title><emphasis>GOING FURTHER</emphasis> Other types of unit files</title>
 
-<para>We have only described the most basic of systemd's capabilities in
-this section.  It offers many other interesting features; we will only
-list a few here:</para>
+      <para>We have only described the most basic of systemd's capabilities in
+      this section.  It offers many other interesting features; we will only
+      list a few here:</para>
 
-<itemizedlist>
-
-<listitem><para>socket activation: a “socket” unit file can be used to
-describe a network or Unix socket managed by systemd; this means that
-the socket will be created by systemd, and the actual service may be
-started on demand when an actual connection attempt comes.  This
-roughly replicates the feature set of
-<command>inetd</command>. See
-<citerefentry><refentrytitle>systemd.socket</refentrytitle><manvolnum>5</manvolnum></citerefentry>.
-</para></listitem>
-
-<listitem><para>timers: a “timer” unit file describes events that
-occur with a fixed frequency or on specific times; when a service is linked to such a
-timer, the corresponding task will be executed whenever the timer
-fires. This allows replicating part of the
-<command>cron</command> features. See
-<citerefentry><refentrytitle>systemd.timer</refentrytitle><manvolnum>5</manvolnum></citerefentry>.
-</para></listitem>
-
-<listitem><para>network: a “network“ unit file describes a network
-interface, which allows configuring such interfaces as well as
-expressing that a service depends on one particular interface being
-up. </para></listitem>
-
-</itemizedlist>
-</sidebar>
-
-</section>
+      <itemizedlist>
+        <listitem>
+          <indexterm><primary><command>systemd</command></primary><secondary><filename>.socket</filename> file</secondary></indexterm>
+          <para>socket activation: a “socket” unit file can be used to describe
+          a network or Unix socket managed by systemd; this means that the
+          socket will be created by systemd, and the actual service may be
+          started on demand when an actual connection attempt comes.  This
+          roughly replicates the feature set of <command>inetd</command>. See
+          <citerefentry><refentrytitle>systemd.socket</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry>.</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary><command>systemd</command></primary><secondary><filename>.timer</filename> file</secondary></indexterm>
+          <para>timers: a “timer” unit file describes events that occur with a
+          fixed frequency or on specific times; when a service is linked to
+          such a timer, the corresponding task will be executed whenever the
+          timer fires. This allows replicating part of the
+          <command>cron</command> features. See
+          <citerefentry><refentrytitle>systemd.timer</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry>.</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary><command>systemd</command></primary><secondary><filename>.network</filename> file</secondary></indexterm>
+          <para>network: a “network“ unit file describes a network interface,
+          which allows configuring such interfaces as well as expressing that a
+          service depends on one particular interface being up. See
+          <citerefentry><refentrytitle>systemd.network</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry>.</para>
+        </listitem>
+      </itemizedlist>
+    </sidebar>
+  </section>
 
 <section id="sect.sysvinit"><title>The System V init system</title>
     <para>The System V init system (which we'll call init for brevity)
