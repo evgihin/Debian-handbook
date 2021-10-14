@@ -794,7 +794,9 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
     <section id="sect.ssh">
       <title>Secure Remote Login: SSH</title>
       <indexterm><primary>SSH</primary></indexterm>
-      <indexterm><primary>Secure Shell</primary></indexterm>
+      <indexterm><primary>server</primary><secondary>SSH</secondary></indexterm>
+      <indexterm><primary><command>ssh</command></primary></indexterm>
+      <indexterm><primary>Secure Shell</primary><seealso>SSH</seealso></indexterm>
 
       <para>The <emphasis>SSH</emphasis> (Secure SHell) protocol was designed
       with security and reliability in mind. Connections using SSH are
@@ -803,31 +805,33 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Telnet and RSH are obsolete</title>
-	<indexterm><primary><command>telnet</command></primary></indexterm>
-	<indexterm><primary><command>rsh</command></primary></indexterm>
+        <indexterm><primary><command>telnet</command></primary></indexterm>
+        <indexterm><primary><command>rsh</command></primary></indexterm>
 
-	<para>Before SSH, <emphasis>Telnet</emphasis> and
-	<emphasis>RSH</emphasis> were the main tools used to login
-	remotely. They are now largely obsolete and should no longer be
-	used even if Debian still provides them.</para>
+        <para>Before SSH, <emphasis>Telnet</emphasis> and
+        <emphasis>RSH</emphasis> were the main tools used to login
+        remotely. They are now largely obsolete and should no longer be
+        used even if Debian still provides them.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Authentication, encryption</title>
 
-	<para>When you need to give a client the ability to conduct or
-	trigger actions on a server, security is important. You must ensure
-	the identity of the client; this is authentication. This identity
-	usually consists of a password that must be kept secret, or any
-	other client could get the password. This is the purpose of
-	encryption, which is a form of encoding that allows two systems to
-	communicate confidential information on a public channel while
-	protecting it from being readable to others.</para>
+        <para>When you need to give a client the ability to conduct or trigger
+        actions on a server, security is important. You must ensure the
+        identity of the client; this is <emphasis>authentication</emphasis>.
+        This identity usually consists of a password or passphrase that must be
+        kept secret, or any other client could it. This is the purpose of
+        <emphasis>encryption</emphasis>, which is a form of encoding that
+        allows two systems to communicate confidential information on a public
+        channel while protecting it from being readable to others.</para>
 
-	<para>Authentication and encryption are often mentioned together,
-	both because they are frequently used together, and because they
-	are usually implemented with similar mathematical concepts.</para>
+        <para>Authentication and encryption are often mentioned together,
+        both because they are frequently used together, and because they
+        are usually implemented with similar mathematical concepts.</para>
       </sidebar>
+
+      <indexterm><primary><command>scp</command></primary></indexterm>
 
       <para>SSH also offers two file transfer services.
       <command>scp</command> is a command line tool that can be used like
@@ -837,12 +841,15 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
       <screen><computeroutput>$ </computeroutput><userinput>scp file machine:/tmp/</userinput>
 </screen>
 
+      <indexterm><primary><command>sftp</command></primary></indexterm>
+
       <para><command>sftp</command> is an interactive command, similar to
       <command>ftp</command>. In a single session, <command>sftp</command>
       can transfer several files, and it is possible to manipulate remote
       files with it (delete, rename, change permissions, etc.).</para>
-      <indexterm><primary><command>scp</command></primary></indexterm>
-      <indexterm><primary><command>sftp</command></primary></indexterm>
+
+      <indexterm><primary>OpenSSH</primary><seealso>SSH</seealso></indexterm>
+      <indexterm><primary>SSH</primary><secondary>OpenSSH</secondary></indexterm>
 
       <para>Debian uses OpenSSH, a free version of SSH maintained by the
       <command>OpenBSD</command> project (a free operating system based on
@@ -852,219 +859,289 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
       but eventually decided to continue its development under a
       proprietary license. The OpenBSD project then created OpenSSH to
       maintain a free version of SSH.</para>
-      <indexterm><primary>OpenSSH</primary></indexterm>
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> <foreignphrase>Fork</foreignphrase></title>
         <indexterm><primary>fork</primary></indexterm>
 
-	<para>A “fork”, in the software field, means a new project that
-	starts as a clone of an existing project, and that will compete
-	with it. From there on, both software will usually quickly diverge
-	in terms of new developments. A fork is often the result of
-	disagreements within the development team.</para>
+        <para>A “fork”, in the software field, means a new project that
+        starts as a clone of an existing project, and that will compete
+        with it. From there on, both software will usually quickly diverge
+        in terms of new developments. A fork is often the result of
+        disagreements within the development team.</para>
 
-	<para>The option to fork a project is a direct result of the very
-	nature of free software; a fork is a healthy event when it enables
-	the continuation of a project as free software (for example in case
-	of license changes). A fork arising from technical or personal
-	disagreements is often a waste of human resources; another
-	resolution would be preferable. Mergers of two projects that
-	previously went through a prior fork are not unheard of.</para>
+        <para>The option to fork a project is a direct result of the very
+        nature of free software; a fork is a healthy event when it enables
+        the continuation of a project as free software (for example in case
+        of license changes). A fork arising from technical or personal
+        disagreements is often a waste of human resources; another
+        resolution would be preferable. Mergers of two projects that
+        previously went through a prior fork are not unheard of.</para>
       </sidebar>
 
-      <para>OpenSSH is split into two packages: the client part is in the <emphasis
-      role="pkg">openssh-client</emphasis> package, and the server is in
-      the <emphasis role="pkg">openssh-server</emphasis> package. The
-      <emphasis role="pkg">ssh</emphasis> meta-package depends on both
-      parts and facilitates installation of both (<command>apt install
-      ssh</command>).</para>
+      <indexterm><primary><emphasis role="pkg">openssh-client</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">openssh-server</emphasis></primary></indexterm>
+
+      <para>OpenSSH is split into two packages: the client part is in the
+      <emphasis role="pkg">openssh-client</emphasis> package, and the server is
+      in the <emphasis role="pkg">openssh-server</emphasis> package. The
+      <emphasis role="pkg">ssh</emphasis> meta-package depends on both parts
+      and facilitates installation of both (<command>apt install
+      ssh</command>), while the <emphasis
+      role="pkg">task-ssh-server</emphasis>, often chosen during the initial
+      installation, depends on the server package only.</para>
 
       <section id="sect.ssh-key-based-auth">
         <title>Key-Based Authentication</title>
+        <indexterm><primary>SSH</primary><secondary>key creation</secondary></indexterm>
 
-	<para>Each time someone logs in over SSH, the remote server asks
-	for a password to authenticate the user. This can be problematic if
-	you want to automate a connection, or if you use a tool that
-	requires frequent connections over SSH. This is why SSH offers a
-	key-based authentication system.</para>
+        <para>Each time someone logs in over SSH, the remote server asks
+        for a password to authenticate the user. This can be problematic if
+        you want to automate a connection, or if you use a tool that
+        requires frequent connections over SSH. This is why SSH offers a
+        key-based authentication system.</para>
 
-	<para>The user generates a key pair on the client machine with
-	<command>ssh-keygen -t rsa</command>; the public key is stored in
-	<filename>~/.ssh/id_rsa.pub</filename>, while the corresponding
-	private key is stored in <filename>~/.ssh/id_rsa</filename>. The
-	user then uses <command>ssh-copy-id
-	<replaceable>server</replaceable></command> to add their public key
-	to the <filename>~/.ssh/authorized_keys</filename> file on the
-	server. If the private key was not protected with a
-	“passphrase” at the time of its creation, all subsequent logins
-	on the server will work without a password. Otherwise, the private
-	key must be decrypted each time by entering the passphrase.
-	Fortunately, <command>ssh-agent</command> allows us to keep private
-	keys in memory to not have to regularly re-enter the password. For
-	this, you simply use <command>ssh-add</command> (once per work
-	session) provided that the session is already associated with a
-	functional instance of <command>ssh-agent</command>. Debian
-	activates it by default in graphical sessions, but this can be
-	deactivated by changing
-	<filename>/etc/X11/Xsession.options</filename>. For a console
-	session, you can manually start it with <command>eval
-	$(ssh-agent)</command>.</para>
+        <indexterm><primary><command>ssh-keygen</command></primary></indexterm>
+        <indexterm><primary><command>ssh-copy-id</command></primary></indexterm>
+
+        <para>The user generates a key pair on the client machine with
+        <command>ssh-keygen -t rsa</command>; the so generated public key is
+        stored in <filename>~/.ssh/id_rsa.pub</filename>, while the
+        corresponding private key is stored in
+        <filename>~/.ssh/id_rsa</filename>. The user can then use
+        <command>ssh-copy-id <replaceable>server</replaceable></command> to add
+        their public key to the <filename>~/.ssh/authorized_keys</filename>
+        file on the server, or, if SSH access hasn't been enabled yet, they
+        have to ask the administrator to add their key manually.</para>
+
+        <indexterm><primary>SSH</primary><secondary>passphrase cache</secondary></indexterm>
+        <indexterm><primary>SSH</primary><secondary>passwordless</secondary></indexterm>
+        <indexterm><primary>SSH</primary><secondary>authentication agent</secondary></indexterm>
+        <indexterm><primary><command>ssh-agent</command></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/X11/Xsession.options</filename></secondary></indexterm>
+
+        <para>If the private key was not protected with a “passphrase” at the
+        time of its creation, all subsequent logins on the server will work
+        without a password.  Otherwise, the private key must be decrypted each
+        time by entering the passphrase. Fortunately,
+        <command>ssh-agent</command> allows us to keep private keys in memory
+        to not have to regularly re-enter the password.  For this, you simply
+        use <command>ssh-add</command> (once per work session) provided that
+        the session is already associated with a functional instance of
+        <command>ssh-agent</command>. Debian activates it by default in
+        graphical sessions, but this can be deactivated by changing
+        <filename>/etc/X11/Xsession.options</filename> and commenting out
+        <literal>use-ssh-agent</literal>. For a console session, you can
+        manually start the agent with <command>eval
+        $(ssh-agent)</command>.</para>
 
         <sidebar>
           <title><emphasis>SECURITY</emphasis> Protection of the private key</title>
+          <indexterm><primary>SSH</primary><secondary>private key</secondary></indexterm>
 
-	  <para>Whoever has the private key can login on the account thus
-	  configured. This is why access to the private key is protected by
-	  a “passphrase”. Someone who acquires a copy of a private key
-	  file (for example, <filename>~/.ssh/id_rsa</filename>) still has
-	  to know this phrase in order to be able to use it. This
-	  additional protection is not, however, impregnable, and if you
-	  think that this file has been compromised, it is best to disable
-	  that key on the computers in which it has been installed (by
-	  removing it from the <filename>authorized_keys</filename> files)
-	  and replacing it with a newly generated key.</para>
+          <para>Whoever has the private key can login on the account thus
+          configured. This is why access to the private key is protected by
+          a “passphrase”. Someone who acquires a copy of a private key
+          file (for example, <filename>~/.ssh/id_rsa</filename>) still has
+          to know this phrase in order to be able to use it. This
+          additional protection is not, however, impregnable, and if you
+          think that this file has been compromised, it is best to disable
+          that key on the computers in which it has been installed (by
+          removing it from the <filename>authorized_keys</filename> files)
+          and replacing it with a newly generated key.</para>
         </sidebar>
 
         <sidebar>
           <title><emphasis>CULTURE</emphasis> OpenSSL flaw in Debian <emphasis role="distribution">Etch</emphasis></title>
 
-	  <para>The OpenSSL library, as initially provided in Debian
-	  <emphasis role="distribution">Etch</emphasis>, had a serious
-	  problem in its random number generator (RNG). Indeed, the Debian
-	  maintainer had made a change so that applications using it
-	  would no longer generate warnings when analyzed by memory testing
-	  tools like <command>valgrind</command>. Unfortunately, this change also
-	  meant that the RNG was employing only one source of entropy
-	  corresponding to the process number (PID) whose 32,000 possible
-	  values do not offer enough randomness. <ulink type="block"
-	  url="https://www.debian.org/security/2008/dsa-1571"/></para>
+          <para>The OpenSSL library, as initially provided in Debian
+          <emphasis role="distribution">Etch</emphasis>, had a serious
+          problem in its random number generator (RNG). Indeed, the Debian
+          maintainer had made a change so that applications using it
+          would no longer generate warnings when analyzed by memory testing
+          tools like <command>valgrind</command>. Unfortunately, this change also
+          meant that the RNG was employing only one source of entropy
+          corresponding to the process number (PID) whose 32,000 possible
+          values do not offer enough randomness.
 
-	  <para>Specifically, whenever OpenSSL was used to generate a key,
-	  it always produced a key within a known set of hundreds of
-	  thousands of keys (32,000 multiplied by a small number of key
-	  lengths). This affected SSH keys, SSL keys, and X.509
-	  certificates used by numerous applications, such as OpenVPN. A
-	  cracker had only to try all of the keys to gain unauthorized
-	  access. To reduce the impact of the problem, the SSH daemon was
-	  modified to refuse problematic keys that are listed in the
-	  <emphasis role="pkg">openssh-blacklist</emphasis> and <emphasis
-	  role="pkg">openssh-blacklist-extra</emphasis> packages.
-	  Additionally, the <command>ssh-vulnkey</command> command allows
-	  identification of possibly compromised keys in the system.</para>
+          <ulink type="block" url="https://www.debian.org/security/2008/dsa-1571"/>
+          </para>
 
-	  <para>A more thorough analysis of this incident brings to
-	  light that it is the result of multiple (small) problems,
-	  both within the OpenSSL project and with the Debian package
-	  maintainer. A widely used library like OpenSSL should —
-	  without modifications — not generate warnings when tested by
-	  <command>valgrind</command>. Furthermore, the code
-	  (especially the parts as sensitive as the RNG) should be
-	  better commented to prevent such errors. On Debian's side,
-	  the maintainer wanted to validate the modifications with the
-	  OpenSSL developers, but simply explained the modifications
-	  without providing the corresponding patch to review and
-	  failed to mention his role within Debian. Finally, the
-	  maintenance choices were sub-optimal: the changes made to
-	  the original code were not clearly documented; all the
-	  modifications were effectively stored in a Subversion
-	  repository, but they ended up all lumped into one single
-	  patch during creation of the source package.</para>
+          <indexterm><primary><command>ssh-vulnkey</command></primary></indexterm>
+          <indexterm><primary><emphasis role="pkg">openssh-blacklist</emphasis></primary></indexterm>
 
-	  <para>It is difficult under such conditions to find the
-	  corrective measures to prevent such incidents from recurring. The
-	  lesson to be learned here is that every divergence Debian
-	  introduces to upstream software must be justified, documented,
-	  submitted to the upstream project when possible, and widely
-	  publicized. It is from this perspective that the new source
+          <para>Specifically, whenever OpenSSL was used to generate a key,
+          it always produced a key within a known set of hundreds of
+          thousands of keys (32,000 multiplied by a small number of key
+          lengths). This affected SSH keys, SSL keys, and X.509
+          certificates used by numerous applications, such as OpenVPN. A
+          cracker had only to try all of the keys to gain unauthorized
+          access. To reduce the impact of the problem, the SSH daemon was
+          modified to refuse problematic keys that are listed in the
+          <emphasis role="pkg">openssh-blacklist</emphasis> and <emphasis
+          role="pkg">openssh-blacklist-extra</emphasis> packages.
+          Additionally, the <command>ssh-vulnkey</command> command allows
+          identification of possibly compromised keys in the system.</para>
+
+          <para>A more thorough analysis of this incident brings to
+          light that it is the result of multiple (small) problems,
+          both within the OpenSSL project and with the Debian package
+          maintainer. A widely used library like OpenSSL should —
+          without modifications — not generate warnings when tested by
+          <command>valgrind</command>. Furthermore, the code
+          (especially the parts as sensitive as the RNG) should be
+          better commented to prevent such errors. On Debian's side,
+          the maintainer wanted to validate the modifications with the
+          OpenSSL developers, but simply explained the modifications
+          without providing the corresponding patch to review and
+          failed to mention his role within Debian. Finally, the
+          maintenance choices were sub-optimal: the changes made to
+          the original code were not clearly documented; all the
+          modifications were effectively stored in a Subversion
+          repository, but they ended up all lumped into one single
+          patch during creation of the source package.</para>
+
+          <para>It is difficult under such conditions to find the
+          corrective measures to prevent such incidents from recurring. The
+          lesson to be learned here is that every divergence Debian
+          introduces to upstream software must be justified, documented,
+          submitted to the upstream project when possible, and widely
+          publicized. It is from this perspective that the new source
           package format (“3.0 (quilt)”) and the Debian sources webservice
           were developed.
-	  <ulink type="block" url="https://sources.debian.org"/></para>
+
+          <ulink type="block" url="https://sources.debian.org"/>
+          </para>
         </sidebar>
+      </section>
+
+      <section id="sect.ssh-cert-based-auth">
+        <title>Cert-Based Authentication</title>
+        <indexterm><primary>SSH</primary><secondary>signed key</secondary></indexterm>
+        <indexterm><primary>SSH</primary><secondary><literal>TrustedUserCAKeys</literal></secondary></indexterm>
+        <indexterm><primary>SSH</primary><secondary><literal>HostCertificate</literal></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ssh/sshd_config</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ssh/known_hosts</filename></secondary></indexterm>
+
+        <para>SSH keys cannot just be protected by a password (or not). An
+        often unknown feature is that they can also be signed via certificate,
+        both the host as well as the client keys. This approach comes with
+        several advantages. Instead of maintaining an
+        <filename>authorized_keys</filename> file per user as described in the
+        previous section, the SSH server can be configured to trust all client
+        keys signed by the same certificate (see also <xref
+        linkend="sect.easy-rsa"/>) by using the
+        <literal>TrustedUserCAKeys</literal> and
+        <literal>HostCertificate</literal> directives in
+        <filename>/etc/ssh/sshd_config</filename>.</para>
+
+        <programlisting>
+TrustedUserCAKeys /etc/ssh/ssh_users_ca.pub
+
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
+</programlisting>
+
+        <para>Vice-versa the clients can also be configured to trust the host
+        key signed by the same authority, making it easier to maintain the
+        <filename>known_hosts</filename> file (even system wide via
+        <filename>/etc/ssh/known_hosts</filename>).</para>
+
+        <programlisting>@cert-authority *.falcot.com ssh-rsa AAAA[..]</programlisting>
+
+        <para>Both, public key and certificate authentication, can be used
+        alongside each other.</para>
       </section>
       <section id="sect.ssh-x11">
         <title>Using Remote X11 Applications</title>
+        <indexterm><primary>SSH</primary><secondary><literal>X11Forwarding</literal></secondary></indexterm>
+        <indexterm><primary>SSH</primary><secondary><literal>remote graphical applications</literal></secondary></indexterm>
+        <indexterm><primary>remote graphical application</primary></indexterm>
+        <indexterm><primary>application, remote graphical application</primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ssh/sshd_config</filename></secondary></indexterm>
 
-	<para>The SSH protocol allows forwarding of graphical data
-	(“X11” session, from the name of the most widespread graphical
-	system in Unix); the server then keeps a dedicated channel for
-	those data. Specifically, a graphical program executed remotely can
-	be displayed on the X.org server of the local screen, and the whole
-	session (input and display) will be secure. Since this feature
-	allows remote applications to interfere with the local system, it
-	is disabled by default. You can enable it by specifying
-	<literal>X11Forwarding yes</literal> in the server configuration
-	file (<filename>/etc/ssh/sshd_config</filename>). Finally, the user
-	must also request it by adding the <literal>-X</literal> option to
-	the <command>ssh</command> command-line.</para>
+        <para>The SSH protocol allows forwarding of graphical data
+        (“X11” session, from the name of the most widespread graphical
+        system in Unix); the server then keeps a dedicated channel for
+        those data. Specifically, a graphical program executed remotely can
+        be displayed on the X.org server of the local screen, and the whole
+        session (input and display) will be secure. Since this feature
+        allows remote applications to interfere with the local system, it
+        is disabled by default. You can enable it by specifying
+        <literal>X11Forwarding yes</literal> in the server configuration
+        file (<filename>/etc/ssh/sshd_config</filename>). Finally, the user
+        must also request it by adding the <literal>-X</literal> option to
+        the <command>ssh</command> command-line.</para>
       </section>
       <section id="sect.ssh-port-forwarding">
         <title>Creating Encrypted Tunnels with Port Forwarding</title>
         <indexterm><primary>port forwarding</primary></indexterm>
+        <indexterm><primary>SSH</primary><secondary>port forwarding</secondary></indexterm>
+        <indexterm><primary>SSH</primary><secondary>tunnel</secondary></indexterm>
 
-	<para>Its <literal>-R</literal> and <literal>-L</literal> options
-	allow <command>ssh</command> to create “encrypted tunnels”
-	between two machines, securely forwarding a local TCP port (see
-	sidebar <xref linkend="sidebar.tcp-udp"/>) to a remote machine or
-	vice versa.</para>
+        <para>Its <literal>-R</literal> and <literal>-L</literal> options
+        allow <command>ssh</command> to create “encrypted tunnels”
+        between two machines, securely forwarding a local TCP port (see
+        sidebar <xref linkend="sidebar.tcp-udp"/>) to a remote machine or
+        vice versa.</para>
 
         <sidebar>
           <title><emphasis>VOCABULARY</emphasis> Tunnel</title>
-          <indexterm><primary>tunnel (SSH)</primary><seealso>VPN</seealso></indexterm>
-          <indexterm><primary>SSH tunnel</primary><seealso>VPN</seealso></indexterm>
+          <indexterm><primary>tunnel</primary><secondary>SSH</secondary><seealso>VPN</seealso></indexterm>
+          <indexterm><primary>SSH</primary><secondary>tunnel</secondary><seealso>VPN</seealso></indexterm>
 
-	  <para>The Internet, and most LANs that are connected to it,
-	  operate in packet mode and not in connected mode, meaning that a
-	  packet issued from one computer to another is going to be stopped
-	  at several intermediary routers to find its way to its
-	  destination. You can still simulate a connected operation where
-	  the stream is encapsulated in normal IP packets. These packets
-	  follow their usual route, but the stream is reconstructed
-	  unchanged at the destination. We call this a “tunnel”,
-	  analogous to a road tunnel in which vehicles drive directly from
-	  the entrance (input) to the exit (output) without encountering
-	  any intersections, as opposed to a path on the surface that would
-	  involve intersections and changing direction.</para>
+          <para>The Internet, and most LANs that are connected to it,
+          operate in packet mode and not in connected mode, meaning that a
+          packet issued from one computer to another is going to be stopped
+          at several intermediary routers to find its way to its
+          destination. You can still simulate a connected operation where
+          the stream is encapsulated in normal IP packets. These packets
+          follow their usual route, but the stream is reconstructed
+          unchanged at the destination. We call this a “tunnel”,
+          analogous to a road tunnel in which vehicles drive directly from
+          the entrance (input) to the exit (output) without encountering
+          any intersections, as opposed to a path on the surface that would
+          involve intersections and changing direction.</para>
 
-	  <para>You can use this opportunity to add encryption to the
-	  tunnel: the stream that flows through it is then unrecognizable
-	  from the outside, but it is returned in decrypted form at the
-	  exit of the tunnel.</para>
+          <para>You can use this opportunity to add encryption to the
+          tunnel: the stream that flows through it is then unrecognizable
+          from the outside, but it is returned in decrypted form at the
+          exit of the tunnel.</para>
         </sidebar>
 
-	<para><command>ssh -L 8000:server:25 intermediary</command>
-	establishes an SSH session with the
-	<replaceable>intermediary</replaceable> host and listens to local
-	port 8000 (see <xref linkend="figure.ssh-L"/>). For any connection
-	established on this port, <command>ssh</command> will initiate a
-	connection from the <replaceable>intermediary</replaceable>
-	computer to port 25 on the <replaceable>server</replaceable>, and
-	will bind both connections together.</para>
+        <para><command>ssh -L 8000:server:25 intermediary</command>
+        establishes an SSH session with the
+        <replaceable>intermediary</replaceable> host and listens to local
+        port 8000 (see <xref linkend="figure.ssh-L"/>). For any connection
+        established on this port, <command>ssh</command> will initiate a
+        connection from the <replaceable>intermediary</replaceable>
+        computer to port 25 on the <replaceable>server</replaceable>, and
+        will bind both connections together.</para>
 
-	<para><command>ssh -R 8000:server:25 intermediary</command> also
-	establishes an SSH session to the
-	<replaceable>intermediary</replaceable> computer, but it is on this
-	machine that <command>ssh</command> listens to port 8000 (see <xref
-	linkend="figure.ssh-R"/>). Any connection established on this port
-	will cause <command>ssh</command> to open a connection from the
-	local machine on to port 25 of the
-	<replaceable>server</replaceable>, and to bind both connections
-	together.</para>
+        <para><command>ssh -R 8000:server:25 intermediary</command> also
+        establishes an SSH session to the
+        <replaceable>intermediary</replaceable> computer, but it is on this
+        machine that <command>ssh</command> listens to port 8000 (see <xref
+        linkend="figure.ssh-R"/>). Any connection established on this port
+        will cause <command>ssh</command> to open a connection from the
+        local machine on to port 25 of the
+        <replaceable>server</replaceable>, and to bind both connections
+        together.</para>
 
-	<para>In both cases, connections are made to port 25 on the
-	<replaceable>server</replaceable> host, which pass through the SSH
-	tunnel established between the local machine and the
-	<replaceable>intermediary</replaceable> machine. In the first case,
-	the entrance to the tunnel is local port 8000, and the data move
-	towards the <replaceable>intermediary</replaceable> machine before
-	being directed to the <replaceable>server</replaceable> on the
-	“public” network. In the second case, the input and output in
-	the tunnel are reversed; the entrance is port 8000 on the
-	<replaceable>intermediary</replaceable> machine, the output is on
-	the local host, and the data are then directed to the
-	<replaceable>server</replaceable>. In practice, the server is
-	usually either the local machine or the intermediary. That way SSH
-	secures the connection from one end to the other.</para>
+        <para>In both cases, connections are made to port 25 on the
+        <replaceable>server</replaceable> host, which pass through the SSH
+        tunnel established between the local machine and the
+        <replaceable>intermediary</replaceable> machine. In the first case,
+        the entrance to the tunnel is local port 8000, and the data move
+        towards the <replaceable>intermediary</replaceable> machine before
+        being directed to the <replaceable>server</replaceable> on the
+        “public” network. In the second case, the input and output in
+        the tunnel are reversed; the entrance is port 8000 on the
+        <replaceable>intermediary</replaceable> machine, the output is on
+        the local host, and the data are then directed to the
+        <replaceable>server</replaceable>. In practice, the server is
+        usually either the local machine or the intermediary. That way SSH
+        secures the connection from one end to the other.</para>
 
         <figure id="figure.ssh-L">
           <title>Forwarding a local port with SSH</title>
@@ -1091,7 +1168,7 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
       <para>VNC (Virtual Network Computing) allows remote access to
       graphical desktops.</para>
       <indexterm><primary>VNC</primary></indexterm>
-      <indexterm><primary>Virtual Network Computing</primary></indexterm>
+      <indexterm><primary>Virtual Network Computing</primary><seealso>VNC</seealso></indexterm>
       <indexterm><primary>graphical desktop</primary><secondary>remote</secondary></indexterm>
       <indexterm><primary>remote graphical desktop</primary></indexterm>
       <indexterm><primary>desktop, remote graphical desktop</primary></indexterm>
@@ -1100,64 +1177,81 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
       administrator can see the errors that the user is facing, and show
       them the correct course of action without having to stand by
       them.</para>
-      <indexterm><primary><emphasis role="pkg">vino</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">krfb</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">x11vnc</emphasis></primary></indexterm>
 
-      <para>First, the user must authorize sharing their session.  The
-      GNOME graphical desktop environment from <emphasis
-      role="distribution">Jessie</emphasis> onward includes that option in
-      its configuration panel (contrary to previous versions of
-      Debian, where the user had to install and run
-      <command>vino</command>).  KDE Plasma still requires using
-      <command>krfb</command> to allow sharing an existing session
-      over VNC. For other graphical desktop environments, the
-      <command>x11vnc</command> command (from the Debian package of
-      the same name) serves the same purpose; you can make it
-      available to the user with an explicit icon.</para>
+      <indexterm><primary>VNC</primary><secondary>server</secondary></indexterm>
+      <indexterm><primary>server</primary><secondary>VNC</secondary></indexterm>
+      <indexterm><primary><emphasis role="pkg">vino</emphasis></primary><seealso>VNC</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">krfb</emphasis></primary><seealso>VNC</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">x11vnc</emphasis></primary><seealso>VNC</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">tightvncserver</emphasis></primary><seealso>VNC</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">tigervnc-standalone-server</emphasis></primary><seealso>VNC</seealso></indexterm>
 
-      <indexterm><primary><emphasis role="pkg">vinagre</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">tsclient</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">krdc</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">xvnc4viewer</emphasis></primary></indexterm>
+      <para>First, the user must authorize sharing their session. The GNOME
+      graphical desktop environment includes that option via <menuchoice>
+      <guimenu>Settings</guimenu> <guimenuitem>Sharing</guimenuitem>
+      </menuchoice> (contrary to previous versions of Debian, where the user
+      had to install and run <command>vino</command>). For this to work
+      <emphasis role="pkg">network-manager</emphasis> must be managing the
+      network used (e.g. enable the <literal>managed</literal> mode for devices
+      handled by <emphasis role="pkg">ifupdown</emphasis> in
+      <filename>/etc/NetworkManager/NetworkManager.conf</filename>). KDE Plasma
+      still requires using <command>krfb</command> to allow sharing an existing
+      session over VNC. For other graphical desktop environments, the
+      <command>x11vnc</command> or <command>tightvncserver</command> commands
+      (from the Debian packages of the same name) or
+      <command>tigervncserver</command> (<emphasis
+      role="pkg">tigervnc-standalone-server</emphasis>) serve the same purpose
+      and provide the <emphasis role="pkg">vnc-server</emphasis> virtual
+      package; you can make either of them available to the user with an
+      explicit menu or desktop entry.</para>
+
+      <indexterm><primary>VNC</primary><secondary>client</secondary></indexterm>
+      <indexterm><primary><emphasis role="pkg">vinagre</emphasis></primary><seealso>VNC</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">krdc</emphasis></primary><seealso>VNC</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">xtightvncviewer</emphasis></primary><seealso>VNC</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">tigervnc-viewer</emphasis></primary><seealso>VNC</seealso></indexterm>
 
       <para>When the graphical session is made available by VNC, the
       administrator must connect to it with a VNC client. GNOME has
-      <command>vinagre</command> and <command>remmina</command> for that,
-      while the KDE project provides <command>krdc</command> (in the menu at
+      <command>vinagre</command> and <command>remmina</command> for that, while
+      the KDE project provides <command>krdc</command> (in the menu at
       <menuchoice> <guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu>
-      <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice>). There
-      are other VNC clients that use the command line, such as
-      <command>xvnc4viewer</command> in the Debian package of the same
-      name. Once connected, the administrator can see what is going on, work
-      on the machine remotely, and show the user how to proceed.</para>
+      <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice>). There are
+      other VNC clients that use the command line, such as
+      <command>xtightvncviewer</command> from the homonym package or
+      <command>xtigervncviewer</command> from the <emphasis
+      role="pkg">tigervnc-viewer</emphasis> Debian package. Once connected, the
+      administrator can see what is going on, work on the machine remotely, and
+      show the user how to proceed.</para>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> VNC over SSH</title>
-        <indexterm><primary>SSH tunnel</primary><secondary>VNC</secondary></indexterm>
+        <indexterm><primary>tunnel</primary><secondary>VNC</secondary></indexterm>
+        <indexterm><primary>SSH</primary><secondary>tunnel</secondary><tertiary>VNC</tertiary></indexterm>
+        <indexterm><primary><command>vncviewer</command></primary></indexterm>
 
-	<para>If you want to connect by VNC, and you don't want your data
-	sent in clear text on the network, it is possible to encapsulate
-	the data in an SSH tunnel (see <xref
-	linkend="sect.ssh-port-forwarding"/>). You simply have to know
-	that VNC uses port 5900 by default for the first screen (called
-	“localhost:0”), 5901 for the second (called “localhost:1”),
-	etc.</para>
+        <para>If you want to connect by VNC, and you don't want your data
+        sent in clear text on the network, it is possible to encapsulate
+        the data in an SSH tunnel (see <xref
+        linkend="sect.ssh-port-forwarding"/>). You simply have to know
+        that VNC uses port 5900 by default for the first screen (called
+        “localhost:0”), 5901 for the second (called “localhost:1”),
+        etc.</para>
 
-	<para>The <command>ssh -L localhost:5901:localhost:5900 -N -T
-	<replaceable>machine</replaceable></command> command creates a
-	tunnel between local port 5901 in the localhost interface and port
-	5900 of the <replaceable>machine</replaceable> host. The first
-	“localhost” restricts SSH to listening to only that interface
-	on the local machine. The second “localhost” indicates the
-	interface on the remote machine which will receive the network
-	traffic entering in “localhost:5901”. Thus <command>vncviewer
-	localhost:1</command> will connect the VNC client to the remote
-	screen, even though you indicate the name of the local
-	machine.</para>
+        <para>The <command>ssh -L localhost:5901:localhost:5900 -N -T
+        <replaceable>machine</replaceable></command> command creates a
+        tunnel between local port 5901 in the localhost interface and port
+        5900 of the <replaceable>machine</replaceable> host. The first
+        “localhost” restricts SSH to listening to only that interface
+        on the local machine. The second “localhost” indicates the
+        interface on the remote machine which will receive the network
+        traffic entering in “localhost:5901”. Thus <command>vncviewer
+        localhost:1</command> will connect the VNC client to the remote
+        screen, even though you indicate the name of the local
+        machine.</para>
 
-	<para>When the VNC session is closed, remember to close the tunnel
-	by also quitting the corresponding SSH session.</para>
+        <para>When the VNC session is closed, remember to close the tunnel
+        by also quitting the corresponding SSH session.</para>
       </sidebar>
 
       <sidebar>
@@ -1169,13 +1263,19 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
         <indexterm><primary>manager</primary><secondary>display manager</secondary></indexterm>
         <indexterm><primary>display manager</primary></indexterm>
 
-	<para><command>gdm3</command>, <command>kdm</command>, <command>lightdm</command>, and
-	<command>xdm</command> are Display Managers. They take control of
-	the graphical interface shortly after boot in order to provide the
-	user a login screen. Once the user has logged in, they execute the
-	programs needed to start a graphical work session.</para>
+        <para><command>gdm3</command>, <command>kdm</command>,
+        <command>lightdm</command>, and <command>xdm</command> are Display
+        Managers (they all provide the <emphasis
+        role="pkg">x-display-manager</emphasis> meta package). They take
+        control of the graphical interface shortly after boot in order to
+        provide the user a login screen. Once the user has logged in, they
+        execute the programs needed to start a graphical work session.</para>
       </sidebar>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/gdm3/daemon.conf</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/inetd.conf</filename></secondary></indexterm>
+
+      <!-- TODO: outdated
       <para>VNC also works for mobile users, or company executives, who
       occasionally need to login from their home to access a remote desktop
       similar to the one they use at work. The configuration of such a
@@ -1204,6 +1304,7 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
       <replaceable>server</replaceable>:50</command>, because the port used
       is 5950.</para>
       <indexterm><primary><emphasis role="pkg">vnc4server</emphasis></primary></indexterm>
+      -->
     </section>
   </section>
   <section id="sect.rights-management">
