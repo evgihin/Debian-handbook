@@ -268,10 +268,18 @@ WantedBy=multi-user.target
 Alias=sshd.service
 </programlisting>
 
-    <para>As you can see, there is very little code in there, only
-    declarations. Systemd takes care of displaying progress reports, keeping
-    track of the processes, and even restarting them when needed. The syntax of
-    these files is fully described in several manual pages (e.g.
+    <para>The <literal>[Unit]</literal> section contains generic information
+    about the service, like its description and manual page resources, as well
+    as relations (dependency and order) to other services. The
+    <literal>[Service]</literal> part contains the declarations related to the
+    service execution (starting, stopping, killing, restarting), directories and
+    configuration file(s) used. The last section, <literal>[Install]</literal>,
+    again carries generic information into which targets to install the service
+    and, in this case, the alias that can be used instead of the service name.
+    As you can see, there is very little code in there, only declarations.
+    Systemd takes care of displaying progress reports, keeping track of the
+    processes, and even restarting them when needed. The syntax of these files
+    is fully described in several manual pages (e.g.
     <citerefentry><refentrytitle>systemd.service</refentrytitle>
     <manvolnum>5</manvolnum></citerefentry>,
     <citerefentry><refentrytitle>systemd.unit</refentrytitle>
@@ -286,7 +294,7 @@ Alias=sshd.service
     thought of as an equivalent of the old-style runlevel.  One of the
     pre-defined targets is <literal>local-fs.target</literal>; when it is
     reached, the rest of the system can assume that all local filesystems are
-    mounted and accessible.  Other targets include
+    mounted and accessible. Other targets include
     <literal>network-online.target</literal> and
     <literal>sound.target</literal> (for a full list of special targets see
     <citerefentry><refentrytitle>systemd.special</refentrytitle>
