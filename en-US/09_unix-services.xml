@@ -118,14 +118,6 @@
         from <emphasis>System V</emphasis> Unix systems; there are
         others.</para>
 
-        <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">file-rc</emphasis></secondary></indexterm>
-
-        <para><emphasis role="pkg">file-rc</emphasis> is a boot system
-        with a very simple process. It keeps the principle of runlevels, but
-        replaces the directories and symbolic links with a configuration
-        file, which indicates to <command>init</command> the processes that
-        must be started and their launch order.</para>
-
         <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">upstart</emphasis></secondary></indexterm>
 
         <para>The <command>upstart</command> system is still not
@@ -140,9 +132,30 @@
         written for traditional systems, especially those from the
         <emphasis role="pkg">sysv-rc</emphasis> package.</para>
 
+        <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">openrc</emphasis></secondary></indexterm>
+
+        <para><command>openrc</command> is a dependency based service manager.
+        It was originally written for the Gentoo project, but it aims at being
+        platform agnostic. It maintains compatibility with the System V init
+        system and provides support for booting, changing runlevels, starting
+        and stopping services (in parallel), and shutting down.</para>
+
+        <!-- MAYCHANGE: file-rc has been removed; re-enable this section if #922088 is completed -->
+        <!--
+        <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">file-rc</emphasis></secondary></indexterm>
+
+        <para><command>file-rc</command> is a boot system
+        with a very simple process. It keeps the principle of runlevels, but
+        replaces the directories and symbolic links with a configuration
+        file, which indicates to <command>init</command> the processes that
+        must be started and their launch order. This package has been removed
+        from Debian, but there is still interest in it.</para>
+        -->
+
         <para>There are also other systems and other operating modes, such as
-        <command>runit</command> or <command>minit</command>, but they are
-        relatively specialized and not widespread.</para>
+        <command>file-rc</command>, <command>runit</command>, or
+        <command>minit</command>, but some of them are relatively specialized
+        and not widespread.</para>
       </sidebar>
 
       <figure id="figure.boot-process-systemd">
@@ -234,6 +247,7 @@
 
       <indexterm><primary><command>systemd</command></primary><secondary><filename>.service</filename> file</secondary></indexterm>
       <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/systemd/system/</filename></secondary><see><command>systemd</command></see></indexterm>
+      <indexterm><primary>service</primary><secondary><filename>ssh.service</filename></secondary></indexterm>
 
       <para>A systemd “<filename>.service</filename> file” describes a process
       managed by systemd. It contains roughly the same information as old-style
@@ -491,233 +505,269 @@ Mar 31 17:30:36 mirtuel systemd[1]: Unit ssh.service entered failed state.
       </sidebar>
     </section>
 
-  <section id="sect.sysvinit">
-    <title>The System V init system</title>
+    <section id="sect.sysvinit">
+      <title>The System V init system</title>
+      <indexterm><primary><command>init</command></primary><secondary><emphasis role="pkg">sysv-rc</emphasis></secondary><seealso>System V init</seealso></indexterm>
+      <indexterm><primary>System V init</primary></indexterm>
 
+      <para>The System V init system (which we'll call init for brevity)
+      executes several processes, following instructions from the
+      <filename>/etc/inittab</filename> file. The first program that is
+      executed (which corresponds to the <emphasis>sysinit</emphasis>
+      step) is <command>/etc/init.d/rcS</command>, a script that
+      executes all of the programs in the
+      <filename>/etc/rcS.d/</filename> directory.</para>
 
-    <para>The System V init system (which we'll call init for brevity)
-    executes several processes, following instructions from the
-    <filename>/etc/inittab</filename> file. The first program that is
-    executed (which corresponds to the <emphasis>sysinit</emphasis>
-    step) is <command>/etc/init.d/rcS</command>, a script that
-    executes all of the programs in the
-    <filename>/etc/rcS.d/</filename> directory.
-    <indexterm><primary><filename>/etc/init.d/rcS</filename></primary></indexterm>
-    <indexterm><primary><filename>rcS</filename></primary></indexterm>
-    <indexterm><primary><filename>/etc/init.d/rcS.d/</filename></primary></indexterm>
-    <indexterm><primary><filename>rcS.d</filename></primary></indexterm></para>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rcS</filename></secondary><seealso><emphasis role="pkg">sysv-rc</emphasis></seealso></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/rcS.d/</filename></secondary><seealso><emphasis role="pkg">sysv-rc</emphasis></seealso></indexterm>
+      <indexterm><primary><filename>rcS</filename></primary></indexterm>
+      <indexterm><primary><filename>rcS.d</filename></primary></indexterm>
 
-    <para>Among these, you will find successively programs in charge
-    of:</para>
-    <itemizedlist>
-      <listitem>
-	<para>configuring the console's keyboard;</para>
-      </listitem>
-      <listitem>
-	<para>loading drivers: most of the kernel modules are loaded by the
-	kernel itself as the hardware is detected; extra drivers are then
-	loaded automatically when the corresponding modules are listed in
-	<filename>/etc/modules</filename>;</para>
-      </listitem>
-      <listitem>
-	<para>checking the integrity of filesystems;</para>
-      </listitem>
-      <listitem>
-	<para>mounting local partitions;</para>
-      </listitem>
-      <listitem>
-	<para>configuring the network;</para>
-      </listitem>
-      <listitem>
-	<para>mounting network filesystems (NFS).</para>
-      </listitem>
-    </itemizedlist>
+      <para>Among these, you will find successively programs in charge
+      of:</para>
 
-    <sidebar>
-      <title><emphasis>BACK TO BASICS</emphasis> Kernel modules and options</title>
-      <indexterm><primary>modules</primary><secondary>kernel modules</secondary></indexterm>
+      <itemizedlist>
+        <listitem>
+          <para>configuring the console's keyboard;</para>
+        </listitem>
+        <listitem>
+          <para>loading drivers: most of the kernel modules are loaded by the
+          kernel itself as the hardware is detected; extra drivers are then
+          loaded automatically when the corresponding modules are listed in
+          <filename>/etc/modules</filename>;</para>
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/modules</filename></secondary></indexterm>
+        </listitem>
+        <listitem>
+          <para>checking the integrity of filesystems;</para>
+        </listitem>
+        <listitem>
+          <para>mounting local partitions;</para>
+        </listitem>
+        <listitem>
+          <para>configuring the network;</para>
+        </listitem>
+        <listitem>
+          <para>mounting network filesystems (NFS).</para>
+        </listitem>
+      </itemizedlist>
 
-      <para>Kernel modules also have options that can be configured by
-      putting some files in <filename>/etc/modprobe.d/</filename>. These
-      options are defined with directives like this: <literal>options
-      <replaceable>module-name</replaceable>
-      <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>.
-      Several options can be specified with a single directive if
-      necessary.</para>
+      <sidebar>
+        <title><emphasis>BACK TO BASICS</emphasis> Kernel modules and options</title>
+        <indexterm><primary>modules</primary><secondary>kernel modules</secondary></indexterm>
+        <indexterm><primary>kernel</primary><secondary>modules</secondary></indexterm>
+        <indexterm><primary>kernel</primary><secondary>modules</secondary><tertiary>load</tertiary><seealso><command>modprobe</command></seealso></indexterm>
+        <indexterm><primary>kernel</primary><secondary>modules</secondary><tertiary>options</tertiary><seealso><command>modinfo</command></seealso></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/modprobe.d</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/modules</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/modules-load.d/</filename></secondary></indexterm>
 
-      <para>These configuration files are intended for
-      <command>modprobe</command> — the program that loads a kernel
-      module with its dependencies (modules can indeed call other modules).
-      This program is provided by the <emphasis
-      role="pkg">kmod</emphasis> package.</para>
-      <indexterm><primary><command>modprobe</command></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">kmod</emphasis></primary></indexterm>
-    </sidebar>
+        <para>You have already learned that kernel modules can be loaded during
+        the start of the system by adding them to
+        <filename>/etc/modules</filename> or a file below
+        <filename>/etc/modules-load.d/</filename>. But modules can also have
+        options that can be configured by putting some files in
+        <filename>/etc/modprobe.d/</filename>. These options are defined with
+        directives like this: <literal>options
+        <replaceable>module-name</replaceable>
+        <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>.
+        Several options can be specified with a single directive if
+        necessary.</para>
 
-    <para>After this stage, <command>init</command> takes over and starts
-    the programs enabled in the default runlevel (which is usually runlevel
-    2). It executes <command>/etc/init.d/rc 2</command>, a script that
-    starts all services which are listed in
-    <filename>/etc/rc2.d/</filename> and whose names start with the “S”
-    letter. The two-figures number that follows had historically been used
-    to define the order in which services had to be started, but nowadays
-    the default boot system uses <command>insserv</command>, which schedules
-    everything automatically
-    based on the scripts' dependencies. Each boot script thus declares the
-    conditions that must be met to start or stop the service (for example,
-    if it must start before or after another service);
-    <command>init</command> then launches them in the order that meets
-    these conditions. The static numbering of scripts is therefore no
-    longer taken into consideration (but they must always have a name
-    beginning with “S” followed by two digits and the actual name
-    of the script used for the dependencies). Generally, base services
-    (such as logging with <command>rsyslog</command>, or port assignment
-    with <command>portmap</command>) are started first, followed by
-    standard services and the graphical interface
-    (<command>gdm3</command>).</para>
+        <para>These configuration files are intended for
+        <command>modprobe</command> — the program that loads a kernel module
+        with its dependencies (modules can indeed call other modules). To list
+        all options of a module use the <command>modinfo -p
+        <replaceable>module</replaceable></command> command.
+        Both programs are provided by the <emphasis role="pkg">kmod</emphasis>
+        package together with other tools to handle modules.</para>
 
-    <para>This dependency-based boot system makes it possible to automate
-    re-numbering, which could be rather tedious if it had to be done
-    manually, and it limits the risks of human error, since scheduling is
-    conducted according to the parameters that are indicated. Another
-    benefit is that services can be started in parallel when they are
-    independent from one another, which can accelerate the boot
-    process.</para>
+        <indexterm><primary><command>modprobe</command></primary></indexterm>
+        <indexterm><primary><command>modinfo</command></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">kmod</emphasis></primary></indexterm>
 
-    <indexterm><primary>runlevel</primary></indexterm>
-    <indexterm><primary>level, runlevel</primary></indexterm>
+        <para>Having learned about systemd, services and targets can use the
+        <filename>modprobe@<replaceable>module</replaceable>.service</filename>
+        to load kernel modules they depend on.</para>
 
-    <para><command>init</command> distinguishes several runlevels, so it
-    can switch from one to another with the <command>telinit
-    <replaceable>new-level</replaceable></command> command. Immediately,
-    <command>init</command> executes <command>/etc/init.d/rc</command>
-    again with the new runlevel. This script will then start the missing
-    services and stop those that are no longer desired. To do this, it
-    refers to the content of the
-    <filename>/etc/rc<replaceable>X</replaceable>.d</filename> (where
-    <replaceable>X</replaceable> represents the new runlevel). Scripts
-    starting with “S” (as in “Start”) are services to be started;
-    those starting with “K” (as in “Kill”) are the services to be
-    stopped. The script does not start any service that was already active
-    in the previous runlevel.</para>
+        <indexterm><primary>service</primary><secondary><filename>modprobe@<replaceable>module</replaceable>.service</filename></secondary></indexterm>
+      </sidebar>
 
-    <para>By default, System V init in Debian uses four different
-    runlevels:</para>
-    <itemizedlist>
-      <listitem>
-	<para>Level 0 is only used temporarily, while the computer is
-	powering down. As such, it only contains many “K”
-	scripts.</para>
-      </listitem>
-      <listitem>
-	<para>Level 1, also known as single-user mode, corresponds to the
-	system in degraded mode; it includes only basic services, and is
-	intended for maintenance operations where interactions with
-	ordinary users are not desired.</para>
-      </listitem>
-      <listitem>
-	<para>Level 2 is the level for normal operation, which includes
-	networking services, a graphical interface, user logins,
-	etc.</para>
-      </listitem>
-      <listitem>
-	<para>Level 6 is similar to level 0, except that it is used during
-	the shutdown phase that precedes a reboot.</para>
-      </listitem>
-    </itemizedlist>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rc</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/rcX.d/</filename></secondary></indexterm>
+      <indexterm><primary><command>insserv</command></primary></indexterm>
 
-    <para>Other levels exist, especially 3 to 5. By default they are
-    configured to operate the same way as level 2, but the administrator
-    can modify them (by adding or deleting scripts in the corresponding
-    <filename>/etc/rc<replaceable>X</replaceable>.d</filename> directories)
-    to adapt them to particular needs.</para>
+      <para>After this stage, <command>init</command> takes over and starts the
+      programs enabled in the default runlevel (which is usually runlevel 2).
+      It executes <command>/etc/init.d/rc 2</command>, a script that starts all
+      services which are listed in <filename>/etc/rc2.d/</filename> and whose
+      names start with the “S” letter. The two-figures number that follows had
+      historically been used to define the order in which services had to be
+      started, but nowadays the default boot system uses
+      <command>insserv</command>, which schedules everything automatically
+      based on the scripts' dependencies. Each boot script thus declares the
+      conditions that must be met to start or stop the service (for example, if
+      it must start before or after another service); <command>init</command>
+      then launches them in the order that meets these conditions. The static
+      numbering of scripts is therefore no longer taken into consideration (but
+      they must always have a name beginning with “S” followed by two digits
+      and the actual name of the script used for the dependencies). Generally,
+      base services (such as logging with <command>rsyslog</command>, or port
+      assignment with <command>portmap</command>) are started first, followed
+      by standard services and the graphical interface
+      (<command>gdm3</command>).</para>
 
-    <figure id="figure.boot-process-sysvinit">
-      <title>Boot sequence of a computer running Linux with System V init</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/startup-sysvinit.png" scalefit="1" width="80%"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    <indexterm><primary>initialization script</primary></indexterm>
+      <para>This dependency-based boot system makes it possible to automate
+      re-numbering, which could be rather tedious if it had to be done
+      manually, and it limits the risks of human error, since scheduling is
+      conducted according to the parameters that are indicated. Another
+      benefit is that services can be started in parallel when they are
+      independent from one another, which can accelerate the boot
+      process.</para>
 
-    <para>All the scripts contained in the various
-    <filename>/etc/rc<replaceable>X</replaceable>.d</filename> directories
-    are really only symbolic links — created upon package installation by
-    the <command>update-rc.d</command> program — pointing to the actual
-    scripts which are stored in <filename>/etc/init.d/</filename>. The
-    administrator can fine tune the services available in each runlevel by
-    re-running <command>update-rc.d</command> with adjusted parameters. The
-    <citerefentry><refentrytitle>update-rc.d</refentrytitle><manvolnum>1</manvolnum></citerefentry>
-    manual page describes the syntax in detail. Please note that removing
-    all symbolic links (with the <literal>remove</literal> parameter) is
-    not a good method to disable a service. Instead you should simply
-    configure it to not start in the desired runlevel (while preserving the
-    corresponding calls to stop it in the event that the service runs in
-    the previous runlevel). Since <command>update-rc.d</command> has a
-    somewhat convoluted interface, you may prefer using
-    <command>rcconf</command> (from the <emphasis
-    role="pkg">rcconf</emphasis> package) which provides a more
-    user-friendly interface.</para>
-    <indexterm><primary><command>update-rc.d</command></primary></indexterm>
+      <indexterm><primary>runlevel</primary></indexterm>
+      <indexterm><primary>level, runlevel</primary></indexterm>
+      <indexterm><primary><command>telinit</command></primary></indexterm>
 
-    <sidebar>
-      <title><emphasis>DEBIAN POLICY</emphasis> Restarting services</title>
-      <indexterm><primary><command>invoke-rc.d</command></primary></indexterm>
-      <indexterm><primary>service</primary><secondary>restart</secondary></indexterm>
-      <indexterm><primary>restarting services</primary></indexterm>
+      <para><command>init</command> distinguishes several runlevels, so it
+      can switch from one to another with the <command>telinit
+      <replaceable>new-level</replaceable></command> command. Immediately,
+      <command>init</command> executes <command>/etc/init.d/rc</command>
+      again with the new runlevel. This script will then start the missing
+      services and stop those that are no longer desired. To do this, it
+      refers to the content of the
+      <filename>/etc/rc<replaceable>X</replaceable>.d</filename> (where
+      <replaceable>X</replaceable> represents the new runlevel). Scripts
+      starting with “S” (as in “Start”) are services to be started;
+      those starting with “K” (as in “Kill”) are the services to be
+      stopped. The script does not start any service that was already active
+      in the previous runlevel.</para>
 
-      <para>The maintainer scripts for Debian packages will sometimes
-      restart certain services to ensure their availability or get them to
-      take certain options into account. The command that controls a
-      service — <command>service <replaceable>service</replaceable>
-      <replaceable>operation</replaceable></command> — doesn't take
-      runlevel into consideration, assumes (wrongly) that the service is
-      currently being used, and may thus initiate incorrect operations
-      (starting a service that was deliberately stopped, or stopping a
-      service that is already stopped, etc.). Debian therefore introduced
-      the <command>invoke-rc.d</command> program: this program must be used
-      by maintainer scripts to run services initialization scripts and it
-      will only execute the necessary commands. Note that, contrary to
-      common usage, the <filename>.d</filename> suffix is used here in a
-      program name, and not in a directory.</para>
-    </sidebar>
+      <indexterm><primary>System V init</primary><secondary>runlevels</secondary></indexterm>
 
-    <para>Finally, <command>init</command> starts control programs for
-    various virtual consoles (<command>getty</command>). It displays a
-    prompt, waiting for a username, then executes <command>login
-    <replaceable>user</replaceable></command> to initiate a session.</para>
-    <indexterm><primary><command>getty</command></primary></indexterm>
+      <para>By default, System V init in Debian uses four different
+      runlevels:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Level 0 is only used temporarily, while the computer is
+          powering down. As such, it only contains many “K”
+          scripts.</para>
+        </listitem>
+        <listitem>
+          <para>Level 1, also known as single-user mode, corresponds to the
+          system in degraded mode; it includes only basic services, and is
+          intended for maintenance operations where interactions with
+          ordinary users are not desired.</para>
+        </listitem>
+        <listitem>
+          <para>Level 2 is the level for normal operation, which includes
+          networking services, a graphical interface, user logins,
+          etc.</para>
+        </listitem>
+        <listitem>
+          <para>Level 6 is similar to level 0, except that it is used during
+          the shutdown phase that precedes a reboot.</para>
+        </listitem>
+      </itemizedlist>
 
-    <sidebar>
-      <title><emphasis>VOCABULARY</emphasis> Console and terminal</title>
+      <para>Other levels exist, especially 3 to 5. By default they are
+      configured to operate the same way as level 2, but the administrator
+      can modify them (by adding or deleting scripts in the corresponding
+      <filename>/etc/rc<replaceable>X</replaceable>.d</filename> directories)
+      to adapt them to particular needs.</para>
 
-      <para>The first computers were usually separated into several, very
-      large parts: the storage enclosure and the central processing unit
-      were separate from the peripheral devices used by the operators to
-      control them. These were part of a separate furniture, the
-      “console”. This term was retained, but its meaning has changed.
-      It has become more or less synonymous with “terminal”, being a
-      keyboard and a screen.</para>
+      <figure id="figure.boot-process-sysvinit">
+        <title>Boot sequence of a computer running Linux with System V init</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/startup-sysvinit.png" scalefit="1" width="80%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <indexterm><primary>initialization script</primary></indexterm>
 
-      <para>With the development of computers, operating systems have
-      offered several virtual consoles to allow for several independent
-      sessions at the same time, even if there is only one keyboard and
-      screen. Most GNU/Linux systems offer six virtual consoles (in text
-      mode), accessible by typing the key combinations <keycombo
-      action="simul"> <keycap>Control</keycap> <keycap>Alt</keycap>
-      <keycap>F1</keycap> </keycombo> through <keycombo action="simul">
-      <keycap>Control</keycap> <keycap>Alt</keycap> <keycap>F6</keycap>
-      </keycombo>.</para>
+      <indexterm><primary><command>update-rc.d</command></primary></indexterm>
+      <indexterm><primary><command>rcconf</command></primary></indexterm>
 
-      <para>By extension, the terms “console” and “terminal” can
-      also refer to a terminal emulator in a graphical X11 session (such as
-      <command>xterm</command>, <command>gnome-terminal</command> or
-      <command>konsole</command>).</para>
-    </sidebar>
-</section>
+      <para>All the scripts contained in the various
+      <filename>/etc/rc<replaceable>X</replaceable>.d</filename> directories
+      are really only symbolic links — created upon package installation by the
+      <command>update-rc.d</command> program — pointing to the actual scripts
+      which are stored in <filename>/etc/init.d/</filename>. The administrator
+      can fine tune the services available in each runlevel by re-running
+      <command>update-rc.d</command> with adjusted parameters. The
+      <citerefentry><refentrytitle>update-rc.d</refentrytitle>
+      <manvolnum>1</manvolnum></citerefentry> manual page describes the syntax
+      in detail. Please note that removing all symbolic links (with the
+      <literal>remove</literal> parameter) is not a good method to disable a
+      service. Instead you should simply configure it to not start in the
+      desired runlevel (while preserving the corresponding calls to stop it in
+      the event that the service runs in the previous runlevel). Since
+      <command>update-rc.d</command> has a somewhat convoluted interface, you
+      may prefer using <command>rcconf</command> (from the <emphasis
+      role="pkg">rcconf</emphasis> package) which provides a more user-friendly
+      interface.</para>
+
+      <sidebar>
+        <title><emphasis>DEBIAN POLICY</emphasis> Restarting services</title>
+        <indexterm><primary><command>invoke-rc.d</command></primary></indexterm>
+        <indexterm><primary>service</primary><secondary>restart</secondary></indexterm>
+        <indexterm><primary>restarting services</primary></indexterm>
+
+        <para>The maintainer scripts for Debian packages will sometimes
+        restart certain services to ensure their availability or get them to
+        take certain options into account. The command that controls a
+        service — <command>service <replaceable>service</replaceable>
+        <replaceable>operation</replaceable></command> — doesn't take
+        runlevel into consideration, assumes (wrongly) that the service is
+        currently being used, and may thus initiate incorrect operations
+        (starting a service that was deliberately stopped, or stopping a
+        service that is already stopped, etc.). Debian therefore introduced
+        the <command>invoke-rc.d</command> program: this program must be used
+        by maintainer scripts to run services initialization scripts and it
+        will only execute the necessary commands. Note that, contrary to
+        common usage, the <filename>.d</filename> suffix is used here in a
+        program name, and not in a directory.</para>
+      </sidebar>
+
+      <para>Finally, <command>init</command> starts control programs for
+      various virtual consoles (<command>getty</command>). It displays a
+      prompt, waiting for a username, then executes <command>login
+      <replaceable>user</replaceable></command> to initiate a session.</para>
+
+      <indexterm><primary><command>getty</command></primary></indexterm>
+      <indexterm><primary>service</primary><secondary><filename>getty@.service</filename></secondary></indexterm>
+
+      <sidebar>
+        <title><emphasis>VOCABULARY</emphasis> Console and terminal</title>
+        <indexterm><primary>console</primary></indexterm>
+        <indexterm><primary>terminal</primary></indexterm>
+
+        <para>The first computers were usually separated into several, very
+        large parts: the storage enclosure and the central processing unit
+        were separate from the peripheral devices used by the operators to
+        control them. These were part of a separate furniture, the
+        “console”. This term was retained, but its meaning has changed.
+        It has become more or less synonymous with “terminal”, being a
+        keyboard and a screen.</para>
+
+        <para>With the development of computers, operating systems have
+        offered several virtual consoles to allow for several independent
+        sessions at the same time, even if there is only one keyboard and
+        screen. Most GNU/Linux systems offer six virtual consoles (in text
+        mode), accessible by typing the key combinations <keycombo
+        action="simul"> <keycap>Control</keycap> <keycap>Alt</keycap>
+        <keycap>F1</keycap> </keycombo> through <keycombo action="simul">
+        <keycap>Control</keycap> <keycap>Alt</keycap> <keycap>F6</keycap>
+        </keycombo>.</para>
+
+        <para>By extension, the terms “console” and “terminal” can
+        also refer to a terminal emulator in a graphical session (such as
+        <command>xterm</command>, <command>gnome-terminal</command> or
+        <command>konsole</command>).</para>
+      </sidebar>
+    </section>
   </section>
+
   <section id="sect.remote-login">
     <title>Remote Login</title>
 
