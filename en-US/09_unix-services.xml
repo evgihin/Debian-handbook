@@ -1309,6 +1309,9 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
   </section>
   <section id="sect.rights-management">
     <title>Managing Rights</title>
+    <indexterm><primary>permissions</primary></indexterm>
+    <indexterm><primary>rights</primary></indexterm>
+    <indexterm><primary>device</primary><secondary>files</secondary></indexterm>
 
     <para>Linux is definitely a multi-user system, so it is necessary to
     provide a permission system to control the set of authorized operations
@@ -1317,8 +1320,7 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
     directory). This principle is common to all Unix systems, but a
     reminder is always useful, especially as there are some interesting and
     relatively unknown advanced uses.</para>
-    <indexterm><primary>rights</primary></indexterm>
-    <indexterm><primary>permissions</primary></indexterm>
+
     <indexterm><primary>user</primary><secondary>owner</secondary></indexterm>
     <indexterm><primary>group</primary><secondary>owner</secondary></indexterm>
     <indexterm><primary>owner</primary><secondary>user</secondary></indexterm>
@@ -1328,38 +1330,48 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
     of users:</para>
     <itemizedlist>
       <listitem>
-	<para>its owner (symbolized by <literal>u</literal> as in
-	“user”);</para>
+        <indexterm><primary>permissions</primary><secondary><literal>u</literal></secondary></indexterm>
+        <para>its owner (symbolized by <literal>u</literal> as in
+        “user”);</para>
       </listitem>
       <listitem>
-	<para>its owner group (symbolized by <literal>g</literal> as in
-	“group”), representing all the members of the group;</para>
+        <indexterm><primary>permissions</primary><secondary><literal>g</literal></secondary></indexterm>
+        <para>its owner group (symbolized by <literal>g</literal> as in
+        “group”), representing all the members of the group;</para>
       </listitem>
       <listitem>
-	<para>the others (symbolized by <literal>o</literal> as in
-	“other”).</para>
+        <indexterm><primary>permissions</primary><secondary><literal>o</literal></secondary></indexterm>
+        <para>the others (symbolized by <literal>o</literal> as in
+        “other”).</para>
       </listitem>
     </itemizedlist>
 
-    <para>Three types of rights can be combined:</para>
+    <para>Three basic types of rights can be combined:</para>
     <itemizedlist>
       <listitem>
-	<para>reading (symbolized by <literal>r</literal> as in
-	“read”);</para>
+        <indexterm><primary>permissions</primary><secondary><literal>r</literal></secondary></indexterm>
+        <para>reading (symbolized by <literal>r</literal> as in
+        “read”);</para>
       </listitem>
       <listitem>
-	<para>writing (or modifying, symbolized by <literal>w</literal> as
-	in “write”);</para>
+        <indexterm><primary>permissions</primary><secondary><literal>w</literal></secondary></indexterm>
+        <para>writing (or modifying, symbolized by <literal>w</literal> as
+        in “write”);</para>
       </listitem>
       <listitem>
-	<para>executing (symbolized by <literal>x</literal> as in
-	“eXecute”).</para>
+        <indexterm><primary>permissions</primary><secondary><literal>x</literal></secondary></indexterm>
+        <para>executing (symbolized by <literal>x</literal> as in
+        “eXecute”).</para>
       </listitem>
     </itemizedlist>
+
     <indexterm><primary>read, right</primary></indexterm>
     <indexterm><primary>write, right</primary></indexterm>
     <indexterm><primary>modification, right</primary></indexterm>
     <indexterm><primary>execution, right</primary></indexterm>
+    <indexterm><primary>permissions</primary><secondary>read</secondary></indexterm>
+    <indexterm><primary>permissions</primary><secondary>write</secondary></indexterm>
+    <indexterm><primary>permissions</primary><secondary>execute</secondary></indexterm>
 
     <para>In the case of a file, these rights are easily understood: read
     access allows reading the content (including copying), write access
@@ -1368,15 +1380,19 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
 
     <sidebar>
       <title><emphasis>SECURITY</emphasis> <literal>setuid</literal> and <literal>setgid</literal> executables</title>
+      <indexterm><primary>permissions</primary><secondary><literal>setuid</literal></secondary><seealso><literal>setuid</literal></seealso></indexterm>
+      <indexterm><primary>permissions</primary><secondary><literal>setgid</literal></secondary><seealso><literal>setgid</literal></seealso></indexterm>
+      <indexterm><primary>permissions</primary><secondary><literal>s</literal></secondary></indexterm>
 
       <para>Two particular rights are relevant to executable files:
       <literal>setuid</literal> and <literal>setgid</literal> (symbolized
       with the letter “s”). Note that we frequently speak of “bit”,
       since each of these boolean values can be represented by a 0 or a 1.
       These two rights allow any user to execute the program with the
-      rights of the owner or the group, respectively. This mechanism grants
+      rights of its owner or its group, respectively. This mechanism grants
       access to features requiring higher level permissions than those you
       would usually have.</para>
+
       <indexterm><primary><literal>setuid</literal>, right</primary></indexterm>
       <indexterm><primary><literal>setgid</literal>, right</primary></indexterm>
 
@@ -1386,6 +1402,16 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
       would manage to subvert it to call a command of their choice could
       then impersonate the root user and have all rights on the
       system.</para>
+
+      <indexterm><primary><command>su</command></primary></indexterm>
+      <indexterm><primary><command>sudo</command></primary></indexterm>
+      <indexterm><primary><command>runuser</command></primary></indexterm>
+
+      <para>If you require running a program under a different user or if a
+      program requires higher permissions, the <command>sudo</command>,
+      <command>su</command>, or <command>runuser</command> commands are usually
+      better choices than using these bits (see <xref
+      linkend="sect.sharing-admin-rights"/>).</para>
     </sidebar>
 
     <para>A directory is handled differently. Read access gives the right
@@ -1408,7 +1434,10 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
       change its main group (with the <command>newgrp</command> command)
       when working in a file tree shared between several users of the same
       dedicated group.</para>
+
+      <indexterm><primary><command>newgrp</command></primary></indexterm>
       <indexterm><primary>sticky bit</primary></indexterm>
+      <indexterm><primary>permissions</primary><secondary><literal>t</literal></secondary></indexterm>
 
       <para>The “sticky” bit (symbolized by the letter “t”) is a
       permission that is only useful in directories. It is especially used
@@ -1423,21 +1452,28 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
     file:</para>
     <itemizedlist>
       <listitem>
-	<para><command>chown <replaceable>user</replaceable>
-	<replaceable>file</replaceable></command> changes the owner of the
-	file;</para>
+        <indexterm><primary><command>chown</command></primary></indexterm>
+        <para><command>chown <replaceable>user</replaceable>
+        <replaceable>file</replaceable></command> changes the owner of the
+        file;</para>
       </listitem>
       <listitem>
-	<para><command>chgrp <replaceable>group</replaceable>
-	<replaceable>file</replaceable></command> alters the owner
-	group;</para>
+        <indexterm><primary><command>chgrp</command></primary></indexterm>
+        <para><command>chgrp <replaceable>group</replaceable>
+        <replaceable>file</replaceable></command> alters the owner
+        group;</para>
       </listitem>
       <listitem>
-	<para><command>chmod <replaceable>rights</replaceable>
-	<replaceable>file</replaceable></command> changes the permissions
-	for the file.</para>
+        <indexterm><primary><command>chmod</command></primary></indexterm>
+        <para><command>chmod <replaceable>rights</replaceable>
+        <replaceable>file</replaceable></command> changes the permissions
+        for the file.</para>
       </listitem>
     </itemizedlist>
+
+    <indexterm><primary>symbolic representation of rights</primary></indexterm>
+    <indexterm><primary>rights</primary><secondary>symbolic representation</secondary></indexterm>
+    <indexterm><primary>permissions</primary><secondary>symbolic representation</secondary></indexterm>
 
     <para>There are two ways of presenting rights. Among them, the symbolic
     representation is probably the easiest to understand and remember. It
@@ -1453,11 +1489,10 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
     <literal>a</literal>, for “all”, covers all three categories of
     users, so that <literal>a=rx</literal> grants all three categories the
     same rights (read and execute, but not write).</para>
-    <indexterm><primary><command>chmod</command></primary></indexterm>
-    <indexterm><primary><command>chown</command></primary></indexterm>
-    <indexterm><primary><command>chgrp</command></primary></indexterm>
+
     <indexterm><primary>octal representation of rights</primary></indexterm>
     <indexterm><primary>rights</primary><secondary>octal representation</secondary></indexterm>
+    <indexterm><primary>permissions</primary><secondary>octal representation</secondary></indexterm>
 
     <para>The (octal) numeric representation associates each right with a
     value: 4 for read, 2 for write, and 1 for execute. We associate each
@@ -1469,11 +1504,15 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
     <replaceable>file</replaceable></command> command will set the
     following rights: read, write and execute for the owner (since 7 = 4 +
     2 + 1); read and execute for the group (since 5 = 4 + 1); read-only for
-    others. The <literal>0</literal> means no rights; thus <command>chmod
+    others. The <literal>0</literal> (zero) means no rights; thus <command>chmod
     600 <replaceable>file</replaceable></command> allows for read/write
     rights for the owner, and no rights for anyone else. The most frequent
     right combinations are <literal>755</literal> for executable files and
     directories, and <literal>644</literal> for data files.</para>
+
+    <indexterm><primary><literal>setuid</literal></primary></indexterm>
+    <indexterm><primary><literal>setgid</literal></primary></indexterm>
+    <indexterm><primary>sticky bit</primary></indexterm>
 
     <para>To represent special rights, you can prefix a fourth digit to
     this number according to the same principle, where the
@@ -1491,51 +1530,98 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
 
     <sidebar>
       <title><emphasis>TIP</emphasis> Recursive operation</title>
+      <indexterm><primary>permissions</primary><secondary>recursive operation</secondary></indexterm>
 
       <para>Sometimes we have to change rights for an entire file tree. All
       the commands above have a <literal>-R</literal> option to operate
       recursively in sub-directories.</para>
 
+      <indexterm><primary>permissions</primary><secondary><literal>X</literal></secondary></indexterm>
+
       <para>The distinction between directories and files sometimes causes
-      problems with recursive operations. That is why the “X” letter has
-      been introduced in the symbolic representation of rights. It
-      represents a right to execute which applies only to directories (and
-      not to files lacking this right). Thus, <command>chmod -R a+X
-      <replaceable>directory</replaceable></command> will only add execute
-      rights for all categories of users (<literal>a</literal>) for all of
-      the sub-directories and files for which at least one category of user
-      (even if their sole owner) already has execute rights.</para>
+      problems with recursive operations. That is why the
+      “<literal>X</literal>” letter has been introduced in the symbolic
+      representation of rights. It also represents the right to execute, but it
+      applies differently to directories and files.</para>
+
+      <para>For directories it adds executable permissions to the chosen
+      user(s). For files, it adds the executable bit <emphasis>only</emphasis> if
+      at least one of the users (owner, group, or others) already has
+      executable permissions. Let's demonstrate it, because this bit can be
+      confusing:</para>
+
+      <screen><computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+<computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+<computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>
+<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+<computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+<computeroutput>$ </computeroutput><userinput>chmod o+x test.txt</userinput>
+<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+<computeroutput>-rw-r--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+<computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>
+<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+<computeroutput>-rwxr--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+</screen>
+
+      <para>The example shows a typical file with its default permissions: its
+      owner can read and write it, the owner's group and all other users can
+      read it. The next operation (<literal>u+X</literal>) won't add executable
+      permissions for the owner of the file, because permissions to execute
+      have not been assigned. The operation has no effect on the file. Next we
+      assign execute rights for "other" users and repeat the operation. This
+      time it is successful, because at least one user group already had
+      executable permissions.</para>
+
+      <para>It is a misconception that this bit will only affect directories.
+      If files and directories have mixed permissions, it is often a good idea
+      to use the <command>find</command> command to locate the targets you want
+      to operate on.</para>
     </sidebar>
 
     <sidebar>
-      <title><emphasis>TIP</emphasis> Changing the user and group</title>
+      <title><emphasis>TIP</emphasis> Changing the user and group together</title>
+      <indexterm><primary><command>chown</command></primary></indexterm>
 
-      <para>Frequently you want to change the group of a file at the
-      same time that you change the owner. The
-      <command>chown</command> command has a special syntax for that:
-      <command>chown
+      <para>Frequently you want to change the group of a file at the same time
+      that you change the owner. The <command>chown</command> command has a
+      special syntax for that: <command>chown
       <replaceable>user</replaceable>:<replaceable>group</replaceable>
-      <replaceable>file</replaceable></command></para>
+      <replaceable>file</replaceable></command>. This syntax can also be used
+      to recursively (<literal>-R</literal>) change the ownership of a whole
+      directory.</para>
     </sidebar>
 
     <sidebar>
       <title><emphasis>GOING FURTHER</emphasis> <command>umask</command></title>
+      <indexterm><primary><command>umask</command></primary></indexterm>
 
       <para>When an application creates a file, it assigns indicative
       permissions, knowing that the system automatically removes certain
       rights, given by the command <command>umask</command>. Enter
       <command>umask</command> in a shell; you will see a mask such as
       <computeroutput>0022</computeroutput>. This is simply an octal
-      representation of the rights to be systematically removed (in this
-      case, the write right for the group and other users).</para>
-      <indexterm><primary>umask</primary></indexterm>
+      representation of the rights to be systematically removed. In this case,
+      the write right for the group and other users: With the above umask
+      value, the default for directories <literal>777</literal> becomes
+      <literal>755</literal> and the default permissions for files
+      <literal>666</literal> become <literal>644</literal>.</para>
+
       <indexterm><primary>rights</primary><secondary>mask</secondary></indexterm>
+      <indexterm><primary>permissions</primary><secondary>umask</secondary></indexterm>
       <indexterm><primary>mask</primary><secondary>rights mask</secondary></indexterm>
+
+      <para>The system's default value is handled by
+      <citerefentry><refentrytitle>pam_umask</refentrytitle>
+      <manvolnum>8</manvolnum></citerefentry> and
+      <filename>/etc/login.defs</filename>.</para>
+
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/login.defs</filename></secondary></indexterm>
 
       <para>If you give it a new octal value, the <command>umask</command>
       command modifies the mask. Used in a shell initialization file (for
-      example, <filename>~/.bash_profile</filename>), it will effectively
-      change the default mask for your work sessions.</para>
+      example, <filename>~/.bashrc</filename> or
+      <filename>~/.profile</filename>), it will effectively change the default
+      mask for your work sessions.</para>
     </sidebar>
   </section>
   <section id="sect.administration-interfaces">
