@@ -1647,9 +1647,11 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
     all aim to be very flexible and try to adopt the configuration file
     as a single reference, they are not always able to integrate external
     changes.</para>
+
     <section id="sect.webmin">
       <title>Administrating on a Web Interface: <command>webmin</command></title>
       <indexterm><primary><emphasis>webmin</emphasis></primary></indexterm>
+      <indexterm><primary>administration, interfaces</primary><secondary><emphasis>webmin</emphasis></secondary></indexterm>
 
       <para>This is, without a doubt, one of the most successful
       administration interfaces. It is a modular system managed through a
@@ -1665,11 +1667,10 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
         </mediaobject>
       </figure>
 
-      <para>Sadly, <command>webmin</command> is no longer part of Debian.
-      Its Debian maintainer — Jaldhar H. Vyas — removed the packages he created
-      because he no longer had the time required to maintain them at an
-      acceptable quality level. Nobody has officially taken over, so
-      <emphasis role="distribution">Buster</emphasis> does not have the
+      <para>Sadly, <command>webmin</command> is no longer part of Debian.  Its
+      Debian maintainer removed the packages created because they no longer had
+      the time required to maintain them at an acceptable quality level. Nobody
+      has officially taken over, so Debian does not provide the
       <command>webmin</command> package.</para>
 
       <para>There is, however, an unofficial package distributed on the
@@ -1681,18 +1682,20 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Changing the root password</title>
 
-	<para>On the first login, identification is conducted with the root
-	username and its usual password. It is recommended to change the
-	password used for <command>webmin</command> as soon as possible, so
-	that if it is compromised, the root password for the server will
-	not be involved, even if this confers important administrative
-	rights to the machine.</para>
+        <para>On the first login, identification is conducted with the root
+        username and its usual password (or any user's login credentials which
+        belongs to the <literal>sudo</literal> group). It is recommended to
+        change the password used for <command>webmin</command> as soon as
+        possible, so that if it is compromised, the server's user accounts will
+        not be involved, even if this confers important administrative rights
+        to the machine.</para>
 
-	<para>Beware! Since <command>webmin</command> has so many features,
-	a malicious user accessing it could compromise the security of the
-	entire system. In general, interfaces of this kind are not
-	recommended for important systems with strong security constraints
-	(firewall, sensitive servers, etc.).</para>
+        <para>Beware! Since <command>webmin</command> has so many features,
+        a malicious user accessing it could compromise the security of the
+        entire system. In general, interfaces of this kind are not
+        recommended for important systems with strong security constraints
+        (firewall, sensitive servers, etc.), and they are not recommended to be
+        exposed to the public either.</para>
       </sidebar>
 
       <para>Webmin is used through a web interface, but it does not require
@@ -1704,35 +1707,35 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
       which:</para>
       <itemizedlist>
         <listitem>
-	  <para>all base services: creation of users and groups, management
-	  of <filename>crontab</filename> files, init scripts, viewing of
-	  logs, etc.</para>
+          <para>all base services: creation of users and groups, management
+          of <filename>crontab</filename> files, service scripts/files, viewing
+          of logs, etc.</para>
         </listitem>
         <listitem>
-	  <para>bind: DNS server configuration (name service);</para>
+          <para>bind: DNS server configuration (name service);</para>
         </listitem>
         <listitem>
-	  <para>postfix: SMTP server configuration (e-mail);</para>
+          <para>postfix: SMTP server configuration (e-mail);</para>
         </listitem>
         <listitem>
-	  <para>inetd: configuration of the <command>inetd</command>
-	  super-server;</para>
+          <para>network services: configuration of the <command>xinetd</command>
+          super-server;</para>
         </listitem>
         <listitem>
-	  <para>quota: user quota management;</para>
+          <para>disk quota: user quota management;</para>
         </listitem>
         <listitem>
-	  <para>dhcpd: DHCP server configuration;</para>
+          <para>dhcpd: DHCP server configuration;</para>
         </listitem>
         <listitem>
-	  <para>proftpd: FTP server configuration;</para>
+          <para>proftpd: FTP server configuration;</para>
         </listitem>
         <listitem>
-	  <para>samba: Samba file server configuration;</para>
+          <para>samba: Samba file server configuration;</para>
         </listitem>
         <listitem>
-	  <para>software: installation or removal of software from Debian
-	  packages and system updates.</para>
+          <para>software: installation or removal of software from Debian
+          packages and system updates.</para>
         </listitem>
       </itemizedlist>
 
@@ -1747,28 +1750,29 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
         <title><emphasis>ALTERNATIVE</emphasis> GNOME control center</title>
         <indexterm><primary><emphasis role="pkg">gnome-control-center</emphasis></primary></indexterm>
 
-	<para>The GNOME project also provides multiple administration
-	interfaces that are usually accessible via the “Settings”
-	entry in the user menu on the top right.
-	<command>gnome-control-center</command> is the main program
-	that brings them all together but many of the system wide
-	configuration tools are effectively provided by other packages
-	(<emphasis role="pkg">accountsservice</emphasis>, <emphasis
-	role="pkg">system-config-printer</emphasis>, etc.).  Although
-	they are easy to use, these applications cover only a limited
-	number of base services: user management, time configuration,
-	network configuration, printer configuration, and so
-	on.</para>
+        <para>The GNOME project also provides multiple administration
+        interfaces that are usually accessible via the “Settings”
+        entry in the user menu on the top right.
+        <command>gnome-control-center</command> is the main program
+        that brings them all together but many of the system wide
+        configuration tools are effectively provided by other packages
+        (<emphasis role="pkg">accountsservice</emphasis>, <emphasis
+        role="pkg">system-config-printer</emphasis>, etc.).  Although
+        they are easy to use, these applications cover only a limited
+        number of base services: user management, time configuration,
+        network configuration, printer configuration, and so
+        on.</para>
       </sidebar>
     </section>
     <section id="sect.debconf">
       <title>Configuring Packages: <command>debconf</command></title>
-      <indexterm><primary><command>debconf</command></primary></indexterm>
-      <indexterm><primary><command>dpkg-reconfigure</command></primary></indexterm>
+      <indexterm><primary><command>debconf</command></primary><seealso><command>dpkg-reconfigure</command></seealso></indexterm>
+      <indexterm><primary><command>dpkg-reconfigure</command></primary><seealso><command>debconf</command></seealso></indexterm>
 
       <para>Many packages are automatically configured after asking a few
-      questions during installation through the Debconf tool. These
-      packages can be reconfigured by running <command>dpkg-reconfigure
+      questions during installation through the Debconf tool. These packages
+      can be reconfigured by running <command>dpkg-reconfigure
+      -p<replaceable>level</replaceable>
       <replaceable>package</replaceable></command>.</para>
 
       <para>For most cases, these settings are very simple; only a few
@@ -1783,24 +1787,27 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
 
       <sidebar>
         <title><emphasis>DEBIAN POLICY</emphasis> Preserving changes</title>
+        <indexterm><primary>Debian Project</primary><secondary>policy</secondary></indexterm>
+        <indexterm><primary>configuration</primary><secondary>files</secondary></indexterm>
 
-	<para>The Debian Policy expressly stipulates that everything should
-	be done to preserve manual changes made to a configuration file, so
-	more and more scripts take precautions when editing configuration
-	files. The general principle is simple: the script will only make
-	changes if it knows the status of the configuration file, which is
-	verified by comparing the checksum of the file against that of the
-	last automatically generated file. If they are the same, the script
-	is authorized to change the configuration file. Otherwise, it
-	determines that the file has been changed and asks what action it
-	should take (install the new file, save the old file, or try to
-	integrate the new changes with the existing file). This
-	precautionary principle has long been unique to Debian, but other
-	distributions have gradually begun to embrace it.</para>
+        <para>The Debian Policy expressly stipulates that everything should
+        be done to preserve manual changes made to a configuration file, so
+        more and more scripts take precautions when editing configuration
+        files. The general principle is simple: the script will only make
+        changes if it knows the status of the configuration file, which is
+        verified by comparing the checksum of the file against that of the
+        last automatically generated file. If they are the same, the script
+        is authorized to change the configuration file. Otherwise, it
+        determines that the file has been changed and asks what action it
+        should take (install the new file, save the old file, or try to
+        integrate the new changes with the existing file). This
+        precautionary principle has long been unique to Debian, but other
+        distributions have gradually begun to embrace it.</para>
 
-	<para>The <command>ucf</command> program (from the Debian package
-	of the same name) can be used to implement such a behavior.</para>
         <indexterm><primary><command>ucf</command></primary></indexterm>
+
+        <para>The <command>ucf</command> program (from the Debian package
+        of the same name) can be used to implement such a behavior.</para>
       </sidebar>
     </section>
   </section>
