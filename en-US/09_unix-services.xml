@@ -1814,8 +1814,10 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
   <section id="sect.syslog">
     <title><command>syslog</command> System Events</title>
     <indexterm><primary><command>rsyslogd</command></primary></indexterm>
+    <indexterm><primary><command>syslogd</command></primary><see><command>rsyslogd</command></see></indexterm>
     <indexterm><primary>file</primary><secondary>log file</secondary></indexterm>
     <indexterm><primary>logs</primary><secondary>dispatching</secondary></indexterm>
+    <indexterm><primary>logs</primary><seealso><filename>/var/log</filename></seealso></indexterm>
     <section id="sect.syslog-principe">
       <title>Principle and Mechanism</title>
 
@@ -1825,206 +1827,219 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
       <filename>/var/log/</filename> directory). It obeys the
       <filename>/etc/rsyslog.conf</filename> configuration file.</para>
 
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/rsyslog.conf</filename></secondary><see><command>rsyslogd</command></see></indexterm>
+
       <para>Each log message is associated with an application subsystem
       (called “facility” in the documentation):</para>
+      <indexterm><primary><command>rsyslogd</command></primary><secondary>facility</secondary></indexterm>
       <itemizedlist>
         <listitem>
-	  <para><literal>auth</literal> and <literal>authpriv</literal>:
-	  for authentication;</para>
+          <para><literal>auth</literal> and <literal>authpriv</literal>:
+          for authentication;</para>
         </listitem>
         <listitem>
-	  <para><literal>cron</literal>: comes from task scheduling
-	  services, <command>cron</command> and
-	  <command>atd</command>;</para>
+          <para><literal>cron</literal>: comes from task scheduling
+          services, <command>cron</command> and
+          <command>atd</command>;</para>
         </listitem>
         <listitem>
-	  <para><literal>daemon</literal>: affects a daemon without any
-	  special classification (DNS, NTP, etc.);</para>
+          <para><literal>daemon</literal>: affects a daemon without any
+          special classification (DNS, NTP, etc.);</para>
         </listitem>
         <listitem>
-	  <para><literal>ftp</literal>: concerns the FTP server;</para>
+          <para><literal>ftp</literal>: concerns the FTP server;</para>
         </listitem>
         <listitem>
-	  <para><literal>kern</literal>: message coming from the
-	  kernel;</para>
+          <para><literal>kern</literal>: message coming from the
+          kernel;</para>
         </listitem>
         <listitem>
-	  <para><literal>lpr</literal>: comes from the printing
-	  subsystem;</para>
+          <para><literal>lpr</literal>: comes from the printing
+          subsystem;</para>
         </listitem>
         <listitem>
-	  <para><literal>mail</literal>: comes from the e-mail
-	  subsystem;</para>
+          <para><literal>mail</literal>: comes from the e-mail
+          subsystem;</para>
         </listitem>
         <listitem>
-	  <para><literal>news</literal>: Usenet subsystem message
-	  (especially from an NNTP — Network News Transfer Protocol —
-	  server that manages newsgroups);</para>
+          <para><literal>news</literal>: Usenet subsystem message
+          (especially from an NNTP — Network News Transfer Protocol —
+          server that manages newsgroups);</para>
+          <indexterm><primary>Network News Transfer Protocol</primary><seealso>NNTP</seealso></indexterm>
         </listitem>
         <listitem>
-	  <para><literal>syslog</literal>: messages from the
-	  <command>syslogd</command> server, itself;</para>
+          <para><literal>syslog</literal>: messages from the
+          <command>syslogd</command> server, itself;</para>
+          <indexterm><primary><command>syslogd</command></primary></indexterm>
         </listitem>
         <listitem>
-	  <para><literal>user</literal>: user messages (generic);</para>
+          <para><literal>user</literal>: user messages (generic);</para>
         </listitem>
         <listitem>
-	  <para><literal>uucp</literal>: messages from the UUCP server
-	  (Unix to Unix Copy Program, an old protocol notably used to
-	  distribute e-mail messages);</para>
+          <para><literal>uucp</literal>: messages from the UUCP server
+          (Unix to Unix Copy Program, an old protocol notably used to
+          distribute e-mail messages);</para>
         </listitem>
         <listitem>
-	  <para><literal>local0</literal> to <literal>local7</literal>:
-	  reserved for local use.</para>
+          <para><literal>local0</literal> to <literal>local7</literal>:
+          reserved for local use.</para>
         </listitem>
       </itemizedlist>
 
       <para>Each message is also associated with a priority level. Here is
       the list in decreasing order:</para>
+      <indexterm><primary><command>rsyslogd</command></primary><secondary>priority</secondary></indexterm>
       <itemizedlist>
         <listitem>
-	  <para><literal>emerg</literal>: “Help!” There is an emergency,
-	  the system is probably unusable.</para>
+          <para><literal>emerg</literal>: “Help!” There is an emergency,
+          the system is probably unusable.</para>
         </listitem>
         <listitem>
-	  <para><literal>alert</literal>: hurry up, any delay can be
-	  dangerous, action must be taken immediately;</para>
+          <para><literal>alert</literal>: hurry up, any delay can be
+          dangerous, action must be taken immediately;</para>
         </listitem>
         <listitem>
-	  <para><literal>crit</literal>: conditions are critical;</para>
+          <para><literal>crit</literal>: conditions are critical;</para>
         </listitem>
         <listitem>
-	  <para><literal>err</literal>: error;</para>
+          <para><literal>err</literal>: error;</para>
         </listitem>
         <listitem>
-	  <para><literal>warn</literal>: warning (potential error);</para>
+          <para><literal>warn</literal>: warning (potential error);</para>
         </listitem>
         <listitem>
-	  <para><literal>notice</literal>: conditions are normal, but the
-	  message is important;</para>
+          <para><literal>notice</literal>: conditions are normal, but the
+          message is important;</para>
         </listitem>
         <listitem>
-	  <para><literal>info</literal>: informative message;</para>
+          <para><literal>info</literal>: informative message;</para>
         </listitem>
         <listitem>
-	  <para><literal>debug</literal>: debugging message.</para>
+          <para><literal>debug</literal>: debugging message.</para>
         </listitem>
       </itemizedlist>
     </section>
     <section id="sect.syslog-config">
       <title>The Configuration File</title>
+      <indexterm><primary><command>rsyslogd</command></primary><secondary>configuration</secondary><seealso><filename>/etc/rsyslog.conf</filename></seealso></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/rsyslog.conf</filename></secondary><see><command>rsyslogd</command></see></indexterm>
 
-      <para>The syntax of the <filename>/etc/rsyslog.conf</filename> file
-      is detailed in the
-      <citerefentry><refentrytitle>rsyslog.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-      manual page, but there is also HTML documentation available in the
-      <emphasis role="pkg">rsyslog-doc</emphasis> package
-      (<filename>/usr/share/doc/rsyslog-doc/html/index.html</filename>).
-      The overall principle is to write “selector” and “action”
-      pairs. The selector defines all relevant messages, and the actions
-      describes how to deal with them.</para>
+      <para>The syntax of the <filename>/etc/rsyslog.conf</filename> file is
+      detailed in the <citerefentry><refentrytitle>rsyslog.conf</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry> manual page, but there is also
+      HTML documentation available in the <emphasis
+      role="pkg">rsyslog-doc</emphasis> package
+      (<filename>/usr/share/doc/rsyslog-doc/html/index.html</filename>).  The
+      overall principle is to write “selector” and “action” pairs. The selector
+      defines all relevant messages, and the action describes how to deal with
+      them.</para>
+
       <section id="sect.syslog-selector-syntax">
         <title>Syntax of the Selector</title>
+        <indexterm><primary><command>rsyslogd</command></primary><secondary>selector</secondary></indexterm>
 
-	<para>The selector is a semicolon-separated list of
-	<literal><replaceable>subsystem</replaceable>.<replaceable>priority</replaceable></literal>
-	pairs (example: <literal>auth.notice;mail.info</literal>). An
-	asterisk may represent all subsystems or all priorities (examples:
-	<literal>*.alert</literal> or <literal>mail.*</literal>). Several
-	subsystems can be grouped, by separating them with a comma
-	(example: <literal>auth,mail.info</literal>). The priority
-	indicated also covers messages of equal or higher priority; thus
-	<literal>auth.alert</literal> indicates the <literal>auth</literal>
-	subsystem messages of <literal>alert</literal> or
-	<literal>emerg</literal> priority. Prefixed with an exclamation
-	point (!), it indicates the opposite, in other words the strictly
-	lower priorities; <literal>auth.!notice</literal>, thus, indicates
-	messages issued from <literal>auth</literal>, with
-	<literal>info</literal> or <literal>debug</literal> priority.
-	Prefixed with an equal sign (=), it corresponds to precisely and
-	only the priority indicated (<literal>auth.=notice</literal> only
-	concerns messages from <literal>auth</literal> with
-	<literal>notice</literal> priority).</para>
+        <para>The selector is a semicolon-separated list of
+        <literal><replaceable>subsystem</replaceable>.<replaceable>priority</replaceable></literal>
+        pairs (example: <literal>auth.notice;mail.info</literal>). An
+        asterisk may represent all subsystems or all priorities (examples:
+        <literal>*.alert</literal> or <literal>mail.*</literal>). Several
+        subsystems can be grouped, by separating them with a comma
+        (example: <literal>auth,mail.info</literal>). The priority
+        indicated also covers messages of equal or higher priority; thus
+        <literal>auth.alert</literal> indicates the <literal>auth</literal>
+        subsystem messages of <literal>alert</literal> or
+        <literal>emerg</literal> priority. Prefixed with an exclamation
+        point (!), it indicates the opposite, in other words the strictly
+        lower priorities; <literal>auth.!notice</literal>, thus, indicates
+        messages issued from <literal>auth</literal>, with
+        <literal>info</literal> or <literal>debug</literal> priority.
+        Prefixed with an equal sign (=), it corresponds to precisely and
+        only the priority indicated (<literal>auth.=notice</literal> only
+        concerns messages from <literal>auth</literal> with
+        <literal>notice</literal> priority).</para>
 
-	<para>Each element in the list on the selector overrides previous
-	elements. It is thus possible to restrict a set or to exclude
-	certain elements from it. For example,
-	<literal>kern.info;kern.!err</literal> means messages from the
-	kernel with priority between <literal>info</literal> and
-	<literal>warn</literal>. The <literal>none</literal> priority
-	indicates the empty set (no priorities), and may serve to exclude a
-	subsystem from a set of messages. Thus,
-	<literal>*.crit;kern.none</literal> indicates all the messages of
-	priority equal to or higher than <literal>crit</literal> not coming
-	from the kernel.</para>
+        <para>Each element in the list on the selector overrides previous
+        elements. It is thus possible to restrict a set or to exclude
+        certain elements from it. For example,
+        <literal>kern.info;kern.!err</literal> means messages from the
+        kernel with priority between <literal>info</literal> and
+        <literal>warn</literal>. The <literal>none</literal> priority
+        indicates the empty set (no priorities), and may serve to exclude a
+        subsystem from a set of messages. Thus,
+        <literal>*.crit;kern.none</literal> indicates all the messages of
+        priority equal to or higher than <literal>crit</literal> not coming
+        from the kernel.</para>
       </section>
       <section id="sect.syslog-action-syntax">
         <title>Syntax of Actions</title>
+        <indexterm><primary><command>rsyslogd</command></primary><secondary>action</secondary></indexterm>
 
         <sidebar>
           <title><emphasis>BACK TO BASICS</emphasis> The named pipe, a persistent pipe</title>
           <indexterm><primary>named pipe</primary></indexterm>
-          <indexterm><primary>pipe, named pipe</primary></indexterm>
+          <indexterm><primary>pipe</primary><secondary>named pipe</secondary></indexterm>
+          <indexterm><primary><command>mkfifo</command></primary></indexterm>
 
-	  <para>A named pipe is a particular type of file that operates
-	  like a traditional pipe (the pipe that you make with the “|”
-	  symbol on the command line), but via a file. This mechanism has
-	  the advantage of being able to relate two unrelated processes.
-	  Anything written to a named pipe blocks the process that writes
-	  until another process attempts to read the data written. This
-	  second process reads the data written by the first, which can
-	  then resume execution.</para>
+          <para>A named pipe is a particular type of file that operates
+          like a traditional pipe (the pipe that you make with the “|”
+          symbol on the command line), but via a file. This mechanism has
+          the advantage of being able to relate two unrelated processes.
+          Anything written to a named pipe blocks the process that writes
+          until another process attempts to read the data written. This
+          second process reads the data written by the first, which can
+          then resume execution.</para>
 
-	  <para>Such a file is created with the <command>mkfifo</command>
-	  command.</para>
+          <para>Such a file is created with the <command>mkfifo</command>
+          command.</para>
         </sidebar>
 
-	<para>The various possible actions are:</para>
+        <para>The various possible actions are:</para>
         <itemizedlist>
           <listitem>
-	    <para>add the message to a file (example:
-	    <filename>/var/log/messages</filename>);</para>
+            <para>add the message to a file (example:
+            <filename>/var/log/messages</filename>);</para>
           </listitem>
           <listitem>
-	    <para>send the message to a remote <command>syslog</command>
-	    server (example: <literal>@log.falcot.com</literal>);</para>
+            <para>send the message to a remote <command>syslog</command>
+            server (example: <literal>@log.falcot.com</literal>);</para>
           </listitem>
           <listitem>
-	    <para>send the message to an existing named pipe (example:
-	    <literal>|/dev/xconsole</literal>);</para>
+            <para>send the message to an existing named pipe (example:
+            <literal>|/dev/xconsole</literal>);</para>
           </listitem>
           <listitem>
-	    <para>send the message to one or more users, if they are logged
-	    in (example: <literal>root,rhertzog</literal>);</para>
+            <para>send the message to one or more users, if they are logged
+            in (example: <literal>root,rhertzog</literal>);</para>
           </listitem>
           <listitem>
-	    <para>send the message to all logged in users (example:
-	    <literal>*</literal>);</para>
+            <para>send the message to all logged in users (example:
+            <literal>*</literal>);</para>
           </listitem>
           <listitem>
-	    <para>write the message in a text console (example:
-	    <literal>/dev/tty8</literal>).</para>
+            <para>write the message in a text console (example:
+            <literal>/dev/tty8</literal>).</para>
           </listitem>
         </itemizedlist>
 
         <sidebar>
           <title><emphasis>SECURITY</emphasis> Forwarding logs</title>
           <indexterm><primary>log</primary><secondary>forwarding</secondary></indexterm>
+          <indexterm><primary><command>rsyslogd</command></primary><secondary>server</secondary></indexterm>
 
-	  <para>It is a good idea to record the most important logs on a
-	  separate machine (perhaps dedicated for this purpose), since this
-	  will prevent any possible intruder from removing traces of their
-	  intrusion (unless, of course, they also compromise this other
-	  server). Furthermore, in the event of a major problem (such as a
-	  kernel crash), you have the logs available on another machine,
-	  which increases your chances of determining the sequence of
-	  events that caused the crash.</para>
+          <para>It is a good idea to record the most important logs on a
+          separate machine (perhaps dedicated for this purpose), since this
+          will prevent any possible intruder from removing traces of their
+          intrusion (unless, of course, they also compromise this other
+          server). Furthermore, in the event of a major problem (such as a
+          kernel crash), you have the logs available on another machine,
+          which increases your chances of determining the sequence of
+          events that caused the crash.</para>
 
-	  <para>To accept log messages sent by other machines, you must
-	  reconfigure <emphasis>rsyslog</emphasis>: in practice, it is
-	  sufficient to activate the ready-for-use entries in
-	  <filename>/etc/rsyslog.conf</filename> (<literal>$ModLoad
-	  imudp</literal> and <literal>$UDPServerRun 514</literal>).</para>
+          <para>To accept log messages sent by other machines, you must
+          reconfigure <emphasis>rsyslog</emphasis>: in practice, it is
+          sufficient to activate the ready-for-use entries in
+          <filename>/etc/rsyslog.conf</filename> (<literal>$ModLoad
+          imudp</literal> and <literal>$UDPServerRun 514</literal>).</para>
         </sidebar>
       </section>
     </section>
