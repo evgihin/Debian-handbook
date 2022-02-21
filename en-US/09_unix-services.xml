@@ -1072,6 +1072,27 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
         file (<filename>/etc/ssh/sshd_config</filename>). Finally, the user
         must also request it by adding the <literal>-X</literal> option to
         the <command>ssh</command> command-line.</para>
+
+        <sidebar>
+          <title><emphasis>GOING FURTHER</emphasis> Magic cookies in .Xauthority</title>
+          <indexterm><primary><filename>.Xauthority</filename></primary></indexterm>
+          <indexterm><primary><command>xauth</command></primary></indexterm>
+          <indexterm><primary>magic cookie</primary></indexterm>
+
+          <para>When a user connects via SSH and starts a remote X11 session, a
+          so-called <emphasis>magic cookie</emphasis> is created and stored in
+          the <filename>.Xauthority</filename> file in the user's home
+          directory that initiated the connection. This cookie is used by
+          <command>xauth</command> to authenticate the user during the X
+          session. If the user impersonates another user on the system, e.g.
+          using <command>su</command> or <command>sudo</command>, then the
+          cookie is not copied automatically to the target user and the X
+          server will refuse to start graphical applications under the target
+          user's context. You will have to copy the magic cookie into the
+          target user's home directory (by exporting and re-importing the
+          cookie via <command>xauth</command>) to allow another user to start
+          graphical programs as well during the X session.</para>
+        </sidebar>
       </section>
       <section id="sect.ssh-port-forwarding">
         <title>Creating Encrypted Tunnels with Port Forwarding</title>
