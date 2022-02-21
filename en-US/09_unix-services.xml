@@ -1321,308 +1321,363 @@ HostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub
     reminder is always useful, especially as there are some interesting and
     relatively unknown advanced uses.</para>
 
-    <indexterm><primary>user</primary><secondary>owner</secondary></indexterm>
-    <indexterm><primary>group</primary><secondary>owner</secondary></indexterm>
-    <indexterm><primary>owner</primary><secondary>user</secondary></indexterm>
-    <indexterm><primary>owner</primary><secondary>group</secondary></indexterm>
+    <section id="sect.rights-management.perm">
+      <title>Owners and Permissions</title>
+      <indexterm><primary>user</primary><secondary>owner</secondary></indexterm>
+      <indexterm><primary>group</primary><secondary>owner</secondary></indexterm>
+      <indexterm><primary>owner</primary><secondary>user</secondary></indexterm>
+      <indexterm><primary>owner</primary><secondary>group</secondary></indexterm>
 
-    <para>Each file or directory has specific permissions for three categories
-    of users:</para>
-    <itemizedlist>
-      <listitem>
-        <indexterm><primary>permissions</primary><secondary><literal>u</literal></secondary></indexterm>
-        <para>its owner (symbolized by <literal>u</literal> as in
-        “user”);</para>
-      </listitem>
-      <listitem>
-        <indexterm><primary>permissions</primary><secondary><literal>g</literal></secondary></indexterm>
-        <para>its owner group (symbolized by <literal>g</literal> as in
-        “group”), representing all the members of the group;</para>
-      </listitem>
-      <listitem>
-        <indexterm><primary>permissions</primary><secondary><literal>o</literal></secondary></indexterm>
-        <para>the others (symbolized by <literal>o</literal> as in
-        “other”).</para>
-      </listitem>
-    </itemizedlist>
+      <para>Each file or directory has specific permissions for three categories
+      of users:</para>
+      <itemizedlist>
+        <listitem>
+          <indexterm><primary>permissions</primary><secondary><literal>u</literal></secondary></indexterm>
+          <para>its owner (symbolized by <literal>u</literal> as in
+          “user”);</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary>permissions</primary><secondary><literal>g</literal></secondary></indexterm>
+          <para>its owner group (symbolized by <literal>g</literal> as in
+          “group”), representing all the members of the group;</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary>permissions</primary><secondary><literal>o</literal></secondary></indexterm>
+          <para>the others (symbolized by <literal>o</literal> as in
+          “other”).</para>
+        </listitem>
+      </itemizedlist>
 
-    <para>Three basic types of rights can be combined:</para>
-    <itemizedlist>
-      <listitem>
-        <indexterm><primary>permissions</primary><secondary><literal>r</literal></secondary></indexterm>
-        <para>reading (symbolized by <literal>r</literal> as in
-        “read”);</para>
-      </listitem>
-      <listitem>
-        <indexterm><primary>permissions</primary><secondary><literal>w</literal></secondary></indexterm>
-        <para>writing (or modifying, symbolized by <literal>w</literal> as
-        in “write”);</para>
-      </listitem>
-      <listitem>
-        <indexterm><primary>permissions</primary><secondary><literal>x</literal></secondary></indexterm>
-        <para>executing (symbolized by <literal>x</literal> as in
-        “eXecute”).</para>
-      </listitem>
-    </itemizedlist>
+      <para>Three basic types of rights can be combined:</para>
+      <itemizedlist>
+        <listitem>
+          <indexterm><primary>permissions</primary><secondary><literal>r</literal></secondary></indexterm>
+          <para>reading (symbolized by <literal>r</literal> as in
+          “read”);</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary>permissions</primary><secondary><literal>w</literal></secondary></indexterm>
+          <para>writing (or modifying, symbolized by <literal>w</literal> as
+          in “write”);</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary>permissions</primary><secondary><literal>x</literal></secondary></indexterm>
+          <para>executing (symbolized by <literal>x</literal> as in
+          “eXecute”).</para>
+        </listitem>
+      </itemizedlist>
 
-    <indexterm><primary>read, right</primary></indexterm>
-    <indexterm><primary>write, right</primary></indexterm>
-    <indexterm><primary>modification, right</primary></indexterm>
-    <indexterm><primary>execution, right</primary></indexterm>
-    <indexterm><primary>permissions</primary><secondary>read</secondary></indexterm>
-    <indexterm><primary>permissions</primary><secondary>write</secondary></indexterm>
-    <indexterm><primary>permissions</primary><secondary>execute</secondary></indexterm>
+      <indexterm><primary>read, right</primary></indexterm>
+      <indexterm><primary>write, right</primary></indexterm>
+      <indexterm><primary>modification, right</primary></indexterm>
+      <indexterm><primary>execution, right</primary></indexterm>
+      <indexterm><primary>permissions</primary><secondary>read</secondary></indexterm>
+      <indexterm><primary>permissions</primary><secondary>write</secondary></indexterm>
+      <indexterm><primary>permissions</primary><secondary>execute</secondary></indexterm>
 
-    <para>In the case of a file, these rights are easily understood: read
-    access allows reading the content (including copying), write access
-    allows changing it, and execute access allows you to run it (which will
-    only work if it is a program).</para>
+      <para>In the case of a file, these rights are easily understood: read
+      access allows reading the content (including copying), write access
+      allows changing it, and execute access allows you to run it (which will
+      only work if it is a program).</para>
 
-    <sidebar>
-      <title><emphasis>SECURITY</emphasis> <literal>setuid</literal> and <literal>setgid</literal> executables</title>
-      <indexterm><primary>permissions</primary><secondary><literal>setuid</literal></secondary><seealso><literal>setuid</literal></seealso></indexterm>
-      <indexterm><primary>permissions</primary><secondary><literal>setgid</literal></secondary><seealso><literal>setgid</literal></seealso></indexterm>
-      <indexterm><primary>permissions</primary><secondary><literal>s</literal></secondary></indexterm>
+      <sidebar>
+        <title><emphasis>SECURITY</emphasis> <literal>setuid</literal> and <literal>setgid</literal> executables</title>
+        <indexterm><primary>permissions</primary><secondary><literal>setuid</literal></secondary><seealso><literal>setuid</literal></seealso></indexterm>
+        <indexterm><primary>permissions</primary><secondary><literal>setgid</literal></secondary><seealso><literal>setgid</literal></seealso></indexterm>
+        <indexterm><primary>permissions</primary><secondary><literal>s</literal></secondary></indexterm>
 
-      <para>Two particular rights are relevant to executable files:
-      <literal>setuid</literal> and <literal>setgid</literal> (symbolized
-      with the letter “s”). Note that we frequently speak of “bit”,
-      since each of these boolean values can be represented by a 0 or a 1.
-      These two rights allow any user to execute the program with the
-      rights of its owner or its group, respectively. This mechanism grants
-      access to features requiring higher level permissions than those you
-      would usually have.</para>
+        <para>Two particular rights are relevant to executable files:
+        <literal>setuid</literal> and <literal>setgid</literal> (symbolized
+        with the letter “s”). Note that we frequently speak of “bit”,
+        since each of these boolean values can be represented by a 0 or a 1.
+        These two rights allow any user to execute the program with the
+        rights of its owner or its group, respectively. This mechanism grants
+        access to features requiring higher level permissions than those you
+        would usually have.</para>
 
-      <indexterm><primary><literal>setuid</literal>, right</primary></indexterm>
-      <indexterm><primary><literal>setgid</literal>, right</primary></indexterm>
+        <indexterm><primary><literal>setuid</literal>, right</primary></indexterm>
+        <indexterm><primary><literal>setgid</literal>, right</primary></indexterm>
 
-      <para>Since a <literal>setuid</literal> root program is
-      systematically run under the super-user identity, it is very
-      important to ensure it is secure and reliable. Indeed, a user who
-      would manage to subvert it to call a command of their choice could
-      then impersonate the root user and have all rights on the
-      system.</para>
+        <para>Since a <literal>setuid</literal> root program is
+        systematically run under the super-user identity, it is very
+        important to ensure it is secure and reliable. Indeed, a user who
+        would manage to subvert it to call a command of their choice could
+        then impersonate the root user and have all rights on the
+        system.</para>
 
-      <indexterm><primary><command>su</command></primary></indexterm>
-      <indexterm><primary><command>sudo</command></primary></indexterm>
-      <indexterm><primary><command>runuser</command></primary></indexterm>
+        <indexterm><primary><command>su</command></primary></indexterm>
+        <indexterm><primary><command>sudo</command></primary></indexterm>
+        <indexterm><primary><command>runuser</command></primary></indexterm>
 
-      <para>If you require running a program under a different user or if a
-      program requires higher permissions, the <command>sudo</command>,
-      <command>su</command>, or <command>runuser</command> commands are usually
-      better choices than using these bits (see <xref
-      linkend="sect.sharing-admin-rights"/>).</para>
-    </sidebar>
+        <para>If you require running a program under a different user or if a
+        program requires higher permissions, the <command>sudo</command>,
+        <command>su</command>, or <command>runuser</command> commands are usually
+        better choices than using these bits (see <xref
+        linkend="sect.sharing-admin-rights"/>).</para>
+      </sidebar>
 
-    <para>A directory is handled differently. Read access gives the right
-    to consult the list of its entries (files and directories), write
-    access allows creating or deleting files, and execute access allows
-    crossing through it (especially to go there with the
-    <command>cd</command> command). Being able to cross through a directory
-    without being able to read it gives permission to access the entries
-    therein that are known by name, but not to find them if you do not know
-    their existence or their exact name.</para>
+      <para>A directory is handled differently. Read access gives the right
+      to consult the list of its entries (files and directories), write
+      access allows creating or deleting files, and execute access allows
+      crossing through it (especially to go there with the
+      <command>cd</command> command). Being able to cross through a directory
+      without being able to read it gives permission to access the entries
+      therein that are known by name, but not to find them if you do not know
+      their existence or their exact name.</para>
 
-    <sidebar id="sidebar.setgid-dir">
-      <title><emphasis>SECURITY</emphasis> <literal>setgid</literal> directory and <emphasis>sticky bit</emphasis></title>
-      <indexterm><primary><literal>setgid</literal> directory</primary></indexterm>
+      <sidebar id="sidebar.setgid-dir">
+        <title><emphasis>SECURITY</emphasis> <literal>setgid</literal> directory and <emphasis>sticky bit</emphasis></title>
+        <indexterm><primary><literal>setgid</literal> directory</primary></indexterm>
 
-      <para>The <literal>setgid</literal> bit also applies to directories.
-      Any newly-created item in such directories is automatically assigned
-      the owner group of the parent directory, instead of inheriting the
-      creator's main group as usual. This setup avoids the user having to
-      change its main group (with the <command>newgrp</command> command)
-      when working in a file tree shared between several users of the same
-      dedicated group.</para>
+        <para>The <literal>setgid</literal> bit also applies to directories.
+        Any newly-created item in such directories is automatically assigned
+        the owner group of the parent directory, instead of inheriting the
+        creator's main group as usual. This setup avoids the user having to
+        change its main group (with the <command>newgrp</command> command)
+        when working in a file tree shared between several users of the same
+        dedicated group.</para>
 
-      <indexterm><primary><command>newgrp</command></primary></indexterm>
+        <indexterm><primary><command>newgrp</command></primary></indexterm>
+        <indexterm><primary>sticky bit</primary></indexterm>
+        <indexterm><primary>permissions</primary><secondary><literal>t</literal></secondary></indexterm>
+
+        <para>The “sticky” bit (symbolized by the letter “t”) is a
+        permission that is only useful in directories. It is especially used
+        for temporary directories where everybody has write access (such as
+        <filename>/tmp/</filename>): it restricts deletion of files so that
+        only their owner (or the owner of the parent directory) can do it.
+        Lacking this, everyone could delete other users' files in
+        <filename>/tmp/</filename>.</para>
+      </sidebar>
+
+      <para>Three commands control the permissions associated with a
+      file:</para>
+      <itemizedlist>
+        <listitem>
+          <indexterm><primary><command>chown</command></primary></indexterm>
+          <para><command>chown <replaceable>user</replaceable>
+          <replaceable>file</replaceable></command> changes the owner of the
+          file;</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary><command>chgrp</command></primary></indexterm>
+          <para><command>chgrp <replaceable>group</replaceable>
+          <replaceable>file</replaceable></command> alters the owner
+          group;</para>
+        </listitem>
+        <listitem>
+          <indexterm><primary><command>chmod</command></primary></indexterm>
+          <para><command>chmod <replaceable>rights</replaceable>
+          <replaceable>file</replaceable></command> changes the permissions
+          for the file.</para>
+        </listitem>
+      </itemizedlist>
+
+      <indexterm><primary>symbolic representation of rights</primary></indexterm>
+      <indexterm><primary>rights</primary><secondary>symbolic representation</secondary></indexterm>
+      <indexterm><primary>permissions</primary><secondary>symbolic representation</secondary></indexterm>
+
+      <para>There are two ways of presenting rights. Among them, the symbolic
+      representation is probably the easiest to understand and remember. It
+      involves the letter symbols mentioned above. You can define rights for
+      each category of users
+      (<literal>u</literal>/<literal>g</literal>/<literal>o</literal>), by
+      setting them explicitly (with <literal>=</literal>), by adding
+      (<literal>+</literal>), or subtracting (<literal>-</literal>). Thus the
+      <literal>u=rwx,g+rw,o-r</literal> formula gives the owner read, write,
+      and execute rights, adds read and write rights for the owner group, and
+      removes read rights for other users. Rights not altered by the addition
+      or subtraction in such a command remain unmodified. The letter
+      <literal>a</literal>, for “all”, covers all three categories of
+      users, so that <literal>a=rx</literal> grants all three categories the
+      same rights (read and execute, but not write).</para>
+
+      <indexterm><primary>octal representation of rights</primary></indexterm>
+      <indexterm><primary>rights</primary><secondary>octal representation</secondary></indexterm>
+      <indexterm><primary>permissions</primary><secondary>octal representation</secondary></indexterm>
+
+      <para>The (octal) numeric representation associates each right with a
+      value: 4 for read, 2 for write, and 1 for execute. We associate each
+      combination of rights with the sum of the figures. Each value is then
+      assigned to different categories of users by putting them end to end in
+      the usual order (owner, group, others).</para>
+
+      <para>For instance, the <command>chmod 754
+      <replaceable>file</replaceable></command> command will set the
+      following rights: read, write and execute for the owner (since 7 = 4 +
+      2 + 1); read and execute for the group (since 5 = 4 + 1); read-only for
+      others. The <literal>0</literal> (zero) means no rights; thus <command>chmod
+      600 <replaceable>file</replaceable></command> allows for read/write
+      rights for the owner, and no rights for anyone else. The most frequent
+      right combinations are <literal>755</literal> for executable files and
+      directories, and <literal>644</literal> for data files.</para>
+
+      <indexterm><primary><literal>setuid</literal></primary></indexterm>
+      <indexterm><primary><literal>setgid</literal></primary></indexterm>
       <indexterm><primary>sticky bit</primary></indexterm>
-      <indexterm><primary>permissions</primary><secondary><literal>t</literal></secondary></indexterm>
 
-      <para>The “sticky” bit (symbolized by the letter “t”) is a
-      permission that is only useful in directories. It is especially used
-      for temporary directories where everybody has write access (such as
-      <filename>/tmp/</filename>): it restricts deletion of files so that
-      only their owner (or the owner of the parent directory) can do it.
-      Lacking this, everyone could delete other users' files in
-      <filename>/tmp/</filename>.</para>
-    </sidebar>
+      <para>To represent special rights, you can prefix a fourth digit to
+      this number according to the same principle, where the
+      <literal>setuid</literal>, <literal>setgid</literal> and
+      <literal>sticky</literal> bits are 4, 2 and 1, respectively.
+      <command>chmod 4754</command> will associate the
+      <literal>setuid</literal> bit with the previously described
+      rights.</para>
 
-    <para>Three commands control the permissions associated with a
-    file:</para>
-    <itemizedlist>
-      <listitem>
+      <para>Note that the use of octal notation only allows to set all the
+      rights at once on a file; you cannot use it to simply add a new right,
+      such as read access for the group owner, since you must take into
+      account the existing rights and compute the new corresponding numerical
+      value.</para>
+
+      <sidebar>
+        <title><emphasis>TIP</emphasis> Recursive operation</title>
+        <indexterm><primary>permissions</primary><secondary>recursive operation</secondary></indexterm>
+
+        <para>Sometimes we have to change rights for an entire file tree. All
+        the commands above have a <literal>-R</literal> option to operate
+        recursively in sub-directories.</para>
+
+        <indexterm><primary>permissions</primary><secondary><literal>X</literal></secondary></indexterm>
+
+        <para>The distinction between directories and files sometimes causes
+        problems with recursive operations. That is why the
+        “<literal>X</literal>” letter has been introduced in the symbolic
+        representation of rights. It also represents the right to execute, but it
+        applies differently to directories and files.</para>
+
+        <para>For directories it adds executable permissions to the chosen
+        user(s). For files, it adds the executable bit <emphasis>only</emphasis> if
+        at least one of the users (owner, group, or others) already has
+        executable permissions. Let's demonstrate it, because this bit can be
+        confusing:</para>
+
+        <screen><computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+  <computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+  <computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>
+  <computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+  <computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+  <computeroutput>$ </computeroutput><userinput>chmod o+x test.txt</userinput>
+  <computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+  <computeroutput>-rw-r--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+  <computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>
+  <computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
+  <computeroutput>-rwxr--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
+  </screen>
+
+        <para>The example shows a typical file with its default permissions: its
+        owner can read and write it, the owner's group and all other users can
+        read it. The next operation (<literal>u+X</literal>) won't add executable
+        permissions for the owner of the file, because permissions to execute
+        have not been assigned. The operation has no effect on the file. Next we
+        assign execute rights for "other" users and repeat the operation. This
+        time it is successful, because at least one user group already had
+        executable permissions.</para>
+
+        <para>It is a misconception that this bit will only affect directories.
+        If files and directories have mixed permissions, it is often a good idea
+        to use the <command>find</command> command to locate the targets you want
+        to operate on.</para>
+      </sidebar>
+
+      <sidebar>
+        <title><emphasis>TIP</emphasis> Changing the user and group together</title>
         <indexterm><primary><command>chown</command></primary></indexterm>
-        <para><command>chown <replaceable>user</replaceable>
-        <replaceable>file</replaceable></command> changes the owner of the
-        file;</para>
-      </listitem>
-      <listitem>
-        <indexterm><primary><command>chgrp</command></primary></indexterm>
-        <para><command>chgrp <replaceable>group</replaceable>
-        <replaceable>file</replaceable></command> alters the owner
-        group;</para>
-      </listitem>
-      <listitem>
-        <indexterm><primary><command>chmod</command></primary></indexterm>
-        <para><command>chmod <replaceable>rights</replaceable>
-        <replaceable>file</replaceable></command> changes the permissions
-        for the file.</para>
-      </listitem>
-    </itemizedlist>
 
-    <indexterm><primary>symbolic representation of rights</primary></indexterm>
-    <indexterm><primary>rights</primary><secondary>symbolic representation</secondary></indexterm>
-    <indexterm><primary>permissions</primary><secondary>symbolic representation</secondary></indexterm>
+        <para>Frequently you want to change the group of a file at the same time
+        that you change the owner. The <command>chown</command> command has a
+        special syntax for that: <command>chown
+        <replaceable>user</replaceable>:<replaceable>group</replaceable>
+        <replaceable>file</replaceable></command>. This syntax can also be used
+        to recursively (<literal>-R</literal>) change the ownership of a whole
+        directory.</para>
+      </sidebar>
 
-    <para>There are two ways of presenting rights. Among them, the symbolic
-    representation is probably the easiest to understand and remember. It
-    involves the letter symbols mentioned above. You can define rights for
-    each category of users
-    (<literal>u</literal>/<literal>g</literal>/<literal>o</literal>), by
-    setting them explicitly (with <literal>=</literal>), by adding
-    (<literal>+</literal>), or subtracting (<literal>-</literal>). Thus the
-    <literal>u=rwx,g+rw,o-r</literal> formula gives the owner read, write,
-    and execute rights, adds read and write rights for the owner group, and
-    removes read rights for other users. Rights not altered by the addition
-    or subtraction in such a command remain unmodified. The letter
-    <literal>a</literal>, for “all”, covers all three categories of
-    users, so that <literal>a=rx</literal> grants all three categories the
-    same rights (read and execute, but not write).</para>
+      <sidebar>
+        <title><emphasis>GOING FURTHER</emphasis> <command>umask</command></title>
+        <indexterm><primary><command>umask</command></primary></indexterm>
 
-    <indexterm><primary>octal representation of rights</primary></indexterm>
-    <indexterm><primary>rights</primary><secondary>octal representation</secondary></indexterm>
-    <indexterm><primary>permissions</primary><secondary>octal representation</secondary></indexterm>
+        <para>When an application creates a file, it assigns indicative
+        permissions, knowing that the system automatically removes certain
+        rights, given by the command <command>umask</command>. Enter
+        <command>umask</command> in a shell; you will see a mask such as
+        <computeroutput>0022</computeroutput>. This is simply an octal
+        representation of the rights to be systematically removed. In this case,
+        the write right for the group and other users: With the above umask
+        value, the default for directories <literal>777</literal> becomes
+        <literal>755</literal> and the default permissions for files
+        <literal>666</literal> become <literal>644</literal>.</para>
 
-    <para>The (octal) numeric representation associates each right with a
-    value: 4 for read, 2 for write, and 1 for execute. We associate each
-    combination of rights with the sum of the figures. Each value is then
-    assigned to different categories of users by putting them end to end in
-    the usual order (owner, group, others).</para>
+        <indexterm><primary>rights</primary><secondary>mask</secondary></indexterm>
+        <indexterm><primary>permissions</primary><secondary>umask</secondary></indexterm>
+        <indexterm><primary>mask</primary><secondary>rights mask</secondary></indexterm>
 
-    <para>For instance, the <command>chmod 754
-    <replaceable>file</replaceable></command> command will set the
-    following rights: read, write and execute for the owner (since 7 = 4 +
-    2 + 1); read and execute for the group (since 5 = 4 + 1); read-only for
-    others. The <literal>0</literal> (zero) means no rights; thus <command>chmod
-    600 <replaceable>file</replaceable></command> allows for read/write
-    rights for the owner, and no rights for anyone else. The most frequent
-    right combinations are <literal>755</literal> for executable files and
-    directories, and <literal>644</literal> for data files.</para>
+        <para>The system's default value is handled by
+        <citerefentry><refentrytitle>pam_umask</refentrytitle>
+        <manvolnum>8</manvolnum></citerefentry> and
+        <filename>/etc/login.defs</filename>.</para>
 
-    <indexterm><primary><literal>setuid</literal></primary></indexterm>
-    <indexterm><primary><literal>setgid</literal></primary></indexterm>
-    <indexterm><primary>sticky bit</primary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/login.defs</filename></secondary></indexterm>
 
-    <para>To represent special rights, you can prefix a fourth digit to
-    this number according to the same principle, where the
-    <literal>setuid</literal>, <literal>setgid</literal> and
-    <literal>sticky</literal> bits are 4, 2 and 1, respectively.
-    <command>chmod 4754</command> will associate the
-    <literal>setuid</literal> bit with the previously described
-    rights.</para>
+        <para>If you give it a new octal value, the <command>umask</command>
+        command modifies the mask. Used in a shell initialization file (for
+        example, <filename>~/.bashrc</filename> or
+        <filename>~/.profile</filename>), it will effectively change the default
+        mask for your work sessions.</para>
+      </sidebar>
+    </section>
+    <section id="sect.rights-management.acl">
+      <title>ACLs - Access Control Lists</title>
+      <indexterm><primary>ACL</primary></indexterm>
+      <indexterm><primary>Access Control List</primary><seealso>ACL</seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">acl</emphasis></primary></indexterm>
 
-    <para>Note that the use of octal notation only allows to set all the
-    rights at once on a file; you cannot use it to simply add a new right,
-    such as read access for the group owner, since you must take into
-    account the existing rights and compute the new corresponding numerical
-    value.</para>
+      <para>Many filesystems, e.g. Btrfs, Ext3, Ext4, JFS, XFS, etc., support
+      the use of Access Control Lists (ACLs). These extend the basic features
+      of file ownership and permission, described in the previous section, and
+      allow for a more fine-grained control of each (file) object. For example:
+      A user wants to share a file with another user and that user should only
+      be able to read the file, but not write or change it.</para>
 
-    <sidebar>
-      <title><emphasis>TIP</emphasis> Recursive operation</title>
-      <indexterm><primary>permissions</primary><secondary>recursive operation</secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+      <indexterm><primary>ACL</primary><secondary><literal>acl</literal></secondary></indexterm>
+      <indexterm><primary>ACL</primary><secondary><literal>noacl</literal></secondary></indexterm>
 
-      <para>Sometimes we have to change rights for an entire file tree. All
-      the commands above have a <literal>-R</literal> option to operate
-      recursively in sub-directories.</para>
+      <para>For some of the filesystems, the usage of ACLs is enabled by
+      default (e.g. Btrfs, Ext3, Ext4). For other filesystems or older systems
+      it must be enabled using the <literal>acl</literal> mount option - either
+      in the <command>mount</command> command directly or in
+      <filename>/etc/fstab</filename>. In the same way the usage of ACLs can be
+      disabled by using the <literal>noacl</literal> mount option. For Ext*
+      filesystems one can also use the <command>tune2fs -o [no]acl
+      /dev/<replaceable>device</replaceable></command> command to
+      enable/disable the usage of ACLs by default. The default values for each
+      filesystem can usually be found in their homonym manual pages in section
+      5
+      (<citerefentry><refentrytitle><replaceable>filesystem</replaceable></refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry>) or in
+      <citerefentry><refentrytitle>mount</refentrytitle>
+      <manvolnum>8</manvolnum></citerefentry>.</para>
 
-      <indexterm><primary>permissions</primary><secondary><literal>X</literal></secondary></indexterm>
+      <para>After enabling ACLs, permissions can be set using the
+      <citerefentry><refentrytitle>setfacl</refentrytitle>
+      <manvolnum>1</manvolnum></citerefentry> command, while
+      <citerefentry><refentrytitle>getfacl</refentrytitle>
+      <manvolnum>1</manvolnum></citerefentry> allows one to retrieve the ACLs
+      for a given object or path. These commands are part of the <emphasis
+      role="pkg">acl</emphasis> package. With <command>setfacl</command> one
+      can also configure newly created files or directories to inherit
+      permissions from the parent directory. It is important to note that
+      ACLs are processed in their order and that an earlier entry that fits
+      the situation has precedence over later entries.</para>
 
-      <para>The distinction between directories and files sometimes causes
-      problems with recursive operations. That is why the
-      “<literal>X</literal>” letter has been introduced in the symbolic
-      representation of rights. It also represents the right to execute, but it
-      applies differently to directories and files.</para>
-
-      <para>For directories it adds executable permissions to the chosen
-      user(s). For files, it adds the executable bit <emphasis>only</emphasis> if
-      at least one of the users (owner, group, or others) already has
-      executable permissions. Let's demonstrate it, because this bit can be
-      confusing:</para>
-
-      <screen><computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
-<computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
-<computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>
-<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
-<computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
-<computeroutput>$ </computeroutput><userinput>chmod o+x test.txt</userinput>
-<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
-<computeroutput>-rw-r--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
-<computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>
-<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>
-<computeroutput>-rwxr--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>
-</screen>
-
-      <para>The example shows a typical file with its default permissions: its
-      owner can read and write it, the owner's group and all other users can
-      read it. The next operation (<literal>u+X</literal>) won't add executable
-      permissions for the owner of the file, because permissions to execute
-      have not been assigned. The operation has no effect on the file. Next we
-      assign execute rights for "other" users and repeat the operation. This
-      time it is successful, because at least one user group already had
-      executable permissions.</para>
-
-      <para>It is a misconception that this bit will only affect directories.
-      If files and directories have mixed permissions, it is often a good idea
-      to use the <command>find</command> command to locate the targets you want
-      to operate on.</para>
-    </sidebar>
-
-    <sidebar>
-      <title><emphasis>TIP</emphasis> Changing the user and group together</title>
-      <indexterm><primary><command>chown</command></primary></indexterm>
-
-      <para>Frequently you want to change the group of a file at the same time
-      that you change the owner. The <command>chown</command> command has a
-      special syntax for that: <command>chown
-      <replaceable>user</replaceable>:<replaceable>group</replaceable>
-      <replaceable>file</replaceable></command>. This syntax can also be used
-      to recursively (<literal>-R</literal>) change the ownership of a whole
-      directory.</para>
-    </sidebar>
-
-    <sidebar>
-      <title><emphasis>GOING FURTHER</emphasis> <command>umask</command></title>
-      <indexterm><primary><command>umask</command></primary></indexterm>
-
-      <para>When an application creates a file, it assigns indicative
-      permissions, knowing that the system automatically removes certain
-      rights, given by the command <command>umask</command>. Enter
-      <command>umask</command> in a shell; you will see a mask such as
-      <computeroutput>0022</computeroutput>. This is simply an octal
-      representation of the rights to be systematically removed. In this case,
-      the write right for the group and other users: With the above umask
-      value, the default for directories <literal>777</literal> becomes
-      <literal>755</literal> and the default permissions for files
-      <literal>666</literal> become <literal>644</literal>.</para>
-
-      <indexterm><primary>rights</primary><secondary>mask</secondary></indexterm>
-      <indexterm><primary>permissions</primary><secondary>umask</secondary></indexterm>
-      <indexterm><primary>mask</primary><secondary>rights mask</secondary></indexterm>
-
-      <para>The system's default value is handled by
-      <citerefentry><refentrytitle>pam_umask</refentrytitle>
-      <manvolnum>8</manvolnum></citerefentry> and
-      <filename>/etc/login.defs</filename>.</para>
-
-      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/login.defs</filename></secondary></indexterm>
-
-      <para>If you give it a new octal value, the <command>umask</command>
-      command modifies the mask. Used in a shell initialization file (for
-      example, <filename>~/.bashrc</filename> or
-      <filename>~/.profile</filename>), it will effectively change the default
-      mask for your work sessions.</para>
-    </sidebar>
+      <para>If a file has ACLs set, the output of the <command>ls -l</command>
+      command will show a plus-sign after the traditional permissions. When
+      using ACLs, the <command>chmod</command> command behaves slightly
+      different, and <command>umask</command> might be ignored. The extensive
+      documentation, e.g. <citerefentry><refentrytitle>acl</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry> contains more information.</para>
+    </section>
   </section>
   <section id="sect.administration-interfaces">
     <title>Administration Interfaces</title>
