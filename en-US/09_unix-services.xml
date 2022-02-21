@@ -2513,6 +2513,8 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
   </section>
   <section id="sect.asynchronous-task-scheduling-anacron">
     <title>Scheduling Asynchronous Tasks: <command>anacron</command></title>
+    <indexterm><primary><command>anacron</command></primary><seealso><command>cron</command></seealso></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/anacrontab</filename></secondary></indexterm>
 
     <para><command>anacron</command> is the daemon that completes
     <command>cron</command> for computers that are not on at all times.
@@ -2520,7 +2522,8 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
     they will never be executed if the computer is off at that time. The
     purpose of <command>anacron</command> is to execute them, taking into
     account periods in which the computer is not working.</para>
-    <indexterm><primary><command>anacron</command></primary></indexterm>
+
+    <indexterm><primary><command>nice</command></primary></indexterm>
 
     <para>Please note that <command>anacron</command> will frequently
     execute such activity a few minutes after booting the machine, which
@@ -2536,6 +2539,9 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Priorities and <command>nice</command></title>
+      <indexterm><primary><command>nice</command></primary></indexterm>
+      <indexterm><primary><command>renice</command></primary></indexterm>
+      <indexterm><primary>niceness</primary><seealso><command>nice</command></seealso></indexterm>
 
       <para>Unix systems (and thus Linux) are multi-tasking and multi-user
       systems. Indeed, several processes can run in parallel, and be owned
@@ -2546,7 +2552,7 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
       priority, you can indicate so by running it with <command>nice
       <replaceable>program</replaceable></command>. The program will then
       have a smaller share of the CPU, and will have a smaller impact on
-      other running processes. Of course, if no other processes needs to
+      other running processes. Of course, if no other process needs to
       run, the program will not be artificially held back.</para>
 
       <para><command>nice</command> works with levels of “niceness”:
@@ -2563,6 +2569,11 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
       already running process, in either direction (but reducing the
       “niceness” of a process is reserved for the root user).</para>
     </sidebar>
+
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.hourly/</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.daily/</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.weekly/</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.monthly/</filename></secondary></indexterm>
 
     <para>Installation of the <emphasis role="pkg">anacron</emphasis>
     package deactivates execution by <command>cron</command> of the scripts
