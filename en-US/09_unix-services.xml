@@ -2974,12 +2974,20 @@ exclude:
     <title>Hot Plugging: <emphasis>hotplug</emphasis></title>
     <section>
       <title>Introduction</title>
+      <indexterm><primary>hotplug</primary></indexterm>
+      <indexterm><primary>kernel</primary><secondary>hotplug subsystem</secondary></indexterm>
+      <indexterm><primary><command>udevd</command></primary></indexterm>
+      <indexterm><primary><filename>/dev/</filename></primary></indexterm>
+      <indexterm><primary>USB</primary></indexterm>
+      <indexterm><primary>IEEE 1394</primary></indexterm>
+      <indexterm><primary>PCMCIA</primary></indexterm>
+      <indexterm><primary>SATA</primary></indexterm>
 
       <para>The <emphasis>hotplug</emphasis> kernel subsystem dynamically
       handles the addition and removal of devices, by loading the appropriate
       drivers and by creating the corresponding device files (with the
       help of <command>udevd</command>). With modern hardware and virtualization,
-      almost everything can be hotplugged: from the usual USB/PCMCIA/IEEE 1394
+      almost everything can be “hotplugged“: from the usual USB/PCMCIA/IEEE 1394
       peripherals to SATA hard drives, but also the CPU and the memory.</para>
 
       <para>The kernel has a database that associates each device ID
@@ -2989,13 +2997,6 @@ exclude:
       connected. Once the device is ready for use, a message is sent to
       <command>udevd</command> so it will be able to create the
       corresponding entry in <filename>/dev/</filename>.</para>
-
-      <indexterm><primary><emphasis>hotplug</emphasis></primary></indexterm>
-      <indexterm><primary>hotplug</primary></indexterm>
-      <indexterm><primary>USB</primary></indexterm>
-      <indexterm><primary>IEEE 1394</primary></indexterm>
-      <indexterm><primary>PCMCIA</primary></indexterm>
-      <indexterm><primary>SATA</primary></indexterm>
     </section>
     <section>
       <title>The Naming Problem</title>
@@ -3016,11 +3017,17 @@ exclude:
       static entries for the given devices, since these essential
       characteristics may vary after a reboot.</para>
 
+      <indexterm><primary>udev</primary></indexterm>
+
       <para><emphasis>udev</emphasis> was created precisely to solve this
       problem.</para>
     </section>
     <section id="sect.udev">
       <title>How <emphasis>udev</emphasis> Works</title>
+      <indexterm><primary>udev</primary></indexterm>
+      <indexterm><primary><filename>/sys/</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/udev/rules.d/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/lib/</filename></primary><secondary><filename>/lib/udev/rules.d/</filename></secondary></indexterm>
 
       <para>When <emphasis>udev</emphasis> is notified by the kernel of the
       appearance of a new device, it collects various information on the
@@ -3028,6 +3035,8 @@ exclude:
       <filename>/sys/</filename>, especially those that uniquely identify
       it (MAC address for a network card, serial number for some USB
       devices, etc.).</para>
+
+      <indexterm><primary>udev</primary><secondary>rules</secondary></indexterm>
 
       <para>Armed with all of this information, <emphasis>udev</emphasis>
       then consults all of the rules contained in
@@ -3053,48 +3062,46 @@ exclude:
       variables:</para>
       <itemizedlist>
         <listitem>
-	  <para><literal>KERNEL</literal>: the name that the kernel assigns
-	  to the device;</para>
+          <para><literal>KERNEL</literal>: the name that the kernel assigns
+          to the device;</para>
         </listitem>
         <listitem>
-	  <para><literal>ACTION</literal>: the action corresponding to the
-	  event (“add” when a device has been added, “remove” when
-	  it has been removed);</para>
+          <para><literal>ACTION</literal>: the action corresponding to the
+          event (“add” when a device has been added, “remove” when
+          it has been removed);</para>
         </listitem>
         <listitem>
-	  <para><literal>DEVPATH</literal>: the path of the device's
-	  <filename>/sys/</filename> entry;</para>
+          <para><literal>DEVPATH</literal>: the path of the device's
+          <filename>/sys/</filename> entry;</para>
         </listitem>
         <listitem>
-	  <para><literal>SUBSYSTEM</literal>: the kernel subsystem which
-	  generated the request (there are many, but a few examples are
-	  “usb”, “ide”, “net”, “firmware”, etc.);</para>
+          <para><literal>SUBSYSTEM</literal>: the kernel subsystem which
+          generated the request (there are many, but a few examples are
+          “usb”, “ide”, “net”, “firmware”, etc.);</para>
         </listitem>
         <listitem>
-	  <para><literal>ATTR{<replaceable>attribute</replaceable>}</literal>:
-	  file contents of the <replaceable>attribute</replaceable> file in
-	  the
-	  <filename>/sys/<replaceable>$devpath</replaceable>/</filename>
-	  directory of the device. This is where you find the MAC address
-	  and other bus specific identifiers;</para>
+          <para><literal>ATTR{<replaceable>attribute</replaceable>}</literal>:
+          file contents of the <replaceable>attribute</replaceable> file in
+          the <filename>/sys/<replaceable>$devpath</replaceable>/</filename>
+          directory of the device. This is where you find the MAC address
+          and other bus specific identifiers;</para>
         </listitem>
         <listitem>
-	  <para><literal>KERNELS</literal>, <literal>SUBSYSTEMS</literal>
-	  and
-	  <literal>ATTRS{<replaceable>attributes</replaceable>}</literal>
-	  are variations that will try to match the different options on
-	  one of the parent devices of the current device;</para>
+          <para><literal>KERNELS</literal>, <literal>SUBSYSTEMS</literal>
+          and <literal>ATTRS{<replaceable>attributes</replaceable>}</literal>
+          are variations that will try to match the different options on
+          one of the parent devices of the current device;</para>
         </listitem>
         <listitem>
-	  <para><literal>PROGRAM</literal>: delegates the test to the
-	  indicated program (true if it returns 0, false if not). The
-	  content of the program's standard output is stored so that it can
-	  be reused by the <literal>RESULT</literal> test;</para>
+          <para><literal>PROGRAM</literal>: delegates the test to the
+          indicated program (true if it returns 0, false if not). The
+          content of the program's standard output is stored so that it can
+          be reused by the <literal>RESULT</literal> test;</para>
         </listitem>
         <listitem>
-	  <para><literal>RESULT</literal>: execute tests on the standard
-	  output stored during the last call to
-	  <literal>PROGRAM</literal>.</para>
+          <para><literal>RESULT</literal>: execute tests on the standard
+          output stored during the last call to
+          <literal>PROGRAM</literal>.</para>
         </listitem>
       </itemizedlist>
 
@@ -3114,22 +3121,22 @@ exclude:
       list. The following variables can be changed:</para>
       <itemizedlist>
         <listitem>
-	  <para><literal>NAME</literal>: the device filename to be created
-	  in <filename>/dev/</filename>. Only the first assignment counts;
-	  the others are ignored;</para>
+          <para><literal>NAME</literal>: the device filename to be created
+          in <filename>/dev/</filename>. Only the first assignment counts;
+          the others are ignored;</para>
         </listitem>
         <listitem>
-	  <para><literal>SYMLINK</literal>: the list of symbolic links that
-	  will point to the same device;</para>
+          <para><literal>SYMLINK</literal>: the list of symbolic links that
+          will point to the same device;</para>
         </listitem>
         <listitem>
-	  <para><literal>OWNER</literal>, <literal>GROUP</literal> and
-	  <literal>MODE</literal> define the user and group that owns the
-	  device, as well as the associated permission;</para>
+          <para><literal>OWNER</literal>, <literal>GROUP</literal> and
+          <literal>MODE</literal> define the user and group that owns the
+          device, as well as the associated permission;</para>
         </listitem>
         <listitem>
-	  <para><literal>RUN</literal>: the list of programs to execute in
-	  response to this event.</para>
+          <para><literal>RUN</literal>: the list of programs to execute in
+          response to this event.</para>
         </listitem>
       </itemizedlist>
 
@@ -3137,48 +3144,48 @@ exclude:
       substitutions:</para>
       <itemizedlist>
         <listitem>
-	  <para><literal>$kernel</literal> or <literal>%k</literal>:
-	  equivalent to <literal>KERNEL</literal>;</para>
+          <para><literal>$kernel</literal> or <literal>%k</literal>:
+          equivalent to <literal>KERNEL</literal>;</para>
         </listitem>
         <listitem>
-	  <para><literal>$number</literal> or <literal>%n</literal>: the
-	  order number of the device, for example, for
-	  <literal>sda3</literal>, it would be “3”;</para>
+          <para><literal>$number</literal> or <literal>%n</literal>: the
+          order number of the device, for example, for
+          <literal>sda3</literal>, it would be “3”;</para>
         </listitem>
         <listitem>
-	  <para><literal>$devpath</literal> or <literal>%p</literal>:
-	  equivalent to <literal>DEVPATH</literal>;</para>
+          <para><literal>$devpath</literal> or <literal>%p</literal>:
+          equivalent to <literal>DEVPATH</literal>;</para>
         </listitem>
         <listitem>
-
-	  <para><literal>$attr{<replaceable>attribute</replaceable>}</literal>
-	  or <literal>%s{<replaceable>attribute</replaceable>}</literal>:
-	  equivalent to
-	  <literal>ATTRS{<replaceable>attribute</replaceable>}</literal>;</para>
+          <para><literal>$attr{<replaceable>attribute</replaceable>}</literal>
+          or <literal>%s{<replaceable>attribute</replaceable>}</literal>:
+          equivalent to
+          <literal>ATTRS{<replaceable>attribute</replaceable>}</literal>;</para>
         </listitem>
         <listitem>
-	  <para><literal>$major</literal> or <literal>%M</literal>: the
-	  kernel major number of the device;</para>
+          <para><literal>$major</literal> or <literal>%M</literal>: the
+          kernel major number of the device;</para>
         </listitem>
         <listitem>
-	  <para><literal>$minor</literal> or <literal>%m</literal>: the
-	  kernel minor number of the device;</para>
+          <para><literal>$minor</literal> or <literal>%m</literal>: the
+          kernel minor number of the device;</para>
         </listitem>
         <listitem>
-	  <para><literal>$result</literal> or <literal>%c</literal>: the
-	  string output by the last program invoked by
-	  <literal>PROGRAM</literal>;</para>
+          <para><literal>$result</literal> or <literal>%c</literal>: the
+          string output by the last program invoked by
+          <literal>PROGRAM</literal>;</para>
         </listitem>
         <listitem>
-	  <para>and, finally, <literal>%%</literal> and
-	  <literal>$$</literal> for the percent and dollar sign,
-	  respectively.</para>
+          <para>and, finally, <literal>%%</literal> and
+          <literal>$$</literal> for the percent and dollar sign,
+          respectively.</para>
         </listitem>
       </itemizedlist>
 
       <para>The above lists are not complete (they include only the most
       important parameters), but the
-      <citerefentry><refentrytitle>udev</refentrytitle><manvolnum>7</manvolnum></citerefentry>
+      <citerefentry><refentrytitle>udev</refentrytitle>
+      <manvolnum>7</manvolnum></citerefentry>
       manual page should be exhaustive.</para>
     </section>
     <section>
@@ -3206,11 +3213,11 @@ exclude:
     ATTR{alignment_offset}=="0"
     ATTR{capability}=="51"
     ATTR{events_poll_msecs}=="-1"
-    ATTR{stat}=="     130        0     6328      435        0        0        0        0        0      252      252        0        0        0        0"
+    ATTR{stat}=="130  0  6328  435  0  0  0  0  0  252  252  0  0  0  0"
     ATTR{size}=="15100224"
     ATTR{range}=="16"
     ATTR{ext_range}=="256"
-    ATTR{inflight}=="       0        0"
+    ATTR{inflight}=="0  0"
 [...]
 
   looking at parent device '/devices/pci0000:00/0000:00:10.0/usb2/2-1/2-1:1.0/host4/target4:0:0/4:0:0:0':
@@ -3253,15 +3260,17 @@ KERNEL=="sd?[0-9]", SUBSYSTEM=="block", ATTRS{serial}=="07032998B60AB777", SYMLI
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Debugging <emphasis>udev</emphasis>'s configuration</title>
+        <indexterm><primary><command>udevd</command></primary><secondary><filename>/var/log/daemon.log</filename></secondary></indexterm>
+        <indexterm><primary><command>udevadm</command></primary></indexterm>
 
-	<para>Like many daemons, <command>udevd</command> stores logs in
-	<filename>/var/log/daemon.log</filename>. But it is not very
-	verbose by default, and it is usually not enough to understand
-	what is happening. The <command>udevadm control
-	--log-priority=info</command> command increases the verbosity level
-	and solves this problem. <command>udevadm control
-	--log-priority=err</command> returns to the default verbosity
-	level.</para>
+        <para>Like many daemons, <command>udevd</command> stores logs in
+        <filename>/var/log/daemon.log</filename>. But it is not very
+        verbose by default, and it is usually not enough to understand
+        what is happening. The <command>udevadm control
+        --log-priority=info</command> command increases the verbosity level
+        and solves this problem. <command>udevadm control
+        --log-priority=err</command> returns to the default verbosity
+        level.</para>
       </sidebar>
     </section>
   </section>
