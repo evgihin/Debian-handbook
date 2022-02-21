@@ -2596,6 +2596,10 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
     the case with Debian kernels. The quota management software is found in
     the <emphasis role="pkg">quota</emphasis> Debian package.</para>
 
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+    <indexterm><primary><literal>usrquota</literal></primary><seealso>quota</seealso></indexterm>
+    <indexterm><primary><literal>grpquota</literal></primary><seealso>quota</seealso></indexterm>
+
     <para>To activate quota in a filesystem, you have to indicate the
     <literal>usrquota</literal> and <literal>grpquota</literal> options in
     <filename>/etc/fstab</filename> for the user and group quotas,
@@ -2603,15 +2607,18 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
     absence of disk activity (a necessary condition for proper accounting
     of already used disk space).</para>
 
+    <indexterm><primary><command>edquota</command></primary></indexterm>
+    <indexterm><primary>quota</primary><secondary><command>edquota</command></secondary></indexterm>
+
     <para>The <command>edquota <replaceable>user</replaceable></command>
     (or <command>edquota -g <replaceable>group</replaceable></command>)
     command allows you to change the limits while examining current disk
     space usage.</para>
-    <indexterm><primary><command>edquota</command></primary></indexterm>
 
     <sidebar>
       <title><emphasis>GOING FURTHER</emphasis> Defining quotas with a script</title>
       <indexterm><primary><command>setquota</command></primary></indexterm>
+      <indexterm><primary>quota</primary><secondary><command>setquota</command></secondary></indexterm>
 
       <para>The <command>setquota</command> program can be used in a script
       to automatically change many quotas. Its
@@ -2623,20 +2630,23 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
     <para>The quota system allows you to set four limits:</para>
     <itemizedlist>
       <listitem>
-	<para>two limits (called “soft” and “hard”) refer to the
-	number of blocks consumed. If the filesystem was created with a
-	block-size of 1 kibibyte, the 1024 available bytes of each block 
-	can only be assigned to one file. Unsaturated blocks thus induce 
-	losses of disk space. A quota of 100 blocks, which theoretically 
-	allows storage of 102,400 bytes, will, however, be saturated with
-	just 100 files of 500 bytes each, only representing 50,000 bytes 
-	in total.</para>
+        <para>two limits (called “soft” and “hard”) refer to the
+        number of blocks consumed. If the filesystem was created with a
+        block-size of 1 kibibyte, the 1024 available bytes of each block 
+        can only be assigned to one file. Unsaturated blocks thus induce 
+        losses of disk space. A quota of 100 blocks, which theoretically 
+        allows storage of 102,400 bytes, will, however, be saturated with
+        just 100 files of 500 bytes each, only representing 50,000 bytes 
+        in total.</para>
       </listitem>
       <listitem>
-	<para>two limits (“soft” and “hard”) refer to the number of inodes
-	used. Each file occupies at least one inode to store information
-	about it (permissions, owner, timestamp of last access, etc.). It
-	is thus a limit on the number of user files.</para>
+        <para>two limits (“soft” and “hard”) refer to the number of inodes
+        used. Each file occupies at least one inode to store information
+        about it (permissions, owner, timestamp of last access, etc.). It
+        is thus a limit on the number of user files.</para>
+        <indexterm><primary>inode</primary></indexterm>
+        <indexterm><primary>quota</primary><secondary>soft limit</secondary></indexterm>
+        <indexterm><primary>quota</primary><secondary>hard limit</secondary></indexterm>
       </listitem>
     </itemizedlist>
 
@@ -2646,6 +2656,8 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
     <command>cron</command>. A “hard” limit can never be exceeded: the
     system will refuse any operation that will cause a hard quota to be
     exceeded.</para>
+
+    <indexterm><primary>quota</primary><secondary><command>warnquota</command></secondary></indexterm>
 
     <sidebar>
       <title><emphasis>VOCABULARY</emphasis> Blocks and inodes</title>
@@ -2669,7 +2681,8 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
       a list of blocks that do not directly contain data, but another list
       of blocks.</para>
     </sidebar>
-    <indexterm><primary><command>warnquota</command></primary></indexterm>
+
+    <indexterm><primary>quota</primary><secondary><command>edquota</command></secondary></indexterm>
 
     <para>With the <command>edquota -t</command> command, you can define a
     maximum authorized “grace period” within which a soft limit may be
@@ -2680,6 +2693,10 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
 
     <sidebar>
       <title><emphasis>GOING FURTHER</emphasis> Setting up a default quota for new users</title>
+      <indexterm><primary>quota</primary><secondary><varname>QUOTAUSER</varname></secondary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>QUOTAUSER</varname></secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/adduser.conf</filename></secondary></indexterm>
+      <indexterm><primary>quota</primary><secondary>template user</secondary></indexterm>
 
       <para>To automatically setup a quota for new users, you have to
       configure a template user (with <command>edquota</command> or
