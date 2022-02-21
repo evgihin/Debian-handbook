@@ -2212,28 +2212,30 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
     <indexterm><primary>command scheduling</primary></indexterm>
 
     <para><command>cron</command> is the daemon responsible for executing
-    scheduled and recurring commands (every day, every week, etc.);
-    <command>atd</command> is that which deals with commands to be executed
+    scheduled and recurring commands (every hour, every day, every week, etc.).
+    <command>atd</command> deals with commands to be executed
     a single time, but at a specific moment in the future.</para>
 
     <para>In a Unix system, many tasks are scheduled for regular
     execution:</para>
     <itemizedlist>
       <listitem>
-	<para>rotating the logs;</para>
+        <para>rotating the logs;</para>
       </listitem>
       <listitem>
-	<para>updating the database for the <command>locate</command>
-	program;</para>
+        <para>updating the database for the <command>locate</command>
+        program;</para>
       </listitem>
       <listitem>
-	<para>back-ups;</para>
+        <para>back-ups;</para>
       </listitem>
       <listitem>
-	<para>maintenance scripts (such as cleaning out temporary
-	files).</para>
+        <para>maintenance scripts (such as cleaning out temporary
+        files).</para>
       </listitem>
     </itemizedlist>
+
+    <indexterm><primary><command>crontab</command></primary></indexterm>
 
     <para>By default, all users can schedule the execution of tasks. Each
     user has thus their own <emphasis>crontab</emphasis> in which they can
@@ -2244,8 +2246,12 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
 
     <sidebar>
       <title><emphasis>SECURITY</emphasis> Restricting <command>cron</command> or <command>atd</command></title>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/at.allow</filename></secondary><seealso><command>atd</command></seealso></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/at.deny</filename></secondary><seealso><command>atd</command></seealso></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.allow</filename></secondary><seealso><command>cron</command></seealso></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.deny</filename></secondary><seealso><command>cron</command></seealso></indexterm>
 
-      <para>You can restrict access to <command>cron</command> by creating
+      <para>You can restrict access to <command>crontab</command> by creating
       an explicit authorization file (whitelist) in
       <filename>/etc/cron.allow</filename>, in which you indicate the only
       users authorized to schedule commands. All others will automatically
@@ -2254,8 +2260,12 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
       prohibition file (blacklist), <filename>/etc/cron.deny</filename>.
       This same feature is available for <command>atd</command>, with the
       <filename>/etc/at.allow</filename> and
-      <filename>/etc/at.deny</filename> files.</para>
+      <filename>/etc/at.deny</filename> files (also described in their manual
+      pages).</para>
     </sidebar>
+
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/crontab</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.d/</filename></secondary></indexterm>
 
     <para>The root user has their own <emphasis>crontab</emphasis>, but can
     also use the <filename>/etc/crontab</filename> file, or write
@@ -2268,20 +2278,24 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
     scheduled commands that execute:</para>
     <itemizedlist>
       <listitem>
-	<para>programs in the <filename>/etc/cron.hourly/</filename>
-	directory once per hour;</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.hourly/</filename></secondary></indexterm>
+        <para>programs in the <filename>/etc/cron.hourly/</filename>
+        directory once per hour;</para>
       </listitem>
       <listitem>
-	<para>programs in <filename>/etc/cron.daily/</filename> once per
-	day;</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.daily/</filename></secondary></indexterm>
+        <para>programs in <filename>/etc/cron.daily/</filename> once per
+        day;</para>
       </listitem>
       <listitem>
-	<para>programs in <filename>/etc/cron.weekly/</filename> once per
-	week;</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.weekly/</filename></secondary></indexterm>
+        <para>programs in <filename>/etc/cron.weekly/</filename> once per
+        week;</para>
       </listitem>
       <listitem>
-	<para>programs in <filename>/etc/cron.monthly/</filename> once per
-	month.</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/cron.monthly/</filename></secondary></indexterm>
+        <para>programs in <filename>/etc/cron.monthly/</filename> once per
+        month.</para>
       </listitem>
     </itemizedlist>
 
@@ -2290,94 +2304,97 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
     services.</para>
     <section id="sect.format-crontab">
       <title>Format of a <filename>crontab</filename> File</title>
-      <indexterm><primary><filename>crontab</filename></primary></indexterm>
+      <indexterm><primary><command>crontab</command></primary><secondary><filename>crontab</filename> file format</secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/crontab</filename></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Text shortcuts for <command>cron</command></title>
 
-	<para><command>cron</command> recognizes some abbreviations which
-	replace the first five fields in a <filename>crontab</filename>
-	entry. They correspond to the most classic scheduling
-	options:</para>
+        <para><command>cron</command> recognizes some abbreviations which
+        replace the first five fields in a <filename>crontab</filename>
+        entry. They correspond to the most classic scheduling
+        options:</para>
         <itemizedlist>
           <listitem>
-	    <para><literal>@yearly</literal>: once per year (January 1, at
-	    00:00);</para>
+            <para><literal>@yearly</literal>: once per year (January 1, at
+            00:00);</para>
           </listitem>
           <listitem>
-	    <para><literal>@monthly</literal>: once per month (the 1st of
-	    the month, at 00:00);</para>
+            <para><literal>@monthly</literal>: once per month (the 1st of
+            the month, at 00:00);</para>
           </listitem>
           <listitem>
-	    <para><literal>@weekly</literal>: once per week (Sunday at
-	    00:00);</para>
+            <para><literal>@weekly</literal>: once per week (Sunday at
+            00:00);</para>
           </listitem>
           <listitem>
-	    <para><literal>@daily</literal>: once per day (at
-	    00:00);</para>
+            <para><literal>@daily</literal>: once per day (at
+            00:00);</para>
           </listitem>
           <listitem>
-	    <para><literal>@hourly</literal>: once per hour (at the
-	    beginning of each hour).</para>
+            <para><literal>@hourly</literal>: once per hour (at the
+            beginning of each hour).</para>
           </listitem>
         </itemizedlist>
+        <para>More abbreviations are recognized, like
+        <literal>@reboot</literal>or <literal>@midnight</literal>.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>SPECIAL CASE</emphasis> <command>cron</command> and daylight savings time</title>
 
-	<para>In Debian, <command>cron</command> takes the time change (for
-	Daylight Savings Time, or in fact for any significant change in the
-	local time) into account as best as it can. Thus, the commands that
-	should have been executed during an hour that never existed (for
-	example, tasks scheduled at 2:30 am during the Spring time change
-	in France, since at 2:00 am the clock jumps directly to 3:00 am)
-	are executed shortly after the time change (thus around 3:00 am
-	DST). On the other hand, in autumn, when commands would be executed
-	several times (2:30 am DST, then an hour later at 2:30 am standard
-	time, since at 3:00 am DST the clock turns back to 2:00 am) are
-	only executed once.</para>
+        <para>In Debian, <command>cron</command> takes the time change (for
+        Daylight Savings Time, or in fact for any significant change in the
+        local time) into account as best as it can. Thus, the commands that
+        should have been executed during an hour that never existed (for
+        example, tasks scheduled at 2:30 am during the Spring time change
+        in France, since at 2:00 am the clock jumps directly to 3:00 am)
+        are executed shortly after the time change (thus around 3:00 am
+        DST). On the other hand, in autumn, when commands would be executed
+        several times (2:30 am DST, then an hour later at 2:30 am standard
+        time, since at 3:00 am DST the clock turns back to 2:00 am) are
+        only executed once.</para>
 
-	<para>Be careful, however, if the order in which the different
-	scheduled tasks and the delay between their respective executions
-	matters, you should check the compatibility of these constraints
-	with <command>cron</command>'s behavior; if necessary, you can
-	prepare a special schedule for the two problematic nights per
-	year.</para>
+        <para>Be careful, however, if the order in which the different
+        scheduled tasks and the delay between their respective executions
+        matters, you should check the compatibility of these constraints
+        with <command>cron</command>'s behavior; if necessary, you can
+        prepare a special schedule for the two problematic nights per
+        year.</para>
       </sidebar>
 
-      <para>Each significant line of a <emphasis>crontab</emphasis>
+      <para>Each significant line of a <filename>crontab</filename> entry
       describes a scheduled command with the six (or seven) following
       fields:</para>
       <itemizedlist>
         <listitem>
-	  <para>the value for the minute (number from 0 to 59);</para>
+          <para>the value for the minute (from 0 to 59);</para>
         </listitem>
         <listitem>
-	  <para>the value for the hour (from 0 to 23);</para>
+          <para>the value for the hour (from 0 to 23);</para>
         </listitem>
         <listitem>
-	  <para>the value for the day of the month (from 1 to 31);</para>
+          <para>the value for the day of the month (from 1 to 31);</para>
         </listitem>
         <listitem>
-	  <para>the value for the month (from 1 to 12);</para>
+          <para>the value for the month (from 1 to 12);</para>
         </listitem>
         <listitem>
-	  <para>the value for the day of the week (from 0 to 7, 1
-	  corresponding to Monday, Sunday being represented by both 0 and
-	  7; it is also possible to use the first three letters of the name
-	  of the day of the week in English, such as
-	  <literal>Sun</literal>, <literal>Mon</literal>, etc.);</para>
+          <para>the value for the day of the week (from 0 to 7, 1
+          corresponding to Monday, Sunday being represented by both 0 and
+          7; it is also possible to use the first three letters of the name
+          of the day of the week in English, such as
+          <literal>Sun</literal>, <literal>Mon</literal>, etc.);</para>
         </listitem>
         <listitem>
-	  <para>the user name under whose identity the command must be
-	  executed (in the <filename>/etc/crontab</filename> file and in
-	  the fragments located in <filename>/etc/cron.d/</filename>, but
-	  not in the users' own crontab files);</para>
+          <para>the user name under whose identity the command must be
+          executed (in the <filename>/etc/crontab</filename> file and in
+          the fragments located in <filename>/etc/cron.d/</filename>, but
+          not in the users' own crontab files);</para>
         </listitem>
         <listitem>
-	  <para>the command to execute (when the conditions defined by the
-	  first five columns are met).</para>
+          <para>the command to execute (when the conditions defined by the
+          first five columns are met).</para>
         </listitem>
       </itemizedlist>
 
@@ -2385,17 +2402,17 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
       <citerefentry><refentrytitle>crontab</refentrytitle>
       <manvolnum>5</manvolnum></citerefentry> man page.</para>
 
-      <para>Each value can be expressed in the form of a list of possible
-      values (separated by commas). The syntax <literal>a-b</literal>
-      describes the interval of all the values between <literal>a</literal>
-      and <literal>b</literal>. The syntax <literal>a-b/c</literal>
-      describes the interval with an increment of <literal>c</literal>
-      (example: <literal>0-10/2</literal> means
-      <literal>0,2,4,6,8,10</literal>). An asterisk <literal>*</literal> is
-      a wildcard, representing all possible values.</para>
+      <para>Each value can also be expressed in the form of a list of possible
+      values (separated by commas). The syntax <literal>a-b</literal> describes
+      the interval of all the values between <literal>a</literal> and
+      <literal>b</literal>. The syntax <literal>a-b/c</literal> describes the
+      interval with an increment of <literal>c</literal> (example:
+      <literal>0-10/2</literal> means <literal>0,2,4,6,8,10</literal>). An
+      asterisk <literal>*</literal> is a wildcard, representing all possible
+      values.</para>
 
       <example id="example.crontab">
-        <title>Sample <filename>crontab</filename> file</title>
+        <title>Sample user <filename>crontab</filename> file</title>
 
         <programlisting>#Format
 #min hour day mon dow  command
@@ -2406,6 +2423,9 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
 # 8:00 am, on weekdays (Monday through Friday)
  00  08   *   *   1-5  $HOME/bin/dosomething
 
+# every two hours
+ *  */2   *   *   *    $HOME/bin/dosomethingelse
+
 # Restart the IRC proxy after each reboot
 @reboot /usr/bin/dircproxy
 </programlisting>
@@ -2413,13 +2433,14 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Executing a command on boot</title>
+        <indexterm><primary><command>cron</command></primary><secondary><literal>@reboot</literal></secondary></indexterm>
 
-	<para>To execute a command a single time, just after booting the
-	computer, you can use the <literal>@reboot</literal> macro (a
-	simple restart of <command>cron</command> does not trigger a
-	command scheduled with <literal>@reboot</literal>). This macro
-	replaces the first five fields of an entry in the
-	<emphasis>crontab</emphasis>.</para>
+        <para>To execute a command a single time, just after booting the
+        computer, you can use the <literal>@reboot</literal> macro (a
+        simple restart of <command>cron</command> does not trigger a
+        command scheduled with <literal>@reboot</literal>). This macro
+        replaces the first five fields of an entry in the
+        <emphasis>crontab</emphasis>.</para>
       </sidebar>
 
     <sidebar>
@@ -2435,6 +2456,8 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
       <title>Using the <command>at</command> Command</title>
       <indexterm><primary><command>at</command></primary></indexterm>
 
+      <!-- MAY CHANGE: adjust dates to be current, also in the example -->
+
       <para>The <command>at</command> executes a command at a specified
       moment in the future. It takes the desired time and date as
       command-line parameters, and the command to be executed in its
@@ -2445,25 +2468,25 @@ finger stream  tcp     nowait  nobody       /usr/sbin/tcpd          /usr/sbin/in
       following the usual conventions: <literal>16:12</literal> or
       <literal>4:12pm</literal> represents 4:12 pm. The date can be
       specified in several European and Western formats, including
-      <literal>DD.MM.YY</literal> (<literal>27.07.15</literal> thus
-      representing 27 July 2015), <literal>YYYY-MM-DD</literal> (this same
-      date being expressed as <literal>2015-07-27</literal>),
-      <literal>MM/DD/[CC]YY</literal> (i.e., <literal>12/25/15</literal> or
-      <literal>12/25/2015</literal> will be December 25, 2015), or simple
-      <literal>MMDD[CC]YY</literal> (so that <literal>122515</literal> or
-      <literal>12252015</literal> will, likewise, represent December 25,
-      2015). Without it, the command will be executed as soon as the clock
+      <literal>DD.MM.YY</literal> (<literal>27.07.22</literal> thus
+      representing 27 July 2022), <literal>YYYY-MM-DD</literal> (this same
+      date being expressed as <literal>2022-07-27</literal>),
+      <literal>MM/DD/[CC]YY</literal> (i.e., <literal>12/25/22</literal> or
+      <literal>12/25/2022</literal> will be December 25, 2022), or simple
+      <literal>MMDD[CC]YY</literal> (so that <literal>122522</literal> or
+      <literal>12252022</literal> will, likewise, represent December 25,
+      2022). Without it, the command will be executed as soon as the clock
       reaches the time indicated (the same day, or tomorrow if that time
       has already passed on the same day). You can also simply write
       “today” or “tomorrow”, which is self-explanatory.</para>
 
       <screen>
-<computeroutput>$ </computeroutput><userinput>at 09:00 27.07.15 &lt;&lt;END</userinput>
+<computeroutput>$ </computeroutput><userinput>at 09:00 27.07.22 &lt;&lt;END</userinput>
 <computeroutput>&gt; </computeroutput><userinput>echo "Don't forget to wish a Happy Birthday to Raphaël!" \</userinput>
 <computeroutput>&gt; </computeroutput><userinput>  | mail lolando@debian.org</userinput>
 <computeroutput>&gt; </computeroutput><userinput>END</userinput>
 <computeroutput>warning: commands will be executed using /bin/sh
-job 31 at Mon Jul 27 09:00:00 2015</computeroutput>
+job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
 </screen>
 
       <para>An alternative syntax postpones the execution for a given
@@ -2483,6 +2506,7 @@ job 31 at Mon Jul 27 09:00:00 2015</computeroutput>
       indicated by the <command>at</command> command when you scheduled it,
       but you can find it again with the <command>atq</command> command,
       which gives the current list of scheduled tasks.</para>
+      <indexterm><primary><command>crontab</command></primary></indexterm>
       <indexterm><primary><command>atrm</command></primary></indexterm>
       <indexterm><primary><command>atq</command></primary></indexterm>
     </section>
