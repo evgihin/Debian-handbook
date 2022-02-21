@@ -2709,23 +2709,36 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
   </section>
   <section id="sect.backup">
     <title>Backup</title>
+    <indexterm><primary>backup</primary></indexterm>
+    <indexterm><primary>restoration</primary></indexterm>
 
     <para>Making backups is one of the main responsibilities of any
     administrator, but it is a complex subject, involving powerful tools
     which are often difficult to master.</para>
-    <indexterm><primary>backup</primary></indexterm>
-    <indexterm><primary>restoration</primary></indexterm>
 
-    <para>Many programs exist, such as <command>amanda</command>,
-    <command>bacula</command>, <command>BackupPC</command>. Those
-    are client/server system featuring many options, whose configuration is
-    rather difficult. Some of them provide user-friendly web interfaces
-    to mitigate this. But Debian contains dozens of other
-    backup software covering all possible use cases, as you can easily confirm
-    with <command>apt-cache search backup</command>.</para>
     <indexterm><primary><command>amanda</command></primary></indexterm>
     <indexterm><primary><command>bacula</command></primary></indexterm>
+    <indexterm><primary><command>dd</command></primary></indexterm>
+    <indexterm><primary><command>duplicity</command></primary></indexterm>
+    <indexterm><primary><command>fsarchiver</command></primary></indexterm>
     <indexterm><primary><command>BackupPC</command></primary></indexterm>
+    <indexterm><primary><command>rdiff-backup</command></primary></indexterm>
+    <indexterm><primary><command>rsnapshot</command></primary></indexterm>
+    <indexterm><primary><command>timeshift</command></primary></indexterm>
+
+    <para>Many programs exist, such as <command>amanda</command>,
+    <command>bacula</command>, or <command>BackupPC</command>.  Those are
+    client/server systems featuring many options, whose configuration is rather
+    difficult. Some of them provide user-friendly web interfaces to mitigate
+    this. For non-enterprise systems, administrators might want to check out
+    <command>rsnapshot</command> or <command>rdiff-backup</command>. Users can
+    easily create backups of their filesystems with
+    <command>timeshift</command>, <command>fsarchiver</command>,
+    <command>duplicity</command>, or even <command>dd</command>. </para>
+
+    <para>Debian contains dozens of other backup software covering all possible
+    use cases, as you can easily confirm with <command>apt-cache search
+    backup</command>.</para>
 
     <para>Rather than detailing some of them, this section will present the
     thoughts of the Falcot Corp administrators when they defined their
@@ -2736,6 +2749,7 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
     whose hard drive has failed.</para>
     <section>
       <title>Backing Up with <command>rsync</command></title>
+      <indexterm><primary><command>rsync</command></primary></indexterm>
 
       <para>Backups on tape having been deemed too slow and costly, data
       will be backed up on hard drives on a dedicated server, on which the
@@ -2745,29 +2759,29 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
       account on their department's file server will be backed up. The
       <command>rsync</command> command (from the package of the same name)
       is used daily to back up these different servers.</para>
-      <indexterm><primary><command>rsync</command></primary></indexterm>
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> The hard link, a second name for the file</title>
         <indexterm><primary>link</primary><secondary>hard link</secondary></indexterm>
         <indexterm><primary>hard link</primary></indexterm>
+        <indexterm><primary><command>ln</command></primary></indexterm>
 
-	<para>A hard link, as opposed to a symbolic link, cannot be
-	differentiated from the linked file. Creating a hard link is
-	essentially the same as giving an existing file a second name. This
-	is why the deletion of a hard link only removes one of the names
-	associated with the file. As long as another name is still assigned
-	to the file, the data therein remain present on the filesystem. It
-	is interesting to note that, unlike a copy, the hard link does not
-	take up additional space on the hard drive.</para>
+        <para>A hard link, as opposed to a symbolic link, cannot be
+        differentiated from the linked file. Creating a hard link is
+        essentially the same as giving an existing file a second name. This
+        is why the deletion of a hard link only removes one of the names
+        associated with the file. As long as another name is still assigned
+        to the file, the data therein remain present on the filesystem. It
+        is interesting to note that, unlike a copy, the hard link does not
+        take up additional space on the hard drive.</para>
 
-	<para>A hard link is created with the <command>ln
-	<replaceable>target</replaceable>
-	<replaceable>link</replaceable></command> command. The
-	<replaceable>link</replaceable> file is then a new name for the
-	<replaceable>target</replaceable> file. Hard links can only be
-	created on the same filesystem, while symbolic links are not
-	subject to this limitation.</para>
+        <para>A hard link is created with the <command>ln
+        <replaceable>target</replaceable>
+        <replaceable>link</replaceable></command> command. The
+        <replaceable>link</replaceable> file is then a new name for the
+        <replaceable>target</replaceable> file. Hard links can only be
+        created on the same filesystem, while symbolic links are not
+        subject to this limitation.</para>
       </sidebar>
 
       <para>The available hard drive space prohibits implementation of a
@@ -2789,6 +2803,8 @@ job 1 at Wed Jul 27 09:00:00 2022</computeroutput>
       (“bank” in its vocabulary) in which it places timestamped copies
       of sets of backup files (these sets are called “vaults” in the
       dirvish documentation).</para>
+
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/dirvish/master.conf</filename></secondary></indexterm>
 
       <para>The main configuration is in the
       <filename>/etc/dirvish/master.conf</filename> file. It defines the
@@ -2821,32 +2837,30 @@ expire-rule:
 
       <para>The <literal>bank</literal> setting indicates the directory in
       which the backups are stored. The <literal>exclude</literal> setting
-      allows you to indicate files (or file types) to exclude from the
-      backup. The <literal>Runall</literal> is a list of file sets to
-      backup with a time-stamp for each set, which allows you to assign the
-      correct date to the copy, in case the backup is not triggered at
-      precisely the assigned time. You have to indicate a time just before
-      the actual execution time (which is, by default, 10:04 pm in Debian,
-      according to <filename>/etc/cron.d/dirvish</filename>). Finally, the
+      allows you to indicate files (or file types) to exclude from the backup.
+      The <literal>Runall</literal> is a list of file sets to backup with a
+      time-stamp for each set, which allows you to assign the correct date to
+      the copy, in case the backup is not triggered at precisely the assigned
+      time. You have to indicate a time just before the actual execution time
+      (according to <filename>/etc/cron.d/dirvish</filename>). Finally, the
       <literal>expire-default</literal> and <literal>expire-rule</literal>
       settings define the expiration policy for backups. The above example
       keeps forever backups that are generated on the first Sunday of each
       quarter, deletes after one year those from the first Sunday of each
-      month, and after 3 months those from other Sundays. Other daily
-      backups are kept for 15 days. The order of the rules does matter,
-      Dirvish uses the last matching rule, or the
-      <literal>expire-default</literal> one if no other
-      <literal>expire-rule</literal> matches.</para>
+      month, and after 3 months those from other Sundays. Other daily backups
+      are kept for 15 days. The order of the rules does matter, Dirvish uses
+      the last matching rule, or the <literal>expire-default</literal> one if
+      no other <literal>expire-rule</literal> matches.</para>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Scheduled expiration</title>
 
-	<para>The expiration rules are not used by
-	<command>dirvish-expire</command> to do its job. In reality, the
-	expiration rules are applied when creating a new backup copy to
-	define the expiration date associated with that copy.
-	<command>dirvish-expire</command> simply peruses the stored copies
-	and deletes those for which the expiration date has passed.</para>
+        <para>The expiration rules are not used by
+        <command>dirvish-expire</command> to do its job. In reality, the
+        expiration rules are applied when creating a new backup copy to
+        define the expiration date associated with that copy.
+        <command>dirvish-expire</command> simply peruses the stored copies
+        and deletes those for which the expiration date has passed.</para>
       </sidebar>
 
       <example id="example.dirvish-vault">
@@ -2879,7 +2893,8 @@ exclude:
       %Y%m%d</literal>).</para>
 
       <para>There are many options available, all documented in the
-      <citerefentry><refentrytitle>dirvish.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+      <citerefentry><refentrytitle>dirvish.conf</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry>
       manual page. Once these configuration files are setup, you have to
       initialize each file set with the <command>dirvish --vault
       <replaceable>vault</replaceable> --init</command> command. From there
@@ -2890,26 +2905,26 @@ exclude:
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Remote backup over SSH</title>
 
-	<para>When dirvish needs to save data to a remote machine, it will
-	use <command>ssh</command> to connect to it, and will start
-	<command>rsync</command> as a server. This requires the root user
-	to be able to automatically connect to it. The use of an SSH
-	authentication key allows precisely that (see <xref
-	linkend="sect.ssh-key-based-auth"/>).</para>
+        <para>When dirvish needs to save data to a remote machine, it will
+        use <command>ssh</command> to connect to it, and will start
+        <command>rsync</command> as a server. This requires the root user
+        to be able to automatically connect to it. The use of an SSH
+        authentication key allows precisely that (see <xref
+        linkend="sect.ssh-key-based-auth"/>).</para>
       </sidebar>
     </section>
     <section>
       <title>Restoring Machines without Backups</title>
 
       <para>Desktop computers, which are not backed up, will be easy to
-      reinstall from custom DVD-ROMs prepared with <emphasis>Simple-CDD</emphasis>
-      (see <xref linkend="sect.simple-cdd" />). Since this performs
-      an installation from scratch, it loses any customization that can have
-      been made after the initial installation. This is fine since
-      the systems are all hooked to a central LDAP directory for
-      accounts and most desktop applications are preconfigured
-      thanks to dconf (see <xref linkend="sect.gnome-desktop" />
-      for more information about this).</para>
+      reinstall from custom DVD-ROMs/USB sticks prepared with <emphasis
+      role="pkg">simple-cdd</emphasis> (see <xref linkend="sect.simple-cdd"
+      />). Since this performs an installation from scratch, it loses any
+      customization that can have been made after the initial installation.
+      This is fine since the systems are all hooked to a central LDAP directory
+      for accounts and most desktop applications are preconfigured thanks to
+      <command>dconf</command> (see <xref linkend="sect.gnome-desktop" /> for
+      more information about this).</para>
 
       <para>The Falcot Corp administrators are aware of the limits in their
       backup policy. Since they can't protect the backup server as well as
@@ -2921,36 +2936,37 @@ exclude:
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Backing up SQL and LDAP services</title>
-
-	<para>Many services (such as SQL or LDAP databases) cannot be
-	backed up by simply copying their files (unless they are properly
-	interrupted during creation of the backups, which is frequently
-	problematic, since they are intended to be available at all times).
-	As such, it is necessary to use an “export” mechanism to create
-	a “data dump” that can be safely backed up. These are often
-	quite large, but they compress well. To reduce the storage space
-	required, you will only store a complete text file per week, and a
-	<command>diff</command> each day, which is created with a command
-	of the type <command>diff
-	<replaceable>file_from_yesterday</replaceable>
-	<replaceable>file_from_today</replaceable></command>. The
-	<command>xdelta</command> program produces incremental differences
-	from binary dumps.</para>
         <indexterm><primary><command>xdelta</command></primary></indexterm>
         <indexterm><primary><command>diff</command></primary></indexterm>
         <indexterm><primary>dump</primary></indexterm>
+
+        <para>Many services (such as SQL or LDAP databases) cannot be
+        backed up by simply copying their files (unless they are properly
+        interrupted during creation of the backups, which is frequently
+        problematic, since they are intended to be available at all times).
+        As such, it is necessary to use an “export” mechanism to create
+        a “data dump” that can be safely backed up. These are often
+        quite large, but they compress well. To reduce the storage space
+        required, you will only store a complete text file per week, and a
+        <command>diff</command> each day, which is created with a command
+        of the type <command>diff
+        <replaceable>file_from_yesterday</replaceable>
+        <replaceable>file_from_today</replaceable></command>. The
+        <command>xdelta</command> program produces incremental differences
+        from binary dumps.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> <emphasis>TAR</emphasis>, the standard for tape backups</title>
         <indexterm><primary>backup</primary><secondary>on tape</secondary></indexterm>
         <indexterm><primary>tape, backup</primary></indexterm>
-        <indexterm><primary>TAR</primary></indexterm>
+        <indexterm><primary><acronym>TAR</acronym></primary><seealso>tape archive</seealso></indexterm>
+        <indexterm><primary>tape archive</primary></indexterm>
 
-	<para>Historically, the simplest means of making a backup on Unix
-	was to store a <emphasis>TAR</emphasis> archive on a tape. The
-	<command>tar</command> command even got its name from “Tape
-	ARchive”.</para>
+        <para>Historically, the simplest means of making a backup on Unix
+        was to store a <emphasis>TAR</emphasis> archive on a tape. The
+        <command>tar</command> command even got its name from “Tape
+        ARchive”.</para>
       </sidebar>
     </section>
   </section>
