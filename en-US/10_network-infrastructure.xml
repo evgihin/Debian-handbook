@@ -1645,13 +1645,16 @@ iface enp7s0 inet6 auto
   <section id="sect.domain-name-servers">
     <title>Domain Name Servers (DNS)</title>
     <indexterm><primary>DNS</primary></indexterm>
+    <indexterm><primary>Domain Name Service</primary><see>DNS</see></indexterm>
     <indexterm><primary>server</primary><secondary>name</secondary></indexterm>
+    <indexterm><primary>IP</primary><secondary>address mapping</secondary></indexterm>
 
-    <para>The <emphasis>Domain Name Service</emphasis> (DNS) is a
-    fundamental component of the Internet: it maps host names to IP
-    addresses (and vice-versa), which allows the use of
-    <literal>www.debian.org</literal> instead of
-    <literal>149.20.4.15</literal> or <literal>2001:4f8:1:c::15</literal>.</para>
+    <!-- MAY CHANGE: debian.org IP address -->
+    <para>The <emphasis>Domain Name Service</emphasis> (DNS) is a fundamental
+    component of the Internet: it maps host names to IP addresses (and
+    vice-versa), which allows the use of <literal>www.debian.org</literal>
+    instead of <literal>130.89.148.77</literal> or
+    <literal>2001:67c:2564:a119::77</literal>.</para>
 
     <para>DNS records are organized in zones; each zone matches either a
     domain (or a subdomain) or an IP address range (since IP addresses
@@ -1661,66 +1664,70 @@ iface enp7s0 inet6 auto
     the primary zone.</para>
     <indexterm><primary>zone</primary><secondary>DNS</secondary></indexterm>
     <indexterm><primary>DNS</primary><secondary>zone</secondary></indexterm>
+    <indexterm><primary>DNS</primary><secondary>resource record</secondary></indexterm>
 
     <para>Each zone can contain records of various kinds
     (<emphasis>Resource Records</emphasis>), these are some of the most common:</para>
     <itemizedlist>
       <listitem>
-        <para><literal>A</literal>: IPv4 address. <indexterm><primary>A,
-        DNS record</primary></indexterm></para>
+        <para><literal>A</literal> (<emphasis>address record</emphasis>): IPv4
+        address. This is the most common form to point a domain to an IPv4
+        address.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>A</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>CNAME</literal>: alias (<emphasis>canonical
-        name</emphasis>). <indexterm><primary>CNAME, DNS
-        record</primary></indexterm></para>
+        <para><literal>CNAME</literal> (<emphasis>canonical name
+        record</emphasis>): alias</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>CNAME</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>MX</literal>: <emphasis>mail exchange</emphasis>,
+        <para><literal>MX</literal> (<emphasis>mail exchange</emphasis>):
         an email server. This information is used by other email servers
         to find where to send email addressed to a given address. Each MX
         record has a priority. The highest-priority server (with the
         lowest number) is tried first (see sidebar <xref
         linkend="sidebar.smtp"/>); other servers are contacted in order
-        of decreasing priority if the first one does not reply.
-        <indexterm><primary>MX</primary><secondary>DNS
-        record</secondary></indexterm></para>
+        of decreasing priority if the first one does not reply.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>MX</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>PTR</literal>: mapping of an IP address to a name.
-        Such a record is stored in a “reverse DNS” zone named after
-        the IP address range. For example,
-        <literal>1.168.192.in-addr.arpa</literal> is the zone containing
-        the reverse mapping for all addresses in the
-        <literal>192.168.1.0/24</literal> range. <indexterm><primary>PTR,
-        DNS record</primary></indexterm></para>
+        <para><literal>PTR</literal> (<emphasis>pointer</emphasis>): mapping of
+        an IP address to a name.  Such a record is stored in a “reverse DNS”
+        zone named after the IP address range. For example,
+        <literal>1.168.192.in-addr.arpa</literal> is the zone containing the
+        reverse mapping for all addresses in the
+        <literal>192.168.1.0/24</literal> range.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>PTR</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>AAAA</literal>: IPv6 address.
-        <indexterm><primary>AAAA, DNS record</primary></indexterm></para>
+        <para><literal>AAAA</literal> (<emphasis>IPv6 address
+        record</emphasis>): IPv6 address.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>AAAA</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>NS</literal>: maps a name to a name server. Each
-        domain must have at least one NS record. These records point at a
-        DNS server that can answer queries concerning this domain; they
-        usually point at the primary and secondary servers for the
-        domain. These records also allow DNS delegation; for instance,
-        the <literal>falcot.com</literal> zone can include an NS record
-        for <literal>internal.falcot.com</literal>, which means that the
+        <para><literal>NS</literal> (<emphasis>name server</emphasis>): maps a
+        name to a name server. Each domain must have at least one NS record.
+        These records point at a DNS server that can answer queries concerning
+        this domain; they usually point at the primary and secondary servers
+        for the domain. These records also allow DNS delegation; for instance,
+        the <literal>falcot.com</literal> zone can include an NS record for
+        <literal>internal.falcot.com</literal>, which means that the
         <literal>internal.falcot.com</literal> zone is handled by another
         server. Of course, this server must declare an
-        <literal>internal.falcot.com</literal> zone.
-        <indexterm><primary>NS, DNS record</primary></indexterm></para>
+        <literal>internal.falcot.com</literal> zone.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>NS</literal></tertiary></indexterm>
       </listitem>
     </itemizedlist>
 
-    <indexterm><primary>record</primary><secondary>DNS</secondary></indexterm>
-    <indexterm><primary>DNS record</primary></indexterm>
-      
     <section id="sect.dns-software">
       <title>DNS software</title>
+      <indexterm><primary>ISC</primary></indexterm>
+      <indexterm><primary>Internet Software Consortium</primary><see>ISC</see></indexterm>
+      <indexterm><primary><emphasis role="pkg">bind9</emphasis></primary></indexterm>
+      <indexterm><primary>DNS</primary><secondary><emphasis role="pkg">bind9</emphasis></secondary><seealso><command>bind</command></seealso></indexterm>
 
       <para>The reference name server, Bind, was developed and is
-      maintained by ISC (<emphasis>Internet Software
+      maintained by ISC (the <emphasis>Internet Software
       Consortium</emphasis>). It is provided in Debian by the <emphasis
       role="pkg">bind9</emphasis> package. Version 9 brings two major
       changes compared to previous versions. First, the DNS server can now
@@ -1731,23 +1738,24 @@ iface enp7s0 inet6 auto
       <para>Furthermore, Bind supports the DNSSEC standard for signing (and
       therefore authenticating) DNS records, which allows blocking any
       spoofing of this data during man-in-the-middle attacks.</para>
-      <indexterm><primary><emphasis role="pkg">bind9</emphasis></primary></indexterm>
-      <indexterm><primary>ISC</primary></indexterm>
-      <indexterm><primary>Internet Software Consortium</primary></indexterm>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> DNSSEC</title>
         <indexterm><primary>DNSSEC</primary></indexterm>
+        <indexterm><primary>Domain Name System Security Extensions</primary><see>DNSSEC</see></indexterm>
+        <indexterm><primary>DNS</primary><secondary>security extensions</secondary><see>DNSSEC</see></indexterm>
 
-	<para>The DNSSEC norm is quite complex; this partly explains why
-	it is not in widespread usage yet (even if it perfectly coexists
-	with DNS servers unaware of DNSSEC). To understand all the ins and
-	outs, you should check the following article. <ulink type="block"
-	url="https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
+        <para>The DNSSEC norm is quite complex; this partly explains why
+        it is not in widespread usage yet (even if it perfectly coexists
+        with DNS servers unaware of DNSSEC). To understand all the ins and
+        outs, you should check the following article. <ulink type="block"
+        url="https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
       </sidebar>
     </section>
     <section id="sect.dns-config">
       <title>Configuring bind</title>
+      <indexterm><primary>daemon</primary><secondary>bind</secondary></indexterm>
+      <indexterm><primary><command>bind</command></primary><secondary>configuration</secondary></indexterm>
 
       <para>Configuration files for <command>bind</command>, irrespective
       of version, have the same structure.</para>
@@ -1761,41 +1769,43 @@ iface enp7s0 inet6 auto
         <title><emphasis>CAUTION</emphasis> Names of reverse zones</title>
         <indexterm><primary>zone</primary><secondary>reverse</secondary></indexterm>
         <indexterm><primary>reverse zone</primary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>reverse zone</secondary></indexterm>
         <indexterm><primary><literal>in-addr.arpa</literal></primary></indexterm>
         <indexterm><primary><literal>ip6.arpa</literal></primary></indexterm>
-	<indexterm><primary>nibble format</primary></indexterm>
+        <indexterm><primary>nibble format</primary></indexterm>
 
-	<para>Reverse zones have a particular name. The zone covering the
-	<literal>192.168.0.0/16</literal> network needs to be named
-	<literal>168.192.in-addr.arpa</literal>: the IP address components
-	are reversed, and followed by the <literal>in-addr.arpa</literal>
-	suffix.</para>
+        <para>Reverse zones have a particular name. The zone covering the
+        <literal>192.168.0.0/16</literal> network needs to be named
+        <literal>168.192.in-addr.arpa</literal>: the IP address components
+        are reversed, and followed by the <literal>in-addr.arpa</literal>
+        suffix.</para>
 
-	<para>For IPv6 networks, the suffix is <literal>ip6.arpa</literal> and
-	the IP address components which are reversed are each character in the full
-	hexadecimal representation of the IP address. As such, the
-	<literal>2001:0bc8:31a0::/48</literal> network would use a zone named
-	<literal>0.a.1.3.8.c.b.0.1.0.0.2.ip6.arpa</literal>.</para>
+        <para>For IPv6 networks, the suffix is <literal>ip6.arpa</literal> and
+        the IP address components which are reversed are each character in the full
+        hexadecimal representation of the IP address. As such, the
+        <literal>2001:0bc8:31a0::/48</literal> network would use a zone named
+        <literal>0.a.1.3.8.c.b.0.1.0.0.2.ip6.arpa</literal>.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Testing the DNS server</title>
+        <indexterm><primary><command>host</command></primary></indexterm>
 
-	<para>The <command>host</command> command (in the <emphasis
-	role="pkg">bind9-host</emphasis> package) queries a DNS
-	server, and can be used to test the server configuration. For
-	example, <command>host machine.falcot.com localhost</command>
-	checks the local server's reply for the
-	<literal>machine.falcot.com</literal> query. <command>host
-	<replaceable>ipaddress</replaceable> localhost</command> tests
-	the reverse resolution.</para>
-	<indexterm><primary><command>host</command></primary></indexterm>
+        <para>The <command>host</command> command (in the <emphasis
+        role="pkg">bind9-host</emphasis> package) queries a DNS
+        server, and can be used to test the server configuration. For
+        example, <command>host machine.falcot.com localhost</command>
+        checks the local server's reply for the
+        <literal>machine.falcot.com</literal> query. <command>host
+        <replaceable>ipaddress</replaceable> localhost</command> tests
+        the reverse resolution.</para>
       </sidebar>
+
+      <indexterm><primary><filename>named.conf</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/bind/named.conf</filename></secondary></indexterm>
 
       <para>The following configuration excerpts, taken from the Falcot
       files, can serve as starting points to configure a DNS server:</para>
-      <indexterm><primary><filename>named.conf</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/bind/named.conf</filename></primary></indexterm>
 
       <example id="example.bind-named.conf.local">
         <title>Excerpt of <filename>/etc/bind/named.conf.local</filename></title>
@@ -1862,14 +1872,14 @@ dns     IN      CNAME   ns
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Syntax of a name</title>
 
-	<para>The syntax of machine names follows strict rules. For
-	instance, <literal>machine</literal> implies
-	<literal>machine.<replaceable>domain</replaceable></literal>. If
-	the domain name should not be appended to a name, said name must be
-	written as <literal>machine.</literal> (with a dot as suffix).
-	Indicating a DNS name outside the current domain therefore requires
-	a syntax such as <literal>machine.otherdomain.com.</literal> (with
-	the final dot).</para>
+        <para>The syntax of machine names follows strict rules. For
+        instance, <literal>machine</literal> implies
+        <literal>machine.<replaceable>domain</replaceable></literal>. If
+        the domain name should not be appended to a name, said name must be
+        written as <literal>machine.</literal> (with a dot as suffix).
+        Indicating a DNS name outside the current domain therefore requires
+        a syntax such as <literal>machine.otherdomain.com.</literal> (with
+        the final dot).</para>
       </sidebar>
 
       <example id="example.bind-db.192.168">
