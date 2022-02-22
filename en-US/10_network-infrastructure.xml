@@ -2040,12 +2040,16 @@ allow-update { 127.0.0.1 192.168.0.1 212.94.201.10 !any };
   </section>
   <section id="sect.network-diagnosis-tools">
     <title>Network Diagnosis Tools</title>
+    <indexterm><primary>network</primary><secondary>diagnosis</secondary></indexterm>
 
     <para>When a network application does not run as expected, it is
     important to be able to look under the hood. Even when everything seems
     to run smoothly, running a network diagnosis can help ensure everything
     is working as it should. Several diagnosis tools exists for this
-    purpose; each one operates on a different level.</para>
+    purpose; each one operates on a different level. It would go beyond the
+    scope of this book to discuss all tools, so we will focus on the more
+    well-known and commonly used tools in the following sections.</para>
+
     <section id="sect.netstat">
       <title>Local Diagnosis: <command>netstat</command></title>
       <indexterm><primary><command>netstat</command></primary></indexterm>
@@ -2065,33 +2069,34 @@ allow-update { 127.0.0.1 192.168.0.1 212.94.201.10 !any };
       options include:</para>
       <itemizedlist>
         <listitem>
-	  <para><literal>-t</literal>, which filters the results to only
-	  include TCP connections;</para>
+          <para><literal>-t</literal>, which filters the results to only
+          include TCP connections;</para>
         </listitem>
         <listitem>
-	  <para><literal>-u</literal>, which works similarly for UDP
-	  connections; these options are not mutually exclusive, and one of
-	  them is enough to stop displaying Unix-domain connections;</para>
+          <para><literal>-u</literal>, which works similarly for UDP
+          connections; these options are not mutually exclusive, and one of
+          them is enough to stop displaying Unix-domain connections;</para>
         </listitem>
         <listitem>
-	  <para><literal>-a</literal>, to also list listening sockets
-	  (waiting for incoming connections);</para>
+          <para><literal>-a</literal>, to also list listening sockets
+          (waiting for incoming connections);</para>
         </listitem>
         <listitem>
-	  <para><literal>-n</literal>, to display the results numerically:
-	  IP addresses (no DNS resolution), port numbers (no aliases as
-	  defined in <filename>/etc/services</filename>) and user ids (no
-	  login names);</para>
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/services</filename></secondary></indexterm>
+          <para><literal>-n</literal>, to display the results numerically:
+          IP addresses (no DNS resolution), port numbers (no aliases as
+          defined in <filename>/etc/services</filename>) and user ids (no
+          login names);</para>
         </listitem>
         <listitem>
-	  <para><literal>-p</literal>, to list the processes involved; this
-	  option is only useful when <command>netstat</command> is run as
-	  root, since normal users will only see their own
-	  processes;</para>
+          <para><literal>-p</literal>, to list the processes involved; this
+          option is only useful when <command>netstat</command> is run as
+          root, since normal users will only see their own
+          processes;</para>
         </listitem>
         <listitem>
-	  <para><literal>-c</literal>, to continuously refresh the list of
-	  connections.</para>
+          <para><literal>-c</literal>, to continuously refresh the list of
+          connections.</para>
         </listitem>
       </itemizedlist>
 
@@ -2170,76 +2175,84 @@ udp6       0      0 :::5353                 :::*                                
       <manvolnum>1</manvolnum> </citerefentry> manual page.</para>
 
       <screen width="80" role="scale">
-<computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>
-<computeroutput>
-Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:05 CET
-Nmap scan report for mirtuel (192.168.1.242)
-Host is up (0.000013s latency).
-rDNS record for 192.168.1.242: mirtuel.internal.placard.fr.eu.org
-Not shown: 998 closed ports
+<computeroutput># </computeroutput><userinput>nmap debian</userinput>
+<computeroutput><![CDATA[Starting Nmap 7.80 ( https://nmap.org ) at 2022-02-22 20:58 CET
+Nmap scan report for debian (192.168.122.57)
+Host is up (0.000087s latency).
+Not shown: 996 closed ports
 PORT    STATE SERVICE
 22/tcp  open  ssh
-111/tcp open  rpcbind
+79/tcp  open  finger
+80/tcp  open  http
+113/tcp open  ident
 
-Nmap done: 1 IP address (1 host up) scanned in 2.41 seconds
-# </computeroutput><userinput>nmap -A localhost</userinput>
-<computeroutput>
-Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:17 CEST
+Nmap done: 1 IP address (1 host up) scanned in 0.07 seconds
+]]># </computeroutput><userinput>nmap -A localhost</userinput>
+<computeroutput><![CDATA[nmap -A localhost
+Starting Nmap 7.80 ( https://nmap.org ) at 2022-02-22 20:56 CET
+Stats: 0:01:16 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan
+Service scan Timing: About 83.33% done; ETC: 20:57 (0:00:15 remaining)
 Nmap scan report for localhost (127.0.0.1)
-Host is up (0.000039s latency).
+Host is up (0.000086s latency).
 Other addresses for localhost (not scanned): ::1
-Not shown: 997 closed ports
+Not shown: 994 closed ports
 PORT    STATE SERVICE VERSION
-22/tcp  open  ssh     OpenSSH 7.9p1 Debian 10 (protocol 2.0)
-| ssh-hostkey: 
-|   2048 33:a1:d8:b1:e5:5b:b2:0d:15:1b:8e:76:7f:e4:d7:3d (RSA)
-|   256 8f:83:cf:fa:b3:58:54:9a:1d:1b:4c:db:b1:e2:58:76 (ECDSA)
-|_  256 fa:3d:58:62:49:92:93:90:52:fe:f4:26:ca:dc:4c:40 (ED25519)
-25/tcp  open  smtp    Exim smtpd 4.92
-| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, CHUNKING, PRDR, HELP, 
-|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA BDAT NOOP QUIT RSET HELP 
-631/tcp open  ipp     CUPS 2.2
-| http-methods: 
-|_  Potentially risky methods: PUT
+22/tcp  open  ssh     OpenSSH 8.4p1 Debian 5 (protocol 2.0)
+|_auth-owners: foobar
+25/tcp  open  smtp    Postfix smtpd
+|_auth-owners: foobar
+|_smtp-commands: debian, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, SMTPUTF8, CHUNKING, 
+| ssl-cert: Subject: commonName=debian
+| Subject Alternative Name: DNS:debian
+| Not valid before: 2022-02-22T14:48:42
+|_Not valid after:  2032-02-20T14:48:42
+|_ssl-date: TLS randomness does not represent time
+79/tcp  open  finger?
+|_auth-owners: foobar
+|_finger: ERROR: Script execution failed (use -d to debug)
+80/tcp  open  http    Apache httpd 2.4.52 ((Debian))
+|_auth-owners: foobar
+|_http-server-header: Apache/2.4.52 (Debian)
+|_http-title: Apache2 Debian Default Page: It works
+113/tcp open  ident   Liedentd (Claimed user: foobar)
+|_auth-owners: foobar
+631/tcp open  ipp     CUPS 2.3
+|_auth-owners: foobar
 | http-robots.txt: 1 disallowed entry 
 |_/
-|_http-server-header: CUPS/2.2 IPP/2.1
-|_http-title: Home - CUPS 2.2.10
-Device type: general purpose
-Running: Linux 3.X
-OS CPE: cpe:/o:linux:linux_kernel:3
-OS details: Linux 3.7 - 3.10
-Network Distance: 0 hops
-Service Info: Host: debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+|_http-server-header: CUPS/2.3 IPP/2.1
+|_http-title: Home - CUPS 2.3.3op2
+Service Info: Host:  debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds
-</computeroutput>
-</screen>
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 87.91 seconds
+]]></computeroutput></screen>
 
-      <para>As expected, the SSH and Exim4 applications are listed. Note
-      that not all applications listen on all IP addresses; since Exim4 is
-      only accessible on the <literal>lo</literal> loopback interface, it
-      only appears during an analysis of <literal>localhost</literal> and
-      not when scanning <literal>mirtuel</literal> (which maps to the
-      <literal>eth0</literal> interface on the same machine).</para>
+      <para>As expected, e.g. the SSH, Apache and Postfix applications are
+      listed. Note that not all applications listen on all IP addresses; since
+      Postfix is only accessible on the <literal>lo</literal> loopback
+      interface, it only appears during an analysis of
+      <literal>localhost</literal> and not when scanning
+      <literal>debian</literal> (which maps to the <literal>enp1s0</literal>
+      interface on the same machine).</para>
+
     </section>
     <section id="sect.sniffers">
       <title>Sniffers: <command>tcpdump</command> and <command>wireshark</command></title>
+      <indexterm><primary><command>tcpdump</command></primary></indexterm>
+      <indexterm><primary><command>wireshark</command></primary></indexterm>
 
       <para>Sometimes, one needs to look at what actually goes on the wire,
       packet by packet. These cases call for a “frame analyzer”, more
       widely known as a <emphasis>sniffer</emphasis>. Such a tool observes
       all the packets that reach a given network interface, and displays
       them in a user-friendly way.</para>
-      <indexterm><primary><command>tcpdump</command></primary></indexterm>
 
       <para>The venerable tool in this domain is
       <command>tcpdump</command>, available as a standard tool on a wide
       range of platforms. It allows many kinds of network traffic capture,
       but the representation of this traffic stays rather obscure. We will
       therefore not describe it in further detail.</para>
-      <indexterm><primary><command>wireshark</command></primary></indexterm>
 
       <para>A more recent (and more modern) tool,
       <command>wireshark</command> (in the <emphasis
@@ -2272,19 +2285,19 @@ Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds
         <title><emphasis>TIP</emphasis> <command>wireshark</command> with no graphical interface: <command>tshark</command></title>
         <indexterm><primary><command>tshark</command></primary></indexterm>
 
-	<para>When one cannot run a graphical interface, or does not wish
-	to do so for whatever reason, a text-only version of
-	<command>wireshark</command> also exists under the name
-	<command>tshark</command> (in a separate <emphasis
-	role="pkg">tshark</emphasis> package). Most of the capture and
-	decoding features are still available, but the lack of a graphical
-	interface necessarily limits the interactions with the program
-	(filtering packets after they've been captured, tracking of a given
-	TCP connection, and so on). It can still be used as a first
-	approach. If further manipulations are intended and require the
-	graphical interface, the packets can be saved to a file and this
-	file can be loaded into a graphical <command>wireshark</command>
-	running on another machine.</para>
+        <para>When one cannot run a graphical interface, or does not wish
+        to do so for whatever reason, a text-only version of
+        <command>wireshark</command> also exists under the name
+        <command>tshark</command> (in a separate <emphasis
+        role="pkg">tshark</emphasis> package). Most of the capture and
+        decoding features are still available, but the lack of a graphical
+        interface necessarily limits the interactions with the program
+        (filtering packets after they've been captured, tracking of a given
+        TCP connection, and so on). It can still be used as a first
+        approach. If further manipulations are intended and require the
+        graphical interface, the packets can be saved to a file and this
+        file can be loaded into a graphical <command>wireshark</command>
+        running on another machine.</para>
       </sidebar>
     </section>
   </section>
