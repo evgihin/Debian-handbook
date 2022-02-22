@@ -1288,7 +1288,7 @@ FALCOT\\vpn     pptp    f@Lc3au     *
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> LARTC — <emphasis>Linux Advanced Routing &amp; Traffic Control</emphasis></title>
-        <indexterm><primary>network</primary><secondary>advanced routing</secondary></indexterm>
+        <indexterm><primary>network</primary><secondary>advanced routing</secondary><seealso>routing</seealso></indexterm>
         <indexterm><primary>routing</primary><secondary>advanced</secondary></indexterm>
         <indexterm><primary>traffic</primary><secondary>control</secondary></indexterm>
         <indexterm><primary>control of traffic</primary></indexterm>
@@ -1398,16 +1398,18 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
   </section>
   <section id="sect.dynamic-routing">
     <title>Dynamic Routing</title>
-    <indexterm><primary>routing</primary><secondary>dynamic</secondary></indexterm>
-    <indexterm><primary><command>quagga</command></primary></indexterm>
-    <indexterm><primary><command>zebra</command></primary></indexterm>
+    <indexterm><primary>routing</primary><secondary>dynamic</secondary><seealso><command>frr</command></seealso></indexterm>
+    <indexterm><primary><command>frr</command></primary></indexterm>
+    <indexterm><primary><command>quagga</command></primary><see><command>frr</command></see></indexterm>
+    <indexterm><primary><command>zebra</command></primary><see><command>frr</command></see></indexterm>
 
+    <!-- MAY CHANGE: reference package has changed quite some times -->
     <para>The reference tool for dynamic routing is currently
-    <command>quagga</command>, from the similarly-named package; it used to
-    be <command>zebra</command> until development of the latter stopped.
-    However, <command>quagga</command> kept the names of the programs for
-    compatibility reasons which explains the <command>zebra</command>
-    commands below.</para>
+    <command>frr</command> from the similarly-named package; it used to be
+    <command>quagga</command>, and before that <command>zebra</command> until
+    development of these stopped.  However, <command>frr</command> kept the
+    names of the programs for compatibility reasons which explains the
+    <command>zebra</command> commands below.</para>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Dynamic routing</title>
@@ -1417,24 +1419,27 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
       own method of defining routes (shortest path, use routes advertised
       by peers, and so on).</para>
 
+      <indexterm><primary><command>ip</command></primary><secondary><literal>route</literal></secondary></indexterm>
+      <indexterm><primary><command>route</command></primary></indexterm>
+
       <para>In the Linux kernel, a route links a network device to a set of
       machines that can be reached through this device. The
       <command>ip</command> command, when <literal>route</literal> is used
       as the first argument, defines new routes and displays existing ones.
       The <command>route</command> command was used for that purpose, but
       it is deprecated in favor of <command>ip</command>.</para>
-      <indexterm><primary><command>route</command></primary></indexterm>
-      <indexterm><primary><command>ip route</command></primary></indexterm>
     </sidebar>
 
-    <para>Quagga is a set of daemons cooperating to define the routing
-    tables to be used by the Linux kernel; each routing protocol (most
-    notably BGP, OSPF and RIP) provides its own daemon. The
-    <command>zebra</command> daemon collects information from other daemons
-    and handles static routing tables accordingly. The other daemons are
-    known as <command>bgpd</command>, <command>ospfd</command>,
-    <command>ospf6d</command>, <command>ripd</command>, 
-    <command>ripngd</command>, and <command>isisd</command>.</para>
+    <para>FRR (FRRouting) is a set of daemons cooperating to define the routing
+    tables to be used by the Linux kernel; each routing protocol (most notably
+    BGP, OSPF and RIP) provides its own daemon(s). The <literal>zebra</literal>
+    and <literal>staticd</literal> daemons, which are always started, collect
+    information from other daemons and handle static routing tables
+    accordingly. The other daemons are known as <command>bgpd</command>,
+    <command>ospfd</command>, <command>ospf6d</command>,
+    <command>ripd</command>, <command>ripngd</command>,
+    <command>isisd</command>, etc.</para>
+
     <indexterm><primary>OSPF</primary></indexterm>
     <indexterm><primary>BGP</primary></indexterm>
     <indexterm><primary>RIP</primary></indexterm>
@@ -1446,30 +1451,36 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
     <indexterm><primary><command>ripngd</command></primary></indexterm>
     <indexterm><primary><command>isisd</command></primary></indexterm>
 
-    <para>Daemons are enabled by creating the
-    <filename>/etc/quagga/<replaceable>daemon</replaceable>.conf</filename>
-    config file, daemon being the name of the daemon to use;
-    this file must belong to the <literal>quagga</literal> user and group
-    in order for the <filename>/etc/init.d/zebra</filename> script
-    to invoke the daemon. The package <emphasis role="pkg">quagga-core</emphasis>
-    provides configuration examples under
-    <filename>/usr/share/doc/quagga-core/examples/</filename>.</para>
+    <indexterm><primary>service</primary><secondary><filename>frr.service</filename></secondary></indexterm>
 
-    <para>The configuration of each of these daemons requires knowledge of
-    the routing protocol in question. These protocols cannot be described
-    in detail here, but <emphasis role="pkg">quagga-doc</emphasis>
-    provides ample explanation in the form of an <command>info</command>
-    file. The same contents may be more easily browsed as HTML on the
-    Quagga website: <ulink type="block"
-      url="http://www.nongnu.org/quagga/docs/docs-info.html"/></para>
+    <para>Daemons are enabled by creating the
+    <filename>/etc/frr/<replaceable>daemon</replaceable>.conf</filename> config
+    file, <replaceable>daemon</replaceable> being the name of the daemon to
+    use, and editing the <filename>/etc/frr/daemon</filename> configuration
+    file. The daemon config file must belong to the <literal>frr</literal>
+    user and group with permissions of <literal>0640</literal> in order for the
+    <filename>/etc/init.d/frr</filename> script or the
+    <filename>frr.service</filename> systemd service file to invoke the daemon.
+    The package <emphasis role="pkg">frr</emphasis> provides configuration
+    examples under <filename>/usr/share/doc/frr/examples/</filename>.</para>
+
+    <para>The configuration of each of these daemons requires knowledge of the
+    routing protocol in question. These protocols cannot be described in detail
+    here, but <emphasis role="pkg">frr-doc</emphasis> provides ample
+    explanation in the form of both <command>info</command> and HTML files. The
+    same contents may be more browsed on the project's website: <ulink
+    type="block" url="http://docs.frrouting.org/en/latest/"/> </para>
 
     <para>In addition, the
     syntax is very close to a standard router's configuration interface,
     and network administrators will adapt quickly to
-    <command>quagga</command>.</para>
+    <command>frr</command>.</para>
 
     <sidebar>
       <title><emphasis>IN PRACTICE</emphasis> OSPF, BGP or RIP?</title>
+      <indexterm><primary>OSPF</primary></indexterm>
+      <indexterm><primary>BGP</primary></indexterm>
+      <indexterm><primary>RIP</primary></indexterm>
 
       <para><acronym>OSPF</acronym> (Open Shortest Path First) is
       generally the best protocol to use for dynamic routing
