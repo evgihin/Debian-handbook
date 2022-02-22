@@ -25,19 +25,21 @@
   </highlights>
   <section id="sect.gateway">
     <title>Gateway</title>
+    <indexterm><primary>gateway</primary></indexterm>
+    <indexterm><primary>network</primary><secondary>gateway</secondary></indexterm>
+    <indexterm><primary>router</primary></indexterm>
 
     <para>A gateway is a system linking several networks. This term often
     refers to a local network's “exit point” on the mandatory path to
     all external IP addresses. The gateway is connected to each of the
     networks it links together, and acts as a router to convey IP packets
     between its various interfaces.</para>
-    <indexterm><primary>gateway</primary></indexterm>
-    <indexterm><primary>network</primary><secondary>gateway</secondary></indexterm>
-    <indexterm><primary>router</primary></indexterm>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> IP packet</title>
       <indexterm><primary>packet</primary><secondary>IP</secondary></indexterm>
+      <indexterm><primary>IP</primary><seealso>Internet Protocol</seealso></indexterm>
+      <indexterm><primary>Internet Protocol</primary></indexterm>
 
       <para>Most networks nowadays use the IP protocol (<emphasis>Internet
       Protocol</emphasis>). This protocol segments the transmitted data
@@ -50,8 +52,10 @@
       <title><emphasis>BACK TO BASICS</emphasis> TCP/UDP</title>
       <indexterm><primary>port</primary><secondary>TCP</secondary></indexterm>
       <indexterm><primary>port</primary><secondary>UDP</secondary></indexterm>
-      <indexterm><primary>TCP, port</primary></indexterm>
-      <indexterm><primary>UDP, port</primary></indexterm>
+      <indexterm><primary>TCP</primary><secondary>port</secondary></indexterm>
+      <indexterm><primary>UDP</primary><secondary>port</secondary></indexterm>
+      <indexterm><primary>Transmission Control Protocol</primary><seealso></seealso></indexterm>
+      <indexterm><primary>User Datagram Protocol</primary><seealso>UDP</seealso></indexterm>
 
       <para>Many programs do not handle the individual packets themselves,
       even though the data they transmit does travel over IP; they often
@@ -82,12 +86,22 @@
       communications in parallel with the same correspondent, since these
       communications can be distinguished by the port number.</para>
 
+      <indexterm><primary>Internet Assigned Numbers Authority</primary><seealso>IANA</seealso></indexterm>
+      <indexterm><primary>IANA</primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/services</filename></secondary></indexterm>
+
       <para>Some of these port numbers — standardized by the IANA
       (<emphasis>Internet Assigned Numbers Authority</emphasis>) — are
-      “well-known” for being associated with network services. For
-      instance, TCP port 25 is generally used by the email server. <ulink
+      “well-known” for being associated with network services. For instance,
+      TCP port 25 is generally used by the email server. The list of services
+      associated with port numbers can be found in the
+      <filename>/etc/services</filename> file, also explained in
+      <citerefentry><refentrytitle>services</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry>, as well as in: <ulink
       type="block"
-      url="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml"/></para>
+      url="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml"/>
+      </para>
+
     </sidebar>
 
     <para>When a local network uses a private address range (not routable
@@ -108,7 +122,7 @@
 
     <sidebar>
       <title><emphasis>CULTURE</emphasis> Private address range</title>
-      <indexterm><primary>IP address</primary><secondary>private</secondary></indexterm>
+      <indexterm><primary>IP</primary><secondary>private address</secondary></indexterm>
       <indexterm><primary>private IP address</primary></indexterm>
 
       <para>RFC 1918 defines three ranges of IPv4 addresses not meant to
@@ -127,6 +141,15 @@
       url="http://www.faqs.org/rfcs/rfc1918.html"/></para>
     </sidebar>
 
+    <indexterm><primary>NAT</primary></indexterm>
+    <indexterm><primary>Network Address Translation</primary><seealso>NAT</seealso></indexterm>
+    <indexterm><primary>network</primary><secondary>address translation</secondary><seealso>NAT</seealso></indexterm>
+    <indexterm><primary>network</primary><secondary>NAT</secondary></indexterm>
+    <indexterm><primary>SNAT</primary></indexterm>
+    <indexterm><primary>DNAT</primary></indexterm>
+    <indexterm><primary>Destination NAT</primary><seealso>DNAT</seealso></indexterm>
+    <indexterm><primary>Source NAT</primary><seealso>SNAT</seealso></indexterm>
+
     <para>The gateway can also perform two kinds of <emphasis>network
     address translation</emphasis> (or NAT for short). The first kind,
     <emphasis>Destination NAT</emphasis> (DNAT) is a technique to alter the
@@ -144,16 +167,12 @@
     addresses to be directly routable on the Internet (this does not imply
     that internal machines are accessible, since intermediary firewalls can
     filter traffic).</para>
-    <indexterm><primary>NAT</primary></indexterm>
-    <indexterm><primary>Network</primary><secondary>Address Translation</secondary></indexterm>
-    <indexterm><primary>SNAT</primary></indexterm>
-    <indexterm><primary>DNAT</primary></indexterm>
-    <indexterm><primary>Destination NAT</primary></indexterm>
-    <indexterm><primary>Source NAT</primary></indexterm>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Port forwarding</title>
       <indexterm><primary>port forwarding</primary></indexterm>
+      <indexterm><primary>network</primary><secondary>port forwarding</secondary></indexterm>
+      <indexterm><primary><command>redir</command></primary></indexterm>
 
       <para>A concrete application of DNAT is <emphasis>port
       forwarding</emphasis>. Incoming connections to a given port of a
@@ -164,6 +183,8 @@
       <command>redir</command>.</para>
     </sidebar>
 
+    <indexterm><primary>filesystem</primary><secondary>virtual</secondary><tertiary><filename>/proc/</filename></tertiary></indexterm>
+
     <para>Enough theory, let's get practical. Turning a Debian system into
     a gateway is a simple matter of enabling the appropriate option in the
     Linux kernel, by way of the <filename>/proc/</filename> virtual
@@ -173,8 +194,11 @@
 <computeroutput># </computeroutput><userinput>echo 1 &gt; /proc/sys/net/ipv4/conf/default/forwarding</userinput>
 </screen>
 
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/sysctl.conf</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/sysctl.d/</filename></secondary></indexterm>
     <para>This option can also be automatically enabled on boot if
-    <filename>/etc/sysctl.conf</filename> sets the
+    <filename>/etc/sysctl.conf</filename> or a configuration file in
+    <filename>/etc/sysctl.d/</filename> sets the
     <literal>net.ipv4.conf.default.forwarding</literal> option to
     <literal>1</literal>.</para>
 
@@ -187,6 +211,9 @@ net.ipv4.conf.default.rp_filter = 1
 net.ipv4.tcp_syncookies = 1
 </programlisting>
     </example>
+
+    <indexterm><primary>IP</primary><secondary>masquerading</secondary></indexterm>
+    <indexterm><primary>network</primary><secondary>masquerading</secondary></indexterm>
 
     <para>The same effect can be obtained for IPv6 by simply replacing
     <literal>ipv4</literal> with <literal>ipv6</literal> in the manual
