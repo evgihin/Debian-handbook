@@ -25,19 +25,21 @@
   </highlights>
   <section id="sect.gateway">
     <title>Gateway</title>
+    <indexterm><primary>gateway</primary></indexterm>
+    <indexterm><primary>network</primary><secondary>gateway</secondary></indexterm>
+    <indexterm><primary>router</primary></indexterm>
 
     <para>A gateway is a system linking several networks. This term often
     refers to a local network's “exit point” on the mandatory path to
     all external IP addresses. The gateway is connected to each of the
     networks it links together, and acts as a router to convey IP packets
     between its various interfaces.</para>
-    <indexterm><primary>gateway</primary></indexterm>
-    <indexterm><primary>network</primary><secondary>gateway</secondary></indexterm>
-    <indexterm><primary>router</primary></indexterm>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> IP packet</title>
       <indexterm><primary>packet</primary><secondary>IP</secondary></indexterm>
+      <indexterm><primary>IP</primary><seealso>Internet Protocol</seealso></indexterm>
+      <indexterm><primary>Internet Protocol</primary></indexterm>
 
       <para>Most networks nowadays use the IP protocol (<emphasis>Internet
       Protocol</emphasis>). This protocol segments the transmitted data
@@ -50,8 +52,10 @@
       <title><emphasis>BACK TO BASICS</emphasis> TCP/UDP</title>
       <indexterm><primary>port</primary><secondary>TCP</secondary></indexterm>
       <indexterm><primary>port</primary><secondary>UDP</secondary></indexterm>
-      <indexterm><primary>TCP, port</primary></indexterm>
-      <indexterm><primary>UDP, port</primary></indexterm>
+      <indexterm><primary>TCP</primary><secondary>port</secondary></indexterm>
+      <indexterm><primary>UDP</primary><secondary>port</secondary></indexterm>
+      <indexterm><primary>Transmission Control Protocol</primary><seealso></seealso></indexterm>
+      <indexterm><primary>User Datagram Protocol</primary><seealso>UDP</seealso></indexterm>
 
       <para>Many programs do not handle the individual packets themselves,
       even though the data they transmit does travel over IP; they often
@@ -82,13 +86,25 @@
       communications in parallel with the same correspondent, since these
       communications can be distinguished by the port number.</para>
 
+      <indexterm><primary>Internet Assigned Numbers Authority</primary><seealso>IANA</seealso></indexterm>
+      <indexterm><primary>IANA</primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/services</filename></secondary></indexterm>
+
       <para>Some of these port numbers — standardized by the IANA
       (<emphasis>Internet Assigned Numbers Authority</emphasis>) — are
-      “well-known” for being associated with network services. For
-      instance, TCP port 25 is generally used by the email server. <ulink
+      “well-known” for being associated with network services. For instance,
+      TCP port 25 is generally used by the email server. The list of services
+      associated with port numbers can be found in the
+      <filename>/etc/services</filename> file, also explained in
+      <citerefentry><refentrytitle>services</refentrytitle>
+      <manvolnum>5</manvolnum></citerefentry>, as well as in: <ulink
       type="block"
-      url="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml"/></para>
+      url="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml"/>
+      </para>
     </sidebar>
+
+    <indexterm><primary>IP</primary><secondary>masquerading</secondary></indexterm>
+    <indexterm><primary>network</primary><secondary>masquerading</secondary></indexterm>
 
     <para>When a local network uses a private address range (not routable
     on the Internet), the gateway needs to implement <emphasis>address
@@ -108,7 +124,7 @@
 
     <sidebar>
       <title><emphasis>CULTURE</emphasis> Private address range</title>
-      <indexterm><primary>IP address</primary><secondary>private</secondary></indexterm>
+      <indexterm><primary>IP</primary><secondary>private address</secondary></indexterm>
       <indexterm><primary>private IP address</primary></indexterm>
 
       <para>RFC 1918 defines three ranges of IPv4 addresses not meant to
@@ -144,16 +160,21 @@
     addresses to be directly routable on the Internet (this does not imply
     that internal machines are accessible, since intermediary firewalls can
     filter traffic).</para>
+
     <indexterm><primary>NAT</primary></indexterm>
-    <indexterm><primary>Network</primary><secondary>Address Translation</secondary></indexterm>
+    <indexterm><primary>Network Address Translation</primary><seealso>NAT</seealso></indexterm>
+    <indexterm><primary>network</primary><secondary>address translation</secondary><seealso>NAT</seealso></indexterm>
+    <indexterm><primary>network</primary><secondary>NAT</secondary></indexterm>
     <indexterm><primary>SNAT</primary></indexterm>
     <indexterm><primary>DNAT</primary></indexterm>
-    <indexterm><primary>Destination NAT</primary></indexterm>
-    <indexterm><primary>Source NAT</primary></indexterm>
+    <indexterm><primary>Destination NAT</primary><seealso>DNAT</seealso></indexterm>
+    <indexterm><primary>Source NAT</primary><seealso>SNAT</seealso></indexterm>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Port forwarding</title>
       <indexterm><primary>port forwarding</primary></indexterm>
+      <indexterm><primary>network</primary><secondary>port forwarding</secondary></indexterm>
+      <indexterm><primary><command>redir</command></primary></indexterm>
 
       <para>A concrete application of DNAT is <emphasis>port
       forwarding</emphasis>. Incoming connections to a given port of a
@@ -164,6 +185,8 @@
       <command>redir</command>.</para>
     </sidebar>
 
+    <indexterm><primary>filesystem</primary><secondary>virtual</secondary><tertiary><filename>/proc/</filename></tertiary></indexterm>
+
     <para>Enough theory, let's get practical. Turning a Debian system into
     a gateway is a simple matter of enabling the appropriate option in the
     Linux kernel, by way of the <filename>/proc/</filename> virtual
@@ -173,8 +196,11 @@
 <computeroutput># </computeroutput><userinput>echo 1 &gt; /proc/sys/net/ipv4/conf/default/forwarding</userinput>
 </screen>
 
+    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.conf</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.d/</filename></secondary></indexterm>
     <para>This option can also be automatically enabled on boot if
-    <filename>/etc/sysctl.conf</filename> sets the
+    <filename>/etc/sysctl.conf</filename> or a configuration file in
+    <filename>/etc/sysctl.d/</filename> sets the
     <literal>net.ipv4.conf.default.forwarding</literal> option to
     <literal>1</literal>.</para>
 
@@ -187,6 +213,9 @@ net.ipv4.conf.default.rp_filter = 1
 net.ipv4.tcp_syncookies = 1
 </programlisting>
     </example>
+
+    <indexterm><primary>IP</primary><secondary>masquerading</secondary></indexterm>
+    <indexterm><primary>network</primary><secondary>masquerading</secondary></indexterm>
 
     <para>The same effect can be obtained for IPv6 by simply replacing
     <literal>ipv4</literal> with <literal>ipv6</literal> in the manual
@@ -205,17 +234,20 @@ net.ipv4.tcp_syncookies = 1
   </section>
   <section id="sect.x509-cert">
     <title>X.509 certificates</title>
-    <indexterm><primary>certificates</primary></indexterm>
+    <indexterm><primary>certificates</primary><secondary>X.509</secondary></indexterm>
     <indexterm><primary>SSL</primary></indexterm>
+    <indexterm><primary>Secure Socket Layer</primary><seealso>SSL</seealso></indexterm>
     <indexterm><primary>TLS</primary></indexterm>
+    <indexterm><primary>Transport Layer Security</primary><seealso>TLS</seealso></indexterm>
     <indexterm><primary>X.509</primary><secondary>certificates</secondary></indexterm>
-    <indexterm><primary>CA</primary><see>Certificate Authority</see></indexterm>
+    <indexterm><primary>CA</primary><seealso>Certificate Authority</seealso></indexterm>
     <indexterm><primary>Certificate Authority</primary></indexterm>
 
     <para>Certificates are an important building block of many network services
-      built on cryptographic protocols, when they need some sort of
-      central authentication.
-    </para>
+    built on cryptographic protocols, when they need some sort of central
+    authentication.</para>
+
+    <indexterm><primary>IETF</primary></indexterm>
 
     <para>Among those protocols, SSL (<emphasis>Secure Socket Layer</emphasis>)
     was invented by Netscape to secure connections to web servers. It
@@ -228,6 +260,8 @@ net.ipv4.tcp_syncookies = 1
     between two or more communicating computer applications. The most common
     case on the Internet is the communication between a client (e.g. a web browser)
     and a server.</para>
+
+    <indexterm><primary>certificate</primary><secondary>root certificate</secondary></indexterm>
 
     <para>A key pair is needed for the exchange of information, which involves
     a public key that includes information about the identity of the owner
@@ -249,14 +283,18 @@ net.ipv4.tcp_syncookies = 1
 
     <section id="sect.trusted-certs">
       <title>Creating gratis trusted certificates</title>
+      <indexterm><primary>certificate</primary><secondary>trusted certificate</secondary></indexterm>
+      <indexterm><primary>certificate</primary><secondary>snakeoil certificate</secondary></indexterm>
+      <indexterm><primary>certificate</primary><secondary>letsencrypt</secondary><seealso><emphasis role="pkg">certbot</emphasis></seealso></indexterm>
+
       <para>Many programs create and use snakeoil certificates by default
       (see sidebar <xref linkend="sidebar.snakeoil-certs"/>).
       Fortunately the <emphasis role="pkg">certbot</emphasis> package brings
       everything we need to create our own trusted certificates, provided by
       the "Lets Encrypt" initiative (see sidebar <xref
       linkend="sidebar.letsencrypt"/>), which can also be used for mail
-      transport agents (Postfix) and mail delivery agents (Dovecot, Cyrus,
-      etc.).</para>
+      transport agents (Postfix), mail delivery agents (Dovecot, Cyrus,
+      etc.), and other network services.</para>
 
       <para>The Falcot administrators just want to create a certificate for
       their website, which runs on Apache. There is a convenient Apache plugin
@@ -265,39 +303,42 @@ net.ipv4.tcp_syncookies = 1
       use of it:</para>
 
       <indexterm><primary><emphasis role="pkg">certbot</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis role="pkg">python-certbot-apache</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">python3-certbot-apache</emphasis></primary></indexterm>
       <indexterm><primary>Apache</primary><secondary><emphasis role="pkg">certbot</emphasis></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><emphasis role="pkg">python3-certbot-apache</emphasis></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary>trusted certificates</secondary></indexterm>
 
-<screen>
-<computeroutput># </computeroutput><userinput>apt install python-certbot-apache
+      <screen>
+<computeroutput># </computeroutput><userinput>apt install python3-certbot-apache
 </userinput><computeroutput>[...]
 # </computeroutput><userinput>certbot --apache
-</userinput><computeroutput>Saving debug log to /var/log/letsencrypt/letsencrypt.log
+</userinput><computeroutput>aving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator apache, Installer apache
-Enter email address (used for urgent renewal and security notices) (Enter 'c' to
-cancel): </computeroutput><userinput>admin@falcot.com
+Enter email address (used for urgent renewal and security notices)
+ (Enter 'c' to cancel): </computeroutput><userinput>admin@falcot.com
 </userinput><computeroutput>
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please read the Terms of Service at
 https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf. You must
-agree in order to register with the ACME server at
-https://acme-v02.api.letsencrypt.org/directory
+agree in order to register with the ACME server. Do you agree?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-(A)gree/(C)ancel: </computeroutput><userinput>A
+(Y)es/(N)o: </computeroutput><userinput>Y
 </userinput><computeroutput>
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Would you be willing to share your email address with the Electronic Frontier
-Foundation, a founding partner of the Let's Encrypt project and the non-profit
-organization that develops Certbot? We'd like to send you email about our work
-encrypting the web, EFF news, campaigns, and ways to support digital freedom.
+Would you be willing, once your first certificate is successfully issued, to
+share your email address with the Electronic Frontier Foundation, a founding
+partner of the Let's Encrypt project and the non-profit organization that
+develops Certbot? We'd like to send you email about our work encrypting the web,
+EFF news, campaigns, and ways to support digital freedom.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 (Y)es/(N)o: </computeroutput><userinput> N
 </userinput><computeroutput>
+Account registered.
+
 No names were found in your configuration files. Please enter in your domain
 name(s) (comma and/or space separated)  (Enter 'c' to cancel): </computeroutput><userinput>falcot.com
-</userinput>
-<computeroutput>Obtaining a new certificate
+</userinput><computeroutput>
+Requesting a certificate for falcot.com
 Performing the following challenges:
 http-01 challenge for falcot.com
 Enabled Apache rewrite module
@@ -333,7 +374,7 @@ IMPORTANT NOTES:
    /etc/letsencrypt/live/falcot.com/fullchain.pem
    Your key file has been saved at:
    /etc/letsencrypt/live/falcot.com/privkey.pem
-   Your cert will expire on 2020-06-04. To obtain a new or tweaked
+   Your cert will expire on 2022-06-04. To obtain a new or tweaked
    version of this certificate in the future, simply run certbot again
    with the "certonly" option. To non-interactively renew *all* of
    your certificates, run "certbot renew"
@@ -349,179 +390,184 @@ IMPORTANT NOTES:
 </computeroutput>
 </screen>
 
-    <sidebar id="sidebar.letsencrypt">
-      <title><emphasis>CULTURE</emphasis> The Let's Encrypt Initiative</title>
+      <sidebar id="sidebar.letsencrypt">
+        <title><emphasis>CULTURE</emphasis> The Let's Encrypt Initiative</title>
+        <indexterm><primary>Let's Encrypt</primary></indexterm>
 
-      <para>The <ulink url="https://letsencrypt.org/">Let's Encrypt</ulink>
-      initiative is a joint effort to create a free, automated, and open
-      certificate authority (CA), run for the public's benefit. It is supported
-      by the <acronym>EFF</acronym> and the Linux Foundation. The initiative
-      provides an automated tool for acquiring and renewing certificates. This
-      reduces the amount of manual effort involved, especially if multiple
-      sites and domains must be managed. The certificates can also be used
-      for SIP, XMPP, WebSockets and TURN servers. Usage of the service
-      requires control over the DNS information of the domain in question
-      (domain validation).  <ulink
-      type="block" url="https://letsencrypt.org/how-it-works/"/></para>
+        <para>The <ulink url="https://letsencrypt.org/">Let's Encrypt</ulink>
+        initiative is a joint effort to create a free, automated, and open
+        certificate authority (CA), run for the public's benefit. It is supported
+        by the <acronym>EFF</acronym> and the Linux Foundation. The initiative
+        provides an automated tool for acquiring and renewing certificates. This
+        reduces the amount of manual effort involved, especially if multiple
+        sites and domains must be managed. The certificates can also be used
+        for SIP, XMPP, WebSockets and TURN servers. Usage of the service
+        requires control over the DNS information of the domain in question
+        (domain validation).  <ulink
+        type="block" url="https://letsencrypt.org/how-it-works/"/></para>
+      </sidebar>
 
-      <indexterm><primary>Let's Encrypt</primary></indexterm>
-    </sidebar>
+      <para>If you would rather keep the server running during the
+      certificate creation, you can use the webroot plugin to get
+      the certificate with the arguments <command>certonly</command> and
+      <command>--webroot</command>. You would have to specify a
+      <command>--webroot-path</command> (abbreviated <command>-w</command>), which
+      should contain the files served. The command looks as follows:</para>
 
-    <para>If you would rather keep the server running during the
-    certificate creation, you can use the webroot plugin to get
-    the certificate with the arguments <command>certonly</command> and
-    <command>--webroot</command>. You would have to specify a
-    <command>--webroot-path</command> (abbreviated <command>-w</command>), which
-    should contain the files served. The command looks as follows:</para>
+      <screen><computeroutput># </computeroutput><userinput>certbot certonly --webroot -w <replaceable>/var/www/html</replaceable> -d www.<replaceable>DOMAIN</replaceable>.com -d <replaceable>DOMAIN</replaceable>.com</userinput></screen>
 
-<screen><computeroutput># </computeroutput><userinput>certbot certonly --webroot -w <replaceable>/var/www/html</replaceable> -d www.<replaceable>DOMAIN</replaceable>.com -d <replaceable>DOMAIN</replaceable>.com</userinput></screen>
+      <para>You need to restart all services using the certificates that
+      you have created.</para>
 
-    <para>You need to restart all services using the certificates that
-    you have created.</para>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.d/certbot</filename></secondary></indexterm>
+      <indexterm><primary><command>certbot</command></primary></indexterm>
 
-    <para>The certificates created are so called short-life certificates,
-    which are valid for 90 days and must therefor be renewed every once in
-    three months using the <command>certbot renew</command> command. However, we
-    shouldn't renew every certificate manually, but automatically. A basic
-    cron job is included by <emphasis role="pkg">certbot</emphasis> in
-    <filename>/etc/cron.d/certbot</filename>. To ensure that certificates can
-    be automatically renewed, you can execute
-    <command>certbot renew --dry-run</command>.</para>
+      <para>The certificates created are so called short-life certificates,
+      which are valid for 90 days and must therefor be renewed every once in
+      three months using the <command>certbot renew</command> command. However, we
+      shouldn't renew every certificate manually, but automatically. A basic
+      cron job is included by <emphasis role="pkg">certbot</emphasis> in
+      <filename>/etc/cron.d/certbot</filename>. To ensure that certificates can
+      be automatically renewed, you can execute
+      <command>certbot renew --dry-run</command>.</para>
 
     </section>
-      <section id="sect.easy-rsa">
-        <title>Public Key Infrastructure: <emphasis>easy-rsa</emphasis></title>
-        <indexterm><primary>PKI (Public Key Infrastructure)</primary></indexterm>
-        <indexterm><primary>Public Key Infrastructure</primary></indexterm>
-        <indexterm><primary>X.509, certificate</primary></indexterm>
-        <indexterm><primary>certificate</primary><secondary>X.509</secondary></indexterm>
-        <indexterm><primary><emphasis>easy-rsa</emphasis></primary></indexterm>
-        <indexterm><primary>RSA (algorithm)</primary></indexterm>
-        <indexterm><primary>key pair</primary></indexterm>
+    <section id="sect.easy-rsa">
+      <title>Public Key Infrastructure: <emphasis>easy-rsa</emphasis></title>
+      <indexterm><primary>PKI</primary><seealso>Public Key Infrastructure</seealso></indexterm>
+      <indexterm><primary>Public Key Infrastructure</primary></indexterm>
+      <indexterm><primary>X.509</primary></indexterm>
+      <indexterm><primary>certificate</primary><secondary>X.509</secondary></indexterm>
+      <indexterm><primary><emphasis>easy-rsa</emphasis></primary></indexterm>
+      <indexterm><primary>RSA (algorithm)</primary></indexterm>
+      <indexterm><primary>algorithm</primary><secondary>RSA</secondary></indexterm>
+      <indexterm><primary>key pair</primary></indexterm>
 
-	<para>It is also possible to create our own CA, for that we will
-	use the RSA algorithm, widely used in public-key cryptography.
-	It involves a “key pair”, comprised of a private and a public
-	key. The two keys are closely linked to each other, and their
-	mathematical properties are such that a message encrypted with the
-	public key can only be decrypted by someone knowing the private
-	key, which ensures confidentiality. In the opposite direction, a
-	message encrypted with the private key can be decrypted by anyone
-	knowing the public key, which allows authenticating the origin of a
-	message since only someone with access to the private key could
-	generate it. When associated with a digital hash function (MD5,
-	SHA1, or a more recent variant), this leads to a signature
-	mechanism that can be applied to any message.</para>
+      <para>It is also possible to create our own CA, for that we will
+      use the RSA algorithm, widely used in public-key cryptography.
+      It involves a “key pair”, comprised of a private and a public
+      key. The two keys are closely linked to each other, and their
+      mathematical properties are such that a message encrypted with the
+      public key can only be decrypted by someone knowing the private
+      key, which ensures confidentiality. In the opposite direction, a
+      message encrypted with the private key can be decrypted by anyone
+      knowing the public key, which allows authenticating the origin of a
+      message since only someone with access to the private key could
+      generate it. When associated with a digital hash function (MD5,
+      SHA1, or a more recent variant), this leads to a signature
+      mechanism that can be applied to any message.</para>
 
-	<para>Since public CAs only emit
-	certificates in exchange for a (hefty) fee, it is also
-	possible to create a private certification authority within
-	the company. The <emphasis role="pkg">easy-rsa</emphasis>
-	package provides tools to serve as an X.509 certification
-	infrastructure, implemented as a set of scripts using the
-	<command>openssl</command> command.</para>
+      <para>Since public CAs only emit
+      certificates in exchange for a (hefty) fee, it is also
+      possible to create a private certification authority within
+      the company. The <emphasis role="pkg">easy-rsa</emphasis>
+      package provides tools to serve as an X.509 certification
+      infrastructure, implemented as a set of scripts using the
+      <command>openssl</command> command.</para>
 
-       <sidebar>
-         <title><emphasis>ALTERNATIVE</emphasis> GnuTLS</title>
-         <indexterm><primary>DTLS</primary></indexterm>
-         <indexterm><primary>GnuTLS</primary></indexterm>
-         <indexterm><primary>SSL</primary></indexterm>
-         <indexterm><primary>TLS</primary></indexterm>
+      <sidebar>
+        <title><emphasis>ALTERNATIVE</emphasis> GnuTLS</title>
+        <indexterm><primary>DTLS</primary></indexterm>
+        <indexterm><primary>GnuTLS</primary></indexterm>
+        <indexterm><primary>SSL</primary></indexterm>
+        <indexterm><primary>TLS</primary></indexterm>
 
-         <para>GnuTLS can also be used to generate a CA, and deal with
-         other technologies around the TLS, DTLS and SSL protocols.</para>
+        <para>GnuTLS can also be used to generate a CA, and deal with
+        other technologies around the TLS, DTLS and SSL protocols.</para>
 
-         <para>The package <emphasis role="pkg">gnutls-bin</emphasis> contains
-         the command-line utilities. It is also useful to install the
-         <emphasis role="pkg">gnutls-doc</emphasis> package, which
-         includes extensive documentation.</para>
-       </sidebar>
+        <para>The package <emphasis role="pkg">gnutls-bin</emphasis> contains
+        the command-line utilities. It is also useful to install the
+        <emphasis role="pkg">gnutls-doc</emphasis> package, which
+        includes extensive documentation.</para>
+      </sidebar>
 
-	<para>The Falcot Corp administrators use this tool to create
-	the required certificates, both for the server and the
-	clients. This allows the configuration of all clients to be
-	similar since they will only have to be set up so as to trust
-	certificates coming from Falcot's local CA. This CA is the
-	first certificate to create; to this end, the administrators
-	set up a directory with the files required for the CA in an
-	appropriate location, preferably on a machine not connected to
-	the network in order to mitigate the risk of the CA's private
-	key being stolen.</para>
+      <para>The Falcot Corp administrators use this tool to create
+      the required certificates, both for the server and the
+      clients. This allows the configuration of all clients to be
+      similar since they will only have to be set up so as to trust
+      certificates coming from Falcot's local CA. This CA is the
+      first certificate to create; to this end, the administrators
+      set up a directory with the files required for the CA in an
+      appropriate location, preferably on a machine not connected to
+      the network in order to mitigate the risk of the CA's private
+      key being stolen.</para>
 
-        <screen>
+      <screen>
 <computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot
 </userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>
 </screen>
 
-	<para>They then store the required parameters into the
-	<filename>vars</filename> file, which can be uncommented
-	and edited:</para>
+      <para>They then store the required parameters into the
+      <filename>vars</filename> file, which can be uncommented
+      and edited:</para>
 
-        <screen>
-<computeroutput>$ </computeroutput><userinput>vim vars
-</userinput><computeroutput>$ </computeroutput><userinput>grep EASYRSA vars
-</userinput><computeroutput>if [ -z "$EASYRSA_CALLER" ]; then
+      <screen>
+<computeroutput>$ </computeroutput><userinput>grep EASYRSA vars
+</userinput><computeroutput><![CDATA[if [ -z "$EASYRSA_CALLER" ]; then
 # easyrsa.  More specific variables for specific files (e.g., EASYRSA_SSL_CONF)
 #set_var EASYRSA	"${0%/*}"
 #set_var EASYRSA_OPENSSL	"openssl"
 #set_var EASYRSA_OPENSSL	"C:/Program Files/OpenSSL-Win32/bin/openssl.exe"
 #set_var EASYRSA_PKI		"$PWD/pki"
+#set_var EASYRSA_TEMP_DIR	"$EASYRSA_PKI"
 #set_var EASYRSA_DN	"cn_only"
-#set_var EASYRSA_REQ_COUNTRY	"FR"
-#set_var EASYRSA_REQ_PROVINCE	"Loire"
-#set_var EASYRSA_REQ_CITY	"Saint-Étienne"
-#set_var EASYRSA_REQ_ORG	"Falcot Corp"
-#set_var EASYRSA_REQ_EMAIL	"admin@falcot.com"
-#set_var EASYRSA_REQ_OU		"Certificate authority"
+#set_var EASYRSA_REQ_COUNTRY	"US"
+#set_var EASYRSA_REQ_PROVINCE	"California"
+#set_var EASYRSA_REQ_CITY	"San Francisco"
+#set_var EASYRSA_REQ_ORG	"Copyleft Certificate Co"
+#set_var EASYRSA_REQ_EMAIL	"me@example.net"
+#set_var EASYRSA_REQ_OU		"My Organizational Unit"
 #set_var EASYRSA_KEY_SIZE	2048
 #set_var EASYRSA_ALGO		rsa
 #set_var EASYRSA_CURVE		secp384r1
 #set_var EASYRSA_CA_EXPIRE	3650
-#set_var EASYRSA_CERT_EXPIRE	1080
-#set_var EASYRSA_CERT_RENEW	30
+#set_var EASYRSA_CERT_EXPIRE	825
 #set_var EASYRSA_CRL_DAYS	180
+#set_var EASYRSA_CERT_RENEW	30
+#set_var EASYRSA_RAND_SN	"yes"
 #set_var EASYRSA_NS_SUPPORT	"no"
 #set_var EASYRSA_NS_COMMENT	"Easy-RSA Generated Certificate"
 #set_var EASYRSA_TEMP_FILE	"$EASYRSA_PKI/extensions.temp"
 # when undefined here, default behaviour is to look in $EASYRSA_PKI first, then
 # fallback to $EASYRSA for the 'x509-types' dir.  You may override this
 #set_var EASYRSA_EXT_DIR	"$EASYRSA/x509-types"
+#set_var EASYRSA_KDC_REALM      "CHANGEME.EXAMPLE.COM"
 # EASYRSA_PKI or EASYRSA dir (in that order.) NOTE that this file is Easy-RSA
 #set_var EASYRSA_SSL_CONF	"$EASYRSA/openssl-easyrsa.cnf"
 #set_var EASYRSA_REQ_CN		"ChangeMe"
 #set_var EASYRSA_DIGEST		"sha256"
 #set_var EASYRSA_BATCH		""
-$ </computeroutput>
+]]>$ </computeroutput><userinput>vim vars
+</userinput><computeroutput>$ </computeroutput>
 </screen>
 
-<para>Now we prepare the public key infrastructure directory with the following command:</para>
+      <para>Now we prepare the public key infrastructure directory with the
+      following command:</para>
 
-<screen>
+      <screen>
 <computeroutput>$ </computeroutput><userinput>./easyrsa init-pki
 </userinput><computeroutput>
-Note: using Easy-RSA configuration from: ./vars
 
 init-pki complete; you may now create a CA or requests.
-Your newly created PKI dir is: /home/roland/pki-falcot/pki
-</computeroutput>
-</screen>
+Your newly created PKI dir is: /home/debian/pki-falcot/pki
 
-	<para>The next step is the creation of the CA's key pair itself
-	(the two parts of the key pair will be stored under
-	<filename>pki/ca.crt</filename> and
-	<filename>pki/private/ca.key</filename> during this step). We can
-	add the option <literal>nopass</literal> to avoid entering a password each
-	time the private key is used:</para>
+</computeroutput></screen>
 
-        <screen>
+      <para>The next step is the creation of the CA's key pair itself
+      (the two parts of the key pair will be stored under
+      <filename>pki/ca.crt</filename> and
+      <filename>pki/private/ca.key</filename> during this step). We can
+      add the option <literal>nopass</literal> to avoid entering a password each
+      time the private key is used:</para>
+
+      <!-- MAY CHANGE: output -->
+      <screen>
 <computeroutput>$ </computeroutput><userinput>./easyrsa build-ca nopass</userinput>
 <computeroutput>
-Note: using Easy-RSA configuration from: ./vars
-
-Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021
 Generating RSA private key, 2048 bit long modulus (2 primes)
-......................................................................................+++++
-......................+++++
+..................+++++
+...............................+++++
 e is 65537 (0x010001)
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
@@ -534,30 +580,31 @@ Common Name (eg: your user, host, or server name) [Easy-RSA CA]:
 
 CA creation complete and you may now import and sign cert requests.
 Your new CA certificate file for publishing is at:
-/home/roland/pki-falcot/pki/ca.crt
+/home/debian/pki-falcot/pki/ca.crt
 
-</computeroutput>
-</screen>
+</computeroutput></screen>
 
-	<para>The certificate can now be created, as well as the
-	Diffie-Hellman parameters required for the server side of
-	an SSL/TLS connection. They want to use it for a VPN server
-	(see section <xref linkend="sect.virtual-private-network"/>)
-	that is identified by the DNS name <literal>vpn.falcot.com</literal>;
-	this name is re-used for the generated key files
-	(<filename>keys/vpn.falcot.com.crt</filename> for the public
-	certificate, <filename>keys/vpn.falcot.com.key</filename> for the
-	private key):</para>
+      <indexterm><primary><filename>dh.pem</filename></primary></indexterm>
 
-        <screen>
+      <para>The certificate can now be created, as well as the
+      Diffie-Hellman parameters required for the server side of
+      an SSL/TLS connection. They want to use it for a VPN server
+      (see section <xref linkend="sect.virtual-private-network"/>)
+      that is identified by the DNS name <literal>vpn.falcot.com</literal>;
+      this name is re-used for the generated key files
+      (<filename>keys/vpn.falcot.com.crt</filename> for the public
+      certificate, <filename>keys/vpn.falcot.com.key</filename> for the
+      private key):</para>
+
+      <!-- MAY CHANGE: output -->
+      <screen>
 <computeroutput>$ </computeroutput><userinput>./easyrsa gen-req vpn.falcot.com nopass
-</userinput><computeroutput>Note: using Easy-RSA configuration from: ./vars
-
-Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+</userinput><computeroutput>
+Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021
 Generating a RSA private key
-.................................................................................+++++
-........+++++
-writing new private key to '/home/roland/pki-falcot/pki/private/vpn.falcot.com.key.E5c3RGJBUd'
+......................................+++++
+..........................................................................+++++
+writing new private key to '/home/debian/pki-falcot/pki/easy-rsa-5515.0PwyXl/tmp.g1c6u6'
 -----
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
@@ -569,14 +616,13 @@ If you enter '.', the field will be left blank.
 Common Name (eg: your user, host, or server name) [vpn.falcot.com]:
 
 Keypair and certificate request completed. Your files are:
-req: /home/roland/pki-falcot/pki/reqs/vpn.falcot.com.req
-key: /home/roland/pki-falcot/pki/private/vpn.falcot.com.key
+req: /home/debian/pki-falcot/pki/reqs/vpn.falcot.com.req
+key: /home/debian/pki-falcot/pki/private/vpn.falcot.com.key
+
 
 $ </computeroutput><userinput>./easyrsa sign-req server vpn.falcot.com
 </userinput><computeroutput>
-Note: using Easy-RSA configuration from: ./vars
-
-Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021
 
 
 You are about to sign the following certificate.
@@ -584,7 +630,7 @@ Please check over the details shown below for accuracy. Note that this request
 has not been cryptographically verified. Please be sure it came from a trusted
 source or that you have verified the request checksum with the sender.
 
-Request subject, to be signed as a server certificate for 1080 days:
+Request subject, to be signed as a server certificate for 825 days:
 
 subject=
     commonName                = vpn.falcot.com
@@ -592,70 +638,69 @@ subject=
 
 Type the word 'yes' to continue, or any other input to abort.
   Confirm request details: <userinput>yes
-</userinput>Using configuration from /home/roland/pki-falcot/pki/safessl-easyrsa.cnf
+</userinput>Using configuration from /home/debian/pki-falcot/pki/easy-rsa-5603.87iCIa/tmp.u8r8Fj
 Check that the request matches the signature
 Signature ok
 The Subject's Distinguished Name is as follows
 commonName            :ASN.1 12:'vpn.falcot.com'
-Certificate is to be certified until Jun 14 10:44:44 2022 GMT (1080 days)
+Certificate is to be certified until May 27 15:26:29 2024 GMT (825 days)
 
 Write out database with 1 new entries
 Data Base Updated
 
-Certificate created at: /home/roland/pki-falcot/pki/issued/vpn.falcot.com.crt
+Certificate created at: /home/debian/pki-falcot/pki/issued/vpn.falcot.com.crt
+
 
 $ </computeroutput><userinput>./easyrsa gen-dh
 </userinput><computeroutput>
-Note: using Easy-RSA configuration from: ./vars
-
-Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019
+sing SSL: openssl OpenSSL 1.1.1k  25 Mar 2021
 Generating DH parameters, 2048 bit long safe prime, generator 2
 This is going to take a long time
 […]
-DH parameters of size 2048 created at /home/roland/pki-falcot/pki/dh.pem
 
-</computeroutput>
-</screen>
+DH parameters of size 2048 created at /home/debian/pki-falcot/pki/dh.pem
 
-	<para>The following step creates certificates for the VPN clients;
-	one certificate is required for each computer or person allowed to
-	use the VPN:</para>
+</computeroutput></screen>
 
-        <screen>
+      <para>The following step creates certificates for the VPN clients;
+      one certificate is required for each computer or person allowed to
+      use the VPN:</para>
+
+      <screen>
 <computeroutput>$ </computeroutput><userinput>./easyrsa build-client-full JoeSmith nopass
 </userinput><computeroutput>
-Note: using Easy-RSA configuration from: ./vars
-
-Using SSL: openssl OpenSSL 1.1.1d  10 Sep 2019
+Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021
 Generating a RSA private key
-.......................................................+++++
-...........................+++++
-writing new private key to '/root/pki-falcot/pki/private/JoeSmith.key.Tgr8kk0a6a'
+...................................+++++
+.........................................................................................+++++
+writing new private key to '/home/debian/pki-falcot/pki/easy-rsa-5694.DOYwSn/tmp.RKlbOE'
 -----
-Using configuration from /root/pki-falcot/pki/safessl-easyrsa.cnf
+Using configuration from /home/debian/pki-falcot/pki/easy-rsa-5694.DOYwSn/tmp.d5QHAC
 Check that the request matches the signature
 Signature ok
 The Subject's Distinguished Name is as follows
 commonName            :ASN.1 12:'JoeSmith'
-Certificate is to be certified until Feb 20 04:52:43 2023 GMT (1080 days)
+Certificate is to be certified until May 27 15:29:25 2024 GMT (825 days)
 
 Write out database with 1 new entries
 Data Base Updated
+
 </computeroutput></screen>
 
-      </section>
+    </section>
   </section>
   <section id="sect.virtual-private-network">
     <title>Virtual Private Network</title>
+    <indexterm><primary>network</primary><secondary>virtual private</secondary></indexterm>
+    <indexterm><primary>VPN</primary></indexterm>
+    <indexterm><primary>virtual private network</primary><seealso>VPN</seealso></indexterm>
+    <indexterm><primary>IP</primary><secondary>IPsec</secondary></indexterm>
 
     <para>A <emphasis>Virtual Private Network</emphasis> (VPN for short) is
     a way to link two different local networks through the Internet by way
     of a tunnel; the tunnel is usually encrypted for confidentiality. VPNs
     are often used to integrate a remote machine within a company's local
     network.</para>
-    <indexterm><primary>network</primary><secondary>virtual private</secondary></indexterm>
-    <indexterm><primary>VPN</primary></indexterm>
-    <indexterm><primary>virtual private network</primary></indexterm>
 
     <para>Several tools provide this functionality. OpenVPN is an efficient solution,
     easy to deploy and maintain, based on SSL/TLS. Another possibility is
@@ -665,9 +710,13 @@ Data Base Updated
     to provide a VPN, in addition to its more conventional features.
     Finally, a VPN can be established using Microsoft's PPTP protocol.
     Other solutions exist, but are beyond the focus of this book.</para>
+
     <section id="sect.openvpn">
       <title>OpenVPN</title>
       <indexterm><primary>OpenVPN</primary></indexterm>
+      <indexterm><primary>VPN</primary><secondary>OpenVPN</secondary></indexterm>
+      <indexterm><primary>network</primary><secondary><literal>tun</literal> interface</secondary></indexterm>
+      <indexterm><primary>network</primary><secondary><literal>tap</literal> interface</secondary></indexterm>
 
       <para>OpenVPN is a piece of software dedicated to creating virtual
       private networks. Its setup involves creating virtual network
@@ -688,122 +737,143 @@ Data Base Updated
 
       <section>
         <title>Configuring the OpenVPN Server</title>
+        <indexterm><primary>OpenVPN</primary><secondary>server</secondary></indexterm>
 
-	<para>After all certificates have been created
-	(follow the instructions from <xref linkend="sect.easy-rsa"/>),
-	they need to be copied where appropriate: the root certificate's
-	public key (<filename>pki/ca.crt</filename>) will be stored on
-	all machines (both server and clients) as
-	<filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
-	certificate is installed only on the server
-	(<filename>pki/issued/vpn.falcot.com.crt</filename> goes to
-	<filename>/etc/ssl/certs/vpn.falcot.com.crt</filename>, and
-	<filename>pki/private/vpn.falcot.com.key</filename> goes to
-	<filename>/etc/ssl/private/vpn.falcot.com.key</filename> with
-	restricted permissions so that only the administrator can read it),
-	with the corresponding Diffie-Hellman parameters
-	(<filename>pki/dh.pem</filename>) installed to
-	<filename>/etc/openvpn/dh.pem</filename>. Client certificates
-	are installed on the corresponding VPN client in a similar
-	fashion.</para>
-      </section>
-      <section>
-        <title>Configuring the OpenVPN Server</title>
+        <para>After all certificates have been created
+        (follow the instructions from <xref linkend="sect.easy-rsa"/>),
+        they need to be copied where appropriate: the root certificate's
+        public key (<filename>pki/ca.crt</filename>) will be stored on
+        all machines (both server and clients) as
+        <filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
+        certificate is installed only on the server
+        (<filename>pki/issued/vpn.falcot.com.crt</filename> goes to
+        <filename>/etc/ssl/certs/vpn.falcot.com.crt</filename>, and
+        <filename>pki/private/vpn.falcot.com.key</filename> goes to
+        <filename>/etc/ssl/private/vpn.falcot.com.key</filename> with
+        restricted permissions so that only the administrator can read it),
+        with the corresponding Diffie-Hellman parameters
+        (<filename>pki/dh.pem</filename>) installed to
+        <filename>/etc/openvpn/dh.pem</filename>. Client certificates
+        are installed on the corresponding VPN client in a similar
+        fashion.</para>
 
-	<para>By default, the OpenVPN initialization script tries starting
-	all virtual private networks defined in
-	<filename>/etc/openvpn/*.conf</filename>. Setting up a VPN server
-	is therefore a matter of storing a corresponding configuration file
-	in this directory. A good starting point is
-	<filename>/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz</filename>,
-	which leads to a rather standard server. Of course, some parameters
-	need to be adapted: <literal>ca</literal>, <literal>cert</literal>,
-	<literal>key</literal> and <literal>dh</literal> need to describe
-	the selected locations (respectively,
-	<literal>/etc/ssl/certs/Falcot_CA.crt</literal>,
-	<literal>/etc/ssl/vpn.falcot.com.crt</literal>,
-	<literal>/etc/ssl/private/vpn.falcot.com.key</literal> and
-	<literal>/etc/openvpn/dh.pem</literal>). The <literal>server
-	10.8.0.0 255.255.255.0</literal> directive defines the subnet to be
-	used by the VPN; the server uses the first IP address in that range
-	(<literal>10.8.0.1</literal>) and the rest of the addresses are
-	allocated to clients.</para>
+        <indexterm><primary><filename>/etc</filename></primary><secondary>/etc/ssl/certs/</secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary>/etc/ssl/private/</secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary>/etc/openvpn/dh.pem</secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary>/etc/openvpn/*.conf</secondary></indexterm>
 
-	<para>With this configuration, starting OpenVPN creates the virtual
-	network interface, usually under the <literal>tun0</literal> name.
-	However, firewalls are often configured at the same time as the
-	real network interfaces, which happens before OpenVPN starts. Good
-	practice therefore recommends creating a persistent virtual network
-	interface, and configuring OpenVPN to use this pre-existing
-	interface. This further allows choosing the name for this
-	interface. To this end, <command>openvpn --mktun --dev vpn
-	--dev-type tun</command> creates a virtual network interface named
-	<literal>vpn</literal> with type <literal>tun</literal>; this
-	command can easily be integrated in the firewall configuration
-	script, or in an <literal>up</literal> directive of the
-	<filename>/etc/network/interfaces</filename> file, or a
-	<emphasis role="package">udev</emphasis> rule can be added to that
-	end. The OpenVPN configuration file must also be updated
+        <para>By default, the OpenVPN initialization script tries starting
+        all virtual private networks defined in
+        <filename>/etc/openvpn/*.conf</filename>. Setting up a VPN server
+        is therefore a matter of storing a corresponding configuration file
+        in this directory. A good starting point is
+        <filename>/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz</filename>,
+        which leads to a rather standard server. Of course, some parameters
+        need to be adapted: <literal>ca</literal>, <literal>cert</literal>,
+        <literal>key</literal> and <literal>dh</literal> need to describe
+        the selected locations (respectively,
+        <literal>/etc/ssl/certs/Falcot_CA.crt</literal>,
+        <literal>/etc/ssl/vpn.falcot.com.crt</literal>,
+        <literal>/etc/ssl/private/vpn.falcot.com.key</literal> and
+        <literal>/etc/openvpn/dh.pem</literal>). The <literal>server
+        10.8.0.0 255.255.255.0</literal> directive defines the subnet to be
+        used by the VPN; the server uses the first IP address in that range
+        (<literal>10.8.0.1</literal>) and the rest of the addresses are
+        allocated to clients.</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary>/etc/network/interfaces</secondary></indexterm>
+        <indexterm><primary>network</primary><secondary>virtual interface</secondary></indexterm>
+        <indexterm><primary>OpenVPN</primary><secondary>network interface</secondary></indexterm>
+
+        <para>With this configuration, starting OpenVPN creates the virtual
+        network interface, usually under the <literal>tun0</literal> name.
+        However, firewalls are often configured at the same time as the
+        real network interfaces, which happens before OpenVPN starts. Good
+        practice therefore recommends creating a persistent virtual network
+        interface, and configuring OpenVPN to use this pre-existing
+        interface. This further allows choosing the name for this
+        interface. To this end, <command>openvpn --mktun --dev vpn
+        --dev-type tun</command> creates a virtual network interface named
+        <literal>vpn</literal> with type <literal>tun</literal>; this
+        command can easily be integrated in the firewall configuration
+        script, or in an <literal>up</literal> directive of the
+        <filename>/etc/network/interfaces</filename> file, or a
+        <emphasis role="package">udev</emphasis> rule can be added to that
+        end. The OpenVPN configuration file must also be updated
         accordingly, with the <literal>dev vpn</literal> and
         <literal>dev-type tun</literal> directives.</para>
 
-	<para>Barring further action, VPN clients can only access the VPN
-	server itself by way of the <literal>10.8.0.1</literal> address.
-	Granting the clients access to the local network (192.168.0.0/24),
-	requires adding a <literal>push route 192.168.0.0
-	255.255.255.0</literal> directive to the OpenVPN configuration so
-	that VPN clients automatically get a network route telling them
-	that this network is reachable by way of the VPN. Furthermore,
-	machines on the local network also need to be informed that the
-	route to the VPN goes through the VPN server (this automatically
-	works when the VPN server is installed on the gateway).
-	Alternatively, the VPN server can be configured to perform IP
-	masquerading so that connections coming from VPN clients appear as
-	if they are coming from the VPN server instead (see <xref
-	linkend="sect.gateway"/>).</para>
+        <indexterm><primary>OpenVPN</primary><secondary>push route</secondary></indexterm>
+
+        <para>Barring further action, VPN clients can only access the VPN
+        server itself by way of the <literal>10.8.0.1</literal> address.
+        Granting the clients access to the local network (192.168.0.0/24),
+        requires adding a <literal>push route 192.168.0.0
+        255.255.255.0</literal> directive to the OpenVPN configuration so
+        that VPN clients automatically get a network route telling them
+        that this network is reachable by way of the VPN. Furthermore,
+        machines on the local network also need to be informed that the
+        route to the VPN goes through the VPN server (this automatically
+        works when the VPN server is installed on the gateway).
+        Alternatively, the VPN server can be configured to perform IP
+        masquerading so that connections coming from VPN clients appear as
+        if they are coming from the VPN server instead (see <xref
+        linkend="sect.gateway"/>).</para>
       </section>
       <section>
         <title>Configuring the OpenVPN Client</title>
+        <indexterm><primary>OpenVPN</primary><secondary>client</secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary>/etc/openvpn/*.conf</secondary></indexterm>
 
-	<para>Setting up an OpenVPN client also requires creating a
-	configuration file in <filename>/etc/openvpn/</filename>. A
-	standard configuration can be obtained by using
-	<filename>/usr/share/doc/openvpn/examples/sample-config-files/client.conf</filename>
-	as a starting point. The <literal>remote vpn.falcot.com
-	1194</literal> directive describes the address and port of the
-	OpenVPN server; the <literal>ca</literal>, <literal>cert</literal>
-	and <literal>key</literal> also need to be adapted to describe the
-	locations of the key files.</para>
+        <para>Setting up an OpenVPN client also requires creating a
+        configuration file in <filename>/etc/openvpn/</filename>. A
+        standard configuration can be obtained by using
+        <filename>/usr/share/doc/openvpn/examples/sample-config-files/client.conf</filename>
+        as a starting point. The <literal>remote vpn.falcot.com
+        1194</literal> directive describes the address and port of the
+        OpenVPN server; the <literal>ca</literal>, <literal>cert</literal>
+        and <literal>key</literal> also need to be adapted to describe the
+        locations of the key files.</para>
 
-	<para>If the VPN should not be started automatically on boot, set
-	the <literal>AUTOSTART</literal> directive to
-	<literal>none</literal> in the
-	<filename>/etc/default/openvpn</filename> file. Starting or
-	stopping a given VPN connection is always possible with the
-	commands <command>systemctl start openvpn@<replaceable>name</replaceable></command> and
-	<command>systemctl stop openvpn@<replaceable>name</replaceable></command> (where the connection
-	<replaceable>name</replaceable> matches the one defined in
-	<filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename>).</para>
+        <indexterm><primary>OpenVPN</primary><secondary><literal>AUTOSTART</literal></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary>/etc/default/openvpn</secondary></indexterm>
+        <indexterm><primary>service</primary><secondary><filename>openvpn@.service</filename></secondary></indexterm>
 
-	<para>The <emphasis
-	role="pkg">network-manager-openvpn-gnome</emphasis> package
-	contains an extension to Network Manager (see <xref
-	linkend="sect.roaming-network-config"/>) that allows managing
-	OpenVPN virtual private networks. This allows every user to
-	configure OpenVPN connections graphically and to control them from
-	the network management icon. <indexterm><primary><emphasis
-	role="pkg">network-manager-openvpn-gnome</emphasis></primary></indexterm></para>
+        <para>If the VPN should not be started automatically on boot, set
+        the <literal>AUTOSTART</literal> directive to
+        <literal>none</literal> in the
+        <filename>/etc/default/openvpn</filename> file. Starting or
+        stopping a given VPN connection is always possible with the
+        commands <command>systemctl start openvpn@<replaceable>name</replaceable></command> and
+        <command>systemctl stop openvpn@<replaceable>name</replaceable></command> (where the connection
+        <replaceable>name</replaceable> matches the one defined in
+        <filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename>).</para>
+
+        <indexterm><primary>OpenVPN</primary><secondary><emphasis role="pkg">network-manager-openvpn-gnome</emphasis></secondary></indexterm>
+
+        <para>The <emphasis
+        role="pkg">network-manager-openvpn-gnome</emphasis> package
+        contains an extension to Network Manager (see <xref
+        linkend="sect.roaming-network-config"/>) that allows managing
+        OpenVPN virtual private networks. This allows every user to
+        configure OpenVPN connections graphically and to control them from
+        the network management icon.</para>
+        <indexterm><primary><emphasis role="pkg">network-manager-openvpn-gnome</emphasis></primary></indexterm>
       </section>
     </section>
     <section id="sect.ssh-vpn">
       <title>Virtual Private Network with SSH</title>
-      <indexterm><primary>SSH</primary></indexterm>
+      <indexterm><primary>SSH</primary><secondary>VPN</secondary></indexterm>
       <indexterm><primary>PPP</primary></indexterm>
 
       <para>There are actually two ways of creating a virtual private
       network with SSH. The historic one involves establishing a PPP layer
       over the SSH link. This method is described in a HOWTO document:
       <ulink type="block" url="https://www.tldp.org/HOWTO/ppp-ssh/"/></para>
+
+      <indexterm><primary>network</primary><secondary><literal>tun</literal> interface</secondary></indexterm>
+      <indexterm><primary>SSH</primary><secondary><literal>PermitTunnel</literal></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ssh/sshd_config</filename></secondary></indexterm>
 
       <para>The second method is more recent, and was introduced with
       OpenSSH 4.3; it is now possible for OpenSSH to create virtual
@@ -838,6 +908,7 @@ Data Base Updated
     <section id="sect.ipsec">
       <title>IPsec</title>
       <indexterm><primary>IPsec</primary></indexterm>
+      <indexterm><primary>Internet Protocol Security</primary><see>IPsec</see></indexterm>
       <indexterm><primary><command>libreswan</command></primary></indexterm>
       <indexterm><primary><command>strongswan</command></primary></indexterm>
 
@@ -847,7 +918,10 @@ Data Base Updated
       configuration tools, are provided by the <emphasis
       role="pkg">libreswan</emphasis> package or the
       <emphasis role="pkg">strongswan</emphasis> package. Here we describe
-      briefly the <emphasis role="pkg">libreswan</emphasis> option.</para>
+      briefly the first of these options.</para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ipsec.conf</filename></secondary></indexterm>
+      <indexterm><primary>IPsec</primary><secondary>tunnel</secondary></indexterm>
 
       <para>First, we install the <emphasis role="pkg">libreswan</emphasis>
       package. In concrete terms, each host's
@@ -859,12 +933,15 @@ Data Base Updated
       documentation has more examples with explanations:
       <ulink type="block" url="https://libreswan.org/wiki/"/></para>
 
+      <indexterm><primary>service</primary><secondary><filename>ipsec.service</filename></secondary></indexterm>
+
       <para>The IPsec service can be controlled with <command>systemctl</command>;
       for example, <command>systemctl start ipsec</command> will start the
       IPsec service.</para>
 
       <indexterm><primary>IKE</primary></indexterm>
-      <indexterm><primary>IPsec</primary><secondary>IPsec Key Exchange</secondary></indexterm>
+      <indexterm><primary>IPsec Key Exchange</primary><see>IKE</see></indexterm>
+      <indexterm><primary>IPsec</primary><secondary>IPsec Key Exchange</secondary><seealso>IKE</seealso></indexterm>
       <indexterm><primary>key pair</primary></indexterm>
       <indexterm><primary><command>setkey</command></primary></indexterm>
 
@@ -875,60 +952,63 @@ Data Base Updated
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> IPsec and NAT</title>
-
-	<para>NATing firewalls and IPsec do not work well together: since
-	IPsec signs the packets, any change on these packets that the
-	firewall might perform will void the signature, and the packets
-	will be rejected at their destination. Various IPsec
-	implementations now include the <emphasis>NAT-T</emphasis>
-	technique (for <emphasis>NAT Traversal</emphasis>), which basically
-	encapsulates the IPsec packet within a standard UDP packet.</para>
+        <indexterm><primary>NAT</primary></indexterm>
         <indexterm><primary>NAT-T</primary></indexterm>
-        <indexterm><primary>NAT Traversal</primary></indexterm>
+        <indexterm><primary>NAT Traversal</primary><seealso>NAT-T</seealso></indexterm>
+
+        <para>NATing firewalls and IPsec do not work well together: since
+        IPsec signs the packets, any change on these packets that the
+        firewall might perform will void the signature, and the packets
+        will be rejected at their destination. Various IPsec
+        implementations now include the <emphasis>NAT-T</emphasis>
+        technique (for <emphasis>NAT Traversal</emphasis>), which basically
+        encapsulates the IPsec packet within a standard UDP packet.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> IPsec and firewalls</title>
-
-	<para>The standard mode of operation of IPsec involves data
-	exchanges on UDP port 500 for key exchanges (also on UDP
-	port 4500 in the case that NAT-T is in use). Moreover, IPsec packets use
-	two dedicated IP protocols that the firewall must let through;
-	reception of these packets is based on their protocol numbers, 50
-	(ESP) and 51 (AH).</para>
         <indexterm><primary>ESP, protocol</primary></indexterm>
         <indexterm><primary>AH, protocol</primary></indexterm>
         <indexterm><primary>protocol</primary><secondary>AH</secondary></indexterm>
         <indexterm><primary>protocol</primary><secondary>ESP</secondary></indexterm>
+
+        <para>The standard mode of operation of IPsec involves data
+        exchanges on UDP port 500 for key exchanges (also on UDP
+        port 4500 in the case that NAT-T is in use). Moreover, IPsec packets use
+        two dedicated IP protocols that the firewall must let through;
+        reception of these packets is based on their protocol numbers, 50
+        (ESP) and 51 (AH).</para>
       </sidebar>
     </section>
     <section id="sect.pptp">
       <title>PPTP</title>
+      <indexterm><primary>PPTP</primary></indexterm>
+      <indexterm><primary>GRE, protocol</primary></indexterm>
+      <indexterm><primary>protocol</primary><secondary>GRE</secondary></indexterm>
 
       <para>PPTP (for <emphasis>Point-to-Point Tunneling
       Protocol</emphasis>) uses two communication channels, one for control
       data and one for payload data; the latter uses the GRE protocol
       (<emphasis>Generic Routing Encapsulation</emphasis>). A standard PPP
       link is then set up over the data exchange channel.</para>
-      <indexterm><primary>PPTP</primary></indexterm>
-      <indexterm><primary>Point-to-Point Tunneling Protocol</primary></indexterm>
-      <indexterm><primary>GRE, protocol</primary></indexterm>
-      <indexterm><primary>protocol</primary><secondary>GRE</secondary></indexterm>
+
       <section id="sect.pptp-config-client">
         <title>Configuring the Client</title>
-
-	<para>The <emphasis role="pkg">pptp-linux</emphasis> package
-	contains an easily-configured PPTP client for Linux. The following
-	instructions take their inspiration from the official
-	documentation: <ulink type="block"
-	url="http://pptpclient.sourceforge.net/howto-debian.phtml"/></para>
+        <indexterm><primary>PPTP</primary><secondary>Client</secondary></indexterm>
         <indexterm><primary><emphasis role="pkg">pptp-linux</emphasis></primary></indexterm>
 
-	<para>The Falcot administrators created several files:
-	<filename>/etc/ppp/options.pptp</filename>,
-	<filename>/etc/ppp/peers/falcot</filename>,
-	<filename>/etc/ppp/ip-up.d/falcot</filename>, and
-	<filename>/etc/ppp/ip-down.d/falcot</filename>.</para>
+        <para>The <emphasis role="pkg">pptp-linux</emphasis> package
+        contains an easily-configured PPTP client for Linux. The following
+        instructions take their inspiration from the official
+        documentation: <ulink type="block"
+        url="http://pptpclient.sourceforge.net/howto-debian.phtml"/></para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ppp/</filename></secondary></indexterm>        
+        <para>The Falcot administrators created several files:
+        <filename>/etc/ppp/options.pptp</filename>,
+        <filename>/etc/ppp/peers/falcot</filename>,
+        <filename>/etc/ppp/ip-up.d/falcot</filename>, and
+        <filename>/etc/ppp/ip-down.d/falcot</filename>.</para>
 
         <example id="example.ppp-options.pptp">
           <title>The <filename>/etc/ppp/options.pptp</filename> file</title>
@@ -984,64 +1064,54 @@ fi
 
         <sidebar>
           <title><emphasis>SECURITY</emphasis> MPPE</title>
-
-	  <para>Securing PPTP involves using the MPPE feature
-	  (<emphasis>Microsoft Point-to-Point Encryption</emphasis>), which
-	  is available in official Debian kernels as a module.</para>
           <indexterm><primary>MPPE</primary></indexterm>
-          <indexterm><primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary></indexterm>
+          <indexterm><primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary><see>MPPE</see></indexterm>
+
+          <para>Securing PPTP involves using the MPPE feature
+          (<emphasis>Microsoft Point-to-Point Encryption</emphasis>), which
+          is available in official Debian kernels as a module.</para>
         </sidebar>
       </section>
       <section id="sect.pptp-config-serveur">
         <title>Configuring the Server</title>
+        <indexterm><primary><command>pptpd</command></primary></indexterm>
 
         <sidebar>
           <title><emphasis>CAUTION</emphasis> PPTP and firewalls</title>
 
-	  <para>Intermediate firewalls need to be configured to let through
-	  IP packets using protocol 47 (GRE). Moreover, the PPTP server's
-	  port 1723 needs to be open so that the communication channel can
-	  happen.</para>
+          <para>Intermediate firewalls need to be configured to let through
+          IP packets using protocol 47 (GRE). Moreover, the PPTP server's
+          port 1723 needs to be open so that the communication channel can
+          happen.</para>
         </sidebar>
 
-	<para><command>pptpd</command> is the PPTP server for Linux. Its
-	main configuration file, <filename>/etc/pptpd.conf</filename>,
-	requires very few changes: <emphasis>localip</emphasis> (local IP
-	address) and <emphasis>remoteip</emphasis> (remote IP address). In
-	the example below, the PPTP server always uses the
-	<literal>192.168.0.199</literal> address, and PPTP clients receive
-	IP addresses from <literal>192.168.0.200</literal> to
-	<literal>192.168.0.250</literal>.</para>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/pptpd.conf</filename></secondary></indexterm>
+        <para><command>pptpd</command> is the PPTP server for Linux. Its
+        main configuration file, <filename>/etc/pptpd.conf</filename>,
+        requires very few changes: <emphasis>localip</emphasis> (local IP
+        address) and <emphasis>remoteip</emphasis> (remote IP address). In
+        the example below, the PPTP server always uses the
+        <literal>192.168.0.199</literal> address, and PPTP clients receive
+        IP addresses from <literal>192.168.0.200</literal> to
+        <literal>192.168.0.250</literal>.</para>
 
         <example id="example.pptpd.conf">
           <title>The <filename>/etc/pptpd.conf</filename> file</title>
 
           <programlisting>
-# TAG: speed
-#
-#       Specifies the speed for the PPP daemon to talk at.
-#
-speed 115200
-
-# TAG: option
-#
-#       Specifies the location of the PPP options file.
-#       By default PPP looks in '/etc/ppp/options'
-#
-option /etc/ppp/pptpd-options
-
-# TAG: debug
-#
-#       Turns on (more) debugging to syslog
-#
-# debug
-
+[..]
 # TAG: localip
 # TAG: remoteip
-#
 #       Specifies the local and remote IP address ranges.
 #
-#       You can specify single IP addresses separated by commas or you can
+#       These options are ignored if delegate option is set.
+#
+#       Any addresses work as long as the local machine takes care of the
+#       routing.  But if you want to use MS-Windows networking, you should
+#       use IP addresses out of the LAN address space and use the proxyarp
+#       option in the pppd options file, or run bcrelay.
+#
+#       You can specify single IP addresses seperated by commas or you can
 #       specify ranges, or both. For example:
 #
 #               192.168.0.234,192.168.0.245-249,192.168.0.254
@@ -1050,54 +1120,67 @@ option /etc/ppp/pptpd-options
 #
 #       1. No spaces are permitted between commas or within addresses.
 #
-#       2. If you give more IP addresses than MAX_CONNECTIONS, it will
-#          start at the beginning of the list and go until it gets
-#          MAX_CONNECTIONS IPs. Others will be ignored.
+#       2. If you give more IP addresses than the value of connections,
+#          it will start at the beginning of the list and go until it
+#          gets connections IPs.  Others will be ignored.
 #
-#       3. No shortcuts in ranges! i.e. 234-8 does not mean 234 to 238,
+#       3. No shortcuts in ranges! ie. 234-8 does not mean 234 to 238,
 #          you must type 234-238 if you mean this.
 #
 #       4. If you give a single localIP, that's ok - all local IPs will
 #          be set to the given one. You MUST still give at least one remote
 #          IP for each simultaneous client.
 #
+# (Recommended)
+#localip 192.168.0.1
+#remoteip 192.168.0.234-238,192.168.0.245
+# or
 #localip 192.168.0.234-238,192.168.0.245
 #remoteip 192.168.1.234-238,192.168.1.245
-#localip 10.0.1.1
-#remoteip 10.0.1.2-100
 localip 192.168.0.199
 remoteip 192.168.0.200-250
 </programlisting>
         </example>
 
-	<para>The PPP configuration used by the PPTP server also requires a
-	few changes in <filename>/etc/ppp/pptpd-options</filename>. The
-	important parameters are the server name (<literal>pptp</literal>),
-	the domain name (<literal>falcot.com</literal>), and the IP
-	addresses for DNS and WINS servers.</para>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ppp/pptpd-options</filename></secondary></indexterm>
+
+        <para>The PPP configuration used by the PPTP server also requires a
+        few changes in <filename>/etc/ppp/pptpd-options</filename>. The
+        important parameters are the server name (<literal>pptp</literal>),
+        the domain name (<literal>falcot.com</literal>), and the IP
+        addresses for DNS and WINS servers.</para>
 
         <example id="example.ppp-pptpd-options">
           <title>The <filename>/etc/ppp/pptpd-options</filename> file</title>
 
           <programlisting>
-## turn pppd syslog debugging on
+# Enable connection debugging facilities.
+# (see your syslog configuration for where pppd sends to)
 #debug
 
-## change 'servername' to whatever you specify as your server name in chap-secrets
-name pptp
+# Name of the local system for authentication purposes
+# (must match the second field in /etc/ppp/chap-secrets entries)
+name pptpd
+
+# Optional: domain name to use for authentication
 ## change the domainname to your local domain
 domain falcot.com
 
+# Authentication
 ## these are reasonable defaults for WinXXXX clients
 ## for the security related settings
-# The Debian pppd package now supports both MSCHAP and MPPE, so enable them
-# here. Please note that the kernel support for MPPE must also be present!
 auth
-require-chap
-require-mschap
+refuse-pap
+refuse-chap
+refuse-mschap
+# Require the peer to authenticate itself using MS-CHAPv2 [Microsoft
+# Challenge Handshake Authentication Protocol, Version 2] authentication.
 require-mschap-v2
+# Require MPPE 128-bit encryption
+# (note that MPPE requires the use of MSCHAP-V2 during authentication)
 require-mppe-128
 
+# Network and Routing
 ## Fill in your addresses
 ms-dns 192.168.0.1
 ms-wins 192.168.0.1
@@ -1112,18 +1195,20 @@ lock
 </programlisting>
         </example>
 
-	<para>The last step involves registering the <literal>vpn</literal>
-	user (and the associated password) in the
-	<filename>/etc/ppp/chap-secrets</filename> file. Contrary to other
-	instances where an asterisk (<literal>*</literal>) would work, the
-	server name must be filled explicitly here. Furthermore, Windows
-	PPTP clients identify themselves under the
-	<literal><replaceable>DOMAIN</replaceable>\\<replaceable>USER</replaceable></literal>
-	form, instead of only providing a user name. This explains why the
-	file also mentions the <literal>FALCOT\\vpn</literal> user. It is
-	also possible to specify individual IP addresses for users; an
-	asterisk in this field specifies that dynamic addressing should be
-	used.</para>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ppp/chap-secrets</filename></secondary></indexterm>
+
+        <para>The last step involves registering the <literal>vpn</literal>
+        user (and the associated password) in the
+        <filename>/etc/ppp/chap-secrets</filename> file. Contrary to other
+        instances where an asterisk (<literal>*</literal>) would work, the
+        server name must be filled explicitly here. Furthermore, Windows
+        PPTP clients identify themselves under the
+        <literal><replaceable>DOMAIN</replaceable>\\<replaceable>USER</replaceable></literal>
+        form, instead of only providing a user name. This explains why the
+        file also mentions the <literal>FALCOT\\vpn</literal> user. It is
+        also possible to specify individual IP addresses for users; an
+        asterisk in this field specifies that dynamic addressing should be
+        used.</para>
 
         <example id="example.ppp-chap-secrets">
           <title>The <filename>/etc/ppp/chap-secrets</filename> file</title>
@@ -1138,15 +1223,16 @@ FALCOT\\vpn     pptp    f@Lc3au     *
 
         <sidebar>
           <title><emphasis>SECURITY</emphasis> PPTP vulnerabilities</title>
+          <indexterm><primary>PPTP</primary><secondary>vulnerabilities</secondary></indexterm>
 
-	  <para>Microsoft's first PPTP implementation drew severe criticism
-	  because it had many security vulnerabilities; most have since
-	  then been fixed in more recent versions. The configuration
-	  documented in this section uses the latest version of the
-	  protocol. Be aware though that removing some options (such as
-	  <literal>require-mppe-128</literal> and
-	  <literal>require-mschap-v2</literal>) would make the service
-	  vulnerable again.</para>
+          <para>Microsoft's first PPTP implementation drew severe criticism
+          because it had many security vulnerabilities; most have since
+          then been fixed in more recent versions. The configuration
+          documented in this section uses the latest version of the
+          protocol. Be aware though that removing some options (such as
+          <literal>require-mppe-128</literal> and
+          <literal>require-mschap-v2</literal>) would make the service
+          vulnerable again.</para>
         </sidebar>
       </section>
     </section>
@@ -1155,6 +1241,11 @@ FALCOT\\vpn     pptp    f@Lc3au     *
     <title>Quality of Service</title>
     <section id="sect.qos-principe">
       <title>Principle and Mechanism</title>
+      <indexterm><primary>network</primary><secondary>QoS</secondary></indexterm>
+      <indexterm><primary>QoS</primary></indexterm>
+      <indexterm><primary>Quality of Service</primary><see>QoS</see></indexterm>
+      <indexterm><primary>quality</primary><secondary>of service</secondary><see>QoS</see></indexterm>
+      <indexterm><primary>service</primary><secondary>quality</secondary><see>QoS</see></indexterm>
 
       <para><emphasis>Quality of Service</emphasis> (or
       <emphasis>QoS</emphasis> for short) refers to a set of techniques
@@ -1169,21 +1260,18 @@ FALCOT\\vpn     pptp    f@Lc3au     *
       important other services. Traffic shaping is a particularly good fit
       for TCP traffic, since this protocol automatically adapts to
       available bandwidth.</para>
-      <indexterm><primary>QoS</primary></indexterm>
-      <indexterm><primary>quality of service</primary></indexterm>
-      <indexterm><primary>quality</primary><secondary>of service</secondary></indexterm>
-      <indexterm><primary>service</primary><secondary>quality</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Net neutrality and QoS</title>
+        <indexterm><primary>network</primary><secondary>neutrality</secondary></indexterm>
 
-	<para>Network neutrality is achieved when Internet service providers treat all Internet
+        <para>Network neutrality is achieved when Internet service providers treat all Internet
         communications equally, that is, without any access limitation based on content, user,
         website, destination address, etc.</para>
+
         <para>Quality of service can be implemented in a net neutral Internet, but only
         if Internet service providers can't charge a special fee for a higher-quality
         service.</para>
-        <indexterm><primary>net neutrality</primary></indexterm>
       </sidebar>
 
       <para>It is also possible to alter the priorities on traffic, which
@@ -1200,53 +1288,61 @@ FALCOT\\vpn     pptp    f@Lc3au     *
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> LARTC — <emphasis>Linux Advanced Routing &amp; Traffic Control</emphasis></title>
-
-	<para>The <emphasis>Linux Advanced Routing &amp; Traffic
-	Control</emphasis> HOWTO is the reference document covering
-	everything there is to know about network quality of service.
-	<ulink type="block" url="https://www.lartc.org/howto/"/></para>
+        <indexterm><primary>network</primary><secondary>advanced routing</secondary><seealso>routing</seealso></indexterm>
         <indexterm><primary>routing</primary><secondary>advanced</secondary></indexterm>
         <indexterm><primary>traffic</primary><secondary>control</secondary></indexterm>
         <indexterm><primary>control of traffic</primary></indexterm>
+
+        <para>The <emphasis>Linux Advanced Routing &amp; Traffic
+        Control</emphasis> HOWTO is the reference document covering
+        everything there is to know about network quality of service.
+        <ulink type="block" url="https://www.lartc.org/howto/"/></para>
       </sidebar>
     </section>
     <section id="sect.qos-config">
       <title>Configuring and Implementing</title>
+      <indexterm><primary><emphasis>iproute</emphasis></primary></indexterm>
+      <indexterm><primary><command>tc</command></primary></indexterm>
 
       <para>QoS parameters are set through the <command>tc</command>
       command (provided by the <emphasis role="pkg">iproute</emphasis>
       package). Since its interface is quite complex, using higher-level
       tools is recommended.</para>
-      <indexterm><primary><emphasis>iproute</emphasis></primary></indexterm>
-      <indexterm><primary><command>tc</command></primary></indexterm>
+
       <section id="sect.qos-wondershaper">
         <title>Reducing Latencies: <command>wondershaper</command></title>
-
-	<para>The main purpose of <command>wondershaper</command> (in the
-	similarly-named package) is to minimize latencies independent of
-	network load. This is achieved by limiting total traffic to a value
-	that falls just short of the link saturation value.</para>
         <indexterm><primary><command>wondershaper</command></primary></indexterm>
         <indexterm><primary>limitation of traffic</primary></indexterm>
         <indexterm><primary>traffic</primary><secondary>limitation</secondary></indexterm>
 
-	<para>Once a network interface is configured, setting up this
-	traffic limitation is achieved by running <command>wondershaper
-	<replaceable>interface</replaceable>
-	<replaceable>download_rate</replaceable>
-	<replaceable>upload_rate</replaceable></command>. The interface can
-	be <literal>eth0</literal> or <literal>ppp0</literal> for example,
-	and both rates are expressed in kilobits per second. The
-	<command>wondershaper remove
-	<replaceable>interface</replaceable></command> command disables
-	traffic control on the specified interface.</para>
+        <para>The main purpose of <command>wondershaper</command> (in the
+        similarly-named package) is to minimize latencies independent of
+        network load. This is achieved by limiting total traffic to a value
+        that falls just short of the link saturation value.</para>
 
-	<para>For an Ethernet connection, this script is best called right
-	after the interface is configured. This is done by adding
-	<literal>up</literal> and <literal>down</literal> directives to the
-	<filename>/etc/network/interfaces</filename> file allowing declared
-	commands to be run, respectively, after the interface is configured
-	and before it is deconfigured. For example:</para>
+        <para>Once a network interface is configured, setting up this
+        traffic limitation is achieved by running <command>wondershaper
+        <replaceable>interface</replaceable>
+        <replaceable>download_rate</replaceable>
+        <replaceable>upload_rate</replaceable></command>. The interface can
+        be <literal>enp1s0</literal>, <literal>eth0</literal> or <literal>ppp0</literal> for example,
+        and both rates are expressed in kilobits per second. The
+        <command>wondershaper remove
+        <replaceable>interface</replaceable></command> command disables
+        traffic control on the specified interface.</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/network/interfaces</filename></secondary></indexterm>
+
+        <para>For an Ethernet connection, historically this script would be
+        called right after the interface is configured. This is done by adding
+        <literal>up</literal> and <literal>down</literal> directives to the
+        <filename>/etc/network/interfaces</filename> file allowing declared
+        commands to be run, respectively, after the interface is configured and
+        before it is deconfigured. Or in the PPP case, creating a script that
+        calls <command>wondershaper</command> in
+        <filename>/etc/ppp/ip-up.d/</filename> will enable traffic control as
+        soon as the connection is up. Below is an example using this first
+        method:</para>
 
         <example id="example.network-interfaces">
           <title>Changes in the <filename>/etc/network/interfaces</filename> file</title>
@@ -1258,42 +1354,39 @@ iface eth0 inet dhcp
 </programlisting>
         </example>
 
-	<para>In the PPP case, creating a script that calls
-	<command>wondershaper</command> in
-	<filename>/etc/ppp/ip-up.d/</filename> will enable traffic control
-	as soon as the connection is up.</para>
-
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Optimal configuration</title>
 
-	  <para>The
-	  <filename>/usr/share/doc/wondershaper/README.Debian.gz</filename>
-	  file describes, in some detail, the configuration method
-	  recommended by the package maintainer. In particular, it advises
-	  measuring the download and upload speeds so as to best evaluate
-	  real limits.</para>
+          <para>The
+          <filename>/usr/share/doc/wondershaper/README.Debian.gz</filename>
+          file describes, in some detail, the configuration method
+          recommended by the package maintainer. In particular, it advises
+          measuring the download and upload speeds so as to best evaluate
+          real limits.</para>
         </sidebar>
       </section>
       <section id="sect.qos-config-standard">
         <title>Standard Configuration</title>
-
-	<para>Barring a specific QoS configuration, the Linux kernel uses
-	the <literal>pfifo_fast</literal> queue scheduler, which provides a
-	few interesting features by itself. The priority of each processed
-	IP packet is based on the DSCP field (<emphasis>Differentiated
-	Services Code Point</emphasis>) of this packet; modifying this
-	6-bit field is enough to take advantage of the scheduling features.
-	Refer to
-	<ulink url="https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector"/>
-	for more information.</para>
         <indexterm><primary>DSCP</primary></indexterm>
-        <indexterm><primary>Differentiated Services Code Point</primary></indexterm>
+        <indexterm><primary>Differentiated Services Code Point</primary><see>DSCP</see></indexterm>
 
-	<para>The DSCP field can be set by applications that generate IP
-	packets, or modified on the fly by <emphasis>netfilter</emphasis>.
-	The following rules are sufficient to increase responsiveness for a
-	server's SSH service, note that the DSCP field must be set in
-	hexadecimal:</para>
+        <para>Barring a specific QoS configuration, the Linux kernel uses
+        the <literal>pfifo_fast</literal> queue scheduler, which provides a
+        few interesting features by itself. The priority of each processed
+        IP packet is based on the DSCP field (<emphasis>Differentiated
+        Services Code Point</emphasis>) of this packet; modifying this
+        6-bit field is enough to take advantage of the scheduling features.
+        Refer to
+        <ulink url="https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector"/>
+        for more information.</para>
+
+        <indexterm><primary>IP</primary><secondary>netfilter</secondary></indexterm>
+
+        <para>The DSCP field can be set by applications that generate IP
+        packets, or modified on the fly by <emphasis>netfilter</emphasis>.
+        The following rules are sufficient to increase responsiveness for a
+        server's SSH service, note that the DSCP field must be set in
+        hexadecimal:</para>
 
         <programlisting role="scale">
 nft add table ip mangle
@@ -1305,16 +1398,18 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
   </section>
   <section id="sect.dynamic-routing">
     <title>Dynamic Routing</title>
-    <indexterm><primary>routing</primary><secondary>dynamic</secondary></indexterm>
-    <indexterm><primary><command>quagga</command></primary></indexterm>
-    <indexterm><primary><command>zebra</command></primary></indexterm>
+    <indexterm><primary>routing</primary><secondary>dynamic</secondary><seealso><command>frr</command></seealso></indexterm>
+    <indexterm><primary><command>frr</command></primary></indexterm>
+    <indexterm><primary><command>quagga</command></primary><see><command>frr</command></see></indexterm>
+    <indexterm><primary><command>zebra</command></primary><see><command>frr</command></see></indexterm>
 
+    <!-- MAY CHANGE: reference package has changed quite some times -->
     <para>The reference tool for dynamic routing is currently
-    <command>quagga</command>, from the similarly-named package; it used to
-    be <command>zebra</command> until development of the latter stopped.
-    However, <command>quagga</command> kept the names of the programs for
-    compatibility reasons which explains the <command>zebra</command>
-    commands below.</para>
+    <command>frr</command> from the similarly-named package; it used to be
+    <command>quagga</command>, and before that <command>zebra</command> until
+    development of these stopped.  However, <command>frr</command> kept the
+    names of the programs for compatibility reasons which explains the
+    <command>zebra</command> commands below.</para>
 
     <sidebar>
       <title><emphasis>BACK TO BASICS</emphasis> Dynamic routing</title>
@@ -1324,24 +1419,27 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
       own method of defining routes (shortest path, use routes advertised
       by peers, and so on).</para>
 
+      <indexterm><primary><command>ip</command></primary><secondary><literal>route</literal></secondary></indexterm>
+      <indexterm><primary><command>route</command></primary></indexterm>
+
       <para>In the Linux kernel, a route links a network device to a set of
       machines that can be reached through this device. The
       <command>ip</command> command, when <literal>route</literal> is used
       as the first argument, defines new routes and displays existing ones.
       The <command>route</command> command was used for that purpose, but
       it is deprecated in favor of <command>ip</command>.</para>
-      <indexterm><primary><command>route</command></primary></indexterm>
-      <indexterm><primary><command>ip route</command></primary></indexterm>
     </sidebar>
 
-    <para>Quagga is a set of daemons cooperating to define the routing
-    tables to be used by the Linux kernel; each routing protocol (most
-    notably BGP, OSPF and RIP) provides its own daemon. The
-    <command>zebra</command> daemon collects information from other daemons
-    and handles static routing tables accordingly. The other daemons are
-    known as <command>bgpd</command>, <command>ospfd</command>,
-    <command>ospf6d</command>, <command>ripd</command>, 
-    <command>ripngd</command>, and <command>isisd</command>.</para>
+    <para>FRR (FRRouting) is a set of daemons cooperating to define the routing
+    tables to be used by the Linux kernel; each routing protocol (most notably
+    BGP, OSPF and RIP) provides its own daemon(s). The <literal>zebra</literal>
+    and <literal>staticd</literal> daemons, which are always started, collect
+    information from other daemons and handle static routing tables
+    accordingly. The other daemons are known as <command>bgpd</command>,
+    <command>ospfd</command>, <command>ospf6d</command>,
+    <command>ripd</command>, <command>ripngd</command>,
+    <command>isisd</command>, etc.</para>
+
     <indexterm><primary>OSPF</primary></indexterm>
     <indexterm><primary>BGP</primary></indexterm>
     <indexterm><primary>RIP</primary></indexterm>
@@ -1353,30 +1451,36 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
     <indexterm><primary><command>ripngd</command></primary></indexterm>
     <indexterm><primary><command>isisd</command></primary></indexterm>
 
-    <para>Daemons are enabled by creating the
-    <filename>/etc/quagga/<replaceable>daemon</replaceable>.conf</filename>
-    config file, daemon being the name of the daemon to use;
-    this file must belong to the <literal>quagga</literal> user and group
-    in order for the <filename>/etc/init.d/zebra</filename> script
-    to invoke the daemon. The package <emphasis role="pkg">quagga-core</emphasis>
-    provides configuration examples under
-    <filename>/usr/share/doc/quagga-core/examples/</filename>.</para>
+    <indexterm><primary>service</primary><secondary><filename>frr.service</filename></secondary></indexterm>
 
-    <para>The configuration of each of these daemons requires knowledge of
-    the routing protocol in question. These protocols cannot be described
-    in detail here, but <emphasis role="pkg">quagga-doc</emphasis>
-    provides ample explanation in the form of an <command>info</command>
-    file. The same contents may be more easily browsed as HTML on the
-    Quagga website: <ulink type="block"
-      url="http://www.nongnu.org/quagga/docs/docs-info.html"/></para>
+    <para>Daemons are enabled by creating the
+    <filename>/etc/frr/<replaceable>daemon</replaceable>.conf</filename> config
+    file, <replaceable>daemon</replaceable> being the name of the daemon to
+    use, and editing the <filename>/etc/frr/daemon</filename> configuration
+    file. The daemon config file must belong to the <literal>frr</literal>
+    user and group with permissions of <literal>0640</literal> in order for the
+    <filename>/etc/init.d/frr</filename> script or the
+    <filename>frr.service</filename> systemd service file to invoke the daemon.
+    The package <emphasis role="pkg">frr</emphasis> provides configuration
+    examples under <filename>/usr/share/doc/frr/examples/</filename>.</para>
+
+    <para>The configuration of each of these daemons requires knowledge of the
+    routing protocol in question. These protocols cannot be described in detail
+    here, but <emphasis role="pkg">frr-doc</emphasis> provides ample
+    explanation in the form of both <command>info</command> and HTML files. The
+    same contents may be more browsed on the project's website: <ulink
+    type="block" url="http://docs.frrouting.org/en/latest/"/> </para>
 
     <para>In addition, the
     syntax is very close to a standard router's configuration interface,
     and network administrators will adapt quickly to
-    <command>quagga</command>.</para>
+    <command>frr</command>.</para>
 
     <sidebar>
       <title><emphasis>IN PRACTICE</emphasis> OSPF, BGP or RIP?</title>
+      <indexterm><primary>OSPF</primary></indexterm>
+      <indexterm><primary>BGP</primary></indexterm>
+      <indexterm><primary>RIP</primary></indexterm>
 
       <para><acronym>OSPF</acronym> (Open Shortest Path First) is
       generally the best protocol to use for dynamic routing
@@ -1388,8 +1492,14 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
   </section>
   <section id="sect.ipv6">
     <title>IPv6</title>
+    <indexterm><primary>IP</primary><secondary>v4</secondary><seealso>IPv4</seealso></indexterm>
+    <indexterm><primary>IP</primary><secondary>v6</secondary><seealso>IPv6</seealso></indexterm>
+    <indexterm><primary>IPv4</primary></indexterm>
+    <indexterm><primary>IPv6</primary></indexterm>
+    <indexterm><primary><emphasis role="pkg">iputils-ping</emphasis></primary></indexterm>
+    <indexterm><primary><emphasis role="pkg">iputils-tracepath</emphasis></primary></indexterm>
 
-    <para>IPv6, successor to IPv4, is a new version of the IP protocol
+    <para>IPv6, successor to IPv4, is a newer version of the IP protocol
     designed to fix its flaws, most notably the scarcity of available IP
     addresses. This protocol handles the network layer; its purpose is to
     provide a way to address machines, to convey data to their intended
@@ -1405,9 +1515,8 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
     <command>ping6</command> and <command>traceroute6</command>, available
     respectively in the <emphasis role="pkg">iputils-ping</emphasis> and
     <emphasis role="pkg">iputils-tracepath</emphasis> packages.</para>
-    <indexterm><primary>IPv6</primary></indexterm>
-    <indexterm><primary><emphasis role="pkg">iputils-ping</emphasis></primary></indexterm>
-    <indexterm><primary><emphasis role="pkg">iputils-tracepath</emphasis></primary></indexterm>
+
+    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/network/interfaces</filename></secondary></indexterm>
 
     <para>The IPv6 network is configured similarly to IPv4, in
     <filename>/etc/network/interfaces</filename>. But if you want that
@@ -1418,7 +1527,7 @@ nft add rule ip mangle PREROUTING tcp dport 22 counter ip dscp set 0x04
       <title>Example of IPv6 configuration</title>
 
       <programlisting>
-iface eth0 inet6 static
+iface enp7s0 inet6 static
     address 2001:db8:1234:5::1:1/64
     # Disabling auto-configuration
     # autoconf 0
@@ -1427,6 +1536,9 @@ iface eth0 inet6 static
     # gateway 2001:db8:1234:5::1
 </programlisting>
     </example>
+
+    <indexterm><primary>SLAAC</primary></indexterm>
+    <indexterm><primary>Stateless Address Autoconfiguration</primary><see>SLAAC</see></indexterm>
 
     <para>IPv6 subnets usually have a netmask of 64 bits. This means that
     2<superscript>64</superscript> distinct addresses exist within the
@@ -1437,25 +1549,27 @@ iface eth0 inet6 static
     automatically find IPv6 routers and configure the network
     interfaces.</para>
 
-    <para>This behavior may have privacy implications. If you switch
-    networks frequently, e.g. with a laptop, you might not want your
-    <acronym>MAC</acronym> address being a part of your public IPv6
-    address. This makes it easy to identify the same device across
-    networks. A solution to this are IPv6 privacy extensions (which Debian
-    enables by default if IPv6 connectivity is detected during initial
-    installation), which will assign an additional randomly generated
-    address to the interface,
+    <indexterm><primary>MAC</primary></indexterm>
+    <indexterm><primary>IPv6</primary><secondary>privacy extensions</secondary></indexterm>
+
+    <para>This behavior may have privacy implications. If you switch networks
+    frequently, e.g. with a laptop, you might not want your
+    <acronym>MAC</acronym> address being a part of your public IPv6 address.
+    This makes it easy to identify the same device across networks. A solution
+    to this are IPv6 privacy extensions (which Debian enables by default if
+    IPv6 connectivity is detected during initial installation), which will
+    assign an additional randomly generated address to the interface,
     periodically change them and prefer them for outgoing connections.
-    Incoming connections can still use the address generated by SLAAC.
-    The following example, for use in
-    <filename>/etc/network/interfaces</filename>, activates these
-    privacy extensions.</para>
+    Incoming connections can still use the address generated by SLAAC.  The
+    following example, for use in <filename>/etc/network/interfaces</filename>,
+    activates these privacy extensions for the interface
+    <replaceable>enp7s0</replaceable>.</para>
 
     <example id="example.network-interface-ipv6-privext">
       <title>IPv6 privacy extensions</title>
 
       <programlisting>
-iface eth0 inet6 auto
+iface enp7s0 inet6 auto
     # Prefer the randomly assigned addresses for outgoing connections.
     privext 2
 </programlisting>
@@ -1463,6 +1577,7 @@ iface eth0 inet6 auto
 
     <sidebar>
       <title><emphasis>TIP</emphasis> Programs built with IPv6</title>
+      <indexterm><primary>mailing lists</primary><secondary><email>debian-ipv6@lists.debian.org</email></secondary></indexterm>
 
       <para>Many pieces of software need to be adapted to handle IPv6. Most
       of the packages in Debian have been adapted already, but
@@ -1473,20 +1588,21 @@ iface eth0 inet6 auto
       <ulink type="block" url="https://lists.debian.org/debian-ipv6/"/></para>
     </sidebar>
 
-    <indexterm><primary>IPv6 firewall</primary></indexterm>
+    <indexterm><primary>IPv6</primary><secondary>firewall</secondary></indexterm>
     <indexterm><primary>firewall</primary><secondary>IPv6</secondary></indexterm>
     <indexterm><primary><command>ip6tables</command></primary></indexterm>
-    <para>
-      IPv6 connections can be restricted, in the same fashion as for IPv4.
-      <command>nft</command> can be used to create firewall rules for IPv4
-      and IPv6 (see <xref linkend="sect.nftables" />).
-    </para>
+
+    <para>IPv6 connections can be restricted, in the same fashion as for IPv4.
+    <command>nft</command> can be used to create firewall rules for IPv4 and
+    IPv6 (see <xref linkend="sect.nftables" />).</para>
 
     <section id="sect.ipv6-tunneling">
       <title>Tunneling</title>
+      <indexterm><primary>IPv6</primary><secondary>tunneling</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> IPv6 tunneling and firewalls</title>
+        <indexterm><primary>IPv6</primary><secondary>tunnel broker</secondary></indexterm>
 
         <para>IPv6 tunneling over IPv4 (as opposed to native IPv6) requires the
         firewall to accept the traffic, which uses IPv4 protocol number 41.</para>
@@ -1502,11 +1618,17 @@ iface eth0 inet6 auto
       account, login, select a free tunnel and edit the file
       <filename>/etc/network/interfaces</filename> with the generated code.</para>
 
+      <indexterm><primary><command>radvd</command></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/radvd.conf</filename></secondary></indexterm>
+      <indexterm><primary>service</primary><secondary><filename>radvd.service</filename></secondary></indexterm>
+
       <para>You can install and configure the
       <command>radvd</command> daemon (from the similarly-named package) if you
       want to use the configured computer as a router for a local network.
       This IPv6 configuration daemon has a role similar to
       <command>dhcpd</command> in the IPv4 world.</para>
+
+      <indexterm><primary><command>ip</command></primary><secondary><literal>address</literal></secondary></indexterm>
 
       <para>The <filename>/etc/radvd.conf</filename> configuration file must
       then be created (see
@@ -1515,23 +1637,24 @@ iface eth0 inet6 auto
       which needs to be replaced with the one provided by Hurricane Electric; it can be
       found in the output of the <command>ip a</command> command, in the
       block concerning the <literal>he-ipv6</literal> interface.</para>
-      <indexterm><primary><command>radvd</command></primary></indexterm>
 
       <para>Then run <command>systemctl start radvd</command>. The IPv6
       network should now work.</para>
     </section>
-
   </section>
   <section id="sect.domain-name-servers">
     <title>Domain Name Servers (DNS)</title>
     <indexterm><primary>DNS</primary></indexterm>
+    <indexterm><primary>Domain Name Service</primary><see>DNS</see></indexterm>
     <indexterm><primary>server</primary><secondary>name</secondary></indexterm>
+    <indexterm><primary>IP</primary><secondary>address mapping</secondary></indexterm>
 
-    <para>The <emphasis>Domain Name Service</emphasis> (DNS) is a
-    fundamental component of the Internet: it maps host names to IP
-    addresses (and vice-versa), which allows the use of
-    <literal>www.debian.org</literal> instead of
-    <literal>149.20.4.15</literal> or <literal>2001:4f8:1:c::15</literal>.</para>
+    <!-- MAY CHANGE: debian.org IP address -->
+    <para>The <emphasis>Domain Name Service</emphasis> (DNS) is a fundamental
+    component of the Internet: it maps host names to IP addresses (and
+    vice-versa), which allows the use of <literal>www.debian.org</literal>
+    instead of <literal>130.89.148.77</literal> or
+    <literal>2001:67c:2564:a119::77</literal>.</para>
 
     <para>DNS records are organized in zones; each zone matches either a
     domain (or a subdomain) or an IP address range (since IP addresses
@@ -1541,66 +1664,70 @@ iface eth0 inet6 auto
     the primary zone.</para>
     <indexterm><primary>zone</primary><secondary>DNS</secondary></indexterm>
     <indexterm><primary>DNS</primary><secondary>zone</secondary></indexterm>
+    <indexterm><primary>DNS</primary><secondary>resource record</secondary></indexterm>
 
     <para>Each zone can contain records of various kinds
     (<emphasis>Resource Records</emphasis>), these are some of the most common:</para>
     <itemizedlist>
       <listitem>
-        <para><literal>A</literal>: IPv4 address. <indexterm><primary>A,
-        DNS record</primary></indexterm></para>
+        <para><literal>A</literal> (<emphasis>address record</emphasis>): IPv4
+        address. This is the most common form to point a domain to an IPv4
+        address.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>A</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>CNAME</literal>: alias (<emphasis>canonical
-        name</emphasis>). <indexterm><primary>CNAME, DNS
-        record</primary></indexterm></para>
+        <para><literal>CNAME</literal> (<emphasis>canonical name
+        record</emphasis>): alias</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>CNAME</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>MX</literal>: <emphasis>mail exchange</emphasis>,
+        <para><literal>MX</literal> (<emphasis>mail exchange</emphasis>):
         an email server. This information is used by other email servers
         to find where to send email addressed to a given address. Each MX
         record has a priority. The highest-priority server (with the
         lowest number) is tried first (see sidebar <xref
         linkend="sidebar.smtp"/>); other servers are contacted in order
-        of decreasing priority if the first one does not reply.
-        <indexterm><primary>MX</primary><secondary>DNS
-        record</secondary></indexterm></para>
+        of decreasing priority if the first one does not reply.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>MX</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>PTR</literal>: mapping of an IP address to a name.
-        Such a record is stored in a “reverse DNS” zone named after
-        the IP address range. For example,
-        <literal>1.168.192.in-addr.arpa</literal> is the zone containing
-        the reverse mapping for all addresses in the
-        <literal>192.168.1.0/24</literal> range. <indexterm><primary>PTR,
-        DNS record</primary></indexterm></para>
+        <para><literal>PTR</literal> (<emphasis>pointer</emphasis>): mapping of
+        an IP address to a name.  Such a record is stored in a “reverse DNS”
+        zone named after the IP address range. For example,
+        <literal>1.168.192.in-addr.arpa</literal> is the zone containing the
+        reverse mapping for all addresses in the
+        <literal>192.168.1.0/24</literal> range.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>PTR</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>AAAA</literal>: IPv6 address.
-        <indexterm><primary>AAAA, DNS record</primary></indexterm></para>
+        <para><literal>AAAA</literal> (<emphasis>IPv6 address
+        record</emphasis>): IPv6 address.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>AAAA</literal></tertiary></indexterm>
       </listitem>
       <listitem>
-        <para><literal>NS</literal>: maps a name to a name server. Each
-        domain must have at least one NS record. These records point at a
-        DNS server that can answer queries concerning this domain; they
-        usually point at the primary and secondary servers for the
-        domain. These records also allow DNS delegation; for instance,
-        the <literal>falcot.com</literal> zone can include an NS record
-        for <literal>internal.falcot.com</literal>, which means that the
+        <para><literal>NS</literal> (<emphasis>name server</emphasis>): maps a
+        name to a name server. Each domain must have at least one NS record.
+        These records point at a DNS server that can answer queries concerning
+        this domain; they usually point at the primary and secondary servers
+        for the domain. These records also allow DNS delegation; for instance,
+        the <literal>falcot.com</literal> zone can include an NS record for
+        <literal>internal.falcot.com</literal>, which means that the
         <literal>internal.falcot.com</literal> zone is handled by another
         server. Of course, this server must declare an
-        <literal>internal.falcot.com</literal> zone.
-        <indexterm><primary>NS, DNS record</primary></indexterm></para>
+        <literal>internal.falcot.com</literal> zone.</para>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>NS</literal></tertiary></indexterm>
       </listitem>
     </itemizedlist>
 
-    <indexterm><primary>record</primary><secondary>DNS</secondary></indexterm>
-    <indexterm><primary>DNS record</primary></indexterm>
-      
     <section id="sect.dns-software">
       <title>DNS software</title>
+      <indexterm><primary>ISC</primary></indexterm>
+      <indexterm><primary>Internet Software Consortium</primary><see>ISC</see></indexterm>
+      <indexterm><primary><emphasis role="pkg">bind9</emphasis></primary></indexterm>
+      <indexterm><primary>DNS</primary><secondary><emphasis role="pkg">bind9</emphasis></secondary><seealso><command>bind</command></seealso></indexterm>
 
       <para>The reference name server, Bind, was developed and is
-      maintained by ISC (<emphasis>Internet Software
+      maintained by ISC (the <emphasis>Internet Software
       Consortium</emphasis>). It is provided in Debian by the <emphasis
       role="pkg">bind9</emphasis> package. Version 9 brings two major
       changes compared to previous versions. First, the DNS server can now
@@ -1611,23 +1738,25 @@ iface eth0 inet6 auto
       <para>Furthermore, Bind supports the DNSSEC standard for signing (and
       therefore authenticating) DNS records, which allows blocking any
       spoofing of this data during man-in-the-middle attacks.</para>
-      <indexterm><primary><emphasis role="pkg">bind9</emphasis></primary></indexterm>
-      <indexterm><primary>ISC</primary></indexterm>
-      <indexterm><primary>Internet Software Consortium</primary></indexterm>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> DNSSEC</title>
         <indexterm><primary>DNSSEC</primary></indexterm>
+        <indexterm><primary>Domain Name System Security Extensions</primary><see>DNSSEC</see></indexterm>
+        <indexterm><primary>DNS</primary><secondary>security extensions</secondary><see>DNSSEC</see></indexterm>
 
-	<para>The DNSSEC norm is quite complex; this partly explains why
-	it is not in widespread usage yet (even if it perfectly coexists
-	with DNS servers unaware of DNSSEC). To understand all the ins and
-	outs, you should check the following article. <ulink type="block"
-	url="https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
+        <para>The DNSSEC norm is quite complex; this partly explains why
+        it is not in widespread usage yet (even if it perfectly coexists
+        with DNS servers unaware of DNSSEC). To understand all the ins and
+        outs, you should check the following article. <ulink type="block"
+        url="https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions"/></para>
       </sidebar>
     </section>
     <section id="sect.dns-config">
       <title>Configuring bind</title>
+      <indexterm><primary>daemon</primary><secondary>bind</secondary></indexterm>
+      <indexterm><primary>server</primary><secondary>DNS</secondary></indexterm>
+      <indexterm><primary><command>bind</command></primary><secondary>configuration</secondary></indexterm>
 
       <para>Configuration files for <command>bind</command>, irrespective
       of version, have the same structure.</para>
@@ -1641,41 +1770,43 @@ iface eth0 inet6 auto
         <title><emphasis>CAUTION</emphasis> Names of reverse zones</title>
         <indexterm><primary>zone</primary><secondary>reverse</secondary></indexterm>
         <indexterm><primary>reverse zone</primary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>reverse zone</secondary></indexterm>
         <indexterm><primary><literal>in-addr.arpa</literal></primary></indexterm>
         <indexterm><primary><literal>ip6.arpa</literal></primary></indexterm>
-	<indexterm><primary>nibble format</primary></indexterm>
+        <indexterm><primary>nibble format</primary></indexterm>
 
-	<para>Reverse zones have a particular name. The zone covering the
-	<literal>192.168.0.0/16</literal> network needs to be named
-	<literal>168.192.in-addr.arpa</literal>: the IP address components
-	are reversed, and followed by the <literal>in-addr.arpa</literal>
-	suffix.</para>
+        <para>Reverse zones have a particular name. The zone covering the
+        <literal>192.168.0.0/16</literal> network needs to be named
+        <literal>168.192.in-addr.arpa</literal>: the IP address components
+        are reversed, and followed by the <literal>in-addr.arpa</literal>
+        suffix.</para>
 
-	<para>For IPv6 networks, the suffix is <literal>ip6.arpa</literal> and
-	the IP address components which are reversed are each character in the full
-	hexadecimal representation of the IP address. As such, the
-	<literal>2001:0bc8:31a0::/48</literal> network would use a zone named
-	<literal>0.a.1.3.8.c.b.0.1.0.0.2.ip6.arpa</literal>.</para>
+        <para>For IPv6 networks, the suffix is <literal>ip6.arpa</literal> and
+        the IP address components which are reversed are each character in the full
+        hexadecimal representation of the IP address. As such, the
+        <literal>2001:0bc8:31a0::/48</literal> network would use a zone named
+        <literal>0.a.1.3.8.c.b.0.1.0.0.2.ip6.arpa</literal>.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Testing the DNS server</title>
+        <indexterm><primary><command>host</command></primary></indexterm>
 
-	<para>The <command>host</command> command (in the <emphasis
-	role="pkg">bind9-host</emphasis> package) queries a DNS
-	server, and can be used to test the server configuration. For
-	example, <command>host machine.falcot.com localhost</command>
-	checks the local server's reply for the
-	<literal>machine.falcot.com</literal> query. <command>host
-	<replaceable>ipaddress</replaceable> localhost</command> tests
-	the reverse resolution.</para>
-	<indexterm><primary><command>host</command></primary></indexterm>
+        <para>The <command>host</command> command (in the <emphasis
+        role="pkg">bind9-host</emphasis> package) queries a DNS
+        server, and can be used to test the server configuration. For
+        example, <command>host machine.falcot.com localhost</command>
+        checks the local server's reply for the
+        <literal>machine.falcot.com</literal> query. <command>host
+        <replaceable>ipaddress</replaceable> localhost</command> tests
+        the reverse resolution.</para>
       </sidebar>
+
+      <indexterm><primary><filename>named.conf</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/bind/named.conf</filename></secondary></indexterm>
 
       <para>The following configuration excerpts, taken from the Falcot
       files, can serve as starting points to configure a DNS server:</para>
-      <indexterm><primary><filename>named.conf</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/bind/named.conf</filename></primary></indexterm>
 
       <example id="example.bind-named.conf.local">
         <title>Excerpt of <filename>/etc/bind/named.conf.local</filename></title>
@@ -1742,14 +1873,14 @@ dns     IN      CNAME   ns
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Syntax of a name</title>
 
-	<para>The syntax of machine names follows strict rules. For
-	instance, <literal>machine</literal> implies
-	<literal>machine.<replaceable>domain</replaceable></literal>. If
-	the domain name should not be appended to a name, said name must be
-	written as <literal>machine.</literal> (with a dot as suffix).
-	Indicating a DNS name outside the current domain therefore requires
-	a syntax such as <literal>machine.otherdomain.com.</literal> (with
-	the final dot).</para>
+        <para>The syntax of machine names follows strict rules. For
+        instance, <literal>machine</literal> implies
+        <literal>machine.<replaceable>domain</replaceable></literal>. If
+        the domain name should not be appended to a name, said name must be
+        written as <literal>machine.</literal> (with a dot as suffix).
+        Indicating a DNS name outside the current domain therefore requires
+        a syntax such as <literal>machine.otherdomain.com.</literal> (with
+        the final dot).</para>
       </sidebar>
 
       <example id="example.bind-db.192.168">
@@ -1780,15 +1911,16 @@ $TTL    604800
   </section>
   <section id="sect.dhcp">
     <title>DHCP</title>
+    <indexterm><primary>DHCP</primary></indexterm>
+    <indexterm><primary>Dynamic Host Configuration Protocol</primary><see>DHCP</see></indexterm>
+    <indexterm><primary>network</primary><secondary>DHCP configuration</secondary></indexterm>
+    <indexterm><primary><emphasis role="pkg">isc-dhcp-server</emphasis></primary></indexterm>
 
     <para>DHCP (for <emphasis>Dynamic Host Configuration
     Protocol</emphasis>) is a protocol by which a machine can
     automatically get its network configuration when it boots. This
     allows centralizing the management of network configurations, and
     ensuring that all desktop machines get similar settings.</para>
-    <indexterm><primary>DHCP</primary></indexterm>
-    <indexterm><primary>Dynamic Host Configuration Protocol</primary></indexterm>
-    <indexterm><primary>network</primary><secondary>DHCP configuration</secondary></indexterm>
 
     <para>A DHCP server provides many network-related parameters. The
     most common of these is an IP address and the network where the
@@ -1802,6 +1934,11 @@ $TTL    604800
 
     <section id="sect.dhcp-config">
       <title>Configuring</title>
+      <indexterm><primary>DHCP</primary><secondary></secondary></indexterm>
+      <indexterm><primary>server</primary><secondary>DHCP</secondary></indexterm>
+      <indexterm><primary>daemon</primary><secondary>dhcpd</secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/dhcp/dhcpd.conf</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/dhcp/dhcpd6.conf</filename></secondary></indexterm>
 
       <para>The first elements that need to be edited in the DHCP server
       configuration files (<filename>/etc/dhcp/dhcpd.conf</filename>, and
@@ -1859,6 +1996,9 @@ subnet 192.168.0.0 netmask 255.255.255.0 {
     <section id="sect.dhcp-dns">
       <title>DHCP and DNS</title>
       <indexterm><primary>DNS</primary><secondary>automated updates</secondary></indexterm>
+      <indexterm><primary>DNS</primary><secondary>zone</secondary></indexterm>
+      <indexterm><primary>DNS</primary><secondary>reverse zone</secondary></indexterm>
+      <indexterm><primary><command>bind</command></primary></indexterm>
 
       <para>A nice feature is the automated registering of DHCP clients in
       the DNS zone, so that each machine gets a significant name (rather
@@ -1900,12 +2040,16 @@ allow-update { 127.0.0.1 192.168.0.1 212.94.201.10 !any };
   </section>
   <section id="sect.network-diagnosis-tools">
     <title>Network Diagnosis Tools</title>
+    <indexterm><primary>network</primary><secondary>diagnosis</secondary></indexterm>
 
     <para>When a network application does not run as expected, it is
     important to be able to look under the hood. Even when everything seems
     to run smoothly, running a network diagnosis can help ensure everything
     is working as it should. Several diagnosis tools exists for this
-    purpose; each one operates on a different level.</para>
+    purpose; each one operates on a different level. It would go beyond the
+    scope of this book to discuss all tools, so we will focus on the more
+    well-known and commonly used tools in the following sections.</para>
+
     <section id="sect.netstat">
       <title>Local Diagnosis: <command>netstat</command></title>
       <indexterm><primary><command>netstat</command></primary></indexterm>
@@ -1925,33 +2069,34 @@ allow-update { 127.0.0.1 192.168.0.1 212.94.201.10 !any };
       options include:</para>
       <itemizedlist>
         <listitem>
-	  <para><literal>-t</literal>, which filters the results to only
-	  include TCP connections;</para>
+          <para><literal>-t</literal>, which filters the results to only
+          include TCP connections;</para>
         </listitem>
         <listitem>
-	  <para><literal>-u</literal>, which works similarly for UDP
-	  connections; these options are not mutually exclusive, and one of
-	  them is enough to stop displaying Unix-domain connections;</para>
+          <para><literal>-u</literal>, which works similarly for UDP
+          connections; these options are not mutually exclusive, and one of
+          them is enough to stop displaying Unix-domain connections;</para>
         </listitem>
         <listitem>
-	  <para><literal>-a</literal>, to also list listening sockets
-	  (waiting for incoming connections);</para>
+          <para><literal>-a</literal>, to also list listening sockets
+          (waiting for incoming connections);</para>
         </listitem>
         <listitem>
-	  <para><literal>-n</literal>, to display the results numerically:
-	  IP addresses (no DNS resolution), port numbers (no aliases as
-	  defined in <filename>/etc/services</filename>) and user ids (no
-	  login names);</para>
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/services</filename></secondary></indexterm>
+          <para><literal>-n</literal>, to display the results numerically:
+          IP addresses (no DNS resolution), port numbers (no aliases as
+          defined in <filename>/etc/services</filename>) and user ids (no
+          login names);</para>
         </listitem>
         <listitem>
-	  <para><literal>-p</literal>, to list the processes involved; this
-	  option is only useful when <command>netstat</command> is run as
-	  root, since normal users will only see their own
-	  processes;</para>
+          <para><literal>-p</literal>, to list the processes involved; this
+          option is only useful when <command>netstat</command> is run as
+          root, since normal users will only see their own
+          processes;</para>
         </listitem>
         <listitem>
-	  <para><literal>-c</literal>, to continuously refresh the list of
-	  connections.</para>
+          <para><literal>-c</literal>, to continuously refresh the list of
+          connections.</para>
         </listitem>
       </itemizedlist>
 
@@ -2030,76 +2175,84 @@ udp6       0      0 :::5353                 :::*                                
       <manvolnum>1</manvolnum> </citerefentry> manual page.</para>
 
       <screen width="80" role="scale">
-<computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>
-<computeroutput>
-Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:05 CET
-Nmap scan report for mirtuel (192.168.1.242)
-Host is up (0.000013s latency).
-rDNS record for 192.168.1.242: mirtuel.internal.placard.fr.eu.org
-Not shown: 998 closed ports
+<computeroutput># </computeroutput><userinput>nmap debian</userinput>
+<computeroutput><![CDATA[Starting Nmap 7.80 ( https://nmap.org ) at 2022-02-22 20:58 CET
+Nmap scan report for debian (192.168.122.57)
+Host is up (0.000087s latency).
+Not shown: 996 closed ports
 PORT    STATE SERVICE
 22/tcp  open  ssh
-111/tcp open  rpcbind
+79/tcp  open  finger
+80/tcp  open  http
+113/tcp open  ident
 
-Nmap done: 1 IP address (1 host up) scanned in 2.41 seconds
-# </computeroutput><userinput>nmap -A localhost</userinput>
-<computeroutput>
-Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:17 CEST
+Nmap done: 1 IP address (1 host up) scanned in 0.07 seconds
+]]># </computeroutput><userinput>nmap -A localhost</userinput>
+<computeroutput><![CDATA[nmap -A localhost
+Starting Nmap 7.80 ( https://nmap.org ) at 2022-02-22 20:56 CET
+Stats: 0:01:16 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan
+Service scan Timing: About 83.33% done; ETC: 20:57 (0:00:15 remaining)
 Nmap scan report for localhost (127.0.0.1)
-Host is up (0.000039s latency).
+Host is up (0.000086s latency).
 Other addresses for localhost (not scanned): ::1
-Not shown: 997 closed ports
+Not shown: 994 closed ports
 PORT    STATE SERVICE VERSION
-22/tcp  open  ssh     OpenSSH 7.9p1 Debian 10 (protocol 2.0)
-| ssh-hostkey: 
-|   2048 33:a1:d8:b1:e5:5b:b2:0d:15:1b:8e:76:7f:e4:d7:3d (RSA)
-|   256 8f:83:cf:fa:b3:58:54:9a:1d:1b:4c:db:b1:e2:58:76 (ECDSA)
-|_  256 fa:3d:58:62:49:92:93:90:52:fe:f4:26:ca:dc:4c:40 (ED25519)
-25/tcp  open  smtp    Exim smtpd 4.92
-| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, CHUNKING, PRDR, HELP, 
-|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA BDAT NOOP QUIT RSET HELP 
-631/tcp open  ipp     CUPS 2.2
-| http-methods: 
-|_  Potentially risky methods: PUT
+22/tcp  open  ssh     OpenSSH 8.4p1 Debian 5 (protocol 2.0)
+|_auth-owners: foobar
+25/tcp  open  smtp    Postfix smtpd
+|_auth-owners: foobar
+|_smtp-commands: debian, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, SMTPUTF8, CHUNKING, 
+| ssl-cert: Subject: commonName=debian
+| Subject Alternative Name: DNS:debian
+| Not valid before: 2022-02-22T14:48:42
+|_Not valid after:  2032-02-20T14:48:42
+|_ssl-date: TLS randomness does not represent time
+79/tcp  open  finger?
+|_auth-owners: foobar
+|_finger: ERROR: Script execution failed (use -d to debug)
+80/tcp  open  http    Apache httpd 2.4.52 ((Debian))
+|_auth-owners: foobar
+|_http-server-header: Apache/2.4.52 (Debian)
+|_http-title: Apache2 Debian Default Page: It works
+113/tcp open  ident   Liedentd (Claimed user: foobar)
+|_auth-owners: foobar
+631/tcp open  ipp     CUPS 2.3
+|_auth-owners: foobar
 | http-robots.txt: 1 disallowed entry 
 |_/
-|_http-server-header: CUPS/2.2 IPP/2.1
-|_http-title: Home - CUPS 2.2.10
-Device type: general purpose
-Running: Linux 3.X
-OS CPE: cpe:/o:linux:linux_kernel:3
-OS details: Linux 3.7 - 3.10
-Network Distance: 0 hops
-Service Info: Host: debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+|_http-server-header: CUPS/2.3 IPP/2.1
+|_http-title: Home - CUPS 2.3.3op2
+Service Info: Host:  debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds
-</computeroutput>
-</screen>
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 87.91 seconds
+]]></computeroutput></screen>
 
-      <para>As expected, the SSH and Exim4 applications are listed. Note
-      that not all applications listen on all IP addresses; since Exim4 is
-      only accessible on the <literal>lo</literal> loopback interface, it
-      only appears during an analysis of <literal>localhost</literal> and
-      not when scanning <literal>mirtuel</literal> (which maps to the
-      <literal>eth0</literal> interface on the same machine).</para>
+      <para>As expected, e.g. the SSH, Apache and Postfix applications are
+      listed. Note that not all applications listen on all IP addresses; since
+      Postfix is only accessible on the <literal>lo</literal> loopback
+      interface, it only appears during an analysis of
+      <literal>localhost</literal> and not when scanning
+      <literal>debian</literal> (which maps to the <literal>enp1s0</literal>
+      interface on the same machine).</para>
+
     </section>
     <section id="sect.sniffers">
       <title>Sniffers: <command>tcpdump</command> and <command>wireshark</command></title>
+      <indexterm><primary><command>tcpdump</command></primary></indexterm>
+      <indexterm><primary><command>wireshark</command></primary></indexterm>
 
       <para>Sometimes, one needs to look at what actually goes on the wire,
       packet by packet. These cases call for a “frame analyzer”, more
       widely known as a <emphasis>sniffer</emphasis>. Such a tool observes
       all the packets that reach a given network interface, and displays
       them in a user-friendly way.</para>
-      <indexterm><primary><command>tcpdump</command></primary></indexterm>
 
       <para>The venerable tool in this domain is
       <command>tcpdump</command>, available as a standard tool on a wide
       range of platforms. It allows many kinds of network traffic capture,
       but the representation of this traffic stays rather obscure. We will
       therefore not describe it in further detail.</para>
-      <indexterm><primary><command>wireshark</command></primary></indexterm>
 
       <para>A more recent (and more modern) tool,
       <command>wireshark</command> (in the <emphasis
@@ -2132,20 +2285,21 @@ Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds
         <title><emphasis>TIP</emphasis> <command>wireshark</command> with no graphical interface: <command>tshark</command></title>
         <indexterm><primary><command>tshark</command></primary></indexterm>
 
-	<para>When one cannot run a graphical interface, or does not wish
-	to do so for whatever reason, a text-only version of
-	<command>wireshark</command> also exists under the name
-	<command>tshark</command> (in a separate <emphasis
-	role="pkg">tshark</emphasis> package). Most of the capture and
-	decoding features are still available, but the lack of a graphical
-	interface necessarily limits the interactions with the program
-	(filtering packets after they've been captured, tracking of a given
-	TCP connection, and so on). It can still be used as a first
-	approach. If further manipulations are intended and require the
-	graphical interface, the packets can be saved to a file and this
-	file can be loaded into a graphical <command>wireshark</command>
-	running on another machine.</para>
+        <para>When one cannot run a graphical interface, or does not wish
+        to do so for whatever reason, a text-only version of
+        <command>wireshark</command> also exists under the name
+        <command>tshark</command> (in a separate <emphasis
+        role="pkg">tshark</emphasis> package). Most of the capture and
+        decoding features are still available, but the lack of a graphical
+        interface necessarily limits the interactions with the program
+        (filtering packets after they've been captured, tracking of a given
+        TCP connection, and so on). It can still be used as a first
+        approach. If further manipulations are intended and require the
+        graphical interface, the packets can be saved to a file and this
+        file can be loaded into a graphical <command>wireshark</command>
+        running on another machine.</para>
       </sidebar>
     </section>
   </section>
 </chapter>
+<!-- vim: set spell spl=en_us ft=xml tw=79 ts=2 sw=2 ai si et: -->
