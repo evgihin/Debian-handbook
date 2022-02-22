@@ -1241,6 +1241,11 @@ FALCOT\\vpn     pptp    f@Lc3au     *
     <title>Quality of Service</title>
     <section id="sect.qos-principe">
       <title>Principle and Mechanism</title>
+      <indexterm><primary>network</primary><secondary>QoS</secondary></indexterm>
+      <indexterm><primary>QoS</primary></indexterm>
+      <indexterm><primary>Quality of Service</primary><see>QoS</see></indexterm>
+      <indexterm><primary>quality</primary><secondary>of service</secondary><see>QoS</see></indexterm>
+      <indexterm><primary>service</primary><secondary>quality</secondary><see>QoS</see></indexterm>
 
       <para><emphasis>Quality of Service</emphasis> (or
       <emphasis>QoS</emphasis> for short) refers to a set of techniques
@@ -1255,21 +1260,18 @@ FALCOT\\vpn     pptp    f@Lc3au     *
       important other services. Traffic shaping is a particularly good fit
       for TCP traffic, since this protocol automatically adapts to
       available bandwidth.</para>
-      <indexterm><primary>QoS</primary></indexterm>
-      <indexterm><primary>quality of service</primary></indexterm>
-      <indexterm><primary>quality</primary><secondary>of service</secondary></indexterm>
-      <indexterm><primary>service</primary><secondary>quality</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Net neutrality and QoS</title>
+        <indexterm><primary>network</primary><secondary>neutrality</secondary></indexterm>
 
-	<para>Network neutrality is achieved when Internet service providers treat all Internet
+        <para>Network neutrality is achieved when Internet service providers treat all Internet
         communications equally, that is, without any access limitation based on content, user,
         website, destination address, etc.</para>
+
         <para>Quality of service can be implemented in a net neutral Internet, but only
         if Internet service providers can't charge a special fee for a higher-quality
         service.</para>
-        <indexterm><primary>net neutrality</primary></indexterm>
       </sidebar>
 
       <para>It is also possible to alter the priorities on traffic, which
@@ -1286,53 +1288,61 @@ FALCOT\\vpn     pptp    f@Lc3au     *
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> LARTC — <emphasis>Linux Advanced Routing &amp; Traffic Control</emphasis></title>
-
-	<para>The <emphasis>Linux Advanced Routing &amp; Traffic
-	Control</emphasis> HOWTO is the reference document covering
-	everything there is to know about network quality of service.
-	<ulink type="block" url="https://www.lartc.org/howto/"/></para>
+        <indexterm><primary>network</primary><secondary>advanced routing</secondary></indexterm>
         <indexterm><primary>routing</primary><secondary>advanced</secondary></indexterm>
         <indexterm><primary>traffic</primary><secondary>control</secondary></indexterm>
         <indexterm><primary>control of traffic</primary></indexterm>
+
+        <para>The <emphasis>Linux Advanced Routing &amp; Traffic
+        Control</emphasis> HOWTO is the reference document covering
+        everything there is to know about network quality of service.
+        <ulink type="block" url="https://www.lartc.org/howto/"/></para>
       </sidebar>
     </section>
     <section id="sect.qos-config">
       <title>Configuring and Implementing</title>
+      <indexterm><primary><emphasis>iproute</emphasis></primary></indexterm>
+      <indexterm><primary><command>tc</command></primary></indexterm>
 
       <para>QoS parameters are set through the <command>tc</command>
       command (provided by the <emphasis role="pkg">iproute</emphasis>
       package). Since its interface is quite complex, using higher-level
       tools is recommended.</para>
-      <indexterm><primary><emphasis>iproute</emphasis></primary></indexterm>
-      <indexterm><primary><command>tc</command></primary></indexterm>
+
       <section id="sect.qos-wondershaper">
         <title>Reducing Latencies: <command>wondershaper</command></title>
-
-	<para>The main purpose of <command>wondershaper</command> (in the
-	similarly-named package) is to minimize latencies independent of
-	network load. This is achieved by limiting total traffic to a value
-	that falls just short of the link saturation value.</para>
         <indexterm><primary><command>wondershaper</command></primary></indexterm>
         <indexterm><primary>limitation of traffic</primary></indexterm>
         <indexterm><primary>traffic</primary><secondary>limitation</secondary></indexterm>
 
-	<para>Once a network interface is configured, setting up this
-	traffic limitation is achieved by running <command>wondershaper
-	<replaceable>interface</replaceable>
-	<replaceable>download_rate</replaceable>
-	<replaceable>upload_rate</replaceable></command>. The interface can
-	be <literal>eth0</literal> or <literal>ppp0</literal> for example,
-	and both rates are expressed in kilobits per second. The
-	<command>wondershaper remove
-	<replaceable>interface</replaceable></command> command disables
-	traffic control on the specified interface.</para>
+        <para>The main purpose of <command>wondershaper</command> (in the
+        similarly-named package) is to minimize latencies independent of
+        network load. This is achieved by limiting total traffic to a value
+        that falls just short of the link saturation value.</para>
 
-	<para>For an Ethernet connection, this script is best called right
-	after the interface is configured. This is done by adding
-	<literal>up</literal> and <literal>down</literal> directives to the
-	<filename>/etc/network/interfaces</filename> file allowing declared
-	commands to be run, respectively, after the interface is configured
-	and before it is deconfigured. For example:</para>
+        <para>Once a network interface is configured, setting up this
+        traffic limitation is achieved by running <command>wondershaper
+        <replaceable>interface</replaceable>
+        <replaceable>download_rate</replaceable>
+        <replaceable>upload_rate</replaceable></command>. The interface can
+        be <literal>enp1s0</literal>, <literal>eth0</literal> or <literal>ppp0</literal> for example,
+        and both rates are expressed in kilobits per second. The
+        <command>wondershaper remove
+        <replaceable>interface</replaceable></command> command disables
+        traffic control on the specified interface.</para>
+
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/network/interfaces</filename></secondary></indexterm>
+
+        <para>For an Ethernet connection, historically this script would be
+        called right after the interface is configured. This is done by adding
+        <literal>up</literal> and <literal>down</literal> directives to the
+        <filename>/etc/network/interfaces</filename> file allowing declared
+        commands to be run, respectively, after the interface is configured and
+        before it is deconfigured. Or in the PPP case, creating a script that
+        calls <command>wondershaper</command> in
+        <filename>/etc/ppp/ip-up.d/</filename> will enable traffic control as
+        soon as the connection is up. Below is an example using this first
+        method:</para>
 
         <example id="example.network-interfaces">
           <title>Changes in the <filename>/etc/network/interfaces</filename> file</title>
@@ -1344,42 +1354,39 @@ iface eth0 inet dhcp
 </programlisting>
         </example>
 
-	<para>In the PPP case, creating a script that calls
-	<command>wondershaper</command> in
-	<filename>/etc/ppp/ip-up.d/</filename> will enable traffic control
-	as soon as the connection is up.</para>
-
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Optimal configuration</title>
 
-	  <para>The
-	  <filename>/usr/share/doc/wondershaper/README.Debian.gz</filename>
-	  file describes, in some detail, the configuration method
-	  recommended by the package maintainer. In particular, it advises
-	  measuring the download and upload speeds so as to best evaluate
-	  real limits.</para>
+          <para>The
+          <filename>/usr/share/doc/wondershaper/README.Debian.gz</filename>
+          file describes, in some detail, the configuration method
+          recommended by the package maintainer. In particular, it advises
+          measuring the download and upload speeds so as to best evaluate
+          real limits.</para>
         </sidebar>
       </section>
       <section id="sect.qos-config-standard">
         <title>Standard Configuration</title>
-
-	<para>Barring a specific QoS configuration, the Linux kernel uses
-	the <literal>pfifo_fast</literal> queue scheduler, which provides a
-	few interesting features by itself. The priority of each processed
-	IP packet is based on the DSCP field (<emphasis>Differentiated
-	Services Code Point</emphasis>) of this packet; modifying this
-	6-bit field is enough to take advantage of the scheduling features.
-	Refer to
-	<ulink url="https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector"/>
-	for more information.</para>
         <indexterm><primary>DSCP</primary></indexterm>
-        <indexterm><primary>Differentiated Services Code Point</primary></indexterm>
+        <indexterm><primary>Differentiated Services Code Point</primary><see>DSCP</see></indexterm>
 
-	<para>The DSCP field can be set by applications that generate IP
-	packets, or modified on the fly by <emphasis>netfilter</emphasis>.
-	The following rules are sufficient to increase responsiveness for a
-	server's SSH service, note that the DSCP field must be set in
-	hexadecimal:</para>
+        <para>Barring a specific QoS configuration, the Linux kernel uses
+        the <literal>pfifo_fast</literal> queue scheduler, which provides a
+        few interesting features by itself. The priority of each processed
+        IP packet is based on the DSCP field (<emphasis>Differentiated
+        Services Code Point</emphasis>) of this packet; modifying this
+        6-bit field is enough to take advantage of the scheduling features.
+        Refer to
+        <ulink url="https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector"/>
+        for more information.</para>
+
+        <indexterm><primary>IP</primary><secondary>netfilter</secondary></indexterm>
+
+        <para>The DSCP field can be set by applications that generate IP
+        packets, or modified on the fly by <emphasis>netfilter</emphasis>.
+        The following rules are sufficient to increase responsiveness for a
+        server's SSH service, note that the DSCP field must be set in
+        hexadecimal:</para>
 
         <programlisting role="scale">
 nft add table ip mangle
