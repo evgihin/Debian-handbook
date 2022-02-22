@@ -691,15 +691,16 @@ Data Base Updated
   </section>
   <section id="sect.virtual-private-network">
     <title>Virtual Private Network</title>
+    <indexterm><primary>network</primary><secondary>virtual private</secondary></indexterm>
+    <indexterm><primary>VPN</primary></indexterm>
+    <indexterm><primary>virtual private network</primary><seealso>VPN</seealso></indexterm>
+    <indexterm><primary>IP</primary><secondary>IPsec</secondary></indexterm>
 
     <para>A <emphasis>Virtual Private Network</emphasis> (VPN for short) is
     a way to link two different local networks through the Internet by way
     of a tunnel; the tunnel is usually encrypted for confidentiality. VPNs
     are often used to integrate a remote machine within a company's local
     network.</para>
-    <indexterm><primary>network</primary><secondary>virtual private</secondary></indexterm>
-    <indexterm><primary>VPN</primary></indexterm>
-    <indexterm><primary>virtual private network</primary></indexterm>
 
     <para>Several tools provide this functionality. OpenVPN is an efficient solution,
     easy to deploy and maintain, based on SSL/TLS. Another possibility is
@@ -709,9 +710,13 @@ Data Base Updated
     to provide a VPN, in addition to its more conventional features.
     Finally, a VPN can be established using Microsoft's PPTP protocol.
     Other solutions exist, but are beyond the focus of this book.</para>
+
     <section id="sect.openvpn">
       <title>OpenVPN</title>
       <indexterm><primary>OpenVPN</primary></indexterm>
+      <indexterm><primary>VPN</primary><secondary>OpenVPN</secondary></indexterm>
+      <indexterm><primary>network</primary><secondary><literal>tun</literal> interface</secondary></indexterm>
+      <indexterm><primary>network</primary><secondary><literal>tap</literal> interface</secondary></indexterm>
 
       <para>OpenVPN is a piece of software dedicated to creating virtual
       private networks. Its setup involves creating virtual network
@@ -732,122 +737,143 @@ Data Base Updated
 
       <section>
         <title>Configuring the OpenVPN Server</title>
+        <indexterm><primary>OpenVPN</primary><secondary>server</secondary></indexterm>
 
-	<para>After all certificates have been created
-	(follow the instructions from <xref linkend="sect.easy-rsa"/>),
-	they need to be copied where appropriate: the root certificate's
-	public key (<filename>pki/ca.crt</filename>) will be stored on
-	all machines (both server and clients) as
-	<filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
-	certificate is installed only on the server
-	(<filename>pki/issued/vpn.falcot.com.crt</filename> goes to
-	<filename>/etc/ssl/certs/vpn.falcot.com.crt</filename>, and
-	<filename>pki/private/vpn.falcot.com.key</filename> goes to
-	<filename>/etc/ssl/private/vpn.falcot.com.key</filename> with
-	restricted permissions so that only the administrator can read it),
-	with the corresponding Diffie-Hellman parameters
-	(<filename>pki/dh.pem</filename>) installed to
-	<filename>/etc/openvpn/dh.pem</filename>. Client certificates
-	are installed on the corresponding VPN client in a similar
-	fashion.</para>
-      </section>
-      <section>
-        <title>Configuring the OpenVPN Server</title>
+        <para>After all certificates have been created
+        (follow the instructions from <xref linkend="sect.easy-rsa"/>),
+        they need to be copied where appropriate: the root certificate's
+        public key (<filename>pki/ca.crt</filename>) will be stored on
+        all machines (both server and clients) as
+        <filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's
+        certificate is installed only on the server
+        (<filename>pki/issued/vpn.falcot.com.crt</filename> goes to
+        <filename>/etc/ssl/certs/vpn.falcot.com.crt</filename>, and
+        <filename>pki/private/vpn.falcot.com.key</filename> goes to
+        <filename>/etc/ssl/private/vpn.falcot.com.key</filename> with
+        restricted permissions so that only the administrator can read it),
+        with the corresponding Diffie-Hellman parameters
+        (<filename>pki/dh.pem</filename>) installed to
+        <filename>/etc/openvpn/dh.pem</filename>. Client certificates
+        are installed on the corresponding VPN client in a similar
+        fashion.</para>
 
-	<para>By default, the OpenVPN initialization script tries starting
-	all virtual private networks defined in
-	<filename>/etc/openvpn/*.conf</filename>. Setting up a VPN server
-	is therefore a matter of storing a corresponding configuration file
-	in this directory. A good starting point is
-	<filename>/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz</filename>,
-	which leads to a rather standard server. Of course, some parameters
-	need to be adapted: <literal>ca</literal>, <literal>cert</literal>,
-	<literal>key</literal> and <literal>dh</literal> need to describe
-	the selected locations (respectively,
-	<literal>/etc/ssl/certs/Falcot_CA.crt</literal>,
-	<literal>/etc/ssl/vpn.falcot.com.crt</literal>,
-	<literal>/etc/ssl/private/vpn.falcot.com.key</literal> and
-	<literal>/etc/openvpn/dh.pem</literal>). The <literal>server
-	10.8.0.0 255.255.255.0</literal> directive defines the subnet to be
-	used by the VPN; the server uses the first IP address in that range
-	(<literal>10.8.0.1</literal>) and the rest of the addresses are
-	allocated to clients.</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/ssl/certs/</secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/ssl/private/</secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/openvpn/dh.pem</secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/openvpn/*.conf</secondary></indexterm>
 
-	<para>With this configuration, starting OpenVPN creates the virtual
-	network interface, usually under the <literal>tun0</literal> name.
-	However, firewalls are often configured at the same time as the
-	real network interfaces, which happens before OpenVPN starts. Good
-	practice therefore recommends creating a persistent virtual network
-	interface, and configuring OpenVPN to use this pre-existing
-	interface. This further allows choosing the name for this
-	interface. To this end, <command>openvpn --mktun --dev vpn
-	--dev-type tun</command> creates a virtual network interface named
-	<literal>vpn</literal> with type <literal>tun</literal>; this
-	command can easily be integrated in the firewall configuration
-	script, or in an <literal>up</literal> directive of the
-	<filename>/etc/network/interfaces</filename> file, or a
-	<emphasis role="package">udev</emphasis> rule can be added to that
-	end. The OpenVPN configuration file must also be updated
+        <para>By default, the OpenVPN initialization script tries starting
+        all virtual private networks defined in
+        <filename>/etc/openvpn/*.conf</filename>. Setting up a VPN server
+        is therefore a matter of storing a corresponding configuration file
+        in this directory. A good starting point is
+        <filename>/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz</filename>,
+        which leads to a rather standard server. Of course, some parameters
+        need to be adapted: <literal>ca</literal>, <literal>cert</literal>,
+        <literal>key</literal> and <literal>dh</literal> need to describe
+        the selected locations (respectively,
+        <literal>/etc/ssl/certs/Falcot_CA.crt</literal>,
+        <literal>/etc/ssl/vpn.falcot.com.crt</literal>,
+        <literal>/etc/ssl/private/vpn.falcot.com.key</literal> and
+        <literal>/etc/openvpn/dh.pem</literal>). The <literal>server
+        10.8.0.0 255.255.255.0</literal> directive defines the subnet to be
+        used by the VPN; the server uses the first IP address in that range
+        (<literal>10.8.0.1</literal>) and the rest of the addresses are
+        allocated to clients.</para>
+
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/network/interfaces</secondary></indexterm>
+        <indexterm><primary>network</primary><secondary>virtual interface</secondary></indexterm>
+        <indexterm><primary>OpenVPN</primary><secondary>network interface</secondary></indexterm>
+
+        <para>With this configuration, starting OpenVPN creates the virtual
+        network interface, usually under the <literal>tun0</literal> name.
+        However, firewalls are often configured at the same time as the
+        real network interfaces, which happens before OpenVPN starts. Good
+        practice therefore recommends creating a persistent virtual network
+        interface, and configuring OpenVPN to use this pre-existing
+        interface. This further allows choosing the name for this
+        interface. To this end, <command>openvpn --mktun --dev vpn
+        --dev-type tun</command> creates a virtual network interface named
+        <literal>vpn</literal> with type <literal>tun</literal>; this
+        command can easily be integrated in the firewall configuration
+        script, or in an <literal>up</literal> directive of the
+        <filename>/etc/network/interfaces</filename> file, or a
+        <emphasis role="package">udev</emphasis> rule can be added to that
+        end. The OpenVPN configuration file must also be updated
         accordingly, with the <literal>dev vpn</literal> and
         <literal>dev-type tun</literal> directives.</para>
 
-	<para>Barring further action, VPN clients can only access the VPN
-	server itself by way of the <literal>10.8.0.1</literal> address.
-	Granting the clients access to the local network (192.168.0.0/24),
-	requires adding a <literal>push route 192.168.0.0
-	255.255.255.0</literal> directive to the OpenVPN configuration so
-	that VPN clients automatically get a network route telling them
-	that this network is reachable by way of the VPN. Furthermore,
-	machines on the local network also need to be informed that the
-	route to the VPN goes through the VPN server (this automatically
-	works when the VPN server is installed on the gateway).
-	Alternatively, the VPN server can be configured to perform IP
-	masquerading so that connections coming from VPN clients appear as
-	if they are coming from the VPN server instead (see <xref
-	linkend="sect.gateway"/>).</para>
+        <indexterm><primary>OpenVPN</primary><secondary>push route</secondary></indexterm>
+
+        <para>Barring further action, VPN clients can only access the VPN
+        server itself by way of the <literal>10.8.0.1</literal> address.
+        Granting the clients access to the local network (192.168.0.0/24),
+        requires adding a <literal>push route 192.168.0.0
+        255.255.255.0</literal> directive to the OpenVPN configuration so
+        that VPN clients automatically get a network route telling them
+        that this network is reachable by way of the VPN. Furthermore,
+        machines on the local network also need to be informed that the
+        route to the VPN goes through the VPN server (this automatically
+        works when the VPN server is installed on the gateway).
+        Alternatively, the VPN server can be configured to perform IP
+        masquerading so that connections coming from VPN clients appear as
+        if they are coming from the VPN server instead (see <xref
+        linkend="sect.gateway"/>).</para>
       </section>
       <section>
         <title>Configuring the OpenVPN Client</title>
+        <indexterm><primary>OpenVPN</primary><secondary>client</secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/openvpn/*.conf</secondary></indexterm>
 
-	<para>Setting up an OpenVPN client also requires creating a
-	configuration file in <filename>/etc/openvpn/</filename>. A
-	standard configuration can be obtained by using
-	<filename>/usr/share/doc/openvpn/examples/sample-config-files/client.conf</filename>
-	as a starting point. The <literal>remote vpn.falcot.com
-	1194</literal> directive describes the address and port of the
-	OpenVPN server; the <literal>ca</literal>, <literal>cert</literal>
-	and <literal>key</literal> also need to be adapted to describe the
-	locations of the key files.</para>
+        <para>Setting up an OpenVPN client also requires creating a
+        configuration file in <filename>/etc/openvpn/</filename>. A
+        standard configuration can be obtained by using
+        <filename>/usr/share/doc/openvpn/examples/sample-config-files/client.conf</filename>
+        as a starting point. The <literal>remote vpn.falcot.com
+        1194</literal> directive describes the address and port of the
+        OpenVPN server; the <literal>ca</literal>, <literal>cert</literal>
+        and <literal>key</literal> also need to be adapted to describe the
+        locations of the key files.</para>
 
-	<para>If the VPN should not be started automatically on boot, set
-	the <literal>AUTOSTART</literal> directive to
-	<literal>none</literal> in the
-	<filename>/etc/default/openvpn</filename> file. Starting or
-	stopping a given VPN connection is always possible with the
-	commands <command>systemctl start openvpn@<replaceable>name</replaceable></command> and
-	<command>systemctl stop openvpn@<replaceable>name</replaceable></command> (where the connection
-	<replaceable>name</replaceable> matches the one defined in
-	<filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename>).</para>
+        <indexterm><primary>OpenVPN</primary><secondary><literal>AUTOSTART</literal></secondary></indexterm>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary>/etc/default/openvpn</secondary></indexterm>
+        <indexterm><primary>service</primary><secondary><filename>openvpn@.service</filename></secondary></indexterm>
 
-	<para>The <emphasis
-	role="pkg">network-manager-openvpn-gnome</emphasis> package
-	contains an extension to Network Manager (see <xref
-	linkend="sect.roaming-network-config"/>) that allows managing
-	OpenVPN virtual private networks. This allows every user to
-	configure OpenVPN connections graphically and to control them from
-	the network management icon. <indexterm><primary><emphasis
-	role="pkg">network-manager-openvpn-gnome</emphasis></primary></indexterm></para>
+        <para>If the VPN should not be started automatically on boot, set
+        the <literal>AUTOSTART</literal> directive to
+        <literal>none</literal> in the
+        <filename>/etc/default/openvpn</filename> file. Starting or
+        stopping a given VPN connection is always possible with the
+        commands <command>systemctl start openvpn@<replaceable>name</replaceable></command> and
+        <command>systemctl stop openvpn@<replaceable>name</replaceable></command> (where the connection
+        <replaceable>name</replaceable> matches the one defined in
+        <filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename>).</para>
+
+        <indexterm><primary>OpenVPN</primary><secondary><emphasis role="pkg">network-manager-openvpn-gnome</emphasis></secondary></indexterm>
+
+        <para>The <emphasis
+        role="pkg">network-manager-openvpn-gnome</emphasis> package
+        contains an extension to Network Manager (see <xref
+        linkend="sect.roaming-network-config"/>) that allows managing
+        OpenVPN virtual private networks. This allows every user to
+        configure OpenVPN connections graphically and to control them from
+        the network management icon.</para>
+        <indexterm><primary><emphasis role="pkg">network-manager-openvpn-gnome</emphasis></primary></indexterm>
       </section>
     </section>
     <section id="sect.ssh-vpn">
       <title>Virtual Private Network with SSH</title>
-      <indexterm><primary>SSH</primary></indexterm>
+      <indexterm><primary>SSH</primary><secondary>VPN</secondary></indexterm>
       <indexterm><primary>PPP</primary></indexterm>
 
       <para>There are actually two ways of creating a virtual private
       network with SSH. The historic one involves establishing a PPP layer
       over the SSH link. This method is described in a HOWTO document:
       <ulink type="block" url="https://www.tldp.org/HOWTO/ppp-ssh/"/></para>
+
+      <indexterm><primary>network</primary><secondary><literal>tun</literal> interface</secondary></indexterm>
+      <indexterm><primary>SSH</primary><secondary><literal>PermitTunnel</literal></secondary></indexterm>
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/ssh/sshd_config</filename></secondary></indexterm>
 
       <para>The second method is more recent, and was introduced with
       OpenSSH 4.3; it is now possible for OpenSSH to create virtual
@@ -882,6 +908,7 @@ Data Base Updated
     <section id="sect.ipsec">
       <title>IPsec</title>
       <indexterm><primary>IPsec</primary></indexterm>
+      <indexterm><primary>Internet Protocol Security</primary><see>IPsec</see></indexterm>
       <indexterm><primary><command>libreswan</command></primary></indexterm>
       <indexterm><primary><command>strongswan</command></primary></indexterm>
 
@@ -891,7 +918,10 @@ Data Base Updated
       configuration tools, are provided by the <emphasis
       role="pkg">libreswan</emphasis> package or the
       <emphasis role="pkg">strongswan</emphasis> package. Here we describe
-      briefly the <emphasis role="pkg">libreswan</emphasis> option.</para>
+      briefly the first of these options.</para>
+
+      <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/ipsec.conf</filename></secondary></indexterm>
+      <indexterm><primary>IPsec</primary><secondary>tunnel</secondary></indexterm>
 
       <para>First, we install the <emphasis role="pkg">libreswan</emphasis>
       package. In concrete terms, each host's
@@ -903,12 +933,15 @@ Data Base Updated
       documentation has more examples with explanations:
       <ulink type="block" url="https://libreswan.org/wiki/"/></para>
 
+      <indexterm><primary>service</primary><secondary><filename>ipsec.service</filename></secondary></indexterm>
+
       <para>The IPsec service can be controlled with <command>systemctl</command>;
       for example, <command>systemctl start ipsec</command> will start the
       IPsec service.</para>
 
       <indexterm><primary>IKE</primary></indexterm>
-      <indexterm><primary>IPsec</primary><secondary>IPsec Key Exchange</secondary></indexterm>
+      <indexterm><primary>IPsec Key Exchange</primary><see>IKE</see></indexterm>
+      <indexterm><primary>IPsec</primary><secondary>IPsec Key Exchange</secondary><seealso>IKE</seealso></indexterm>
       <indexterm><primary>key pair</primary></indexterm>
       <indexterm><primary><command>setkey</command></primary></indexterm>
 
@@ -919,60 +952,63 @@ Data Base Updated
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> IPsec and NAT</title>
-
-	<para>NATing firewalls and IPsec do not work well together: since
-	IPsec signs the packets, any change on these packets that the
-	firewall might perform will void the signature, and the packets
-	will be rejected at their destination. Various IPsec
-	implementations now include the <emphasis>NAT-T</emphasis>
-	technique (for <emphasis>NAT Traversal</emphasis>), which basically
-	encapsulates the IPsec packet within a standard UDP packet.</para>
+        <indexterm><primary>NAT</primary></indexterm>
         <indexterm><primary>NAT-T</primary></indexterm>
-        <indexterm><primary>NAT Traversal</primary></indexterm>
+        <indexterm><primary>NAT Traversal</primary><seealso>NAT-T</seealso></indexterm>
+
+        <para>NATing firewalls and IPsec do not work well together: since
+        IPsec signs the packets, any change on these packets that the
+        firewall might perform will void the signature, and the packets
+        will be rejected at their destination. Various IPsec
+        implementations now include the <emphasis>NAT-T</emphasis>
+        technique (for <emphasis>NAT Traversal</emphasis>), which basically
+        encapsulates the IPsec packet within a standard UDP packet.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> IPsec and firewalls</title>
-
-	<para>The standard mode of operation of IPsec involves data
-	exchanges on UDP port 500 for key exchanges (also on UDP
-	port 4500 in the case that NAT-T is in use). Moreover, IPsec packets use
-	two dedicated IP protocols that the firewall must let through;
-	reception of these packets is based on their protocol numbers, 50
-	(ESP) and 51 (AH).</para>
         <indexterm><primary>ESP, protocol</primary></indexterm>
         <indexterm><primary>AH, protocol</primary></indexterm>
         <indexterm><primary>protocol</primary><secondary>AH</secondary></indexterm>
         <indexterm><primary>protocol</primary><secondary>ESP</secondary></indexterm>
+
+        <para>The standard mode of operation of IPsec involves data
+        exchanges on UDP port 500 for key exchanges (also on UDP
+        port 4500 in the case that NAT-T is in use). Moreover, IPsec packets use
+        two dedicated IP protocols that the firewall must let through;
+        reception of these packets is based on their protocol numbers, 50
+        (ESP) and 51 (AH).</para>
       </sidebar>
     </section>
     <section id="sect.pptp">
       <title>PPTP</title>
+      <indexterm><primary>PPTP</primary></indexterm>
+      <indexterm><primary>GRE, protocol</primary></indexterm>
+      <indexterm><primary>protocol</primary><secondary>GRE</secondary></indexterm>
 
       <para>PPTP (for <emphasis>Point-to-Point Tunneling
       Protocol</emphasis>) uses two communication channels, one for control
       data and one for payload data; the latter uses the GRE protocol
       (<emphasis>Generic Routing Encapsulation</emphasis>). A standard PPP
       link is then set up over the data exchange channel.</para>
-      <indexterm><primary>PPTP</primary></indexterm>
-      <indexterm><primary>Point-to-Point Tunneling Protocol</primary></indexterm>
-      <indexterm><primary>GRE, protocol</primary></indexterm>
-      <indexterm><primary>protocol</primary><secondary>GRE</secondary></indexterm>
+
       <section id="sect.pptp-config-client">
         <title>Configuring the Client</title>
-
-	<para>The <emphasis role="pkg">pptp-linux</emphasis> package
-	contains an easily-configured PPTP client for Linux. The following
-	instructions take their inspiration from the official
-	documentation: <ulink type="block"
-	url="http://pptpclient.sourceforge.net/howto-debian.phtml"/></para>
+        <indexterm><primary>PPTP</primary><secondary>Client</secondary></indexterm>
         <indexterm><primary><emphasis role="pkg">pptp-linux</emphasis></primary></indexterm>
 
-	<para>The Falcot administrators created several files:
-	<filename>/etc/ppp/options.pptp</filename>,
-	<filename>/etc/ppp/peers/falcot</filename>,
-	<filename>/etc/ppp/ip-up.d/falcot</filename>, and
-	<filename>/etc/ppp/ip-down.d/falcot</filename>.</para>
+        <para>The <emphasis role="pkg">pptp-linux</emphasis> package
+        contains an easily-configured PPTP client for Linux. The following
+        instructions take their inspiration from the official
+        documentation: <ulink type="block"
+        url="http://pptpclient.sourceforge.net/howto-debian.phtml"/></para>
+
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/ppp/</filename></secondary></indexterm>        
+        <para>The Falcot administrators created several files:
+        <filename>/etc/ppp/options.pptp</filename>,
+        <filename>/etc/ppp/peers/falcot</filename>,
+        <filename>/etc/ppp/ip-up.d/falcot</filename>, and
+        <filename>/etc/ppp/ip-down.d/falcot</filename>.</para>
 
         <example id="example.ppp-options.pptp">
           <title>The <filename>/etc/ppp/options.pptp</filename> file</title>
@@ -1028,64 +1064,54 @@ fi
 
         <sidebar>
           <title><emphasis>SECURITY</emphasis> MPPE</title>
-
-	  <para>Securing PPTP involves using the MPPE feature
-	  (<emphasis>Microsoft Point-to-Point Encryption</emphasis>), which
-	  is available in official Debian kernels as a module.</para>
           <indexterm><primary>MPPE</primary></indexterm>
-          <indexterm><primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary></indexterm>
+          <indexterm><primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary><see>MPPE</see></indexterm>
+
+          <para>Securing PPTP involves using the MPPE feature
+          (<emphasis>Microsoft Point-to-Point Encryption</emphasis>), which
+          is available in official Debian kernels as a module.</para>
         </sidebar>
       </section>
       <section id="sect.pptp-config-serveur">
         <title>Configuring the Server</title>
+        <indexterm><primary><command>pptpd</command></primary></indexterm>
 
         <sidebar>
           <title><emphasis>CAUTION</emphasis> PPTP and firewalls</title>
 
-	  <para>Intermediate firewalls need to be configured to let through
-	  IP packets using protocol 47 (GRE). Moreover, the PPTP server's
-	  port 1723 needs to be open so that the communication channel can
-	  happen.</para>
+          <para>Intermediate firewalls need to be configured to let through
+          IP packets using protocol 47 (GRE). Moreover, the PPTP server's
+          port 1723 needs to be open so that the communication channel can
+          happen.</para>
         </sidebar>
 
-	<para><command>pptpd</command> is the PPTP server for Linux. Its
-	main configuration file, <filename>/etc/pptpd.conf</filename>,
-	requires very few changes: <emphasis>localip</emphasis> (local IP
-	address) and <emphasis>remoteip</emphasis> (remote IP address). In
-	the example below, the PPTP server always uses the
-	<literal>192.168.0.199</literal> address, and PPTP clients receive
-	IP addresses from <literal>192.168.0.200</literal> to
-	<literal>192.168.0.250</literal>.</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/pptpd.conf</filename></secondary></indexterm>
+        <para><command>pptpd</command> is the PPTP server for Linux. Its
+        main configuration file, <filename>/etc/pptpd.conf</filename>,
+        requires very few changes: <emphasis>localip</emphasis> (local IP
+        address) and <emphasis>remoteip</emphasis> (remote IP address). In
+        the example below, the PPTP server always uses the
+        <literal>192.168.0.199</literal> address, and PPTP clients receive
+        IP addresses from <literal>192.168.0.200</literal> to
+        <literal>192.168.0.250</literal>.</para>
 
         <example id="example.pptpd.conf">
           <title>The <filename>/etc/pptpd.conf</filename> file</title>
 
           <programlisting>
-# TAG: speed
-#
-#       Specifies the speed for the PPP daemon to talk at.
-#
-speed 115200
-
-# TAG: option
-#
-#       Specifies the location of the PPP options file.
-#       By default PPP looks in '/etc/ppp/options'
-#
-option /etc/ppp/pptpd-options
-
-# TAG: debug
-#
-#       Turns on (more) debugging to syslog
-#
-# debug
-
+[..]
 # TAG: localip
 # TAG: remoteip
-#
 #       Specifies the local and remote IP address ranges.
 #
-#       You can specify single IP addresses separated by commas or you can
+#       These options are ignored if delegate option is set.
+#
+#       Any addresses work as long as the local machine takes care of the
+#       routing.  But if you want to use MS-Windows networking, you should
+#       use IP addresses out of the LAN address space and use the proxyarp
+#       option in the pppd options file, or run bcrelay.
+#
+#       You can specify single IP addresses seperated by commas or you can
 #       specify ranges, or both. For example:
 #
 #               192.168.0.234,192.168.0.245-249,192.168.0.254
@@ -1094,54 +1120,67 @@ option /etc/ppp/pptpd-options
 #
 #       1. No spaces are permitted between commas or within addresses.
 #
-#       2. If you give more IP addresses than MAX_CONNECTIONS, it will
-#          start at the beginning of the list and go until it gets
-#          MAX_CONNECTIONS IPs. Others will be ignored.
+#       2. If you give more IP addresses than the value of connections,
+#          it will start at the beginning of the list and go until it
+#          gets connections IPs.  Others will be ignored.
 #
-#       3. No shortcuts in ranges! i.e. 234-8 does not mean 234 to 238,
+#       3. No shortcuts in ranges! ie. 234-8 does not mean 234 to 238,
 #          you must type 234-238 if you mean this.
 #
 #       4. If you give a single localIP, that's ok - all local IPs will
 #          be set to the given one. You MUST still give at least one remote
 #          IP for each simultaneous client.
 #
+# (Recommended)
+#localip 192.168.0.1
+#remoteip 192.168.0.234-238,192.168.0.245
+# or
 #localip 192.168.0.234-238,192.168.0.245
 #remoteip 192.168.1.234-238,192.168.1.245
-#localip 10.0.1.1
-#remoteip 10.0.1.2-100
 localip 192.168.0.199
 remoteip 192.168.0.200-250
 </programlisting>
         </example>
 
-	<para>The PPP configuration used by the PPTP server also requires a
-	few changes in <filename>/etc/ppp/pptpd-options</filename>. The
-	important parameters are the server name (<literal>pptp</literal>),
-	the domain name (<literal>falcot.com</literal>), and the IP
-	addresses for DNS and WINS servers.</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/ppp/pptpd-options</filename></secondary></indexterm>
+
+        <para>The PPP configuration used by the PPTP server also requires a
+        few changes in <filename>/etc/ppp/pptpd-options</filename>. The
+        important parameters are the server name (<literal>pptp</literal>),
+        the domain name (<literal>falcot.com</literal>), and the IP
+        addresses for DNS and WINS servers.</para>
 
         <example id="example.ppp-pptpd-options">
           <title>The <filename>/etc/ppp/pptpd-options</filename> file</title>
 
           <programlisting>
-## turn pppd syslog debugging on
+# Enable connection debugging facilities.
+# (see your syslog configuration for where pppd sends to)
 #debug
 
-## change 'servername' to whatever you specify as your server name in chap-secrets
-name pptp
+# Name of the local system for authentication purposes
+# (must match the second field in /etc/ppp/chap-secrets entries)
+name pptpd
+
+# Optional: domain name to use for authentication
 ## change the domainname to your local domain
 domain falcot.com
 
+# Authentication
 ## these are reasonable defaults for WinXXXX clients
 ## for the security related settings
-# The Debian pppd package now supports both MSCHAP and MPPE, so enable them
-# here. Please note that the kernel support for MPPE must also be present!
 auth
-require-chap
-require-mschap
+refuse-pap
+refuse-chap
+refuse-mschap
+# Require the peer to authenticate itself using MS-CHAPv2 [Microsoft
+# Challenge Handshake Authentication Protocol, Version 2] authentication.
 require-mschap-v2
+# Require MPPE 128-bit encryption
+# (note that MPPE requires the use of MSCHAP-V2 during authentication)
 require-mppe-128
 
+# Network and Routing
 ## Fill in your addresses
 ms-dns 192.168.0.1
 ms-wins 192.168.0.1
@@ -1156,18 +1195,20 @@ lock
 </programlisting>
         </example>
 
-	<para>The last step involves registering the <literal>vpn</literal>
-	user (and the associated password) in the
-	<filename>/etc/ppp/chap-secrets</filename> file. Contrary to other
-	instances where an asterisk (<literal>*</literal>) would work, the
-	server name must be filled explicitly here. Furthermore, Windows
-	PPTP clients identify themselves under the
-	<literal><replaceable>DOMAIN</replaceable>\\<replaceable>USER</replaceable></literal>
-	form, instead of only providing a user name. This explains why the
-	file also mentions the <literal>FALCOT\\vpn</literal> user. It is
-	also possible to specify individual IP addresses for users; an
-	asterisk in this field specifies that dynamic addressing should be
-	used.</para>
+        <indexterm><primary><filename>/etc/</filename></primary><secondary><filename>/etc/ppp/chap-secrets</filename></secondary></indexterm>
+
+        <para>The last step involves registering the <literal>vpn</literal>
+        user (and the associated password) in the
+        <filename>/etc/ppp/chap-secrets</filename> file. Contrary to other
+        instances where an asterisk (<literal>*</literal>) would work, the
+        server name must be filled explicitly here. Furthermore, Windows
+        PPTP clients identify themselves under the
+        <literal><replaceable>DOMAIN</replaceable>\\<replaceable>USER</replaceable></literal>
+        form, instead of only providing a user name. This explains why the
+        file also mentions the <literal>FALCOT\\vpn</literal> user. It is
+        also possible to specify individual IP addresses for users; an
+        asterisk in this field specifies that dynamic addressing should be
+        used.</para>
 
         <example id="example.ppp-chap-secrets">
           <title>The <filename>/etc/ppp/chap-secrets</filename> file</title>
@@ -1182,15 +1223,16 @@ FALCOT\\vpn     pptp    f@Lc3au     *
 
         <sidebar>
           <title><emphasis>SECURITY</emphasis> PPTP vulnerabilities</title>
+          <indexterm><primary>PPTP</primary><secondary>vulnerabilities</secondary></indexterm>
 
-	  <para>Microsoft's first PPTP implementation drew severe criticism
-	  because it had many security vulnerabilities; most have since
-	  then been fixed in more recent versions. The configuration
-	  documented in this section uses the latest version of the
-	  protocol. Be aware though that removing some options (such as
-	  <literal>require-mppe-128</literal> and
-	  <literal>require-mschap-v2</literal>) would make the service
-	  vulnerable again.</para>
+          <para>Microsoft's first PPTP implementation drew severe criticism
+          because it had many security vulnerabilities; most have since
+          then been fixed in more recent versions. The configuration
+          documented in this section uses the latest version of the
+          protocol. Be aware though that removing some options (such as
+          <literal>require-mppe-128</literal> and
+          <literal>require-mschap-v2</literal>) would make the service
+          vulnerable again.</para>
         </sidebar>
       </section>
     </section>
