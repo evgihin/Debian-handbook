@@ -40,7 +40,7 @@
     <indexterm><primary>email</primary><secondary>server</secondary></indexterm>
     <indexterm><primary>email</primary><secondary>Postfix</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>email</secondary></indexterm>
-    <indexterm><primary>server</primary><secondary>E-Mail</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>SMTP</secondary></indexterm>
     <indexterm><primary>mail server</primary></indexterm>
     <indexterm><primary>SMTP</primary></indexterm>
     <indexterm><primary>Postfix</primary></indexterm>
@@ -51,6 +51,7 @@
       <indexterm><primary>Exim</primary></indexterm>
       <indexterm><primary>email</primary><secondary>Exim</secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">exim4</emphasis></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exim4/</filename></secondary></indexterm>
 
       <para>Debian uses Exim4 as the default email server (which is why the
       initial installation includes Exim4). The configuration is provided
@@ -81,6 +82,7 @@
     <section>
       <title>Installing Postfix</title>
       <indexterm><primary>Postfix</primary><secondary>installation</secondary></indexterm>
+      <indexterm><primary>daemon</primary><secondary>SMTP</secondary></indexterm>
 
       <para>The <emphasis role="pkg">postfix</emphasis> package includes
       the main <acronym>SMTP</acronym> daemon. Other packages (such as <emphasis
@@ -92,8 +94,7 @@
       <sidebar id="sidebar.smtp">
         <title><emphasis>BACK TO BASICS</emphasis> SMTP</title>
         <indexterm><primary>SMTP</primary></indexterm>
-        <indexterm><primary>Simple Mail Transfer Protocol</primary></indexterm>
-        <indexterm><primary>server</primary><secondary>SMTP</secondary></indexterm>
+        <indexterm><primary>Simple Mail Transfer Protocol</primary><see>SMTP</see></indexterm>
 
         <para><acronym>SMTP</acronym> (<emphasis>Simple Mail Transfer
         Protocol</emphasis>, RFC 5321) is the protocol used by mail servers to
@@ -104,6 +105,7 @@
       the package. The answers allow generating a first version of the
       <filename>/etc/postfix/main.cf</filename> configuration file.</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
       <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
 
       <para>The first question deals with the type of setup. Only two of
@@ -126,7 +128,8 @@
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> ISP</title>
-        <indexterm><primary>ISP, Internet Service Provider</primary></indexterm>
+        <indexterm><primary>ISP</primary></indexterm>
+        <indexterm><primary>ISP, Internet Service Provider</primary><see>ISP</see></indexterm>
 
         <para><acronym>ISP</acronym> is the acronym for “Internet Service
         Provider”. It covers an entity, often a commercial company, that
@@ -155,8 +158,10 @@
       <literal>mydestination</literal> variable of the main Postfix
       configuration file — <filename>/etc/postfix/main.cf</filename>.</para>
 
+      <indexterm><primary>Postfix</primary><secondary><literal>mydestination</literal></secondary></indexterm>
       <indexterm><primary>server</primary><secondary>MX</secondary></indexterm>
       <indexterm><primary>MX</primary><secondary>server</secondary></indexterm>
+      <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>MX</tertiary></indexterm>
 
       <figure>
         <title>Role of the DNS <emphasis>MX</emphasis> record while sending a mail</title>
@@ -169,11 +174,16 @@
 
       <sidebar>
         <title><emphasis>EXTRA</emphasis> Querying the MX records</title>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>A</tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>AAAA</tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>MX</tertiary></indexterm>
 
         <para>When the DNS does not have an MX record for a domain, the email
         server will try sending the messages to the host itself, by using the
         matching A record (or AAAA in IPv6).</para>
       </sidebar>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>mynetworks</literal></secondary></indexterm>
 
       <para>In some cases, the installation can also ask what networks
       should be allowed to send email via the machine. In its default
@@ -235,30 +245,33 @@ compatibility_level = 2
 # TLS parameters
 smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-smtpd_use_tls=yes
-smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtpd_tls_security_level=may
+
+smtp_tls_CApath=/etc/ssl/certs
+smtp_tls_security_level=may
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
-# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
-# information on enabling SSL in the smtp client.
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 myhostname = mail.falcot.com
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
-myorigin = /etc/mailname
 mydestination = mail.falcot.com, falcot.com, localhost.localdomain, localhost
-relayhost =
+relayhost = 
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/16
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
+default_transport = smtp
+relay_transport = smtp
 inet_protocols = all
+myorigin = /etc/mailname
 ]]></programlisting>
       </example>
 
       <sidebar id="sidebar.snakeoil-certs">
         <title><emphasis>SECURITY</emphasis> <emphasis>Snake oil</emphasis> SSL certificates</title>
+        <indexterm><primary>certificate</primary><secondary>snakeoil certificate</secondary></indexterm>
 
         <para>The <emphasis>snake oil</emphasis> certificates, like the
         <emphasis>snake oil</emphasis> “medicine” sold by unscrupulous
@@ -278,6 +291,7 @@ inet_protocols = all
 
         <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">certbot</emphasis></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary>trusted certificates</secondary></indexterm>
+        <indexterm><primary>certificate</primary><secondary>trusted certificate</secondary></indexterm>
 
         <informalexample>
           <indexterm><primary>Postfix</primary><secondary><literal>smtpd_tls_cert_file</literal></secondary></indexterm>
@@ -295,8 +309,9 @@ smtp_tls_CApath = /etc/ssl/certs
 </programlisting>
         </informalexample>
 
-        <para>A different way to generate own certificates is described in
-        <xref linkend="sect.easy-rsa"/>.</para>
+        <para>A different way to generate your own certificates using your own
+        certificate authority is described in <xref
+        linkend="sect.easy-rsa"/>.</para>
       </sidebar>
     </section>
 
@@ -304,16 +319,18 @@ smtp_tls_CApath = /etc/ssl/certs
       <title>Configuring Virtual Domains</title>
       <indexterm><primary>Postfix</primary><secondary>virtual domain</secondary></indexterm>
       <indexterm><primary>domain</primary><secondary>virtual</secondary></indexterm>
-      <indexterm><primary>virtual domain</primary></indexterm>
 
-      <para>The mail server can receive emails addressed to other domains
-      besides the main domain; these are then known as virtual domains. In
-      most cases where this happens, the emails are not ultimately destined
-      to local users. Postfix provides two interesting features for
-      handling virtual domains.</para>
+      <para>The mail server can receive mails addressed to other domains
+      besides the main domain; these are then known as “virtual“ domains. In
+      most cases where this happens, the emails are not ultimately destined to
+      local users. Postfix provides two interesting features for handling
+      virtual domains.</para>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Virtual domains and canonical domains</title>
+        <indexterm><primary>Postfix</primary><secondary>canonical domain</secondary></indexterm>
+        <indexterm><primary>domain</primary><secondary>canonical</secondary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><literal>mydestination</literal></secondary></indexterm>
 
         <para>None of the virtual domains must be referenced in the
         <literal>mydestination</literal> variable; this variable only
@@ -352,6 +369,7 @@ virtual_alias_maps = hash:/etc/postfix/virtual
         <literal>@domain.com</literal> syntax covers all remaining
         aliases in a domain.</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/virtual</filename></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/virtual</filename></secondary></indexterm>
 
         <informalexample>
@@ -370,13 +388,12 @@ contact@falcotsbrand.com    laure@falcot.com, sophie@falcot.com
         postfix table <filename>/etc/postfix/virtual.db</filename> needs to be
         updated using <command>sudo postmap
         /etc/postfix/virtual</command>.</para>
-
       </section>
 
       <section>
         <title>Virtual Mailbox Domains</title>
         <indexterm><primary>mailbox, virtual domain</primary></indexterm>
-        <indexterm><primary>virtual domain</primary><secondary>virtual mailbox domain</secondary></indexterm>
+        <indexterm><primary>domain</primary><secondary>virtual mailbox domain</secondary></indexterm>
 
         <sidebar>
           <title><emphasis>CAUTION</emphasis> Combined virtual domain?</title>
@@ -403,6 +420,7 @@ contact@falcotsbrand.com    laure@falcot.com, sophie@falcot.com
 
         <indexterm><primary>Postfix</primary><secondary><literal>virtual_mailbox_domains</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>virtual_mailbox_maps</literal></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/vmailbox</filename></secondary></indexterm>
 
         <informalexample>
           <programlisting>
@@ -538,6 +556,8 @@ smtpd_client_restrictions =
         local network (as defined by the <literal>mynetworks</literal>
         configuration variable).</para>
 
+        <indexterm><primary>Postfix</primary><secondary><literal>permit_mynetworks</literal></secondary></indexterm>
+
         <para>The second directive would normally reject emails coming from
         machines without a completely valid DNS configuration. Such a valid
         configuration means that the IP address can be resolved to a name, and
@@ -560,12 +580,13 @@ smtpd_client_restrictions =
 
           <para>The restriction criteria include administrator-modifiable
           tables listing combinations of senders, IP addresses, and allowed or
-          forbidden hostnames. These tables can be created using an
-          uncompressed copy of the
-          <filename>/usr/share/doc/postfix/examples/access.gz</filename> file
-          shipped with the <emphasis role="pkg">postfix-doc</emphasis> package.
-          This model is self-documented in its comments, which means each table
-          describes its own syntax.</para>
+          forbidden hostnames. These tables can be created using a copy of the
+          <filename>/usr/share/doc/postfix/examples/access</filename> file
+          shipped with the <emphasis role="pkg">postfix-doc</emphasis> package
+          and explained in <citerefentry><refentrytitle>access</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry>.  This model is
+          self-documented in its comments, which means each table describes its
+          own syntax.</para>
 
           <para>The <filename>/etc/postfix/access_clientip</filename> table
           lists IP addresses and networks;
@@ -578,11 +599,11 @@ smtpd_client_restrictions =
           command.</para>
         </sidebar>
 
-        <para>The third directive allows the administrator to set up a
-        blacklist and a whitelist of email servers, stored in the
-        <filename>/etc/postfix/access_clientip</filename> file. Servers in
-        the whitelist are considered as trusted, and the emails coming
-        from there therefore do not go through the following filtering
+        <para>The <literal>check_client_access</literal> directive allows the
+        administrator to set up a blacklist and a whitelist of email servers,
+        stored in the <filename>/etc/postfix/access_clientip</filename> file.
+        Servers in the whitelist are considered as trusted, and the emails
+        coming from there therefore do not go through the following filtering
         rules.</para>
 
         <indexterm><primary>Postfix</primary><secondary><literal>check_client_access</literal></secondary></indexterm>
@@ -603,8 +624,8 @@ smtpd_client_restrictions =
 
         <sidebar>
           <title><emphasis>TIP</emphasis> White list and RBLs</title>
-          <indexterm><primary>RBL</primary><see>Remote Black List</see></indexterm>
-          <indexterm><primary>Remote Black List</primary></indexterm>
+          <indexterm><primary>RBL</primary></indexterm>
+          <indexterm><primary>Remote Black List</primary><see>RBL</see></indexterm>
 
           <para>Blacklists sometimes include a legitimate server that has been
           suffering an incident. In these situations, all emails coming from
@@ -621,6 +642,7 @@ smtpd_client_restrictions =
       <section id="sect.smtpd-helo-restrictions">
         <title>Checking the Validity of the <literal>EHLO</literal> or <literal>HELO</literal> Commands</title>
         <indexterm><primary>Postfix</primary><secondary><literal>smtpd_helo_restrictions</literal></secondary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><literal>smtpd_helo_required</literal></secondary></indexterm>
         <indexterm><primary>email</primary><secondary>filtering on the mail host</secondary></indexterm>
 
         <para>Each SMTP exchange starts with a <literal>HELO</literal> (or
@@ -668,12 +690,13 @@ smtpd_helo_restrictions =
         (including a domain name as well as a host name). The
         <literal>reject_unknown_helo_hostname</literal> rule rejects messages
         if the announced name does not exist in the DNS. Since this last rule
-        unfortunately leads to too many rejections, the administrators turned
+        unfortunately leads to a lot of rejections, the administrators turned
         its effect to a simple warning with the
         <literal>warn_if_reject</literal> modifier as a first step; they may
         decide to remove this modifier at a later stage, after auditing the
         results of this rule.</para>
 
+        <indexterm><primary>Postfix</primary><secondary><literal>warn_if_reject</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>reject_invalid_helo_hostname</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>reject_non_fqdn_helo_hostname</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>reject_unknown_helo_hostname</literal></secondary></indexterm>
@@ -694,7 +717,7 @@ smtpd_helo_restrictions =
       </section>
 
       <section id="sect.smtpd-sender-restrictions">
-        <title>Accepting or Refusing Based on the Announced Sender</title>
+        <title>Accepting or Refusing Mails Based on the Announced Sender</title>
         <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sender_restrictions</literal></secondary></indexterm>
         <indexterm><primary>email</primary><secondary>filtering on the sender</secondary></indexterm>
 
@@ -728,7 +751,7 @@ smtpd_sender_restrictions =
         requires a valid sender domain, since it is needed for a valid
         address. The <literal>reject_unlisted_sender</literal> rule rejects
         local senders if the address does not exist; this prevents emails
-        from being sent from an invalid address in the
+        being sent from an invalid address in the
         <literal>falcot.com</literal> domain, and messages emanating from
         <literal>joe.bloggs@falcot.com</literal> are only accepted if such
         an address really exists.</para>
@@ -753,7 +776,7 @@ smtpd_sender_restrictions =
       </section>
 
       <section id="sect.smtpd-recipient-restrictions">
-        <title>Accepting or Refusing Based on the Recipient</title>
+        <title>Accepting or Refusing Mails Based on the Recipient</title>
         <indexterm><primary>Postfix</primary><secondary><literal>smtpd_recipient_restrictions</literal></secondary></indexterm>
         <indexterm><primary>email</primary><secondary>filtering on the recipient</secondary></indexterm>
 
@@ -763,6 +786,7 @@ smtpd_sender_restrictions =
         relevant than the checks made on the sender address.</para>
 
         <indexterm><primary>RCPT TO</primary></indexterm>
+        <indexterm><primary>SMTP</primary><secondary>RCPT TO</secondary></indexterm>
 
         <example>
           <title>Recipient checks</title>
@@ -891,16 +915,16 @@ body_checks = regexp:/etc/postfix/body_checks
 
         <sidebar>
           <title><emphasis>QUICK LOOK</emphasis> Regexp tables</title>
+          <indexterm><primary>Postfix</primary><secondary><literal>header_checks</literal></secondary></indexterm>
 
           <para>The file
-          <filename>/usr/share/doc/postfix/examples/header_checks.gz</filename>
+          <filename>/usr/share/doc/postfix/examples/header_checks</filename>
           (from the <emphasis role="pkg">postfix-doc</emphasis> package) and
-          <citerefentry><refentrytitle>header_checks</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-          contain many explanatory comments and can be used as a starting point
-          for creating the <filename>/etc/postfix/header_checks</filename> and
+          <citerefentry><refentrytitle>header_checks</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry> contain many explanatory
+          comments and can be used as a starting point for creating the
+          <filename>/etc/postfix/header_checks</filename> and
           <filename>/etc/postfix/body_checks</filename> files.</para>
-
-          <indexterm><primary>Postfix</primary><secondary><literal>header_checks</literal></secondary></indexterm>
         </sidebar>
 
         <example>
@@ -914,9 +938,9 @@ body_checks = regexp:/etc/postfix/body_checks
 
         <sidebar id="sidebar.regexp">
           <title><emphasis>BACK TO BASICS</emphasis> Regular expression</title>
-          <indexterm><primary>regular expressions</primary></indexterm>
-          <indexterm><primary>regex</primary><see>regular expressions</see></indexterm>
-          <indexterm><primary>regexp</primary><see>regular expressions</see></indexterm>
+          <indexterm><primary>regular expression</primary></indexterm>
+          <indexterm><primary>regex</primary><see>regular expression</see></indexterm>
+          <indexterm><primary>regexp</primary><see>regular expression</see></indexterm>
 
           <para>The <emphasis>regular expression</emphasis> term (shortened
           to <emphasis>regexp</emphasis> or <emphasis>regex</emphasis>)
@@ -957,17 +981,18 @@ body_checks = regexp:/etc/postfix/body_checks
     <section id="sect.setting-up-greylisting">
       <title>Setting Up <foreignphrase>greylisting</foreignphrase></title>
       <indexterm><primary>greylisting</primary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary>greylisting</secondary></indexterm>
       <indexterm><primary>email</primary><secondary>greylisting</secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">postgrey</emphasis></primary></indexterm>
 
-      <para>“Greylisting” is a filtering technique according to which a
-      message is initially rejected with a temporary error code, and only
-      accepted on a further try after some delay. This filtering is
-      particularly efficient against spam sent by the many machines
-      infected by worms and viruses, since this software rarely acts as
-      a full SMTP agent (by checking the error code and retrying failed
-      messages later), especially since many of the harvested addresses are
-      really invalid and retrying would only mean losing time.</para>
+      <para>“Greylisting” is a filtering technique according to which a message
+      is initially rejected with a temporary error code, and only accepted
+      after a further delivery attempt with some delay. This filtering is
+      particularly efficient against spam sent by the many machines infected by
+      worms and viruses, since this software rarely acts as a full SMTP agent
+      (by checking the error code and retrying failed messages later),
+      especially since many of the harvested addresses are really invalid and
+      retrying would only mean losing time.</para>
 
       <para>Postfix doesn't provide greylisting natively, but there is a
       feature by which the decision to accept or reject a given message can
@@ -975,6 +1000,8 @@ body_checks = regexp:/etc/postfix/body_checks
       role="pkg">postgrey</emphasis> package contains just such a program,
       designed to interface with this access policy delegation
       service.</para>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>check_policy_service</literal></secondary></indexterm>
 
       <para>Once <emphasis role="pkg">postgrey</emphasis> is installed, it
       runs as a daemon and listens on port 10023. Postfix can then be
@@ -1027,6 +1054,8 @@ smtpd_recipient_restrictions =
         sender's server. For very large mailing-lists (with tens of
         thousands of subscribers), this can soon become a problem.</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postgrey/whitelist_clients</filename></secondary></indexterm>
+
         <para>To mitigate these drawbacks, Postgrey manages a whitelist of
         such sites, and messages emanating from them are immediately
         accepted without going through greylisting. This list can easily be
@@ -1037,6 +1066,7 @@ smtpd_recipient_restrictions =
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Selective greylisting with <emphasis role="pkg">milter-greylist</emphasis></title>
         <indexterm><primary><emphasis role="pkg">milter-greylist</emphasis></primary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">milter-greylist</emphasis></secondary></indexterm>
 
         <para>The drawbacks of greylisting can be mitigated by only using
         greylisting on the subset of clients that are already considered as
@@ -1050,6 +1080,10 @@ smtpd_recipient_restrictions =
         blacklists, including those listing all dynamic IP addresses
         from ISP clients (such as <literal>pbl.spamhaus.org</literal>
         or <literal>dul.dnsbl.sorbs.net</literal>).</para>
+
+        <indexterm><primary>Postfix</primary><secondary><literal>smtpd_milters</literal></secondary><tertiary>milter-greylist</tertiary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/milter-greylist/greylist.conf</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/milter-greylist</filename></secondary></indexterm>
 
         <!-- TODO: postfix chroot -> use smtpd_milters = milter-greylist/milter-greylist.sock -->
         <para>Since <emphasis role="pkg">milter-greylist</emphasis> uses
@@ -1133,14 +1167,15 @@ falcot.com             greylisting
     </section>
 
     <section id="sect.postfix-antivirus">
-      <title>Integrating an Antivirus</title>
+      <title>Integrating an Antivirus Filter</title>
       <indexterm><primary>antivirus</primary></indexterm>
       <indexterm><primary>email</primary><secondary>virus scanning</secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><command>clamav-milter</command></secondary></indexterm>
 
       <para>The many viruses circulating as attachments to emails make it
-      important to set up an antivirus at the entry point of the company
-      network, since despite an awareness campaign, some users will still
-      open attachments from obviously shady messages.</para>
+      important to set up an antivirus solution at the entry point of the
+      company network, since despite an awareness campaign, some users will
+      still open attachments from obviously shady messages.</para>
 
       <sidebar id="sidebar.anti-virus">
         <title><emphasis>SECURITY</emphasis> Controversial Discussion of Anti-Virus Software</title>
@@ -1159,17 +1194,12 @@ falcot.com             greylisting
         <indexterm><primary>antivirus</primary><secondary>controversy</secondary></indexterm>
       </sidebar>
 
-      <para>The Falcot administrators selected <command>clamav</command>
-      for their free antivirus. The main package is <emphasis
-      role="pkg">clamav</emphasis>, but they also installed a few extra
-      packages such as <emphasis role="pkg">arj</emphasis>, <emphasis
-      role="pkg">unzoo</emphasis>, <emphasis role="pkg">unrar</emphasis>
-      and <emphasis role="pkg">lha</emphasis>, since they are required for
-      the antivirus to analyze attachments archived in one of these
-      formats.</para>
+      <para>The Falcot administrators selected <command>clamav</command> ffrom
+      the hononymous package.</para>
 
       <indexterm><primary><command>clamav</command></primary></indexterm>
       <indexterm><primary><command>clamav-milter</command></primary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><emphasis>milter</emphasis></secondary></indexterm>
 
       <para>The task of interfacing between antivirus and the email server
       goes to <command>clamav-milter</command>. A
@@ -1185,6 +1215,7 @@ falcot.com             greylisting
         <title><emphasis>QUICK LOOK</emphasis> A milter for Spamassassin</title>
         <indexterm><primary><emphasis role="pkg">spamassassin</emphasis></primary></indexterm>
         <indexterm><primary><emphasis role="pkg">spamass-milter</emphasis></primary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">spamass-milter</emphasis></secondary></indexterm>
 
         <para>The <emphasis role="pkg">spamass-milter</emphasis> package
         provides a milter based on <emphasis>SpamAssassin</emphasis>, the
@@ -1218,6 +1249,8 @@ falcot.com             greylisting
       recently-configured filter. This is a simple matter of adding the
       following directive to
       <filename>/etc/postfix/main.cf</filename>:</para>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_milters</literal></secondary><tertiary>clamav</tertiary></indexterm>
 
       <programlisting>
 # Virus check with clamav-milter
@@ -1281,8 +1314,8 @@ smtpd_milters = inet:[127.0.0.1]:10002
 
       <section id="sect.spf">
         <title>Integrating the Sender Policy Framework (SPF)</title>
-        <indexterm><primary>SPF</primary><see>Sender Policy Framework</see></indexterm>
-        <indexterm><primary>Sender Policy Framework </primary></indexterm>
+        <indexterm><primary>SPF</primary></indexterm>
+        <indexterm><primary>Sender Policy Framework</primary><see>SPF</see></indexterm>
         <indexterm><primary><emphasis role="pkg">postfix-policyd-spf-python</emphasis></primary></indexterm>
 
         <para>The Sender Policy Framework (<acronym>SPF</acronym>) is used to
@@ -1295,10 +1328,12 @@ smtpd_milters = inet:[127.0.0.1]:10002
         </para>
 
         <para>The following is a sample DNS entry which states that all the
-        domain's Mail Exchange Resource Records (MX-RRs) are allowed to email
-        the current domain, and all others are prohibited. The DNS
+        domain's Mail Exchange Resource Records (MX-RRs) are allowed to send
+        email for the current domain, and all others are prohibited. The DNS
         entry does not need to be given a name. But to use the
         <literal>include</literal> directive it must have one.</para>
+
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>SPF</literal></tertiary></indexterm>
 
         <informalexample>
           <programlisting><![CDATA[
@@ -1359,8 +1394,8 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
 
       <section id="sect.dkim">
         <title>Integrating DomainKeys (DKIM) Signing and Checking</title>
-        <indexterm><primary>DKIM</primary><see>DomainKeys Identified Mail</see></indexterm>
-        <indexterm><primary>DomainKeys Identified Mail</primary></indexterm>
+        <indexterm><primary>DKIM</primary></indexterm>
+        <indexterm><primary>DomainKeys Identified Mail</primary><see>DKIM</see></indexterm>
         <indexterm><primary><emphasis role="pkg">opendkim</emphasis></primary></indexterm>
 
         <para>The Domain Keys Identified Mail (<acronym>DKIM</acronym>) standard
@@ -1386,7 +1421,8 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
           to the mail severs log files to identify such issues. Otherwise such
           emails might be flagged as spam and might get rejected.</para>
 
-          <indexterm><primary>DomainKeys Identified Mail</primary><secondary>mailing list problems</secondary></indexterm>
+          <indexterm><primary>DKIM</primary><secondary>mailing lists</secondary></indexterm>
+          <indexterm><primary>mailing lists</primary><secondary>DKIM</secondary></indexterm>
         </sidebar>
 
         <para>First the private key must be created using the command
@@ -1412,6 +1448,9 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
         ownership. The first file contains the private key, and the latter the
         public key that needs to be added to the DNS:</para>
 
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>mail._domainkey</literal></tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>DKIM</literal></tertiary></indexterm>
+
         <programlisting><![CDATA[
 Name: mail._domainkey
 Type: TXT
@@ -1429,6 +1468,9 @@ Data: "v=DKIM1; h=sha256; k=rsa; s=email; p=[...]"
         <ulink type="block" url="https://tools.ietf.org/html/rfc6376"/>
         <ulink type="block" url="https://en.wikipedia.org/wiki/DKIM"/>
         </para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/opendkim</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/opendkim.conf</filename></secondary></indexterm>
 
         <para>To configure <emphasis role="pkg">opendkim</emphasis>,
         <literal>SOCKET</literal> and <literal>RUNDIR</literal> must be chosen in
@@ -1507,9 +1549,11 @@ smtpd_milters = inet:localhost:12345
 
       <section id="sect.dmarc">
         <title>Integrating Domain-based Message Authentication, Reporting and Conformance (DMARC)</title>
-        <indexterm><primary>DMARC</primary><see>Domain-based Message Authentication, Reporting and Conformance</see></indexterm>
-        <indexterm><primary>Domain-based Message Authentication, Reporting and Conformance</primary></indexterm>
+        <indexterm><primary>DMARC</primary></indexterm>
+        <indexterm><primary>Domain-based Message Authentication, Reporting and Conformance</primary><see>DMARC</see></indexterm>
         <indexterm><primary><emphasis role="pkg">opendmarc</emphasis></primary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>_dmarc</literal></tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>DMARC</literal></tertiary></indexterm>
 
         <para>The Domain-based Message Authentication, Reporting and
         Conformance (<acronym>DMARC</acronym>) standard can be used to define a
@@ -1525,7 +1569,7 @@ smtpd_milters = inet:localhost:12345
 <computeroutput># </computeroutput><userinput>host -t TXT _dmarc.gmail.com</userinput><computeroutput><![CDATA[
 _dmarc.gmail.com descriptive text "v=DMARC1; p=none; sp=quarantine; rua=mailto:mailauth-reports@google.com"]]></computeroutput>
 <computeroutput># </computeroutput><userinput>host -t TXT _dmarc.yahoo.com</userinput><computeroutput><![CDATA[
-_dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:dmarc_y_rua@yahoo.com;"]]></computeroutput>
+_dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:d@rua.agari.com; ruf=mailto:d@ruf.agari.com;"]]></computeroutput>
 </screen>
 
         <para>Yahoo has a strict policy to <literal>reject</literal> all
@@ -1539,6 +1583,10 @@ _dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:dmarc
         <ulink type="block" url="https://tools.ietf.org/html/rfc7489"/>
         <ulink type="block" url="https://en.wikipedia.org/wiki/DMARC"/>
         </para>
+
+        <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">opendmarc</emphasis></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/opendmarc</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/opendmarc.conf</filename></secondary></indexterm>
 
         <para>The <command>postfix</command> mail server can use this
         information too. The <emphasis role="pkg">opendmarc</emphasis> package
@@ -1577,6 +1625,10 @@ smtpd_milters = inet:localhost:12345,inet:localhost:54321
 
     <section id="sect.authenticated-smtp">
       <title>Authenticated SMTP</title>
+      <indexterm><primary>SASL</primary></indexterm>
+      <indexterm><primary>Simple Authentication and Security Layer</primary><see>SASL</see></indexterm>
+      <indexterm><primary>Postfix</primary><secondary>authentication</secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary>SASL</secondary></indexterm>
 
       <para>Being able to send emails requires an SMTP server to be
       reachable; it also requires said SMTP server to send emails through
@@ -1622,6 +1674,12 @@ smtpd_milters = inet:localhost:12345,inet:localhost:54321
       to be configured to allow SASL-authenticated clients to send emails
       freely.</para>
 
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_recipient_restrictions</literal></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_auth_enable</literal></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_local_domain</literal></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><literal>permit_sasl_authenticated</literal></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
+
       <example>
         <title>Enabling SASL in <filename>/etc/postfix/main.cf</filename></title>
 
@@ -1649,6 +1707,9 @@ smtpd_recipient_restrictions =
       authentication at all for port 25 (<literal>smtpd</literal> service)
       add the following directive:</para>
 
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_auth_enable</literal></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/master.cf</filename></secondary></indexterm>
+
       <informalexample>
         <programlisting><![CDATA[smtp      inet  n       -       y       -       -       smtpd
     [..]
@@ -1656,6 +1717,8 @@ smtpd_recipient_restrictions =
     [..]
 ]]></programlisting>
       </informalexample>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>broken_sasl_auth_clients</literal></secondary></indexterm>
 
       <para>If for some reason clients use an outdated <literal>AUTH</literal>
       command (some very old mail clients do), interoperability with them can
@@ -1688,6 +1751,8 @@ smtpd_sasl_local_domain = $myhostname
         remote SMTP server. In this case, the local Postfix itself will be
         the client that authenticates with SASL. Here are the required
         parameters:</para>
+
+        <indexterm><primary>Postfix</primary><secondary><literal>smtp_sasl_password_maps</literal></secondary></indexterm>
 
         <programlisting>
 smtp_sasl_auth_enable = yes
