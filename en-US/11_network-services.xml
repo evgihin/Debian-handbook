@@ -1779,28 +1779,30 @@ relay_host = [mail.falcot.com]
   <section id="sect.http-web-server">
     <title>Web Server (HTTP)</title>
 
-    <!-- MAY CHANGE: Apache version -->
+    <!-- MAY CHANGE: Debian and Apache versions -->
     <para>The Falcot Corp administrators decided to use the Apache HTTP
     server, included in Debian <emphasis
-    role="distribution">Buster</emphasis> at version 2.4.38.</para>
+    role="distribution">Bullseye</emphasis> at version 2.4.52.</para>
 
     <indexterm><primary><command>apache</command></primary></indexterm>
     <indexterm><primary>server</primary><secondary>web</secondary></indexterm>
     <indexterm><primary>web server</primary><seealso>Apache</seealso></indexterm>
     <indexterm><primary>server</primary><secondary>HTTP</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>HTTP</secondary></indexterm>
     <indexterm><primary>HTTP</primary><secondary>server</secondary><seealso>Apache</seealso></indexterm>
 
     <sidebar>
       <title><emphasis>ALTERNATIVE</emphasis> Other web servers</title>
 
-      <para>Apache is merely the most widely-known (and widely-used) web
-      server, but there are others; they can offer better performance under
-      certain workloads, but this has its counterpart in the smaller number
-      of available features and modules. However, when the prospective web
-      server is built to serve static files or to act as a proxy, the
-      alternatives, such as <emphasis role="pkg">nginx</emphasis> and
-      <emphasis role="pkg">lighttpd</emphasis>, are worth
-      investigating.</para>
+      <para>Apache is probably the most widely-known web server, but there are
+      others. Its major opponent is <emphasis role="pkg">nginx</emphasis>,
+      which comes in different packages with different sets of features, like
+      <emphasis role="pkg">nginx-light</emphasis>, <emphasis
+      role="pkg">nginx-full</emphasis>, or <emphasis
+      role="pkg">nginx-extras</emphasis>. Another alternative is <emphasis
+      role="pkg">lighttpd</emphasis>. All of them can offer very good or even
+      better performance under certain workloads or in certain situations, but
+      not all provide the same number of available features and modules.</para>
 
       <indexterm><primary><emphasis role="pkg">nginx</emphasis></primary></indexterm>
       <indexterm><primary><emphasis role="pkg">lighttpd</emphasis></primary></indexterm>
@@ -1808,7 +1810,8 @@ relay_host = [mail.falcot.com]
 
     <section>
       <title>Installing Apache</title>
-      <indexterm><primary><command>Apache</command></primary><secondary>installation</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>installation</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>MPM</secondary></indexterm>
 
       <para>Installing the <emphasis role="pkg">apache2</emphasis> package is
       all that is needed. It contains all the modules, including the
@@ -1827,22 +1830,25 @@ relay_host = [mail.falcot.com]
       <emphasis>keep-alive</emphasis> feature) are handed back to a dedicated
       management thread.</para>
 
-      <!-- MAY CHANGE: Apache PHP modules version -->
+      <!-- MAY CHANGE: PHP version -->
       <para>The Falcot administrators also install <emphasis
-      role="pkg">libapache2-mod-php7.3</emphasis> so as to include the PHP
+      role="pkg">libapache2-mod-php</emphasis> so as to include the PHP 7.4
       support in Apache. This causes the default <emphasis>event</emphasis> MPM
       to be disabled, and <emphasis>prefork</emphasis> to be used instead. To
       use the <emphasis>event</emphasis> MPM one can use <emphasis
-      role="pkg">php7.3-fpm</emphasis>.</para>
+      role="pkg">php-fpm</emphasis>.</para>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Execution under the <literal>www-data</literal> user</title>
         <indexterm><primary><literal>www-data</literal></primary></indexterm>
         <indexterm><primary>suexec</primary></indexterm>
         <indexterm><primary>Apache</primary><secondary><literal>www-data</literal>, user</secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>suexec</literal></secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/envvars</filename></secondary></indexterm>
 
         <para>By default, Apache handles incoming requests under the
-        identity of the <literal>www-data</literal> user. This means that a
+        identity of the <literal>www-data</literal> user as defined in
+        <filename>/etc/apache2/envvars</filename>. This means that a
         security vulnerability in a CGI script executed by Apache (for a
         dynamic page) won't compromise the whole system, but only the files
         owned by this particular user.</para>
@@ -1870,9 +1876,10 @@ relay_host = [mail.falcot.com]
       <sidebar>
         <title><emphasis>QUICK LOOK</emphasis> List of modules</title>
 
+        <!-- MAY CHANGE: Apache version in link -->
         <para>The full list of Apache standard modules can be found online.
         <ulink type="block"
-        url="https://httpd.apache.org/docs/2.4/mod/index.html"/></para>
+        url="https://httpd.apache.org/docs/2.4/mod/"/></para>
       </sidebar>
 
       <para>Apache is a modular server, and many features are implemented
@@ -1887,13 +1894,15 @@ relay_host = [mail.falcot.com]
       actual files (stored in
       <filename>/etc/apache2/mods-available/</filename>).</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apache2/</filename></secondary><see>Apache</see></indexterm>
       <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-available</filename></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-enabled</filename></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><command>a2enmod</command></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><command>a2dismod</command></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Checking the configuration</title>
-        <indexterm><primary>Apache</primary><secondary>mod_info</secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>mod_info</literal></secondary></indexterm>
 
         <para>The <literal>mod_info</literal> module (<command>a2enmod
         info</command>) allows to access the comprehensive Apache server
@@ -1910,14 +1919,17 @@ relay_host = [mail.falcot.com]
       and serves pages from the <filename>/var/www/html/</filename> directory
       (as configured in
       <filename>/etc/apache2/sites-enabled/000-default.conf</filename>).</para>
+
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/ports.conf</filename></secondary></indexterm>
     </section>
 
     <section id="sect.apache-ssl">
       <title>Adding support for SSL</title>
       <indexterm><primary>HTTPS</primary></indexterm>
-      <indexterm><primary>HTTP</primary><secondary>secure</secondary></indexterm>
+      <indexterm><primary>HTTP</primary><secondary>secure</secondary><see>HTTPS</see></indexterm>
       <indexterm><primary>Apache</primary><secondary>SSL</secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary>mod_ssl</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>mod_ssl</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/sites-available/default-ssl.conf</filename></secondary></indexterm>
 
       <para>Apache 2.4 includes the SSL module (<literal>mod_ssl</literal>)
       required for secure HTTP (HTTPS) out of the box. It just needs to be
@@ -1932,6 +1944,10 @@ relay_host = [mail.falcot.com]
       <xref linkend="sect.trusted-certs"/> and then adjust the following
       variables:</para>
 
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateFile</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateKeyFile</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateChainFile</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCACertificateFile</literal></secondary></indexterm>
 
       <programlisting>
 SSLCertificateFile      /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/fullchain.pem
@@ -1952,19 +1968,21 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
 
       <indexterm><primary><emphasis>Perfect Forward Secrecy</emphasis></primary></indexterm>
 
-      <para>As an alternative to the standard SSL module, there is an
-      extension module called <literal>mod_gnutls</literal>, which is shipped
-      with the <emphasis role="pkg">libapache2-mod-gnutls</emphasis> package
-      and enabled with the <command>a2enmod gnutls</command> command.
-      <ulink type="block" url="https://mod.gnutls.org/"/>
-      </para>
+      <!-- MAY CHAMGE: status of package and stable name -->
+      <para>As an alternative to the standard SSL module, there is an extension
+      module called <literal>mod_gnutls</literal>, which is shipped with the
+      <emphasis role="pkg">libapache2-mod-gnutls</emphasis> package and enabled
+      with the <command>a2enmod gnutls</command> command.  Unfortunately the
+      version packaged for Debian had serious issues and even security
+      implications and is therefor not part of the Debian Bullseye release.
+      <ulink type="block" url="https://mod.gnutls.org/"/> </para>
 
       <indexterm><primary>Apache</primary><secondary>mod_gnutls</secondary></indexterm>
     </section>
 
     <section>
       <title>Configuring Virtual Hosts</title>
-      <indexterm><primary>Apache</primary><secondary>Virtual Hosts</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>virtual hosts</secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><literal>VirtualHost</literal></secondary></indexterm>
 
       <para>A virtual host is an extra identity for the web server.</para>
@@ -1990,11 +2008,18 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
       either by running on a different port or on a different IP address
       (IPv6 can help there).</para>
 
+      <indexterm><primary>HTTPS</primary><secondary>SNI</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>virtual hosts</secondary><tertiary>name based</tertiary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>SNI</secondary></indexterm>
+      <indexterm><primary>SNI</primary></indexterm>
+
       <para>The default configuration for Apache 2 enables name-based
       virtual hosts.  In addition, a default virtual host is defined
       in the <literal>/etc/apache2/sites-enabled/000-default.conf</literal>
       file; this virtual host will be used if no host matching the
       request sent by the client is found.</para>
+
+      <indexterm><primary>Apache</primary><secondary>virtual hosts</secondary><tertiary>default</tertiary></indexterm>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> First virtual host</title>
@@ -2006,7 +2031,9 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
 
       <sidebar>
         <title><emphasis>QUICK LOOK</emphasis> Apache supports SNI</title>
-        <indexterm><primary>Server Name Indication</primary></indexterm>
+        <indexterm><primary>Apache</primary><secondary>SNI</secondary></indexterm>
+        <indexterm><primary>SNI</primary></indexterm>
+        <indexterm><primary>Server Name Indication</primary><see>SNI</see></indexterm>
 
         <para>The Apache server supports
         an SSL protocol extension called <emphasis>Server Name
@@ -2157,7 +2184,7 @@ DirectoryIndex index.php index.html index.htm
         </listitem>
         <listitem>
           <para><literal>SymlinksIfOwnerMatch</literal> also tells the
-          server to follow symbolic links, but only when the link and the
+          server to follow symbolic links, but only when the link and
           its target have the same owner.</para>
           <indexterm><primary><literal>SymlinksIfOwnerMatch</literal>, Apache directive</primary></indexterm>
           <indexterm><primary>Apache</primary><secondary><literal>SymlinksIfOwnerMatch</literal></secondary></indexterm>
@@ -2169,6 +2196,7 @@ DirectoryIndex index.php index.html index.htm
           each request.</para>
           <indexterm><primary><literal>Includes</literal>, Apache directive</primary></indexterm>
           <indexterm><primary>Apache</primary><secondary><literal>Includes</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary>SSI</indexterm>
         </listitem>
         <listitem>
           <para><literal>IncludesNOEXEC</literal> allows <emphasis>Server Side
@@ -2231,10 +2259,17 @@ DirectoryIndex index.php index.html index.htm
 
         <para>In some circumstances, access to part of a website needs to
         be restricted, so only legitimate users who provide a username and
-        a password are granted access to the contents.</para>
+        a password are granted access to the contents. These feature are
+        provided by the <literal>mod_auth*</literal> modules.</para>
+
+        <indexterm><primary>Apache</primary><secondary><literal>mod_auth*</literal></secondary></indexterm>
 
         <example>
           <title><filename>.htaccess</filename> file requiring authentication</title>
+          <indexterm><primary>Apache</primary><secondary><literal>Require</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthName</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthType</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthUserFile</literal></secondary></indexterm>
 
           <programlisting>
 Require valid-user
@@ -2375,6 +2410,8 @@ Deny from all
       The Falcot administrators keep it unchanged apart from the following
       parameters:</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/awstats/awstats.conf</filename></secondary></indexterm>
+
       <programlisting>
 LogFile="/var/log/apache2/access.log"
 LogFormat = "%virtualname %host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"
@@ -2425,7 +2462,9 @@ HostAliases="falcot.org"
       <para>AWStats uses many icons stored in the
       <filename>/usr/share/awstats/icon/</filename> directory. In order for
       these icons to be available on the web site, the Apache configuration
-      needs to be adapted to include the following directive:</para>
+      needs to be adapted to include the following directive (check out
+      <filename>/usr/share/doc/awstats/examples/apache.conf</filename> for a
+      more detailed example):</para>
 
       <programlisting>
 Alias /awstats-icon/ /usr/share/awstats/icon/
@@ -2439,47 +2478,25 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Log file rotation</title>
+        <indexterm><primary>Apache</primary><secondary><filename>/etc/logrotate.d/apache2</filename></secondary></indexterm>
 
-        <para>In order for the statistics to take all the logs into
-        account, <emphasis>AWStats</emphasis> needs to be run right before
-        the Apache log files are rotated. Looking at the <literal>prerotate</literal>
-        directive of <filename>/etc/logrotate.d/apache2</filename> file,
-        this can be solved by putting a symlink to
-        <filename>/usr/share/awstats/tools/update.sh</filename> in
-        <filename>/etc/logrotate.d/httpd-prerotate</filename>:</para>
-
-        <screen><computeroutput>$ </computeroutput><userinput>cat /etc/logrotate.d/apache2
-</userinput><computeroutput><![CDATA[/var/log/apache2/*.log {
-  daily
-  missingok
-  rotate 14
-  compress
-  delaycompress
-  notifempty
-  create 644 root adm
-  sharedscripts
-  postrotate
-    if invoke-rc.d apache2 status > /dev/null 2>&1; then \
-      invoke-rc.d apache2 reload > /dev/null 2>&1; \
-    fi;
-  endscript
-  prerotate
-    if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
-      run-parts /etc/logrotate.d/httpd-prerotate; \
-    fi; \
-  endscript
-}
-]]>
-$ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
-</userinput><computeroutput>$ </computeroutput><userinput>sudo ln -sf /usr/share/awstats/tools/update.sh \
-  /etc/logrotate.d/httpd-prerotate/awstats
-</userinput></screen>
+        <para>In order for the statistics to take all the logs into account,
+        <emphasis>AWStats</emphasis> needs to be run right before the Apache
+        log files are rotated. Looking at the <literal>prerotate</literal>
+        directive of <filename>/etc/logrotate.d/apache2</filename> file, this
+        is solved by the <emphasis role="pkg">awstats</emphasis> package by
+        putting a scipt in
+        <filename>/etc/logrotate.d/httpd-prerotate</filename> running
+        <filename>/usr/share/awstats/tools/update.sh</filename>.</para>
 
         <para>Note also that the log files created by
         <command>logrotate</command> need to be readable by everyone,
-        especially AWStats. In the above example, this is ensured by the
-        <literal>create 644 root adm</literal> line (instead of the default
-        <literal>640</literal> permissions).</para>
+        especially AWStats. This is ensured by changing
+        <filename>/etc/logrotate.d/apache2</filename> to include
+        <literal>create 644 root adm</literal> (instead of the default
+        <literal>640</literal> permissions) for example. But please refer
+        to <filename>/usr/share/doc/awstats/README.Debian.gz</filename> for a
+        more extensive documentation about this topic and alternatives.</para>
       </sidebar>
     </section>
   </section>
