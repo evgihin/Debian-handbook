@@ -3833,6 +3833,7 @@ netgroup:   ldap [NOTFOUND=return] files
       <section>
         <title>Securing LDAP Data Exchanges</title>
         <indexterm><primary>LDAP</primary><secondary>secure</secondary></indexterm>
+        <indexterm><primary>X.509</primary></indexterm>
 
         <para>By default, the LDAP protocol transits on the network as
         cleartext; this includes the (encrypted) passwords. Since the
@@ -4006,6 +4007,7 @@ SLAPD_OPTIONS=""
         </section>
         <section>
           <title>Configuring the Client</title>
+          <indexterm><primary>X.509</primary></indexterm>
 
           <para>On the client side, the configuration for the
           <emphasis>libpam-ldap</emphasis> and
@@ -4068,6 +4070,17 @@ TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
   </section>
   <section id="sect.rtc-services">
     <title>Real-Time Communication Services</title>
+    <indexterm><primary>RTC</primary></indexterm>
+    <indexterm><primary>Real-Time Communication</primary><see>RTC</see></indexterm>
+    <indexterm><primary>server</primary><secondary>VoIP</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>RTC</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>IM</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>Chat</secondary></indexterm>
+    <indexterm><primary>VoIP</primary></indexterm>
+    <indexterm><primary>RTC</primary></indexterm>
+    <indexterm><primary>IM</primary></indexterm>
+    <indexterm><primary>Instant Messaging</primary><see>IM</see></indexterm>
+    <indexterm><primary>Chat</primary></indexterm>
 
     <para>Real-Time Communication (RTC) services include voice,
     video/webcam, instant messaging (IM) and desktop sharing.
@@ -4078,18 +4091,18 @@ TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
     Quick Start Guide which includes examples specific to Debian.
     <ulink type="block" url="https://rtcquickstart.org"/>
     </para>
-    <indexterm><primary>VoIP</primary><secondary>server</secondary></indexterm>
-    <indexterm><primary>RTC</primary><secondary>server</secondary></indexterm>
-    <indexterm><primary>Instant Messaging</primary><secondary>server</secondary></indexterm>
-    <indexterm><primary>Chat</primary><secondary>server</secondary></indexterm>
 
     <para>Both SIP and XMPP can provide the same functionality. SIP
     is slightly more well known for voice and video while XMPP is
     traditionally regarded as an IM protocol. In fact, they can both
-    be used for any of these purposes.  To maximize connectivity options,
+    be used for any of these purposes. To maximize connectivity options,
     it is recommended to run both in parallel.</para>
+
     <indexterm><primary>SIP</primary></indexterm>
+    <indexterm><primary>Session Initiation Protocol</primary><see>SIP</see></indexterm>
     <indexterm><primary>XMPP</primary></indexterm>
+    <indexterm><primary>Extensible Messaging and Presence Protocol</primary><see>XMPP</see></indexterm>
+    <indexterm><primary>X.509</primary></indexterm>
 
     <para>These services rely on X.509 certificates both for authentication
     and confidentiality purposes. See <xref linkend="sect.x509-cert"/> for
@@ -4097,12 +4110,15 @@ TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
 
     <section id="sect.rtc-dns-settings">
       <title>DNS settings for RTC services</title>
+      <indexterm><primary>DNS</primary><secondary>RTC</secondary></indexterm>
 
       <para>RTC services require DNS SRV and NAPTR records.  A sample
       configuration that can be placed in the zone file for
-      <literal>falcot.com</literal>:</para>
-      <indexterm><primary>DNS</primary><secondary>SRV record</secondary></indexterm>
-      <indexterm><primary>DNS</primary><secondary>NAPTR record</secondary></indexterm>
+      <literal>falcot.com</literal> (see also <xref
+      linkend="example.bind-db.falcot.com"/>:</para>
+
+      <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>SRV</literal></tertiary></indexterm>
+      <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>NAPTR</literal></tertiary></indexterm>
 
 <programlisting>
 ; the server where everything will run
@@ -4144,6 +4160,7 @@ _xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.falcot.com.
       found. It is highly recommended that the TURN server is installed
       before any of the other RTC services are offered to end users.</para>
       <indexterm><primary>TURN</primary><secondary>server</secondary></indexterm>
+      <indexterm><primary>server</primary><secondary>TURN</secondary></indexterm>
 
       <para>TURN and the related ICE protocol are open standards.
       To benefit from these protocols, maximizing connectivity and
@@ -4154,24 +4171,27 @@ _xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.falcot.com.
       <para>For the ICE algorithm to work effectively, the server must
       have two public IPv4 addresses.</para>
 
-        <para>Install the <emphasis role="pkg">coturn</emphasis> package
-        and edit the <filename>/etc/turnserver.conf</filename>
-        configuration file. By default, a SQLite database is configured
-        in <filename>/var/db/turndb</filename> for user account settings,
-        but PostgreSQL, MySQL or Redis can be set up instead if preferred.
-        The most important thing to do is insert the IP addresses of the
-        server.</para>
-        <indexterm><primary>coturn</primary></indexterm>
+      <para>Install the <emphasis role="pkg">coturn</emphasis> package
+      and edit the <filename>/etc/turnserver.conf</filename>
+      configuration file. By default, a SQLite database is configured
+      in <filename>/var/db/turndb</filename> for user account settings,
+      but PostgreSQL, MySQL or Redis can be set up instead if preferred.
+      The most important thing to do is insert the IP addresses of the
+      server.</para>
+      <indexterm><primary><emphasis role="pkg">coturn</emphasis></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/turnserver.conf</filename></secondary></indexterm>
 
-        <para>The server can be started running
-        <command>/usr/bin/turnserver</command>. We want the server
-        to be an automatically started system service,
-        so we edit the <filename>/etc/default/coturn</filename> file
-        like this:
-        </para>
+      <para>The server can be started running <command>turnserver</command>
+      from the <emphasis role="pkg">coturn</emphasis> package. We want the
+      server to be an automatically started system service. This is the default
+      behavior using <emphasis>systemd</emphasis>. Only when using the older
+      SysVinit you have to edit the <filename>/etc/default/coturn</filename>
+      file like this:</para>
 
-<programlisting>
-#
+      <indexterm><primary><command>turnserver</command></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/coturn</filename></secondary></indexterm>
+
+      <programlisting>#
 # Uncomment it if you want to have the turnserver running as
 # an automatic system service daemon
 #
@@ -4180,9 +4200,13 @@ TURNSERVER_ENABLED=1
 
         <para>By default, the TURN server uses anonymous access. We have to
         add the users we want to use:</para>
-<screen><computeroutput># </computeroutput><userinput>turnadmin -a -u roland -p <replaceable>secret_password</replaceable> -r falcot.com</userinput>
+
+        <indexterm><primary><command>turnadmin</command></primary></indexterm>
+
+        <screen><computeroutput># </computeroutput><userinput>turnadmin -a -u roland -p <replaceable>secret_password</replaceable> -r falcot.com</userinput>
 <computeroutput># </computeroutput><userinput>turnadmin -A -u admin -p <replaceable>secret_password</replaceable></userinput>
 </screen>
+
         <para>We use the argument <literal>-a</literal> to add a normal
         user and <literal>-A</literal> to add an admin user.</para>
     </section>
@@ -4206,23 +4230,26 @@ TURNSERVER_ENABLED=1
 
       <section id="sect.sip-server-install">
         <title>Install the SIP proxy</title>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/kamctlrc</filename></secondary></indexterm>
+
         <para>Install the <emphasis role="pkg">kamailio</emphasis> package and
-          the package for the database backend. The Falcot administrators
-          chose MySQL, so they install <emphasis role="pkg">mariadb-server</emphasis>.
-          <filename>/etc/kamailio/kamctlrc</filename> is the configuration
-          file for the control tools <command>kamctl</command> and
-          <command>kamdbctl</command>. You need to edit and set the
-          <literal>SIP_DOMAIN</literal> to your SIP service domain and set
-          the <literal>DBENGINE</literal> to MySQL, another database backend
-          can be used.
-        </para>
-<programlisting>
-[...]
+        the package for the database backend. The Falcot administrators chose
+        MySQL, so they install <emphasis
+        role="pkg">kamailio-mysql-modules</emphasis> and <emphasis
+        role="pkg">mariadb-server</emphasis>.
+        <filename>/etc/kamailio/kamctlrc</filename> is the configuration file
+        for the control tools <command>kamctl</command> and
+        <command>kamdbctl</command>. You need to edit and set the
+        <literal>SIP_DOMAIN</literal> to your SIP service domain and set the
+        <literal>DBENGINE</literal> to MySQL, another database backend can be
+        used.</para>
+
+        <programlisting>[...]
 ## your SIP domain
 SIP_DOMAIN=sip.falcot.com
 
 ## chrooted directory
-# $CHROOT_DIR="/path/to/chrooted/directory"
+# CHROOT_DIR="/path/to/chrooted/directory"
 
 ## database type: MYSQL, PGSQL, ORACLE, DB_BERKELEY, DBTEXT, or SQLITE
 # by default none is loaded
@@ -4232,13 +4259,16 @@ SIP_DOMAIN=sip.falcot.com
 DBENGINE=MYSQL
 [...]
 </programlisting>
-        <indexterm><primary>Kamailio</primary></indexterm>
+
+        <indexterm><primary><command>kamailio</command></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/kamailio.cfg</filename></secondary></indexterm>
+
         <para>Now we focus on the configuration file
         <filename>/etc/kamailio/kamailio.cfg</filename>. Falcot needs
         user authentication and persistent user location, so they
         add the following <literal>#!define</literal> directives
-        at the top of that file:
-        </para>
+        at the top of that file:</para>
+
         <programlisting>
 #!KAMAILIO
 #
@@ -4249,71 +4279,82 @@ DBENGINE=MYSQL
 #!define WITH_AUTH
 #!define WITH_USRLOCDB
 [...]
-        </programlisting>
-        <para>Kamailio needs a database structure that we can create running
-          <command>kamdbctl create</command> as root.
-        </para>
-        <para>Finally, we can add some users with <command>kamctl</command>.</para>
+</programlisting>
 
-<screen><computeroutput># </computeroutput><userinput>kamctl add <replaceable>roland</replaceable> <replaceable>secret_password</replaceable></userinput>
+        <para>Kamailio needs a database structure that we can create running
+        <command>kamdbctl create</command> as root. Finally, we can add some
+        users with <command>kamctl</command>.</para>
+
+        <indexterm><primary><command>kamdbctl</command></primary></indexterm>
+        <indexterm><primary><command>kamctl</command></primary></indexterm>
+
+        <screen><computeroutput># </computeroutput><userinput>kamdbctl create
+</userinput><computeroutput>[...]
+# </computeroutput><userinput>kamctl add <replaceable>roland</replaceable> <replaceable>secret_password</replaceable></userinput>
 </screen>
 
-        <para>Once everything is properly configured you can start
-        or restart the service with <command>systemctl restart kamailio</command>, you
-        can connect with a SIP client providing the IP address and the port (5090 is the
-        default port). The users have the following id:
+        <para>Once everything is properly configured you can start or restart
+        the service with <command>systemctl restart kamailio</command>, you can
+        connect with a SIP client providing the IP address and the port (5090
+        is the default port). The users have the following id:
         <literal><replaceable>roland</replaceable>@<replaceable>sip.falcot.com</replaceable></literal>,
-        and they can login using a client (see <xref linkend="sect.rtc-clients"/>).</para>
+        and they can login using a client (see <xref
+        linkend="sect.rtc-clients"/>).</para>
+
+        <indexterm><primary>service</primary><secondary><filename>kamailio.service</filename></secondary></indexterm>
       </section>
     </section>
 
     <section id="sect.xmpp-server">
       <title>XMPP Server</title>
+      <indexterm><primary>XMPP</primary></indexterm>
 
       <para>An XMPP server manages connectivity between local XMPP users
       and XMPP users in other domains on the public Internet.</para>
-      <indexterm><primary>XMPP</primary><secondary>server</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> XMPP or Jabber?</title>
-        <indexterm><primary>Jabber</primary></indexterm>
 
-        <para>XMPP is sometimes referred to as Jabber.  In fact,
-        Jabber is a trademark and XMPP is the official name of the standard.
-        </para>
+        <para>XMPP is sometimes referred to as Jabber.  In fact, Jabber is a
+        trademark and XMPP is the official name of the standard.</para>
+
         <indexterm><primary>Jabber</primary></indexterm>
       </sidebar>
 
-      <para>Prosody is a popular XMPP server that operates reliably
-      on Debian servers.</para>
-      <indexterm><primary>Prosody</primary></indexterm>
+      <para><emphasis role="pkg">prosody</emphasis> is a popular XMPP server
+      that operates reliably on Debian servers.</para>
+
       <section id="sect.xmpp-server-install">
         <title>Install the XMPP server</title>
-        <para>
-          Install the <emphasis role="pkg">prosody</emphasis> package.
-        </para>
-        <indexterm><primary>Prosody</primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">prosody</emphasis></primary></indexterm>
+
+        <para>Install the <emphasis role="pkg">prosody</emphasis>
+        package.</para>
 
         <para>Review the <filename>/etc/prosody/prosody.cfg.lua</filename>
         configuration file. The most important thing to do is insert JIDs
         of the users who are permitted to manage the server.</para>
 
-<programlisting>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/prosody.cfg.lua</filename></secondary></indexterm>
+
+        <programlisting>
 admins = { "joe@falcot.com" }
 </programlisting>
 
-        <para>An individual configuration file is also needed for
-        each domain. Copy the sample from
-        <filename>/etc/prosody/conf.avail/example.com.cfg.lua</filename>
-        and use it as a starting point. Here is
+        <para>An individual configuration file is also needed for each domain.
+        Copy the sample from
+        <filename>/etc/prosody/conf.avail/example.com.cfg.lua</filename> and
+        use it as a starting point. Here is
         <literal>falcot.com.cfg.lua</literal>:</para>
 
-<programlisting>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/conf.avail/</filename></secondary></indexterm>
+
+        <programlisting>
 VirtualHost "falcot.com"
         enabled = true
         ssl = {
-                key = "/etc/ssl/private/falcot.com-key.pem";
-                certificate = "/etc/ssl/public/falcot.com.pem";
+                key = "/etc/ssl/private/falcot.com.key";
+                certificate = "/etc/ssl/certs/falcot.com.pem";
                 }
 
 -- Set up a MUC (multi-user chat) room server on conference.example.com:
@@ -4321,30 +4362,37 @@ Component "conference.falcot.com" "muc"
 </programlisting>
 
         <para>To enable the domain, there must be a symlink from
-          <filename>/etc/prosody/conf.d/</filename>. Create it that way:</para>
+        <filename>/etc/prosody/conf.d/</filename>. Create it that way:</para>
 
-<screen><computeroutput># </computeroutput><userinput>ln -s /etc/prosody/conf.avail/falcot.com.cfg.lua /etc/prosody/conf.d/</userinput>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/conf.d/</filename></secondary></indexterm>
+
+        <screen><computeroutput># </computeroutput><userinput>ln -s /etc/prosody/conf.avail/falcot.com.cfg.lua /etc/prosody/conf.d/</userinput>
 </screen>
 
         <para>Restart the service to use the new configuration.</para>
+
+        <indexterm><primary>service</primary><secondary><filename>prosody.service</filename></secondary></indexterm>
       </section>
+
       <section id="sect.xmpp-server-management">
         <title>Managing the XMPP server</title>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/prosody.cfg.lua</filename></secondary></indexterm>
+        <indexterm><primary><command>prosodyctl</command></primary></indexterm>
+
         <para>Some management operations can be performed using the
-        <literal>prosodyctl</literal> command line utility. For example, to
-        add the administrator account specified in
+        <command>prosodyctl</command> command line utility. For example, to add
+        the administrator account specified in
         <filename>/etc/prosody/prosody.cfg.lua</filename>:</para>
-<programlisting>
-# prosodyctl adduser joe@falcot.com
-</programlisting>
+
+        <programlisting><computeroutput># </computeroutput><userinput>prosodyctl adduser joe@falcot.com
+</userinput></programlisting>
 
         <para>See the <ulink url="https://prosody.im/doc/configure">
         Prosody online documentation</ulink> for more details about
         how to customize the configuration.</para>
-
       </section>
-
     </section>
+
     <section id="sect.rtc-port-443">
       <title>Running services on port 443</title>
       <para>Some administrators prefer to run all of their RTC services on
@@ -4358,16 +4406,17 @@ Component "conference.falcot.com" "muc"
       The port number, 443, must be specified in the configuration
       files for each process and also in the DNS SRV records.</para>
     </section>
+
     <section id="sect.rtc-webrtc">
       <title>Adding WebRTC</title>
+      <indexterm><primary>WebRTC</primary></indexterm>
+      <indexterm><primary>SIP</primary><secondary>WebSockets</secondary></indexterm>
 
       <para>Falcot wants to let customers make phone calls directly from
       the web site. The Falcot administrators also want to use WebRTC as
       part of their disaster recovery plan, so staff can use web browsers
       at home to log in to the company phone system and work normally in
       an emergency.</para>
-      <indexterm><primary>WebRTC</primary></indexterm>
-      <indexterm><primary>SIP</primary><secondary>WebSockets</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Try WebRTC</title>
@@ -4375,15 +4424,12 @@ Component "conference.falcot.com" "muc"
 
         <para>If you have not tried WebRTC before, there are various
         sites that give an online demonstration and test facilities.
-        <ulink type="block" url="https://www.sip5060.net/test-calls"/></para>
+        <ulink type="block" url="https://sip5060.net/test-calls"/></para>
       </sidebar>
 
-      <para>
-        WebRTC is a rapidly evolving technology and it is essential to
-        use packages from the
-        <emphasis role="distribution">Testing</emphasis> distribution.
-        Another option is to compile the software.
-      </para>
+      <para>WebRTC is a rapidly evolving technology and it is essential to use
+      packages from the <emphasis role="distribution">Testing</emphasis>
+      distribution. Another option is to compile the software.</para>
 
       <para>WebRTC uses a simple API to provide browsers and mobile applications with
       RTC, it is free software and it is being developed by Google.
@@ -4391,11 +4437,11 @@ Component "conference.falcot.com" "muc"
       <indexterm><primary>WebRTC</primary></indexterm>
 
       <para>A very flexible approach is using GStreamer's WebRTC
-      implementation. It enables pipeline-based multimedia
-      applications, which allows developing interesting and highly
-      efficient applications. A good starting point is the following
-      demo by Centricular, the main company that is
-      developing it: <ulink type="block" url="https://github.com/centricular/gstwebrtc-demos"/></para>
+      implementation. It enables pipeline-based multimedia applications, which
+      allows developing interesting and highly efficient applications. A good
+      starting point is the following demo by Centricular, the main company
+      that is developing it: <ulink type="block"
+      url="https://gitlab.freedesktop.org/gstreamer/gst-examples"/></para>
       <indexterm><primary>GStreamer</primary></indexterm>
 
       <para>More advanced click-to-call web sites typically use server-side
@@ -4409,7 +4455,6 @@ Component "conference.falcot.com" "muc"
       were described. Now it is time for an even more technical
       chapter: we'll go into deeper detail for some concepts, describe
       massive deployments and virtualization.</para>
-
     </section>
   </section>
 </chapter>
