@@ -40,7 +40,7 @@
     <indexterm><primary>email</primary><secondary>server</secondary></indexterm>
     <indexterm><primary>email</primary><secondary>Postfix</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>email</secondary></indexterm>
-    <indexterm><primary>server</primary><secondary>E-Mail</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>SMTP</secondary></indexterm>
     <indexterm><primary>mail server</primary></indexterm>
     <indexterm><primary>SMTP</primary></indexterm>
     <indexterm><primary>Postfix</primary></indexterm>
@@ -51,6 +51,7 @@
       <indexterm><primary>Exim</primary></indexterm>
       <indexterm><primary>email</primary><secondary>Exim</secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">exim4</emphasis></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exim4/</filename></secondary></indexterm>
 
       <para>Debian uses Exim4 as the default email server (which is why the
       initial installation includes Exim4). The configuration is provided
@@ -81,6 +82,7 @@
     <section>
       <title>Installing Postfix</title>
       <indexterm><primary>Postfix</primary><secondary>installation</secondary></indexterm>
+      <indexterm><primary>daemon</primary><secondary>SMTP</secondary></indexterm>
 
       <para>The <emphasis role="pkg">postfix</emphasis> package includes
       the main <acronym>SMTP</acronym> daemon. Other packages (such as <emphasis
@@ -92,8 +94,7 @@
       <sidebar id="sidebar.smtp">
         <title><emphasis>BACK TO BASICS</emphasis> SMTP</title>
         <indexterm><primary>SMTP</primary></indexterm>
-        <indexterm><primary>Simple Mail Transfer Protocol</primary></indexterm>
-        <indexterm><primary>server</primary><secondary>SMTP</secondary></indexterm>
+        <indexterm><primary>Simple Mail Transfer Protocol</primary><see>SMTP</see></indexterm>
 
         <para><acronym>SMTP</acronym> (<emphasis>Simple Mail Transfer
         Protocol</emphasis>, RFC 5321) is the protocol used by mail servers to
@@ -104,6 +105,7 @@
       the package. The answers allow generating a first version of the
       <filename>/etc/postfix/main.cf</filename> configuration file.</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
       <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
 
       <para>The first question deals with the type of setup. Only two of
@@ -126,7 +128,8 @@
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> ISP</title>
-        <indexterm><primary>ISP, Internet Service Provider</primary></indexterm>
+        <indexterm><primary>ISP</primary></indexterm>
+        <indexterm><primary>ISP, Internet Service Provider</primary><see>ISP</see></indexterm>
 
         <para><acronym>ISP</acronym> is the acronym for “Internet Service
         Provider”. It covers an entity, often a commercial company, that
@@ -155,8 +158,10 @@
       <literal>mydestination</literal> variable of the main Postfix
       configuration file — <filename>/etc/postfix/main.cf</filename>.</para>
 
+      <indexterm><primary>Postfix</primary><secondary><literal>mydestination</literal></secondary></indexterm>
       <indexterm><primary>server</primary><secondary>MX</secondary></indexterm>
       <indexterm><primary>MX</primary><secondary>server</secondary></indexterm>
+      <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>MX</tertiary></indexterm>
 
       <figure>
         <title>Role of the DNS <emphasis>MX</emphasis> record while sending a mail</title>
@@ -169,11 +174,16 @@
 
       <sidebar>
         <title><emphasis>EXTRA</emphasis> Querying the MX records</title>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>A</tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>AAAA</tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary>MX</tertiary></indexterm>
 
         <para>When the DNS does not have an MX record for a domain, the email
         server will try sending the messages to the host itself, by using the
         matching A record (or AAAA in IPv6).</para>
       </sidebar>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>mynetworks</literal></secondary></indexterm>
 
       <para>In some cases, the installation can also ask what networks
       should be allowed to send email via the machine. In its default
@@ -235,30 +245,33 @@ compatibility_level = 2
 # TLS parameters
 smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-smtpd_use_tls=yes
-smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtpd_tls_security_level=may
+
+smtp_tls_CApath=/etc/ssl/certs
+smtp_tls_security_level=may
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
-# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
-# information on enabling SSL in the smtp client.
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 myhostname = mail.falcot.com
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
-myorigin = /etc/mailname
 mydestination = mail.falcot.com, falcot.com, localhost.localdomain, localhost
-relayhost =
+relayhost = 
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/16
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
+default_transport = smtp
+relay_transport = smtp
 inet_protocols = all
+myorigin = /etc/mailname
 ]]></programlisting>
       </example>
 
       <sidebar id="sidebar.snakeoil-certs">
         <title><emphasis>SECURITY</emphasis> <emphasis>Snake oil</emphasis> SSL certificates</title>
+        <indexterm><primary>certificate</primary><secondary>snakeoil certificate</secondary></indexterm>
 
         <para>The <emphasis>snake oil</emphasis> certificates, like the
         <emphasis>snake oil</emphasis> “medicine” sold by unscrupulous
@@ -278,6 +291,7 @@ inet_protocols = all
 
         <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">certbot</emphasis></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary>trusted certificates</secondary></indexterm>
+        <indexterm><primary>certificate</primary><secondary>trusted certificate</secondary></indexterm>
 
         <informalexample>
           <indexterm><primary>Postfix</primary><secondary><literal>smtpd_tls_cert_file</literal></secondary></indexterm>
@@ -295,8 +309,9 @@ smtp_tls_CApath = /etc/ssl/certs
 </programlisting>
         </informalexample>
 
-        <para>A different way to generate own certificates is described in
-        <xref linkend="sect.easy-rsa"/>.</para>
+        <para>A different way to generate your own certificates using your own
+        certificate authority is described in <xref
+        linkend="sect.easy-rsa"/>.</para>
       </sidebar>
     </section>
 
@@ -304,16 +319,18 @@ smtp_tls_CApath = /etc/ssl/certs
       <title>Configuring Virtual Domains</title>
       <indexterm><primary>Postfix</primary><secondary>virtual domain</secondary></indexterm>
       <indexterm><primary>domain</primary><secondary>virtual</secondary></indexterm>
-      <indexterm><primary>virtual domain</primary></indexterm>
 
-      <para>The mail server can receive emails addressed to other domains
-      besides the main domain; these are then known as virtual domains. In
-      most cases where this happens, the emails are not ultimately destined
-      to local users. Postfix provides two interesting features for
-      handling virtual domains.</para>
+      <para>The mail server can receive mails addressed to other domains
+      besides the main domain; these are then known as “virtual“ domains. In
+      most cases where this happens, the emails are not ultimately destined to
+      local users. Postfix provides two interesting features for handling
+      virtual domains.</para>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Virtual domains and canonical domains</title>
+        <indexterm><primary>Postfix</primary><secondary>canonical domain</secondary></indexterm>
+        <indexterm><primary>domain</primary><secondary>canonical</secondary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><literal>mydestination</literal></secondary></indexterm>
 
         <para>None of the virtual domains must be referenced in the
         <literal>mydestination</literal> variable; this variable only
@@ -352,6 +369,7 @@ virtual_alias_maps = hash:/etc/postfix/virtual
         <literal>@domain.com</literal> syntax covers all remaining
         aliases in a domain.</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/virtual</filename></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/virtual</filename></secondary></indexterm>
 
         <informalexample>
@@ -370,13 +388,12 @@ contact@falcotsbrand.com    laure@falcot.com, sophie@falcot.com
         postfix table <filename>/etc/postfix/virtual.db</filename> needs to be
         updated using <command>sudo postmap
         /etc/postfix/virtual</command>.</para>
-
       </section>
 
       <section>
         <title>Virtual Mailbox Domains</title>
         <indexterm><primary>mailbox, virtual domain</primary></indexterm>
-        <indexterm><primary>virtual domain</primary><secondary>virtual mailbox domain</secondary></indexterm>
+        <indexterm><primary>domain</primary><secondary>virtual mailbox domain</secondary></indexterm>
 
         <sidebar>
           <title><emphasis>CAUTION</emphasis> Combined virtual domain?</title>
@@ -403,6 +420,7 @@ contact@falcotsbrand.com    laure@falcot.com, sophie@falcot.com
 
         <indexterm><primary>Postfix</primary><secondary><literal>virtual_mailbox_domains</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>virtual_mailbox_maps</literal></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/vmailbox</filename></secondary></indexterm>
 
         <informalexample>
           <programlisting>
@@ -538,6 +556,8 @@ smtpd_client_restrictions =
         local network (as defined by the <literal>mynetworks</literal>
         configuration variable).</para>
 
+        <indexterm><primary>Postfix</primary><secondary><literal>permit_mynetworks</literal></secondary></indexterm>
+
         <para>The second directive would normally reject emails coming from
         machines without a completely valid DNS configuration. Such a valid
         configuration means that the IP address can be resolved to a name, and
@@ -560,12 +580,13 @@ smtpd_client_restrictions =
 
           <para>The restriction criteria include administrator-modifiable
           tables listing combinations of senders, IP addresses, and allowed or
-          forbidden hostnames. These tables can be created using an
-          uncompressed copy of the
-          <filename>/usr/share/doc/postfix/examples/access.gz</filename> file
-          shipped with the <emphasis role="pkg">postfix-doc</emphasis> package.
-          This model is self-documented in its comments, which means each table
-          describes its own syntax.</para>
+          forbidden hostnames. These tables can be created using a copy of the
+          <filename>/usr/share/doc/postfix/examples/access</filename> file
+          shipped with the <emphasis role="pkg">postfix-doc</emphasis> package
+          and explained in <citerefentry><refentrytitle>access</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry>.  This model is
+          self-documented in its comments, which means each table describes its
+          own syntax.</para>
 
           <para>The <filename>/etc/postfix/access_clientip</filename> table
           lists IP addresses and networks;
@@ -578,11 +599,11 @@ smtpd_client_restrictions =
           command.</para>
         </sidebar>
 
-        <para>The third directive allows the administrator to set up a
-        blacklist and a whitelist of email servers, stored in the
-        <filename>/etc/postfix/access_clientip</filename> file. Servers in
-        the whitelist are considered as trusted, and the emails coming
-        from there therefore do not go through the following filtering
+        <para>The <literal>check_client_access</literal> directive allows the
+        administrator to set up a blacklist and a whitelist of email servers,
+        stored in the <filename>/etc/postfix/access_clientip</filename> file.
+        Servers in the whitelist are considered as trusted, and the emails
+        coming from there therefore do not go through the following filtering
         rules.</para>
 
         <indexterm><primary>Postfix</primary><secondary><literal>check_client_access</literal></secondary></indexterm>
@@ -603,8 +624,8 @@ smtpd_client_restrictions =
 
         <sidebar>
           <title><emphasis>TIP</emphasis> White list and RBLs</title>
-          <indexterm><primary>RBL</primary><see>Remote Black List</see></indexterm>
-          <indexterm><primary>Remote Black List</primary></indexterm>
+          <indexterm><primary>RBL</primary></indexterm>
+          <indexterm><primary>Remote Black List</primary><see>RBL</see></indexterm>
 
           <para>Blacklists sometimes include a legitimate server that has been
           suffering an incident. In these situations, all emails coming from
@@ -621,6 +642,7 @@ smtpd_client_restrictions =
       <section id="sect.smtpd-helo-restrictions">
         <title>Checking the Validity of the <literal>EHLO</literal> or <literal>HELO</literal> Commands</title>
         <indexterm><primary>Postfix</primary><secondary><literal>smtpd_helo_restrictions</literal></secondary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><literal>smtpd_helo_required</literal></secondary></indexterm>
         <indexterm><primary>email</primary><secondary>filtering on the mail host</secondary></indexterm>
 
         <para>Each SMTP exchange starts with a <literal>HELO</literal> (or
@@ -668,12 +690,13 @@ smtpd_helo_restrictions =
         (including a domain name as well as a host name). The
         <literal>reject_unknown_helo_hostname</literal> rule rejects messages
         if the announced name does not exist in the DNS. Since this last rule
-        unfortunately leads to too many rejections, the administrators turned
+        unfortunately leads to a lot of rejections, the administrators turned
         its effect to a simple warning with the
         <literal>warn_if_reject</literal> modifier as a first step; they may
         decide to remove this modifier at a later stage, after auditing the
         results of this rule.</para>
 
+        <indexterm><primary>Postfix</primary><secondary><literal>warn_if_reject</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>reject_invalid_helo_hostname</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>reject_non_fqdn_helo_hostname</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>reject_unknown_helo_hostname</literal></secondary></indexterm>
@@ -694,7 +717,7 @@ smtpd_helo_restrictions =
       </section>
 
       <section id="sect.smtpd-sender-restrictions">
-        <title>Accepting or Refusing Based on the Announced Sender</title>
+        <title>Accepting or Refusing Mails Based on the Announced Sender</title>
         <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sender_restrictions</literal></secondary></indexterm>
         <indexterm><primary>email</primary><secondary>filtering on the sender</secondary></indexterm>
 
@@ -728,7 +751,7 @@ smtpd_sender_restrictions =
         requires a valid sender domain, since it is needed for a valid
         address. The <literal>reject_unlisted_sender</literal> rule rejects
         local senders if the address does not exist; this prevents emails
-        from being sent from an invalid address in the
+        being sent from an invalid address in the
         <literal>falcot.com</literal> domain, and messages emanating from
         <literal>joe.bloggs@falcot.com</literal> are only accepted if such
         an address really exists.</para>
@@ -753,7 +776,7 @@ smtpd_sender_restrictions =
       </section>
 
       <section id="sect.smtpd-recipient-restrictions">
-        <title>Accepting or Refusing Based on the Recipient</title>
+        <title>Accepting or Refusing Mails Based on the Recipient</title>
         <indexterm><primary>Postfix</primary><secondary><literal>smtpd_recipient_restrictions</literal></secondary></indexterm>
         <indexterm><primary>email</primary><secondary>filtering on the recipient</secondary></indexterm>
 
@@ -763,6 +786,7 @@ smtpd_sender_restrictions =
         relevant than the checks made on the sender address.</para>
 
         <indexterm><primary>RCPT TO</primary></indexterm>
+        <indexterm><primary>SMTP</primary><secondary>RCPT TO</secondary></indexterm>
 
         <example>
           <title>Recipient checks</title>
@@ -891,16 +915,16 @@ body_checks = regexp:/etc/postfix/body_checks
 
         <sidebar>
           <title><emphasis>QUICK LOOK</emphasis> Regexp tables</title>
+          <indexterm><primary>Postfix</primary><secondary><literal>header_checks</literal></secondary></indexterm>
 
           <para>The file
-          <filename>/usr/share/doc/postfix/examples/header_checks.gz</filename>
+          <filename>/usr/share/doc/postfix/examples/header_checks</filename>
           (from the <emphasis role="pkg">postfix-doc</emphasis> package) and
-          <citerefentry><refentrytitle>header_checks</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-          contain many explanatory comments and can be used as a starting point
-          for creating the <filename>/etc/postfix/header_checks</filename> and
+          <citerefentry><refentrytitle>header_checks</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry> contain many explanatory
+          comments and can be used as a starting point for creating the
+          <filename>/etc/postfix/header_checks</filename> and
           <filename>/etc/postfix/body_checks</filename> files.</para>
-
-          <indexterm><primary>Postfix</primary><secondary><literal>header_checks</literal></secondary></indexterm>
         </sidebar>
 
         <example>
@@ -914,9 +938,9 @@ body_checks = regexp:/etc/postfix/body_checks
 
         <sidebar id="sidebar.regexp">
           <title><emphasis>BACK TO BASICS</emphasis> Regular expression</title>
-          <indexterm><primary>regular expressions</primary></indexterm>
-          <indexterm><primary>regex</primary><see>regular expressions</see></indexterm>
-          <indexterm><primary>regexp</primary><see>regular expressions</see></indexterm>
+          <indexterm><primary>regular expression</primary></indexterm>
+          <indexterm><primary>regex</primary><see>regular expression</see></indexterm>
+          <indexterm><primary>regexp</primary><see>regular expression</see></indexterm>
 
           <para>The <emphasis>regular expression</emphasis> term (shortened
           to <emphasis>regexp</emphasis> or <emphasis>regex</emphasis>)
@@ -957,17 +981,18 @@ body_checks = regexp:/etc/postfix/body_checks
     <section id="sect.setting-up-greylisting">
       <title>Setting Up <foreignphrase>greylisting</foreignphrase></title>
       <indexterm><primary>greylisting</primary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary>greylisting</secondary></indexterm>
       <indexterm><primary>email</primary><secondary>greylisting</secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">postgrey</emphasis></primary></indexterm>
 
-      <para>“Greylisting” is a filtering technique according to which a
-      message is initially rejected with a temporary error code, and only
-      accepted on a further try after some delay. This filtering is
-      particularly efficient against spam sent by the many machines
-      infected by worms and viruses, since this software rarely acts as
-      a full SMTP agent (by checking the error code and retrying failed
-      messages later), especially since many of the harvested addresses are
-      really invalid and retrying would only mean losing time.</para>
+      <para>“Greylisting” is a filtering technique according to which a message
+      is initially rejected with a temporary error code, and only accepted
+      after a further delivery attempt with some delay. This filtering is
+      particularly efficient against spam sent by the many machines infected by
+      worms and viruses, since this software rarely acts as a full SMTP agent
+      (by checking the error code and retrying failed messages later),
+      especially since many of the harvested addresses are really invalid and
+      retrying would only mean losing time.</para>
 
       <para>Postfix doesn't provide greylisting natively, but there is a
       feature by which the decision to accept or reject a given message can
@@ -975,6 +1000,8 @@ body_checks = regexp:/etc/postfix/body_checks
       role="pkg">postgrey</emphasis> package contains just such a program,
       designed to interface with this access policy delegation
       service.</para>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>check_policy_service</literal></secondary></indexterm>
 
       <para>Once <emphasis role="pkg">postgrey</emphasis> is installed, it
       runs as a daemon and listens on port 10023. Postfix can then be
@@ -1027,6 +1054,8 @@ smtpd_recipient_restrictions =
         sender's server. For very large mailing-lists (with tens of
         thousands of subscribers), this can soon become a problem.</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postgrey/whitelist_clients</filename></secondary></indexterm>
+
         <para>To mitigate these drawbacks, Postgrey manages a whitelist of
         such sites, and messages emanating from them are immediately
         accepted without going through greylisting. This list can easily be
@@ -1037,6 +1066,7 @@ smtpd_recipient_restrictions =
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Selective greylisting with <emphasis role="pkg">milter-greylist</emphasis></title>
         <indexterm><primary><emphasis role="pkg">milter-greylist</emphasis></primary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">milter-greylist</emphasis></secondary></indexterm>
 
         <para>The drawbacks of greylisting can be mitigated by only using
         greylisting on the subset of clients that are already considered as
@@ -1050,6 +1080,10 @@ smtpd_recipient_restrictions =
         blacklists, including those listing all dynamic IP addresses
         from ISP clients (such as <literal>pbl.spamhaus.org</literal>
         or <literal>dul.dnsbl.sorbs.net</literal>).</para>
+
+        <indexterm><primary>Postfix</primary><secondary><literal>smtpd_milters</literal></secondary><tertiary>milter-greylist</tertiary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/milter-greylist/greylist.conf</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/milter-greylist</filename></secondary></indexterm>
 
         <!-- TODO: postfix chroot -> use smtpd_milters = milter-greylist/milter-greylist.sock -->
         <para>Since <emphasis role="pkg">milter-greylist</emphasis> uses
@@ -1133,14 +1167,15 @@ falcot.com             greylisting
     </section>
 
     <section id="sect.postfix-antivirus">
-      <title>Integrating an Antivirus</title>
+      <title>Integrating an Antivirus Filter</title>
       <indexterm><primary>antivirus</primary></indexterm>
       <indexterm><primary>email</primary><secondary>virus scanning</secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><command>clamav-milter</command></secondary></indexterm>
 
       <para>The many viruses circulating as attachments to emails make it
-      important to set up an antivirus at the entry point of the company
-      network, since despite an awareness campaign, some users will still
-      open attachments from obviously shady messages.</para>
+      important to set up an antivirus solution at the entry point of the
+      company network, since despite an awareness campaign, some users will
+      still open attachments from obviously shady messages.</para>
 
       <sidebar id="sidebar.anti-virus">
         <title><emphasis>SECURITY</emphasis> Controversial Discussion of Anti-Virus Software</title>
@@ -1159,17 +1194,12 @@ falcot.com             greylisting
         <indexterm><primary>antivirus</primary><secondary>controversy</secondary></indexterm>
       </sidebar>
 
-      <para>The Falcot administrators selected <command>clamav</command>
-      for their free antivirus. The main package is <emphasis
-      role="pkg">clamav</emphasis>, but they also installed a few extra
-      packages such as <emphasis role="pkg">arj</emphasis>, <emphasis
-      role="pkg">unzoo</emphasis>, <emphasis role="pkg">unrar</emphasis>
-      and <emphasis role="pkg">lha</emphasis>, since they are required for
-      the antivirus to analyze attachments archived in one of these
-      formats.</para>
+      <para>The Falcot administrators selected <command>clamav</command> ffrom
+      the hononymous package.</para>
 
       <indexterm><primary><command>clamav</command></primary></indexterm>
       <indexterm><primary><command>clamav-milter</command></primary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><emphasis>milter</emphasis></secondary></indexterm>
 
       <para>The task of interfacing between antivirus and the email server
       goes to <command>clamav-milter</command>. A
@@ -1185,6 +1215,7 @@ falcot.com             greylisting
         <title><emphasis>QUICK LOOK</emphasis> A milter for Spamassassin</title>
         <indexterm><primary><emphasis role="pkg">spamassassin</emphasis></primary></indexterm>
         <indexterm><primary><emphasis role="pkg">spamass-milter</emphasis></primary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">spamass-milter</emphasis></secondary></indexterm>
 
         <para>The <emphasis role="pkg">spamass-milter</emphasis> package
         provides a milter based on <emphasis>SpamAssassin</emphasis>, the
@@ -1218,6 +1249,8 @@ falcot.com             greylisting
       recently-configured filter. This is a simple matter of adding the
       following directive to
       <filename>/etc/postfix/main.cf</filename>:</para>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_milters</literal></secondary><tertiary>clamav</tertiary></indexterm>
 
       <programlisting>
 # Virus check with clamav-milter
@@ -1281,8 +1314,8 @@ smtpd_milters = inet:[127.0.0.1]:10002
 
       <section id="sect.spf">
         <title>Integrating the Sender Policy Framework (SPF)</title>
-        <indexterm><primary>SPF</primary><see>Sender Policy Framework</see></indexterm>
-        <indexterm><primary>Sender Policy Framework </primary></indexterm>
+        <indexterm><primary>SPF</primary></indexterm>
+        <indexterm><primary>Sender Policy Framework</primary><see>SPF</see></indexterm>
         <indexterm><primary><emphasis role="pkg">postfix-policyd-spf-python</emphasis></primary></indexterm>
 
         <para>The Sender Policy Framework (<acronym>SPF</acronym>) is used to
@@ -1295,10 +1328,12 @@ smtpd_milters = inet:[127.0.0.1]:10002
         </para>
 
         <para>The following is a sample DNS entry which states that all the
-        domain's Mail Exchange Resource Records (MX-RRs) are allowed to email
-        the current domain, and all others are prohibited. The DNS
+        domain's Mail Exchange Resource Records (MX-RRs) are allowed to send
+        email for the current domain, and all others are prohibited. The DNS
         entry does not need to be given a name. But to use the
         <literal>include</literal> directive it must have one.</para>
+
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>SPF</literal></tertiary></indexterm>
 
         <informalexample>
           <programlisting><![CDATA[
@@ -1359,8 +1394,8 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
 
       <section id="sect.dkim">
         <title>Integrating DomainKeys (DKIM) Signing and Checking</title>
-        <indexterm><primary>DKIM</primary><see>DomainKeys Identified Mail</see></indexterm>
-        <indexterm><primary>DomainKeys Identified Mail</primary></indexterm>
+        <indexterm><primary>DKIM</primary></indexterm>
+        <indexterm><primary>DomainKeys Identified Mail</primary><see>DKIM</see></indexterm>
         <indexterm><primary><emphasis role="pkg">opendkim</emphasis></primary></indexterm>
 
         <para>The Domain Keys Identified Mail (<acronym>DKIM</acronym>) standard
@@ -1386,7 +1421,8 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
           to the mail severs log files to identify such issues. Otherwise such
           emails might be flagged as spam and might get rejected.</para>
 
-          <indexterm><primary>DomainKeys Identified Mail</primary><secondary>mailing list problems</secondary></indexterm>
+          <indexterm><primary>DKIM</primary><secondary>mailing lists</secondary></indexterm>
+          <indexterm><primary>mailing lists</primary><secondary>DKIM</secondary></indexterm>
         </sidebar>
 
         <para>First the private key must be created using the command
@@ -1412,6 +1448,9 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
         ownership. The first file contains the private key, and the latter the
         public key that needs to be added to the DNS:</para>
 
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>mail._domainkey</literal></tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>DKIM</literal></tertiary></indexterm>
+
         <programlisting><![CDATA[
 Name: mail._domainkey
 Type: TXT
@@ -1429,6 +1468,9 @@ Data: "v=DKIM1; h=sha256; k=rsa; s=email; p=[...]"
         <ulink type="block" url="https://tools.ietf.org/html/rfc6376"/>
         <ulink type="block" url="https://en.wikipedia.org/wiki/DKIM"/>
         </para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/opendkim</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/opendkim.conf</filename></secondary></indexterm>
 
         <para>To configure <emphasis role="pkg">opendkim</emphasis>,
         <literal>SOCKET</literal> and <literal>RUNDIR</literal> must be chosen in
@@ -1507,9 +1549,11 @@ smtpd_milters = inet:localhost:12345
 
       <section id="sect.dmarc">
         <title>Integrating Domain-based Message Authentication, Reporting and Conformance (DMARC)</title>
-        <indexterm><primary>DMARC</primary><see>Domain-based Message Authentication, Reporting and Conformance</see></indexterm>
-        <indexterm><primary>Domain-based Message Authentication, Reporting and Conformance</primary></indexterm>
+        <indexterm><primary>DMARC</primary></indexterm>
+        <indexterm><primary>Domain-based Message Authentication, Reporting and Conformance</primary><see>DMARC</see></indexterm>
         <indexterm><primary><emphasis role="pkg">opendmarc</emphasis></primary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>_dmarc</literal></tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>DMARC</literal></tertiary></indexterm>
 
         <para>The Domain-based Message Authentication, Reporting and
         Conformance (<acronym>DMARC</acronym>) standard can be used to define a
@@ -1525,7 +1569,7 @@ smtpd_milters = inet:localhost:12345
 <computeroutput># </computeroutput><userinput>host -t TXT _dmarc.gmail.com</userinput><computeroutput><![CDATA[
 _dmarc.gmail.com descriptive text "v=DMARC1; p=none; sp=quarantine; rua=mailto:mailauth-reports@google.com"]]></computeroutput>
 <computeroutput># </computeroutput><userinput>host -t TXT _dmarc.yahoo.com</userinput><computeroutput><![CDATA[
-_dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:dmarc_y_rua@yahoo.com;"]]></computeroutput>
+_dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:d@rua.agari.com; ruf=mailto:d@ruf.agari.com;"]]></computeroutput>
 </screen>
 
         <para>Yahoo has a strict policy to <literal>reject</literal> all
@@ -1539,6 +1583,10 @@ _dmarc.yahoo.com descriptive text "v=DMARC1; p=reject; pct=100; rua=mailto:dmarc
         <ulink type="block" url="https://tools.ietf.org/html/rfc7489"/>
         <ulink type="block" url="https://en.wikipedia.org/wiki/DMARC"/>
         </para>
+
+        <indexterm><primary>Postfix</primary><secondary><emphasis role="pkg">opendmarc</emphasis></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/opendmarc</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/opendmarc.conf</filename></secondary></indexterm>
 
         <para>The <command>postfix</command> mail server can use this
         information too. The <emphasis role="pkg">opendmarc</emphasis> package
@@ -1577,6 +1625,10 @@ smtpd_milters = inet:localhost:12345,inet:localhost:54321
 
     <section id="sect.authenticated-smtp">
       <title>Authenticated SMTP</title>
+      <indexterm><primary>SASL</primary></indexterm>
+      <indexterm><primary>Simple Authentication and Security Layer</primary><see>SASL</see></indexterm>
+      <indexterm><primary>Postfix</primary><secondary>authentication</secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary>SASL</secondary></indexterm>
 
       <para>Being able to send emails requires an SMTP server to be
       reachable; it also requires said SMTP server to send emails through
@@ -1622,6 +1674,12 @@ smtpd_milters = inet:localhost:12345,inet:localhost:54321
       to be configured to allow SASL-authenticated clients to send emails
       freely.</para>
 
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_recipient_restrictions</literal></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_auth_enable</literal></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_local_domain</literal></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><literal>permit_sasl_authenticated</literal></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
+
       <example>
         <title>Enabling SASL in <filename>/etc/postfix/main.cf</filename></title>
 
@@ -1649,6 +1707,9 @@ smtpd_recipient_restrictions =
       authentication at all for port 25 (<literal>smtpd</literal> service)
       add the following directive:</para>
 
+      <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_auth_enable</literal></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/master.cf</filename></secondary></indexterm>
+
       <informalexample>
         <programlisting><![CDATA[smtp      inet  n       -       y       -       -       smtpd
     [..]
@@ -1656,6 +1717,8 @@ smtpd_recipient_restrictions =
     [..]
 ]]></programlisting>
       </informalexample>
+
+      <indexterm><primary>Postfix</primary><secondary><literal>broken_sasl_auth_clients</literal></secondary></indexterm>
 
       <para>If for some reason clients use an outdated <literal>AUTH</literal>
       command (some very old mail clients do), interoperability with them can
@@ -1689,6 +1752,8 @@ smtpd_sasl_local_domain = $myhostname
         the client that authenticates with SASL. Here are the required
         parameters:</para>
 
+        <indexterm><primary>Postfix</primary><secondary><literal>smtp_sasl_password_maps</literal></secondary></indexterm>
+
         <programlisting>
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
@@ -1714,28 +1779,30 @@ relay_host = [mail.falcot.com]
   <section id="sect.http-web-server">
     <title>Web Server (HTTP)</title>
 
-    <!-- MAY CHANGE: Apache version -->
+    <!-- MAY CHANGE: Debian and Apache versions -->
     <para>The Falcot Corp administrators decided to use the Apache HTTP
     server, included in Debian <emphasis
-    role="distribution">Buster</emphasis> at version 2.4.38.</para>
+    role="distribution">Bullseye</emphasis> at version 2.4.52.</para>
 
     <indexterm><primary><command>apache</command></primary></indexterm>
     <indexterm><primary>server</primary><secondary>web</secondary></indexterm>
     <indexterm><primary>web server</primary><seealso>Apache</seealso></indexterm>
     <indexterm><primary>server</primary><secondary>HTTP</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>HTTP</secondary></indexterm>
     <indexterm><primary>HTTP</primary><secondary>server</secondary><seealso>Apache</seealso></indexterm>
 
     <sidebar>
       <title><emphasis>ALTERNATIVE</emphasis> Other web servers</title>
 
-      <para>Apache is merely the most widely-known (and widely-used) web
-      server, but there are others; they can offer better performance under
-      certain workloads, but this has its counterpart in the smaller number
-      of available features and modules. However, when the prospective web
-      server is built to serve static files or to act as a proxy, the
-      alternatives, such as <emphasis role="pkg">nginx</emphasis> and
-      <emphasis role="pkg">lighttpd</emphasis>, are worth
-      investigating.</para>
+      <para>Apache is probably the most widely-known web server, but there are
+      others. Its major opponent is <emphasis role="pkg">nginx</emphasis>,
+      which comes in different packages with different sets of features, like
+      <emphasis role="pkg">nginx-light</emphasis>, <emphasis
+      role="pkg">nginx-full</emphasis>, or <emphasis
+      role="pkg">nginx-extras</emphasis>. Another alternative is <emphasis
+      role="pkg">lighttpd</emphasis>. All of them can offer very good or even
+      better performance under certain workloads or in certain situations, but
+      not all provide the same number of available features and modules.</para>
 
       <indexterm><primary><emphasis role="pkg">nginx</emphasis></primary></indexterm>
       <indexterm><primary><emphasis role="pkg">lighttpd</emphasis></primary></indexterm>
@@ -1743,7 +1810,8 @@ relay_host = [mail.falcot.com]
 
     <section>
       <title>Installing Apache</title>
-      <indexterm><primary><command>Apache</command></primary><secondary>installation</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>installation</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>MPM</secondary></indexterm>
 
       <para>Installing the <emphasis role="pkg">apache2</emphasis> package is
       all that is needed. It contains all the modules, including the
@@ -1762,22 +1830,25 @@ relay_host = [mail.falcot.com]
       <emphasis>keep-alive</emphasis> feature) are handed back to a dedicated
       management thread.</para>
 
-      <!-- MAY CHANGE: Apache PHP modules version -->
+      <!-- MAY CHANGE: PHP version -->
       <para>The Falcot administrators also install <emphasis
-      role="pkg">libapache2-mod-php7.3</emphasis> so as to include the PHP
+      role="pkg">libapache2-mod-php</emphasis> so as to include the PHP 7.4
       support in Apache. This causes the default <emphasis>event</emphasis> MPM
       to be disabled, and <emphasis>prefork</emphasis> to be used instead. To
       use the <emphasis>event</emphasis> MPM one can use <emphasis
-      role="pkg">php7.3-fpm</emphasis>.</para>
+      role="pkg">php-fpm</emphasis>.</para>
 
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Execution under the <literal>www-data</literal> user</title>
         <indexterm><primary><literal>www-data</literal></primary></indexterm>
         <indexterm><primary>suexec</primary></indexterm>
         <indexterm><primary>Apache</primary><secondary><literal>www-data</literal>, user</secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>suexec</literal></secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/envvars</filename></secondary></indexterm>
 
         <para>By default, Apache handles incoming requests under the
-        identity of the <literal>www-data</literal> user. This means that a
+        identity of the <literal>www-data</literal> user as defined in
+        <filename>/etc/apache2/envvars</filename>. This means that a
         security vulnerability in a CGI script executed by Apache (for a
         dynamic page) won't compromise the whole system, but only the files
         owned by this particular user.</para>
@@ -1805,9 +1876,10 @@ relay_host = [mail.falcot.com]
       <sidebar>
         <title><emphasis>QUICK LOOK</emphasis> List of modules</title>
 
+        <!-- MAY CHANGE: Apache version in link -->
         <para>The full list of Apache standard modules can be found online.
         <ulink type="block"
-        url="https://httpd.apache.org/docs/2.4/mod/index.html"/></para>
+        url="https://httpd.apache.org/docs/2.4/mod/"/></para>
       </sidebar>
 
       <para>Apache is a modular server, and many features are implemented
@@ -1822,13 +1894,15 @@ relay_host = [mail.falcot.com]
       actual files (stored in
       <filename>/etc/apache2/mods-available/</filename>).</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apache2/</filename></secondary><see>Apache</see></indexterm>
       <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-available</filename></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-enabled</filename></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><command>a2enmod</command></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><command>a2dismod</command></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Checking the configuration</title>
-        <indexterm><primary>Apache</primary><secondary>mod_info</secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>mod_info</literal></secondary></indexterm>
 
         <para>The <literal>mod_info</literal> module (<command>a2enmod
         info</command>) allows to access the comprehensive Apache server
@@ -1845,14 +1919,17 @@ relay_host = [mail.falcot.com]
       and serves pages from the <filename>/var/www/html/</filename> directory
       (as configured in
       <filename>/etc/apache2/sites-enabled/000-default.conf</filename>).</para>
+
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/ports.conf</filename></secondary></indexterm>
     </section>
 
     <section id="sect.apache-ssl">
       <title>Adding support for SSL</title>
       <indexterm><primary>HTTPS</primary></indexterm>
-      <indexterm><primary>HTTP</primary><secondary>secure</secondary></indexterm>
+      <indexterm><primary>HTTP</primary><secondary>secure</secondary><see>HTTPS</see></indexterm>
       <indexterm><primary>Apache</primary><secondary>SSL</secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary>mod_ssl</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>mod_ssl</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/sites-available/default-ssl.conf</filename></secondary></indexterm>
 
       <para>Apache 2.4 includes the SSL module (<literal>mod_ssl</literal>)
       required for secure HTTP (HTTPS) out of the box. It just needs to be
@@ -1867,6 +1944,10 @@ relay_host = [mail.falcot.com]
       <xref linkend="sect.trusted-certs"/> and then adjust the following
       variables:</para>
 
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateFile</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateKeyFile</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateChainFile</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCACertificateFile</literal></secondary></indexterm>
 
       <programlisting>
 SSLCertificateFile      /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/fullchain.pem
@@ -1887,19 +1968,21 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
 
       <indexterm><primary><emphasis>Perfect Forward Secrecy</emphasis></primary></indexterm>
 
-      <para>As an alternative to the standard SSL module, there is an
-      extension module called <literal>mod_gnutls</literal>, which is shipped
-      with the <emphasis role="pkg">libapache2-mod-gnutls</emphasis> package
-      and enabled with the <command>a2enmod gnutls</command> command.
-      <ulink type="block" url="https://mod.gnutls.org/"/>
-      </para>
+      <!-- MAY CHAMGE: status of package and stable name -->
+      <para>As an alternative to the standard SSL module, there is an extension
+      module called <literal>mod_gnutls</literal>, which is shipped with the
+      <emphasis role="pkg">libapache2-mod-gnutls</emphasis> package and enabled
+      with the <command>a2enmod gnutls</command> command.  Unfortunately the
+      version packaged for Debian had serious issues and even security
+      implications and is therefor not part of the Debian Bullseye release.
+      <ulink type="block" url="https://mod.gnutls.org/"/> </para>
 
       <indexterm><primary>Apache</primary><secondary>mod_gnutls</secondary></indexterm>
     </section>
 
     <section>
       <title>Configuring Virtual Hosts</title>
-      <indexterm><primary>Apache</primary><secondary>Virtual Hosts</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>virtual hosts</secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><literal>VirtualHost</literal></secondary></indexterm>
 
       <para>A virtual host is an extra identity for the web server.</para>
@@ -1925,11 +2008,18 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
       either by running on a different port or on a different IP address
       (IPv6 can help there).</para>
 
+      <indexterm><primary>HTTPS</primary><secondary>SNI</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>virtual hosts</secondary><tertiary>name based</tertiary></indexterm>
+      <indexterm><primary>Apache</primary><secondary>SNI</secondary></indexterm>
+      <indexterm><primary>SNI</primary></indexterm>
+
       <para>The default configuration for Apache 2 enables name-based
       virtual hosts.  In addition, a default virtual host is defined
       in the <literal>/etc/apache2/sites-enabled/000-default.conf</literal>
       file; this virtual host will be used if no host matching the
       request sent by the client is found.</para>
+
+      <indexterm><primary>Apache</primary><secondary>virtual hosts</secondary><tertiary>default</tertiary></indexterm>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> First virtual host</title>
@@ -1941,7 +2031,9 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
 
       <sidebar>
         <title><emphasis>QUICK LOOK</emphasis> Apache supports SNI</title>
-        <indexterm><primary>Server Name Indication</primary></indexterm>
+        <indexterm><primary>Apache</primary><secondary>SNI</secondary></indexterm>
+        <indexterm><primary>SNI</primary></indexterm>
+        <indexterm><primary>Server Name Indication</primary><see>SNI</see></indexterm>
 
         <para>The Apache server supports
         an SSL protocol extension called <emphasis>Server Name
@@ -2092,7 +2184,7 @@ DirectoryIndex index.php index.html index.htm
         </listitem>
         <listitem>
           <para><literal>SymlinksIfOwnerMatch</literal> also tells the
-          server to follow symbolic links, but only when the link and the
+          server to follow symbolic links, but only when the link and
           its target have the same owner.</para>
           <indexterm><primary><literal>SymlinksIfOwnerMatch</literal>, Apache directive</primary></indexterm>
           <indexterm><primary>Apache</primary><secondary><literal>SymlinksIfOwnerMatch</literal></secondary></indexterm>
@@ -2104,6 +2196,7 @@ DirectoryIndex index.php index.html index.htm
           each request.</para>
           <indexterm><primary><literal>Includes</literal>, Apache directive</primary></indexterm>
           <indexterm><primary>Apache</primary><secondary><literal>Includes</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary>SSI</secondary></indexterm>
         </listitem>
         <listitem>
           <para><literal>IncludesNOEXEC</literal> allows <emphasis>Server Side
@@ -2166,10 +2259,17 @@ DirectoryIndex index.php index.html index.htm
 
         <para>In some circumstances, access to part of a website needs to
         be restricted, so only legitimate users who provide a username and
-        a password are granted access to the contents.</para>
+        a password are granted access to the contents. These feature are
+        provided by the <literal>mod_auth*</literal> modules.</para>
+
+        <indexterm><primary>Apache</primary><secondary><literal>mod_auth*</literal></secondary></indexterm>
 
         <example>
           <title><filename>.htaccess</filename> file requiring authentication</title>
+          <indexterm><primary>Apache</primary><secondary><literal>Require</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthName</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthType</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthUserFile</literal></secondary></indexterm>
 
           <programlisting>
 Require valid-user
@@ -2310,6 +2410,8 @@ Deny from all
       The Falcot administrators keep it unchanged apart from the following
       parameters:</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/awstats/awstats.conf</filename></secondary></indexterm>
+
       <programlisting>
 LogFile="/var/log/apache2/access.log"
 LogFormat = "%virtualname %host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"
@@ -2360,7 +2462,9 @@ HostAliases="falcot.org"
       <para>AWStats uses many icons stored in the
       <filename>/usr/share/awstats/icon/</filename> directory. In order for
       these icons to be available on the web site, the Apache configuration
-      needs to be adapted to include the following directive:</para>
+      needs to be adapted to include the following directive (check out
+      <filename>/usr/share/doc/awstats/examples/apache.conf</filename> for a
+      more detailed example):</para>
 
       <programlisting>
 Alias /awstats-icon/ /usr/share/awstats/icon/
@@ -2374,47 +2478,25 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Log file rotation</title>
+        <indexterm><primary>Apache</primary><secondary><filename>/etc/logrotate.d/apache2</filename></secondary></indexterm>
 
-        <para>In order for the statistics to take all the logs into
-        account, <emphasis>AWStats</emphasis> needs to be run right before
-        the Apache log files are rotated. Looking at the <literal>prerotate</literal>
-        directive of <filename>/etc/logrotate.d/apache2</filename> file,
-        this can be solved by putting a symlink to
-        <filename>/usr/share/awstats/tools/update.sh</filename> in
-        <filename>/etc/logrotate.d/httpd-prerotate</filename>:</para>
-
-        <screen><computeroutput>$ </computeroutput><userinput>cat /etc/logrotate.d/apache2
-</userinput><computeroutput><![CDATA[/var/log/apache2/*.log {
-  daily
-  missingok
-  rotate 14
-  compress
-  delaycompress
-  notifempty
-  create 644 root adm
-  sharedscripts
-  postrotate
-    if invoke-rc.d apache2 status > /dev/null 2>&1; then \
-      invoke-rc.d apache2 reload > /dev/null 2>&1; \
-    fi;
-  endscript
-  prerotate
-    if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
-      run-parts /etc/logrotate.d/httpd-prerotate; \
-    fi; \
-  endscript
-}
-]]>
-$ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
-</userinput><computeroutput>$ </computeroutput><userinput>sudo ln -sf /usr/share/awstats/tools/update.sh \
-  /etc/logrotate.d/httpd-prerotate/awstats
-</userinput></screen>
+        <para>In order for the statistics to take all the logs into account,
+        <emphasis>AWStats</emphasis> needs to be run right before the Apache
+        log files are rotated. Looking at the <literal>prerotate</literal>
+        directive of <filename>/etc/logrotate.d/apache2</filename> file, this
+        is solved by the <emphasis role="pkg">awstats</emphasis> package by
+        putting a scipt in
+        <filename>/etc/logrotate.d/httpd-prerotate</filename> running
+        <filename>/usr/share/awstats/tools/update.sh</filename>.</para>
 
         <para>Note also that the log files created by
         <command>logrotate</command> need to be readable by everyone,
-        especially AWStats. In the above example, this is ensured by the
-        <literal>create 644 root adm</literal> line (instead of the default
-        <literal>640</literal> permissions).</para>
+        especially AWStats. This is ensured by changing
+        <filename>/etc/logrotate.d/apache2</filename> to include
+        <literal>create 644 root adm</literal> (instead of the default
+        <literal>640</literal> permissions) for example. But please refer
+        to <filename>/usr/share/doc/awstats/README.Debian.gz</filename> for a
+        more extensive documentation about this topic and alternatives.</para>
       </sidebar>
     </section>
   </section>
@@ -2425,6 +2507,8 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
     <indexterm><primary>File Transfer Protocol</primary></indexterm>
     <indexterm><primary>server</primary><secondary>file</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>FTP</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>FTP</secondary></indexterm>
+    <indexterm><primary><emphasis role="pkg">ftp-server</emphasis></primary></indexterm>
 
     <para>FTP (<emphasis>File Transfer Protocol</emphasis>) is one of the
     first protocols of the Internet (RFC 959 was issued in 1985!). It was
@@ -2435,9 +2519,24 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
     <para>This protocol allows both file uploads and file downloads; for
     this reason, it is still widely used to deploy updates to a website
     hosted by one's Internet service provider (or any other entity hosting
-    websites). In these cases, secure access is enforced with a user
+    websites). In these cases, access is enforced with a user
     identifier and password; on successful authentication, the FTP server
     grants read-write access to that user's home directory.</para>
+
+    <sidebar>
+      <title><emphasis>SECURITY</emphasis> FTP, FTPS, and SFTP</title>
+      <indexterm><primary>FTP</primary><secondary>secure</secondary><see>FTPS</see></indexterm>
+      <indexterm><primary>SFTP</primary><seealso>SSH</seealso></indexterm>
+      <indexterm><primary>SSL</primary></indexterm>
+      <indexterm><primary>TLS</primary></indexterm>
+
+      <para>FTP is not a secure protocol. User names, passwords, and data are
+      transported in clear text.  To increase the security, one can use FTP via
+      implicit (enforced) or explicit (requested) SSL/TLS, also known as FTPS,
+      but not to be confused with <emphasis>SFTP</emphasis>, the SSH File
+      Transfer Protocol, an alternative file transfer implementation using
+      SSH. Many FTP server packages in Debian support FTPS.</para>
+    </sidebar>
 
     <para>Other FTP servers are mainly used to distribute files for public
     downloading; Debian packages are a good example. The contents of these
@@ -2449,19 +2548,22 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
     password is often, by convention, the user's email address, but the
     server ignores it.</para>
 
+    <!-- MAY CHANGE: Maybe remove sentence about dropping pyftpd in Bookworm -->
     <para>Many FTP servers are available in Debian (<emphasis
-    role="pkg">ftpd</emphasis><footnote><para>The <emphasis
-    role="pkg">ftpd</emphasis> package is not included in Debian <emphasis
-    role="distribution">Buster</emphasis> due to a bug, which could not be
-    solved before the release.</para></footnote>, <emphasis
-    role="pkg">proftpd-basic</emphasis>, <emphasis role="pkg">pyftpd</emphasis>
-    and so on). The Falcot Corp administrators picked <emphasis
-    role="pkg">vsftpd</emphasis> because they only use the FTP server to
-    distribute a few files (including a Debian package repository); since they
-    don't need advanced features, they chose to focus on the security
+    role="pkg">ftpd(-ssl)</emphasis>, <emphasis
+    role="pkg">proftpd-basic</emphasis>, <emphasis
+    role="pkg">pure-ftpd</emphasis> and so on), which all provide the virtual
+    <emphasis role="pkg">ftp-server</emphasis> package. Please note that the
+    <emphasis role="pkg">pyftpd</emphasis> package, however, has been removed
+    from the Debian project due to not being actively maintained anymore and
+    being incompatible with Python 3. The Falcot Corp administrators picked
+    <emphasis role="pkg">vsftpd</emphasis> because they only use the FTP server
+    to distribute a few files (including a Debian package repository); since
+    they don't need advanced features, they chose to focus on the security
     aspects.</para>
 
     <indexterm><primary><emphasis role="pkg">vsftpd</emphasis></primary></indexterm>
+    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/vsftpd.conf</filename></secondary></indexterm>
 
     <para>Installing the package creates an <literal>ftp</literal> system
     user. This account is always used for anonymous FTP connections, and
@@ -2474,16 +2576,24 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
     local users needs to be disabled (<literal>local_enable=NO</literal>).
     The latter is particularly important since the FTP protocol doesn't
     use any form of encryption and the user password could be intercepted
-    over the wire.
-    </para>
+    over the wire.</para>
+
+    <para>FTP and FTPS resources can be accessed with a variety of clients,
+    with and without a graphical user interface, and they can also be mounted
+    locally using the <command>curlftpfs</command> command from the similarly
+    named package.</para>
+
+    <indexterm><primary><command>mount</command></primary><secondary>FTP</secondary></indexterm>
+    <indexterm><primary><command>curlftpfs</command></primary></indexterm>
   </section>
 
   <section id="sect.nfs-file-server">
     <title>NFS File Server</title>
-    <indexterm><primary>NFS</primary><seealso>Network File System</seealso></indexterm>
-    <indexterm><primary>Network File System</primary></indexterm>
+    <indexterm><primary>NFS</primary></indexterm>
+    <indexterm><primary>Network File System</primary><see>NFS</see></indexterm>
     <indexterm><primary>server</primary><secondary>NFS</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>file</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>NFS</secondary></indexterm>
 
     <para>NFS (<emphasis>Network File System</emphasis>) is a protocol
     allowing remote access to a filesystem through the network. All Unix
@@ -2502,14 +2612,14 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
 
       <para>As an alternative Debian can be installed on Windows 10 Pro and
       higher. It requires the installation of the Windows Subsystem for Linux
-      component and the Debian app from the Windows store.
+      (WSL) component and the Debian app from the Windows store.
       <ulink type="block" url="https://www.microsoft.com/en-us/p/debian/9msvkqc78pk6?"/>
       </para>
 
       <indexterm><primary>Network File System</primary><secondary>Windows client</secondary></indexterm>
     </sidebar>
 
-    <indexterm><primary><emphasis>Network</emphasis></primary><secondary><emphasis>File System</emphasis></secondary></indexterm>
+    <indexterm><primary>network</primary><secondary><emphasis>file system</emphasis></secondary></indexterm>
     <indexterm><primary>filesystem</primary><secondary>network</secondary></indexterm>
     <indexterm><primary>file</primary><secondary>server</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>file</secondary></indexterm>
@@ -2551,8 +2661,8 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> RPC</title>
-        <indexterm><primary>RPC</primary><see>Remote Procedure Call</see></indexterm>
-        <indexterm><primary>Remote Procedure Call</primary></indexterm>
+        <indexterm><primary>RPC</primary></indexterm>
+        <indexterm><primary>Remote Procedure Call</primary><see>RPC</see></indexterm>
 
         <para>RPC (<emphasis>Remote Procedure Call</emphasis>) is a Unix
         standard for remote services. NFS is one such service.</para>
@@ -2577,6 +2687,7 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
       <title>NFS Server</title>
       <indexterm><primary>NFS</primary><secondary><filename>/etc/exports</filename></secondary></indexterm>
       <indexterm><primary>NFS</primary><secondary>server</secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exports</filename></secondary><seealso>NFS</seealso></indexterm>
 
       <para>The NFS server is part of the Linux kernel; in kernels provided
       by Debian it is built as a kernel module. If the NFS server is to be
@@ -2584,15 +2695,17 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
       role="pkg">nfs-kernel-server</emphasis> package should be installed;
       it contains the relevant start-up scripts.</para>
 
-      <para>The NFS server configuration file,
-      <filename>/etc/exports</filename>, lists the directories that are
-      made available over the network (<emphasis>exported</emphasis>). For
-      each NFS share, only the given list of machines is granted access.
-      More fine-grained access control can be obtained with a few options.
-      The syntax for this file is quite simple:</para>
+      <indexterm><primary><emphasis role="pkg">nfs-kernel-server</emphasis></primary></indexterm>
+
+      <para>The NFS server configuration file(s),
+      <filename>/etc/exports</filename> and
+      <filename>/etc/exports.d/</filename>, lists the directories that are made
+      available over the network (<emphasis>exported</emphasis>). For each NFS
+      share, only the given list of machines is granted access.  More
+      fine-grained access control can be obtained with a few options.  The
+      syntax for this file is quite simple:</para>
 
       <indexterm><primary><filename>exports</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/exports</filename></primary></indexterm>
 
       <programlisting>
 /directory/to/share machine1(option1,option2,...) machine2(...) ...
@@ -2660,14 +2773,22 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
       <sidebar>
         <title><emphasis>CAUTION</emphasis> First installation</title>
 
-        <para>The <filename>/etc/init.d/nfs-kernel-server</filename> boot
-        script only starts the server if
-        <filename>/etc/exports</filename> lists one or more valid NFS
-        shares. On initial configuration, once this file has been edited to
-        contain valid entries, the NFS server must therefore be started
-        with the following command:</para>
+        <para>The file <filename>/etc/exports</filename> does not list any
+        valid NFS shares on initial installation. Once either this file or any
+        file in <filename>/etc/exports.d/</filename> has been edited or added
+        to contain valid entries, the NFS server must be restarted with either
+        of the following commands:</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exports</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exports.d/</filename></secondary></indexterm>
+        <indexterm><primary>service</primary><secondary><filename>nfs-kernel-server.service</filename></secondary></indexterm>
+        <indexterm><primary><command>exportfs</command></primary></indexterm>
 
         <screen>
+<computeroutput># </computeroutput><userinput>exportfs -ra</userinput>
+</screen>
+
+<screen>
 <computeroutput># </computeroutput><userinput>systemctl start nfs-kernel-server</userinput>
 </screen>
       </sidebar>
@@ -2679,15 +2800,22 @@ $ </computeroutput><userinput>sudo mkdir -p /etc/logrotate.d/httpd-prerotate
       <indexterm><primary>client</primary><secondary>NFS</secondary></indexterm>
       <indexterm><primary>NFS</primary><secondary>client</secondary></indexterm>
 
-      <para>As with other filesystems, integrating an NFS share into the
-      system hierarchy requires mounting (and the <emphasis
+      <para>As with other filesystems, integrating an NFS share into the system
+      hierarchy requires mounting (and the <emphasis
       role="pkg">nfs-common</emphasis> package). Since this filesystem has its
       peculiarities, a few adjustments were required in the syntaxes of the
-      <command>mount</command> command and the
-      <filename>/etc/fstab</filename> file.</para>
+      <command>mount</command> command and the <filename>/etc/fstab</filename>
+      file.</para>
+
+      <indexterm><primary><emphasis role="pkg">nfs-common</emphasis></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+      <indexterm><primary><command>mount</command></primary><secondary>NFS</secondary><see><command>mount.nfs4</command></see></indexterm>
+      <indexterm><primary><command>mount.nfs4</command></primary></indexterm>
+      <indexterm><primary>NFS share, mounting</primary></indexterm>
 
       <example>
         <title>Manually mounting with the <command>mount</command> command</title>
+        <indexterm><primary><command>mount</command></primary></indexterm>
 
         <screen>
 <computeroutput># </computeroutput><userinput>mount -t nfs4 -o rw,nosuid arrakis.internal.falcot.com:/shared /srv/shared</userinput>
@@ -2730,15 +2858,17 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
     <indexterm><primary>server</primary><secondary>file</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>SMB</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>CIFS</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>smbd</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>nmbd</secondary></indexterm>
 
     <para>Samba is a suite of tools handling the SMB protocol (also known as
     “CIFS”) on Linux. This protocol is used by Windows for network
     shares and shared printers.</para>
 
-    <indexterm><primary>SMB</primary><see>Server Message Block</see></indexterm>
-    <indexterm><primary>Server Message Block</primary></indexterm>
-    <indexterm><primary>CIFS</primary><see>Common Internet File System</see></indexterm>
-    <indexterm><primary>Common Internet File System</primary></indexterm>
+    <indexterm><primary>SMB</primary></indexterm>
+    <indexterm><primary>Server Message Block</primary><see>SMB</see></indexterm>
+    <indexterm><primary>CIFS</primary></indexterm>
+    <indexterm><primary>Common Internet File System</primary><see>CIFS</see></indexterm>
 
     <para>Samba can also act as a Windows domain controller. This is an
     outstanding tool for ensuring seamless integration of Linux servers and
@@ -2770,7 +2900,7 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         can address a great many different use cases matching very
         different requirements and network architectures. This book only
         focuses on the use case where Samba is used as a standalone server,
-        but it can also be a NT4 Domain Controller or a full Active
+        but it can also be an NT4 Domain Controller or a full Active
         Directory Domain Controller, or a simple member of an existing
         domain (which could be managed by a Windows server).</para>
 
@@ -2802,14 +2932,18 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         <filename>/usr/share/doc/libpam-winbind/examples/pam_winbind/</filename>
         directory of the <emphasis role="pkg">libpam-winbind</emphasis>
         package.</para>
+
+        <indexterm><primary><emphasis role="pkg">libpam-winbind</emphasis></primary></indexterm>
       </sidebar>
 
       <section>
         <title>Configuring with <command>debconf</command></title>
         <indexterm><primary>Samba</primary><secondary>configuration</secondary></indexterm>
+        <indexterm><primary>Samba</primary><secondary><filename>/etc/samba/smb.conf</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/samba/</filename></secondary><see>Samba</see></indexterm>
 
         <para>The package sets up a minimal configuration during the initial
-        installation by plainly copying
+        installation in <filename>/etc/samba/smb.conf</filename> by plainly copying
         <filename>/usr/share/samba/smb.conf</filename>. So you should really
         run <command>dpkg-reconfigure samba-common</command> to adapt
         it:</para>
@@ -2854,6 +2988,8 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 # Change this to the workgroup/NT-domain name your Samba server will part of
    workgroup = FALCOTNET
 
+[...]
+
 # Windows Internet Name Serving Support Section:
 # WINS Support - Tells the NMBD component of Samba to enable its WINS Server
    wins support = yes <co id="smb.conf.wins"/>
@@ -2865,7 +3001,7 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 # Server role. Defines in which mode Samba will operate. Possible
 # values are "standalone server", "member server", "classic primary
 # domain controller", "classic backup domain controller", "active
-# directory domain controller". 
+# directory domain controller".
 #
 # Most people will want "standalone server" or "member server".
 # Running as "active directory domain controller" will require first
@@ -2903,6 +3039,8 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         <section>
           <title>Adding Users</title>
           <indexterm><primary>Samba</primary><secondary>add users</secondary></indexterm>
+          <indexterm><primary><command>adduser</command></primary></indexterm>
+          <indexterm><primary><command>smbpasswd</command></primary></indexterm>
 
           <para>Each Samba user needs an account on the server; the Unix
           accounts must be created first, then the user needs to be
@@ -2962,6 +3100,7 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 
         <indexterm><primary><command>mount.cifs</command></primary></indexterm>
         <indexterm><primary>Windows share, mounting</primary></indexterm>
+        <indexterm><primary><command>mount</command></primary><secondary>CIFS</secondary><see><command>mount.cifs</command></see></indexterm>
 
         <example>
           <title>Mounting a Windows share</title>
@@ -2978,6 +3117,7 @@ mount -t cifs //arrakis/shared /shared \
         format:</para>
 
         <indexterm><primary>Samba</primary><secondary>credentials</secondary></indexterm>
+        <indexterm><primary>Samba</primary><secondary><filename>/etc/smb-credentials</filename></secondary></indexterm>
 
         <programlisting>
 username = <replaceable>user</replaceable>
@@ -2995,11 +3135,13 @@ password = <replaceable>password</replaceable></programlisting>
         <para>A mount of a Windows share can also be configured
         in <filename>/etc/fstab</filename>:</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+
         <programlisting>
 //<replaceable>server</replaceable>/shared /shared cifs credentials=/etc/smb-credentials
 </programlisting>
 
-        <para>Unmounting a SMB/CIFS share is done with the standard
+        <para>Unmounting an SMB/CIFS share is done with the standard
         <command>umount</command> command.</para>
       </section>
 
@@ -3012,6 +3154,7 @@ password = <replaceable>password</replaceable></programlisting>
         installing Windows shared printers automatically.</para>
 
         <indexterm><primary>printing</primary><secondary>network</secondary></indexterm>
+        <indexterm><primary>network</primary><secondary>printers</secondary></indexterm>
         <indexterm><primary>Samba</primary><secondary>shared printers</secondary></indexterm>
 
         <para>Here are the required steps:</para>
@@ -3054,6 +3197,8 @@ password = <replaceable>password</replaceable></programlisting>
     <title>HTTP/FTP Proxy</title>
     <indexterm><primary>Proxy</primary><secondary>HTTP</secondary></indexterm>
     <indexterm><primary>Proxy</primary><secondary>FTP</secondary></indexterm>
+    <indexterm><primary>HTTP</primary><secondary>proxy</secondary></indexterm>
+    <indexterm><primary>FTP</primary><secondary>proxy</secondary></indexterm>
 
     <para>An HTTP/FTP proxy acts as an intermediary for HTTP and/or FTP
     connections. Its role is twofold:</para>
@@ -3081,11 +3226,7 @@ password = <replaceable>password</replaceable></programlisting>
       <title>Installing</title>
       <indexterm><primary>Squid</primary><secondary>installation</secondary></indexterm>
 
-      <para>The <emphasis role="pkg">squid</emphasis><footnote><para>The
-      <emphasis role="pkg">squid3</emphasis> package, providing Squid until
-      Debian <emphasis role="distribution">Jessie</emphasis>, is now a
-      transitional package and will automatically install <emphasis
-      role="pkg">squid</emphasis>.</para></footnote> Debian package only
+      <para>The <emphasis role="pkg">squid</emphasis> Debian package only
       contains the modular (caching) proxy. Turning it into a filtering server
       requires installing the additional <emphasis
       role="pkg">squidguard</emphasis> package. In addition, <emphasis
@@ -3104,8 +3245,10 @@ password = <replaceable>password</replaceable></programlisting>
 
     <section>
       <title>Configuring a Cache</title>
-      <indexterm><primary>Squid</primary><secondary><filename>squid.conf</filename></secondary></indexterm>
+      <indexterm><primary><filename>squid.conf</filename></primary></indexterm>
       <indexterm><primary>Squid</primary><secondary><filename>/etc/squid/squid.conf</filename></secondary></indexterm>
+      <indexterm><primary>Squid</primary><secondary><filename>/etc/squid/conf.d/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/squid/</filename></secondary><see>Squid</see></indexterm>
 
       <para>Enabling the caching server feature is a simple matter of
       editing the <filename>/etc/squid/squid.conf</filename> configuration
@@ -3144,10 +3287,9 @@ http_access deny all
       <filename>/etc/squid/squid.conf</filename> file:</para>
 
       <indexterm><primary><command>squidGuard</command></primary></indexterm>
-      <indexterm><primary><command>squidGuard</command></primary><secondary><filename>squidGuard.conf</filename></secondary></indexterm>
-      <indexterm><primary><command>squidGuard</command></primary><secondary><filename>/etc/squidguard/squidGuard.conf.default</filename></secondary></indexterm>
+      <indexterm><primary>Squid</primary><secondary><command>squidGuard</command></secondary></indexterm>
       <indexterm><primary><filename>squidGuard.conf</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/squidguard/squidGuard.conf.default</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/squidguard/squidGuard.conf.default</filename></secondary><seealso><command>squidGuard</command></seealso></indexterm>
 
       <programlisting>
 url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
@@ -3155,7 +3297,7 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
       <para>The <filename>/usr/lib/cgi-bin/squidGuard.cgi</filename> CGI
       program also needs to be installed, using
-      <filename>/usr/share/doc/squidguard/examples/squidGuard.cgi.gz</filename>
+      <filename>/usr/share/doc/squidguard/examples/squidGuard.cgi</filename>
       as a starting point. Required modifications to this script are the
       <varname>$proxy</varname> and <varname>$proxymaster</varname>
       variables (the name of the proxy and the administrator's contact
@@ -3163,14 +3305,15 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
       <varname>$redirect</varname> variables should point to existing
       images representing the rejection of a query.</para>
 
-      <para>The filter is enabled with the <command>service squid
-      reload</command> command. However, since the <emphasis
-      role="pkg">squidguard</emphasis> package does no filtering by
-      default, it is the administrator's task to define the policy. This
-      can be done by creating the
-      <filename>/etc/squid/squidGuard.conf</filename> file (using
-      <filename>/etc/squidguard/squidGuard.conf.default</filename> as
-      template if required).</para>
+      <para>The filter is enabled with the <command>systemctl reload
+      squid</command> command. However, since the <emphasis
+      role="pkg">squidguard</emphasis> package does no filtering by default, it
+      is the administrator's task to define the policy. This can be done by
+      creating the <filename>/etc/squid/squidGuard.conf</filename> file (using
+      <filename>/etc/squidguard/squidGuard.conf.default</filename> as template
+      if required).</para>
+
+      <indexterm><primary>service</primary><secondary><filename>squid.service</filename></secondary></indexterm>
 
       <para>The working database must be regenerated with
       <command>update-squidguard</command> after each change of the
@@ -3181,39 +3324,29 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
       <indexterm><primary><command>update-squidguard</command></primary></indexterm>
       <indexterm><primary>Squid</primary><secondary><command>update-squidguard</command></secondary></indexterm>
-      <indexterm><primary>Squid</primary><secondary><command>squidGuard</command></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>ALTERNATIVE</emphasis> E2guardian (a DansGuardian Fork)</title>
-        <indexterm><primary><emphasis role="pkg">dansguardian</emphasis></primary></indexterm>
+        <indexterm><primary>dansguardian</primary></indexterm>
         <indexterm><primary><emphasis role="pkg">e2guardian</emphasis></primary></indexterm>
 
         <para>The <emphasis role="pkg">e2guardian</emphasis> package, a
         DansGuardian fork, is an alternative to <emphasis
         role="pkg">squidguard</emphasis>. This software does not simply handle
-        a blacklist of forbidden URLs, but it can take advantage of the
-        <acronym>PICS</acronym><footnote><para><acronym>PICS</acronym> has been
-        superseded by the <emphasis>Protocol for Web Description
-        Resources</emphasis> (<acronym>POWDER</acronym> system: <ulink
-        url="https://www.w3.org/2009/08/pics_superseded.html"/>.
-        <indexterm><primary>POWDER</primary><see>Protocol for Web Description
-        Resources</see></indexterm> <indexterm><primary>Protocol for Web
-        Description Resources</primary></indexterm> </para></footnote>
-        (<emphasis>Platform for Internet Content Selection</emphasis>) to
-        decide whether a page is acceptable by dynamic analysis of its
-        contents.</para>
-
-        <indexterm><primary>PICS</primary><see>Platform for Internet Content Selection</see></indexterm>
-        <indexterm><primary>Platform for Internet Content Selection</primary></indexterm>
+        a blacklist of forbidden URLs, it can also take advantage of content
+        and anti-virus scanning and it provides broad authentication
+        support.</para>
       </sidebar>
     </section>
   </section>
 
   <section id="sect.ldap-directory">
     <title>LDAP Directory</title>
-    <indexterm><primary>LDAP</primary></indexterm>
+    <indexterm><primary>LDAP</primary><seealso>OpenLDAP</seealso></indexterm>
+    <indexterm><primary>Lightweight Directory Access Protocol</primary><see>LDAP</see></indexterm>
     <indexterm><primary>OpenLDAP</primary></indexterm>
     <indexterm><primary>directory, LDAP</primary></indexterm>
+    <indexterm><primary>server</primary><secondary>LDAP</secondary></indexterm>
 
     <para>OpenLDAP is an implementation of the LDAP protocol; in other
     words, it is a special-purpose database designed for storing
@@ -3229,22 +3362,24 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
     database can store, with a list of all their possible attributes. The
     syntax used to refer to a particular object in the database is based on
     this structure, which explains its complexity.</para>
+
     <section>
       <title>Installing</title>
+      <indexterm><primary>server</primary><secondary>slapd</secondary></indexterm>
 
       <para>The <emphasis role="pkg">slapd</emphasis> package contains the
       OpenLDAP server. The <emphasis role="pkg">ldap-utils</emphasis>
       package includes command-line tools for interacting with LDAP
       servers.</para>
+
       <indexterm><primary><emphasis>slapd</emphasis></primary></indexterm>
 
-      <para>
-        Installing <emphasis role="pkg">slapd</emphasis> usually
-        asks only for the administrator's password and the resulting
-        database is unlikely to suit your needs. Fortunately a
-        simple <command>dpkg-reconfigure slapd</command> will let
-        you reconfigure the LDAP database with more details:
-      </para>
+      <para>Installing <emphasis role="pkg">slapd</emphasis> usually asks only
+      for the administrator's password and the resulting database is unlikely
+      to suit your needs. Fortunately a simple <command>dpkg-reconfigure
+      slapd</command> will let you reconfigure the LDAP database with more
+      details:</para>
+
       <itemizedlist>
         <listitem>
           <para>Omit OpenLDAP server configuration? No, of course, we want
@@ -3279,23 +3414,26 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> LDIF format</title>
+        <indexterm><primary>LDIF</primary></indexterm>
+        <indexterm><primary>LDAP Data Interchange Format</primary><see>LDIF</see></indexterm>
 
         <para>An LDIF file (<emphasis>LDAP Data Interchange
         Format</emphasis>) is a portable text file describing the contents
         of an LDAP database (or a portion thereof); this can then be used
         to inject the data into any other LDAP server.</para>
-        <indexterm><primary>LDIF</primary></indexterm>
       </sidebar>
 
       <para>A minimal database is now configured, as demonstrated by the
       following query:</para>
 
+      <indexterm><primary><command>ldapsearch</command></primary></indexterm>
+
       <screen>
-<computeroutput>$ </computeroutput><userinput>ldapsearch -x -b dc=falcot,dc=com</userinput>
-<computeroutput># extended LDIF
+<computeroutput>$ </computeroutput><userinput>ldapsearch -x -b dc=falcot,dc=com
+</userinput><computeroutput><![CDATA[# extended LDIF
 #
 # LDAPv3
-# base &lt;dc=falcot,dc=com&gt; with scope subtree
+# base <dc=falcot,dc=com> with scope subtree
 # filter: (objectclass=*)
 # requesting: ALL
 #
@@ -3319,14 +3457,14 @@ description: LDAP administrator
 search: 2
 result: 0 Success
 
-# numResponses: 3
-# numEntries: 2
-</computeroutput>
-</screen>
+# numResponses: 2
+# numEntries: 1
+]]></computeroutput></screen>
 
       <para>The query returned two objects: the organization itself, and
       the administrative user.</para>
     </section>
+
     <section>
       <title>Filling in the Directory</title>
 
@@ -3340,6 +3478,11 @@ result: 0 Success
       <filename>/etc/group</filename>, <filename>/etc/services</filename>,
       <filename>/etc/hosts</filename> and so on), convert this data, and
       inject it into the LDAP database.</para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/passwd</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/group</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/services</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/hosts</filename></secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">migrationtools</emphasis></primary></indexterm>
 
       <para>Once the package is installed, the
@@ -3351,12 +3494,16 @@ result: 0 Success
       need to be updated.
       </para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/migrationtools/migrate_common.ph</filename></secondary></indexterm>
+
       <para>The actual migration operation is handled by the
       <command>migrate_all_online.sh</command> command, as follows:</para>
 
+      <indexterm><primary><command>ldapadd</command></primary></indexterm>
+
       <screen>
 <computeroutput># </computeroutput><userinput>cd /usr/share/migrationtools</userinput>
-<computeroutput># </computeroutput><userinput>LDAPADD="/usr/bin/ldapadd -c" ETC_ALIASES=/dev/null ./migrate_all_online.sh</userinput>
+<computeroutput># </computeroutput><userinput>PERL5LIB="${PERL5LIB}:/etc/migrationtools" LDAPADD="/usr/bin/ldapadd -c" ETC_ALIASES=/dev/null ./migrate_all_online.sh</userinput>
 </screen>
 
       <para>The <command>migrate_all_online.sh</command> asks a few
@@ -3395,23 +3542,31 @@ result: 0 Success
         </tgroup>
       </table>
 
-      <para>We deliberately ignore migration of the
-      <filename>/etc/aliases</filename> file, since the standard schema as
-      provided by Debian does not include the structures that this script
-      uses to describe email aliases. Should we want to integrate this data
-      into the directory, the
-      <filename>/etc/ldap/schema/misc.schema</filename> file should be
-      added to the standard schema.</para>
+      <para>You might notice that we extend the
+      <varname>PERL5LIB</varname> variable. This is due to Debian bug report
+      #982666. <ulink type="block"
+      url="https://bugs.debian.org/982666"/></para>
+
+      <para>As you might have also noticed, we deliberately ignore migration of
+      the <filename>/etc/aliases</filename> file, since the standard schema as
+      provided by Debian does not include the structures that this script uses
+      to describe email aliases. Should we want to integrate this data into the
+      directory, the <filename>/etc/ldap/schema/misc.schema</filename> file
+      should be added to the standard schema.</para>
+
+      <indexterm><primary>OpenLDAP</primary><secondary><filename>/etc/ldap/schema/misc.schema</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ldap/</filename></secondary><see>OpenLDAP</see></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/aliases</filename></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>TOOL</emphasis> Browsing an LDAP directory</title>
+        <indexterm><primary><command>jxplorer</command></primary></indexterm>
 
         <para>The <command>jxplorer</command> command (in the package of the
         same name) is a graphical tool allowing to browse and edit an LDAP
         database. It is an interesting tool that provides an administrator
         with a good overview of the hierarchical structure of the LDAP
         data.</para>
-        <indexterm><primary><command>jxplorer</command></primary></indexterm>
       </sidebar>
 
       <para>Also note the use of the <literal>-c</literal> option to the
@@ -3429,6 +3584,9 @@ result: 0 Success
       use the LDAP database.</para>
       <section id="sect.config-nss">
         <title>Configuring NSS</title>
+        <indexterm><primary>NSS</primary></indexterm>
+        <indexterm><primary>Name Service Switch</primary><see>NSS</see></indexterm>
+        <indexterm><primary>OpenLDAP</primary><secondary>NSS</secondary></indexterm>
 
         <para>The NSS system (Name Service Switch, see sidebar <xref
         linkend="sidebar.intro-nss"/>) is a modular system designed to define
@@ -3438,10 +3596,12 @@ result: 0 Success
         few questions; the answers are summarized in <xref
         linkend="tab-libnss-ldap" xrefstyle="select: label
         nopage"/>.</para>
-        <indexterm><primary><emphasis>libnss-ldap</emphasis></primary></indexterm>
+
+        <indexterm><primary><emphasis role="pkg">libnss-ldap</emphasis></primary></indexterm>
 
         <table colsep="1" id="tab-libnss-ldap">
-          <title>Configuring the <emphasis role="pkg">libnss-ldap</emphasis> package</title>
+          <title>Configuring the <emphasis role="pkg">libnss-ldap</emphasis>
+          package:</title>
           <tgroup cols="2">
             <colspec align="justify"/>
             <colspec align="justify"/>
@@ -3453,7 +3613,7 @@ result: 0 Success
             </thead>
             <tbody>
               <row>
-                <entry>LDAP server Uniform Resource Identifier</entry>
+                <entry>LDAP server URI (Uniform Resource Identifier)</entry>
                 <entry>
                   <literal>ldapi://ldap.falcot.com</literal>
                 </entry>
@@ -3500,6 +3660,9 @@ result: 0 Success
         in <filename>/usr/share/doc/libnss-ldap/examples/nsswitch.ldap</filename>
         or edit your existing configuration.</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/nsswitch.conf</filename></secondary></indexterm>
+        <indexterm><primary><command>ldap</command></primary></indexterm>
+
         <example>
           <title>The <filename>/etc/nsswitch.conf</filename> file</title>
 
@@ -3513,14 +3676,14 @@ result: 0 Success
 # /etc/netconfig file has a "-" for nametoaddr_libs of "inet" transports.
 
 # the following lines obviate the "+" entry in /etc/passwd and /etc/group.
-passwd:                files ldap
-shadow:                files ldap
-group:                files ldap
+passwd:         files ldap
+shadow:         files ldap
+group:          files ldap
 
 # consult DNS first, we will need it to resolve the LDAP host. (If we
 # can't resolve it, we're in infinite recursion, because libldap calls
 # gethostbyname(). Careful!)
-hosts:                dns ldap
+hosts:          dns ldap
 
 # LDAP is nominally authoritative for the following maps.
 services:   ldap [NOTFOUND=return] files
@@ -3543,8 +3706,6 @@ sendmailvars:   files
 
 # Note: there is no support for netgroups on Solaris (yet)
 netgroup:   ldap [NOTFOUND=return] files
-
-
 </programlisting>
         </example>
 
@@ -3556,6 +3717,9 @@ netgroup:   ldap [NOTFOUND=return] files
         hostname query would try to ask the LDAP server; this would trigger
         a name resolution for the LDAP server, and so on in an infinite
         loop.</para>
+
+        <indexterm><primary>OpenLDAP</primary><secondary><command>ldap</command></secondary></indexterm>
+        <indexterm><primary>OpenLDAP</primary><secondary><command>files</command></secondary></indexterm>
 
         <para>If the LDAP server should be considered authoritative (and
         the local files used by the <command>files</command> module
@@ -3570,8 +3734,10 @@ netgroup:   ldap [NOTFOUND=return] files
         resource does exist in one of the local files; these local files
         will only be used when the LDAP service is down.</para>
       </section>
+
       <section id="sect.config-pam">
         <title>Configuring PAM</title>
+        <indexterm><primary>OpenLDAP</primary><secondary>PAM</secondary></indexterm>
 
         <para>This section describes a PAM configuration (see sidebar <xref
         linkend="sidebar.intro-pam"/>) that will allow applications to
@@ -3597,10 +3763,12 @@ netgroup:   ldap [NOTFOUND=return] files
         the <emphasis role="pkg">libnss-ldap</emphasis> package. Answers
         are summarized in <xref linkend="tab-libpam-ldap"
         xrefstyle="select: label nopage"/>.</para>
-        <indexterm><primary><emphasis>libpam-ldap</emphasis></primary></indexterm>
+
+        <indexterm><primary><emphasis role="pkg">libpam-ldap</emphasis></primary></indexterm>
 
         <table colsep="1" id="tab-libpam-ldap">
           <title>Configuration of <emphasis>libpam-ldap</emphasis></title>
+          <indexterm><primary><command>passwd</command></primary></indexterm>
           <tgroup cols="2">
             <colspec align="justify"/>
             <colspec align="justify"/>
@@ -3620,18 +3788,24 @@ netgroup:   ldap [NOTFOUND=return] files
                 <entry>no</entry>
               </row>
               <row>
-                <entry>LDAP account for root</entry>
+                <entry>LDAP account for root:</entry>
                 <entry>
                   <literal>cn=admin,dc=falcot,dc=com</literal>
                 </entry>
               </row>
               <row>
-                <entry>LDAP root account password</entry>
+                <entry>LDAP administrative password:</entry>
                 <entry>the LDAP database administrative password</entry>
               </row>
               <row>
-                <entry>Local encryption algorithm to use for passwords</entry>
-                <entry>crypt</entry>
+                <entry>Local encryption algorithm to use for passwords:</entry>
+                <entry>
+                  <literal>crypt</literal>
+                </entry>
+              </row>
+              <row>
+                <entry>PAM profiles to enable:</entry>
+                <entry>LDAP Authentication is among the enabled profiles</entry>
               </row>
             </tbody>
           </tgroup>
@@ -3647,16 +3821,19 @@ netgroup:   ldap [NOTFOUND=return] files
         role="pkg">libpam-runtime</emphasis> package). This tool can also
         be run by the administrator should they wish to enable or disable
         PAM modules.</para>
+        <indexterm><primary><command>pam-auth-update</command></primary></indexterm>
         <indexterm><primary><filename>common-auth</filename></primary></indexterm>
-        <indexterm><primary><filename>/etc/pam.d/common-auth</filename></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/pam.d/common-auth</filename></secondary></indexterm>
         <indexterm><primary><filename>common-password</filename></primary></indexterm>
-        <indexterm><primary><filename>/etc/pam.d/common-password</filename></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/pam.d/common-password</filename></secondary></indexterm>
         <indexterm><primary><filename>common-account</filename></primary></indexterm>
-        <indexterm><primary><filename>/etc/pam.d/common-account</filename></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/pam.d/common-account</filename></secondary></indexterm>
       </section>
+
       <section>
         <title>Securing LDAP Data Exchanges</title>
         <indexterm><primary>LDAP</primary><secondary>secure</secondary></indexterm>
+        <indexterm><primary>X.509</primary></indexterm>
 
         <para>By default, the LDAP protocol transits on the network as
         cleartext; this includes the (encrypted) passwords. Since the
@@ -3668,6 +3845,7 @@ netgroup:   ldap [NOTFOUND=return] files
           <title>Configuring the Server</title>
           <indexterm><primary><foreignphrase>OpenSSL</foreignphrase></primary><secondary>creating keys</secondary></indexterm>
           <indexterm><primary>key pair</primary></indexterm>
+          <indexterm><primary><emphasis>easy-rsa</emphasis></primary></indexterm>
 
           <para>The first step is to create a key pair (comprising a public
           key and a private key) for the LDAP server. The Falcot administrators
@@ -3688,25 +3866,18 @@ netgroup:   ldap [NOTFOUND=return] files
           by the LDAP server which runs under the <literal>openldap</literal>
           user identity:</para>
 
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ssl/</filename></secondary></indexterm>
+
           <screen><computeroutput># </computeroutput><userinput>adduser openldap ssl-cert
 </userinput><computeroutput>Adding user `openldap' to group `ssl-cert' ...
 Adding user openldap to group ssl-cert
 Done.
 # </computeroutput><userinput>mv pki/private/ldap.falcot.com.key /etc/ssl/private/ldap.falcot.com.key
-</userinput><computeroutput># </computeroutput><userinput>chown root:ssl-cert /etc/ssl/private/ldap.falcot.com.key
+</userinput><computeroutput># </computeroutput><userinput>chown root.ssl-cert /etc/ssl/private/ldap.falcot.com.key
 </userinput><computeroutput># </computeroutput><userinput>chmod 0640 /etc/ssl/private/ldap.falcot.com.key
-</userinput><computeroutput># </computeroutput><userinput>./eassyrsa gen-dh
-</userinput><computeroutput>
-Note: using Easy-RSA configuration from: ./vars
-
-Using SSL: openssl OpenSSL 1.1.1c  28 May 2019
-Generating DH parameters, 2048 bit long safe prime, generator 2
-This is going to take a long time
-........................................................+..........................................................................+...............................................................................+............
-[...]
-DH parameters of size 2048 created at /home/roland/pki/dh.pem
-
-# </computeroutput><userinput>mv pki/dh.pem /etc/ssl/certs/ldap.falcot.com.pem
+</userinput><computeroutput># </computeroutput><userinput>mv pki/issued/ldap.falcot.com.crt /etc/ssl/certs/ldap.falcot.com.pem
+</userinput><computeroutput># </computeroutput><userinput>chown root.root /etc/ssl/certs/ldap.falcot.com.pem
+</userinput><computeroutput># </computeroutput><userinput>chmod 0644 /etc/ssl/certs/ldap.falcot.com.pem
 </userinput></screen>
 
           <para>The <command>slapd</command> daemon also needs to be told
@@ -3718,38 +3889,57 @@ DH parameters of size 2048 created at /home/roland/pki/dh.pem
           <command>ldapmodify</command> is thus the right tool to update
           the configuration:</para>
 
+          <indexterm><primary>OpenLDAP</primary><secondary><filename>/etc/ldap/slapd.d/</filename></secondary></indexterm>
+          <indexterm><primary>server</primary><secondary><command>slapd</command></secondary></indexterm>
+          <indexterm><primary><command>slapd</command></primary></indexterm>
+          <indexterm><primary>OpenLDAP</primary><secondary><command>slapd</command></secondary></indexterm>
+          <indexterm><primary>OpenLDAP</primary><secondary><command>ldapmodify</command></secondary></indexterm>
+
           <example>
             <title>Configuring <command>slapd</command> for encryption</title>
+            <indexterm><primary>service</primary><secondary><filename>slapd.service</filename></secondary></indexterm>
+            <indexterm><primary>OpenLDAP</primary><secondary><command>ldapmodify</command></secondary></indexterm>
+            <indexterm><primary>OpenLDAP</primary><secondary><command>ldapsearch</command></secondary></indexterm>
 
             <screen><computeroutput># </computeroutput><userinput>cat &gt;ssl.ldif &lt;&lt;END
 dn: cn=config
 changetype: modify
-add: olcTLSCertificateFile
-olcTLSCertificateFile: /etc/ssl/certs/ldap.falcot.com.pem
--
 add: olcTLSCertificateKeyFile
 olcTLSCertificateKeyFile: /etc/ssl/private/ldap.falcot.com.key
 -
+add: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/ssl/certs/ldap.falcot.com.pem
 END
 </userinput><computeroutput># </computeroutput><userinput>ldapmodify -Y EXTERNAL -H ldapi:/// -f ssl.ldif
 </userinput><computeroutput>SASL/EXTERNAL authentication started
 SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 SASL SSF: 0
 modifying entry "cn=config"
-</computeroutput></screen>
+# </computeroutput><userinput>systemctl restart slapd.service
+</userinput><computeroutput># </computeroutput><userinput>ldapsearch -Y EXTERNAL -H ldapi:/// -b cn=config -s base | grep TLS
+</userinput><computeroutput>SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+olcTLSCertificateFile: /etc/ssl/certs/ldap.falcot.com.pem
+olcTLSCertificateKeyFile: /etc/ssl/certs/ldap.falcot.com.key
+</computeroutput>
+</screen>
           </example>
 
           <sidebar>
             <title><emphasis>TOOL</emphasis> <command>ldapvi</command> to edit an LDAP directory</title>
             <indexterm><primary><command>ldapvi</command></primary></indexterm>
-            <para>With <command>ldapvi</command>, you can display an LDIF
-            output of any part of the LDAP directory, make some changes in
-            the text editor, and let the tool do the corresponding LDAP
-            operations for you.
-            </para>
+            <indexterm><primary>OpenLDAP</primary><secondary><command>ldapvi</command></secondary></indexterm>
+
+            <para>With <emphasis role="pkg">ldapvi</emphasis>, you can display
+            an LDIF output of any part of the LDAP directory, make some changes
+            in the text editor, and let the tool do the corresponding LDAP
+            operations for you.</para>
+
             <para>It is thus a convenient way to update the configuration
             of the LDAP server, simply by editing the <literal>cn=config</literal>
             hierarchy.</para>
+
             <screen><computeroutput># </computeroutput><userinput>ldapvi -Y EXTERNAL -h ldapi:/// -b cn=config
 </userinput></screen>
           </sidebar>
@@ -3758,6 +3948,10 @@ modifying entry "cn=config"
           <varname>SLAPD_SERVICES</varname> variable in the
           <filename>/etc/default/slapd</filename> file. We'll play it safe
           and disable unsecured LDAP altogether.</para>
+
+          <indexterm><primary>OpenLDAP</primary><secondary><varname>SLAPD_SERVICES</varname></secondary></indexterm>
+          <indexterm><primary>OpenLDAP</primary><secondary><filename>/etc/default/slapd</filename></secondary></indexterm>
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/slapd</filename></secondary><see>OpenLDAP</see></indexterm>
 
           <example>
             <title>The <filename>/etc/default/slapd</filename> file</title>
@@ -3777,7 +3971,7 @@ SLAPD_USER="openldap"
 SLAPD_GROUP="openldap"
 
 # Path to the pid file of the slapd server. If not set the init.d script
-# will try to figure it out from $SLAPD_CONF (/etc/ldap/slapd.conf by
+# will try to figure it out from $SLAPD_CONF (/etc/ldap/slapd.d by
 # default)
 SLAPD_PIDFILE=
 
@@ -3808,12 +4002,12 @@ SLAPD_SENTINEL_FILE=/etc/ldap/noslapd
 
 # Additional options to pass to slapd
 SLAPD_OPTIONS=""
-
 </programlisting>
           </example>
         </section>
         <section>
           <title>Configuring the Client</title>
+          <indexterm><primary>X.509</primary></indexterm>
 
           <para>On the client side, the configuration for the
           <emphasis>libpam-ldap</emphasis> and
@@ -3821,7 +4015,7 @@ SLAPD_OPTIONS=""
           to use an <literal>ldaps://</literal> URI.</para>
 
           <para>LDAP clients also need to be able to authenticate the
-          server. In a X.509 public key infrastructure, public certificates
+          server. In an X.509 public key infrastructure, public certificates
           are signed by the key of a certificate authority (CA). With
           <emphasis>easy-rsa</emphasis>, the Falcot administrators
           have created their own CA and they now need to configure
@@ -3832,8 +4026,9 @@ SLAPD_OPTIONS=""
 
           <screen><computeroutput># </computeroutput><userinput>cp pki/ca.crt /usr/local/share/ca-certificates/falcot.crt
 </userinput><computeroutput># </computeroutput><userinput>update-ca-certificates
-</userinput><computeroutput>Updating certificates in /etc/ssl/certs... 1 added, 0 removed; done.
-Running hooks in /etc/ca-certificates/update.d....
+</userinput><computeroutput>Updating certificates in /etc/ssl/certs...
+1 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
 
 Adding debian:falcot.pem
 done.
@@ -3845,6 +4040,8 @@ done.
           in <filename>/etc/ldap/ldap.conf</filename>. This will save
           quite some typing.</para>
 
+          <indexterm><primary><filename>OpenLDAP</filename></primary><secondary><filename>/etc/ldap/ldap.conf</filename></secondary></indexterm>
+
           <example>
             <title>The <filename>/etc/ldap/ldap.conf</filename> file</title>
 
@@ -3855,8 +4052,8 @@ done.
 # See ldap.conf(5) for details
 # This file should be world readable but not world writable.
 
-BASE   dc=falcot,dc=com
-URI    ldaps://ldap.falcot.com
+#BASE   dc=example,dc=com
+#URI    ldap://ldap.example.com ldap://ldap-provider.example.com:666
 
 #SIZELIMIT      12
 #TIMELIMIT      15
@@ -3873,6 +4070,17 @@ TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
   </section>
   <section id="sect.rtc-services">
     <title>Real-Time Communication Services</title>
+    <indexterm><primary>RTC</primary></indexterm>
+    <indexterm><primary>Real-Time Communication</primary><see>RTC</see></indexterm>
+    <indexterm><primary>server</primary><secondary>VoIP</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>RTC</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>IM</secondary></indexterm>
+    <indexterm><primary>server</primary><secondary>Chat</secondary></indexterm>
+    <indexterm><primary>VoIP</primary></indexterm>
+    <indexterm><primary>RTC</primary></indexterm>
+    <indexterm><primary>IM</primary></indexterm>
+    <indexterm><primary>Instant Messaging</primary><see>IM</see></indexterm>
+    <indexterm><primary>Chat</primary></indexterm>
 
     <para>Real-Time Communication (RTC) services include voice,
     video/webcam, instant messaging (IM) and desktop sharing.
@@ -3883,18 +4091,18 @@ TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
     Quick Start Guide which includes examples specific to Debian.
     <ulink type="block" url="https://rtcquickstart.org"/>
     </para>
-    <indexterm><primary>VoIP</primary><secondary>server</secondary></indexterm>
-    <indexterm><primary>RTC</primary><secondary>server</secondary></indexterm>
-    <indexterm><primary>Instant Messaging</primary><secondary>server</secondary></indexterm>
-    <indexterm><primary>Chat</primary><secondary>server</secondary></indexterm>
 
     <para>Both SIP and XMPP can provide the same functionality. SIP
     is slightly more well known for voice and video while XMPP is
     traditionally regarded as an IM protocol. In fact, they can both
-    be used for any of these purposes.  To maximize connectivity options,
+    be used for any of these purposes. To maximize connectivity options,
     it is recommended to run both in parallel.</para>
+
     <indexterm><primary>SIP</primary></indexterm>
+    <indexterm><primary>Session Initiation Protocol</primary><see>SIP</see></indexterm>
     <indexterm><primary>XMPP</primary></indexterm>
+    <indexterm><primary>Extensible Messaging and Presence Protocol</primary><see>XMPP</see></indexterm>
+    <indexterm><primary>X.509</primary></indexterm>
 
     <para>These services rely on X.509 certificates both for authentication
     and confidentiality purposes. See <xref linkend="sect.x509-cert"/> for
@@ -3902,12 +4110,15 @@ TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
 
     <section id="sect.rtc-dns-settings">
       <title>DNS settings for RTC services</title>
+      <indexterm><primary>DNS</primary><secondary>RTC</secondary></indexterm>
 
       <para>RTC services require DNS SRV and NAPTR records.  A sample
       configuration that can be placed in the zone file for
-      <literal>falcot.com</literal>:</para>
-      <indexterm><primary>DNS</primary><secondary>SRV record</secondary></indexterm>
-      <indexterm><primary>DNS</primary><secondary>NAPTR record</secondary></indexterm>
+      <literal>falcot.com</literal> (see also <xref
+      linkend="example.bind-db.falcot.com"/>:</para>
+
+      <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>SRV</literal></tertiary></indexterm>
+      <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>NAPTR</literal></tertiary></indexterm>
 
 <programlisting>
 ; the server where everything will run
@@ -3949,6 +4160,7 @@ _xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.falcot.com.
       found. It is highly recommended that the TURN server is installed
       before any of the other RTC services are offered to end users.</para>
       <indexterm><primary>TURN</primary><secondary>server</secondary></indexterm>
+      <indexterm><primary>server</primary><secondary>TURN</secondary></indexterm>
 
       <para>TURN and the related ICE protocol are open standards.
       To benefit from these protocols, maximizing connectivity and
@@ -3959,24 +4171,27 @@ _xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.falcot.com.
       <para>For the ICE algorithm to work effectively, the server must
       have two public IPv4 addresses.</para>
 
-        <para>Install the <emphasis role="pkg">coturn</emphasis> package
-        and edit the <filename>/etc/turnserver.conf</filename>
-        configuration file. By default, a SQLite database is configured
-        in <filename>/var/db/turndb</filename> for user account settings,
-        but PostgreSQL, MySQL or Redis can be set up instead if preferred.
-        The most important thing to do is insert the IP addresses of the
-        server.</para>
-        <indexterm><primary>coturn</primary></indexterm>
+      <para>Install the <emphasis role="pkg">coturn</emphasis> package
+      and edit the <filename>/etc/turnserver.conf</filename>
+      configuration file. By default, a SQLite database is configured
+      in <filename>/var/db/turndb</filename> for user account settings,
+      but PostgreSQL, MySQL or Redis can be set up instead if preferred.
+      The most important thing to do is insert the IP addresses of the
+      server.</para>
+      <indexterm><primary><emphasis role="pkg">coturn</emphasis></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/turnserver.conf</filename></secondary></indexterm>
 
-        <para>The server can be started running
-        <command>/usr/bin/turnserver</command>. We want the server
-        to be an automatically started system service,
-        so we edit the <filename>/etc/default/coturn</filename> file
-        like this:
-        </para>
+      <para>The server can be started running <command>turnserver</command>
+      from the <emphasis role="pkg">coturn</emphasis> package. We want the
+      server to be an automatically started system service. This is the default
+      behavior using <emphasis>systemd</emphasis>. Only when using the older
+      SysVinit you have to edit the <filename>/etc/default/coturn</filename>
+      file like this:</para>
 
-<programlisting>
-#
+      <indexterm><primary><command>turnserver</command></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/coturn</filename></secondary></indexterm>
+
+      <programlisting>#
 # Uncomment it if you want to have the turnserver running as
 # an automatic system service daemon
 #
@@ -3985,9 +4200,13 @@ TURNSERVER_ENABLED=1
 
         <para>By default, the TURN server uses anonymous access. We have to
         add the users we want to use:</para>
-<screen><computeroutput># </computeroutput><userinput>turnadmin -a -u roland -p <replaceable>secret_password</replaceable> -r falcot.com</userinput>
+
+        <indexterm><primary><command>turnadmin</command></primary></indexterm>
+
+        <screen><computeroutput># </computeroutput><userinput>turnadmin -a -u roland -p <replaceable>secret_password</replaceable> -r falcot.com</userinput>
 <computeroutput># </computeroutput><userinput>turnadmin -A -u admin -p <replaceable>secret_password</replaceable></userinput>
 </screen>
+
         <para>We use the argument <literal>-a</literal> to add a normal
         user and <literal>-A</literal> to add an admin user.</para>
     </section>
@@ -4011,23 +4230,26 @@ TURNSERVER_ENABLED=1
 
       <section id="sect.sip-server-install">
         <title>Install the SIP proxy</title>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/kamctlrc</filename></secondary></indexterm>
+
         <para>Install the <emphasis role="pkg">kamailio</emphasis> package and
-          the package for the database backend. The Falcot administrators
-          chose MySQL, so they install <emphasis role="pkg">mariadb-server</emphasis>.
-          <filename>/etc/kamailio/kamctlrc</filename> is the configuration
-          file for the control tools <command>kamctl</command> and
-          <command>kamdbctl</command>. You need to edit and set the
-          <literal>SIP_DOMAIN</literal> to your SIP service domain and set
-          the <literal>DBENGINE</literal> to MySQL, another database backend
-          can be used.
-        </para>
-<programlisting>
-[...]
+        the package for the database backend. The Falcot administrators chose
+        MySQL, so they install <emphasis
+        role="pkg">kamailio-mysql-modules</emphasis> and <emphasis
+        role="pkg">mariadb-server</emphasis>.
+        <filename>/etc/kamailio/kamctlrc</filename> is the configuration file
+        for the control tools <command>kamctl</command> and
+        <command>kamdbctl</command>. You need to edit and set the
+        <literal>SIP_DOMAIN</literal> to your SIP service domain and set the
+        <literal>DBENGINE</literal> to MySQL, another database backend can be
+        used.</para>
+
+        <programlisting>[...]
 ## your SIP domain
 SIP_DOMAIN=sip.falcot.com
 
 ## chrooted directory
-# $CHROOT_DIR="/path/to/chrooted/directory"
+# CHROOT_DIR="/path/to/chrooted/directory"
 
 ## database type: MYSQL, PGSQL, ORACLE, DB_BERKELEY, DBTEXT, or SQLITE
 # by default none is loaded
@@ -4037,13 +4259,16 @@ SIP_DOMAIN=sip.falcot.com
 DBENGINE=MYSQL
 [...]
 </programlisting>
-        <indexterm><primary>Kamailio</primary></indexterm>
+
+        <indexterm><primary><command>kamailio</command></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/kamailio.cfg</filename></secondary></indexterm>
+
         <para>Now we focus on the configuration file
         <filename>/etc/kamailio/kamailio.cfg</filename>. Falcot needs
         user authentication and persistent user location, so they
         add the following <literal>#!define</literal> directives
-        at the top of that file:
-        </para>
+        at the top of that file:</para>
+
         <programlisting>
 #!KAMAILIO
 #
@@ -4054,71 +4279,82 @@ DBENGINE=MYSQL
 #!define WITH_AUTH
 #!define WITH_USRLOCDB
 [...]
-        </programlisting>
-        <para>Kamailio needs a database structure that we can create running
-          <command>kamdbctl create</command> as root.
-        </para>
-        <para>Finally, we can add some users with <command>kamctl</command>.</para>
+</programlisting>
 
-<screen><computeroutput># </computeroutput><userinput>kamctl add <replaceable>roland</replaceable> <replaceable>secret_password</replaceable></userinput>
+        <para>Kamailio needs a database structure that we can create running
+        <command>kamdbctl create</command> as root. Finally, we can add some
+        users with <command>kamctl</command>.</para>
+
+        <indexterm><primary><command>kamdbctl</command></primary></indexterm>
+        <indexterm><primary><command>kamctl</command></primary></indexterm>
+
+        <screen><computeroutput># </computeroutput><userinput>kamdbctl create
+</userinput><computeroutput>[...]
+# </computeroutput><userinput>kamctl add <replaceable>roland</replaceable> <replaceable>secret_password</replaceable></userinput>
 </screen>
 
-        <para>Once everything is properly configured you can start
-        or restart the service with <command>systemctl restart kamailio</command>, you
-        can connect with a SIP client providing the IP address and the port (5090 is the
-        default port). The users have the following id:
+        <para>Once everything is properly configured you can start or restart
+        the service with <command>systemctl restart kamailio</command>, you can
+        connect with a SIP client providing the IP address and the port (5090
+        is the default port). The users have the following id:
         <literal><replaceable>roland</replaceable>@<replaceable>sip.falcot.com</replaceable></literal>,
-        and they can login using a client (see <xref linkend="sect.rtc-clients"/>).</para>
+        and they can login using a client (see <xref
+        linkend="sect.rtc-clients"/>).</para>
+
+        <indexterm><primary>service</primary><secondary><filename>kamailio.service</filename></secondary></indexterm>
       </section>
     </section>
 
     <section id="sect.xmpp-server">
       <title>XMPP Server</title>
+      <indexterm><primary>XMPP</primary></indexterm>
 
       <para>An XMPP server manages connectivity between local XMPP users
       and XMPP users in other domains on the public Internet.</para>
-      <indexterm><primary>XMPP</primary><secondary>server</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> XMPP or Jabber?</title>
-        <indexterm><primary>Jabber</primary></indexterm>
 
-        <para>XMPP is sometimes referred to as Jabber.  In fact,
-        Jabber is a trademark and XMPP is the official name of the standard.
-        </para>
+        <para>XMPP is sometimes referred to as Jabber.  In fact, Jabber is a
+        trademark and XMPP is the official name of the standard.</para>
+
         <indexterm><primary>Jabber</primary></indexterm>
       </sidebar>
 
-      <para>Prosody is a popular XMPP server that operates reliably
-      on Debian servers.</para>
-      <indexterm><primary>Prosody</primary></indexterm>
+      <para><emphasis role="pkg">prosody</emphasis> is a popular XMPP server
+      that operates reliably on Debian servers.</para>
+
       <section id="sect.xmpp-server-install">
         <title>Install the XMPP server</title>
-        <para>
-          Install the <emphasis role="pkg">prosody</emphasis> package.
-        </para>
-        <indexterm><primary>Prosody</primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">prosody</emphasis></primary></indexterm>
+
+        <para>Install the <emphasis role="pkg">prosody</emphasis>
+        package.</para>
 
         <para>Review the <filename>/etc/prosody/prosody.cfg.lua</filename>
         configuration file. The most important thing to do is insert JIDs
         of the users who are permitted to manage the server.</para>
 
-<programlisting>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/prosody.cfg.lua</filename></secondary></indexterm>
+
+        <programlisting>
 admins = { "joe@falcot.com" }
 </programlisting>
 
-        <para>An individual configuration file is also needed for
-        each domain. Copy the sample from
-        <filename>/etc/prosody/conf.avail/example.com.cfg.lua</filename>
-        and use it as a starting point. Here is
+        <para>An individual configuration file is also needed for each domain.
+        Copy the sample from
+        <filename>/etc/prosody/conf.avail/example.com.cfg.lua</filename> and
+        use it as a starting point. Here is
         <literal>falcot.com.cfg.lua</literal>:</para>
 
-<programlisting>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/conf.avail/</filename></secondary></indexterm>
+
+        <programlisting>
 VirtualHost "falcot.com"
         enabled = true
         ssl = {
-                key = "/etc/ssl/private/falcot.com-key.pem";
-                certificate = "/etc/ssl/public/falcot.com.pem";
+                key = "/etc/ssl/private/falcot.com.key";
+                certificate = "/etc/ssl/certs/falcot.com.pem";
                 }
 
 -- Set up a MUC (multi-user chat) room server on conference.example.com:
@@ -4126,30 +4362,37 @@ Component "conference.falcot.com" "muc"
 </programlisting>
 
         <para>To enable the domain, there must be a symlink from
-          <filename>/etc/prosody/conf.d/</filename>. Create it that way:</para>
+        <filename>/etc/prosody/conf.d/</filename>. Create it that way:</para>
 
-<screen><computeroutput># </computeroutput><userinput>ln -s /etc/prosody/conf.avail/falcot.com.cfg.lua /etc/prosody/conf.d/</userinput>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/conf.d/</filename></secondary></indexterm>
+
+        <screen><computeroutput># </computeroutput><userinput>ln -s /etc/prosody/conf.avail/falcot.com.cfg.lua /etc/prosody/conf.d/</userinput>
 </screen>
 
         <para>Restart the service to use the new configuration.</para>
+
+        <indexterm><primary>service</primary><secondary><filename>prosody.service</filename></secondary></indexterm>
       </section>
+
       <section id="sect.xmpp-server-management">
         <title>Managing the XMPP server</title>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/prosody/prosody.cfg.lua</filename></secondary></indexterm>
+        <indexterm><primary><command>prosodyctl</command></primary></indexterm>
+
         <para>Some management operations can be performed using the
-        <literal>prosodyctl</literal> command line utility. For example, to
-        add the administrator account specified in
+        <command>prosodyctl</command> command line utility. For example, to add
+        the administrator account specified in
         <filename>/etc/prosody/prosody.cfg.lua</filename>:</para>
-<programlisting>
-# prosodyctl adduser joe@falcot.com
-</programlisting>
+
+        <programlisting><computeroutput># </computeroutput><userinput>prosodyctl adduser joe@falcot.com
+</userinput></programlisting>
 
         <para>See the <ulink url="https://prosody.im/doc/configure">
         Prosody online documentation</ulink> for more details about
         how to customize the configuration.</para>
-
       </section>
-
     </section>
+
     <section id="sect.rtc-port-443">
       <title>Running services on port 443</title>
       <para>Some administrators prefer to run all of their RTC services on
@@ -4163,16 +4406,17 @@ Component "conference.falcot.com" "muc"
       The port number, 443, must be specified in the configuration
       files for each process and also in the DNS SRV records.</para>
     </section>
+
     <section id="sect.rtc-webrtc">
       <title>Adding WebRTC</title>
+      <indexterm><primary>WebRTC</primary></indexterm>
+      <indexterm><primary>SIP</primary><secondary>WebSockets</secondary></indexterm>
 
       <para>Falcot wants to let customers make phone calls directly from
       the web site. The Falcot administrators also want to use WebRTC as
       part of their disaster recovery plan, so staff can use web browsers
       at home to log in to the company phone system and work normally in
       an emergency.</para>
-      <indexterm><primary>WebRTC</primary></indexterm>
-      <indexterm><primary>SIP</primary><secondary>WebSockets</secondary></indexterm>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Try WebRTC</title>
@@ -4180,15 +4424,12 @@ Component "conference.falcot.com" "muc"
 
         <para>If you have not tried WebRTC before, there are various
         sites that give an online demonstration and test facilities.
-        <ulink type="block" url="https://www.sip5060.net/test-calls"/></para>
+        <ulink type="block" url="https://sip5060.net/test-calls"/></para>
       </sidebar>
 
-      <para>
-        WebRTC is a rapidly evolving technology and it is essential to
-        use packages from the
-        <emphasis role="distribution">Testing</emphasis> distribution.
-        Another option is to compile the software.
-      </para>
+      <para>WebRTC is a rapidly evolving technology and it is essential to use
+      packages from the <emphasis role="distribution">Testing</emphasis>
+      distribution. Another option is to compile the software.</para>
 
       <para>WebRTC uses a simple API to provide browsers and mobile applications with
       RTC, it is free software and it is being developed by Google.
@@ -4196,11 +4437,11 @@ Component "conference.falcot.com" "muc"
       <indexterm><primary>WebRTC</primary></indexterm>
 
       <para>A very flexible approach is using GStreamer's WebRTC
-      implementation. It enables pipeline-based multimedia
-      applications, which allows developing interesting and highly
-      efficient applications. A good starting point is the following
-      demo by Centricular, the main company that is
-      developing it: <ulink type="block" url="https://github.com/centricular/gstwebrtc-demos"/></para>
+      implementation. It enables pipeline-based multimedia applications, which
+      allows developing interesting and highly efficient applications. A good
+      starting point is the following demo by Centricular, the main company
+      that is developing it: <ulink type="block"
+      url="https://gitlab.freedesktop.org/gstreamer/gst-examples"/></para>
       <indexterm><primary>GStreamer</primary></indexterm>
 
       <para>More advanced click-to-call web sites typically use server-side
@@ -4214,7 +4455,6 @@ Component "conference.falcot.com" "muc"
       were described. Now it is time for an even more technical
       chapter: we'll go into deeper detail for some concepts, describe
       massive deployments and virtualization.</para>
-
     </section>
   </section>
 </chapter>
