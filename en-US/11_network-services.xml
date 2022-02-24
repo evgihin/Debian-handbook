@@ -2589,10 +2589,11 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
 
   <section id="sect.nfs-file-server">
     <title>NFS File Server</title>
-    <indexterm><primary>NFS</primary><seealso>Network File System</seealso></indexterm>
-    <indexterm><primary>Network File System</primary></indexterm>
+    <indexterm><primary>NFS</primary></indexterm>
+    <indexterm><primary>Network File System</primary><see>NFS</see></indexterm>
     <indexterm><primary>server</primary><secondary>NFS</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>file</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>NFS</secondary></indexterm>
 
     <para>NFS (<emphasis>Network File System</emphasis>) is a protocol
     allowing remote access to a filesystem through the network. All Unix
@@ -2611,14 +2612,14 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
 
       <para>As an alternative Debian can be installed on Windows 10 Pro and
       higher. It requires the installation of the Windows Subsystem for Linux
-      component and the Debian app from the Windows store.
+      (WSL) component and the Debian app from the Windows store.
       <ulink type="block" url="https://www.microsoft.com/en-us/p/debian/9msvkqc78pk6?"/>
       </para>
 
       <indexterm><primary>Network File System</primary><secondary>Windows client</secondary></indexterm>
     </sidebar>
 
-    <indexterm><primary><emphasis>Network</emphasis></primary><secondary><emphasis>File System</emphasis></secondary></indexterm>
+    <indexterm><primary>network</primary><secondary><emphasis>file system</emphasis></secondary></indexterm>
     <indexterm><primary>filesystem</primary><secondary>network</secondary></indexterm>
     <indexterm><primary>file</primary><secondary>server</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>file</secondary></indexterm>
@@ -2660,8 +2661,8 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> RPC</title>
-        <indexterm><primary>RPC</primary><see>Remote Procedure Call</see></indexterm>
-        <indexterm><primary>Remote Procedure Call</primary></indexterm>
+        <indexterm><primary>RPC</primary></indexterm>
+        <indexterm><primary>Remote Procedure Call</primary><see>RPC</see></indexterm>
 
         <para>RPC (<emphasis>Remote Procedure Call</emphasis>) is a Unix
         standard for remote services. NFS is one such service.</para>
@@ -2686,6 +2687,7 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
       <title>NFS Server</title>
       <indexterm><primary>NFS</primary><secondary><filename>/etc/exports</filename></secondary></indexterm>
       <indexterm><primary>NFS</primary><secondary>server</secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exports</filename></secondary><seealso>NFS</seealso></indexterm>
 
       <para>The NFS server is part of the Linux kernel; in kernels provided
       by Debian it is built as a kernel module. If the NFS server is to be
@@ -2693,15 +2695,17 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
       role="pkg">nfs-kernel-server</emphasis> package should be installed;
       it contains the relevant start-up scripts.</para>
 
-      <para>The NFS server configuration file,
-      <filename>/etc/exports</filename>, lists the directories that are
-      made available over the network (<emphasis>exported</emphasis>). For
-      each NFS share, only the given list of machines is granted access.
-      More fine-grained access control can be obtained with a few options.
-      The syntax for this file is quite simple:</para>
+      <indexterm><primary><emphasis role="pkg">nfs-kernel-server</emphasis></primary></indexterm>
+
+      <para>The NFS server configuration file(s),
+      <filename>/etc/exports</filename> and
+      <filename>/etc/exports.d/</filename>, lists the directories that are made
+      available over the network (<emphasis>exported</emphasis>). For each NFS
+      share, only the given list of machines is granted access.  More
+      fine-grained access control can be obtained with a few options.  The
+      syntax for this file is quite simple:</para>
 
       <indexterm><primary><filename>exports</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/exports</filename></primary></indexterm>
 
       <programlisting>
 /directory/to/share machine1(option1,option2,...) machine2(...) ...
@@ -2769,14 +2773,22 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
       <sidebar>
         <title><emphasis>CAUTION</emphasis> First installation</title>
 
-        <para>The <filename>/etc/init.d/nfs-kernel-server</filename> boot
-        script only starts the server if
-        <filename>/etc/exports</filename> lists one or more valid NFS
-        shares. On initial configuration, once this file has been edited to
-        contain valid entries, the NFS server must therefore be started
-        with the following command:</para>
+        <para>The file <filename>/etc/exports</filename> does not list any
+        valid NFS shares on initial installation. Once either this file or any
+        file in <filename>/etc/exports.d/</filename> has been edited or added
+        to contain valid entries, the NFS server must be restarted with either
+        of the following commands:</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exports</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exports.d/</filename></secondary></indexterm>
+        <indexterm><primary>service</primary><secondary><filename>nfs-kernel-server.service</filename></secondary></indexterm>
+        <indexterm><primary><command>exportfs</command></primary></indexterm>
 
         <screen>
+<computeroutput># </computeroutput><userinput>exportfs -ra</userinput>
+</screen>
+
+<screen>
 <computeroutput># </computeroutput><userinput>systemctl start nfs-kernel-server</userinput>
 </screen>
       </sidebar>
@@ -2788,15 +2800,20 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
       <indexterm><primary>client</primary><secondary>NFS</secondary></indexterm>
       <indexterm><primary>NFS</primary><secondary>client</secondary></indexterm>
 
-      <para>As with other filesystems, integrating an NFS share into the
-      system hierarchy requires mounting (and the <emphasis
+      <para>As with other filesystems, integrating an NFS share into the system
+      hierarchy requires mounting (and the <emphasis
       role="pkg">nfs-common</emphasis> package). Since this filesystem has its
       peculiarities, a few adjustments were required in the syntaxes of the
-      <command>mount</command> command and the
-      <filename>/etc/fstab</filename> file.</para>
+      <command>mount</command> command and the <filename>/etc/fstab</filename>
+      file.</para>
+
+      <indexterm><primary><emphasis role="pkg">nfs-common</emphasis></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+      <indexterm><primary><command>mount</command></primary><secondary>NFS</secondary></indexterm>
 
       <example>
         <title>Manually mounting with the <command>mount</command> command</title>
+        <indexterm><primary><command>mount</command></primary></indexterm>
 
         <screen>
 <computeroutput># </computeroutput><userinput>mount -t nfs4 -o rw,nosuid arrakis.internal.falcot.com:/shared /srv/shared</userinput>
