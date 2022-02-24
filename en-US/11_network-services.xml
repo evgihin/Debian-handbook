@@ -3342,9 +3342,11 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
   <section id="sect.ldap-directory">
     <title>LDAP Directory</title>
-    <indexterm><primary>LDAP</primary></indexterm>
+    <indexterm><primary>LDAP</primary><seealso>OpenLDAP</seealso></indexterm>
+    <indexterm><primary>Lightweight Directory Access Protocol</primary><see>LDAP</see></indexterm>
     <indexterm><primary>OpenLDAP</primary></indexterm>
     <indexterm><primary>directory, LDAP</primary></indexterm>
+    <indexterm><primary>server</primary><secondary>LDAP</secondary></indexterm>
 
     <para>OpenLDAP is an implementation of the LDAP protocol; in other
     words, it is a special-purpose database designed for storing
@@ -3360,22 +3362,24 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
     database can store, with a list of all their possible attributes. The
     syntax used to refer to a particular object in the database is based on
     this structure, which explains its complexity.</para>
+
     <section>
       <title>Installing</title>
+      <indexterm><primary>server</primary><secondary>slapd</secondary></indexterm>
 
       <para>The <emphasis role="pkg">slapd</emphasis> package contains the
       OpenLDAP server. The <emphasis role="pkg">ldap-utils</emphasis>
       package includes command-line tools for interacting with LDAP
       servers.</para>
+
       <indexterm><primary><emphasis>slapd</emphasis></primary></indexterm>
 
-      <para>
-        Installing <emphasis role="pkg">slapd</emphasis> usually
-        asks only for the administrator's password and the resulting
-        database is unlikely to suit your needs. Fortunately a
-        simple <command>dpkg-reconfigure slapd</command> will let
-        you reconfigure the LDAP database with more details:
-      </para>
+      <para>Installing <emphasis role="pkg">slapd</emphasis> usually asks only
+      for the administrator's password and the resulting database is unlikely
+      to suit your needs. Fortunately a simple <command>dpkg-reconfigure
+      slapd</command> will let you reconfigure the LDAP database with more
+      details:</para>
+
       <itemizedlist>
         <listitem>
           <para>Omit OpenLDAP server configuration? No, of course, we want
@@ -3410,23 +3414,26 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> LDIF format</title>
+        <indexterm><primary>LDIF</primary></indexterm>
+        <indexterm><primary>LDAP Data Interchange Format</primary><see>LDIF</see></indexterm>
 
         <para>An LDIF file (<emphasis>LDAP Data Interchange
         Format</emphasis>) is a portable text file describing the contents
         of an LDAP database (or a portion thereof); this can then be used
         to inject the data into any other LDAP server.</para>
-        <indexterm><primary>LDIF</primary></indexterm>
       </sidebar>
 
       <para>A minimal database is now configured, as demonstrated by the
       following query:</para>
 
+      <indexterm><primary><command>ldapsearch</command></primary></indexterm>
+
       <screen>
-<computeroutput>$ </computeroutput><userinput>ldapsearch -x -b dc=falcot,dc=com</userinput>
-<computeroutput># extended LDIF
+<computeroutput>$ </computeroutput><userinput>ldapsearch -x -b dc=falcot,dc=com
+</userinput><computeroutput><![CDATA[# extended LDIF
 #
 # LDAPv3
-# base &lt;dc=falcot,dc=com&gt; with scope subtree
+# base <dc=falcot,dc=com> with scope subtree
 # filter: (objectclass=*)
 # requesting: ALL
 #
@@ -3450,14 +3457,14 @@ description: LDAP administrator
 search: 2
 result: 0 Success
 
-# numResponses: 3
-# numEntries: 2
-</computeroutput>
-</screen>
+# numResponses: 2
+# numEntries: 1
+]]></computeroutput></screen>
 
       <para>The query returned two objects: the organization itself, and
       the administrative user.</para>
     </section>
+
     <section>
       <title>Filling in the Directory</title>
 
@@ -3471,6 +3478,11 @@ result: 0 Success
       <filename>/etc/group</filename>, <filename>/etc/services</filename>,
       <filename>/etc/hosts</filename> and so on), convert this data, and
       inject it into the LDAP database.</para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/passwd</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/group</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/services</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/hosts</filename></secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">migrationtools</emphasis></primary></indexterm>
 
       <para>Once the package is installed, the
@@ -3482,12 +3494,16 @@ result: 0 Success
       need to be updated.
       </para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/migrationtools/migrate_common.ph</filename></secondary></indexterm>
+
       <para>The actual migration operation is handled by the
       <command>migrate_all_online.sh</command> command, as follows:</para>
 
+      <indexterm><primary><command>ldapadd</command></primary></indexterm>
+
       <screen>
 <computeroutput># </computeroutput><userinput>cd /usr/share/migrationtools</userinput>
-<computeroutput># </computeroutput><userinput>LDAPADD="/usr/bin/ldapadd -c" ETC_ALIASES=/dev/null ./migrate_all_online.sh</userinput>
+<computeroutput># </computeroutput><userinput>PERL5LIB="${PERL5LIB}:/etc/migrationtools" LDAPADD="/usr/bin/ldapadd -c" ETC_ALIASES=/dev/null ./migrate_all_online.sh</userinput>
 </screen>
 
       <para>The <command>migrate_all_online.sh</command> asks a few
@@ -3526,23 +3542,31 @@ result: 0 Success
         </tgroup>
       </table>
 
-      <para>We deliberately ignore migration of the
-      <filename>/etc/aliases</filename> file, since the standard schema as
-      provided by Debian does not include the structures that this script
-      uses to describe email aliases. Should we want to integrate this data
-      into the directory, the
-      <filename>/etc/ldap/schema/misc.schema</filename> file should be
-      added to the standard schema.</para>
+      <para>You might notice that we extend the
+      <varname>PERL5LIB</varname> variable. This is due to Debian bug report
+      #982666. <ulink type="block"
+      url="https://bugs.debian.org/982666"/></para>
+
+      <para>As you might have also noticed, we deliberately ignore migration of
+      the <filename>/etc/aliases</filename> file, since the standard schema as
+      provided by Debian does not include the structures that this script uses
+      to describe email aliases. Should we want to integrate this data into the
+      directory, the <filename>/etc/ldap/schema/misc.schema</filename> file
+      should be added to the standard schema.</para>
+
+      <indexterm><primary>OpenLDAP</primary><secondary><filename>/etc/ldap/schema/misc.schema</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ldap/</filename></secondary><see>OpenLDAP</see></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/aliases</filename></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>TOOL</emphasis> Browsing an LDAP directory</title>
+        <indexterm><primary><command>jxplorer</command></primary></indexterm>
 
         <para>The <command>jxplorer</command> command (in the package of the
         same name) is a graphical tool allowing to browse and edit an LDAP
         database. It is an interesting tool that provides an administrator
         with a good overview of the hierarchical structure of the LDAP
         data.</para>
-        <indexterm><primary><command>jxplorer</command></primary></indexterm>
       </sidebar>
 
       <para>Also note the use of the <literal>-c</literal> option to the
@@ -3560,6 +3584,9 @@ result: 0 Success
       use the LDAP database.</para>
       <section id="sect.config-nss">
         <title>Configuring NSS</title>
+        <indexterm><primary>NSS</primary></indexterm>
+        <indexterm><primary>Name Service Switch</primary><see>NSS</see></indexterm>
+        <indexterm><primary>OpenLDAP</primary><secondary>NSS</secondary></indexterm>
 
         <para>The NSS system (Name Service Switch, see sidebar <xref
         linkend="sidebar.intro-nss"/>) is a modular system designed to define
@@ -3569,10 +3596,12 @@ result: 0 Success
         few questions; the answers are summarized in <xref
         linkend="tab-libnss-ldap" xrefstyle="select: label
         nopage"/>.</para>
-        <indexterm><primary><emphasis>libnss-ldap</emphasis></primary></indexterm>
+
+        <indexterm><primary><emphasis role="pkg">libnss-ldap</emphasis></primary></indexterm>
 
         <table colsep="1" id="tab-libnss-ldap">
-          <title>Configuring the <emphasis role="pkg">libnss-ldap</emphasis> package</title>
+          <title>Configuring the <emphasis role="pkg">libnss-ldap</emphasis>
+          package:</title>
           <tgroup cols="2">
             <colspec align="justify"/>
             <colspec align="justify"/>
@@ -3584,7 +3613,7 @@ result: 0 Success
             </thead>
             <tbody>
               <row>
-                <entry>LDAP server Uniform Resource Identifier</entry>
+                <entry>LDAP server URI (Uniform Resource Identifier)</entry>
                 <entry>
                   <literal>ldapi://ldap.falcot.com</literal>
                 </entry>
@@ -3631,6 +3660,9 @@ result: 0 Success
         in <filename>/usr/share/doc/libnss-ldap/examples/nsswitch.ldap</filename>
         or edit your existing configuration.</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/nsswitch.conf</filename></secondary></indexterm>
+        <indexterm><primary><command>ldap</command></primary></indexterm>
+
         <example>
           <title>The <filename>/etc/nsswitch.conf</filename> file</title>
 
@@ -3644,14 +3676,14 @@ result: 0 Success
 # /etc/netconfig file has a "-" for nametoaddr_libs of "inet" transports.
 
 # the following lines obviate the "+" entry in /etc/passwd and /etc/group.
-passwd:                files ldap
-shadow:                files ldap
-group:                files ldap
+passwd:         files ldap
+shadow:         files ldap
+group:          files ldap
 
 # consult DNS first, we will need it to resolve the LDAP host. (If we
 # can't resolve it, we're in infinite recursion, because libldap calls
 # gethostbyname(). Careful!)
-hosts:                dns ldap
+hosts:          dns ldap
 
 # LDAP is nominally authoritative for the following maps.
 services:   ldap [NOTFOUND=return] files
@@ -3674,8 +3706,6 @@ sendmailvars:   files
 
 # Note: there is no support for netgroups on Solaris (yet)
 netgroup:   ldap [NOTFOUND=return] files
-
-
 </programlisting>
         </example>
 
@@ -3687,6 +3717,9 @@ netgroup:   ldap [NOTFOUND=return] files
         hostname query would try to ask the LDAP server; this would trigger
         a name resolution for the LDAP server, and so on in an infinite
         loop.</para>
+
+        <indexterm><primary>OpenLDAP</primary><secondary><command>ldap</command></secondary></indexterm>
+        <indexterm><primary>OpenLDAP</primary><secondary><command>files</command></secondary></indexterm>
 
         <para>If the LDAP server should be considered authoritative (and
         the local files used by the <command>files</command> module
@@ -3701,8 +3734,10 @@ netgroup:   ldap [NOTFOUND=return] files
         resource does exist in one of the local files; these local files
         will only be used when the LDAP service is down.</para>
       </section>
+
       <section id="sect.config-pam">
         <title>Configuring PAM</title>
+        <indexterm><primary>OpenLDAP</primary><secondary>PAM</secondary></indexterm>
 
         <para>This section describes a PAM configuration (see sidebar <xref
         linkend="sidebar.intro-pam"/>) that will allow applications to
@@ -3728,10 +3763,12 @@ netgroup:   ldap [NOTFOUND=return] files
         the <emphasis role="pkg">libnss-ldap</emphasis> package. Answers
         are summarized in <xref linkend="tab-libpam-ldap"
         xrefstyle="select: label nopage"/>.</para>
-        <indexterm><primary><emphasis>libpam-ldap</emphasis></primary></indexterm>
+
+        <indexterm><primary><emphasis role="pkg">libpam-ldap</emphasis></primary></indexterm>
 
         <table colsep="1" id="tab-libpam-ldap">
           <title>Configuration of <emphasis>libpam-ldap</emphasis></title>
+          <indexterm><primary><command>passwd</command></primary></indexterm>
           <tgroup cols="2">
             <colspec align="justify"/>
             <colspec align="justify"/>
@@ -3751,18 +3788,24 @@ netgroup:   ldap [NOTFOUND=return] files
                 <entry>no</entry>
               </row>
               <row>
-                <entry>LDAP account for root</entry>
+                <entry>LDAP account for root:</entry>
                 <entry>
                   <literal>cn=admin,dc=falcot,dc=com</literal>
                 </entry>
               </row>
               <row>
-                <entry>LDAP root account password</entry>
+                <entry>LDAP administrative password:</entry>
                 <entry>the LDAP database administrative password</entry>
               </row>
               <row>
-                <entry>Local encryption algorithm to use for passwords</entry>
-                <entry>crypt</entry>
+                <entry>Local encryption algorithm to use for passwords:</entry>
+                <entry>
+                  <literal>crypt</literal>
+                </entry>
+              </row>
+              <row>
+                <entry>PAM profiles to enable:</entry>
+                <entry>LDAP Authentication is among the enabled profiles</entry>
               </row>
             </tbody>
           </tgroup>
@@ -3778,13 +3821,15 @@ netgroup:   ldap [NOTFOUND=return] files
         role="pkg">libpam-runtime</emphasis> package). This tool can also
         be run by the administrator should they wish to enable or disable
         PAM modules.</para>
+        <indexterm><primary><command>pam-auth-update</command></primary></indexterm>
         <indexterm><primary><filename>common-auth</filename></primary></indexterm>
-        <indexterm><primary><filename>/etc/pam.d/common-auth</filename></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/pam.d/common-auth</filename></secondary></indexterm>
         <indexterm><primary><filename>common-password</filename></primary></indexterm>
-        <indexterm><primary><filename>/etc/pam.d/common-password</filename></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/pam.d/common-password</filename></secondary></indexterm>
         <indexterm><primary><filename>common-account</filename></primary></indexterm>
-        <indexterm><primary><filename>/etc/pam.d/common-account</filename></primary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/pam.d/common-account</filename></secondary></indexterm>
       </section>
+
       <section>
         <title>Securing LDAP Data Exchanges</title>
         <indexterm><primary>LDAP</primary><secondary>secure</secondary></indexterm>
@@ -3799,6 +3844,7 @@ netgroup:   ldap [NOTFOUND=return] files
           <title>Configuring the Server</title>
           <indexterm><primary><foreignphrase>OpenSSL</foreignphrase></primary><secondary>creating keys</secondary></indexterm>
           <indexterm><primary>key pair</primary></indexterm>
+          <indexterm><primary><emphasis>easy-rsa</emphasis></primary></indexterm>
 
           <para>The first step is to create a key pair (comprising a public
           key and a private key) for the LDAP server. The Falcot administrators
@@ -3819,25 +3865,18 @@ netgroup:   ldap [NOTFOUND=return] files
           by the LDAP server which runs under the <literal>openldap</literal>
           user identity:</para>
 
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/ssl/</filename></secondary></indexterm>
+
           <screen><computeroutput># </computeroutput><userinput>adduser openldap ssl-cert
 </userinput><computeroutput>Adding user `openldap' to group `ssl-cert' ...
 Adding user openldap to group ssl-cert
 Done.
 # </computeroutput><userinput>mv pki/private/ldap.falcot.com.key /etc/ssl/private/ldap.falcot.com.key
-</userinput><computeroutput># </computeroutput><userinput>chown root:ssl-cert /etc/ssl/private/ldap.falcot.com.key
+</userinput><computeroutput># </computeroutput><userinput>chown root.ssl-cert /etc/ssl/private/ldap.falcot.com.key
 </userinput><computeroutput># </computeroutput><userinput>chmod 0640 /etc/ssl/private/ldap.falcot.com.key
-</userinput><computeroutput># </computeroutput><userinput>./eassyrsa gen-dh
-</userinput><computeroutput>
-Note: using Easy-RSA configuration from: ./vars
-
-Using SSL: openssl OpenSSL 1.1.1c  28 May 2019
-Generating DH parameters, 2048 bit long safe prime, generator 2
-This is going to take a long time
-........................................................+..........................................................................+...............................................................................+............
-[...]
-DH parameters of size 2048 created at /home/roland/pki/dh.pem
-
-# </computeroutput><userinput>mv pki/dh.pem /etc/ssl/certs/ldap.falcot.com.pem
+</userinput><computeroutput># </computeroutput><userinput>mv pki/issued/ldap.falcot.com.crt /etc/ssl/certs/ldap.falcot.com.pem
+</userinput><computeroutput># </computeroutput><userinput>chown root.root /etc/ssl/certs/ldap.falcot.com.pem
+</userinput><computeroutput># </computeroutput><userinput>chmod 0644 /etc/ssl/certs/ldap.falcot.com.pem
 </userinput></screen>
 
           <para>The <command>slapd</command> daemon also needs to be told
@@ -3849,38 +3888,57 @@ DH parameters of size 2048 created at /home/roland/pki/dh.pem
           <command>ldapmodify</command> is thus the right tool to update
           the configuration:</para>
 
+          <indexterm><primary>OpenLDAP</primary><secondary><filename>/etc/ldap/slapd.d/</filename></secondary></indexterm>
+          <indexterm><primary>server</primary><secondary><command>slapd</command></secondary></indexterm>
+          <indexterm><primary><command>slapd</command></primary></indexterm>
+          <indexterm><primary>OpenLDAP</primary><secondary><command>slapd</command></secondary></indexterm>
+          <indexterm><primary>OpenLDAP</primary><secondary><command>ldapmodify</command></secondary></indexterm>
+
           <example>
             <title>Configuring <command>slapd</command> for encryption</title>
+            <indexterm><primary>service</primary><secondary><filename>slapd.service</filename></secondary></indexterm>
+            <indexterm><primary>OpenLDAP</primary><secondary><command>ldapmodify</command></secondary></indexterm>
+            <indexterm><primary>OpenLDAP</primary><secondary><command>ldapsearch</command></secondary></indexterm>
 
             <screen><computeroutput># </computeroutput><userinput>cat &gt;ssl.ldif &lt;&lt;END
 dn: cn=config
 changetype: modify
-add: olcTLSCertificateFile
-olcTLSCertificateFile: /etc/ssl/certs/ldap.falcot.com.pem
--
 add: olcTLSCertificateKeyFile
 olcTLSCertificateKeyFile: /etc/ssl/private/ldap.falcot.com.key
 -
+add: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/ssl/certs/ldap.falcot.com.pem
 END
 </userinput><computeroutput># </computeroutput><userinput>ldapmodify -Y EXTERNAL -H ldapi:/// -f ssl.ldif
 </userinput><computeroutput>SASL/EXTERNAL authentication started
 SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 SASL SSF: 0
 modifying entry "cn=config"
-</computeroutput></screen>
+# </computeroutput><userinput>systemctl restart slapd.service
+</userinput><computeroutput># </computeroutput><userinput>ldapsearch -Y EXTERNAL -H ldapi:/// -b cn=config -s base | grep TLS
+</userinput><computeroutput>SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+olcTLSCertificateFile: /etc/ssl/certs/ldap.falcot.com.pem
+olcTLSCertificateKeyFile: /etc/ssl/certs/ldap.falcot.com.key
+</computeroutput>
+</screen>
           </example>
 
           <sidebar>
             <title><emphasis>TOOL</emphasis> <command>ldapvi</command> to edit an LDAP directory</title>
             <indexterm><primary><command>ldapvi</command></primary></indexterm>
-            <para>With <command>ldapvi</command>, you can display an LDIF
-            output of any part of the LDAP directory, make some changes in
-            the text editor, and let the tool do the corresponding LDAP
-            operations for you.
-            </para>
+            <indexterm><primary>OpenLDAP</primary><secondary><command>ldapvi</command></secondary></indexterm>
+
+            <para>With <emphasis role="pkg">ldapvi</emphasis>, you can display
+            an LDIF output of any part of the LDAP directory, make some changes
+            in the text editor, and let the tool do the corresponding LDAP
+            operations for you.</para>
+
             <para>It is thus a convenient way to update the configuration
             of the LDAP server, simply by editing the <literal>cn=config</literal>
             hierarchy.</para>
+
             <screen><computeroutput># </computeroutput><userinput>ldapvi -Y EXTERNAL -h ldapi:/// -b cn=config
 </userinput></screen>
           </sidebar>
@@ -3889,6 +3947,10 @@ modifying entry "cn=config"
           <varname>SLAPD_SERVICES</varname> variable in the
           <filename>/etc/default/slapd</filename> file. We'll play it safe
           and disable unsecured LDAP altogether.</para>
+
+          <indexterm><primary>OpenLDAP</primary><secondary><varname>SLAPD_SERVICES</varname></secondary></indexterm>
+          <indexterm><primary>OpenLDAP</primary><secondary><filename>/etc/default/slapd</filename></secondary></indexterm>
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/slapd</filename></secondary><see>OpenLDAP</see></indexterm>
 
           <example>
             <title>The <filename>/etc/default/slapd</filename> file</title>
@@ -3908,7 +3970,7 @@ SLAPD_USER="openldap"
 SLAPD_GROUP="openldap"
 
 # Path to the pid file of the slapd server. If not set the init.d script
-# will try to figure it out from $SLAPD_CONF (/etc/ldap/slapd.conf by
+# will try to figure it out from $SLAPD_CONF (/etc/ldap/slapd.d by
 # default)
 SLAPD_PIDFILE=
 
@@ -3939,7 +4001,6 @@ SLAPD_SENTINEL_FILE=/etc/ldap/noslapd
 
 # Additional options to pass to slapd
 SLAPD_OPTIONS=""
-
 </programlisting>
           </example>
         </section>
@@ -3952,7 +4013,7 @@ SLAPD_OPTIONS=""
           to use an <literal>ldaps://</literal> URI.</para>
 
           <para>LDAP clients also need to be able to authenticate the
-          server. In a X.509 public key infrastructure, public certificates
+          server. In an X.509 public key infrastructure, public certificates
           are signed by the key of a certificate authority (CA). With
           <emphasis>easy-rsa</emphasis>, the Falcot administrators
           have created their own CA and they now need to configure
@@ -3963,8 +4024,9 @@ SLAPD_OPTIONS=""
 
           <screen><computeroutput># </computeroutput><userinput>cp pki/ca.crt /usr/local/share/ca-certificates/falcot.crt
 </userinput><computeroutput># </computeroutput><userinput>update-ca-certificates
-</userinput><computeroutput>Updating certificates in /etc/ssl/certs... 1 added, 0 removed; done.
-Running hooks in /etc/ca-certificates/update.d....
+</userinput><computeroutput>Updating certificates in /etc/ssl/certs...
+1 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
 
 Adding debian:falcot.pem
 done.
@@ -3976,6 +4038,8 @@ done.
           in <filename>/etc/ldap/ldap.conf</filename>. This will save
           quite some typing.</para>
 
+          <indexterm><primary><filename>OpenLDAP</filename></primary><secondary><filename>/etc/ldap/ldap.conf</filename></secondary></indexterm>
+
           <example>
             <title>The <filename>/etc/ldap/ldap.conf</filename> file</title>
 
@@ -3986,8 +4050,8 @@ done.
 # See ldap.conf(5) for details
 # This file should be world readable but not world writable.
 
-BASE   dc=falcot,dc=com
-URI    ldaps://ldap.falcot.com
+#BASE   dc=example,dc=com
+#URI    ldap://ldap.example.com ldap://ldap-provider.example.com:666
 
 #SIZELIMIT      12
 #TIMELIMIT      15
