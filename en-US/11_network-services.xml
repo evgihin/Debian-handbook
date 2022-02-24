@@ -2809,7 +2809,9 @@ Alias /awstats-icon/ /usr/share/awstats/icon/
 
       <indexterm><primary><emphasis role="pkg">nfs-common</emphasis></primary></indexterm>
       <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
-      <indexterm><primary><command>mount</command></primary><secondary>NFS</secondary></indexterm>
+      <indexterm><primary><command>mount</command></primary><secondary>NFS</secondary><see><command>mount.nfs4</command></see></indexterm>
+      <indexterm><primary><command>mount.nfs4</command></primary></indexterm>
+      <indexterm><primary>NFS share, mounting</primary></indexterm>
 
       <example>
         <title>Manually mounting with the <command>mount</command> command</title>
@@ -2856,15 +2858,17 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
     <indexterm><primary>server</primary><secondary>file</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>SMB</secondary></indexterm>
     <indexterm><primary>server</primary><secondary>CIFS</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>smbd</secondary></indexterm>
+    <indexterm><primary>daemon</primary><secondary>nmbd</secondary></indexterm>
 
     <para>Samba is a suite of tools handling the SMB protocol (also known as
     “CIFS”) on Linux. This protocol is used by Windows for network
     shares and shared printers.</para>
 
-    <indexterm><primary>SMB</primary><see>Server Message Block</see></indexterm>
-    <indexterm><primary>Server Message Block</primary></indexterm>
-    <indexterm><primary>CIFS</primary><see>Common Internet File System</see></indexterm>
-    <indexterm><primary>Common Internet File System</primary></indexterm>
+    <indexterm><primary>SMB</primary></indexterm>
+    <indexterm><primary>Server Message Block</primary><see>SMB</see></indexterm>
+    <indexterm><primary>CIFS</primary></indexterm>
+    <indexterm><primary>Common Internet File System</primary><see>CIFS</see></indexterm>
 
     <para>Samba can also act as a Windows domain controller. This is an
     outstanding tool for ensuring seamless integration of Linux servers and
@@ -2896,7 +2900,7 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         can address a great many different use cases matching very
         different requirements and network architectures. This book only
         focuses on the use case where Samba is used as a standalone server,
-        but it can also be a NT4 Domain Controller or a full Active
+        but it can also be an NT4 Domain Controller or a full Active
         Directory Domain Controller, or a simple member of an existing
         domain (which could be managed by a Windows server).</para>
 
@@ -2928,14 +2932,18 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         <filename>/usr/share/doc/libpam-winbind/examples/pam_winbind/</filename>
         directory of the <emphasis role="pkg">libpam-winbind</emphasis>
         package.</para>
+
+        <indexterm><primary><emphasis role="pkg">libpam-winbind</emphasis></primary></indexterm>
       </sidebar>
 
       <section>
         <title>Configuring with <command>debconf</command></title>
         <indexterm><primary>Samba</primary><secondary>configuration</secondary></indexterm>
+        <indexterm><primary>Samba</primary><secondary><filename>/etc/samba/smb.conf</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/samba/</filename></secondary><see>Samba</see></indexterm>
 
         <para>The package sets up a minimal configuration during the initial
-        installation by plainly copying
+        installation in <filename>/etc/samba/smb.conf</filename> by plainly copying
         <filename>/usr/share/samba/smb.conf</filename>. So you should really
         run <command>dpkg-reconfigure samba-common</command> to adapt
         it:</para>
@@ -2980,6 +2988,8 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 # Change this to the workgroup/NT-domain name your Samba server will part of
    workgroup = FALCOTNET
 
+[...]
+
 # Windows Internet Name Serving Support Section:
 # WINS Support - Tells the NMBD component of Samba to enable its WINS Server
    wins support = yes <co id="smb.conf.wins"/>
@@ -2991,7 +3001,7 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 # Server role. Defines in which mode Samba will operate. Possible
 # values are "standalone server", "member server", "classic primary
 # domain controller", "classic backup domain controller", "active
-# directory domain controller". 
+# directory domain controller".
 #
 # Most people will want "standalone server" or "member server".
 # Running as "active directory domain controller" will require first
@@ -3029,6 +3039,8 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         <section>
           <title>Adding Users</title>
           <indexterm><primary>Samba</primary><secondary>add users</secondary></indexterm>
+          <indexterm><primary><command>adduser</command></primary></indexterm>
+          <indexterm><primary><command>smbpasswd</command></primary></indexterm>
 
           <para>Each Samba user needs an account on the server; the Unix
           accounts must be created first, then the user needs to be
@@ -3088,6 +3100,7 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
 
         <indexterm><primary><command>mount.cifs</command></primary></indexterm>
         <indexterm><primary>Windows share, mounting</primary></indexterm>
+        <indexterm><primary><command>mount</command></primary><secondary>CIFS</secondary><see><command>mount.cifs</command></see></indexterm>
 
         <example>
           <title>Mounting a Windows share</title>
@@ -3104,6 +3117,7 @@ mount -t cifs //arrakis/shared /shared \
         format:</para>
 
         <indexterm><primary>Samba</primary><secondary>credentials</secondary></indexterm>
+        <indexterm><primary>Samba</primary><secondary><filename>/etc/smb-credentials</filename></secondary></indexterm>
 
         <programlisting>
 username = <replaceable>user</replaceable>
@@ -3121,11 +3135,13 @@ password = <replaceable>password</replaceable></programlisting>
         <para>A mount of a Windows share can also be configured
         in <filename>/etc/fstab</filename>:</para>
 
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/fstab</filename></secondary></indexterm>
+
         <programlisting>
 //<replaceable>server</replaceable>/shared /shared cifs credentials=/etc/smb-credentials
 </programlisting>
 
-        <para>Unmounting a SMB/CIFS share is done with the standard
+        <para>Unmounting an SMB/CIFS share is done with the standard
         <command>umount</command> command.</para>
       </section>
 
@@ -3138,6 +3154,7 @@ password = <replaceable>password</replaceable></programlisting>
         installing Windows shared printers automatically.</para>
 
         <indexterm><primary>printing</primary><secondary>network</secondary></indexterm>
+        <indexterm><primary>network</primary><secondary>printers</secondary></indexterm>
         <indexterm><primary>Samba</primary><secondary>shared printers</secondary></indexterm>
 
         <para>Here are the required steps:</para>
@@ -3180,6 +3197,8 @@ password = <replaceable>password</replaceable></programlisting>
     <title>HTTP/FTP Proxy</title>
     <indexterm><primary>Proxy</primary><secondary>HTTP</secondary></indexterm>
     <indexterm><primary>Proxy</primary><secondary>FTP</secondary></indexterm>
+    <indexterm><primary>HTTP</primary><secondary>proxy</secondary></indexterm>
+    <indexterm><primary>FTP</primary><secondary>proxy</secondary></indexterm>
 
     <para>An HTTP/FTP proxy acts as an intermediary for HTTP and/or FTP
     connections. Its role is twofold:</para>
@@ -3207,11 +3226,7 @@ password = <replaceable>password</replaceable></programlisting>
       <title>Installing</title>
       <indexterm><primary>Squid</primary><secondary>installation</secondary></indexterm>
 
-      <para>The <emphasis role="pkg">squid</emphasis><footnote><para>The
-      <emphasis role="pkg">squid3</emphasis> package, providing Squid until
-      Debian <emphasis role="distribution">Jessie</emphasis>, is now a
-      transitional package and will automatically install <emphasis
-      role="pkg">squid</emphasis>.</para></footnote> Debian package only
+      <para>The <emphasis role="pkg">squid</emphasis> Debian package only
       contains the modular (caching) proxy. Turning it into a filtering server
       requires installing the additional <emphasis
       role="pkg">squidguard</emphasis> package. In addition, <emphasis
@@ -3230,8 +3245,10 @@ password = <replaceable>password</replaceable></programlisting>
 
     <section>
       <title>Configuring a Cache</title>
-      <indexterm><primary>Squid</primary><secondary><filename>squid.conf</filename></secondary></indexterm>
+      <indexterm><primary><filename>squid.conf</filename></primary></indexterm>
       <indexterm><primary>Squid</primary><secondary><filename>/etc/squid/squid.conf</filename></secondary></indexterm>
+      <indexterm><primary>Squid</primary><secondary><filename>/etc/squid/conf.d/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/squid/</filename></secondary><see>Squid</see></indexterm>
 
       <para>Enabling the caching server feature is a simple matter of
       editing the <filename>/etc/squid/squid.conf</filename> configuration
@@ -3270,10 +3287,9 @@ http_access deny all
       <filename>/etc/squid/squid.conf</filename> file:</para>
 
       <indexterm><primary><command>squidGuard</command></primary></indexterm>
-      <indexterm><primary><command>squidGuard</command></primary><secondary><filename>squidGuard.conf</filename></secondary></indexterm>
-      <indexterm><primary><command>squidGuard</command></primary><secondary><filename>/etc/squidguard/squidGuard.conf.default</filename></secondary></indexterm>
+      <indexterm><primary>Squid</primary><secondary><command>squidGuard</command></secondary></indexterm>
       <indexterm><primary><filename>squidGuard.conf</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc/squidguard/squidGuard.conf.default</filename></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/squidguard/squidGuard.conf.default</filename></secondary><seealso><command>squidGuard</command></seealso></indexterm>
 
       <programlisting>
 url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
@@ -3281,7 +3297,7 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
       <para>The <filename>/usr/lib/cgi-bin/squidGuard.cgi</filename> CGI
       program also needs to be installed, using
-      <filename>/usr/share/doc/squidguard/examples/squidGuard.cgi.gz</filename>
+      <filename>/usr/share/doc/squidguard/examples/squidGuard.cgi</filename>
       as a starting point. Required modifications to this script are the
       <varname>$proxy</varname> and <varname>$proxymaster</varname>
       variables (the name of the proxy and the administrator's contact
@@ -3289,14 +3305,15 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
       <varname>$redirect</varname> variables should point to existing
       images representing the rejection of a query.</para>
 
-      <para>The filter is enabled with the <command>service squid
-      reload</command> command. However, since the <emphasis
-      role="pkg">squidguard</emphasis> package does no filtering by
-      default, it is the administrator's task to define the policy. This
-      can be done by creating the
-      <filename>/etc/squid/squidGuard.conf</filename> file (using
-      <filename>/etc/squidguard/squidGuard.conf.default</filename> as
-      template if required).</para>
+      <para>The filter is enabled with the <command>systemctl reload
+      squid</command> command. However, since the <emphasis
+      role="pkg">squidguard</emphasis> package does no filtering by default, it
+      is the administrator's task to define the policy. This can be done by
+      creating the <filename>/etc/squid/squidGuard.conf</filename> file (using
+      <filename>/etc/squidguard/squidGuard.conf.default</filename> as template
+      if required).</para>
+
+      <indexterm><primary>service</primary><secondary><filename>squid.service</filename></secondary></indexterm>
 
       <para>The working database must be regenerated with
       <command>update-squidguard</command> after each change of the
@@ -3307,30 +3324,18 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
       <indexterm><primary><command>update-squidguard</command></primary></indexterm>
       <indexterm><primary>Squid</primary><secondary><command>update-squidguard</command></secondary></indexterm>
-      <indexterm><primary>Squid</primary><secondary><command>squidGuard</command></secondary></indexterm>
 
       <sidebar>
         <title><emphasis>ALTERNATIVE</emphasis> E2guardian (a DansGuardian Fork)</title>
-        <indexterm><primary><emphasis role="pkg">dansguardian</emphasis></primary></indexterm>
+        <indexterm><primary>dansguardian</primary></indexterm>
         <indexterm><primary><emphasis role="pkg">e2guardian</emphasis></primary></indexterm>
 
         <para>The <emphasis role="pkg">e2guardian</emphasis> package, a
         DansGuardian fork, is an alternative to <emphasis
         role="pkg">squidguard</emphasis>. This software does not simply handle
-        a blacklist of forbidden URLs, but it can take advantage of the
-        <acronym>PICS</acronym><footnote><para><acronym>PICS</acronym> has been
-        superseded by the <emphasis>Protocol for Web Description
-        Resources</emphasis> (<acronym>POWDER</acronym> system: <ulink
-        url="https://www.w3.org/2009/08/pics_superseded.html"/>.
-        <indexterm><primary>POWDER</primary><see>Protocol for Web Description
-        Resources</see></indexterm> <indexterm><primary>Protocol for Web
-        Description Resources</primary></indexterm> </para></footnote>
-        (<emphasis>Platform for Internet Content Selection</emphasis>) to
-        decide whether a page is acceptable by dynamic analysis of its
-        contents.</para>
-
-        <indexterm><primary>PICS</primary><see>Platform for Internet Content Selection</see></indexterm>
-        <indexterm><primary>Platform for Internet Content Selection</primary></indexterm>
+        a blacklist of forbidden URLs, it can also take advantage of content
+        and anti-virus scanning and it provides broad authentication
+        support.</para>
       </sidebar>
     </section>
   </section>
