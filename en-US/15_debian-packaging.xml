@@ -13,6 +13,7 @@
       <keyword>Archive</keyword>
       <keyword>Meta-package</keyword>
       <keyword>Debian Developer</keyword>
+      <keyword>Debian Package</keyword>
       <keyword>Maintainer</keyword>
     </keywordset>
   </chapterinfo>
@@ -29,6 +30,8 @@
   </highlights>
   <section id="sect.rebuilding-package">
     <title>Rebuilding a Package from its Sources</title>
+    <indexterm><primary>package</primary><secondary>backport</secondary></indexterm>
+    <indexterm><primary>package</primary><secondary>rebuild</secondary></indexterm>
 
     <para>Rebuilding a binary package is required under several sets
     of circumstances. In some cases, the administrator needs a
@@ -50,10 +53,17 @@
     </para>
     <section>
       <title>Getting the Sources</title>
+      <indexterm><primary>package</primary><secondary>source</secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>source</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>source</literal></secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>update</literal></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/sources.list</filename></secondary></indexterm>
+      <indexterm><primary><literal>deb-src</literal></primary></indexterm>
 
       <para>Rebuilding a Debian package starts with getting its source
       code. The easiest way is to use the <command>apt-get source
-      <replaceable>source-package-name</replaceable></command> command.
+      <replaceable>package-name</replaceable></command> command.
       This command requires a <literal>deb-src</literal> line in the
       <filename>/etc/apt/sources.list</filename> file, and up-to-date index
       files (i.e. <command>apt-get update</command>). These conditions
@@ -61,7 +71,9 @@
       chapter dealing with APT configuration (see <xref
       linkend="sect.apt-sources.list"/>). Note, however, that you will be
       downloading the source packages from the Debian version mentioned in
-      the <literal>deb-src</literal> line. If you need another version, you
+      the <literal>deb-src</literal> line.</para>
+
+      <para>If you need another version, you
       may need to download it manually from a Debian mirror or from the web
       site. This involves fetching two or three files (with extensions
       <filename>*.dsc</filename> — for <emphasis>Debian Source
@@ -86,44 +98,61 @@
       it extracts the source package (unless the <literal>-d</literal> or
       <literal>--download-only</literal> option is used). The Debian keyring is
       needed, unless the option <literal>-u</literal> is supplied.</para>
+
+      <indexterm><primary><emphasis role="pkg">devscripts</emphasis></primary></indexterm>
+      <indexterm><primary><command>dscverify</command></primary></indexterm>
+      <indexterm><primary><command>dget</command></primary></indexterm>
+      <indexterm><primary><command>dpkg-source</command></primary></indexterm>
+      <indexterm><primary><filename>.dsc</filename></primary></indexterm>
+      <indexterm><primary><filename>.diff.gz</filename></primary></indexterm>
+      <indexterm><primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.gz</filename></secondary></indexterm>
+      <indexterm><primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.bz2</filename></secondary></indexterm>
+      <indexterm><primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.xz</filename></secondary></indexterm>
+      <indexterm><primary><filename>.tar</filename></primary><secondary><filename>.tar.gz</filename></secondary></indexterm>
+      <indexterm><primary><filename>.tar</filename></primary><secondary><filename>.tar.bz2</filename></secondary></indexterm>
+      <indexterm><primary><filename>.tar</filename></primary><secondary><filename>.tar.xz</filename></secondary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>--download-only</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>--download-only</literal></secondary></indexterm>
+      <indexterm><primary><emphasis role="pkg">debian-archive-keyring</emphasis></primary></indexterm>
     </section>
     <section>
       <title>Making Changes</title>
 
-<para>Let us use the <emphasis role="pkg">samba</emphasis> package as an
-example.</para>
+      <para>Let us use the <emphasis role="pkg">samba</emphasis> package as an
+      example.</para>
 
-<screen><computeroutput>$ </computeroutput><userinput>apt source samba
+      <!-- MAY CHANGE: output and samba version -->
+      <screen><computeroutput>$ </computeroutput><userinput>apt source samba
 </userinput><computeroutput>Reading package lists... Done
 NOTICE: 'samba' packaging is maintained in the 'Git' version control system at:
 https://salsa.debian.org/samba-team/samba.git
 Please use:
 git clone https://salsa.debian.org/samba-team/samba.git
 to retrieve the latest (possibly unreleased) updates to the package.
-Need to get 11.7 MB of source archives.
-Get:1 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (dsc) [4,316 B]
-Get:2 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (tar) [11.4 MB]
-Get:3 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (diff) [252 kB]
-Fetched 11.7 MB in 1s (9,505 kB/s)
-dpkg-source: info: extracting samba in samba-4.9.5+dfsg
-dpkg-source: info: unpacking samba_4.9.5+dfsg.orig.tar.xz
-dpkg-source: info: unpacking samba_4.9.5+dfsg-5+deb10u1.debian.tar.xz
+Need to get 12.3 MB of source archives.
+Get:1 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (dsc) [4,514 B]
+Get:2 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (tar) [11.8 MB]
+Get:3 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (diff) [468 kB]
+Fetched 12.3 MB in 3s (4,582 kB/s)
+dpkg-source: info: extracting samba in samba-4.13.13+dfsg
+dpkg-source: info: unpacking samba_4.13.13+dfsg.orig.tar.xz
+dpkg-source: info: unpacking samba_4.13.13+dfsg-1~deb11u3.debian.tar.xz
 dpkg-source: info: using patch list from debian/patches/series
 dpkg-source: info: applying 07_private_lib
 dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
-[...]
+dpkg-source: info: applying [...]
 </computeroutput></screen>
 
       <para>The source of the package is now available in a directory named
       after the source package and its version
-      (<emphasis>samba-4.9.5+dfsg</emphasis>); this is where we'll work
-      on our local changes.</para>
+      (<filename>samba-4.13.13+dfsg</filename>); this is where we'll work on
+      our local changes.</para>
 
       <para>The first thing to do is to change the package version number,
       so that the rebuilt packages can be distinguished from the original
       packages provided by Debian. Assuming the current version is
-      <literal>2:4.9.5+dfsg-5</literal>, we can create version
-      <literal>2:4.9.5+dfsg-5falcot1</literal>, which clearly indicates the
+      <literal>2:4.13.13+dfsg-1~deb11u3</literal>, we can create version
+      <literal>2:4.13.13+dfsg-1~deb11u3+falcot1</literal>, which clearly indicates the
       origin of the package. This makes the package version number higher
       than the one provided by Debian, so that the package will easily
       install as an update to the original package. Such a change is best
@@ -131,8 +160,13 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       CHangelog</emphasis>) from the <emphasis
       role="pkg">devscripts</emphasis> package.
 
-<screen><computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg
-</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput></screen>
+      <indexterm><primary><command>dch</command></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">devscripts</emphasis></primary></indexterm>
+      <indexterm><primary>package</primary><secondary>version</secondary></indexterm>
+
+      <screen><computeroutput>$ </computeroutput><userinput>cd 4.13.13+dfsg-1~deb11u3
+</userinput><computeroutput>$ </computeroutput><userinput>dch --local +falcot
+</userinput></screen>
 
       The last command invokes a text editor
       (<command>sensible-editor</command> — this should be your favorite
@@ -143,12 +177,20 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       really did change the <filename>debian/changelog</filename>
       file.</para>
 
+      <indexterm><primary><command>sensible-editor</command></primary></indexterm>
+      <indexterm><primary><varname>VISUAL</varname></primary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>VISUAL</varname></secondary></indexterm>
+      <indexterm><primary><varname>EDITOR</varname></primary></indexterm>
+      <indexterm><primary>environment variables</primary><secondary><varname>EDITOR</varname></secondary></indexterm>
+      <indexterm><primary>package</primary><secondary><filename>changelog</filename></secondary></indexterm>
+
       <para>When a change in build options is required, the changes
       need to be made in <filename>debian/rules</filename>, which
       drives the steps in the package build process. In the simplest
       cases, the lines concerning the initial configuration
       (<literal>./configure …</literal>) or the actual build
-      (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are
+      (<literal>$(MAKE) …</literal> or <literal>make …</literal> or
+      <literal>cmake …</literal> or …) are
       easy to spot. If these commands are not explicitly called, they
       are probably a side effect of another explicit command, in which
       case please refer to their documentation to learn more about how
@@ -156,7 +198,15 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       <command>dh</command>, you might need to add an override
       for the <command>dh_auto_configure</command> or
       <command>dh_auto_build</command> commands (see their respective
-      manual pages for explanations on how to achieve this).</para>
+      manual pages and <citerefentry><refentrytitle>debhelper</refentrytitle>
+      <manvolnum>7</manvolnum></citerefentry> for explanations on how to achieve this).</para>
+
+      <indexterm><primary><command>dh</command></primary><secondary><command>dh_auto_build</command></secondary></indexterm>
+      <indexterm><primary><command>dh</command></primary><secondary><command>dh_auto_configure</command></secondary></indexterm>
+      <indexterm><primary><command>dh</command></primary><secondary>override target</secondary></indexterm>
+      <indexterm><primary><command>dh</command></primary><seealso><command>debhelper</command></seealso></indexterm>
+      <indexterm><primary>package</primary><secondary><filename>rules</filename></secondary><seealso><filename>rules</filename></seealso></indexterm>
+      <indexterm><primary><emphasis role="pkg">debhelper</emphasis></primary></indexterm>
 
       <para>Depending on the local changes to the packages, an update may
       also be required in the <filename>debian/control</filename> file,
@@ -173,6 +223,9 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       package version during build, which is why Debian maintainers
       frequently use strictly versioned build-dependencies.</para>
 
+      <indexterm><primary>package</primary><secondary><filename>control</filename></secondary><seealso><filename>control</filename></seealso></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Build-Depends</literal></secondary></indexterm>
+
       <para>If you know for sure that these build-dependencies are too
       strict, you should feel free to relax them locally. Reading the files
       which document the standard way of building the software — these
@@ -188,17 +241,24 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       are not careful. Therefore, backports should be kept to a strict
       minimum when possible.</para>
 
+      <indexterm><primary><filename>INSTALL</filename></primary></indexterm>
+
       <sidebar>
         <title><emphasis>TIP</emphasis> Installing <literal>Build-Depends</literal></title>
         <indexterm><primary><literal>Build-Depends</literal>, control field</primary></indexterm>
-	<para><command>apt-get</command> allows
-	installing all packages mentioned in the
-	<literal>Build-Depends</literal> fields of a source package
-	available in a distribution mentioned in a
-	<literal>deb-src</literal> line of the
-	<filename>/etc/apt/sources.list</filename> file. This is a simple
-	matter of running the <command>apt-get build-dep
-	<replaceable>source-package</replaceable></command> command.</para>
+        <indexterm><primary><filename>control</filename></primary><secondary><literal>Build-Depends</literal></secondary></indexterm>
+
+        <para><command>apt-get</command> allows installing all packages
+        mentioned in the <literal>Build-Depends</literal> fields of a source
+        package available in a distribution mentioned in a
+        <literal>deb-src</literal> line of the
+        <filename>/etc/apt/sources.list</filename> file. This is a simple
+        matter of running the <command>apt-get build-dep
+        <replaceable>package</replaceable></command> command.</para>
+        
+        <indexterm><primary><literal>deb-src</literal></primary></indexterm>
+        <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary></indexterm>
+        <indexterm><primary><command>apt-get</command></primary></indexterm>
       </sidebar>
     </section>
     <section>
@@ -209,6 +269,9 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       (<filename>.deb</filename> file). The whole process is managed by the
       <command>dpkg-buildpackage</command> command.</para>
 
+      <indexterm><primary><filename>.deb</filename></primary></indexterm>
+      <indexterm><primary><command>dpkg-buildpackage</command></primary></indexterm>
+
       <example>
         <title>Rebuilding a package</title>
 
@@ -218,7 +281,7 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       </example>
 
       <para>The previous command can fail if the
-      <literal>Build-Depends</literal> fields have not been updated, or if
+      <literal>Build-Depends</literal> field has not been updated, or if
       the related packages are not installed. In such a case, it is
       possible to overrule this check by passing the <literal>-d</literal>
       option to <command>dpkg-buildpackage</command>. However, explicitly
@@ -226,33 +289,43 @@ dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch
       failing at a later stage. Worse, the package may seem to build
       correctly but fail to run properly: some programs automatically
       disable some of their features when a required library is not
-      available at build time.</para>
+      available at build time. The switch can still be very useful if you only
+      want to create a source package, which is supposed to be passed to clean
+      build environments (like <emphasis role="pkg">sbuild</emphasis>,
+      <emphasis role="pkg">pbuilder</emphasis>, or <emphasis
+      role="pkg">cowbuilder</emphasis>, etc.).</para>
+
+      <para>The other options used in the above example make sure that neither
+      the source package's <filename>.dsc</filename> (<literal>-us</literal>)
+      nor the produced <filename>.changes</filename> file
+      (<literal>-uc</literal>) get signed with the package builder's
+      cryptographic key.</para>
 
       <sidebar id="sidebar.fakeroot">
         <title><emphasis>TOOL</emphasis> <command>fakeroot</command></title>
 
-	<para>In essence, the package creation process is a simple matter
-	of gathering in an archive a set of existing (or built) files; most
-	of the files will end up being owned by <emphasis>root</emphasis>
-	in the archive. However, building the whole package under this user
-	would imply increased risks; fortunately, this can be avoided with
-	the <command>fakeroot</command> command. This tool can be used to
-	run a program and give it the impression that it runs as
-	<emphasis>root</emphasis> and creates files with arbitrary
-	ownership and permissions. When the program creates the archive
-	that will become the Debian package, it is tricked into creating an
-	archive containing files marked as belonging to arbitrary owners,
-	including <emphasis>root</emphasis>. This setup is so convenient
-	that <command>dpkg-buildpackage</command> uses
-	<command>fakeroot</command> by default when building
-	packages.</para>
+        <para>In essence, the package creation process is a simple matter
+        of gathering in an archive a set of existing (or built) files; most
+        of the files will end up being owned by <emphasis>root</emphasis>
+        in the archive. However, building the whole package under this user
+        would imply increased risks; fortunately, this can be avoided with
+        the <command>fakeroot</command> command. This tool can be used to
+        run a program and give it the impression that it runs as
+        <emphasis>root</emphasis> and creates files with arbitrary
+        ownership and permissions. When the program creates the archive
+        that will become the Debian package, it is tricked into creating an
+        archive containing files marked as belonging to arbitrary owners,
+        including <emphasis>root</emphasis>. This setup is so convenient
+        that <command>dpkg-buildpackage</command> uses
+        <command>fakeroot</command> by default when building
+        packages.</para>
 
-	<para>Note that the program is only tricked into “believing”
-	that it operates as a privileged account, and the process actually
-	runs as the user running <command>fakeroot
-	<replaceable>program</replaceable></command> (and the files are
-	actually created with that user's permissions). At no time does it
-	actually get root privileges that it could abuse.</para>
+        <para>Note that the program is only tricked into “believing”
+        that it operates as a privileged account, and the process actually
+        runs as the user running <command>fakeroot
+        <replaceable>program</replaceable></command> (and the files are
+        actually created with that user's permissions). At no time does it
+        actually get root privileges that it could abuse.</para>
       </sidebar>
 
       <para>More often than not, Debian developers use a higher-level
@@ -1180,3 +1253,4 @@ release_label = Internal Packages
     </section>
   </section>
 </chapter>
+<!-- vim: set ft=xml tw=79 ts=2 sw=2 ai si et: -->
