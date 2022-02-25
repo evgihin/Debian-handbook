@@ -22,9 +22,9 @@
 
   <section id="sect.x11-server-configuration">
     <title>Configuring the X11 Server</title>
-    <indexterm><primary>XFree86</primary></indexterm>
+    <indexterm><primary>XFree86</primary><seealso>X.org</seealso></indexterm>
     <indexterm><primary>X.org</primary></indexterm>
-    <indexterm><primary>X11</primary></indexterm>
+    <indexterm><primary>X11</primary><seealso>X.org</seealso></indexterm>
     <indexterm><primary>interface</primary><secondary>graphical</secondary></indexterm>
 
     <!-- MAY CHANGE: Debian suite name -->
@@ -38,6 +38,8 @@
 
     <sidebar>
       <title><emphasis>PERSPECTIVE</emphasis> X11, XFree86 and X.org</title>
+      <indexterm><primary>server</primary><secondary>X</secondary></indexterm>
+      <indexterm><primary>server</primary><secondary>graphical</secondary></indexterm>
 
       <para>X11 is the graphical system most widely used on Unix-like
       systems (also available for
@@ -62,6 +64,7 @@
     longer even creates a <filename>/etc/X11/xorg.conf</filename>
     configuration file.</para>
 
+    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/X11/</filename></secondary><see>X.org</see></indexterm>
     <indexterm><primary>resolution</primary></indexterm>
 
     <para>The keyboard configuration is currently set up in
@@ -70,6 +73,8 @@
     handled by the <emphasis role="pkg">keyboard-configuration</emphasis>
     package. Details on configuring the keyboard layout are available in
     <xref linkend="sect.keyboard-config"/>.</para>
+
+    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/keyboard</filename></secondary></indexterm>
 
     <para>The <emphasis role="pkg">xserver-xorg-core</emphasis> package provides
     a generic X server, as used by the 7.x versions of X.org. This server
@@ -93,23 +98,28 @@
     <filename>~/.local/share/xorg/Xorg.0.log</filename>, whereas it is
     <filename>/var/log/Xorg.0.log</filename> for X servers started with root
     privileges and for versions older than Debian 9 <emphasis
-    role="distribution">Stetch</emphasis>.  That log file is where one would
+    role="distribution">Stretch</emphasis>. That log file is where one would
     look to know what driver is currently in use. For example, the following
     snippet matches what the <literal>intel</literal> driver outputs when it is
     loaded:</para>
 
     <indexterm><primary>VESA</primary></indexterm>
+    <indexterm><primary>X.org</primary><secondary><literal>fbdev</literal></secondary></indexterm>
+    <indexterm><primary>X.org</primary><secondary><literal>vesa</literal></secondary></indexterm>
     <indexterm><primary><literal>fbdev</literal></primary></indexterm>
     <indexterm><primary><literal>vesa</literal></primary></indexterm>
+    <indexterm><primary>X.org</primary><secondary><filename>Xorg.0.log</filename></secondary></indexterm>
+    <indexterm><primary><filename>Xorg.0.log</filename></primary></indexterm>
 
     <programlisting>
-(==) Matched intel as autoconfigured driver 0
+(==) Matched nouveau as autoconfigured driver 0
 (==) Matched modesetting as autoconfigured driver 1
-(==) Matched vesa as autoconfigured driver 2
-(==) Matched fbdev as autoconfigured driver 3
+(==) Matched fbdev as autoconfigured driver 2
+(==) Matched vesa as autoconfigured driver 3
 (==) Assigned the driver to the xf86ConfigLayout
 (II) LoadModule: "intel"
 (II) Loading /usr/lib/xorg/modules/drivers/intel_drv.so
+(II) Module intel: vendor="X.Org Foundation"
 </programlisting>
 
     <indexterm><primary>video card</primary></indexterm>
@@ -135,18 +145,22 @@
       automated by installing the package <emphasis
       role="pkg">nvidia-kernel-dkms</emphasis> (for NVIDIA).</para>
 
-      <para>The “nouveau” project aims to develop a free software driver for
-      NVIDIA cards and is the default driver that you get for those cards in
-      Debian. In general, its feature set and performance do not match the
-      proprietary driver. In the developers' defense, we should mention that
-      the required information can only be gathered by reverse engineering,
-      which makes things difficult.  The free drivers for ATI video cards,
-      called “radeon” and "amdgpu", are much better in that regard although it
+      <para>The <literal>nouveau</literal> project aims to develop a free
+      software driver for NVIDIA cards and is the default driver that you get
+      for those cards in Debian. In general, its feature set and performance do
+      not match the proprietary driver. In the developers' defense, we should
+      mention that the required information can only be gathered by reverse
+      engineering, which makes things difficult.  The free drivers for ATI
+      video cards, called <literal>radeon</literal> and
+      <literal>amdgpu</literal>, are much better in that regard although it
       often requires non-free firmware from the <emphasis
       role="pkg">firmware-amd-graphics</emphasis> package.</para>
 
       <indexterm><primary>ATI</primary></indexterm>
       <indexterm><primary>NVIDIA</primary></indexterm>
+      <indexterm><primary>X.org</primary><secondary><literal>nouveau</literal></secondary></indexterm>
+      <indexterm><primary>X.org</primary><secondary><literal>radeon</literal></secondary></indexterm>
+      <indexterm><primary>X.org</primary><secondary><literal>amdgpu</literal></secondary></indexterm>
     </sidebar>
   </section>
 
@@ -155,26 +169,30 @@
     <section>
       <title>Choosing a Display Manager</title>
       <indexterm><primary>manager</primary><secondary>display</secondary></indexterm>
-      <indexterm><primary>display manager</primary><secondary>gdm</secondary></indexterm>
+      <indexterm><primary>display manager</primary><secondary>gdm3</secondary></indexterm>
       <indexterm><primary>display manager</primary><secondary>sddm</secondary></indexterm>
       <indexterm><primary>display manager</primary><secondary>xdm</secondary></indexterm>
       <indexterm><primary>display manager</primary><secondary>lightdm</secondary></indexterm>
-      <indexterm><primary><command>gdm</command></primary></indexterm>
+      <indexterm><primary>display manager</primary><secondary>x-display-manager</secondary></indexterm>
+      <indexterm><primary><command>gdm3</command></primary></indexterm>
       <indexterm><primary><command>sddm</command></primary></indexterm>
       <indexterm><primary><command>xdm</command></primary></indexterm>
       <indexterm><primary><command>lightdm</command></primary></indexterm>
+      <indexterm><primary>x-display-manager</primary></indexterm>
 
-      <para>The graphical interface only provides display
-      space. Running the X server by itself only leads to an empty
-      screen, which is why most installations use a <emphasis>display
-      manager</emphasis> to display a user authentication screen and
-      start the graphical desktop once the user has authenticated. The
-      three most popular display managers in current use are <emphasis
-      role="pkg">gdm3</emphasis> (<foreignphrase>GNOME Display
-      Manager</foreignphrase>), <emphasis role="pkg">sddm</emphasis>
-      (suggested for KDE Plasma) and
-      <emphasis role="pkg">lightdm</emphasis> (<foreignphrase>Light Display
-      Manager</foreignphrase>). Since the Falcot Corp administrators
+      <para>The graphical interface only provides display space. Running the X
+      server by itself only leads to an empty screen, which is why most
+      installations use a <emphasis>display manager</emphasis> to display a
+      user authentication screen and start the graphical desktop once the user
+      has authenticated. The three most popular display managers in current use
+      are <emphasis role="pkg">gdm3</emphasis> (<foreignphrase>GNOME Display
+      Manager</foreignphrase>), <emphasis role="pkg">sddm</emphasis> (suggested
+      for KDE Plasma) and <emphasis role="pkg">lightdm</emphasis>
+      (<foreignphrase>Light Display Manager</foreignphrase>). More
+      alternatives exist and can be found by searching for the <emphasis
+      role="pkg">x-display-manager</emphasis> virtual package.</para>
+
+      <para>Since the Falcot Corp administrators
       have opted to use the GNOME desktop environment, they logically
       picked <command>gdm3</command> as a display manager too. The
       <filename>/etc/gdm3/daemon.conf</filename> configuration file
@@ -188,13 +206,17 @@
       useful settings for end-users can be tweaked with GNOME's
       control center.</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/gdm3/daemon.conf</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/gdm3/greeter.dconf-defaults</filename></secondary></indexterm>
     </section>
     <section>
       <title>Choosing a Window Manager</title>
       <indexterm><primary>manager</primary><secondary>window</secondary></indexterm>
+      <indexterm><primary>window manager</primary><secondary>x-window-manager</secondary></indexterm>
       <indexterm><primary>window manager</primary><secondary>mutter</secondary></indexterm>
       <indexterm><primary>window manager</primary><secondary>kwin</secondary></indexterm>
       <indexterm><primary>window manager</primary><secondary>xfwm</secondary></indexterm>
+      <indexterm><primary>window manager</primary><secondary>openbox</secondary></indexterm>
 
       <para>Since each graphical desktop provides its own window
       manager, which window manager you choose is usually influenced by
@@ -210,6 +232,7 @@
       <indexterm><primary><command>mutter</command></primary></indexterm>
       <indexterm><primary><command>kwin</command></primary></indexterm>
       <indexterm><primary><command>xfwm</command></primary></indexterm>
+      <indexterm><primary><command>openbox</command></primary></indexterm>
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Window manager</title>
@@ -226,28 +249,33 @@
         change to another window manager (if installed).</para>
       </sidebar>
 
-      <para>Older computers may, however, have a hard time running
-      heavyweight graphical desktop environments. In these cases, a lighter
-      configuration should be used. “Light” (or small footprint) window
-      managers include WindowMaker (in the <emphasis
-      role="pkg">wmaker</emphasis> package), Afterstep, fvwm, icewm,
-      blackbox, fluxbox, or openbox. In these cases, the system should be configured so that the
-      appropriate window manager gets precedence; the standard way is to
-      change the <command>x-window-manager</command> alternative with the
-      command <command>update-alternatives --config x-window-manager</command>.</para>
+      <para>Older computers may, however, have a hard time running heavyweight
+      graphical desktop environments. In these cases, a lighter alternative
+      (search for the <emphasis role="pkg">x-window-manager</emphasis> virtual
+      package) should be used. “Light” (or small footprint) window managers
+      include WindowMaker (in the <emphasis role="pkg">wmaker</emphasis>
+      package), <emphasis role="pkg">afterstep</emphasis>, <emphasis
+      role="pkg">icewm</emphasis>, <emphasis role="pkg">blackbox</emphasis>,
+      <emphasis role="pkg">fluxbox</emphasis>, or <emphasis
+      role="pkg">openbox</emphasis>. In these cases, the system should be
+      configured so that the appropriate window manager gets precedence; the
+      standard way is to change the <command>x-window-manager</command>
+      alternative with the command <command>update-alternatives --config
+      x-window-manager</command>.</para>
 
-      <indexterm><primary>WindowMaker</primary></indexterm>
-      <indexterm><primary>window manager</primary><secondary>windowmaker</secondary></indexterm>
-      <indexterm><primary>Afterstep</primary></indexterm>
+      <indexterm><primary>window manager</primary><secondary>wmaker</secondary></indexterm>
       <indexterm><primary>window manager</primary><secondary>afterstep</secondary></indexterm>
-      <indexterm><primary>Blackbox</primary></indexterm>
       <indexterm><primary>window manager</primary><secondary>blackbox</secondary></indexterm>
-      <indexterm><primary>Icewm</primary></indexterm>
       <indexterm><primary>window manager</primary><secondary>icewm</secondary></indexterm>
-      <indexterm><primary>Fluxbox</primary></indexterm>
       <indexterm><primary>window manager</primary><secondary>fluxbox</secondary></indexterm>
-      <indexterm><primary>Openbox</primary></indexterm>
       <indexterm><primary>window manager</primary><secondary>openbox</secondary></indexterm>
+      <indexterm><primary>window manager</primary><secondary>x-window-manager</secondary></indexterm>
+      <indexterm><primary>WindowMaker</primary></indexterm>
+      <indexterm><primary>afterstep</primary></indexterm>
+      <indexterm><primary>blackbox</primary></indexterm>
+      <indexterm><primary>icewm</primary></indexterm>
+      <indexterm><primary>fluxbox</primary></indexterm>
+      <indexterm><primary>openbox</primary></indexterm>
       <indexterm><primary><command>x-window-manager</command></primary></indexterm>
 
       <sidebar id="sidebar.alternatives">
@@ -270,19 +298,20 @@
         priority allows picking the best installed window manager when the
         generic command is run.</para>
 
-        <para>Both the registration of commands and the explicit
-        configuration involve the <command>update-alternatives</command>
-        script. Choosing where a symbolic command points at is a simple
-        matter of running <command>update-alternatives --config
-        <replaceable>symbolic-command</replaceable></command>. The
-        <command>update-alternatives</command> script creates (and
-        maintains) symbolic links in the
+        <para>Both the registration of commands and the explicit configuration
+        involve the <command>update-alternatives</command> script. Choosing
+        where a symbolic command points at is a simple matter of running
+        <command>update-alternatives --config
+        <replaceable>symbolic-command</replaceable></command>. This script
+        creates (and maintains) symbolic links in the
         <filename>/etc/alternatives/</filename> directory, which in turn
-        references the location of the executable. As time passes, packages
-        are installed or removed, and/or the administrator makes explicit
-        changes to the configuration. When a package providing an
-        alternative is removed, the alternative automatically goes to the
-        next best choice among the remaining possible commands.</para>
+        references the location of the executable. As time passes, packages are
+        installed or removed, and/or the administrator makes explicit changes
+        to the configuration. When a package providing an alternative is
+        removed, the alternative automatically goes to the next best choice
+        among the remaining possible commands.</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/alternatives/</filename></secondary></indexterm>
 
         <para>Not all symbolic commands are explicitly listed by the Debian
         policy; some Debian package maintainers deliberately chose to use
@@ -312,16 +341,16 @@
       applications, each package usually provides a <filename>.desktop</filename>
       file in <filename>/usr/share/applications</filename>. The format
       of those files has been standardized by FreeDesktop.org:
-      <ulink type="block" url="https://standards.freedesktop.org/desktop-entry-spec/latest/"/>
+      <ulink type="block" url="https://specifications.freedesktop.org/desktop-entry-spec/latest/"/>
       </para>
 
       <para>The applications menus can be further customized by administrators
       through system-wide configuration files as described by the “Desktop Menu
-      Specification”.  End-users can also customize the menus with graphical
+      Specification”. End-users can also customize the menus with graphical
       tools such as <emphasis role="pkg">kmenuedit</emphasis> (in Plasma),
       <emphasis role="pkg">alacarte</emphasis> (in GNOME) or <emphasis
       role="pkg">menulibre</emphasis>.
-      <ulink type="block" url="https://standards.freedesktop.org/menu-spec/latest/"/>
+      <ulink type="block" url="https://specifications.freedesktop.org/menu-spec/latest/"/>
       </para>
 
       <sidebar>
@@ -344,10 +373,8 @@
   <section id="sect.graphical-desktops">
     <title>Graphical Desktops</title>
 
-    <para>The free graphical desktop field is dominated by two large
-    software collections: GNOME and Plasma by KDE. Both of them are very popular.
-    This is rather a rare instance in the free software world; the Apache
-    web server, for instance, has very few peers.</para>
+    <para>The free graphical desktop field is dominated by two large software
+    collections: GNOME and Plasma by KDE. Both of them are very popular.</para>
 
     <indexterm><primary>graphical desktop</primary></indexterm>
     <indexterm><primary>GNOME</primary></indexterm>
@@ -381,7 +408,9 @@
       <para>Debian <emphasis role="distribution">Bullseye</emphasis>
       includes GNOME version 3.38, which can be installed by a simple
       <command>apt install gnome</command> (it can also be installed by
-      selecting the “Debian desktop environment” task).</para>
+      selecting the “Debian desktop environment” task - <emphasis
+      role="pkg">task-desktop</emphasis> and <emphasis
+      role="pkg">task-gnome-desktop</emphasis>).</para>
 
       <indexterm><primary><emphasis role="pkg">gnome</emphasis></primary></indexterm>
 
@@ -427,7 +456,8 @@
       <!-- MAY CHANGE: distribution name and KDE Plasma version -->
       <para>Debian <emphasis role="distribution">Bullseye</emphasis>
       includes version 5.20 of KDE Plasma, which can be installed with
-      <command>apt install kde-standard</command>.</para>
+      <command>apt install kde-standard</command> (<emphasis
+      role="pkg">task-kde-desktop</emphasis>).</para>
 
       <para>Plasma has had a rapid evolution based on a very hands-on
       approach. Its authors quickly got very good results, which allowed
@@ -455,10 +485,11 @@
       <title>Xfce and Others</title>
 
       <para>Xfce is a simple and lightweight graphical desktop, which is a
-      perfect match for computers with limited resources. It can be
-      installed with <command>apt install xfce4</command>. Like GNOME,
-      Xfce is based on the GTK+ toolkit, and several components are common
-      across both desktops.</para>
+      perfect match for computers with limited resources. It can be installed
+      with <command>apt install xfce4</command> (<emphasis
+      role="pkg">task-xfce-desktop</emphasis>). Like GNOME, Xfce is based on
+      the GTK+ toolkit, and several components are common across both
+      desktops.</para>
 
       <indexterm><primary>Xfce</primary></indexterm>
 
@@ -487,10 +518,13 @@
       <title>Other Desktop Environments</title>
 
       <para><emphasis>LXDE</emphasis> and <emphasis>LXQt</emphasis> are two
-      desktop environments focusing on the “lightweight” aspect. The former
-      is GTK+ based while the latter is Qt based. They can be installed with
-      the <emphasis role="pkg">lxde</emphasis>
-      and <emphasis role="pkg">lxqt</emphasis> metapackages.
+      desktop environments focusing on the “lightweight” aspect. The former is
+      GTK+ based while the latter is Qt based. They can be installed with the
+      <emphasis role="pkg">lxde</emphasis> (<emphasis
+      role="pkg">task-lxde-desktop</emphasis>), and <emphasis
+      role="pkg">lxqt</emphasis> (<emphasis
+      role="pkg">task-lxqt-desktop</emphasis>) metapackages.
+      
       <ulink type="block" url="https://lxde.org/"/>
       <ulink type="block" url="https://lxqt.org/"/>
       </para>
@@ -498,15 +532,16 @@
       <indexterm><primary>LXDE</primary></indexterm>
       <indexterm><primary>LXQt</primary></indexterm>
 
-      <para>
-      <emphasis>Cinnamon</emphasis> and <emphasis>MATE</emphasis> both started
-      when GNOME 3 moved away from the traditional desktop paradigm,
-      dropping the usual panel and its menu in favor of the new
-      search-based shell. The former reintroduced a panel by forking
-      GNOME Shell and the latter is a continuation of GNOME 2.
-      They can be installed with the
-      <emphasis role="pkg">cinnamon-desktop-environment</emphasis> and
-      <emphasis role="pkg">mate-desktop-environment</emphasis> metapackages.
+      <para><emphasis>Cinnamon</emphasis> and <emphasis>MATE</emphasis> both
+      started when GNOME 3 moved away from the traditional desktop paradigm,
+      dropping the usual panel and its menu in favor of the new search-based
+      shell. The former reintroduced a panel by forking GNOME Shell and the
+      latter is a continuation of GNOME 2.  They can be installed with the
+      <emphasis role="pkg">cinnamon-desktop-environment</emphasis> (<emphasis
+      role="pkg">task-cinnamon-desktop</emphasis>) and <emphasis
+      role="pkg">mate-desktop-environment</emphasis> (<emphasis
+      role="pkg">task-mate-desktop</emphasis>) metapackages
+
       <ulink type="block" url="https://developer.linuxmint.com/projects/cinnamon-projects.html"/>
       <ulink type="block" url="https://mate-desktop.org/"/>
       </para>
@@ -780,7 +815,7 @@
       Glade (in the <emphasis role="pkg">glade</emphasis> package) is
       an application designed to create GTK+ graphical interfaces for
       GNOME and save them in an XML file. These XML files can then be
-      loaded by the GTK+ shared library though its
+      loaded by the GTK+ shared library through its
       <literal>GtkBuilder</literal> component to recreate the saved
       interfaces; such a feature can be interesting, for instance for
       plugins that require dialogs.
@@ -870,6 +905,7 @@
     <para>LibreOffice and Calligra Suite are available in the <emphasis
     role="pkg">libreoffice</emphasis> and <emphasis
     role="pkg">calligra</emphasis> Debian packages, respectively.</para>
+
     <para>Language-specific packs for LibreOffice are
     distributed in separate packages, most notably <emphasis
     role="pkg">libreoffice-l10n-*</emphasis> and <emphasis
@@ -960,6 +996,9 @@
 
     <sidebar>
       <title><emphasis>TIP</emphasis> Working around a winecfg failure</title>
+      <indexterm><primary><command>winecfg</command></primary></indexterm>
+      <indexterm><primary><command>wine64</command></primary></indexterm>
+      <indexterm><primary><command>wine32</command></primary></indexterm>
 
       <para>In some cases, <command>winecfg</command> (which is just a wrapper)
       might fail. As a work-around, it is possible to try to run the underlying
@@ -997,9 +1036,9 @@
       <foreignphrase>Windows NT/2000 Terminal Server</foreignphrase> uses
       to display desktops on remote machines.</para>
 
-      <indexterm><primary>RDP</primary><see>Remote Desktop Protocol</see></indexterm>
-      <indexterm><primary><emphasis>Remote Desktop Protocol</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis>Windows Terminal Server</emphasis></primary></indexterm>
+      <indexterm><primary>RDP</primary></indexterm>
+      <indexterm><primary>Remote Desktop Protocol</primary><see>RDP</see></indexterm>
+      <indexterm><primary>Windows</primary><secondary>Terminal Server</secondary></indexterm>
 
       <para>The VNC software provides similar features, with the added
       benefit of also working with many operating systems. Linux VNC
@@ -1010,8 +1049,8 @@
 
   <section id="sect.rtc-clients">
     <title>Real-Time Communications software</title>
-    <indexterm><primary>Real-Time Communication</primary></indexterm>
-    <indexterm><primary>RTC</primary><see>Real-Time Communication</see></indexterm>
+    <indexterm><primary>Real-Time Communication</primary><see>RTC</see></indexterm>
+    <indexterm><primary>RTC</primary></indexterm>
 
     <para>Debian provides a wide range of Real-Time Communications
     (<acronym>RTC</acronym>) client software. The setup of RTC servers is
@@ -1035,12 +1074,9 @@
     world, it is recommended to configure both SIP and XMPP clients
     or a single client that supports both protocols.</para>
 
-    <indexterm><primary>Session Initiation Protocol</primary></indexterm>
-    <indexterm><primary>Extensible Messaging and Presence Protocol</primary></indexterm>
-    <indexterm><primary>Instant Messaging</primary></indexterm>
-    <indexterm><primary>SIP</primary><see>Session Initiation Protocol</see></indexterm>
-    <indexterm><primary>XMPP</primary><see>Extensible Messaging and Presence Protocol</see></indexterm>
-    <indexterm><primary>IM</primary><see>Instant Messaging</see></indexterm>
+    <indexterm><primary>SIP</primary></indexterm>
+    <indexterm><primary>XMPP</primary></indexterm>
+    <indexterm><primary>IM</primary></indexterm>
 
     <para>The default GNOME desktop suggests the Empathy communications
     client. Empathy can support both SIP and XMPP. It supports instant
@@ -1079,10 +1115,10 @@
 
     <sidebar>
       <title><emphasis>TIP</emphasis> Look for clients supporting ICE and TURN</title>
-      <indexterm><primary>Traversal Using Relays around NAT</primary></indexterm>
-      <indexterm><primary>Interactive Connectivity Establishment</primary></indexterm>
-      <indexterm><primary>TURN</primary><see>Traversal Using Relays around NAT</see></indexterm>
-      <indexterm><primary>ICE</primary><see>Interactive Connectivity Establishment</see></indexterm>
+      <indexterm><primary><foreignphrase>Traversal Using Relays around NAT</foreignphrase></primary><see>TURN</see></indexterm>
+      <indexterm><primary><foreignphrase>Interactive Connectivity Establishment</foreignphrase></primary><see>ICE</see></indexterm>
+      <indexterm><primary>TURN</primary></indexterm>
+      <indexterm><primary>ICE</primary></indexterm>
 
       <para>Some RTC clients have significant problems sending voice and
       video through firewalls and NAT networks. Users may receive
@@ -1112,8 +1148,8 @@
      users and the server by tunneling the IRC protocol inside
      SSL.</para>
 
-     <indexterm><primary>IRC</primary><see>Internet Relay Chat</see></indexterm>
-     <indexterm><primary><foreignphrase>Internet Relay Chat</foreignphrase></primary></indexterm>
+     <indexterm><primary>IRC</primary></indexterm>
+     <indexterm><primary><foreignphrase>Internet Relay Chat</foreignphrase></primary><see>IRC</see></indexterm>
 
      <para>IRC clients are a bit more complex, and they usually
      provide many features that are of limited use in a corporate
