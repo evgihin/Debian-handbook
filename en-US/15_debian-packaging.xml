@@ -291,18 +291,19 @@ dpkg-source: info: applying [...]
       disable some of their features when a required library is not
       available at build time. The switch can still be very useful if you only
       want to create a source package, which is supposed to be passed to clean
-      build environments (like <emphasis role="pkg">sbuild</emphasis>,
-      <emphasis role="pkg">pbuilder</emphasis>, or <emphasis
-      role="pkg">cowbuilder</emphasis>, etc.).</para>
+      build environments as descibed in <xref linkend="sidebar.schroot"/>.</para>
 
       <para>The other options used in the above example make sure that neither
       the source package's <filename>.dsc</filename> (<literal>-us</literal>)
       nor the produced <filename>.changes</filename> file
       (<literal>-uc</literal>) get signed with the package builder's
-      cryptographic key.</para>
+      cryptographic key after the asuccessful build.</para>
 
       <sidebar id="sidebar.fakeroot">
         <title><emphasis>TOOL</emphasis> <command>fakeroot</command></title>
+        <indexterm><primary><command>fakeroot</command></primary></indexterm>
+        <indexterm><primary>root</primary></indexterm>
+        <indexterm><primary>account</primary><secondary>root account</secondary></indexterm>
 
         <para>In essence, the package creation process is a simple matter
         of gathering in an archive a set of existing (or built) files; most
@@ -328,45 +329,79 @@ dpkg-source: info: applying [...]
         actually get root privileges that it could abuse.</para>
       </sidebar>
 
-      <para>More often than not, Debian developers use a higher-level
-      program such as <command>debuild</command>; this runs
+      <para>More often than not, Debian developers use a higher-level program
+      such as <command>debuild</command>; this runs
       <command>dpkg-buildpackage</command> as usual, but it also adds an
-      invocation of a program that runs many checks to validate the
-      generated package against the Debian policy. This script also cleans
-      up the environment so that local environment variables do not
-      “pollute” the package build. The <command>debuild</command>
-      command is one of the tools in the <emphasis>devscripts</emphasis>
-      suite, which share some consistency and configuration to make the
-      maintainers' task easier.</para>
+      invocation of a program that runs many checks to validate the generated
+      package against the Debian policy. This script also cleans up the
+      environment so that local environment variables do not “pollute” the
+      package build. The <command>debuild</command> command is one of the tools
+      in the <emphasis role="pkg">devscripts</emphasis> suite, which share some
+      consistency and configuration to make the maintainers' task
+      easier.</para>
 
-      <sidebar>
-        <title><emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted</emphasis> environment</title>
+      <indexterm><primary><command>debuild</command></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">devscripts</emphasis></primary></indexterm>
+
+      <sidebar id="sidebar.schroot">
+        <title><emphasis>QUICK LOOK</emphasis> Building packages in <emphasis>chrooted</emphasis> and <emphasis>virtual</emphasis> environments</title>
         <indexterm><primary><command>pbuilder</command></primary></indexterm>
+        <indexterm><primary><command>cowbuilder</command></primary></indexterm>
         <indexterm><primary><command>schroot</command></primary></indexterm>
+        <indexterm><primary><command>sbuild</command></primary></indexterm>
 
-	<para>The <command>pbuilder</command> program (in the similarly
-	named package) allows building a Debian package in a
-	<emphasis>chrooted</emphasis> environment. It first creates a
-	temporary directory containing the minimal system required for
-	building the package (including the packages mentioned in the
-	<emphasis>Build-Depends</emphasis> field). This directory is then
-	used as the root directory (<filename>/</filename>), using the
-	<command>chroot</command> command, during the build process.</para>
+        <para>Building a package on an existing system, like a workstation or
+        server, can pose several problems. Maybe the system has packages
+        installed, that conflict with the build requirements. Or maybe it has
+        packages (libraries, headers, etc.) installed, that the project to
+        build is not supposed to use - e.g. from <emphasis
+        role="distribution">Testing</emphasis>, <emphasis
+        role="distribution">Unstable</emphasis>, or even from third parties.
+        Also it might have packages installed, which are actually required for
+        the build, but are not listed in <filename>debian/control</filename>.
+        It is therefore a good practice to build a packages in “clean“
+        environments.</para>
 
-	<para>This tool allows the build process to happen in an
-	environment that is not altered by users' manipulations. This also
-	allows for quick detection of the missing build-dependencies (since
-	the build will fail unless the appropriate dependencies are
-	documented). Finally, it allows building a package for a Debian
-	version that is not the one used by the system as a whole: the
-	machine can be using <emphasis
-	role="distribution">Stable</emphasis> for its normal workload, and
-	a <command>pbuilder</command> running on the same machine can be
-	using <emphasis role="distribution">Unstable</emphasis> for package
-	builds.</para>
+        <para>The <command>sbuild</command>, <command>pbuilder</command>, or
+        <command>cowbuilder</command> programs (in the similarly named
+        packages) allow building a Debian package in a
+        <emphasis>chrooted</emphasis> environment. Each of them first creates a
+        temporary directory containing the minimal system required for building
+        the package (including the packages mentioned in the
+        <emphasis>Build-Depends</emphasis> field). This directory is then used
+        as the root directory (<filename>/</filename>), using the
+        <command>chroot</command> command, during the build process.</para>
 
-        <para><command>schroot</command> allows running a command or a login
+        <indexterm><primary><command>chroot</command></primary></indexterm>
+
+        <para>These tools allow the build process to happen in an environment
+        that is not altered by users' manipulations. This also allows for quick
+        detection of the missing build-dependencies (since the build will fail
+        unless the appropriate dependencies are documented). Finally, it allows
+        building a package for a Debian version that is not the one used by the
+        system as a whole: the machine can be using <emphasis
+        role="distribution">Stable</emphasis> for its normal workload, and the
+        chrooted environments can be running on the same machine using
+        <emphasis role="distribution">Unstable</emphasis> for package builds.
+        Using these tools, it is also possible to build for a different
+        distribution, like <emphasis
+        role="distribution">Ubuntu</emphasis>.</para>
+
+        <para><command>schroot</command>, <command>sbuild-shell</command>, or
+        <command>pbuilder</command> allow running a command or a login
         shell in a <emphasis>chrooted</emphasis> environment.</para>
+
+        <para>Sometimes it is not enough to build a package in a chrooted
+        environment. This can be due to building for a different architecture
+        where cross-compilation does not work, or due to the tools not being
+        able to create a chrooted environment for the desired target system.
+        Then one can create virtual machines to build the package there. These
+        setups are usually more complex then the tools mentioned above, and
+        rarely needed, so we will only mention this possibility without going
+        into much detail. Check out <xref linkend="sect.virtualization"/> for
+        an introduction into this topic.</para>
+
+        <indexterm><primary>virtualization</primary></indexterm>
       </sidebar>
     </section>
   </section>
@@ -1253,4 +1288,4 @@ release_label = Internal Packages
     </section>
   </section>
 </chapter>
-<!-- vim: set ft=xml tw=79 ts=2 sw=2 ai si et: -->
+<!-- vim: set spell spl=en_us ft=xml tw=79 ts=2 sw=2 ai si et: -->
