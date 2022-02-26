@@ -405,10 +405,15 @@ dpkg-source: info: applying [...]
       </sidebar>
     </section>
   </section>
+
   <section id="sect.building-first-package">
     <title>Building your First Package</title>
     <section>
       <title>Meta-Packages or Fake Packages</title>
+      <indexterm><primary>package</primary><secondary>meta-package</secondary></indexterm>
+      <indexterm><primary>meta-package</primary></indexterm>
+      <indexterm><primary>package</primary><secondary>fake package</secondary></indexterm>
+      <indexterm><primary>fake package</primary></indexterm>
 
       <para>Fake packages and meta-packages are similar, in that they are
       empty shells that only exist for the effects their meta-data have on
@@ -443,18 +448,23 @@ dpkg-source: info: applying [...]
       within the scope of <command>equivs-build</command>, and they will
       not be kept in the headers of the generated package.</para>
 
+      <indexterm><primary><emphasis role="pkg">equivs</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">equivs</emphasis></primary><secondary><command>equivs-control</command></secondary></indexterm>
+      <indexterm><primary><emphasis role="pkg">equivs</emphasis></primary><secondary><command>equivs-build</command></secondary></indexterm>
+
       <example>
         <title>Header file of the <emphasis>libxml-libxml-perl</emphasis> fake package</title>
 
-        <programlisting>
+        <!-- MAY CHANGE: default policy version -->
+        <programlisting><![CDATA[
 Section: perl
 Priority: optional
-Standards-Version: 4.4.1
+Standards-Version: 4.5.1
 
 Package: libxml-libxml-perl
-Version: 2.0134-1
-Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;
-Depends: libxml2 (&gt;= 2.7.4)
+Version: 2.0207-1
+Maintainer: Raphael Hertzog <hertzog@debian.org>
+Depends: libxml2 (>= 2.9.10)
 Architecture: all
 Description: Fake package - module manually installed in site_perl
  This is a fake package to let the packaging system
@@ -463,16 +473,60 @@ Description: Fake package - module manually installed in site_perl
  In fact, the package is not installed since a newer version
  of the module has been manually compiled &amp; installed in the
  site_perl directory.
-</programlisting>
+]]></programlisting>
       </example>
 
       <para>The next step is to generate the Debian package with the
       <command>equivs-build <replaceable>file</replaceable></command>
       command. Voilà: the package is created in the current directory and
       it can be handled like any other Debian package would.</para>
+
+      <screen><computeroutput>$ </computeroutput><userinput>equivs-build <replaceable>file</replaceable>
+</userinput><computeroutput><![CDATA[equivs-build control 
+dpkg-buildpackage: info: source package libxml-libxml-perl
+dpkg-buildpackage: info: source version 2.0207-1
+dpkg-buildpackage: info: source distribution unstable
+dpkg-buildpackage: info: source changed by Raphael Hertzog <hertzog@debian.org>
+dpkg-buildpackage: info: host architecture amd64
+ dpkg-source --before-build .
+ debian/rules clean
+dh clean
+   dh_clean
+ debian/rules binary
+dh binary
+   dh_update_autotools_config
+   dh_autoreconf
+   create-stamp debian/debhelper-build-stamp
+   dh_prep
+   dh_install
+   dh_installdocs
+   dh_installchangelogs
+   dh_perl
+   dh_link
+   dh_strip_nondeterminism
+   dh_compress
+   dh_fixperms
+   dh_missing
+   dh_installdeb
+   dh_gencontrol
+   dh_md5sums
+   dh_builddeb
+dpkg-deb: building package 'libxml-libxml-perl' in '../libxml-libxml-perl_2.0207-1_all.deb'.
+ dpkg-genbuildinfo --build=binary
+ dpkg-genchanges --build=binary >../libxml-libxml-perl_2.0207-1_amd64.changes
+dpkg-genchanges: info: binary-only upload (no source code included)
+ dpkg-source --after-build .
+dpkg-buildpackage: info: binary-only upload (no source included)
+
+The package has been created.
+Attention, the package has been created in the current directory,
+not in ".." as indicated by the messaige above!
+]]></computeroutput></screen>
     </section>
     <section>
       <title>Simple File Archive</title>
+      <indexterm><primary><command>dh_make</command></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">dh-make</emphasis></primary></indexterm>
 
       <para>The Falcot Corp administrators need to create a Debian package
       in order to ease deployment of a set of documents on a large number
@@ -501,7 +555,7 @@ Type of package: (single, indep, library, python)
 <computeroutput>
 Maintainer Name     : Raphael Hertzog
 Email-Address       : hertzog@debian.org
-Date                : Fri, 04 Sep 2015 12:09:39 -0400
+Date                : Sat, 26 Feb 2021 13:02:06 +0100
 Package Name        : falcot-data
 Version             : 1.0
 License             : gpl3
@@ -513,37 +567,43 @@ Done. Please edit the files in the debian/ subdirectory now.
 $</computeroutput>
 </screen>
 
-      <para>The selected type of package (<emphasis>indep</emphasis>)
-      indicates that this source package will generate a
-      single binary package that can be shared across all architectures
-      (<literal>Architecture: all</literal>). <emphasis>single</emphasis>
-      acts as a counterpart, and leads to a single binary
-      package that is dependent on the target architecture
-      (<literal>Architecture: any</literal>). In this case, the former
-      choice is more relevant since the package only contains documents and
-      no binary programs, so it can be used similarly on computers of all
-      architectures.</para>
+      <para>The selected type of package (<emphasis>indep</emphasis>) indicates
+      that this source package will generate a single binary package that can
+      be shared across all architectures (<literal>Architecture: all</literal>
+      in <filename>debian/control</filename>). <emphasis>single</emphasis> acts
+      as a counterpart, and leads to a single binary package that is dependent
+      on the target architecture (<literal>Architecture: any</literal>). In
+      this case, the former choice is more relevant since the package only
+      contains documents and no binary programs, so it can be used similarly on
+      computers of all architectures.</para>
 
-      <indexterm><primary>package types</primary></indexterm>
       <indexterm><primary>package</primary><secondary>types</secondary></indexterm>
+      <indexterm><primary>package</primary><secondary>architecture</secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Architecture</literal></secondary></indexterm>
 
-      <para>The <emphasis>library</emphasis> type corresponds to a
-      source package leading to several binary packages. It is useful for
-      shared libraries, since they need to follow strict packaging rules.
-      </para>
+      <para>The <emphasis>library</emphasis> type corresponds to a source
+      package leading to several binary packages. It is useful for shared
+      libraries, since they need to follow strict packaging rules.</para>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Maintainer's name and email address</title>
+        <indexterm><primary><varname>DEBFULLNAME</varname></primary></indexterm>
+        <indexterm><primary>environment variables</primary><secondary><varname>DEBFULLNAME</varname></secondary></indexterm>
+        <indexterm><primary><varname>DEBEMAIL</varname></primary></indexterm>
+        <indexterm><primary>environment variables</primary><secondary><varname>DEBEMAIL</varname></secondary></indexterm>
+        <indexterm><primary><varname>EMAIL</varname></primary></indexterm>
+        <indexterm><primary>environment variables</primary><secondary><varname>EMAIL</varname></secondary></indexterm>
+        <indexterm><primary><filename>.bashrc</filename></primary></indexterm>
 
-	<para>Most of the programs involved in package maintenance will
-	look for your name and email address in the
-	<varname>DEBFULLNAME</varname> and <varname>DEBEMAIL</varname> or
-	<varname>EMAIL</varname> environment variables. Defining them once
-	and for all will avoid you having to type them multiple times. If
-	your usual shell is <command>bash</command>, it is a simple matter
-	of adding the following two lines in your
-	<filename>~/.bashrc</filename> file (you will obviously
-	replace the values with more relevant ones!):</para>
+        <para>Most of the programs involved in package maintenance will
+        look for your name and email address in the
+        <varname>DEBFULLNAME</varname> and <varname>DEBEMAIL</varname> or
+        <varname>EMAIL</varname> environment variables. Defining them once
+        and for all will avoid you having to type them multiple times. If
+        your usual shell is <command>bash</command>, it is a simple matter
+        of adding the following two lines in your
+        <filename>~/.bashrc</filename> file (you will obviously
+        replace the values with more relevant ones!):</para>
 
         <programlisting>
 export EMAIL="hertzog@debian.org"
@@ -551,47 +611,74 @@ export DEBFULLNAME="Raphael Hertzog"
 </programlisting>
       </sidebar>
 
-      <para>The <command>dh_make</command> command created a
-      <filename>debian</filename> subdirectory with many files. Some
-      are required, in particular <filename>rules</filename>,
-      <filename>control</filename>, <filename>changelog</filename> and
-      <filename>copyright</filename>. Files with the
-      <filename>.ex</filename> extension are example files that can be
-      used by modifying them (and removing the extension) when
-      appropriate. When they are not needed, removing them is
-      recommended. The <filename>compat</filename> file should be
-      kept, since it is required for the correct functioning of the
-      <emphasis>debhelper</emphasis> suite of programs (all beginning
-      with the <command>dh_</command> prefix) used at various stages
-      of the package build process.</para>
+      <indexterm><primary><filename>debian</filename></primary></indexterm>
+      <indexterm><primary><filename>debian</filename></primary><secondary><filename>rules</filename></secondary><seealso><filename>rules</filename></seealso></indexterm>
+      <indexterm><primary><filename>rules</filename></primary></indexterm>
+      <indexterm><primary><filename>debian</filename></primary><secondary><filename>control</filename></secondary><seealso><filename>control</filename></seealso></indexterm>
+      <indexterm><primary><filename>control</filename></primary></indexterm>
+      <indexterm><primary><filename>debian</filename></primary><secondary><filename>changelog</filename></secondary><seealso><filename>changelog</filename></seealso></indexterm>
+      <indexterm><primary><filename>changelog</filename></primary></indexterm>
+      <indexterm><primary><filename>debian</filename></primary><secondary><filename>copyright</filename></secondary><seealso><filename>copyright</filename></seealso></indexterm>
+      <indexterm><primary><filename>copyright</filename></primary></indexterm>
 
-      <para>The <filename>copyright</filename> file must contain
-      information about the authors of the documents included in the
-      package, and the related license. In our case, these are internal
-      documents and their use is restricted to within the Falcot Corp
-      company. The default <filename>changelog</filename> file is generally
+      <para>The <command>dh_make</command> command created a
+      <filename>debian</filename> subdirectory with many files. Some are
+      required, in particular <filename>rules</filename>,
+      <filename>control</filename>, <filename>changelog</filename> and
+      <filename>copyright</filename>. Files with the <filename>.ex</filename>
+      extension are example files that can be used by modifying them (and
+      removing the extension) when appropriate. When they are not needed,
+      removing them is recommended. The <filename>compat</filename> file is not
+      used nor created anymore. Instead of defining the debhelper compatibility
+      level as a number in this file, it is now defined as a build-dependency
+      on the <emphasis role="pkg">debhelper-compat</emphasis> virtual package
+      in the <literal>Build-Depends</literal> file in
+      <filename>debian/control</filename>.</para>
+
+      <para>The <filename>copyright</filename> file must contain information
+      about the authors of the documents included in the package, and the
+      related copyright and license. In our case, these are internal documents
+      and their use is restricted to within the Falcot Corp company. The
+      default format used for this file is defined in the
+      <literal>Format</literal> field. <ulink type="block"
+      url="https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/"/></para>
+
+      <para>The default <filename>changelog</filename> file is generally
       appropriate; replacing the “Initial release” with a more verbose
       explanation and changing the distribution from
-      <literal>unstable</literal> to <literal>internal</literal> is enough.
-      The <filename>control</filename> file was also updated: the <literal>Section</literal> field
-      has been changed to <emphasis>misc</emphasis> and the
-      <literal>Homepage</literal>, <literal>Vcs-Git</literal> and
-      <literal>Vcs-Browser</literal> fields were removed. The
-      <literal>Depends</literal> fields was completed with
+      <literal>UNRELEASED</literal> or <literal>unstable</literal> to the
+      target release name is enough.</para>
+
+      <para>The <filename>control</filename> file must also be updated: the
+      <literal>Section</literal> field can be changed to
+      <emphasis>misc</emphasis> and the <literal>Homepage</literal>,
+      <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were
+      removed. The <literal>Depends</literal> fields was completed with
       <literal>firefox-esr | www-browser</literal> so as to ensure the
       availability of a web browser able to display the documents in the
-      package.</para>
+      package. If the package does not require to run any commands as root (see
+      <xref linkend="sidebar.fakeroot"/>), the
+      <literal>Rules-Requires-Root</literal> field can be left as is.</para>
+
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Depends</literal></secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Homepage</literal></secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Rules-Requires-Root</literal></secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Section</literal></secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Vcs-Browser</literal></secondary></indexterm>
+      <indexterm><primary><filename>control</filename></primary><secondary><literal>Vcs-Git</literal></secondary></indexterm>
 
       <example>
         <title>The <filename>control</filename> file</title>
 
-        <programlisting>
+        <!-- MAY CHANGE: dh-compat version, standards version, etc. -->
+        <programlisting><![CDATA[
 Source: falcot-data
 Section: misc
 Priority: optional
-Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;
-Build-Depends: debhelper (&gt;= 10)
-Standards-Version: 4.4.1
+Maintainer: Raphael Hertzog <hertzog@debian.org>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.5.1
+Rules-Requires-Root: no
 
 Package: falcot-data
 Architecture: all
@@ -604,33 +691,35 @@ Description: Internal Falcot Corp Documentation
  .
  These documents MUST NOT leave the company.
  Their use is INTERNAL ONLY.
-</programlisting>
+]]></programlisting>
       </example>
 
       <example>
         <title>The <filename>changelog</filename> file</title>
 
-        <programlisting>
-falcot-data (1.0) internal; urgency=low
+        <!-- MAY CHANGE: distribution name -->
+        <programlisting><![CDATA[
+falcot-data (1.0) bullseye; urgency=low
 
   * Initial Release.
   * Let's start with few documents:
     - internal company structure;
     - contacts for each department.
 
- -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400
-</programlisting>
+ -- Raphael Hertzog <hertzog@debian.org>  Sat, 26 Feb 2022 15:12:06 +0100
+]]></programlisting>
       </example>
 
       <example>
         <title>The <filename>copyright</filename> file</title>
 
+        <!-- MAY CHANGE: update copyright -->
         <programlisting>
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: falcot-data
 
 Files: *
-Copyright: 2004-2019 Falcot Corp
+Copyright: 2004-2021 Falcot Corp
 License:
  All rights reserved.
 </programlisting>
@@ -639,13 +728,14 @@ License:
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> <filename>Makefile</filename> file</title>
         <indexterm><primary><filename>Makefile</filename></primary></indexterm>
+        <indexterm><primary><command>make</command></primary></indexterm>
 
-	<para>A <filename>Makefile</filename> file is a script used by the
-	<command>make</command> program; it describes rules for how to
-	build a set of files from each other in a tree of dependencies (for
-	instance, a program can be built from a set of source files). The
-	<filename>Makefile</filename> file describes these rules in the
-	following format:</para>
+        <para>A <filename>Makefile</filename> file is a script used by the
+        <command>make</command> program; it describes rules for how to
+        build a set of files from each other in a tree of dependencies (for
+        instance, a program can be built from a set of source files). The
+        <filename>Makefile</filename> file describes these rules in the
+        following format:</para>
 
         <programlisting>
 target: source1 source2 ...
@@ -653,17 +743,19 @@ target: source1 source2 ...
         command2
 </programlisting>
 
-	<para>The interpretation of such a rule is as follows: if one of
-	the <literal>source*</literal> files is more recent than the
-	<literal>target</literal> file, then the target needs to be
-	generated, using <command>command1</command> and
-	<command>command2</command>.</para>
+        <para>The basic interpretation of such a rule is as follows: if one of
+        the <literal>source*</literal> files is more recent than the
+        <literal>target</literal> file, then the target needs to be generated,
+        using <command>command1</command> and
+        <command>command2</command>.</para>
 
-	<para>Note that the command lines must start with a tab character;
-	also note that when a command line starts with a dash character
-	(<literal>-</literal>), failure of the command does not interrupt
-	the whole process.</para>
+        <para>Note that the command lines must start with a tab character;
+        also note that when a command line starts with a dash character
+        (<literal>-</literal>), failure of the command does not interrupt
+        the whole process.</para>
       </sidebar>
+
+      <indexterm><primary><filename>rules</filename></primary></indexterm>
 
       <para>The <filename>rules</filename> file usually contains a set of
       rules used to configure, build and install the software in a
@@ -688,17 +780,21 @@ target: source1 source2 ...
       <command>dh_install</command> command by creating the following
       <filename>debian/falcot-data.install</filename> file:</para>
 
+      <indexterm><primary><command>dh</command></primary><secondary><command>dh_install</command></secondary></indexterm>
+
       <programlisting>
 data/* usr/share/falcot-data/
 </programlisting>
 
-      <para>At this point, the package can be created. We will, however, add
-      a lick of paint. Since the administrators want the documents to be
-      easily accessed from the menus of graphical desktop environments,
-      we add a <filename>falcot-data.desktop</filename> file and
-      get it installed in <filename>/usr/share/applications</filename>
-      by adding a second line to <filename>debian/falcot-data.install</filename>.
-      </para>
+      <para>At this point, the package can be created. We will, however, add a
+      lick of paint. Since the administrators want the documents to be easily
+      accessed from the menus of graphical desktop environments, we add a
+      <filename>falcot-data.desktop</filename> file and get it installed in
+      <filename>/usr/share/applications</filename> by adding a second line to
+      <filename>debian/falcot-data.install</filename>.</para>
+
+      <indexterm><primary><filename>.desktop</filename></primary></indexterm>
+      <indexterm><primary><filename>.install</filename></primary></indexterm>
 
       <example>
         <title>The <filename>falcot-data.desktop</filename> file</title>
@@ -726,8 +822,11 @@ falcot-data.desktop usr/share/applications/
       for rebuilding packages: we run the <command>dpkg-buildpackage -us
       -uc</command> command from within the
       <filename>falcot-data-1.0</filename> directory.</para>
+
+      <indexterm><primary><command>dpkg-buildpackage</command></primary></indexterm>
     </section>
   </section>
+
   <section id="sect.setup-apt-package-repository">
     <title>Creating a Package Repository for APT</title>
     <indexterm><primary>package archive</primary></indexterm>
