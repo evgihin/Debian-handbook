@@ -1021,84 +1021,72 @@ release_label = Internal Packages
 
   <section id="sect.becoming-package-maintainer">
     <title>Becoming a Package Maintainer</title>
+    <indexterm><primary>package</primary><secondary>maintainer</secondary></indexterm>
+    <indexterm><primary>package</primary><secondary>new maintainer</secondary></indexterm>
+
     <section>
       <title>Learning to Make Packages</title>
+      <indexterm><primary>package</primary><secondary>creation</secondary></indexterm>
 
-      <para>Creating a quality Debian package is not always a simple task,
-      and becoming a package maintainer takes some learning, both with
-      theory and practice. It is not a simple matter of building and
-      installing software; rather, the bulk of the complexity comes from
-      understanding the problems and conflicts, and more generally the
-      interactions, with the myriad of other packages available.</para>
+      <para>Creating a quality Debian package is not always a simple task, and
+      becoming a package maintainer takes some learning, both with theory and
+      practice in technical and legal matters. It is not a simple matter of
+      building and installing software; rather, the bulk of the complexity
+      comes from understanding the problems and conflicts, and more generally
+      the interactions, with the myriad of other packages available.</para>
+
       <section>
         <title>Rules</title>
+        <indexterm><primary>package</primary><secondary>policy</secondary></indexterm>
+        <indexterm><primary>Debian</primary><secondary>Policy</secondary></indexterm>
+        <indexterm><primary><filename>control</filename></primary><secondary><literal>Standards-Version</literal></secondary></indexterm>
 
-	<para>A Debian package must comply with the precise rules compiled
-	in the Debian policy, and each package maintainer must know them.
-	There is no requirement to know them by heart, but rather to know
-	they exist and to refer to them whenever a choice presents a
-	non-trivial alternative. Every Debian maintainer has made mistakes
-	by not knowing about a rule, but this is not a huge problem as long
-	as the error gets fixed when a user reports it as a bug report (which
+        <para>A Debian package must comply with the precise rules compiled
+        in the Debian policy, and each package maintainer must know them.
+        There is no requirement to know them by heart, but rather to know
+        they exist and to refer to them whenever a choice presents a
+        non-trivial alternative. Every Debian maintainer has made mistakes
+        by not knowing about a rule, but this is not a huge problem as long
+        as the error gets fixed when a user reports it as a bug report (which
         tends to happen fairly soon thanks to advanced users). The
         <literal>Standards-Version</literal> field in
         <filename>debian/control</filename> specifies the version of the
         Debian policy with which a package complies. Maintainers should
         comply to the latest version of the Debian policy.
-        <ulink type="block" url="https://www.debian.org/doc/debian-policy/"/></para>
+
+        <ulink type="block" url="https://www.debian.org/doc/debian-policy/"/>
+        </para>
       </section>
       <section>
         <title>Procedures</title>
-        <indexterm><primary>Debian Developer's Reference</primary></indexterm>
+        <indexterm><primary>Debian</primary><secondary>Developer's Reference</secondary></indexterm>
+        <indexterm><primary>package</primary><secondary>developer's reference</secondary></indexterm>
 
-	<para>Debian is not a simple collection of individual packages.
-	Everyone's packaging work is part of a collective project; being a
-	Debian developer involves knowing how the Debian project operates
-	as a whole. Every developer will, sooner or later, interact with
-	others. The Debian Developer's Reference (in the <emphasis
-	role="pkg">developers-reference</emphasis> package) summarizes what
-	every developer must know in order to interact as smoothly as
-	possible with the various teams within the project, and to take the
-	best possible advantages of the available resources. This document
-	also enumerates a number of duties a developer is expected to
-	fulfill. <ulink type="block"
-          url="https://www.debian.org/doc/manuals/developers-reference/"/></para>
+        <para>Debian is not a simple collection of individual packages.
+        Everyone's packaging work is part of a collective project; being a
+        Debian developer involves knowing how the Debian project operates
+        as a whole. Every developer will, sooner or later, interact with
+        others. The Debian Developer's Reference (in the <emphasis
+        role="pkg">developers-reference</emphasis> package) summarizes what
+        every developer must know in order to interact as smoothly as
+        possible with the various teams within the project, and to take the
+        best possible advantages of the available resources. This document
+        also enumerates a number of duties a developer is expected to
+        fulfill.
+
+        <ulink type="block" url="https://www.debian.org/doc/manuals/developers-reference/"/>
+        </para>
       </section>
       <section>
         <title>Tools</title>
 
-	<para>Many tools help package maintainers in their work. This
-	section describes them quickly, but does not give the full details,
-	since they all have comprehensive documentation of their
-	own.</para>
-        <section>
-          <title>The <command>lintian</command> Program</title>
-          <indexterm><primary><command>lintian</command></primary></indexterm>
+        <para>Many tools help package maintainers in their work. This
+        section describes them quickly, but does not give the full details,
+        since they all have comprehensive documentation of their
+        own.</para>
 
-	  <para>This tool is one of the most important: it is the Debian
-	  package checker. It is based on a large array of tests created
-	  from the Debian policy, and detects quickly and automatically
-	  many errors that can then be fixed before packages are
-	  released.</para>
+        <indexterm><primary>package</primary><secondary>tools</secondary></indexterm>
 
-	  <para>This tool is only a helper, and it sometimes gets it wrong
-	  (for instance, since the Debian policy changes over time,
-	  <command>lintian</command> is sometimes outdated). It is also not
-	  exhaustive: not getting any Lintian error should not be
-	  interpreted as a proof that the package is perfect; at most, it
-	  avoids the most common errors.</para>
-        </section>
-        <section>
-          <title>The <command>piuparts</command> Program</title>
-          <indexterm><primary><command>piuparts</command></primary></indexterm>
-
-	  <para>This is another important tool: it automates the
-	  installation, upgrade, removal and purge of a package (in an
-	  isolated environment), and checks that none of these
-	  operations leads to an error.  It can help in detecting
-	  missing dependencies, and it also detects when files are
-	  incorrectly left over after the package got purged.</para>
-        </section>
         <section>
           <title>devscripts</title>
           <indexterm><primary><emphasis role="pkg">devscripts</emphasis></primary></indexterm>
@@ -1107,116 +1095,242 @@ release_label = Internal Packages
           <indexterm><primary><command>uscan</command></primary></indexterm>
           <indexterm><primary><command>debi</command></primary></indexterm>
           <indexterm><primary><command>debc</command></primary></indexterm>
+          <indexterm><primary><command>bts</command></primary></indexterm>
 
-	  <para>The <emphasis role="pkg">devscripts</emphasis> package
-	  contains many programs helping with a wide array of a Debian
-	  developer's job:</para>
+          <para>The <emphasis role="pkg">devscripts</emphasis> package
+          contains many programs helping with a wide array of a Debian
+          developer's job:</para>
           <itemizedlist>
             <listitem>
-	      <para><command>debuild</command> allows generating a package
-	      (with <command>dpkg-buildpackage</command>) and running
-	      <command>lintian</command> to check its compliance with the
-	      Debian policy afterwards.</para>
+              <para><command>debuild</command> allows generating a package
+              (with <command>dpkg-buildpackage</command>) and running
+              <command>lintian</command> to check its compliance with the
+              Debian policy afterwards.</para>
             </listitem>
             <listitem>
-	      <para><command>debclean</command> cleans a source package
-	      after a binary package has been generated.</para>
+              <para><command>debclean</command> cleans a source package
+              after a binary package has been generated.</para>
             </listitem>
             <listitem>
-	      <para><command>dch</command> allows quick and easy editing of
-	      a <filename>debian/changelog</filename> file in a source
-	      package.</para>
+              <para><command>dch</command> allows quick and easy editing of
+              a <filename>debian/changelog</filename> file in a source
+              package.</para>
             </listitem>
             <listitem>
-	      <para><command>uscan</command> checks whether a new version
-	      of a software has been released by the upstream author; this
-	      requires a <filename>debian/watch</filename> file with a
-	      description of the location of such releases.</para>
+              <para><command>uscan</command> checks whether a new version
+              of a software has been released by the upstream author; this
+              requires a <filename>debian/watch</filename> file with a
+              description of the location of such releases.</para>
+              <indexterm><primary><filename>debian</filename></primary><secondary><filename>watch</filename></secondary></indexterm>
             </listitem>
             <listitem>
-	      <para><command>debi</command> allows installing (with
-	      <command>dpkg -i</command>) the Debian package that was just
-	      generated without the need to type its full name and path.</para>
+              <para><command>debi</command> allows installing (with
+              <command>dpkg -i</command>) the Debian package that was just
+              generated without the need to type its full name and path.</para>
             </listitem>
             <listitem>
-	      <para>In a similar fashion, <command>debc</command> allows
-	      scanning the contents of the recently-generated package (with
-	      <command>dpkg -c</command>), without needing to type its full
-	      name and path.</para>
+              <para>In a similar fashion, <command>debc</command> allows
+              scanning the contents of the recently-generated package (with
+              <command>dpkg -c</command>), without needing to type its full
+              name and path.</para>
             </listitem>
             <listitem>
-	      <para><command>bts</command> controls the bug tracking system
-	      from the command line; this program automatically generates
-	      the appropriate emails.</para>
+              <para><command>bts</command> controls the bug tracking system
+              from the command line; this program automatically generates
+              the appropriate emails.
+              <ulink type="block" url="https://www.debian.org/Bugs/server-refcard"/>
+              </para>
             </listitem>
             <listitem>
-	      <para><command>debrelease</command> uploads a
-	      recently-generated package to a remote server, without
-	      needing to type the full name and path of the related
-	      <filename>.changes</filename> file.</para>
+              <para><command>debrelease</command> uploads a
+              recently-generated package to a remote server, without
+              needing to type the full name and path of the related
+              <filename>.changes</filename> file.</para>
+              <indexterm><primary><filename>.changes</filename></primary></indexterm>
             </listitem>
             <listitem>
-	      <para><command>debsign</command> signs the
-	      <filename>*.dsc</filename> and <filename>*.changes</filename>
-	      files.</para>
+              <para><command>debsign</command> signs the
+              <filename>*.dsc</filename> and <filename>*.changes</filename>
+              files.</para>
+              <indexterm><primary><filename>.changes</filename></primary></indexterm>
+              <indexterm><primary><filename>.dsc</filename></primary></indexterm>
             </listitem>
             <listitem>
-	      <para><command>uupdate</command> automates the creation of a
-	      new revision of a package when a new upstream version has
-	      been released.</para>
+              <para><command>uupdate</command> automates the creation of a
+              new revision of a package when a new upstream version has
+              been released.</para>
             </listitem>
           </itemizedlist>
+
+          <para>All of the mentioned commands are documented in their
+          respective manual pages. They can further be configured per user in
+          one file: <filename>~/.devscripts</filename>.</para>
         </section>
         <section>
           <title><emphasis role="pkg">debhelper</emphasis> and <emphasis role="pkg">dh-make</emphasis></title>
           <indexterm><primary><emphasis>debhelper</emphasis></primary></indexterm>
           <indexterm><primary><emphasis>dh-make</emphasis></primary></indexterm>
+          <indexterm><primary><command>dh</command></primary></indexterm>
+          <indexterm><primary><filename>debian</filename></primary><secondary><filename>rules</filename></secondary></indexterm>
 
-	  <para>Debhelper is a set of scripts easing the creation of
-	  policy-compliant packages; these scripts are invoked from
-	  <filename>debian/rules</filename>. Debhelper has been widely
-	  adopted within Debian, as evidenced by the fact that it is used
-	  by the majority of official Debian packages. All the commands it
-          contains have a <command>dh_</command> prefix.</para>
+          <para>Debhelper is a set of scripts easing the creation of
+          policy-compliant packages; these scripts are invoked from
+          <filename>debian/rules</filename>. Debhelper has been widely adopted
+          within Debian, as evidenced by the fact that it is used by the
+          majority of official Debian packages. All the commands it contains
+          have a <command>dh_</command> prefix. Each of them is documented in a
+          manual page. The different compatibility levels and common options
+          are described in
+          <citerefentry><refentrytitle>debhelper</refentrytitle>
+          <manvolnum>7</manvolnum></citerefentry>.</para>
 
-	  <para>The <command>dh_make</command> script (in the
-	  <emphasis>dh-make</emphasis> package) creates files required for
-	  generating a Debian package in a directory initially containing
-	  the sources for a piece of software. As can be guessed from the
-	  name of the program, the generated files use debhelper by
-	  default.</para>
+          <para>The <command>dh_make</command> script (in the
+          <emphasis>dh-make</emphasis> package) creates files required for
+          generating a Debian package in a directory initially containing
+          the sources for a piece of software. As can be guessed from the
+          name of the program, the generated files use debhelper by
+          default.</para>
+        </section>
+        <section>
+          <title><command>lintian</command></title>
+          <indexterm><primary><command>lintian</command></primary></indexterm>
+          <indexterm><primary>package</primary><secondary>checker</secondary></indexterm>
+
+          <para>This tool is one of the most important: it is the Debian
+          package checker. It is based on a large array of tests created
+          from the Debian policy, and detects quickly and automatically
+          many errors that can then be fixed before packages are
+          released.</para>
+
+          <para>This tool is only a helper, and it sometimes gets it wrong
+          (for instance, since the Debian policy changes over time,
+          <command>lintian</command> is sometimes outdated). It is also not
+          exhaustive: not getting any Lintian error should not be
+          interpreted as a proof that the package is perfect; at most, it
+          avoids the most common errors.</para>
+        </section>
+        <section>
+          <title><command>piuparts</command></title>
+          <indexterm><primary><command>piuparts</command></primary></indexterm>
+
+          <para>This is another important tool: it automates the
+          installation, upgrade, removal and purge of a package (in an
+          isolated environment), and checks that none of these
+          operations leads to an error.  It can help in detecting
+          missing dependencies, and it also detects when files are
+          incorrectly left over after the package got purged.</para>
         </section>
         <section>
           <title><emphasis role="pkg">autopkgtest</emphasis></title>
           <indexterm><primary><emphasis>autopkgtest</emphasis></primary></indexterm>
+          <indexterm><primary>package</primary><secondary>tests</secondary></indexterm>
 
-	  <para><command>autopkgtest</command> runs tests on binary packages,
-          using the tests supplied in the source package.</para>
+          <para><command>autopkgtest</command> runs tests on binary packages,
+          using the tests supplied in the source package in
+          <filename>debian/tests/</filename>. Several commands allow the easy
+          creation of chrooted or virtual test environments.</para>
         </section>
         <section>
           <title><emphasis role="pkg">reprotest</emphasis></title>
           <indexterm><primary><emphasis>reprotest</emphasis></primary></indexterm>
 
-	  <para><command>reprotest</command> builds the same source code
+      	  <para><command>reprotest</command> builds the same source code
           twice in different environments, and then checks the binaries
           produced by each build for differences. If any are found, then
           <command>diffoscope</command> (if unavailable,
           <command>diff</command>) is used to display them in detail for later
           analysis.</para>
+
+          <indexterm><primary><command>diffoscope</command></primary></indexterm>
         </section>
         <section>
           <title><command>dupload</command> and <command>dput</command></title>
           <indexterm><primary><command>dupload</command></primary></indexterm>
           <indexterm><primary><command>dput</command></primary></indexterm>
 
-	  <para>The <command>dupload</command> and <command>dput</command>
-	  commands allow uploading a Debian package to a (possibly remote)
-	  server. This allows developers to publish their package on the
-	  main Debian server (<literal>ftp-master.debian.org</literal>) so
-	  that it can be integrated to the archive and distributed by
-	  mirrors. These commands take a <filename>*.changes</filename>
-	  file as a parameter, and deduce the other relevant files from its
-	  contents.</para>
+          <para>The <command>dupload</command> and <command>dput</command>
+          commands allow uploading a Debian package to a (possibly remote)
+          server. This allows developers to publish their package on the
+          main Debian server (<literal>ftp-master.debian.org</literal>) so
+          that it can be integrated to the archive and distributed by
+          mirrors. These commands take a <filename>.changes</filename>
+          file as a parameter, and deduce the other relevant files from its
+          contents.</para>
+
+          <indexterm><primary><filename>.changes</filename></primary></indexterm>
+        </section>
+        <section>
+          <title><emphasis role="pkg">git-buildpackage</emphasis> and <emphasis role="pkg">dgit</emphasis></title>
+          <indexterm><primary><emphasis role="pkg">git-buildpackage</emphasis></primary></indexterm>
+          <indexterm><primary><emphasis role="pkg">dgit</emphasis></primary></indexterm>
+
+          <para>The project has been using various version control systems over
+          the years to store packaging efforts or package source code, or allow
+          collaborative package maintenance. In an effort to unify the systems
+          and efforts, it was ultimately decided in 2017 to move (almost) all
+          package sources into <emphasis>Git</emphasis> (<xref
+          linkend="sidebar.git"/>) onto a Gitlab instance called
+          <literal>salsa.debian.org</literal>.
+
+          <ulink type="block" url="https://salsa.debian.org/"/>
+          </para>
+
+          <indexterm><primary><literal>salsa.debian.org</literal></primary></indexterm>
+
+          <para>To make packaging using Git easier for Debian developers, tools
+          have been developed. These allow not only to store the packaging
+          files in Git, but also to use the Git repositories (and their
+          history) of software projects, put patches applied to package sources
+          into Git history, maintain software versions per distribution,
+          etc.</para>
+
+          <para>One of the most famous packages is <emphasis
+          role="pkg">git-buildpackage</emphasis>. An alternative is <emphasis
+          role="pkg">dgit</emphasis>. Of course it is still possible to use
+          neither of those.</para>
+
+          <para>Below is an example for a <filename>~/.gbp.conf</filename>
+          configuration file </para>
+
+          <programlisting><![CDATA[[DEFAULT]
+builder = sbuild -d bullseye --build-dep-resolver=aptitude -s --source-only-changes --build-failed-commands "%SBUILD_SHELL"
+pristine-tar = true
+
+[buildpackage]
+sign-tags = true
+keyid = XXXX
+postbuild  = autopkgtest --user debci --apt-upgrade -s "$GBP_CHANGES_FILE" -- lxc --sudo autopkgtest-bullseye-amd64 
+export-dir = /tmp/build-area/
+notify = off
+
+[import-orig]
+filter-pristine-tar = true
+sign-tags = true
+
+[pq]
+drop = true
+]]></programlisting>
+
+          <para>Building the package is then as easy as running <command>gbp
+          buildpackage</command> in the Git tree. It will start a package build
+          in a Debian <emphasis role="distribution">Bullseye</emphasis> chroot
+          using <command>sbuild</command>. When the build succeeds, the created
+          files are checked running the
+          <command>autopkgtest</command>-testsuite (if defined). All the
+          various options are explained in
+          <citerefentry><refentrytitle>gbp.conf</refentrytitle>
+          <manvolnum>5</manvolnum></citerefentry> and
+          <filename>/etc/git-buildpackage/gbp.conf</filename>.</para>
+
+          <indexterm><primary><command>gbp</command></primary></indexterm>
+          <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/git-buildpackage/gbp.conf</filename></secondary></indexterm>
+
+          <para>All the tools mentioned so far have been included in the
+          continuous integration (CI) process in the
+          <literal>salsa.debian.org</literal> instance as well:
+          <ulink type="block" url="https://salsa.debian.org/salsa-ci-team/pipeline"/>
+          </para>
+
         </section>
       </section>
     </section>
