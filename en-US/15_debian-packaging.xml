@@ -829,7 +829,7 @@ falcot-data.desktop usr/share/applications/
 
   <section id="sect.setup-apt-package-repository">
     <title>Creating a Package Repository for APT</title>
-    <indexterm><primary>package archive</primary></indexterm>
+    <indexterm><primary>package</primary><secondary>archive</secondary></indexterm>
     <indexterm><primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary></indexterm>
 
     <para>Falcot Corp gradually started maintaining a number of Debian
@@ -843,10 +843,13 @@ falcot-data.desktop usr/share/applications/
     <filename>/etc/apt/sources.list.d/falcot.list</filename> file to be as
     follows:</para>
 
+    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list.d/</filename></secondary></indexterm>
+
     <programlisting>
 deb http://packages.falcot.com/ updates/
 deb http://packages.falcot.com/ internal/
 </programlisting>
+
     <indexterm><primary><command>mini-dinstall</command></primary></indexterm>
 
     <para>The administrators therefore configure a virtual host on their
@@ -880,7 +883,7 @@ deb http://packages.falcot.com/ internal/
     <filename>Packages.gz</filename>.</para>
 
     <sidebar>
-      <title><emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command></title>
+      <title><emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>, <command>aptly</command>, and <command>reprepro</command></title>
       <indexterm><primary><command>apt-ftparchive</command></primary></indexterm>
 
       <para>If <command>mini-dinstall</command> seems too complex for your
@@ -906,13 +909,26 @@ deb http://packages.falcot.com/ internal/
       creating <filename>Sources.gz</filename> files in a similar
       fashion.</para>
 
-      <para><command>reprepro</command> is a more advanced tool for the same
-      purpose. It can produce, manage and synchronize a local repository of
-      packages. It stores packages and checksums in a Berkeley DB database
-      file, so no database server is needed. With <command>reprepro</command>
-      you can check signatures of mirrored repositories and create signatures
-      of the generated package indices.</para>
+      <para><command>reprepro</command> and <command>aptly</command> are more
+      advanced tools for the same purpose. They can produce, manage and
+      synchronize a number of package repositories, mirror other repositories,
+      even cherry-pick packages from official repositories and provide them
+      locally, create signatures of the generated package indices and thus
+      provide signed repositories. <command>reprepro</command> stores packages
+      and checksums in a Berkeley DB database file, so no database server is
+      needed. <command>aptly</command> provides the same functionality, but it
+      can be easier in handling. Unfortunately, both projects, although
+      probably the most feature-rich solutions, are not actively developed at
+      the moment.</para>
 
+      <para><command>reprepro</command> comes with a lot of documentation and
+      examples in <filename>/usr/share/doc/reprepro/</filename>, while
+      <command>aptly</command> has a vast online documentation.
+      <ulink type="block" url="https://www.aptly.info/"/>
+      </para>
+
+      <indexterm><primary><command>reprepro</command></primary></indexterm>
+      <indexterm><primary><command>aptly</command></primary></indexterm>
     </sidebar>
 
     <para>Configuring <command>mini-dinstall</command> requires setting up
@@ -1002,6 +1018,7 @@ release_label = Internal Packages
       changes may be relevant.</para>
     </sidebar>
   </section>
+
   <section id="sect.becoming-package-maintainer">
     <title>Becoming a Package Maintainer</title>
     <section>
