@@ -30,14 +30,22 @@
   </highlights>
   <section id="sect.raid-and-lvm">
     <title>RAID and LVM</title>
+    <indexterm><primary>RAID</primary></indexterm>
+    <indexterm><primary>LVM</primary></indexterm>
+    <indexterm><primary>Logical Volume Manager</primary><see>LVM</see></indexterm>
+    <indexterm><primary>volume</primary><secondary>logical volume</secondary></indexterm>
+    <indexterm><primary>volume</primary><secondary>raid volume</secondary></indexterm>
+    <indexterm><primary>filesystem</primary><secondary>redundancy</secondary></indexterm>
 
     <para><xref linkend="installation"/> presented these technologies from
     the point of view of the installer, and how it integrated them to make
     their deployment easy from the start. After the initial installation,
     an administrator must be able to handle evolving storage space needs
-    without having to resort to an expensive reinstallation. They must
+    without having to resort to an expensive re-installation. They must
     therefore understand the required tools for manipulating RAID and LVM
     volumes.</para>
+
+    <indexterm><primary>volume</primary><secondary>management</secondary></indexterm>
 
     <para>RAID and LVM are both techniques to abstract the mounted
     volumes from their physical counterparts (actual hard-disk drives
@@ -53,13 +61,15 @@
 
     <sidebar>
       <title><emphasis>PERSPECTIVE</emphasis> Btrfs combines LVM and RAID</title>
+      <indexterm><primary><command>mount</command></primary><secondary>Btrfs</secondary></indexterm>
+      <indexterm><primary>Btrfs</primary></indexterm>
 
       <para>While LVM and RAID are two distinct kernel subsystems that
       come between the disk block devices and their filesystems,
       <emphasis>btrfs</emphasis> is a filesystem, initially
       developed at Oracle, that purports to combine the featuresets of
       LVM and RAID and much more.
-      <ulink type="block" url="https://btrfs.wiki.kernel.org/index.php/Main_Page"/></para>
+      <ulink type="block" url="https://btrfs.wiki.kernel.org/"/></para>
 
       <para>Among the noteworthy features are the ability to take a
       snapshot of a filesystem tree at any point in time. This snapshot
@@ -67,6 +77,8 @@
       duplicated when one of the copies is modified. The filesystem also
       handles transparent compression of files, and checksums ensure the
       integrity of all stored data.</para>
+
+      <indexterm><primary>filesystem</primary><secondary>snapshot</secondary></indexterm>
     </sidebar>
 
     <para>In both the RAID and LVM cases, the kernel provides a block
@@ -77,9 +89,11 @@
     configuration, this block can be stored on one or several physical
     disks, and its physical location may not be directly correlated to the
     location of the block in the logical device.</para>
+
     <section id="sect.raid-soft">
       <title>Software RAID</title>
-      <indexterm><primary>RAID</primary></indexterm>
+      <indexterm><primary>RAID</primary><secondary>Software RAID</secondary></indexterm>
+      <indexterm><primary>Redundant Array of Independent Disks</primary><see>RAID</see></indexterm>
 
       <para>RAID means <emphasis>Redundant Array of Independent
       Disks</emphasis>. The goal of this system is to prevent data loss and
@@ -93,14 +107,18 @@
       <sidebar>
         <title><emphasis>CULTURE</emphasis> <foreignphrase>Independent</foreignphrase> or <foreignphrase>inexpensive</foreignphrase>?</title>
 
-	<para>The I in RAID initially stood for
-	<emphasis>inexpensive</emphasis>, because RAID allowed a drastic
-	increase in data safety without requiring investing in expensive
-	high-end disks. Probably due to image concerns, however, it is now
-	more customarily considered to stand for
-	<emphasis>independent</emphasis>, which doesn't have the unsavory
-	flavor of cheapness.</para>
+        <para>The I in RAID initially stood for
+        <emphasis>inexpensive</emphasis>, because RAID allowed a drastic
+        increase in data safety without requiring investing in expensive
+        high-end disks. Probably due to image concerns, however, it is now
+        more customarily considered to stand for
+        <emphasis>independent</emphasis>, which doesn't have the unsavory
+        flavor of cheapness.</para>
       </sidebar>
+
+      <indexterm><primary>RAID</primary><secondary>Hardware RAID</secondary></indexterm>
+      <indexterm><primary>RAID</primary><secondary>degraded</secondary></indexterm>
+      <indexterm><primary>RAID</primary><secondary>reconstruction</secondary></indexterm>
 
       <para>RAID can be implemented either by dedicated hardware (RAID
       modules integrated into SCSI or SATA controller cards) or by software
@@ -127,293 +145,339 @@
 
       <section id="sect.raid-levels">
         <title>Different RAID Levels</title>
+        <indexterm><primary>RAID</primary><secondary>level</secondary></indexterm>
 
-	<para>RAID is actually not a single system, but a range of
-	systems identified by their levels; the levels differ by their layout
-	and the amount of redundancy they provide. The more redundant,
-	the more failure-proof, since the system will be able to keep
-	working with more failed disks. The counterpart is that the
-	usable space shrinks for a given set of disks; seen the other
-	way, more disks will be needed to store a given amount of
-	data.</para>
+        <para>RAID is actually not a single system, but a range of
+        systems identified by their levels; the levels differ by their layout
+        and the amount of redundancy they provide. The more redundant,
+        the more failure-proof, since the system will be able to keep
+        working with more failed disks. The counterpart is that the
+        usable space shrinks for a given set of disks; seen the other
+        way, more disks will be needed to store a given amount of
+        data.</para>
+
         <variablelist>
           <varlistentry>
             <term>Linear RAID</term>
             <listitem>
-	      <para>Even though the kernel's RAID subsystem allows creating
-	      “linear RAID”, this is not proper RAID, since this setup
-	      doesn't involve any redundancy. The kernel merely aggregates
-	      several disks end-to-end and provides the resulting
-	      aggregated volume as one virtual disk (one block device).
-	      That is about its only function. This setup is rarely used by
-	      itself (see later for the exceptions), especially since the
-	      lack of redundancy means that one disk failing makes the
-	      whole aggregate, and therefore all the data,
-	      unavailable.</para>
+              <para>Even though the kernel's RAID subsystem allows creating
+              “linear RAID”, this is not proper RAID, since this setup
+              doesn't involve any redundancy. The kernel merely aggregates
+              several disks end-to-end and provides the resulting
+              aggregated volume as one virtual disk (one block device).
+              That is about its only function. This setup is rarely used by
+              itself (see later for the exceptions), especially since the
+              lack of redundancy means that one disk failing makes the
+              whole aggregate, and therefore all the data,
+              unavailable.</para>
+
+              <indexterm><primary>RAID</primary><secondary>linear</secondary></indexterm>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term>RAID-0</term>
             <listitem>
-	      <para>This level doesn't provide any redundancy either, but
-	      disks aren't simply stuck on end one after another: they are
-	      divided in <emphasis>stripes</emphasis>, and the blocks on
-	      the virtual device are stored on stripes on alternating
-	      physical disks. In a two-disk RAID-0 setup, for instance,
-	      even-numbered blocks of the virtual device will be stored on
-	      the first physical disk, while odd-numbered blocks will end
-	      up on the second physical disk.</para>
+              <para>This level doesn't provide any redundancy either, but
+              disks aren't simply stuck on end one after another: they are
+              divided in <emphasis>stripes</emphasis>, and the blocks on
+              the virtual device are stored on stripes on alternating
+              physical disks. In a two-disk RAID-0 setup, for instance,
+              even-numbered blocks of the virtual device will be stored on
+              the first physical disk, while odd-numbered blocks will end
+              up on the second physical disk.</para>
 
-	      <para>This system doesn't aim at increasing reliability,
-	      since (as in the linear case) the availability of all the
-	      data is jeopardized as soon as one disk fails, but at
-	      increasing performance: during sequential access to large
-	      amounts of contiguous data, the kernel will be able to read
-	      from both disks (or write to them) in parallel, which increases the
-	      data transfer rate. The disks are utilized entirely by the RAID device,
-	      so they should have the same size not to lose performance.</para>
+              <indexterm><primary>RAID</primary><secondary>stripes</secondary></indexterm>
 
-	      <para>RAID-0 use is shrinking, its niche being filled by LVM
-	      (see later).</para>
+              <para>This system doesn't aim at increasing reliability,
+              since (as in the linear case) the availability of all the
+              data is jeopardized as soon as one disk fails, but at
+              increasing performance: during sequential access to large
+              amounts of contiguous data, the kernel will be able to read
+              from both disks (or write to them) in parallel, which increases the
+              data transfer rate. The disks are utilized entirely by the RAID device,
+              so they should have the same size not to lose performance.</para>
+
+              <para>RAID-0 use is shrinking, its niche being filled by LVM
+              (see later).</para>
+
+              <indexterm><primary>RAID</primary><secondary>0</secondary></indexterm>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term>RAID-1</term>
             <listitem>
-	      <para>This level, also known as “RAID mirroring”, is both
-	      the simplest and the most widely used setup. In its standard
-	      form, it uses two physical disks of the same size, and
-	      provides a logical volume of the same size again. Data are
-	      stored identically on both disks, hence the “mirror”
-	      nickname. When one disk fails, the data is still available on
-	      the other. For really critical data, RAID-1 can of course be
-	      set up on more than two disks, with a direct impact on the
-	      ratio of hardware cost versus available payload space.</para>
+              <para>This level, also known as “RAID mirroring”, is both
+              the simplest and the most widely used setup. In its standard
+              form, it uses two physical disks of the same size, and
+              provides a logical volume of the same size again. Data are
+              stored identically on both disks, hence the “mirror”
+              nickname. When one disk fails, the data is still available on
+              the other. For really critical data, RAID-1 can of course be
+              set up on more than two disks, with a direct impact on the
+              ratio of hardware cost versus available payload space.</para>
+
+              <indexterm><primary>RAID</primary><secondary>1</secondary></indexterm>
+              <indexterm><primary>RAID</primary><secondary>mirror</secondary></indexterm>
 
               <sidebar>
                 <title><emphasis>NOTE</emphasis> Disks and cluster sizes</title>
 
-		<para>If two disks of different sizes are set up in a
-		mirror, the bigger one will not be fully used, since it
-		will contain the same data as the smallest one and nothing
-		more. The useful available space provided by a RAID-1
-		volume therefore matches the size of the smallest disk in
-		the array. This still holds for RAID volumes with a higher
-		RAID level, even though redundancy is stored
-		differently.</para>
+                <para>If two disks of different sizes are set up in a
+                mirror, the bigger one will not be fully used, since it
+                will contain the same data as the smallest one and nothing
+                more. The useful available space provided by a RAID-1
+                volume therefore matches the size of the smallest disk in
+                the array. This still holds for RAID volumes with a higher
+                RAID level, even though redundancy is stored
+                differently.</para>
 
-		<para>It is therefore important, when setting up RAID
-		arrays (except for RAID-0 and “linear RAID”), to only
-		assemble disks of identical, or very close, sizes, to avoid
-		wasting resources.</para>
+                <para>It is therefore important, when setting up RAID
+                arrays (except for RAID-0 and “linear RAID”), to only
+                assemble disks of identical, or very close, sizes, to avoid
+                wasting resources.</para>
               </sidebar>
 
               <sidebar>
                 <title><emphasis>NOTE</emphasis> Spare disks</title>
+                <indexterm><primary>spare disk</primary></indexterm>
 
-		<para>RAID levels that include redundancy allow assigning
-		more disks than required to an array. The extra disks are
-		used as spares when one of the main disks fails. For
-		instance, in a mirror of two disks plus one spare, if one
-		of the first two disks fails, the kernel will automatically
-		(and immediately) reconstruct the mirror using the spare
-		disk, so that redundancy stays assured after the
-		reconstruction time. This can be used as another kind of
-		safeguard for critical data.</para>
+                <para>RAID levels that include redundancy allow assigning
+                more disks than required to an array. The extra disks are
+                used as spares when one of the main disks fails. For
+                instance, in a mirror of two disks plus one spare, if one
+                of the first two disks fails, the kernel will automatically
+                (and immediately) reconstruct the mirror using the spare
+                disk, so that redundancy stays assured after the
+                reconstruction time. This can be used as another kind of
+                safeguard for critical data.</para>
 
-		<para>One would be forgiven for wondering how this is
-		better than simply mirroring on three disks to start with.
-		The advantage of the “spare disk” configuration is that
-		the spare disk can be shared across several RAID volumes.
-		For instance, one can have three mirrored volumes, with
-		redundancy assured even in the event of one disk failure,
-		with only seven disks (three pairs, plus one shared spare),
-		instead of the nine disks that would be required by three
-		triplets.</para>
+                <para>One would be forgiven for wondering how this is
+                better than simply mirroring on three disks to start with.
+                The advantage of the “spare disk” configuration is that
+                the spare disk can be shared across several RAID volumes.
+                For instance, one can have three mirrored volumes, with
+                redundancy assured even in the event of one disk failure,
+                with only seven disks (three pairs, plus one shared spare),
+                instead of the nine disks that would be required by three
+                triplets.</para>
               </sidebar>
 
-	      <para>This RAID level, although expensive (since only half of
-	      the physical storage space, at best, is useful), is widely
-	      used in practice. It is simple to understand, and it allows
-	      very simple backups: since both disks have identical
-	      contents, one of them can be temporarily extracted with no
-	      impact on the working system. Read performance is often
-	      increased since the kernel can read half of the data on each
-	      disk in parallel, while write performance isn't too severely
-	      degraded. In case of a RAID-1 array of N disks, the data
-	      stays available even with N-1 disk failures.</para>
+              <para>This RAID level, although expensive (since only half of
+              the physical storage space, at best, is useful), is widely
+              used in practice. It is simple to understand, and it allows
+              very simple backups: since both disks have identical
+              contents, one of them can be temporarily extracted with no
+              impact on the working system. Read performance is often
+              increased since the kernel can read half of the data on each
+              disk in parallel, while write performance isn't too severely
+              degraded. In case of a RAID-1 array of N disks, the data
+              stays available even with N-1 disk failures.</para>
+
+              <sidebar>
+                <title><emphasis>CAUTION</emphasis> RAID is not Backup</title>
+                <indexterm><primary>backup</primary></indexterm>
+
+                <para>RAID systems are not backup mechanisms. While RAID
+                increases the redundancy - and therefore the availability of a
+                system - and protects against disk failures, backups are done
+                to protect data from being altered, deleted, getting corrupted,
+                etc., and to be able to restore them if necessary. To
+                demonstrate this: If you remove one or all files by accident, a
+                RAID will mirror this change, but it will not provide the means
+                to restore the file(s). So while there is clearly an overlap,
+                they are not the same and should be used in conjunction with
+                each other.</para>
+              </sidebar>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term>RAID-4</term>
             <listitem>
-	      <para>This RAID level, not widely used, uses N disks to store
-	      useful data, and an extra disk to store redundancy
-	      information. If that disk fails, the system can reconstruct
-	      its contents from the other N. If one of the N data disks
-	      fails, the remaining N-1 combined with the “parity” disk
-	      contain enough information to reconstruct the required
-	      data.</para>
+              <para>This RAID level, not widely used, uses N disks to store
+              useful data, and an extra disk to store redundancy
+              information. If that disk fails, the system can reconstruct
+              its contents from the other N. If one of the N data disks
+              fails, the remaining N-1 combined with the “parity” disk
+              contain enough information to reconstruct the required
+              data.</para>
 
-	      <para>RAID-4 isn't too expensive since it only involves a
-	      one-in-N increase in costs and has no noticeable impact on
-	      read performance, but writes are slowed down. Furthermore,
-	      since a write to any of the N disks also involves a write to
-	      the parity disk, the latter sees many more writes than the
-	      former, and its lifespan can shorten dramatically as a
-	      consequence. Data on a RAID-4 array is safe only up to one
-	      failed disk (of the N+1).</para>
+              <indexterm><primary>RAID</primary><secondary>4</secondary></indexterm>
+              <indexterm><primary>RAID</primary><secondary>parity</secondary></indexterm>
+
+              <para>RAID-4 isn't too expensive since it only involves a
+              one-in-N increase in costs and has no noticeable impact on
+              read performance, but writes are slowed down. Furthermore,
+              since a write to any of the N disks also involves a write to
+              the parity disk, the latter sees many more writes than the
+              former, and its lifespan can shorten dramatically as a
+              consequence. Data on a RAID-4 array is safe only up to one
+              failed disk (of the N+1).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term>RAID-5</term>
             <listitem>
-	      <para>RAID-5 addresses the asymmetry issue of RAID-4: parity
-	      blocks are spread over all of the N+1 disks, with no single
-	      disk having a particular role.</para>
+              <para>RAID-5 addresses the asymmetry issue of RAID-4: parity
+              blocks are spread over all of the N+1 disks, with no single
+              disk having a particular role.</para>
 
-	      <para>Read and write performance are identical to RAID-4.
-	      Here again, the system stays functional with up to one failed
-	      disk (of the N+1), but no more.</para>
+              <indexterm><primary>RAID</primary><secondary>5</secondary></indexterm>
+              <indexterm><primary>RAID</primary><secondary>parity</secondary></indexterm>
+
+              <para>Read and write performance are identical to RAID-4.
+              Here again, the system stays functional with up to one failed
+              disk (of the N+1), but no more.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term>RAID-6</term>
             <listitem>
-	      <para>RAID-6 can be considered an extension of RAID-5, where
-	      each series of N blocks involves two redundancy blocks, and
-	      each such series of N+2 blocks is spread over N+2
-	      disks.</para>
+              <para>RAID-6 can be considered an extension of RAID-5, where
+              each series of N blocks involves two redundancy blocks, and
+              each such series of N+2 blocks is spread over N+2
+              disks.</para>
 
-	      <para>This RAID level is slightly more expensive than the
-	      previous two, but it brings some extra safety since up to two
-	      drives (of the N+2) can fail without compromising data
-	      availability. The counterpart is that write operations now
-	      involve writing one data block and two redundancy blocks,
-	      which makes them even slower.</para>
+              <indexterm><primary>RAID</primary><secondary>6</secondary></indexterm>
+
+              <para>This RAID level is slightly more expensive than the
+              previous two, but it brings some extra safety since up to two
+              drives (of the N+2) can fail without compromising data
+              availability. The counterpart is that write operations now
+              involve writing one data block and two redundancy blocks,
+              which makes them even slower.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term>RAID-1+0</term>
             <listitem>
-	      <para>This isn't strictly speaking, a RAID level, but a
-	      stacking of two RAID groupings. Starting from 2×N disks, one
-	      first sets them up by pairs into N RAID-1 volumes; these N
-	      volumes are then aggregated into one, either by “linear
-	      RAID” or (increasingly) by LVM. This last case goes farther
-	      than pure RAID, but there is no problem with that.</para>
+              <para>This isn't strictly speaking, a RAID level, but a
+              stacking of two RAID groupings. Starting from 2×N disks, one
+              first sets them up by pairs into N RAID-1 volumes; these N
+              volumes are then aggregated into one, either by “linear
+              RAID” or (increasingly) by LVM. This last case goes farther
+              than pure RAID, but there is no problem with that.</para>
 
-	      <para>RAID-1+0 can survive multiple disk failures: up to N in
-	      the 2×N array described above, provided that at least one
-	      disk keeps working in each of the RAID-1 pairs.</para>
+              <indexterm><primary>RAID</primary><secondary>1+0</secondary></indexterm>
+
+              <para>RAID-1+0 can survive multiple disk failures: up to N in
+              the 2×N array described above, provided that at least one
+              disk keeps working in each of the RAID-1 pairs.</para>
 
               <sidebar id="sidebar.raid-10">
                 <title><emphasis>GOING FURTHER</emphasis> RAID-10</title>
+                <indexterm><primary>RAID</primary><secondary>10</secondary></indexterm>
 
-		<para>RAID-10 is generally considered a synonym of
-		RAID-1+0, but a Linux specificity makes it actually a
-		generalization. This setup allows a system where each block
-		is stored on two different disks, even with an odd number
-		of disks, the copies being spread out along a configurable
-		model.</para>
+                <para>RAID-10 is generally considered a synonym of
+                RAID-1+0, but a Linux specificity makes it actually a
+                generalization. This setup allows a system where each block
+                is stored on two different disks, even with an odd number
+                of disks, the copies being spread out along a configurable
+                model.</para>
 
-		<para>Performances will vary depending on the chosen
-		repartition model and redundancy level, and of the workload
-		of the logical volume.</para>
+                <para>Performances will vary depending on the chosen
+                repartition model and redundancy level, and of the workload
+                of the logical volume.</para>
               </sidebar>
             </listitem>
           </varlistentry>
         </variablelist>
 
-	<para>Obviously, the RAID level will be chosen according to the
-	constraints and requirements of each application. Note that a
-	single computer can have several distinct RAID arrays with
-	different configurations.</para>
+        <para>Obviously, the RAID level will be chosen according to the
+        constraints and requirements of each application. Note that a
+        single computer can have several distinct RAID arrays with
+        different configurations.</para>
       </section>
       <section id="sect.raid-setup">
         <title>Setting up RAID</title>
         <indexterm><primary><emphasis role="pkg">mdadm</emphasis></primary></indexterm> 
+        <indexterm><primary>RAID</primary><secondary>create</secondary></indexterm>
 
-	<para>Setting up RAID volumes requires the <emphasis
-	role="pkg">mdadm</emphasis> package; it
-	provides the <command>mdadm</command> command, which allows
-	creating and manipulating RAID arrays, as well as scripts and tools
-	integrating it to the rest of the system, including the monitoring
-	system.</para>
+        <para>Setting up RAID volumes requires the <emphasis
+        role="pkg">mdadm</emphasis> package; it
+        provides the <command>mdadm</command> command, which allows
+        creating and manipulating RAID arrays, as well as scripts and tools
+        integrating it to the rest of the system, including the monitoring
+        system.</para>
 
-	<para>Our example will be a server with a number of disks, some of
-	which are already used, the rest being available to setup RAID. We
-	initially have the following disks and partitions:</para>
+        <para>Our example will be a server with a number of disks, some of
+        which are already used, the rest being available to setup RAID. We
+        initially have the following disks and partitions:</para>
         <itemizedlist>
           <listitem>
-	    <para>the <filename>sdb</filename> disk, 4 GB, is entirely
-	    available;</para>
+            <para>the <filename>sdb</filename> disk, 4 GB, is entirely
+            available;</para>
           </listitem>
           <listitem>
-	    <para>the <filename>sdc</filename> disk, 4 GB, is also
-	    entirely available;</para>
+            <para>the <filename>sdc</filename> disk, 4 GB, is also
+            entirely available;</para>
           </listitem>
           <listitem>
-	    <para>on the <filename>sdd</filename> disk, only partition
-	    <filename>sdd2</filename> (about 4 GB) is available;</para>
+            <para>on the <filename>sdd</filename> disk, only partition
+            <filename>sdd2</filename> (about 4 GB) is available;</para>
           </listitem>
           <listitem>
-	    <para>finally, a <filename>sde</filename> disk, still 4 GB,
-	    entirely available.</para>
+            <para>finally, a <filename>sde</filename> disk, still 4 GB,
+            entirely available.</para>
           </listitem>
         </itemizedlist>
 
         <sidebar>
           <title><emphasis>NOTE</emphasis> Identifying existing RAID volumes</title>
+          <indexterm><primary><filename>/proc</filename></primary><secondary><filename>/proc/mdstat</filename></secondary></indexterm>
 
-	  <para>The <filename>/proc/mdstat</filename> file lists existing
-	  volumes and their states. When creating a new RAID volume, care
-	  should be taken not to name it the same as an existing
-	  volume.</para>
+          <para>The <filename>/proc/mdstat</filename> file lists existing
+          volumes and their states. When creating a new RAID volume, care
+          should be taken not to name it the same as an existing
+          volume.</para>
         </sidebar>
 
-	<para>We're going to use these physical elements to build two
-	volumes, one RAID-0 and one mirror (RAID-1). Let's start with the
-	RAID-0 volume:</para>
+        <indexterm><primary>RAID</primary><secondary>0</secondary></indexterm>
+        <indexterm><primary>RAID</primary><secondary>1</secondary></indexterm>
 
-        <screen><computeroutput># </computeroutput><userinput>mdadm --create /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc</userinput>
-<computeroutput>mdadm: Defaulting to version 1.2 metadata
+        <para>We're going to use these physical elements to build two
+        volumes, one RAID-0 and one mirror (RAID-1). Let's start with the
+        RAID-0 volume:</para>
+
+        <!-- MAY CHANGE: version numbers -->
+        <screen><computeroutput># </computeroutput><userinput>mdadm --create /dev/md0 --level=0 --raid-devices=2 /dev/sdb /dev/sdc
+</userinput><computeroutput>mdadm: Defaulting to version 1.2 metadata
 mdadm: array /dev/md0 started.
-# </computeroutput><userinput>mdadm --query /dev/md0</userinput>
-<computeroutput>/dev/md0: 8.00GiB raid0 2 devices, 0 spares. Use mdadm --detail for more detail.
-# </computeroutput><userinput>mdadm --detail /dev/md0</userinput>
-<computeroutput>/dev/md0:
+# </computeroutput><userinput>mdadm --query /dev/md0
+</userinput><computeroutput>/dev/md0: 7.99GiB raid0 2 devices, 0 spares. Use mdadm --detail for more detail.
+# </computeroutput><userinput>mdadm --detail /dev/md0
+</userinput><computeroutput>/dev/md0:
            Version : 1.2
-     Creation Time : Tue Jun 25 08:47:49 2019
+     Creation Time : Mon Feb 28 01:54:24 2022
         Raid Level : raid0
         Array Size : 8378368 (7.99 GiB 8.58 GB)
       Raid Devices : 2
      Total Devices : 2
        Persistence : Superblock is persistent
 
-       Update Time : Tue Jun 25 08:47:49 2019
+       Update Time : Mon Feb 28 01:54:24 2022
              State : clean 
     Active Devices : 2
    Working Devices : 2
     Failed Devices : 0
      Spare Devices : 0
 
+            Layout : -unknown-
         Chunk Size : 512K
 
 Consistency Policy : none
 
-              Name : mirwiz:0  (local to host debian)
-              UUID : 146e104f:66ccc06d:71c262d7:9af1fbc7
+              Name : debian:0  (local to host debian)
+              UUID : a75ac628:b384c441:157137ac:c04cd98c
             Events : 0
 
     Number   Major   Minor   RaidDevice State
-       0       8       32        0      active sync   /dev/sdb
-       1       8       48        1      active sync   /dev/sdc
-# </computeroutput><userinput>mkfs.ext4 /dev/md0</userinput>
-<computeroutput>mke2fs 1.44.5 (15-Dec-2018)
+       0       8        0        0      active sync   /dev/sdb
+       1       8       16        1      active sync   /dev/sdc
+# </computeroutput><userinput>mkfs.ext4 /dev/md0
+</userinput><computeroutput>mke2fs 1.46.2 (28-Feb-2021)
 Discarding device blocks: done                            
 Creating filesystem with 2094592 4k blocks and 524288 inodes
-Filesystem UUID: 413c3dff-ab5e-44e7-ad34-cf1a029cfe98
+Filesystem UUID: ef077204-c477-4430-bf01-52288237bea0
 Superblock backups stored on blocks: 
 	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
 
@@ -422,50 +486,50 @@ Writing inode tables: done
 Creating journal (16384 blocks): done
 Writing superblocks and filesystem accounting information: done 
 
-# </computeroutput><userinput>mkdir /srv/raid-0</userinput>
-<computeroutput># </computeroutput><userinput>mount /dev/md0 /srv/raid-0</userinput>
-<computeroutput># </computeroutput><userinput>df -h /srv/raid-0</userinput>
-<computeroutput>Filesystem      Size  Used Avail Use% Mounted on
-/dev/md0        7.9G   36M  7.4G   1% /srv/raid-0
+# </computeroutput><userinput>mkdir /srv/raid-0
+</userinput><computeroutput># </computeroutput><userinput>mount /dev/md0 /srv/raid-0
+</userinput><computeroutput># </computeroutput><userinput>df -h /srv/raid-0
+</userinput><computeroutput>Filesystem      Size  Used Avail Use% Mounted on
+/dev/md0        7.8G   24K  7.4G   1% /srv/raid-0
 </computeroutput>
 </screen>
 
-	<para>The <command>mdadm --create</command> command requires
-	several parameters: the name of the volume to create
-	(<filename>/dev/md*</filename>, with MD standing for
-	<foreignphrase>Multiple Device</foreignphrase>), the RAID
-	level, the number of disks (which is compulsory despite being
-	mostly meaningful only with RAID-1 and above), and the
-	physical drives to use. Once the device is created, we can use
-	it like we'd use a normal partition, create a filesystem on
-	it, mount that filesystem, and so on. Note that our creation
-	of a RAID-0 volume on <filename>md0</filename> is nothing but
-	coincidence, and the numbering of the array doesn't need to be
-	correlated to the chosen amount of redundancy.  It is also
-	possible to create named RAID arrays, by giving
-	<command>mdadm</command> parameters such as
-	<filename>/dev/md/linear</filename> instead of
-	<filename>/dev/md0</filename>.</para>
+        <para>The <command>mdadm --create</command> command requires
+        several parameters: the name of the volume to create
+        (<filename>/dev/md*</filename>, with MD standing for
+        <foreignphrase>Multiple Device</foreignphrase>), the RAID
+        level, the number of disks (which is compulsory despite being
+        mostly meaningful only with RAID-1 and above), and the
+        physical drives to use. Once the device is created, we can use
+        it like we'd use a normal partition, create a filesystem on
+        it, mount that filesystem, and so on. Note that our creation
+        of a RAID-0 volume on <filename>md0</filename> is nothing but
+        coincidence, and the numbering of the array doesn't need to be
+        correlated to the chosen amount of redundancy.  It is also
+        possible to create named RAID arrays, by giving
+        <command>mdadm</command> parameters such as
+        <filename>/dev/md/linear</filename> instead of
+        <filename>/dev/md0</filename>.</para>
 
-	<para>Creation of a RAID-1 follows a similar fashion, the
-	differences only being noticeable after the creation:</para>
+        <para>Creation of a RAID-1 follows a similar fashion, the
+        differences only being noticeable after the creation:</para>
 
-        <screen><computeroutput># </computeroutput><userinput>mdadm --create /dev/md1 --level=1 --raid-devices=2 /dev/sdd2 /dev/sde</userinput>
-<computeroutput>mdadm: Note: this array has metadata at the start and
+        <screen><computeroutput># </computeroutput><userinput>mdadm --create /dev/md1 --level=1 --raid-devices=2 /dev/sdd2 /dev/sde
+</userinput><computeroutput>mdadm: Note: this array has metadata at the start and
     may not be suitable as a boot device.  If you plan to
     store '/boot' on this device please ensure that
     your boot-loader understands md/v1.x metadata, or use
     --metadata=0.90
-mdadm: largest drive (/dev/sdd2) exceeds size (4192192K) by more than 1%
-Continue creating array? </computeroutput><userinput>y</userinput>
-<computeroutput>mdadm: Defaulting to version 1.2 metadata
+mdadm: largest drive (/dev/sdc2) exceeds size (4189184K) by more than 1%
+Continue creating array? </computeroutput><userinput>y
+</userinput><computeroutput>mdadm: Defaulting to version 1.2 metadata
 mdadm: array /dev/md1 started.
-# </computeroutput><userinput>mdadm --query /dev/md1</userinput>
-<computeroutput>/dev/md1: 4.00GiB raid1 2 devices, 0 spares. Use mdadm --detail for more detail.
-# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
-<computeroutput>/dev/md1:
+# </computeroutput><userinput>mdadm --query /dev/md1
+</userinput><computeroutput>/dev/md1: 4.00GiB raid1 2 devices, 0 spares. Use mdadm --detail for more detail.
+# </computeroutput><userinput>mdadm --detail /dev/md1
+</userinput><computeroutput>/dev/md1:
            Version : 1.2
-     Creation Time : Tue Jun 25 10:21:22 2019
+     Creation Time : Mon Feb 28 02:07:48 2022
         Raid Level : raid1
         Array Size : 4189184 (4.00 GiB 4.29 GB)
      Used Dev Size : 4189184 (4.00 GiB 4.29 GB)
@@ -473,8 +537,8 @@ mdadm: array /dev/md1 started.
      Total Devices : 2
        Persistence : Superblock is persistent
 
-       Update Time : Tue Jun 25 10:22:03 2019
-             State : clean, resyncing 
+       Update Time : Mon Feb 28 02:08:09 2022
+             State : clean, resync
     Active Devices : 2
    Working Devices : 2
     Failed Devices : 0
@@ -482,17 +546,17 @@ mdadm: array /dev/md1 started.
 
 Consistency Policy : resync
 
-     Resync Status : 93% complete
+    Rebuild Status : 13% complete
 
-              Name : mirwiz:1  (local to host debian)
-              UUID : 7d123734:9677b7d6:72194f7d:9050771c
-            Events : 16
+              Name : debian:1  (local to host debian)
+              UUID : 2dfb7fd5:e09e0527:0b5a905a:8334adb8
+            Events : 17
 
     Number   Major   Minor   RaidDevice State
-       0       8       64        0      active sync   /dev/sdd2
-       1       8       80        1      active sync   /dev/sde
-# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
-<computeroutput>/dev/md1:
+       0       8       34        0      active sync   /dev/sdd2
+       1       8       48        1      active sync   /dev/sde
+# </computeroutput><userinput>mdadm --detail /dev/md1
+</userinput><computeroutput>/dev/md1:
 [...]
           State : clean
 [...]
@@ -502,80 +566,92 @@ Consistency Policy : resync
         <sidebar>
           <title><emphasis>TIP</emphasis> RAID, disks and partitions</title>
 
-	  <para>As illustrated by our example, RAID devices can be
-	  constructed out of disk partitions, and do not require full
-	  disks.</para>
+          <para>As illustrated by our example, RAID devices can be
+          constructed out of disk partitions as well, and do not require full
+          disks.</para>
         </sidebar>
 
-	<para>A few remarks are in order. First, <command>mdadm</command>
-	notices that the physical elements have different sizes; since this
-	implies that some space will be lost on the bigger element, a
-	confirmation is required.</para>
+        <para>A few remarks are in order. First, <command>mdadm</command>
+        notices that the physical elements have different sizes; since this
+        implies that some space will be lost on the bigger element, a
+        confirmation is required.</para>
 
-	<para>More importantly, note the state of the mirror. The normal
-	state of a RAID mirror is that both disks have exactly the same
-	contents. However, nothing guarantees this is the case when the
-	volume is first created. The RAID subsystem will therefore provide
-	that guarantee itself, and there will be a synchronization phase as
-	soon as the RAID device is created. After some time (the exact
-	amount will depend on the actual size of the disks…), the RAID
-	array switches to the “active” or “clean”  state. Note that during this
-	reconstruction phase, the mirror is in a degraded mode, and
-	redundancy isn't assured. A disk failing during that risk window
-	could lead to losing all the data. Large amounts of critical data,
-	however, are rarely stored on a freshly created RAID array before
-	its initial synchronization. Note that even in degraded mode, the
-	<filename>/dev/md1</filename> is usable, and a filesystem can be
-	created on it, as well as some data copied on it.</para>
+        <para>More importantly, note the state of the mirror. The normal
+        state of a RAID mirror is that both disks have exactly the same
+        contents. However, nothing guarantees this is the case when the
+        volume is first created. The RAID subsystem will therefore provide
+        that guarantee itself, and there will be a synchronization phase as
+        soon as the RAID device is created. After some time (the exact
+        amount will depend on the actual size of the disks…), the RAID
+        array switches to the “active” or “clean”  state. Note that during this
+        reconstruction phase, the mirror is in a degraded mode, and
+        redundancy isn't assured. A disk failing during that risk window
+        could lead to losing all the data. Large amounts of critical data,
+        however, are rarely stored on a freshly created RAID array before
+        its initial synchronization. Note that even in degraded mode, the
+        <filename>/dev/md1</filename> is usable, and a filesystem can be
+        created on it, as well as some data copied on it.</para>
 
         <sidebar>
           <title><emphasis>TIP</emphasis> Starting a mirror in degraded mode</title>
+          <indexterm><primary>RAID</primary><secondary>degraded</secondary></indexterm>
 
-	  <para>Sometimes two disks are not immediately available when one
-	  wants to start a RAID-1 mirror, for instance because one of the
-	  disks one plans to include is already used to store the data one
-	  wants to move to the array. In such circumstances, it is possible
-	  to deliberately create a degraded RAID-1 array by passing
-	  <filename>missing</filename> instead of a device file as one of
-	  the arguments to <command>mdadm</command>. Once the data have
-	  been copied to the “mirror”, the old disk can be added to the
-	  array. A synchronization will then take place, giving us the
-	  redundancy that was wanted in the first place.</para>
+          <para>Sometimes two disks are not immediately available when one
+          wants to start a RAID-1 mirror, for instance because one of the
+          disks one plans to include is already used to store the data one
+          wants to move to the array. In such circumstances, it is possible
+          to deliberately create a degraded RAID-1 array by passing
+          <filename>missing</filename> instead of a device file as one of
+          the arguments to <command>mdadm</command>. Once the data have
+          been copied to the “mirror”, the old disk can be added to the
+          array. A synchronization will then take place, giving us the
+          redundancy that was wanted in the first place.</para>
         </sidebar>
 
         <sidebar>
           <title><emphasis>TIP</emphasis> Setting up a mirror without synchronization</title>
+          <indexterm><primary>RAID</primary><secondary>1</secondary></indexterm>
 
-	  <para>RAID-1 volumes are often created to be used as a new disk,
-	  often considered blank. The actual initial contents of the disk
-	  is therefore not very relevant, since one only needs to know that
-	  the data written after the creation of the volume, in particular
-	  the filesystem, can be accessed later.</para>
+          <para>RAID-1 volumes are often created to be used as a new disk,
+          often considered blank. The actual initial contents of the disk
+          is therefore not very relevant, since one only needs to know that
+          the data written after the creation of the volume, in particular
+          the filesystem, can be accessed later.</para>
 
-	  <para>One might therefore wonder about the point of synchronizing
-	  both disks at creation time. Why care whether the contents are
-	  identical on zones of the volume that we know will only be read
-	  after we have written to them?</para>
+          <para>One might therefore wonder about the point of synchronizing
+          both disks at creation time. Why care whether the contents are
+          identical on zones of the volume that we know will only be read
+          after we have written to them?</para>
 
-	  <para>Fortunately, this synchronization phase can be avoided by
-	  passing the <literal>--assume-clean</literal> option to
-	  <command>mdadm</command>. However, this option can lead to
-	  surprises in cases where the initial data will be read (for
-	  instance if a filesystem is already present on the physical
-	  disks), which is why it isn't enabled by default.</para>
+          <para>Fortunately, this synchronization phase can be avoided by
+          passing the <literal>--assume-clean</literal> option to
+          <command>mdadm</command>. However, this option can lead to
+          surprises in cases where the initial data will be read (for
+          instance if a filesystem is already present on the physical
+          disks), which is why it isn't enabled by default.</para>
         </sidebar>
 
-	<para>Now let's see what happens when one of the elements of the
-	RAID-1 array fails. <command>mdadm</command>, in particular its
-	<literal>--fail</literal> option, allows simulating such a disk
-	failure:</para>
+        <indexterm><primary>RAID</primary><secondary>failing</secondary></indexterm>
 
-        <screen><computeroutput># </computeroutput><userinput>mdadm /dev/md1 --fail /dev/sde</userinput>
-<computeroutput>mdadm: set /dev/sde faulty in /dev/md1
-# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
-<computeroutput>/dev/md1:
-[...]
-       Update Time : Tue Jun 25 11:03:44 2019
+        <para>Now let's see what happens when one of the elements of the
+        RAID-1 array fails. <command>mdadm</command>, in particular its
+        <literal>--fail</literal> option, allows simulating such a disk
+        failure:</para>
+
+        <screen><computeroutput># </computeroutput><userinput>mdadm /dev/md1 --fail /dev/sde
+</userinput><computeroutput>mdadm: set /dev/sde faulty in /dev/md1
+# </computeroutput><userinput>mdadm --detail /dev/md1
+</userinput><computeroutput>/dev/md1:
+           Version : 1.2
+     Creation Time : Mon Feb 28 02:07:48 2022
+        Raid Level : raid1
+        Array Size : 4189184 (4.00 GiB 4.29 GB)
+     Used Dev Size : 4189184 (4.00 GiB 4.29 GB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
+
+       Update Time : Mon Feb 28 02:15:34 2022
              State : clean, degraded 
     Active Devices : 1
    Working Devices : 1
@@ -584,34 +660,39 @@ Consistency Policy : resync
 
 Consistency Policy : resync
 
-              Name : mirwiz:1  (local to host debian)
-              UUID : 7d123734:9677b7d6:72194f7d:9050771c
-            Events : 20
+              Name : debian:1  (local to host debian)
+              UUID : 2dfb7fd5:e09e0527:0b5a905a:8334adb8
+            Events : 19
 
     Number   Major   Minor   RaidDevice State
-       -       0        0        0      removed
-       1       8       80        1      active sync   /dev/sdd2
+       0       8       34        0      active sync   /dev/sdd2
+       -       0        0        1      removed
 
-       0       8       64        -      faulty   /dev/sde</computeroutput>
+       1       8       48        -      faulty   /dev/sde
+</computeroutput>
 </screen>
 
-	<para>The contents of the volume are still accessible (and, if it is
-	mounted, the applications don't notice a thing), but the data
-	safety isn't assured anymore: should the <filename>sdd</filename>
-	disk fail in turn, the data would be lost. We want to avoid that
-	risk, so we'll replace the failed disk with a new one,
-	<filename>sdf</filename>:</para>
+        <para>The contents of the volume are still accessible (and, if it is
+        mounted, the applications don't notice a thing), but the data
+        safety isn't assured anymore: should the <filename>sdd</filename>
+        disk fail in turn, the data would be lost. We want to avoid that
+        risk, so we'll replace the failed disk with a new one,
+        <filename>sdf</filename>:</para>
 
         <screen><computeroutput># </computeroutput><userinput>mdadm /dev/md1 --add /dev/sdf</userinput>
 <computeroutput>mdadm: added /dev/sdf
-# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
-<computeroutput>/dev/md1:
-[...]
+# </computeroutput><userinput>mdadm --detail /dev/md1
+</userinput><computeroutput>/dev/md1:
+           Version : 1.2
+     Creation Time : Mon Feb 28 02:07:48 2022
+        Raid Level : raid1
+        Array Size : 4189184 (4.00 GiB 4.29 GB)
+     Used Dev Size : 4189184 (4.00 GiB 4.29 GB)
       Raid Devices : 2
      Total Devices : 3
        Persistence : Superblock is persistent
 
-       Update Time : Tue Jun 25 11:09:42 2019
+       Update Time : Mon Feb 28 02:25:34 2022
              State : clean, degraded, recovering 
     Active Devices : 1
    Working Devices : 2
@@ -620,24 +701,32 @@ Consistency Policy : resync
 
 Consistency Policy : resync
 
-    Rebuild Status : 27% complete
+    Rebuild Status : 47% complete
 
-              Name : mirwiz:1  (local to host debian)
-              UUID : 7d123734:9677b7d6:72194f7d:9050771c
-            Events : 26
+              Name : debian:1  (local to host debian)
+              UUID : 2dfb7fd5:e09e0527:0b5a905a:8334adb8
+            Events : 39
 
     Number   Major   Minor   RaidDevice State
-       2       8       96        0      spare rebuilding   /dev/sdf
-       1       8       80        1      active sync   /dev/sdd2
+       0       8       34        0      active sync   /dev/sdd2
+       2       8       64        1      spare rebuilding   /dev/sdf
 
-       0       8       64        -      faulty   /dev/sde
+       1       8       48        -      faulty   /dev/sde
 # </computeroutput><userinput>[...]</userinput>
 <computeroutput>[...]
 # </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
 <computeroutput>/dev/md1:
-[...]
-       Update Time : Tue Jun 25 11:10:47 2019
-             State : clean 
+           Version : 1.2
+     Creation Time : Mon Feb 28 02:07:48 2022
+        Raid Level : raid1
+        Array Size : 4189184 (4.00 GiB 4.29 GB)
+     Used Dev Size : 4189184 (4.00 GiB 4.29 GB)
+      Raid Devices : 2
+     Total Devices : 3
+       Persistence : Superblock is persistent
+
+       Update Time : Mon Feb 28 02:25:34 2022
+             State : clean
     Active Devices : 2
    Working Devices : 2
     Failed Devices : 1
@@ -645,74 +734,79 @@ Consistency Policy : resync
 
 Consistency Policy : resync
 
-              Name : mirwiz:1  (local to host debian)
-              UUID : 7d123734:9677b7d6:72194f7d:9050771c
-            Events : 39
+              Name : debian:1  (local to host debian)
+              UUID : 2dfb7fd5:e09e0527:0b5a905a:8334adb8
+            Events : 41
 
     Number   Major   Minor   RaidDevice State
-       2       8       96        0      active sync   /dev/sdd2
-       1       8       80        1      active sync   /dev/sdf
+       0       8       34        0      active sync   /dev/sdd2
+       2       8       64        1      active sync   /dev/sdf
 
-       0       8       64        -      faulty   /dev/sde</computeroutput>
+       1       8       48        -      faulty   /dev/sde
+</computeroutput>
 </screen>
 
-	<para>Here again, the kernel automatically triggers a
-	reconstruction phase during which the volume, although still
-	accessible, is in a degraded mode. Once the reconstruction is over,
-	the RAID array is back to a normal state. One can then tell the
-	system that the <filename>sde</filename> disk is about to be
-	removed from the array, so as to end up with a classical RAID
-	mirror on two disks:</para>
+        <para>Here again, the kernel automatically triggers a
+        reconstruction phase during which the volume, although still
+        accessible, is in a degraded mode. Once the reconstruction is over,
+        the RAID array is back to a normal state. One can then tell the
+        system that the <filename>sde</filename> disk is about to be
+        removed from the array, so as to end up with a classical RAID
+        mirror on two disks:</para>
 
-        <screen><computeroutput># </computeroutput><userinput>mdadm /dev/md1 --remove /dev/sde</userinput>
-<computeroutput>mdadm: hot removed /dev/sde from /dev/md1
-# </computeroutput><userinput>mdadm --detail /dev/md1</userinput>
-<computeroutput>/dev/md1:
+        <screen><computeroutput># </computeroutput><userinput>mdadm /dev/md1 --remove /dev/sde
+</userinput><computeroutput>mdadm: hot removed /dev/sde from /dev/md1
+# </computeroutput><userinput>mdadm --detail /dev/md1
+</userinput><computeroutput>/dev/md1:
 [...]
     Number   Major   Minor   RaidDevice State
-       2       8       96        0      active sync   /dev/sdd2
-       1       8       80        1      active sync   /dev/sdf</computeroutput>
+       0       8       34        0      active sync   /dev/sdd2
+       2       8       64        1      active sync   /dev/sdf
+</computeroutput>
 </screen>
 
-	<para>From then on, the drive can be physically removed when the
-	server is next switched off, or even hot-removed when the hardware
-	configuration allows hot-swap. Such configurations include some
-	SCSI controllers, most SATA disks, and external drives operating on
-	USB or Firewire.</para>
+        <para>From then on, the drive can be physically removed when the
+        server is next switched off, or even hot-removed when the hardware
+        configuration allows hot-swap. Such configurations include some
+        SCSI controllers, most SATA disks, and external drives operating on
+        USB or Firewire.</para>
       </section>
       <section id="sect.backup-raid-config">
         <title>Backing up the Configuration</title>
 
-	<para>Most of the meta-data concerning RAID volumes are saved
-	directly on the disks that make up these arrays, so that the kernel
-	can detect the arrays and their components and assemble them
-	automatically when the system starts up. However, backing up this
-	configuration is encouraged, because this detection isn't
-	fail-proof, and it is only expected that it will fail precisely in
-	sensitive circumstances. In our example, if the
-	<filename>sde</filename> disk failure had been real (instead of
-	simulated) and the system had been restarted without removing this
-	<filename>sde</filename> disk, this disk could start working again
-	due to having been probed during the reboot. The kernel would then
-	have three physical elements, each claiming to contain half of the
-	same RAID volume. Another source of confusion can come when RAID
-	volumes from two servers are consolidated onto one server only. If
-	these arrays were running normally before the disks were moved, the
-	kernel would be able to detect and reassemble the pairs properly;
-	but if the moved disks had been aggregated into an
-	<filename>md1</filename> on the old server, and the new server
-	already has an <filename>md1</filename>, one of the mirrors would
-	be renamed.</para>
+        <para>Most of the meta-data concerning RAID volumes are saved directly
+        on the disks that make up these arrays, so that the kernel can detect
+        the arrays and their components and assemble them automatically when
+        the system starts up. However, backing up this configuration is
+        encouraged, because this detection isn't fail-proof, and it is only
+        expected that it will fail precisely in sensitive circumstances. In our
+        example, if the <filename>sde</filename> disk failure had been real
+        (instead of simulated) and the system had been restarted without
+        removing this <filename>sde</filename> disk, this disk could start
+        working again due to having been probed during the reboot. The kernel
+        would then have three physical elements, each claiming to contain half
+        of the same RAID volume. In reality this leads to the RAID starting
+        from the individual disks alternately - distributing the data also
+        alternately, depending on which disk started the RAID in degraded mode
+        Another source of confusion can come when RAID volumes from two servers
+        are consolidated onto one server only. If these arrays were running
+        normally before the disks were moved, the kernel would be able to
+        detect and reassemble the pairs properly; but if the moved disks had
+        been aggregated into an <filename>md1</filename> on the old server, and
+        the new server already has an <filename>md1</filename>, one of the
+        mirrors would be renamed.</para>
 
-	<para>Backing up the configuration is therefore important, if only
-	for reference. The standard way to do it is by editing the
-	<filename>/etc/mdadm/mdadm.conf</filename> file, an example of
-	which is listed here:</para>
+        <para>Backing up the configuration is therefore important, if only
+        for reference. The standard way to do it is by editing the
+        <filename>/etc/mdadm/mdadm.conf</filename> file, an example of
+        which is listed here:</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/mdadm/mdadm.conf</filename></secondary></indexterm>
 
         <example id="example.mdadm-conf">
           <title><command>mdadm</command> configuration file</title>
 
-          <programlisting># mdadm.conf
+          <programlisting><![CDATA[# mdadm.conf
 #
 # !NB! Run update-initramfs -u after updating this file.
 # !NB! This will ensure that initramfs has an uptodate copy.
@@ -725,51 +819,48 @@ Consistency Policy : resync
 # wildcards if desired.
 DEVICE /dev/sd*
 
-# auto-create devices with Debian standard permissions
-CREATE owner=root group=disk mode=0660 auto=yes
-
 # automatically tag new arrays as belonging to the local system
-HOMEHOST &lt;system&gt;
+HOMEHOST <system>
 
 # instruct the monitoring daemon where to send mail alerts
 MAILADDR root
 
 # definitions of existing MD arrays
-ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=146e104f:66ccc06d:71c262d7:9af1fbc7
-ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:9050771c
-
-# This configuration was auto-generated on Tue, 25 Jun 2019 07:54:35 -0400 by mkconf
-</programlisting>
+ARRAY /dev/md/0  metadata=1.2 UUID=a75ac628:b384c441:157137ac:c04cd98c name=debian:0
+ARRAY /dev/md/1  metadata=1.2 UUID=2dfb7fd5:e09e0527:0b5a905a:8334adb8 name=debian:1
+# This configuration was auto-generated on Mon, 28 Feb 2022 01:53:48 +0100 by mkconf
+]]></programlisting>
         </example>
 
-	<para>One of the most useful details is the
-	<literal>DEVICE</literal> option, which lists the devices
-	where the system will automatically look for components of
-	RAID volumes at start-up time. In our example, we replaced the
-	default value, <literal>partitions containers</literal>, with
-	an explicit list of device files, since we chose to use entire
-	disks and not only partitions, for some volumes.</para>
+        <para>One of the most useful details is the
+        <literal>DEVICE</literal> option, which lists the devices
+        where the system will automatically look for components of
+        RAID volumes at start-up time. In our example, we replaced the
+        default value, <literal>partitions containers</literal>, with
+        an explicit list of device files, since we chose to use entire
+        disks and not only partitions, for some volumes.</para>
 
-	<para>The last two lines in our example are those allowing the
-	kernel to safely pick which volume number to assign to which
-	array.  The metadata stored on the disks themselves are enough
-	to re-assemble the volumes, but not to determine the volume
-	number (and the matching <filename>/dev/md*</filename> device
-	name).</para>
+        <para>The last two lines in our example are those allowing the
+        kernel to safely pick which volume number to assign to which
+        array.  The metadata stored on the disks themselves are enough
+        to re-assemble the volumes, but not to determine the volume
+        number (and the matching <filename>/dev/md*</filename> device
+        name).</para>
 
-	<para>Fortunately, these lines can be generated
-	automatically:</para>
+        <para>Fortunately, these lines can be generated
+        automatically:</para>
 
-        <screen><computeroutput># </computeroutput><userinput>mdadm --misc --detail --brief /dev/md?</userinput>
-<computeroutput>ARRAY /dev/md0 metadata=1.2 name=mirwiz:0 UUID=146e104f:66ccc06d:71c262d7:9af1fbc7
-ARRAY /dev/md1 metadata=1.2 name=mirwiz:1 UUID=7d123734:9677b7d6:72194f7d:9050771c</computeroutput>
+        <screen><computeroutput># </computeroutput><userinput>mdadm --misc --detail --brief /dev/md?
+</userinput><computeroutput>ARRAY /dev/md/0  metadata=1.2 UUID=a75ac628:b384c441:157137ac:c04cd98c name=debian:0
+ARRAY /dev/md/1  metadata=1.2 UUID=2dfb7fd5:e09e0527:0b5a905a:8334adb8 name=debian:1
+</computeroutput>
 </screen>
 
-	<para>The contents of these last two lines doesn't depend on the
-	list of disks included in the volume. It is therefore not necessary
-	to regenerate these lines when replacing a failed disk with a new
-	one. On the other hand, care must be taken to update the file when
-	creating or deleting a RAID array.</para>
+        <para>The contents of these last two lines doesn't depend on the
+        list of disks included in the volume. It is therefore not necessary
+        to regenerate these lines when replacing a failed disk with a new
+        one. On the other hand, care must be taken to update the file when
+        creating or deleting a RAID array.</para>
       </section>
     </section>
     <section id="sect.lvm">
@@ -3634,4 +3725,4 @@ define service{
     </section>
   </section>
 </chapter>
-
+<!-- vim: set spell spl=en_us ft=xml tw=79 ts=2 sw=2 ai si et: -->
