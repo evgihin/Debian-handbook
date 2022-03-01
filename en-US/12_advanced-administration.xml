@@ -1489,50 +1489,58 @@ The filesystem on /dev/vg_critical/lv_files is now 1572864 (4k) blocks long.
       <filename>sdc</filename>. They are partitioned identically along the
       following scheme:</para>
 
-      <screen><computeroutput># </computeroutput><userinput>fdisk -l /dev/sda</userinput>
-<computeroutput>
-Disk /dev/sda: 300 GB, 300090728448 bytes, 586114704 sectors
+      <screen><computeroutput># </computeroutput><userinput>sfdisk -l /dev/sda
+</userinput><computeroutput>Disk /dev/sda: 894.25 GiB, 960197124096 bytes, 1875385008 sectors
+Disk model: SAMSUNG MZ7LM960
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: dos
-Disk identifier: 0x00039a9f
+Disklabel type: gpt
+Disk identifier: BB14C130-9E9A-9A44-9462-6226349CA012
 
-Device    Boot     Start       End   Sectors Size Id Type
-/dev/sda1 *         2048   1992060   1990012 1.0G fd Linux raid autodetect
-/dev/sda2        1992061   3984120   1992059 1.0G 82 Linux swap / Solaris
-/dev/sda3        4000185 586099395 582099210 298G 5  Extended
-/dev/sda5        4000185 203977305 199977120 102G fd Linux raid autodetect
-/dev/sda6      203977306 403970490 199993184 102G fd Linux raid autodetect
-/dev/sda7      403970491 586099395 182128904  93G 8e Linux LVM</computeroutput>
+Device         Start        End   Sectors   Size Type
+/dev/sda1        2048       4095      2048     1M BIOS boot
+/dev/sda2        4096  100667391 100663296    48G Linux RAID
+/dev/sda3   100667392  134221823  33554432    16G Linux RAID
+/dev/sda4   134221824  763367423 629145600   300G Linux RAID
+/dev/sda5   763367424 1392513023 629145600   300G Linux RAID
+/dev/sda6  1392513024 1875384974 482871951 230.3G Linux LVM
+</computeroutput>
 </screen>
       <itemizedlist>
         <listitem>
-	  <para>The first partitions of both disks (about 1 GB) are
-	  assembled into a RAID-1 volume, <filename>md0</filename>. This
-	  mirror is directly used to store the root filesystem.</para>
+          <para>The first partitions of both disks are BIOS boot
+          partitions.</para>
         </listitem>
         <listitem>
-	  <para>The <filename>sda2</filename> and <filename>sdc2</filename>
-	  partitions are used as swap partitions, providing a total 2 GB
-	  of swap space. With 1 GB of RAM, the workstation has a
-	  comfortable amount of available memory.</para>
+          <para>The next two partitions <filename>sda2</filename> and
+          <filename>sdc2</filename> (about 48 GB) are assembled into a RAID-1
+          volume, <filename>md0</filename>. This mirror is directly used to
+          store the root filesystem.</para>
         </listitem>
         <listitem>
-	  <para>The <filename>sda5</filename> and <filename>sdc5</filename>
-	  partitions, as well as <filename>sda6</filename> and
-	  <filename>sdc6</filename>, are assembled into two new RAID-1
-	  volumes of about 100 GB each, <filename>md1</filename> and
-	  <filename>md2</filename>. Both these mirrors are initialized as
-	  physical volumes for LVM, and assigned to the
-	  <filename>vg_raid</filename> volume group. This VG thus contains
-	  about 200 GB of safe space.</para>
+          <para>The <filename>sda3</filename> and <filename>sdc3</filename>
+          partitions are assembled into a RAID-0 volume,
+          <filename>md1</filename>, and used as swap partition, providing a
+          total 32 GB of swap space. Modern systems can provide plenty of RAM
+          and our system won't need hibernation. So with this amount added, our
+          system will unlikely run out of memory.</para>
         </listitem>
         <listitem>
-	  <para>The remaining partitions, <filename>sda7</filename> and
-	  <filename>sdc7</filename>, are directly used as physical volumes,
-	  and assigned to another VG called <filename>vg_bulk</filename>,
-	  which therefore ends up with roughly 200 GB of space.</para>
+          <para>The <filename>sda4</filename> and <filename>sdc4</filename>
+          partitions, as well as <filename>sda5</filename> and
+          <filename>sdc5</filename>, are assembled into two new RAID-1
+          volumes of about 300 GB each, <filename>md2</filename> and
+          <filename>md3</filename>. Both these mirrors are initialized as
+          physical volumes for LVM, and assigned to the
+          <filename>vg_raid</filename> volume group. This VG thus contains
+          about 600 GB of safe space.</para>
+        </listitem>
+        <listitem>
+          <para>The remaining partitions, <filename>sda6</filename> and
+          <filename>sdc6</filename>, are directly used as physical volumes,
+          and assigned to another VG called <filename>vg_bulk</filename>,
+          which therefore ends up with roughly 460 GB of space.</para>
         </listitem>
       </itemizedlist>
 
@@ -1565,41 +1573,41 @@ Device    Boot     Start       End   Sectors Size Id Type
       <sidebar>
         <title><emphasis>NOTE</emphasis> Why three RAID-1 volumes?</title>
 
-	<para>We could have set up one RAID-1 volume only, to serve as a
-	physical volume for <filename>vg_raid</filename>. Why create three
-	of them, then?</para>
+        <para>We could have set up one RAID-1 volume only, to serve as a
+        physical volume for <filename>vg_raid</filename>. Why create three
+        of them, then?</para>
 
-	<para>The rationale for the first split (<filename>md0</filename>
-	vs. the others) is about data safety: data written to both elements
-	of a RAID-1 mirror are exactly the same, and it is therefore
-	possible to bypass the RAID layer and mount one of the disks
-	directly. In case of a kernel bug, for instance, or if the LVM
-	metadata become corrupted, it is still possible to boot a minimal
-	system to access critical data such as the layout of disks in the
-	RAID and LVM volumes; the metadata can then be reconstructed and
-	the files can be accessed again, so that the system can be brought
-	back to its nominal state.</para>
+        <para>The rationale for the first split (<filename>md0</filename>
+        vs. the others) is about data safety: data written to both elements
+        of a RAID-1 mirror are exactly the same, and it is therefore
+        possible to bypass the RAID layer and mount one of the disks
+        directly. In case of a kernel bug, for instance, or if the LVM
+        metadata become corrupted, it is still possible to boot a minimal
+        system to access critical data such as the layout of disks in the
+        RAID and LVM volumes; the metadata can then be reconstructed and
+        the files can be accessed again, so that the system can be brought
+        back to its nominal state.</para>
 
-	<para>The rationale for the second split (<filename>md1</filename>
-	vs. <filename>md2</filename>) is less clear-cut, and more related
-	to acknowledging that the future is uncertain. When the workstation
-	is first assembled, the exact storage requirements are not
-	necessarily known with perfect precision; they can also evolve over
-	time. In our case, we can't know in advance the actual storage
-	space requirements for video rushes and complete video clips. If
-	one particular clip needs a very large amount of rushes, and the VG
-	dedicated to redundant data is less than halfway full, we can
-	re-use some of its unneeded space. We can remove one of the
-	physical volumes, say <filename>md2</filename>, from
-	<filename>vg_raid</filename> and either assign it to
-	<filename>vg_bulk</filename> directly (if the expected duration of
-	the operation is short enough that we can live with the temporary
-	drop in performance), or undo the RAID setup on
-	<filename>md2</filename> and integrate its components
-	<filename>sda6</filename> and <filename>sdc6</filename> into the
-	bulk VG (which grows by 200 GB instead of 100 GB); the
-	<filename>lv_rushes</filename> logical volume can then be grown
-	according to requirements.</para>
+        <para>The rationale for the second split (<filename>md2</filename>
+        vs. <filename>md3</filename>) is less clear-cut, and more related
+        to acknowledging that the future is uncertain. When the workstation
+        is first assembled, the exact storage requirements are not
+        necessarily known with perfect precision; they can also evolve over
+        time. In our case, we can't know in advance the actual storage
+        space requirements for video rushes and complete video clips. If
+        one particular clip needs a very large amount of rushes, and the VG
+        dedicated to redundant data is less than halfway full, we can
+        re-use some of its unneeded space. We can remove one of the
+        physical volumes, say <filename>md3</filename>, from
+        <filename>vg_raid</filename> and either assign it to
+        <filename>vg_bulk</filename> directly (if the expected duration of
+        the operation is short enough that we can live with the temporary
+        drop in performance), or undo the RAID setup on
+        <filename>md3</filename> and integrate its components
+        <filename>sda5</filename> and <filename>sdc5</filename> into the
+        bulk VG (which grows by 600 GB instead of 300 GB); the
+        <filename>lv_rushes</filename> logical volume can then be grown
+        according to requirements.</para>
       </sidebar>
     </section>
   </section>
