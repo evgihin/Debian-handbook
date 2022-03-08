@@ -1507,6 +1507,7 @@ Device         Start        End   Sectors   Size Type
 /dev/sda6  1392513024 1875384974 482871951 230.3G Linux LVM
 </computeroutput>
 </screen>
+
       <itemizedlist>
         <listitem>
           <para>The first partitions of both disks are BIOS boot
@@ -1628,49 +1629,52 @@ Device         Start        End   Sectors   Size Type
     <para>There are multiple virtualization solutions, each with its own
     pros and cons. This book will focus on Xen, LXC, and KVM, but other
     noteworthy implementations include the following:</para>
+
+    <indexterm><primary><emphasis>Xen</emphasis></primary></indexterm>
     <indexterm><primary><emphasis>VMWare</emphasis></primary></indexterm>
     <indexterm><primary><emphasis>Bochs</emphasis></primary></indexterm>
     <indexterm><primary><emphasis>QEMU</emphasis></primary></indexterm>
     <indexterm><primary><emphasis>VirtualBox</emphasis></primary></indexterm>
     <indexterm><primary><emphasis>KVM</emphasis></primary></indexterm>
     <indexterm><primary><emphasis>LXC</emphasis></primary></indexterm>
+
     <itemizedlist>
       <listitem>
-	<para>QEMU is a software emulator for a full computer; performances
-	are far from the speed one could achieve running natively, but this
-	allows running unmodified or experimental operating systems on the
-	emulated hardware. It also allows emulating a different hardware
-	architecture: for instance, an <emphasis>amd64</emphasis> system can
-	emulate an <emphasis>arm</emphasis> computer. QEMU is free
-	software. <ulink type="block" url="https://www.qemu.org/"/></para>
+        <para>QEMU is a software emulator for a full computer; performances
+        are far from the speed one could achieve running natively, but this
+        allows running unmodified or experimental operating systems on the
+        emulated hardware. It also allows emulating a different hardware
+        architecture: for instance, an <emphasis>amd64</emphasis> system can
+        emulate an <emphasis>arm</emphasis> computer. QEMU is free
+        software.
+        <ulink type="block" url="https://qemu.org/"/></para>
       </listitem>
       <listitem>
-	<para>Bochs is another free virtual machine, but it only
-	emulates the x86 architectures (i386 and amd64).</para>
+        <para>Bochs is another free virtual machine, but it only
+        emulates the x86 architectures (i386 and amd64).</para>
       </listitem>
       <listitem>
-	<para>VMWare is a proprietary virtual machine; being one of the
-	oldest out there, it is also one of the most widely-known. It works
-	on principles similar to QEMU. VMWare proposes advanced features
-	such as snapshotting a running virtual machine. <ulink type="block"
-	url="https://www.vmware.com/"/></para>
+        <para>VMWare is a proprietary virtual machine; being one of the
+        oldest out there, it is also one of the most widely-known. It works
+        on principles similar to QEMU. VMWare proposes advanced features
+        such as “snapshotting“ a running virtual machine.
+        <ulink type="block" url="https://vmware.com/"/></para>
       </listitem>
       <listitem>
         <para>VirtualBox is a virtual machine that is mostly free software
-          (some extra components are available under a proprietary
-          license). Unfortunately it is in Debian's “contrib” section because it
-          includes some precompiled files that cannot be rebuilt without a
-          proprietary compiler and it currently only resides in Debian Unstable
-          as Oracle's policies make it impossible to keep it secure
-          in a Debian stable release (see <ulink
-            url="https://bugs.debian.org/794466">#794466</ulink>). While
-          younger than VMWare and restricted to the i386 and amd64
-          architectures, it still includes some snapshotting and other
-          interesting features.
-          <ulink type="block" url="https://www.virtualbox.org/"/>
-        </para>
+        (some extra components are available under a proprietary license).
+        Unfortunately it is in Debian's “contrib” section because it includes
+        some precompiled files that cannot be rebuilt without a proprietary
+        compiler and it currently only resides in Debian Unstable as Oracle's
+        policies make it impossible to keep it secure in a Debian stable
+        release (see <ulink
+        url="https://bugs.debian.org/794466">#794466</ulink>). While younger
+        than VMWare and restricted to the i386 and amd64 architectures, it
+        still includes some “snapshotting“ and other interesting features.
+        <ulink type="block" url="https://www.virtualbox.org/"/></para>
       </listitem>
     </itemizedlist>
+
     <sidebar>
       <title><emphasis>HARDWARE</emphasis> Virtualization support</title>
       <para>Some computers might not have hardware virtualization
@@ -1684,16 +1688,26 @@ Device         Start        End   Sectors   Size Type
       <itemizedlist>
         <listitem>
           <para>For Intel processors you can execute
-          <command>grep vmx /proc/cpuinfo</command></para>
+          <command>grep vmx /proc/cpuinfo</command> to check for Intel's
+          Virtual Machine Extensions.</para>
         </listitem>
         <listitem>
           <para>For AMD processors you can execute
-          <command>grep svm /proc/cpuinfo</command></para>
+          <command>grep svm /proc/cpuinfo</command> to check for AMD's Secure
+          Virtual Machine.</para>
         </listitem>
       </itemizedlist>
+
+      <para>If that is not the case, you can access the BIOS of your system and
+      check for entries like “Intel Virtualization Technology”/“Intel VT-x”
+      or “SVM mode” (AMD) - usually to be found in the CPU configuration in the
+      Advanced section.</para>
     </sidebar>
     <section id="sect.xen">
       <title>Xen</title>
+      <indexterm><primary>paravirtualization</primary></indexterm>
+      <indexterm><primary>hypervisor</primary></indexterm>
+      <indexterm><primary>Xen</primary></indexterm>
 
       <para>Xen <indexterm><primary>Xen</primary></indexterm> is a
       “paravirtualization” solution. It introduces a thin abstraction
@@ -1705,6 +1719,11 @@ Device         Start        End   Sectors   Size Type
       degraded, and systems run close to native speed; the drawback is that
       the kernels of the operating systems one wishes to use on a Xen
       hypervisor need to be adapted to run on Xen.</para>
+
+      <indexterm><primary>dom0</primary></indexterm>
+      <indexterm><primary>domU</primary></indexterm>
+      <indexterm><primary>virtualization</primary><secondary>host</secondary></indexterm>
+      <indexterm><primary>virtualization</primary><secondary>guest</secondary></indexterm>
 
       <para>Let's spend some time on terms. The hypervisor is the lowest
       layer, which runs directly on the hardware, even below the kernel.
@@ -1722,54 +1741,54 @@ Device         Start        End   Sectors   Size Type
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and the various versions of Linux</title>
 
-	<para>Xen was initially developed as a set of patches that lived
-	out of the official tree, and not integrated to the Linux kernel.
-	At the same time, several upcoming virtualization systems
-	(including KVM) required some generic virtualization-related
-	functions to facilitate their integration, and the Linux kernel
-	gained this set of functions (known as the
-	<emphasis>paravirt_ops</emphasis> or <emphasis>pv_ops</emphasis>
-	interface). Since the Xen patches were duplicating some of the
-	functionality of this interface, they couldn't be accepted
-	officially.</para>
+        <para>Xen was initially developed as a set of patches that lived
+        out of the official tree, and not integrated to the Linux kernel.
+        At the same time, several upcoming virtualization systems
+        (including KVM) required some generic virtualization-related
+        functions to facilitate their integration, and the Linux kernel
+        gained this set of functions (known as the
+        <emphasis>paravirt_ops</emphasis> or <emphasis>pv_ops</emphasis>
+        interface). Since the Xen patches were duplicating some of the
+        functionality of this interface, they couldn't be accepted
+        officially.</para>
 
-	<para>Xensource, the company behind Xen, therefore had to port Xen
-	to this new framework, so that the Xen patches could be merged into
-	the official Linux kernel. That meant a lot of code rewrite, and
-	although Xensource soon had a working version based on the
-	paravirt_ops interface, the patches were only progressively merged
-	into the official kernel. The merge was completed in Linux 3.0.
-	<ulink type="block"
-	url="https://wiki.xenproject.org/wiki/XenParavirtOps"/></para>
+        <para>Xensource, the company behind Xen, therefore had to port Xen
+        to this new framework, so that the Xen patches could be merged into
+        the official Linux kernel. That meant a lot of code rewrite, and
+        although Xensource soon had a working version based on the
+        paravirt_ops interface, the patches were only progressively merged
+        into the official kernel. The merge was completed in Linux 3.0.
+        <ulink type="block"
+        url="https://wiki.xenproject.org/wiki/XenParavirtOps"/></para>
 
-	<para>Since <emphasis role="distribution">Jessie</emphasis> is
-	based on version 3.16 of the Linux kernel, the standard
-	<emphasis role="pkg">linux-image-686-pae</emphasis> and
-	<emphasis role="pkg">linux-image-amd64</emphasis> packages
-	include the necessary code, and the distribution-specific
-	patching that was required for <emphasis
-	role="distribution">Squeeze</emphasis> and earlier versions of
-	Debian is no more. <ulink type="block"
-	url="https://wiki.xenproject.org/wiki/Xen_Kernel_Feature_Matrix"/></para>
+        <para>Since <emphasis role="distribution">Jessie</emphasis> is
+        based on version 3.16 of the Linux kernel, the standard
+        <emphasis role="pkg">linux-image-686-pae</emphasis> and
+        <emphasis role="pkg">linux-image-amd64</emphasis> packages
+        include the necessary code, and the distribution-specific
+        patching that was required for <emphasis
+        role="distribution">Squeeze</emphasis> and earlier versions of
+        Debian is no more. <ulink type="block"
+        url="https://wiki.xenproject.org/wiki/Xen_Kernel_Feature_Matrix"/></para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>CULTURE</emphasis> Xen and non-Linux kernels</title>
 
-	<para>Xen requires modifications to all the operating systems
-	one wants to run on it; not all kernels have the same level of
-	maturity in this regard. Many are fully-functional, both as
-	dom0 and domU: Linux 3.0 and later, NetBSD 4.0 and later, and
+        <para>Xen requires modifications to all the operating systems
+        one wants to run on it; not all kernels have the same level of
+        maturity in this regard. Many are fully-functional, both as
+        dom0 and domU: Linux 3.0 and later, NetBSD 4.0 and later, and
         OpenSolaris. Others only work as a domU. You can check the status
         of each operating system in the Xen wiki:
         <ulink type="block" url="https://wiki.xenproject.org/wiki/Dom0_Kernels_for_Xen"/>
         <ulink type="block" url="https://wiki.xenproject.org/wiki/DomU_Support_for_Xen"/>
-	</para>
+        </para>
 
-	<para>However, if Xen can rely on the hardware functions dedicated
-	to virtualization (which are only present in more recent
-	processors), even non-modified operating systems can run as domU
-	(including Windows).</para>
+        <para>However, if Xen can rely on the hardware functions dedicated
+        to virtualization (which are only present in more recent
+        processors), even non-modified operating systems can run as domU
+        (including Windows).</para>
       </sidebar>
 
       <sidebar>
@@ -1780,28 +1799,35 @@ Device         Start        End   Sectors   Size Type
       </sidebar>
 
       <para>Using Xen under Debian requires three components:</para>
+
+      <indexterm><primary><emphasis role="pkg">xen-hypervisor</emphasis></primary></indexterm>
+
+      <!-- MAY CHANGE: hypervisor and kernel package names/versions -->
       <itemizedlist>
         <listitem>
-	  <para>The hypervisor itself. According to the available hardware,
-          the appropriate package will be either
-          <emphasis role="pkg">xen-hypervisor-4.11-amd64</emphasis>,
-          <emphasis role="pkg">xen-hypervisor-4.11-armhf</emphasis>,
-          or <emphasis role="pkg">xen-hypervisor-4.11-arm64</emphasis>.</para>
+	        <para>The hypervisor itself. According to the available hardware,
+          the appropriate package providing <emphasis
+          role="pkg">xen-hypervisor</emphasis> will be either
+          <emphasis role="pkg">xen-hypervisor-4.14-amd64</emphasis>,
+          <emphasis role="pkg">xen-hypervisor-4.14-armhf</emphasis>,
+          or <emphasis role="pkg">xen-hypervisor-4.14-arm64</emphasis>.</para>
         </listitem>
         <listitem>
-	  <para>A kernel that runs on that hypervisor. Any kernel more
-	  recent than 3.0 will do, including the 4.19 version present
-	  in <emphasis role="distribution">Buster</emphasis>.</para>
+          <para>A kernel that runs on that hypervisor. Any kernel more
+          recent than 3.0 will do, including the 5.10 version present
+          in <emphasis role="distribution">Bullseye</emphasis>.</para>
         </listitem>
         <listitem>
-	  <para>The i386 architecture also requires a standard library with
-	  the appropriate patches taking advantage of Xen; this is in the
-	  <emphasis role="pkg">libc6-xen</emphasis> package.</para>
+          <para>The i386 architecture also requires a standard library with
+          the appropriate patches taking advantage of Xen; this is in the
+          <emphasis role="pkg">libc6-xen</emphasis> package.</para>
         </listitem>
       </itemizedlist>
 
+      <indexterm><primary><emphasis role="pkg">xen-utils</emphasis></primary></indexterm>
+
       <para>The hypervisor also
-      brings <emphasis role="pkg">xen-utils-4.11</emphasis>, which
+      brings <emphasis role="pkg">xen-utils-4.14</emphasis>, which
       contains tools to control the hypervisor from the dom0. This in
       turn brings the appropriate standard library. During the
       installation of all that, configuration scripts also create a
@@ -1816,6 +1842,10 @@ Device         Start        End   Sectors   Size Type
       standard fashion, with a few extra messages on the console during the
       early initialization steps.</para>
 
+      <indexterm><primary><emphasis role="pkg">xen-tools</emphasis></primary></indexterm>
+      <indexterm><primary><command>xen-create-image</command></primary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/xen-tools/xen-tools.conf</filename></secondary></indexterm>
+
       <para>Now is the time to actually install useful systems on the domU
       systems, using the tools from <emphasis
       role="pkg">xen-tools</emphasis>. This package provides the
@@ -1829,59 +1859,62 @@ Device         Start        End   Sectors   Size Type
       file before creating images, or to use extra parameters in the
       <command>xen-create-image</command> invocation. Important parameters
       of note include the following:</para>
+
       <itemizedlist>
         <listitem>
-	  <para><literal>--memory</literal>, to specify the amount of RAM
-	  dedicated to the newly created system;</para>
+          <para><literal>--memory</literal>, to specify the amount of RAM
+          dedicated to the newly created system;</para>
         </listitem>
         <listitem>
-	  <para><literal>--size</literal> and <literal>--swap</literal>, to
-	  define the size of the “virtual disks” available to the
-	  domU;</para>
+          <para><literal>--size</literal> and <literal>--swap</literal>, to
+          define the size of the “virtual disks” available to the
+          domU;</para>
         </listitem>
         <listitem>
-	  <para><literal>--debootstrap-cmd</literal>, to specify the
+          <indexterm><primary><command>debootstrap</command></primary></indexterm>
+          <para><literal>--debootstrap-cmd</literal>, to specify the
           which debootstrap command is used. The default is <command>debootstrap</command>
           if debootstrap and cdebootstrap are installed. In that
-	  case, the <literal>--dist</literal> option will also most often
-	  be used (with a distribution name such as <emphasis
-	  role="distribution">buster</emphasis>).</para>
+          case, the <literal>--dist</literal> option will also most often
+          be used (with a distribution name such as <emphasis
+          role="distribution">bullseye</emphasis>).</para>
 
           <sidebar>
             <title><emphasis>GOING FURTHER</emphasis> Installing a non-Debian system in a domU</title>
 
-	    <para>In case of a non-Linux system, care should be taken to
-	    define the kernel the domU must use, using the
-	    <literal>--kernel</literal> option.</para>
+            <para>In case of a non-Linux system, care should be taken to
+            define the kernel the domU must use, using the
+            <literal>--kernel</literal> option.</para>
           </sidebar>
         </listitem>
         <listitem>
-	  <para><literal>--dhcp</literal> states that the domU's network
-	  configuration should be obtained by DHCP while
-	  <literal>--ip</literal> allows defining a static IP
-	  address.</para>
+          <para><literal>--dhcp</literal> states that the domU's network
+          configuration should be obtained by DHCP while
+          <literal>--ip</literal> allows defining a static IP
+          address.</para>
         </listitem>
         <listitem>
-	  <para>Lastly, a storage method must be chosen for the images to
-	  be created (those that will be seen as hard disk drives from the
-	  domU). The simplest method, corresponding to the
-	  <literal>--dir</literal> option, is to create one file on the
-	  dom0 for each device the domU should be provided. For systems
-	  using LVM, the alternative is to use the <literal>--lvm</literal>
-	  option, followed by the name of a volume group;
-	  <command>xen-create-image</command> will then create a new
-	  logical volume inside that group, and this logical volume will be
-	  made available to the domU as a hard disk drive.</para>
+          <indexterm><primary>LVM</primary><secondary>Xen</secondary></indexterm>
+          <para>Lastly, a storage method must be chosen for the images to
+          be created (those that will be seen as hard disk drives from the
+          domU). The simplest method, corresponding to the
+          <literal>--dir</literal> option, is to create one file on the
+          dom0 for each device the domU should be provided. For systems
+          using LVM, the alternative is to use the <literal>--lvm</literal>
+          option, followed by the name of a volume group;
+          <command>xen-create-image</command> will then create a new
+          logical volume inside that group, and this logical volume will be
+          made available to the domU as a hard disk drive.</para>
 
           <sidebar>
             <title><emphasis>NOTE</emphasis> Storage in the domU</title>
 
-	    <para>Entire hard disks can also be exported to the domU, as
-	    well as partitions, RAID arrays or pre-existing LVM logical
-	    volumes. These operations are not automated by
-	    <command>xen-create-image</command>, however, so editing the
-	    Xen image's configuration file is in order after its initial
-	    creation with <command>xen-create-image</command>.</para>
+            <para>Entire hard disks can also be exported to the domU, as
+            well as partitions, RAID arrays or pre-existing LVM logical
+            volumes. These operations are not automated by
+            <command>xen-create-image</command>, however, so editing the
+            Xen image's configuration file is in order after its initial
+            creation with <command>xen-create-image</command>.</para>
           </sidebar>
         </listitem>
       </itemizedlist>
@@ -1889,41 +1922,43 @@ Device         Start        End   Sectors   Size Type
       <para>Once these choices are made, we can create the image for our
       future Xen domU:</para>
 
-      <screen><computeroutput># </computeroutput><userinput>xen-create-image --hostname testxen --dhcp --dir /srv/testxen --size=2G --dist=buster --role=udev</userinput>
-<computeroutput>
-[...]
+      <!-- MAY CHANGE: distribution name and size -->
+      <screen><computeroutput># </computeroutput><userinput>xen-create-image --hostname testxen --dhcp --dir /srv/testxen --size=2G --dist=bullseye --role=udev
+</userinput><computeroutput>
 General Information
 --------------------
 Hostname       :  testxen
-Distribution   :  buster
+Distribution   :  bullseye
 Mirror         :  http://deb.debian.org/debian
 Partitions     :  swap            512M  (swap)
                   /               2G    (ext4)
 Image type     :  sparse
 Memory size    :  256M
-Kernel path    :  /boot/vmlinuz-4.19.0-5-amd64
-Initrd path    :  /boot/initrd.img-4.19.0-5-amd64
+Bootloader     :  pygrub
+
 [...]
 Logfile produced at:
-         /var/log/xen-tools/testxen.log
+	 /var/log/xen-tools/testxen.log
 
 Installation Summary
 ---------------------
 Hostname        :  testxen
-Distribution    :  buster
-MAC Address     :  00:16:3E:0C:74:2F
+Distribution    :  bullseye
+MAC Address     :  00:16:3E:C2:07:EE
 IP Address(es)  :  dynamic
-SSH Fingerprint :  SHA256:PuAGX4/4S07Xzh1u0Cl2tL04EL5udf9ajvvbufBrfvU (DSA)
-SSH Fingerprint :  SHA256:ajFTX54eakzolyzmZku/ihq/BK6KYsz5MewJ98BM5co (ECDSA)
-SSH Fingerprint :  SHA256:/sFov86b+rD/bRSJoHKbiMqzGFiwgZulEwpzsiw6aSc (ED25519)
-SSH Fingerprint :  SHA256:/NJg/CcoVj+OLE/cL3yyJINStnla7YkHKe3/xEdVGqc (RSA)
-Root Password   :  EwmQMHtywY9zsRBpqQuxZTb
+SSH Fingerprint :  SHA256:K+0QjpGzZOacLZ3jX4gBwp0mCESt5ceN5HCJZSKWS1A (DSA)
+SSH Fingerprint :  SHA256:9PnovvGRuTw6dUcEVzzPKTITO0+3Ki1Gs7wu4ke+4co (ECDSA)
+SSH Fingerprint :  SHA256:X5z84raKBajUkWBQA6MVuanV1OcV2YIeD0NoCLLo90k (ED25519)
+SSH Fingerprint :  SHA256:VXu6l4tsrCoRsXOqAwvgt57sMRj2qArEbOzHeydvV34 (RSA)
+Root Password   :  FS7CUxsY3xkusv7EkbT9yae
 </computeroutput>
 </screen>
 
       <para>We now have a virtual machine, but it is currently not running
       (and therefore only using space on the dom0's hard disk). Of course,
       we can create more images, possibly with different parameters.</para>
+
+      <indexterm><primary>Xen</primary><secondary>network models</secondary></indexterm>
 
       <para>Before turning these virtual machines on, we need to define how
       they'll be accessed. They can of course be considered as isolated
@@ -1938,22 +1973,22 @@ Root Password   :  EwmQMHtywY9zsRBpqQuxZTb
       that:</para>
       <itemizedlist>
         <listitem>
-	  <para>The simplest model is the <emphasis>bridge</emphasis>
-	  model; all the eth0 network cards (both in the dom0 and the domU
-	  systems) behave as if they were directly plugged into an Ethernet
-	  switch.</para>
+          <para>The simplest model is the <emphasis>bridge</emphasis>
+          model; all the eth0 network cards (both in the dom0 and the domU
+          systems) behave as if they were directly plugged into an Ethernet
+          switch.</para>
         </listitem>
         <listitem>
-	  <para>Then comes the <emphasis>routing</emphasis> model, where the
-	  dom0 behaves as a router that stands between the domU systems and
-	  the (physical) external network.</para>
+          <para>Then comes the <emphasis>routing</emphasis> model, where the
+          dom0 behaves as a router that stands between the domU systems and
+          the (physical) external network.</para>
         </listitem>
         <listitem>
-	  <para>Finally, in the <emphasis>NAT</emphasis> model, the dom0 is
-	  again between the domU systems and the rest of the network, but
-	  the domU systems are not directly accessible from outside, and
-	  traffic goes through some network address translation on the
-	  dom0.</para>
+          <para>Finally, in the <emphasis>NAT</emphasis> model, the dom0 is
+          again between the domU systems and the rest of the network, but
+          the domU systems are not directly accessible from outside, and
+          traffic goes through some network address translation on the
+          dom0.</para>
         </listitem>
       </itemizedlist>
 
@@ -1973,14 +2008,22 @@ Root Password   :  EwmQMHtywY9zsRBpqQuxZTb
       exist). We must therefore set up a bridge in
       <filename>/etc/network/interfaces</filename> (which requires
       installing the <emphasis role="pkg">bridge-utils</emphasis> package,
-      which is why the <emphasis role="pkg">xen-utils-4.11</emphasis> package
-      recommends it) to replace the existing eth0 entry:</para>
+      which is why the <emphasis role="pkg">xen-utils</emphasis> package
+      recommends it) to replace the existing <replaceable>eth0</replaceable>
+      entry (be careful to use the correct network device name):</para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/network/interfaces</filename></secondary></indexterm>
+      <indexterm><primary><emphasis role="pkg">bridge-utils</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">xen-utils</emphasis></primary></indexterm>
+      <indexterm><primary>Xen</primary><secondary><literal>xenbr0</literal></secondary></indexterm>
 
       <programlisting>auto xenbr0
 iface xenbr0 inet dhcp
-    bridge_ports eth0
+    bridge_ports <replaceable>eth0</replaceable>
     bridge_maxwait 0
-    </programlisting>
+</programlisting>
+
+      <indexterm><primary><command>xl</command></primary></indexterm>
 
       <para>After rebooting to make sure the bridge is automatically
       created, we can now start the domU with the Xen control tools, in
@@ -1991,44 +2034,48 @@ iface xenbr0 inet dhcp
       <filename>/etc/xen/testxen.cfg</filename>). Here we have set it to
       1024 (megabytes).</para>
 
-      <screen><computeroutput># </computeroutput><userinput>xl list</userinput>
-<computeroutput>Name                                        ID   Mem VCPUs	State	Time(s)
-Domain-0                                     0  1894     2     r-----      63.5
-# </computeroutput><userinput>xl create /etc/xen/testxen.cfg</userinput>
-<computeroutput>Parsing config from /etc/xen/testxen.cfg
-# </computeroutput><userinput>xl list</userinput>
-<computeroutput>Name                                        ID   Mem VCPUs	State	Time(s)
-Domain-0                                     0  1505     2     r-----     100.0
-testxen                                     13  1024     0     --p---       0.0</computeroutput>
-</screen>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/xen/testxen.cfg</filename></secondary></indexterm>
+
+      <screen><computeroutput># </computeroutput><userinput>xl list
+</userinput><computeroutput>Name                                        ID   Mem VCPUs	State	Time(s)
+Domain-0                                     0  3918     2     r-----      35.1
+# </computeroutput><userinput>xl create /etc/xen/testxen.cfg
+</userinput><computeroutput>Parsing config from /etc/xen/testxen.cfg
+# </computeroutput><userinput>xl list
+</userinput><computeroutput>Name                                        ID   Mem VCPUs	State	Time(s)
+Domain-0                                     0  2757     2     r-----      45.2
+testxen                                      3  1024     1     r-----       1.3
+</computeroutput></screen>
 
       <sidebar>
         <title><emphasis>TOOL</emphasis> Choice of toolstacks to manage Xen VM</title>
         <indexterm><primary><command>xm</command></primary></indexterm>
         <indexterm><primary><command>xe</command></primary></indexterm>
-        <para>
-          In Debian 7 and older releases, <command>xm</command> was the reference
-          command line tool to use to manage Xen virtual machines. It has
-          now been replaced by <command>xl</command> which is mostly
-          backwards compatible. But those are not the only available
-          tools: <command>virsh</command> of libvirt and
-          <command>xe</command> of XenServer's XAPI (commercial offering
-          of Xen) are alternative tools.
-        </para>
+        <indexterm><primary><command>xl</command></primary></indexterm>
+        <indexterm><primary><command>virsh</command></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">libvirt</emphasis></primary></indexterm>
+
+        <para>In Debian 7 and older releases, <command>xm</command> was the
+        reference command line tool to use to manage Xen virtual machines. It
+        has now been replaced by <command>xl</command> which is mostly
+        backwards compatible. But those are not the only available tools:
+        <command>virsh</command> of <emphasis role="pkg">libvirt</emphasis> and
+        <command>xe</command> of XenServer's XAPI (commercial offering of Xen)
+        are alternative tools.</para>
       </sidebar>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Only one domU per image!</title>
 
-	<para>While it is of course possible to have several domU systems
-	running in parallel, they will all need to use their own image,
-	since each domU is made to believe it runs on its own hardware
-	(apart from the small slice of the kernel that talks to the
-	hypervisor). In particular, it isn't possible for two domU systems
-	running simultaneously to share storage space. If the domU systems
-	are not run at the same time, it is, however, quite possible to reuse
-	a single swap partition, or the partition hosting the
-	<filename>/home</filename> filesystem.</para>
+        <para>While it is of course possible to have several domU systems
+        running in parallel, they will all need to use their own image,
+        since each domU is made to believe it runs on its own hardware
+        (apart from the small slice of the kernel that talks to the
+        hypervisor). In particular, it isn't possible for two domU systems
+        running simultaneously to share storage space. If the domU systems
+        are not run at the same time, it is, however, quite possible to reuse
+        a single swap partition, or the partition hosting the
+        <filename>/home</filename> filesystem.</para>
       </sidebar>
 
       <para>Note that the <filename>testxen</filename> domU uses real
@@ -2046,10 +2093,13 @@ testxen                                     13  1024     0     --p---       0.0<
       <filename>hvc0</filename> console, with the <command>xl
       console</command> command:</para>
 
+      <indexterm><primary>Xen</primary><secondary><literal>hvc0</literal></secondary></indexterm>
+
+      <!-- MAY CHANGE: output -->
       <screen><computeroutput># </computeroutput><userinput>xl console testxen</userinput>
 <computeroutput>[...]
 
-Debian GNU/Linux 10 testxen hvc0
+Debian GNU/Linux 11 testxen hvc0
 
 testxen login: </computeroutput>
 </screen>
@@ -2062,23 +2112,31 @@ testxen login: </computeroutput>
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Getting the console straight away</title>
+        <indexterm><primary>Xen</primary><secondary>console</secondary></indexterm>
 
-	<para>Sometimes one wishes to start a domU system and get to its
-	console straight away; this is why the <command>xl create</command>
-	command takes a <literal>-c</literal> switch. Starting a domU with
-	this switch will display all the messages as the system
-	boots.</para>
+        <para>Sometimes one wishes to start a domU system and get to its
+        console straight away; this is why the <command>xl create</command>
+        command takes a <literal>-c</literal> switch. Starting a domU with
+        this switch will display all the messages as the system
+        boots.</para>
       </sidebar>
 
       <sidebar>
-        <title><emphasis>TOOL</emphasis> OpenXenManager</title>
+        <title><emphasis>TOOL</emphasis> Graphical Xen managers</title>
+        <indexterm><primary>Xen</primary><secondary>manager</secondary></indexterm>
 
-	<para>OpenXenManager (in the <emphasis role="pkg">openxenmanager</emphasis>
-	package) is a graphical interface allowing remote management
-	of Xen domains via Xen's API. It can thus control Xen domains remotely. It
-	provides most of the features of the <command>xl</command> command.
-	</para>
+        <para>OpenXenManager (in the <emphasis role="pkg">openxenmanager</emphasis>
+        package), a graphical interface allowing remote management
+        of Xen domains via Xen's API, is no longer provided by Debian due to
+        the lack of upstream development. If you are looking for a replacement, <emphasis
+        role="pkg">virt-manager</emphasis> provides support to handle Xen VMs
+        as well.</para>
+        
+        <indexterm><primary><emphasis role="pkg">openxenmanager</emphasis></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">virt-manager</emphasis></primary></indexterm>
       </sidebar>
+
+      <indexterm><primary><command>xl</command></primary></indexterm>
 
       <para>Once the domU is up, it can be used just like any other server
       (since it is a GNU/Linux system after all). However, its virtual
@@ -2099,33 +2157,35 @@ testxen login: </computeroutput>
       also that Xen is so far incompatible with a large part of ACPI power
       management, which precludes suspending the host (dom0) system.</para>
 
-      <sidebar>
-        <title><emphasis>DOCUMENTATION</emphasis> <command>xl</command> options</title>
-
-	<para>Most of the <command>xl</command> subcommands expect one or
-	more arguments, often a domU name. These arguments are well
-	described in the <citerefentry><refentrytitle>xl</refentrytitle>
-	<manvolnum>1</manvolnum></citerefentry> manual page.</para>
-      </sidebar>
+      <indexterm><primary>Xen</primary><secondary>ACPI</secondary></indexterm>
+      <indexterm><primary>ACPI</primary></indexterm>
 
       <para>Halting or rebooting a domU can be done either from within the
       domU (with the <command>shutdown</command> command) or from the dom0,
       with <command>xl shutdown</command> or <command>xl
       reboot</command>.</para>
 
+      <para>Most of the <command>xl</command> subcommands expect one or
+      more arguments, often a domU name. These arguments are well
+      described in the <citerefentry><refentrytitle>xl</refentrytitle>
+      <manvolnum>1</manvolnum></citerefentry> manual page.</para>
+
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Advanced Xen</title>
+        <indexterm><primary>Xen</primary><secondary>documentation</secondary></indexterm>
 
-	<para>Xen has many more features than we can describe in these few
-	paragraphs. In particular, the system is very dynamic, and many
-	parameters for one domain (such as the amount of allocated memory,
-	the visible hard drives, the behavior of the task scheduler, and
-	so on) can be adjusted even when that domain is running. A domU can
-	even be migrated across servers without being shut down, and
-	without losing its network connections! For all these advanced
-	aspects, the primary source of information is the official Xen
-	documentation. <ulink type="block"
-	url="https://xenproject.org/help/documentation/"/></para>
+        <para>Xen has many more features than we can describe in these few
+        paragraphs. In particular, the system is very dynamic, and many
+        parameters for one domain (such as the amount of allocated memory,
+        the visible hard drives, the behavior of the task scheduler, and
+        so on) can be adjusted even when that domain is running. A domU can
+        even be migrated across servers without being shut down, and
+        without losing its network connections! For all these advanced
+        aspects, the primary source of information is the official Xen
+        documentation.
+
+        <ulink type="block" url="https://xenproject.org/help/documentation/"/>
+        </para>
       </sidebar>
     </section>
     <section id="sect.lxc">
