@@ -3574,6 +3574,9 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
   </section>
   <section id="sect.monitoring">
     <title>Monitoring</title>
+    <indexterm><primary>monitoring</primary></indexterm>
+    <indexterm><primary>Munin</primary></indexterm>
+    <indexterm><primary>Nagios</primary></indexterm>
 
     <para>Monitoring is a generic term, and the various involved activities
     have several goals: on the one hand, following usage of the resources
@@ -3609,7 +3612,7 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
       to have a web interface. On the hosts to monitor you would install
       <emphasis role="pkg">zabbix-agent</emphasis> feeding data back to the
       server.
-      <ulink type="block" url="https://www.zabbix.com/"/></para>
+      <ulink type="block" url="https://zabbix.com/"/></para>
     </sidebar>
 
     <sidebar>
@@ -3621,82 +3624,95 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
       developers forked Nagios and use Icinga as their new name. Icinga is
       still compatible — so far — with Nagios configurations and
       plugins, but it also adds extra features.
-      <ulink type="block" url="https://www.icinga.org/"/></para>
+      <ulink type="block" url="https://icinga.com/"/></para>
     </sidebar>
     <section id="sect.munin">
       <title>Setting Up Munin</title>
       <indexterm><primary>Munin</primary></indexterm>
+      <indexterm><primary>Munin</primary><secondary>grapher</secondary></indexterm>
 
       <para>The purpose of Munin is to monitor many machines; therefore, it
       quite naturally uses a client/server architecture. The central host
       — the grapher — collects data from all the monitored hosts, and
       generates historical graphs.</para>
+
       <section>
         <title>Configuring Hosts To Monitor</title>
+        <indexterm><primary>server</primary><secondary>munin-node</secondary></indexterm>
 
-	<para>The first step is to install the <emphasis
-	role="pkg">munin-node</emphasis> package. The daemon installed by
-	this package listens on port 4949 and sends back the data collected
-	by all the active plugins. Each plugin is a simple program
-	returning a description of the collected data as well as the latest
-	measured value. Plugins are stored in
-	<filename>/usr/share/munin/plugins/</filename>, but only those with
-	a symbolic link in <filename>/etc/munin/plugins/</filename> are
-	really used.</para>
+        <para>The first step is to install the <emphasis
+        role="pkg">munin-node</emphasis> package. The daemon installed by
+        this package listens on port 4949 and sends back the data collected
+        by all the active plugins. Each plugin is a simple program
+        returning a description of the collected data as well as the latest
+        measured value. Plugins are stored in
+        <filename>/usr/share/munin/plugins/</filename>, but only those with
+        a symbolic link in <filename>/etc/munin/plugins/</filename> are
+        really used.</para>
 
-	<para>When the package is installed, a set of active plugins is
-	determined based on the available software and the current
-	configuration of the host. However, this autoconfiguration depends
-	on a feature that each plugin must provide, and it is usually a
-        good idea to review and tweak the results by hand. Browsing
-        the Plugin Gallery<footnote><para><ulink type="block"
-        url="http://gallery.munin-monitoring.org"/></para></footnote>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/munin/</filename></secondary><see>Munin</see></indexterm>
+        <indexterm><primary>Munin</primary><secondary><filename>/etc/munin/plugins/</filename></secondary></indexterm>
+        <indexterm><primary>Munin</primary><secondary>plugins</secondary></indexterm>
+
+        <para>When the package is installed, a set of active plugins is
+        determined based on the available software and the current
+        configuration of the host. However, this auto-configuration depends on
+        a feature that each plugin must provide, and it is usually a good idea
+        to review and tweak the results by hand. Browsing the Plugin Gallery
         can be interesting even though not all plugins have comprehensive
-        documentation. However, all plugins are scripts and most are rather simple and
-	well-commented. Browsing <filename>/etc/munin/plugins/</filename>
-	is therefore a good way of getting an idea of what each plugin is
-	about and determining which should be removed. Similarly, enabling
-	an interesting plugin found in
-	<filename>/usr/share/munin/plugins/</filename> is a simple matter
-	of setting up a symbolic link with <command>ln -sf
-	/usr/share/munin/plugins/<replaceable>plugin</replaceable>
-	/etc/munin/plugins/</command>. Note that when a plugin name ends
-	with an underscore “_”, the plugin requires a parameter. This
-	parameter must be stored in the name of the symbolic link; for
-	instance, the “if_” plugin must be enabled with a
-	<filename>if_eth0</filename> symbolic link, and it will monitor
-	network traffic on the eth0 interface.</para>
+        documentation.
+        <ulink type="block" url="https://gallery.munin-monitoring.org"/>
+        </para>
 
-	<para>Once all plugins are correctly set up, the daemon
-	configuration must be updated to describe access control for the
-	collected data. This involves <literal>allow</literal> directives
-	in the <filename>/etc/munin/munin-node.conf</filename> file. The
-	default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
-	and only allows access to the local host. An administrator will
-	usually add a similar line containing the IP address of the grapher
-	host, then restart the daemon with <command>systemctl restart 
-	munin-node</command>.</para>
+        <para>However, all plugins are scripts and most are rather simple and
+        well-commented. Browsing <filename>/etc/munin/plugins/</filename>
+        is therefore a good way of getting an idea of what each plugin is
+        about and determining which should be removed. Similarly, enabling
+        an interesting plugin found in
+        <filename>/usr/share/munin/plugins/</filename> is a simple matter
+        of setting up a symbolic link with <command>ln -sf
+        /usr/share/munin/plugins/<replaceable>plugin</replaceable>
+        /etc/munin/plugins/</command>. Note that when a plugin name ends
+        with an underscore “_”, the plugin requires a parameter. This
+        parameter must be stored in the name of the symbolic link; for
+        instance, the “if_” plugin must be enabled with a
+        <filename>if_eth0</filename> symbolic link, and it will monitor
+        network traffic on the eth0 interface.</para>
+
+        <indexterm><primary>Munin</primary><secondary><filename>/etc/munin/munin-node.conf</filename></secondary></indexterm>
+        <indexterm><primary>service</primary><secondary><filename>munin-node.service</filename></secondary></indexterm>
+
+        <para>Once all plugins are correctly set up, the daemon
+        configuration must be updated to describe access control for the
+        collected data. This involves <literal>allow</literal> directives
+        in the <filename>/etc/munin/munin-node.conf</filename> file. The
+        default configuration is <literal>allow ^127\.0\.0\.1$</literal>,
+        and only allows access to the local host. An administrator will
+        usually add a similar line containing the IP address of the grapher
+        host, then restart the daemon with <command>systemctl restart 
+        munin-node</command>.</para>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Creating local plugins</title>
+          <indexterm><primary>Munin</primary><secondary><command>munin-run</command></secondary></indexterm>
 
-	  <para>Munin does include detailed documentation on how plugins
-	  should behave, and how to develop new plugins. <ulink
-	  type="block" url="http://guide.munin-monitoring.org/en/latest/plugin/writing.html"/></para>
+          <para>Munin does include detailed documentation on how plugins
+          should behave, and how to develop new plugins. <ulink
+          type="block" url="https://guide.munin-monitoring.org/en/latest/plugin/writing.html"/></para>
 
-	  <para>A plugin is best tested when run in the same conditions as
-	  it would be when triggered by munin-node; this can be simulated
-	  by running <command>munin-run
-	  <replaceable>plugin</replaceable></command> as root. A potential
-	  second parameter given to this command (such as
-	  <literal>config</literal>) is passed to the plugin as a
-	  parameter.</para>
+          <para>A plugin is best tested when run in the same conditions as
+          it would be when triggered by munin-node; this can be simulated
+          by running <command>munin-run
+          <replaceable>plugin</replaceable></command> as root. A potential
+          second parameter given to this command (such as
+          <literal>config</literal>) is passed to the plugin as a
+          parameter.</para>
 
-	  <para>When a plugin is invoked with the <literal>config</literal>
-	  parameter, it must describe itself by returning a set of
-	  fields:</para>
+          <para>When a plugin is invoked with the <literal>config</literal>
+          parameter, it must describe itself by returning a set of
+          fields:</para>
 
-          <screen><computeroutput>$ </computeroutput><userinput>sudo munin-run load config
+          <screen><computeroutput># </computeroutput><userinput>munin-run load config
 </userinput><computeroutput>graph_title Load average
 graph_args --base 1000 -l 0
 graph_vlabel load
@@ -3708,114 +3724,126 @@ load.info 5 minute load average
 </computeroutput>
 </screen>
 
-	  <para>The various available fields are described by the
-            “Plugin reference” available as part of the “Munin guide”.
-          <ulink type="block"
-            url="https://munin.readthedocs.org/en/latest/reference/plugin.html"/></para>
+          <para>The various available fields are described by the “Plugin
+          reference” available as part of the “Munin guide”.  <ulink
+          type="block"
+          url="https://munin.readthedocs.org/en/latest/reference/plugin.html"/></para>
 
-	  <para>When invoked without a parameter, the plugin simply returns
-	  the last measured values; for instance, executing <command>sudo
-	  munin-run load</command> could return <literal>load.value
-	  0.12</literal>.</para>
+          <para>When invoked without a parameter, the plugin simply returns
+          the last measured values; for instance, executing <command>sudo
+          munin-run load</command> could return <literal>load.value
+          0.12</literal>.</para>
 
-	  <para>Finally, when a plugin is invoked with the
-	  <literal>autoconf</literal> parameter, it should return “yes”
-	  (and a 0 exit status) or “no” (with a 1 exit status)
-	  according to whether the plugin should be enabled on this
-	  host.</para>
+          <para>Finally, when a plugin is invoked with the
+          <literal>autoconf</literal> parameter, it should return “yes”
+          (and a 0 exit status) or “no” (with a 1 exit status)
+          according to whether the plugin should be enabled on this
+          host.</para>
         </sidebar>
       </section>
       <section>
         <title>Configuring the Grapher</title>
+        <indexterm><primary>Munin</primary><secondary>grapher</secondary></indexterm>
+        <indexterm><primary>Munin</primary><secondary><command>munin-cron</command></secondary></indexterm>
+        <indexterm><primary>Munin</primary><secondary><filename>/etc/munin/munin.conf</filename></secondary></indexterm>
 
-	<para>The “grapher” is simply the computer that aggregates the
-	data and generates the corresponding graphs. The required software
-	is in the <emphasis role="pkg">munin</emphasis> package. The
-	standard configuration runs <command>munin-cron</command> (once
-	every 5 minutes), which gathers data from all the hosts listed in
-	<filename>/etc/munin/munin.conf</filename> (only the local host is
-	listed by default), saves the historical data in RRD files
-	(<emphasis>Round Robin Database</emphasis>, a file format designed
-	to store data varying in time) stored under
-	<filename>/var/lib/munin/</filename> and generates an HTML page
-	with the graphs in
-	<filename>/var/cache/munin/www/</filename>.</para>
+        <para>The “grapher” is simply the computer that aggregates the
+        data and generates the corresponding graphs. The required software
+        is in the <emphasis role="pkg">munin</emphasis> package. The
+        standard configuration runs <command>munin-cron</command> (once
+        every 5 minutes), which gathers data from all the hosts listed in
+        <filename>/etc/munin/munin.conf</filename> (only the local host is
+        listed by default), saves the historical data in RRD files
+        (<emphasis>Round Robin Database</emphasis>, a file format designed
+        to store data varying in time) stored under
+        <filename>/var/lib/munin/</filename> and generates an HTML page
+        with the graphs in
+        <filename>/var/cache/munin/www/</filename>.</para>
 
-	<para>All monitored machines must therefore be listed in the
-	<filename>/etc/munin/munin.conf</filename> configuration file. Each
-	machine is listed as a full section with a name matching the
-	machine and at least an <literal>address</literal> entry giving the
-	corresponding IP address.</para>
+        <para>All monitored machines must therefore be listed in the
+        <filename>/etc/munin/munin.conf</filename> configuration file. Each
+        machine is listed as a full section with a name matching the
+        machine and at least an <literal>address</literal> entry giving the
+        corresponding IP address.</para>
 
         <programlisting>[ftp.falcot.com]
     address 192.168.0.12
     use_node_name yes
 </programlisting>
 
-	<para>Sections can be more complex, and describe extra graphs that
-	could be created by combining data coming from several machines.
-	The samples provided in the configuration file are good starting
-	points for customization.</para>
+        <para>Sections can be more complex, and describe extra graphs that
+        could be created by combining data coming from several machines.
+        The samples provided in the configuration file are good starting
+        points for customization.</para>
 
-	<para>The last step is to publish the generated pages; this
-	involves configuring a web server so that the contents of
-	<filename>/var/cache/munin/www/</filename> are made available on a
-	website. Access to this website will often be restricted, using
-	either an authentication mechanism or IP-based access control. See
-	<xref linkend="sect.http-web-server"/> for the relevant
-	details.</para>
+        <para>The last step is to publish the generated pages; this
+        involves configuring a web server so that the contents of
+        <filename>/var/cache/munin/www/</filename> are made available on a
+        website. Access to this website will often be restricted, using
+        either an authentication mechanism or IP-based access control. See
+        <xref linkend="sect.http-web-server"/> for the relevant
+        details.</para>
       </section>
     </section>
     <section id="sect.nagios">
       <title>Setting Up Nagios</title>
       <indexterm><primary>Nagios</primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">nagios4</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">monitoring-plugins</emphasis></primary></indexterm>
 
       <para>Unlike Munin, Nagios does not necessarily require installing
       anything on the monitored hosts; most of the time, Nagios is used to
       check the availability of network services. For instance, Nagios can
       connect to a web server and check that a given web page can be
       obtained within a given time.</para>
+
       <section>
         <title>Installing</title>
 
-	<para>The first step in setting up Nagios is to install the
-	<emphasis role="pkg">nagios4</emphasis> and <emphasis
-	role="pkg">monitoring-plugins</emphasis> packages. Installing the packages
-	configures the web interface and the Apache server. The
-	<literal>authz_groupfile</literal> and <literal>auth_digest</literal> Apache modules
-	must be enabled, for that execute:</para>
+        <para>The first step in setting up Nagios is to install the
+        <emphasis role="pkg">nagios4</emphasis> and <emphasis
+        role="pkg">monitoring-plugins</emphasis> packages. Installing the packages
+        configures the web interface and the Apache server. The
+        <literal>authz_groupfile</literal> and <literal>auth_digest</literal> Apache modules
+        must be enabled, for that execute:</para>
 
-<screen><computeroutput># </computeroutput><userinput>a2enmod authz_groupfile</userinput>
-<computeroutput>Considering dependency authz_core for authz_groupfile:
+        <screen><computeroutput># </computeroutput><userinput>a2enmod authz_groupfile
+</userinput><computeroutput>Considering dependency authz_core for authz_groupfile:
+Module authz_core already enabled
 Module authz_core already enabled
 Enabling module authz_groupfile.
 To activate the new configuration, you need to run:
   systemctl restart apache2
-# </computeroutput><userinput>a2enmod auth_digest</userinput>
-Considering dependency authn_core for auth_digest:
+# </computeroutput><userinput>a2enmod auth_digest
+</userinput><computeroutput>Considering dependency authn_core for auth_digest:
 Module authn_core already enabled
 Enabling module auth_digest.
 To activate the new configuration, you need to run:
   systemctl restart apache2
-<computeroutput># </computeroutput><userinput>systemctl restart apache2
+# </computeroutput><userinput>systemctl restart apache2
 </userinput>
 </screen>
 
-	<para>Adding other users is a simple matter of inserting them
-	in the <filename>/etc/nagios4/hdigest.users</filename> file.</para>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/nagios4/</filename></secondary><see>Nagios</see></indexterm>
+        <indexterm><primary>Nagios</primary><secondary><filename>/etc/nagios4/hdigest.users</filename></secondary></indexterm>
 
-	<para>Pointing a browser at
-	<literal>http://<replaceable>server</replaceable>/nagios4/</literal>
-	displays the web interface; in particular, note that Nagios already
-	monitors some parameters of the machine where it runs. However,
-	some interactive features such as adding comments to a host do not
-	work. These features are disabled in the default configuration for
-	Nagios, which is very restrictive for security reasons.</para>
+        <para>Adding other users is a simple matter of inserting them
+        in the <filename>/etc/nagios4/hdigest.users</filename> file.</para>
 
-	<para>Enabling some features involves editing
-	<filename>/etc/nagios4/nagios.cfg</filename>. We
-	also need to set up write permissions for the directory used by
-	Nagios, with commands such as the following:</para>
+        <para>Pointing a browser at
+        <literal>http://<replaceable>server</replaceable>/nagios4/</literal>
+        displays the web interface; in particular, note that Nagios already
+        monitors some parameters of the machine where it runs. However,
+        some interactive features such as adding comments to a host do not
+        work. These features are disabled in the default configuration for
+        Nagios, which is very restrictive for security reasons.</para>
+
+        <indexterm><primary>Nagios</primary><secondary><filename>/etc/nagios4/nagios.cfg</filename></secondary></indexterm>
+
+        <para>Enabling some features involves editing
+        <filename>/etc/nagios4/nagios.cfg</filename>. We
+        also need to set up write permissions for the directory used by
+        Nagios, with commands such as the following:</para>
 
         <screen><computeroutput># </computeroutput><userinput>systemctl stop nagios4
 </userinput><computeroutput># </computeroutput><userinput>dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios4/rw
@@ -3826,78 +3854,81 @@ To activate the new configuration, you need to run:
       <section>
         <title>Configuring</title>
 
-	<para>The Nagios web interface is rather nice, but it does not
-	allow configuration, nor can it be used to add monitored hosts and
-	services. The whole configuration is managed via files referenced
-	in the central configuration file,
-	<filename>/etc/nagios4/nagios.cfg</filename>.</para>
+        <para>The Nagios web interface is rather nice, but it does not
+        allow configuration, nor can it be used to add monitored hosts and
+        services. The whole configuration is managed via files referenced
+        in the central configuration file,
+        <filename>/etc/nagios4/nagios.cfg</filename>.</para>
 
-	<para>These files should not be dived into without some
-	understanding of the Nagios concepts. The configuration lists
-	objects of the following types:</para>
+        <para>These files should not be dived into without some
+        understanding of the Nagios concepts. The configuration lists
+        objects of the following types:</para>
+
         <itemizedlist>
           <listitem>
-	    <para>a <emphasis>host</emphasis> is a machine to be
-	    monitored;</para>
+            <para>a <emphasis>host</emphasis> is a machine to be
+            monitored;</para>
           </listitem>
           <listitem>
-	    <para>a <emphasis>hostgroup</emphasis> is a set of hosts that
-	    should be grouped together for display, or to factor some
-	    common configuration elements;</para>
+            <para>a <emphasis>hostgroup</emphasis> is a set of hosts that
+            should be grouped together for display, or to factor some
+            common configuration elements;</para>
           </listitem>
           <listitem>
-	    <para>a <emphasis>service</emphasis> is a testable element
-	    related to a host or a host group. It will most often be a
-	    check for a network service, but it can also involve checking
-	    that some parameters are within an acceptable range (for
-	    instance, free disk space or processor load);</para>
+            <para>a <emphasis>service</emphasis> is a testable element
+            related to a host or a host group. It will most often be a
+            check for a network service, but it can also involve checking
+            that some parameters are within an acceptable range (for
+            instance, free disk space or processor load);</para>
           </listitem>
           <listitem>
-	    <para>a <emphasis>servicegroup</emphasis> is a set of services
-	    that should be grouped together for display;</para>
+            <para>a <emphasis>servicegroup</emphasis> is a set of services
+            that should be grouped together for display;</para>
           </listitem>
           <listitem>
-	    <para>a <emphasis>contact</emphasis> is a person who can
-	    receive alerts;</para>
+            <para>a <emphasis>contact</emphasis> is a person who can
+            receive alerts;</para>
           </listitem>
           <listitem>
-	    <para>a <emphasis>contactgroup</emphasis> is a set of such
-	    contacts;</para>
+            <para>a <emphasis>contactgroup</emphasis> is a set of such
+            contacts;</para>
           </listitem>
           <listitem>
-	    <para>a <emphasis>timeperiod</emphasis> is a range of time
-	    during which some services have to be checked;</para>
+            <para>a <emphasis>timeperiod</emphasis> is a range of time
+            during which some services have to be checked;</para>
           </listitem>
           <listitem>
-	    <para>a <emphasis>command</emphasis> is the command line
-	    invoked to check a given service.</para>
+            <para>a <emphasis>command</emphasis> is the command line
+            invoked to check a given service.</para>
           </listitem>
         </itemizedlist>
 
-	<para>According to its type, each object has a number of properties
-	that can be customized. A full list would be too long to include,
-	but the most important properties are the relations between the
-	objects.</para>
+        <para>According to its type, each object has a number of properties
+        that can be customized. A full list would be too long to include,
+        but the most important properties are the relations between the
+        objects.</para>
 
-	<para>A <emphasis>service</emphasis> uses a
-	<emphasis>command</emphasis> to check the state of a feature on a
-	<emphasis>host</emphasis> (or a <emphasis>hostgroup</emphasis>)
-	within a <emphasis>timeperiod</emphasis>. In case of a problem,
-	Nagios sends an alert to all members of the
-	<emphasis>contactgroup</emphasis> linked to the service. Each
-	member is sent the alert according to the channel described in the
-	matching <emphasis>contact</emphasis> object.</para>
+        <para>A <emphasis>service</emphasis> uses a
+        <emphasis>command</emphasis> to check the state of a feature on a
+        <emphasis>host</emphasis> (or a <emphasis>hostgroup</emphasis>)
+        within a <emphasis>timeperiod</emphasis>. In case of a problem,
+        Nagios sends an alert to all members of the
+        <emphasis>contactgroup</emphasis> linked to the service. Each
+        member is sent the alert according to the channel described in the
+        matching <emphasis>contact</emphasis> object.</para>
 
-	<para>An inheritance system allows easy sharing of a set of
-	properties across many objects without duplicating information.
-	Moreover, the initial configuration includes a number of standard
-	objects; in many cases, defining new hosts, services and contacts
-	is a simple matter of deriving from the provided generic objects.
-	The files in <filename>/etc/nagios4/conf.d/</filename> are a good
-	source of information on how they work.</para>
+        <para>An inheritance system allows easy sharing of a set of
+        properties across many objects without duplicating information.
+        Moreover, the initial configuration includes a number of standard
+        objects; in many cases, defining new hosts, services and contacts
+        is a simple matter of deriving from the provided generic objects.
+        The files in <filename>/etc/nagios4/conf.d/</filename> are a good
+        source of information on how they work.</para>
 
-	<para>The Falcot Corp administrators use the following
-	configuration:</para>
+        <indexterm><primary>Nagios</primary><secondary><filename>/etc/nagios4/conf.d/</filename></secondary></indexterm>
+
+        <para>The Falcot Corp administrators use the following
+        configuration:</para>
 
         <example>
           <title><filename>/etc/nagios4/conf.d/falcot.cfg</filename> file</title>
@@ -3943,7 +3974,7 @@ define host{
     use                   generic-host ; Name of host template to use
     host_name             ftp-host
     alias                 ftp.falcot.com
-    address               192.168.0.6
+    address               192.168.0.12
     contact_groups        falcot-admins
     hostgroups            debian-servers,ssh-servers
 }
@@ -3992,57 +4023,64 @@ define service{
 </programlisting>
         </example>
 
-	<para>This configuration file describes two monitored hosts. The
-	first one is the web server, and the checks are made on the HTTP
-	(80) and secure-HTTP (443) ports. Nagios also checks that an SMTP
-	server runs on port 25. The second host is the FTP server, and the
-	check includes making sure that a reply comes within 20 seconds.
-	Beyond this delay, a <emphasis>warning</emphasis> is emitted;
-	beyond 30 seconds, the alert is deemed critical. The Nagios web
-	interface also shows that the SSH service is monitored: this comes
-	from the hosts belonging to the <literal>ssh-servers</literal>
-	hostgroup. The matching standard service is defined in
-	<filename>/etc/nagios4/conf.d/services_nagios2.cfg</filename>.</para>
+        <!-- TODO: services_nagios2.cfg seems like a relict -->
+        <para>This configuration file describes two monitored hosts. The
+        first one is the web server, and the checks are made on the HTTP
+        (80) and secure-HTTP (443) ports. Nagios also checks that an SMTP
+        server runs on port 25. The second host is the FTP server, and the
+        check includes making sure that a reply comes within 20 seconds.
+        Beyond this delay, a <emphasis>warning</emphasis> is emitted;
+        beyond 30 seconds, the alert is deemed critical. The Nagios web
+        interface also shows that the SSH service is monitored: this comes
+        from the hosts belonging to the <literal>ssh-servers</literal>
+        hostgroup. The matching standard service is defined in
+        <filename>/etc/nagios4/conf.d/services_nagios2.cfg</filename>.</para>
 
-	<para>Note the use of inheritance: an object is made to inherit
-	from another object with the “use
-	<replaceable>parent-name</replaceable>”. The parent object must
-	be identifiable, which requires giving it a “name
-	<replaceable>identifier</replaceable>” property. If the parent
-	object is not meant to be a real object, but only to serve as a
-	parent, giving it a “register 0” property tells Nagios not to
-	consider it, and therefore to ignore the lack of some parameters
-	that would otherwise be required.</para>
+        <para>Note the use of inheritance: an object is made to inherit
+        from another object with the “use
+        <replaceable>parent-name</replaceable>”. The parent object must
+        be identifiable, which requires giving it a “name
+        <replaceable>identifier</replaceable>” property. If the parent
+        object is not meant to be a real object, but only to serve as a
+        parent, giving it a “register 0” property tells Nagios not to
+        consider it, and therefore to ignore the lack of some parameters
+        that would otherwise be required.</para>
 
         <sidebar>
           <title><emphasis>DOCUMENTATION</emphasis> List of object properties</title>
 
-	  <para>A more in-depth understanding of the various ways in which
-	  Nagios can be configured can be obtained from the documentation
-	  hosted on
-	  <ulink url="https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/index.html"/>.
-	  It includes a list of all object types, with all the
-	  properties they can have. It also explains how to create new
-	  plugins.</para>
+          <para>A more in-depth understanding of the various ways in which
+          Nagios can be configured can be obtained from the documentation
+          hosted on
+          <ulink url="https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/"/>.
+          It includes a list of all object types, with all the
+          properties they can have. It also explains how to create new
+          plugins.</para>
         </sidebar>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Remote tests with NRPE</title>
+          <indexterm><primary>Nagios Remote Plugin Executor</primary><see>NRPE</see></indexterm>
+          <indexterm><primary>NRPE</primary></indexterm>
+          <indexterm><primary>Nagios</primary><secondary><emphasis role="pkg">nagios-nrpe-plugin</emphasis></secondary></indexterm>
+          <indexterm><primary>Nagios</primary><secondary><emphasis role="pkg">nagios-nrpe-server</emphasis></secondary></indexterm>
+          <indexterm><primary>Nagios</primary><secondary><filename>/etc/nagios/nrpe.cfg</filename></secondary></indexterm>
+          <indexterm><primary><command>check_nrpe</command></primary></indexterm>
 
-	  <para>Many Nagios plugins allow checking some parameters local to
-	  a host; if many machines need these checks while a central
-	  installation gathers them, the NRPE (<emphasis>Nagios Remote
-	  Plugin Executor</emphasis>) plugin needs to be deployed. The
-	  <emphasis role="pkg">nagios-nrpe-plugin</emphasis> package needs
-	  to be installed on the Nagios server, and <emphasis
-	  role="pkg">nagios-nrpe-server</emphasis> on the hosts where local
-	  tests need to run. The latter gets its configuration from
-	  <filename>/etc/nagios/nrpe.cfg</filename>. This file should list
-	  the tests that can be started remotely, and the IP addresses of
-	  the machines allowed to trigger them. On the Nagios side,
-	  enabling these remote tests is a simple matter of adding matching
-	  services using the new <emphasis>check_nrpe</emphasis>
-	  command.</para>
+          <para>Many Nagios plugins allow checking some parameters local to
+          a host; if many machines need these checks while a central
+          installation gathers them, the NRPE (<emphasis>Nagios Remote
+          Plugin Executor</emphasis>) plugin needs to be deployed. The
+          <emphasis role="pkg">nagios-nrpe-plugin</emphasis> package needs
+          to be installed on the Nagios server, and <emphasis
+          role="pkg">nagios-nrpe-server</emphasis> on the hosts where local
+          tests need to run. The latter gets its configuration from
+          <filename>/etc/nagios/nrpe.cfg</filename>. This file should list
+          the tests that can be started remotely, and the IP addresses of
+          the machines allowed to trigger them. On the Nagios side,
+          enabling these remote tests is a simple matter of adding matching
+          services using the new <command>check_nrpe</command>
+          command.</para>
         </sidebar>
       </section>
     </section>
