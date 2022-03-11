@@ -3404,7 +3404,7 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
     </section>
     <section id="sect.simple-cdd">
       <title>Simple-CDD: The All-In-One Solution</title>
-      <indexterm><primary>simple-cdd</primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">simple-cdd</emphasis></primary></indexterm>
 
       <para>Simply using a preseed file is not enough to fulfill all the
       requirements that may appear for large deployments. Even though it is
@@ -3420,64 +3420,66 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
       should be possible to create a customized installer that fulfills our
       needs; it should even be able to configure some services after
       unpacking the required packages. Fortunately, this is not a mere
-      hypothesis, since this is exactly what Simple-CDD (in the <emphasis
-      role="pkg">simple-cdd</emphasis> package) does.</para>
+      hypothesis, since this is exactly what <emphasis
+      role="pkg">simple-cdd</emphasis> does.</para>
 
-      <para>The purpose of Simple-CDD is to allow anyone to easily create a
+      <para>The purpose of this tool is to allow anyone to easily create a
       distribution derived from Debian, by selecting a subset of the
       available packages, preconfiguring them with Debconf, adding specific
       software, and executing custom scripts at the end of the installation
       process. This matches the “universal operating system”
       philosophy, since anyone can adapt it to their own needs.</para>
+
       <section>
         <title>Creating Profiles</title>
 
-	<para>Simple-CDD defines “profiles” that match the FAI
-	“classes” concept, and a machine can have several profiles
-	(determined at installation time). A profile is defined by a set of
-	<filename>profiles/<replaceable>profile</replaceable>.*</filename>
-	files:</para>
+        <para>Simple-CDD defines “profiles” that match the FAI
+        “classes” concept, and a machine can have several profiles
+        (determined at installation time). A profile is defined by a set of
+        <filename>profiles/<replaceable>profile</replaceable>.*</filename>
+        files:</para>
+
         <itemizedlist>
           <listitem>
-	    <para>the <filename>.description</filename> file contains a
-	    one-line description for the profile;</para>
+            <para>the <filename>.description</filename> file contains a
+            one-line description for the profile;</para>
           </listitem>
           <listitem>
-	    <para>the <filename>.packages</filename> file lists packages
-	    that will automatically be installed if the profile is
-	    selected;</para>
+            <para>the <filename>.packages</filename> file lists packages
+            that will automatically be installed if the profile is
+            selected;</para>
           </listitem>
           <listitem>
-	    <para>the <filename>.downloads</filename> file lists packages
-	    that will be stored onto the installation media, but not
-	    necessarily installed;</para>
+            <para>the <filename>.downloads</filename> file lists packages
+            that will be stored onto the installation media, but not
+            necessarily installed;</para>
           </listitem>
           <listitem>
-	    <para>the <filename>.preseed</filename> file contains
-	    preseeding information for Debconf questions (for the installer
-	    and/or for packages);</para>
+            <para>the <filename>.preseed</filename> file contains
+            preseeding information for Debconf questions (for the installer
+            and/or for packages);</para>
           </listitem>
           <listitem>
-	    <para>the <filename>.postinst</filename> file contains a script
-	    that will be run at the end of the installation process;</para>
+            <para>the <filename>.postinst</filename> file contains a script
+            that will be run at the end of the installation process;</para>
           </listitem>
           <listitem>
-	    <para>lastly, the <filename>.conf</filename> file allows
-	    changing some Simple-CDD parameters based on the profiles to be
-	    included in an image.</para>
+            <para>lastly, the <filename>.conf</filename> file allows
+            changing some parameters based on the profiles to be
+            included in an image.</para>
           </listitem>
         </itemizedlist>
 
-	<para>The <literal>default</literal> profile has a particular role,
-	since it is always selected; it contains the bare minimum required
-	for Simple-CDD to work. The only thing that is usually customized
-	in this profile is the <literal>simple-cdd/profiles</literal>
-	preseed parameter: this allows avoiding the question, introduced by
-	Simple-CDD, about what profiles to install.</para>
+        <para>The <literal>default</literal> profile has a particular role,
+        since it is always selected; it contains the bare minimum required
+        for Simple-CDD to work. The only thing that is usually customized
+        in this profile is the <literal>simple-cdd/profiles</literal>
+        preseed parameter: this allows avoiding the question, introduced by
+        Simple-CDD, about what profiles to install.</para>
 
-	<para>Note also that the commands will need to be invoked from the
-	parent directory of the <filename>profiles</filename>
-	directory.</para>
+        <para>Note also that the commands will need to be invoked from the
+        parent directory of the <filename>profiles</filename>
+        directory.</para>
       </section>
       <section>
         <title>Configuring and Using <command>build-simple-cdd</command></title>
@@ -3486,79 +3488,87 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
         <sidebar>
           <title><emphasis>QUICK LOOK</emphasis> Detailed configuration file</title>
 
-	  <para>An example of a Simple-CDD configuration file, with all
-	  possible parameters, is included in the package
-	  (<filename>/usr/share/doc/simple-cdd/examples/simple-cdd.conf.detailed.gz</filename>).
-	  This can be used as a starting point when creating a custom
-	  configuration file.</para>
+          <para>An example of a Simple-CDD configuration file, with most
+          possible parameters, is included in the package
+          (<filename>/usr/share/doc/simple-cdd/examples/simple-cdd.conf.detailed</filename>).
+          This can be used as a starting point when creating a custom
+          configuration file. Unfortunately not everything is documented there,
+          so some variables are only listed and explained in
+          <filename>/usr/lib/python3/dist-packages/simple_cdd/variables.py</filename>.</para>
+
+          <para>It is further important to familiarize yourself with the
+          variables understood by
+          <filename>/usr/share/debian-cd/CONF.sh</filename>.</para>
         </sidebar>
 
-	<para>Simple-CDD requires many parameters to operate fully. They
-	will most often be gathered in a configuration file, which
-	<command>build-simple-cdd</command> can be pointed at with the
-	<literal>--conf</literal> option, but they can also be specified
-	via dedicated parameters given to
-	<command>build-simple-cdd</command>. Here is an overview of how
-	this command behaves, and how its parameters are used:</para>
+        <para>Simple-CDD requires many parameters to operate fully. They
+        will most often be gathered in a configuration file, which
+        <command>build-simple-cdd</command> can be pointed at with the
+        <literal>--conf</literal> option, but they can also be specified
+        via dedicated parameters given to
+        <command>build-simple-cdd</command>. Here is an overview of how
+        this command behaves, and how its parameters are used:</para>
+
         <itemizedlist>
           <listitem>
-	    <para>the <literal>profiles</literal> parameter lists the
-	    profiles that will be included on the generated CD-ROM
-	    image;</para>
+            <para>the <literal>profiles</literal> parameter lists the
+            profiles that will be included on the generated CD-ROM
+            image;</para>
           </listitem>
           <listitem>
-	    <para>based on the list of required packages, Simple-CDD
-	    downloads the appropriate files from the server mentioned in
-	    <literal>server</literal>, and gathers them into a partial
-	    mirror (which will later be given to debian-cd);</para>
+            <para>based on the list of required packages, Simple-CDD
+            downloads the appropriate files from the server mentioned in
+            <literal>server</literal>, and gathers them into a partial
+            mirror (which will later be given to debian-cd);</para>
           </listitem>
           <listitem>
-	    <para>the custom packages mentioned in
-	    <literal>local_packages</literal> are also integrated into this
-	    local mirror;</para>
+            <para>the custom packages mentioned in
+            <literal>local_packages</literal> are also integrated into this
+            local mirror;</para>
           </listitem>
           <listitem>
-	    <para>debian-cd is then executed (within a default location
-	    that can be configured with the
-	    <literal>debian_cd_dir</literal> variable), with the list of
-	    packages to integrate;</para>
+            <para>debian-cd is then executed (within a default location
+            that can be configured with the
+            <literal>debian_cd_dir</literal> variable), with the list of
+            packages to integrate;</para>
           </listitem>
           <listitem>
-	    <para>once debian-cd has prepared its directory, Simple-CDD
-	    applies some changes to this directory:</para>
+            <para>once debian-cd has prepared its directory, Simple-CDD
+            applies some changes to this directory:</para>
             <itemizedlist>
               <listitem>
-		<para>files containing the profiles are added in a
-		<filename>simple-cdd</filename> subdirectory (that will end
-		up on the CD-ROM);</para>
+                <para>files containing the profiles are added in a
+                <filename>simple-cdd</filename> subdirectory (that will end
+                up on the CD-ROM);</para>
               </listitem>
               <listitem>
-		<para>other files listed in the
-		<literal>all_extras</literal> parameter are also
-		added;</para>
+                <para>other files listed in the
+                <literal>all_extras</literal> parameter are also
+                added;</para>
               </listitem>
               <listitem>
-		<para>the boot parameters are adjusted so as to enable the
-		preseeding. Questions concerning language and country can
-		be avoided if the required information is stored in the
-		<literal>language</literal> and <literal>country</literal>
-		variables.</para>
+                <para>the boot parameters are adjusted so as to enable the
+                preseeding. Questions concerning language and country can
+                be avoided if the required information is stored in the
+                <literal>language</literal> and <literal>country</literal>
+                variables.</para>
               </listitem>
             </itemizedlist>
           </listitem>
           <listitem>
-	    <para>debian-cd then generates the final ISO image.</para>
+            <para>debian-cd then generates the final ISO image.</para>
           </listitem>
         </itemizedlist>
       </section>
       <section>
         <title>Generating an ISO Image</title>
 
-	<para>Once we have written a configuration file and defined our
-	profiles, the remaining step is to invoke <command>build-simple-cdd
-	--conf simple-cdd.conf</command>. After a few minutes, we get the
-	required image in
-	<filename>images/debian-10-amd64-CD-1.iso</filename>.</para>
+        <!-- MAY CHANGE: Debian version -->
+        <para>Once we have written a configuration file and defined our
+        profiles, the remaining step is to invoke <command>build-simple-cdd
+        --conf simple-cdd.conf</command>. After a few minutes, we get the
+        required image in
+        <filename>images/debian-11-amd64-CD-1.iso</filename>.</para>
       </section>
     </section>
   </section>
