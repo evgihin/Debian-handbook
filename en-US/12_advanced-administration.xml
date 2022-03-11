@@ -3304,21 +3304,52 @@ d-i netcfg/hostname seen false</programlisting>
         <section>
           <title>Preparing a Bootable USB Key</title>
           <indexterm><primary><filename>syslinux.cfg</filename></primary></indexterm>
+          <indexterm><primary>syslinux</primary></indexterm>
+          <indexterm><primary>isolinux</primary></indexterm>
+          <indexterm><primary><filename>grub.cfg</filename></primary></indexterm>
 
           <para>Once a bootable key has been prepared (see <xref
-          linkend="sect.install-usb"/>), a few extra operations are
-          needed. Assuming the key contents are available under
-          <filename>/media/usbdisk/</filename>:</para>
-          <itemizedlist>
-            <listitem>
-              <para>copy the preseed file to
-              <filename>/media/usbdisk/preseed.cfg</filename></para>
-            </listitem>
-            <listitem>
-              <para>edit <filename>/media/usbdisk/syslinux.cfg</filename>
-              and add required boot parameters (see example below).</para>
-            </listitem>
-          </itemizedlist>
+          linkend="sect.install-usb"/>), a few extra operations are needed.
+          Assuming the key contents are available under
+          <filename>/media/usbdisk/</filename>, copy the preseed file to
+          <filename>/media/usbdisk/preseed.cfg</filename>.</para>
+
+          <para>If you have been using a hybrid ISO image to create the
+          bootable USB stick, then you have to edit
+          <filename>/media/usbdisk/boot/grub/grub.cfg</filename> (for the EFI
+          boot screen):</para>
+
+          <example>
+            <title>boot/grub/grub.cfg file and preseeding parameters</title>
+
+            <programlisting>menuentry --hotkey=i 'Install' {
+    set background_color=black
+    linux    /install.amd/vmlinuz preseed/file=/cdrom/preseed.cfg locale=en_US.UTF-8 keymap=us language=us country=US vga=788 --- quiet 
+    initrd   /install.amd/initrd.gz
+}
+</programlisting>
+          </example>
+
+          <para>And you have to edit
+          <filename>/media/usbdisk/isolinux/isolinux.cfg</filename> (for BIOS boot)
+          or one of the files it utilizes - e.g.
+          <filename>/media/usbdisk/isolinux/txt.cfg</filename> - to add
+          required boot parameters:</para>
+
+          <example>
+            <title>isolinux/txt.cfg file and preseeding parameters</title>
+
+            <programlisting>label install
+        menu label ^Install
+        kernel [...]
+        append preseed/file=/cdrom/preseed.cfg locale=en_US.UTF-8 keymap=us language=us country=US vga=788 initrd=/install.amd/initrd.gz --- quiet
+</programlisting>
+          </example>
+
+          <para>If you have been using the <filename>hd-media</filename>
+          installer image for a custom USB stick, edit
+          <filename>/media/usbdisk/syslinux.cfg</filename> and add the required
+          boot parameters as shown in the example below:</para>
 
           <example>
             <title>syslinux.cfg file and preseeding parameters</title>
@@ -3331,7 +3362,10 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
         </section>
         <section>
           <title>Creating a CD-ROM Image</title>
-          <indexterm><primary>debian-cd</primary></indexterm>
+          <indexterm><primary><emphasis role="pkg">debian-cd</emphasis></primary></indexterm>
+          <indexterm><primary><command>genisoimage</command></primary></indexterm>
+          <indexterm><primary><command>mkisofs</command></primary></indexterm>
+          <indexterm><primary><command>xorriso</command></primary></indexterm>
 
           <para>A USB key is a read-write media, so it was easy for us to
           add a file there and change a few parameters. In the CD-ROM case,
@@ -3345,23 +3379,24 @@ append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=
           <filename>/usr/share/debian-cd/README</filename> is therefore a
           very recommended read.</para>
 
-          <para>Having said that, debian-cd always operates in a similar
-          way: an “image” directory with the exact contents of the
-          CD-ROM is generated, then converted to an ISO file with a tool
-          such as <command>genisoimage</command>,
-          <command>mkisofs</command> or <command>xorriso</command>. The
-          image directory is finalized after debian-cd's <command>make
-          image-trees</command> step. At that point, we insert the preseed
-          file into the appropriate directory (usually
+          <para>Having said that, <emphasis role="pkg">debian-cd</emphasis>
+          always operates in a similar way: an “image” directory with the exact
+          contents of the CD-ROM is generated, then converted to an ISO file
+          with a tool such as <command>genisoimage</command>,
+          <command>mkisofs</command> or <command>xorriso</command>. The image
+          directory is finalized after debian-cd's <command>make
+          image-trees</command> step. At that point, we insert the preseed file
+          into the appropriate directory (usually
           <filename>$TDIR/$CODENAME/CD1/</filename>, $TDIR and $CODENAME being
-          parameters defined by the <filename>CONF.sh</filename>
-          configuration file). The CD-ROM uses <command>isolinux</command>
-          as its bootloader, and its configuration file must be adapted
-          from what debian-cd generated, in order to insert the required
-          boot parameters (the specific file is
-          <filename>$TDIR/$CODENAME/boot1/isolinux/isolinux.cfg</filename>).
-          Then the “normal” process can be resumed, and we can go on to
-          generating the ISO image with <command>make image CD=1</command>
+          parameters defined by the <filename>CONF.sh</filename> configuration
+          file). The CD-ROM uses <command>isolinux</command> as its bootloader,
+          and its configuration file must be adapted from what debian-cd
+          generated, in order to insert the required boot parameters (the
+          specific files are
+          <filename>$TDIR/$CODENAME/CD1/isolinux/isolinux.cfg</filename> and
+          <filename>$TDIR/$CODENAME/CD1/boot/grub/grub.cfg</filename> as shown
+          above).  Then the “normal” process can be resumed, and we can go on
+          to generating the ISO image with <command>make image CD=1</command>
           (or <command>make images</command> if several CD-ROMs are
           generated).</para>
         </section>
