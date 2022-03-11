@@ -2976,7 +2976,7 @@ warning: centos-release-7-9.2009.0.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
     go through the centralized reference image maintained by SystemImager.
     This solution also requires the target machines to be homogeneous,
     otherwise many different images would have to be kept and managed (an
-    i386 image won't fit on a powerpc machine, and so on).</para>
+    amd64 image won't fit on a powerpc machine, and so on).</para>
 
     <para>On the other hand, an automated installation using
     debian-installer can adapt to the specifics of each machine: the
@@ -2990,23 +2990,30 @@ warning: centos-release-7-9.2009.0.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
     applications. Fulfilling this particular need requires customizing the
     installer… Fortunately, the installer is very modular, and there are
     tools to automate most of the work required for this customization,
-    most importantly simple-CDD (CDD being an acronym for <emphasis>Custom
-    Debian Derivative</emphasis>). Even the simple-CDD solution, however,
-    only handles initial installations; this is usually not a problem since
-    the APT tools allow efficient deployment of updates later on.</para>
+    most importantly <emphasis role="pkg">simple-cdd</emphasis> (CDD being
+    an acronym for <emphasis>Custom Debian Derivative</emphasis>). Even
+    this solution, however, only handles initial installations; this is
+    usually not a problem since the APT tools allow efficient deployment of
+    updates later on.</para>
 
     <para>We will only give a rough overview of FAI, and skip SystemImager
-    altogether (which is no longer in Debian), in order to focus more
-    intently on debian-installer and simple-CDD, which are more interesting
-    in a Debian-only context.</para>
+    altogether (which is no longer in Debian, but available as a third-party
+    package), in order to focus more intently on debian-installer and <emphasis
+    role="pkg">simple-cdd</emphasis>, which are more interesting in a
+    Debian-only context.</para>
+
     <section id="sect.fai">
       <title>Fully Automatic Installer (FAI)</title>
-      <indexterm><primary>Fully Automatic Installer (FAI)</primary></indexterm>
+      <indexterm><primary>Fully Automatic Installer</primary><see>FAI</see></indexterm>
+      <indexterm><primary>FAI</primary></indexterm>
 
       <para><foreignphrase>Fully Automatic Installer</foreignphrase> is
       probably the oldest automated deployment system for Debian, which
       explains its status as a reference; but its very flexible nature only
       just compensates for the complexity it involves.</para>
+
+      <indexterm><primary>FAI</primary><secondary><emphasis role="pkg">fai-server</emphasis></secondary></indexterm>
+      <indexterm><primary>FAI</primary><secondary><emphasis role="pkg">fai-quickstart</emphasis></secondary></indexterm>
 
       <para>FAI requires a server system to store deployment information
       and allow target machines to boot from the network. This server
@@ -3014,20 +3021,27 @@ warning: centos-release-7-9.2009.0.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
       <emphasis role="pkg">fai-quickstart</emphasis>, which also brings the
       required elements for a standard configuration).</para>
 
-      <para>FAI uses a specific approach for defining the various
-      installable profiles. Instead of simply duplicating a reference
-      installation, FAI is a full-fledged installer, fully configurable via
-      a set of files and scripts stored on the server; the default location
-      <filename>/srv/fai/config/</filename> is not automatically created,
-      so the administrator needs to create it along with the relevant
-      files. Most of the times, these files will be customized from the
-      example files available in the documentation for the <emphasis
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/fai/</filename></secondary><see>FAI</see></indexterm>
+      <indexterm><primary>FAI</primary><secondary><filename>/etc/fai/nfsroot.conf</filename></secondary></indexterm>
+
+      <para>FAI uses a specific approach for defining the various installable
+      profiles. Instead of simply duplicating a reference installation, FAI is
+      a full-fledged installer, fully configurable via a set of files and
+      scripts stored on the server; the default location
+      <filename>/srv/fai/config/</filename> according to
+      <filename>/etc/fai/nfsroot.conf</filename> is not automatically created,
+      so the administrator needs to create it along with the relevant files.
+      Most of the times, these files will be customized from the example files
+      available in the documentation for the <emphasis
       role="pkg">fai-doc</emphasis> package, more particularly the
       <filename>/usr/share/doc/fai-doc/examples/simple/</filename>
       directory.</para>
 
+      <indexterm><primary>FAI</primary><secondary><command>fai-setup</command></secondary></indexterm>
+      <indexterm><primary>FAI</primary><secondary><command>fai-cd</command></secondary></indexterm>
+
       <para>Once the profiles are defined, the <command>fai-setup</command>
-      command generates the elements required to start a FAI installation;
+      command generates the elements required to start an FAI installation;
       this mostly means preparing or updating a minimal system (NFS-root)
       used during installation. An alternative is to generate a dedicated
       boot CD with <command>fai-cd</command>.</para>
@@ -3037,61 +3051,63 @@ warning: centos-release-7-9.2009.0.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
       made of the following steps:</para>
       <itemizedlist>
         <listitem>
-	  <para>fetching a kernel from the network, and booting it;</para>
+          <para>fetching a kernel from the network, and booting it;</para>
         </listitem>
         <listitem>
-	  <para>mounting the root filesystem from NFS;</para>
+          <para>mounting the root filesystem from NFS;</para>
         </listitem>
         <listitem>
-	  <para>executing <command>/usr/sbin/fai</command>, which controls
-	  the rest of the process (the next steps are therefore initiated
-	  by this script);</para>
+          <indexterm><primary>FAI</primary><secondary><command>fai</command></secondary></indexterm>
+          <para>executing <command>/usr/sbin/fai</command>, which controls
+          the rest of the process (the next steps are therefore initiated
+          by this script);</para>
         </listitem>
         <listitem>
-	  <para>copying the configuration space from the server into
-	  <filename>/fai/</filename>;</para>
+          <para>copying the configuration space from the server into
+          <filename>/fai/</filename>;</para>
         </listitem>
         <listitem>
-	  <para>running <command>fai-class</command>. The
-	  <filename>/fai/class/[0-9][0-9]*</filename> scripts are executed
-	  in turn, and return names of “classes” that apply to the
-	  machine being installed; this information will serve as a base
-	  for the following steps. This allows for some flexibility in
-	  defining the services to be installed and configured.</para>
+          <para>running <command>fai-class</command>. The
+          <filename>/fai/class/[0-9][0-9]*</filename> scripts are executed
+          in turn, and return names of “classes” that apply to the
+          machine being installed; this information will serve as a base
+          for the following steps. This allows for some flexibility in
+          defining the services to be installed and configured.</para>
         </listitem>
         <listitem>
-	  <para>fetching a number of configuration variables, depending on
-	  the relevant classes;</para>
+          <para>fetching a number of configuration variables, depending on
+          the relevant classes;</para>
         </listitem>
         <listitem>
-	  <para>partitioning the disks and formatting the partitions, based
-	  on information provided in
-	  <filename>/fai/disk_config/<replaceable>class</replaceable></filename>;</para>
+          <para>partitioning the disks and formatting the partitions, based
+          on information provided in
+          <filename>/fai/disk_config/<replaceable>class</replaceable></filename>;</para>
         </listitem>
         <listitem>
-	  <para>mounting said partitions;</para>
+          <para>mounting said partitions;</para>
         </listitem>
         <listitem>
-	  <para>installing the base system;</para>
+          <para>installing the base system;</para>
         </listitem>
         <listitem>
-	  <para>preseeding the Debconf database with
-	  <command>fai-debconf</command>;</para>
+          <indexterm><primary>FAI</primary><secondary><command>fai-debconf</command></secondary></indexterm>
+          <para>preseeding the Debconf database with
+          <command>fai-debconf</command>;</para>
         </listitem>
         <listitem>
-	  <para>fetching the list of available packages for APT;</para>
+          <para>fetching the list of available packages for APT;</para>
         </listitem>
         <listitem>
-	  <para>installing the packages listed in
-	  <filename>/fai/package_config/<replaceable>class</replaceable></filename>;</para>
+          <para>installing the packages listed in
+          <filename>/fai/package_config/<replaceable>class</replaceable></filename>;</para>
         </listitem>
         <listitem>
-	  <para>executing the post-configuration scripts,
-	  <filename>/fai/scripts/<replaceable>class</replaceable>/[0-9][0-9]*</filename>;</para>
+          <para>executing the post-configuration scripts,
+          <filename>/fai/scripts/<replaceable>class</replaceable>/[0-9][0-9]*</filename>;</para>
         </listitem>
         <listitem>
-	  <para>recording the installation logs, unmounting the partitions,
-	  and rebooting.</para>
+          <para>recording the installation logs, unmounting the partitions,
+          and rebooting.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -3099,6 +3115,7 @@ warning: centos-release-7-9.2009.0.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
       <title>Preseeding Debian-Installer</title>
       <indexterm><primary>preseed</primary></indexterm>
       <indexterm><primary>preconfiguration</primary></indexterm>
+      <indexterm><primary>installation</primary><secondary>preseeding</secondary></indexterm>
 
       <para>At the end of the day, the best tool to install Debian systems
       should logically be the official Debian installer. This is why, right
@@ -3109,157 +3126,197 @@ warning: centos-release-7-9.2009.0.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
       provided default answer), and on the other hand, to provide the
       default answers separately, so that installation can be
       non-interactive. This last feature is known as
-      <emphasis>preseeding</emphasis>.</para>
+      <foreignphrase>preseeding</foreignphrase>.</para>
 
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Debconf with a centralized database</title>
-        <indexterm><primary><command>debconf</command></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">debconf-doc</emphasis></primary></indexterm>
 
-	<para>Preseeding allows to provide a set of answers to Debconf
-	questions at installation time, but these answers are static and do
-	not evolve as time passes. Since already-installed machines may
-	need upgrading, and new answers may become required, the
-	<filename>/etc/debconf.conf</filename> configuration file can be
-	set up so that Debconf uses external data sources (such as an LDAP
-	directory server, or a remote file accessed via NFS or Samba).
-	Several external data sources can be defined at the same time, and
-	they complement one another. The local database is still used (for
-	read-write access), but the remote databases are usually restricted
-	to reading. The
-	<citerefentry><refentrytitle>debconf.conf</refentrytitle>
-	<manvolnum>5</manvolnum></citerefentry> manual page describes all
+        <para>Preseeding allows to provide a set of answers to Debconf
+        questions at installation time, but these answers are static and do
+        not evolve as time passes. Since already-installed machines may
+        need upgrading, and new answers may become required, the
+        <filename>/etc/debconf.conf</filename> configuration file can be
+        set up so that Debconf uses external data sources (such as an LDAP
+        directory server, or a remote file accessed via NFS or Samba).
+        Several external data sources can be defined at the same time, and
+        they complement one another. The local database is still used (for
+        read-write access), but the remote databases are usually restricted
+        to reading. The
+        <citerefentry><refentrytitle>debconf.conf</refentrytitle>
+        <manvolnum>5</manvolnum></citerefentry> manual page describes all
         the possibilities in detail (you need the <emphasis
         role="pkg">debconf-doc</emphasis> package).</para>
+
+        <indexterm><primary><command>debconf</command></primary></indexterm>
       </sidebar>
       <section>
         <title>Using a Preseed File</title>
 
-	<para>There are several places where the installer can get a
-	preseeding file:</para>
+        <para>There are several places where the installer can get a
+        preseeding file:</para>
+
         <itemizedlist>
           <listitem>
-	    <para>in the initrd used to start the machine; in this case,
-	    preseeding happens at the very beginning of the installation,
-	    and all questions can be avoided. The file just needs to be
-	    called <filename>preseed.cfg</filename> and stored in the
-	    initrd root.</para>
+            <indexterm><primary><filename>preseed.cfg</filename></primary></indexterm>
+            <para>in the initrd used to start the machine; in this case,
+            preseeding happens at the very beginning of the installation,
+            and all questions can be avoided. The file just needs to be
+            called <filename>preseed.cfg</filename> and stored in the
+            initrd root.</para>
           </listitem>
           <listitem>
-	    <para>on the boot media (CD or USB key); preseeding then
-	    happens as soon as the media is mounted, which means right
-	    after the questions about language and keyboard layout. The
-	    <literal>preseed/file</literal> boot parameter can be used to
-	    indicate the location of the preseeding file (for instance,
-	    <filename>/cdrom/preseed.cfg</filename> when the installation
-	    is done off a CD-ROM, or
-	    <filename>/hd-media/preseed.cfg</filename> in the USB-key
-	    case).</para>
+            <para>on the boot media (CD or USB key); preseeding then
+            happens as soon as the media is mounted, which means right
+            after the questions about language and keyboard layout. The
+            <literal>preseed/file</literal> boot parameter can be used to
+            indicate the location of the preseeding file (for instance,
+            <filename>/cdrom/preseed.cfg</filename> when the installation
+            is done off a CD-ROM, or
+            <filename>/hd-media/preseed.cfg</filename> in the USB-key
+            case).</para>
           </listitem>
           <listitem>
-	    <para>from the network; preseeding then only happens after the
-	    network is (automatically) configured; the relevant boot
-	    parameter is then
-	    <literal>preseed/url=http://<replaceable>server</replaceable>/preseed.cfg</literal>.</para>
+            <para>from the network; preseeding then only happens after the
+            network is (automatically) configured; the relevant boot
+            parameter is then
+            <literal>preseed/url=http://<replaceable>server</replaceable>/preseed.cfg</literal>
+            (HTTPS, FTPS, SFTP, etc. are not supported).</para>
           </listitem>
         </itemizedlist>
 
-	<para>At a glance, including the preseeding file in the initrd
-	looks like the most interesting solution; however, it is rarely
-	used in practice, because generating an installer initrd is rather
-	complex. The other two solutions are much more common, especially
-	since boot parameters provide another way to preseed the answers to
-	the first questions of the installation process. The usual way to
-	save the bother of typing these boot parameters by hand at each
-	installation is to save them into the configuration for
-	<command>isolinux</command> (in the CD-ROM case) or
-	<command>syslinux</command> (USB key).</para>
+        <para>At a glance, including the preseeding file in the initrd
+        looks like the most interesting solution; however, it is rarely
+        used in practice, because generating an installer initrd is rather
+        complex. The other two solutions are much more common, especially
+        since boot parameters provide another way to preseed the answers to
+        the first questions of the installation process. The usual way to
+        save the bother of typing these boot parameters by hand at each
+        installation is to save them into the configuration for
+        <command>isolinux</command> (in the CD-ROM case) or
+        <command>syslinux</command> (USB key).</para>
       </section>
       <section>
         <title>Creating a Preseed File</title>
 
-	<para>A preseed file is a plain text file, where each line contains
-	the answer to one Debconf question. A line is split across four
-	fields separated by whitespace (spaces or tabs), as in, for
-	instance, <literal>d-i mirror/suite string stable</literal>:</para>
+        <para>A preseed file is a plain text file, where each line contains
+        the answer to one Debconf question. A line is split across four
+        fields separated by whitespace (spaces or tabs), as in, for
+        instance, <literal>d-i mirror/suite string stable</literal>:</para>
+
         <itemizedlist>
           <listitem>
-	    <para>the first field is the “owner” of the question;
-	    “d-i” is used for questions relevant to the installer, but
-	    it can also be a package name for questions coming from Debian
-	    packages;</para>
+            <para>the first field is the “owner” of the question;
+            “d-i” is used for questions relevant to the installer, but
+            it can also be a package name for questions coming from Debian
+            packages;</para>
           </listitem>
           <listitem>
-	    <para>the second field is an identifier for the question;</para>
+            <para>the second field is an identifier for the question (the
+            template name);</para>
           </listitem>
           <listitem>
-	    <para>third, the type of question;</para>
+            <para>third, the type of question;</para>
           </listitem>
           <listitem>
-	    <para>the fourth and last field contains the value for the
-	    answer. Note that it must be separated from the third field
-	    with a single space; if there are more than one, the
-	    following space characters are considered part of the value.</para>
+            <para>the fourth and last field contains the value for the
+            answer. Note that it must be separated from the third field
+            with a single space; if there are more than one, the
+            following space characters are considered part of the value.</para>
           </listitem>
         </itemizedlist>
 
-	<para>The simplest way to write a preseed file is to install a
-	system by hand. Then <command>debconf-get-selections
-	--installer</command> will provide the answers concerning the
-	installer. Answers about other packages can be obtained with
-	<command>debconf-get-selections</command>. However, a cleaner
-	solution is to write the preseed file by hand, starting from an
-	example and the reference documentation: with such an approach,
-	only questions where the default answer needs to be overridden can
-	be preseeded; using the <literal>priority=critical</literal> boot
-	parameter will instruct Debconf to only ask critical questions, and
-	use the default answer for others.</para>
+        <para>The simplest way to write a preseed file is to install a
+        system by hand. Then <command>debconf-get-selections
+        --installer</command> will provide the answers concerning the
+        installer. Answers about other packages can be obtained with
+        <command>debconf-get-selections</command>. However, a cleaner
+        solution is to write the preseed file by hand, starting from an
+        example and the reference documentation: with such an approach,
+        only questions where the default answer needs to be overridden can
+        be preseeded; using the <literal>priority=critical</literal> boot
+        parameter will instruct Debconf to only ask critical questions, and
+        use the default answer for others.</para>
+
+        <para>Pre-setting a value in a preseed file automatically instructs the
+        Debian installer to not ask that question. This happens, because
+        loading the preseed file does not just set the given value(s), but also
+        marks each of the affected dialogs as “seen“ by the user. Thus it is
+        possible to pre-set a question's value and still present the dialog to
+        the user by resetting the “seen“ flag. Beware that order in this case
+        matters and that the value has to be preseeded before setting the
+        dialog to “unseen“ as shown in the following example:</para>
+
+        <programlisting>d-i netcfg/hostname string worker
+d-i netcfg/hostname seen false</programlisting>
+
+        <indexterm><primary><command>debconf-get-selections</command></primary></indexterm>
 
         <sidebar>
           <title><emphasis>DOCUMENTATION</emphasis> Installation guide appendix</title>
+          <indexterm><primary>preseed</primary><secondary>all templates</secondary></indexterm>
 
-	  <para>The installation guide, available online, includes detailed
-	  documentation on the use of a preseed file in an appendix. It
-	  also includes a detailed and commented sample file, which can
-	  serve as a base for local customizations. <ulink type="block"
-	  url="https://www.debian.org/releases/stable/amd64/apb"/>
-	  <ulink type="block"
-	  url="https://www.debian.org/releases/stable/example-preseed.txt"/></para>
+          <para>The installation guide, available online, includes detailed
+          documentation on the use of a preseed file in an appendix. It
+          also includes a detailed and commented sample file, which can
+          serve as a base for local customizations. There are also collections
+          of all debconf templates extracted from each component and suite of
+          Debian:
+
+          <ulink type="block" url="https://www.debian.org/releases/stable/amd64/apb"/>
+          <ulink type="block" url="https://www.debian.org/releases/stable/example-preseed.txt"/>
+          <ulink type="block" url="https://preseed.debian.net/"/>
+          </para>
+
+          <para>Preseeding an installation is often not as straightforward as
+          one would wish. It sometimes requires to understand how packages
+          process the given values in their scripts. Don't hesitate to ask on
+          the <email>debian-cd@lists.debian.org</email> mailing list or in the
+          <literal>#debian-cd</literal> IRC channel if you require help. Also
+          be aware that some complex setups still cannot be achieved by
+          preseeding.</para>
+
+          <indexterm><primary>mailing lists</primary><secondary><email>debian-cd@lists.debian.org</email></secondary></indexterm>
         </sidebar>
       </section>
       <section>
         <title>Creating a Customized Boot Media</title>
 
-	<para>Knowing where to store the preseed file is all very well, but
-	the location isn't everything: one must, one way or another, alter
-	the installation boot media to change the boot parameters and add
-	the preseed file.</para>
+        <para>Knowing where to store the preseed file is all very well, but
+        the location isn't everything: one must, one way or another, alter
+        the installation boot media to change the boot parameters and add
+        the preseed file.</para>
+
         <section>
           <title>Booting From the Network</title>
+          <indexterm><primary>PXE</primary></indexterm>
 
-	  <para>When a computer is booted from the network, the server
-	  sending the initialization elements also defines the boot
-	  parameters. Thus, the change needs to be made in the PXE
-	  configuration for the boot server; more specifically, in its
-	  <filename>/tftpboot/pxelinux.cfg/default</filename> configuration
-	  file. Setting up network boot is a prerequisite; see the
-	  Installation Guide for details. <ulink type="block"
-	  url="https://www.debian.org/releases/stable/amd64/ch04s05"/></para>
+          <para>When a computer is booted from the network, the server
+          sending the initialization elements also defines the boot
+          parameters. Thus, the change needs to be made in the PXE
+          configuration for the boot server; more specifically, in its
+          <filename>/tftpboot/pxelinux.cfg/default</filename> configuration
+          file. Setting up network boot is a prerequisite; see the
+          Installation Guide for details.
+          <ulink type="block" url="https://www.debian.org/releases/stable/amd64/ch04s05"/>
+          </para>
         </section>
         <section>
           <title>Preparing a Bootable USB Key</title>
+          <indexterm><primary><filename>syslinux.cfg</filename></primary>
 
-	  <para>Once a bootable key has been prepared (see <xref
-	  linkend="sect.install-usb"/>), a few extra operations are
-	  needed. Assuming the key contents are available under
-	  <filename>/media/usbdisk/</filename>:</para>
+          <para>Once a bootable key has been prepared (see <xref
+          linkend="sect.install-usb"/>), a few extra operations are
+          needed. Assuming the key contents are available under
+          <filename>/media/usbdisk/</filename>:</para>
           <itemizedlist>
             <listitem>
-	      <para>copy the preseed file to
-	      <filename>/media/usbdisk/preseed.cfg</filename></para>
+              <para>copy the preseed file to
+              <filename>/media/usbdisk/preseed.cfg</filename></para>
             </listitem>
             <listitem>
-	      <para>edit <filename>/media/usbdisk/syslinux.cfg</filename>
-	      and add required boot parameters (see example below).</para>
+              <para>edit <filename>/media/usbdisk/syslinux.cfg</filename>
+              and add required boot parameters (see example below).</para>
             </listitem>
           </itemizedlist>
 
@@ -3270,42 +3327,43 @@ warning: centos-release-7-9.2009.0.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 S
 append preseed/file=/hd-media/preseed.cfg locale=en_US.UTF-8 keymap=us language=us country=US vga=788 initrd=initrd.gz  --
 </programlisting>
           </example>
+
         </section>
         <section>
           <title>Creating a CD-ROM Image</title>
           <indexterm><primary>debian-cd</primary></indexterm>
 
-	  <para>A USB key is a read-write media, so it was easy for us to
-	  add a file there and change a few parameters. In the CD-ROM case,
-	  the operation is more complex, since we need to regenerate a full
-	  ISO image. This task is handled by <emphasis
-	  role="pkg">debian-cd</emphasis>, but this tool is rather awkward
-	  to use: it needs a local mirror, and it requires an understanding
-	  of all the options provided by
-	  <filename>/usr/share/debian-cd/CONF.sh</filename>; even then,
-	  <command>make</command> must be invoked several times.
-	  <filename>/usr/share/debian-cd/README</filename> is therefore a
-	  very recommended read.</para>
+          <para>A USB key is a read-write media, so it was easy for us to
+          add a file there and change a few parameters. In the CD-ROM case,
+          the operation is more complex, since we need to regenerate a full
+          ISO image. This task is handled by <emphasis
+          role="pkg">debian-cd</emphasis>, but this tool is rather awkward
+          to use: it needs a local mirror, and it requires an understanding
+          of all the options provided by
+          <filename>/usr/share/debian-cd/CONF.sh</filename>; even then,
+          <command>make</command> must be invoked several times.
+          <filename>/usr/share/debian-cd/README</filename> is therefore a
+          very recommended read.</para>
 
-	  <para>Having said that, debian-cd always operates in a similar
-	  way: an “image” directory with the exact contents of the
-	  CD-ROM is generated, then converted to an ISO file with a tool
-	  such as <command>genisoimage</command>,
-	  <command>mkisofs</command> or <command>xorriso</command>. The
-	  image directory is finalized after debian-cd's <command>make
-	  image-trees</command> step. At that point, we insert the preseed
-	  file into the appropriate directory (usually
-	  <filename>$TDIR/$CODENAME/CD1/</filename>, $TDIR and $CODENAME being
-	  parameters defined by the <filename>CONF.sh</filename>
-	  configuration file). The CD-ROM uses <command>isolinux</command>
-	  as its bootloader, and its configuration file must be adapted
-	  from what debian-cd generated, in order to insert the required
-	  boot parameters (the specific file is
-	  <filename>$TDIR/$CODENAME/boot1/isolinux/isolinux.cfg</filename>).
-	  Then the “normal” process can be resumed, and we can go on to
-	  generating the ISO image with <command>make image CD=1</command>
-	  (or <command>make images</command> if several CD-ROMs are
-	  generated).</para>
+          <para>Having said that, debian-cd always operates in a similar
+          way: an “image” directory with the exact contents of the
+          CD-ROM is generated, then converted to an ISO file with a tool
+          such as <command>genisoimage</command>,
+          <command>mkisofs</command> or <command>xorriso</command>. The
+          image directory is finalized after debian-cd's <command>make
+          image-trees</command> step. At that point, we insert the preseed
+          file into the appropriate directory (usually
+          <filename>$TDIR/$CODENAME/CD1/</filename>, $TDIR and $CODENAME being
+          parameters defined by the <filename>CONF.sh</filename>
+          configuration file). The CD-ROM uses <command>isolinux</command>
+          as its bootloader, and its configuration file must be adapted
+          from what debian-cd generated, in order to insert the required
+          boot parameters (the specific file is
+          <filename>$TDIR/$CODENAME/boot1/isolinux/isolinux.cfg</filename>).
+          Then the “normal” process can be resumed, and we can go on to
+          generating the ISO image with <command>make image CD=1</command>
+          (or <command>make images</command> if several CD-ROMs are
+          generated).</para>
         </section>
       </section>
     </section>
