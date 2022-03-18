@@ -646,11 +646,13 @@ iface eth0 inet static
     consequences. This section reviews some tools that can be used to
     monitor several aspects of a Debian system. As such, it completes
     <xref linkend="sect.monitoring"/>.</para>
+
     <section id="sect.logcheck">
       <title>Monitoring Logs with <command>logcheck</command></title>
       <indexterm><primary><command>logcheck</command></primary></indexterm>
       <indexterm><primary>logs</primary><secondary>monitoring</secondary></indexterm>
       <indexterm><primary>monitoring</primary><secondary>log files</secondary></indexterm>
+      <indexterm><primary>file</primary><secondary>log file</secondary></indexterm>
 
       <para>The <command>logcheck</command> program monitors log files
       every hour by default. It sends unusual log messages in emails to the
@@ -660,6 +662,9 @@ iface eth0 inet static
       <filename>/etc/logcheck/logcheck.logfiles</filename>; the default
       values work fine if the <filename>/etc/rsyslog.conf</filename> file
       has not been completely overhauled.</para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/logcheck/</filename></secondary><seealso><command>logcheck</command></seealso></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/rsyslog.conf</filename></secondary></indexterm>
 
       <para><command>logcheck</command> can work in one of three more or
       less detailed modes: <emphasis>paranoid</emphasis>,
@@ -681,38 +686,38 @@ iface eth0 inet static
       <para>The applied rules can be split into several types:</para>
       <itemizedlist>
         <listitem>
-	  <para>those that qualify a message as a cracking attempt (stored
-	  in a file in the <filename>/etc/logcheck/cracking.d/</filename>
-	  directory);</para>
+          <para>those that qualify a message as a cracking attempt (stored
+          in a file in the <filename>/etc/logcheck/cracking.d/</filename>
+          directory);</para>
         </listitem>
         <listitem>
-	  <para>those canceling such a qualification
-	  (<filename>/etc/logcheck/cracking.ignore.d/</filename>);</para>
+          <para>those canceling such a qualification
+          (<filename>/etc/logcheck/cracking.ignore.d/</filename>);</para>
         </listitem>
         <listitem>
-	  <para>those classifying a message as a security alert
-	  (<filename>/etc/logcheck/violations.d/</filename>);</para>
+          <para>those classifying a message as a security alert
+          (<filename>/etc/logcheck/violations.d/</filename>);</para>
         </listitem>
         <listitem>
-	  <para>those canceling this classification
-	  (<filename>/etc/logcheck/violations.ignore.d/</filename>);</para>
+          <para>those canceling this classification
+          (<filename>/etc/logcheck/violations.ignore.d/</filename>);</para>
         </listitem>
         <listitem>
-	  <para>finally, those applying to the remaining messages
-	  (considered as <emphasis>system events</emphasis>).</para>
+          <para>finally, those applying to the remaining messages
+          (considered as <emphasis>system events</emphasis>).</para>
         </listitem>
       </itemizedlist>
 
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Ignoring a message</title>
 
-	<para>Any message tagged as a cracking attempt or a security alert
-	(following a rule stored in a
-	<filename>/etc/logcheck/violations.d/myfile</filename> file) can
-	only be ignored by a rule in a
-	<filename>/etc/logcheck/violations.ignore.d/myfile</filename> or
-	<filename>/etc/logcheck/violations.ignore.d/myfile-<replaceable>extension</replaceable></filename>
-	file.</para>
+        <para>Any message tagged as a cracking attempt or a security alert
+        (following a rule stored in a
+        <filename>/etc/logcheck/violations.d/myfile</filename> file) can
+        only be ignored by a rule in a
+        <filename>/etc/logcheck/violations.ignore.d/myfile</filename> or
+        <filename>/etc/logcheck/violations.ignore.d/myfile-<replaceable>extension</replaceable></filename>
+        file.</para>
       </sidebar>
 
       <para>A system event is always signaled unless a rule in one of the
@@ -725,103 +730,108 @@ iface eth0 inet static
       <title>Monitoring Activity</title>
       <indexterm><primary>monitoring</primary><secondary>activity</secondary></indexterm>
       <indexterm><primary>activity, monitoring</primary></indexterm>
+
       <section id="sect.real-time-monitoring">
         <title>In Real Time</title>
-
-	<para><command>top</command> is an interactive tool that displays a
-	list of currently running processes. The default sorting is based
-	on the current amount of processor use and can be obtained with the
-	<keycap>P</keycap> key. Other sort orders include a sort by
-	occupied memory (<keycap>M</keycap> key), by total processor time
-	(<keycap>T</keycap> key) and by process identifier
-	(<keycap>N</keycap> key). The <keycap>k</keycap> key allows killing
-	a process by entering its process identifier. The
-	<keycap>r</keycap> key allows <emphasis>renicing</emphasis> a
-	process, i.e. changing its priority.</para>
         <indexterm><primary><command>top</command></primary></indexterm>
 
-	<para>When the system seems to be overloaded,
-	<command>top</command> is a great tool to see which processes are
-	competing for processor time or consume too much memory. In
-	particular, it is often interesting to check if the processes
-	consuming resources match the real services that the machine is
-	known to host. An unknown process running as the www-data user
-	should really stand out and be investigated, since it is probably an
-	instance of software installed and executed on the system through a
-	vulnerability in a web application.</para>
+        <para><command>top</command> is an interactive tool that displays a
+        list of currently running processes. The default sorting is based
+        on the current amount of processor use and can be obtained with the
+        <keycap>P</keycap> key. Other sort orders include a sort by
+        occupied memory (<keycap>M</keycap> key), by total processor time
+        (<keycap>T</keycap> key) and by process identifier
+        (<keycap>N</keycap> key). The <keycap>k</keycap> key allows killing
+        a process by entering its process identifier. The
+        <keycap>r</keycap> key allows <emphasis>renicing</emphasis> a
+        process, i.e. changing its priority.</para>
 
-	<para><command>top</command> is a very flexible tool and its manual
-	page gives details on how to customize its display and adapt it to
-	one's personal needs and habits.</para>
+        <para>When the system seems to be overloaded,
+        <command>top</command> is a great tool to see which processes are
+        competing for processor time or consume too much memory. In
+        particular, it is often interesting to check if the processes
+        consuming resources match the real services that the machine is
+        known to host. An unknown process running as the www-data user
+        should really stand out and be investigated, since it is probably an
+        instance of software installed and executed on the system through a
+        vulnerability in a web application.</para>
+
+        <para><command>top</command> is a very flexible tool and its manual
+        page gives details on how to customize its display and adapt it to
+        one's personal needs and habits.</para>
 
         <para>The <command>gnome-system-monitor</command> graphical tool
         is similar to <command>top</command> and it provides roughly the same
-	features.</para>
+        features.</para>
 
         <indexterm><primary><command>gnome-system-monitor</command></primary></indexterm>
       </section>
       <section id="sect.monitoring-history">
         <title>History</title>
         <indexterm><primary>activity, history</primary></indexterm>
-
-	<para>Processor load, network traffic and free disk space are
-	information that are constantly varying. Keeping a history of their
-	evolution is often useful in determining exactly how the computer
-	is used.</para>
         <indexterm><primary>SNMP</primary></indexterm>
-        <indexterm><primary>Simple Network Management Protocol</primary></indexterm>
+        <indexterm><primary>Simple Network Management Protocol</primary><see>SNMP</see></indexterm>
+        <indexterm><primary><command>cacti</command></primary></indexterm>
 
-	<para>There are many dedicated tools for this task. Most can fetch
-	data via SNMP (<emphasis>Simple Network Management
-	Protocol</emphasis>) in order to centralize this information. An
-	added benefit is that this allows fetching data from network
-	elements that may not be general-purpose computers, such as
-	dedicated network routers or switches.</para>
+        <para>Processor load, network traffic and free disk space are
+        information that are constantly varying. Keeping a history of their
+        evolution is often useful in determining exactly how the computer
+        is used.</para>
 
-	<para>This book deals with Munin in some detail (see <xref
-	linkend="sect.munin"/>) as part of <xref
-	linkend="advanced-administration" xrefstyle="select: label
-	quotedtitle"/>. Debian also provides a similar tool, <emphasis
-	role="pkg">cacti</emphasis>. Its deployment is slightly more
-	complex, since it is based solely on SNMP. Despite having a web
-	interface, grasping the concepts involved in configuration still
-	requires some effort. Reading the HTML documentation
-	(<filename>/usr/share/doc/cacti/html/Table-of-Contents.html</filename>)
-	should be considered a prerequisite.</para>
+        <para>There are many dedicated tools for this task. Most can fetch
+        data via SNMP (<emphasis>Simple Network Management
+        Protocol</emphasis>) in order to centralize this information. An
+        added benefit is that this allows fetching data from network
+        elements that may not be general-purpose computers, such as
+        dedicated network routers or switches.</para>
+
+        <para>This book deals with Munin in some detail (see <xref
+        linkend="sect.munin"/>) as part of <xref
+        linkend="advanced-administration" xrefstyle="select: label
+        quotedtitle"/>. Debian also provides a similar tool, <emphasis
+        role="pkg">cacti</emphasis>. Its deployment is slightly more
+        complex, since it is based solely on SNMP. Despite having a web
+        interface, grasping the concepts involved in configuration still
+        requires some effort. Reading the HTML documentation
+        (<filename>/usr/share/doc/cacti/html/Table-of-Contents.html</filename>)
+        should be considered a prerequisite.</para>
 
         <sidebar>
           <title><emphasis>ALTERNATIVE</emphasis> <command>mrtg</command></title>
           <indexterm><primary><command>mrtg</command></primary></indexterm>
 
-	  <para><command>mrtg</command> (in the similarly-named package) is
-	  an older tool. Despite some rough edges, it can aggregate
-	  historical data and display them as graphs. It includes a number
-	  of scripts dedicated to collecting the most commonly monitored
-	  data such as processor load, network traffic, web page hits, and
-	  so on.</para>
+          <para><command>mrtg</command> (in the similarly-named package) is
+          an older tool. Despite some rough edges, it can aggregate
+          historical data and display them as graphs. It includes a number
+          of scripts dedicated to collecting the most commonly monitored
+          data such as processor load, network traffic, web page hits, and
+          so on.</para>
 
-	  <para>The <emphasis role="pkg">mrtg-contrib</emphasis> and
-	  <emphasis role="pkg">mrtgutils</emphasis> packages contain
-	  example scripts that can be used directly.</para>
+          <para>The <emphasis role="pkg">mrtg-contrib</emphasis> and
+          <emphasis role="pkg">mrtgutils</emphasis> packages contain
+          example scripts that can be used directly.</para>
         </sidebar>
       </section>
     </section>
     <section>
       <title>Avoiding Intrusion</title>
+      <indexterm><primary>intrusion detection</primary></indexterm>
+      <indexterm><primary>brute-force</primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">fail2ban</emphasis></primary></indexterm>
 
       <para>Attackers try to get access to servers by guessing
       passwords, which is why strong passwords must always be used.
       Even then, you should also establish measures against
       brute-force attacks. A brute-force attack is an attempt to
-      log in to an unauthorised software system by performing multiple
+      log into an unauthorized software system by performing multiple
       login attempts in a short period of time.</para>
 
-      <para>The best way to stop a brute-force atack is to limit the
+      <para>The best way to stop a brute-force attack is to limit the
       number of login attempts coming from the same origin, usually
       by temporarily banning an IP address.</para>
 
       <para>Fail2Ban is an intrusion prevention software suite that can
-      be configured to monitor any service that writes login attemps to
+      be configured to monitor any service that writes login attempts to
       a log file. It can be found in the package
       <emphasis role="pkg">fail2ban</emphasis>.</para>
 
@@ -830,22 +840,27 @@ iface eth0 inet static
       configuration files and issues corresponding configuration
       commands to the server, <command>fail2ban-server</command>. It has
       four configuration file types, all stored in
-      <filename>/etc/fail2ban</filename>:</para>
+      <filename>/etc/fail2ban/</filename>:</para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/fail2ban/</filename></secondary></indexterm>
+
       <itemizedlist>
         <listitem>
-	  <para><filename>fail2ban.conf</filename>. Global configuration (such as logging).</para>
+          <para><filename>fail2ban.conf</filename>. Global configuration (such
+          as logging).</para>
         </listitem>
         <listitem>
-	  <para><filename>filter.d/*.conf</filename>. Filters specifying how to detect
+          <para><filename>filter.d/*.conf</filename>. Filters specifying how to detect
           authentication failures. The Debian package already contains filters for
           many common programs.</para>
         </listitem>
         <listitem>
-	  <para><filename>action.d/*.conf</filename>. Actions defining the commands for
-          banning and unbanning of IP addresses.</para>
+          <para><filename>action.d/*.conf</filename>. Actions defining the commands for
+          banning and “unbanning“ of IP addresses.</para>
         </listitem>
         <listitem>
-	  <para><filename>jail.conf</filename>. It is where <emphasis>jails</emphasis>, the
+          <indexterm><primary>jail</primary></indexterm>
+          <para><filename>jail.conf</filename>. It is where <emphasis>jails</emphasis>, the
           combinations of filters and actions, are defined.</para>
         </listitem>
       </itemizedlist>
@@ -854,28 +869,39 @@ iface eth0 inet static
       <filename>/etc/fail2ban/jail.conf</filename> to better understand how
       Fail2Ban works...</para>
 
+      <indexterm><primary>SSH</primary><secondary>fail2ban</secondary></indexterm>
+
 <programlisting>[...]
 [DEFAULT]
 [...]
-bantime  = 10m
+bantime   = 10m
 [...]
-maxretry = 5
+findtime  = 10m
+[...]
+maxretry  = 5
 [...]
 [sshd]
-port    = ssh
-logpath = %(sshd_log)s
-backend = %(sshd_backend)s
+port     = ssh
+logpath  = %(sshd_log)s
+backend  = %(sshd_backend)s
 </programlisting>
 
-      <para>Fail2Ban will check for failed login attepts for
+      <para>Fail2Ban will check for failed login attempts for
       <command>sshd</command> using Python regular expressions
       defined in
-      <filename>/etc/fail2ban/filters.d/sshd.conf</filename>
+      <filename>/etc/fail2ban/filter.d/sshd.conf</filename>
       against the log file of <command>sshd</command>, which is
       defined in the variable <literal>sshd_log</literal> in the
-      file <filename>/etc/fail2ban/paths_common.conf</filename>.
-      If Fail2Ban detects five failed login attempts in a row,
-      it will ban the IP address where those attempts originated.</para>
+      file <filename>/etc/fail2ban/paths-common.conf</filename>.
+      If Fail2Ban detects five failed login attempts within 10 minutes,
+      it will ban the IP address where those attempts originated for 10
+      minutes.</para>
+
+      <para>To enable, disable, or configure “jails“, the main configuration
+      file <filename>/etc/fail2ban/jail.conf</filename> is not supposed to be
+      altered. Instead this is supposed to be done in
+      <filename>/etc/fail2ban/jail.d/defaults-debian.conf</filename> or files
+      within the same directory.</para>
 
       <para>Fail2Ban is a very simple and effective way to protect
       against the most common brute-force attacks, but it
@@ -898,65 +924,72 @@ backend = %(sshd_backend)s
       would therefore be worth investigating. This section presents a few
       tools able to monitor files and to warn the administrator when an
       unexpected change occurs (or simply to list such changes).</para>
+
       <section id="sect.dpkg-verify">
         <title>Auditing Packages with <command>dpkg --verify</command></title>
-        <indexterm><primary><command>dpkg</command></primary><secondary><command>dpkg --verify</command></secondary></indexterm>
+        <indexterm><primary><command>dpkg</command></primary><secondary><literal>--verify</literal></secondary></indexterm>
+
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> Protecting against upstream changes</title>
 
-	  <para><command>dpkg --verify</command> is useful in detecting changes
-	  to files coming from a Debian package, but it will be useless if
-	  the package itself is compromised, for instance, if the Debian
-	  mirror is compromised. Protecting against this class of attacks
-	  involves using APT's digital signature verification system (see
-	  <xref linkend="sect.package-authentication"/>), and taking care
-	  to only install packages from a certified origin.</para>
+          <para><command>dpkg --verify</command> and
+          <command>debsums</command> are useful in detecting changes
+          to files coming from a Debian package, but they will be useless if
+          the package itself is compromised, for instance, if the Debian
+          mirror is compromised. Protecting against this class of attacks
+          involves using APT's digital signature verification system (see
+          <xref linkend="sect.package-authentication"/>), and taking care
+          to only install packages from a certified origin.</para>
         </sidebar>
 
-        <para><command>dpkg --verify</command> (or <command>dpkg
-            -V</command>) is an interesting tool since it allows finding
-          what installed files have been modified (potentially by an
-          attacker), but this should be taken with a grain of salt.  To do
-          its job it relies on checksums stored in dpkg's own database
-          which is stored on the hard disk (they can be found in
-          <filename>/var/lib/dpkg/info/<replaceable>package</replaceable>.md5sums</filename>);
-          a thorough attacker will therefore update these files so they
-          contain the new checksums for the subverted files.
-        </para>
+        <para><command>dpkg --verify</command> (or <command>dpkg -V</command>)
+        is an interesting tool since it allows finding what installed files
+        have been modified (potentially by an attacker), but this should be
+        taken with a grain of salt. To do its job it relies on checksums
+        stored in dpkg's own database which is stored on the hard disk (they
+        can be found in
+        <filename>/var/lib/dpkg/info/<replaceable>package</replaceable>.md5sums</filename>);
+        a thorough attacker will therefore update these files so they contain
+        the new checksums for the subverted files.</para>
+
+        <indexterm><primary><filename>.md5sums</filename></primary></indexterm>
 
         <sidebar>
           <title><emphasis>BACK TO BASICS</emphasis> File fingerprint</title>
-	  <indexterm><primary>fingerprint</primary></indexterm>
-	  <indexterm><primary>control sum</primary></indexterm>
-	  <indexterm><primary>MD5</primary></indexterm>
-	  <indexterm><primary>SHA1</primary></indexterm>
-          <para>As a reminder: a
-          fingerprint is a value, often a number (even though in hexadecimal
-          notation), that contains a kind of signature for the contents of a
-          file. This signature is calculated with an algorithm (MD5 or SHA1
-          being well-known examples) that more or less guarantee that even
-          the tiniest change in the file contents implies a change in the
-          fingerprint; this is known as the “avalanche effect”. This
-          allows a simple numerical fingerprint to serve as a litmus test to
-          check whether the contents of a file have been altered. These
-          algorithms are not reversible; in other words, for most of them,
-          knowing a fingerprint doesn't allow finding the corresponding
-          contents. Recent mathematical advances seem to weaken the
-          absoluteness of these principles, but their use is not called into
-          question so far, since creating different contents yielding the
-          same fingerprint still seems to be quite a difficult task.
-          </para>
+          <indexterm><primary>file</primary><secondary>fingerprint</secondary></indexterm>
+          <indexterm><primary>fingerprint</primary></indexterm>
+          <indexterm><primary>hashsum</primary></indexterm>
+          <indexterm><primary>control sum</primary><seealso>hashsum</seealso></indexterm>
+          <indexterm><primary>MD5</primary></indexterm>
+          <indexterm><primary>SHA1</primary></indexterm>
+
+          <para>As a reminder: a fingerprint is a value, often a number (even
+          though in hexadecimal notation), that contains a kind of signature
+          for the contents of a file. This signature is calculated with an
+          algorithm, e.g. MD5 via <command>md5sum</command> or SHA* via
+          various <command>sha*</command> commands being well-known
+          examples, that more or less guarantee that even the tiniest change
+          in the file contents implies a change in the fingerprint; this is
+          known as the “avalanche effect”. This allows a simple numerical
+          fingerprint to serve as a litmus test to check whether the contents
+          of a file have been altered. These algorithms are not reversible;
+          in other words, for most of them, knowing a fingerprint doesn't
+          allow finding the corresponding contents. Recent mathematical
+          advances seem to weaken the absoluteness of these principles, but
+          their use is not called into question so far, since creating
+          different contents yielding the same fingerprint still seems to be
+          quite a difficult task.</para>
         </sidebar>
 
         <para>Running <command>dpkg -V</command> will verify all installed
-          packages and will print out a line for each file with a failing
-          test. The output format is the same as the one of <command>rpm
-            -V</command> where each character denotes a test on some
-          specific meta-data. Unfortunately <command>dpkg</command> does
-          not store the meta-data needed for most tests and will thus
-          output question marks for them. Currently only the checksum test
-          can yield a "5" on the third character (when it fails).
-        </para>
+        packages and will print out a line for each file with a failing test.
+        The output format is the same as the one of <command>rpm -V</command>
+        where each character denotes a test on some specific meta-data.
+        Unfortunately <command>dpkg</command> does not store the meta-data
+        needed for most tests and will thus output question marks for them.
+        Currently only the checksum test can yield a "5" on the third character
+        (when it fails).</para>
+
         <screen>
 <computeroutput># </computeroutput><userinput>dpkg -V</userinput>
 <computeroutput>??5??????   /lib/systemd/system/ssh.service
@@ -964,13 +997,17 @@ backend = %(sshd_backend)s
 ??5?????? c /etc/lvm/lvm.conf
 ??5?????? c /etc/salt/roster</computeroutput>
 </screen>
+
         <para>In the sample above, dpkg reports a change to SSH's service file
-        that the administrator made to the packaged file instead of using
-        an appropriate <filename>/etc/systemd/system/ssh.service</filename>
+        that the administrator made to the packaged file instead of using an
+        appropriate
+        <filename>/etc/systemd/system/ssh.service.d/override.conf</filename>
         override (which would be stored below <filename>/etc</filename> like
         any configuration change should be). It also lists multiple
-        configuration files (identified by the "c" letter on the second
-        field) that had been legitimately modified.</para>
+        configuration files (identified by the "c" letter on the second field)
+        that had been legitimately modified.</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/systemd/system/*.d/override.conf</filename></secondary></indexterm>
       </section>
 
       <section id="sect.debsums">
@@ -984,121 +1021,130 @@ backend = %(sshd_backend)s
           does not offer similar work-arounds).
         </para>
 
-        <para>
-          Since the data on the disk cannot be trusted, <command>debsums</command>
-          offers to do its checks based on <filename>.deb</filename> files instead of
-          relying on dpkg's database. To download trusted <filename>.deb</filename> files
-          of all the packages installed, we can rely on APT's authenticated downloads.
-	  This operation can be slow and tedious, and should therefore not be
-	  considered a proactive technique to be used on a regular
-          basis.
-        </para>
+        <para>Since the data on the disk cannot be trusted,
+        <command>debsums</command> offers to do its checks based on
+        <filename>.deb</filename> files instead of relying on dpkg's database.
+        To download trusted <filename>.deb</filename> files of all the packages
+        installed, we can rely on APT's authenticated downloads. This
+        operation can be slow and tedious, and should therefore not be
+        considered a proactive technique to be used on a regular basis.</para>
 
         <screen>
-<computeroutput># </computeroutput><userinput>apt-get --reinstall -d install `grep-status -e 'Status: install ok installed' -n -s Package`</userinput>
-<computeroutput>[ ... ]
+<computeroutput># </computeroutput><userinput>apt-get --reinstall -d install `grep-status -e 'Status: install ok installed' -n -s Package`
+</userinput><computeroutput>[ ... ]
 # </computeroutput><userinput>debsums -p /var/cache/apt/archives --generate=all</userinput>
 </screen>
 
-	<para>Note that this example uses the
-	<command>grep-status</command> command from the <emphasis
-	role="pkg">dctrl-tools</emphasis> package, which is not installed by
-	default.</para>
+        <para>Note that this example uses the
+        <command>grep-status</command> command from the <emphasis
+        role="pkg">dctrl-tools</emphasis> package, which is not installed by
+        default.</para>
 
-	<para>
-	  <command>debsums</command> can be run frequently as a cronjob setting
-	  <literal>CRON_CHECK</literal> in <filename>/etc/default/debsums</filename>.
-	  To ignore certain files outside the <filename>/etc</filename> directory,
-	  which have been altered on purpuse or which are expected to change
-	  (like <filename>/usr/share/misc/pci.ids</filename>) you can add them
-	  to <filename>/etc/debsums-ignore</filename>.
-	</para>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/default/debsums</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/debsums-ignore</filename></secondary></indexterm>
+
+        <para><command>debsums</command> can be run frequently as a cronjob
+        setting <literal>CRON_CHECK</literal> in
+        <filename>/etc/default/debsums</filename>. To ignore certain files
+        outside the <filename>/etc</filename> directory, which have been
+        altered on purpuse or which are expected to change (like
+        <filename>/usr/share/misc/pci.ids</filename>) you can add them to
+        <filename>/etc/debsums-ignore</filename>.</para>
       </section>
       <section>
         <title>Monitoring Files: AIDE</title>
-        <indexterm><primary><emphasis role="pkg">aide</emphasis> (Debian package)</primary></indexterm>
+        <indexterm><primary><command>aideinit</command></primary></indexterm>
+        <indexterm><primary>AIDE</primary></indexterm>
+        <indexterm><primary>Advanced Intrusion Detection Environment</primary><see>AIDE</see></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.daily/aide</filename></secondary></indexterm>
 
-	<para>The AIDE tool (<emphasis>Advanced Intrusion Detection
-	Environment</emphasis>) allows checking file integrity, and
-	detecting any change against a previously recorded image of the
-	valid system. This image is stored as a database
-	(<filename>/var/lib/aide/aide.db</filename>) containing the
-	relevant information on all files of the system (fingerprints,
-	permissions, timestamps and so on). This database is first
-	initialized with <command>aideinit</command>; it is then used daily
-	(by the <filename>/etc/cron.daily/aide</filename> script) to check
-	that nothing relevant changed. When changes are detected, AIDE
-	records them in log files
-	(<filename>/var/log/aide/*.log</filename>) and sends its findings
-	to the administrator by email.</para>
+        <para>The AIDE tool (<emphasis>Advanced Intrusion Detection
+        Environment</emphasis>) allows checking file integrity, and
+        detecting any change against a previously recorded image of the
+        valid system. This image is stored as a database
+        (<filename>/var/lib/aide/aide.db</filename>) containing the
+        relevant information on all files of the system (fingerprints,
+        permissions, timestamps and so on). This database is first
+        initialized with <command>aideinit</command>; it is then used daily
+        (by the <filename>/etc/cron.daily/aide</filename> script) to check
+        that nothing relevant changed. When changes are detected, AIDE
+        records them in log files
+        (<filename>/var/log/aide/*.log</filename>) and sends its findings
+        to the administrator by email.</para>
 
         <sidebar>
           <title><emphasis>IN PRACTICE</emphasis> Protecting the database</title>
 
-	  <para>Since AIDE uses a local database to compare the states of
-	  the files, the validity of its results is directly linked to the
-	  validity of the database. If an attacker gets root permissions on
-	  a compromised system, they will be able to replace the database
-	  and cover their tracks. A possible workaround would be to store
-	  the reference data on read-only storage media.</para>
+          <para>Since AIDE uses a local database to compare the states of
+          the files, the validity of its results is directly linked to the
+          validity of the database. If an attacker gets root permissions on
+          a compromised system, they will be able to replace the database
+          and cover their tracks. A possible workaround would be to store
+          the reference data on read-only storage media.</para>
         </sidebar>
 
-	<para>Many options in <filename>/etc/default/aide</filename> can be
-	used to tweak the behavior of the <emphasis
-	role="pkg">aide</emphasis> package. The AIDE configuration proper
-	is stored in <filename>/etc/aide/aide.conf</filename> and
-	<filename>/etc/aide/aide.conf.d/</filename> (actually, these files
-	are only used by <command>update-aide.conf</command> to generate
-	<filename>/var/lib/aide/aide.conf.autogenerated</filename>).
-	Configuration indicates which properties of which files need to be
-	checked. For instance, the contents of log files changes routinely,
-	and such changes can be ignored as long as the permissions of these
-	files stay the same, but both contents and permissions of
-	executable programs must be constant. Although not very complex,
-	the configuration syntax is not fully intuitive, and reading the
-	<citerefentry><refentrytitle>aide.conf</refentrytitle>
-	<manvolnum>5</manvolnum></citerefentry> manual page is therefore
-	recommended.</para>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/aide/aide.conf</filename></secondary></indexterm>
 
-	<para>A new version of the database is generated daily in
-	<filename>/var/lib/aide/aide.db.new</filename>; if all recorded
-	changes were legitimate, it can be used to replace the reference
-	database.</para>
+        <para>Many options in <filename>/etc/default/aide</filename> can be
+        used to tweak the behavior of the <emphasis
+        role="pkg">aide</emphasis> package. The AIDE configuration proper
+        is stored in <filename>/etc/aide/aide.conf</filename> and
+        <filename>/etc/aide/aide.conf.d/</filename> (actually, these files
+        are only used by <command>update-aide.conf</command> to generate
+        <filename>/var/lib/aide/aide.conf.autogenerated</filename>).
+        Configuration indicates which properties of which files need to be
+        checked. For instance, the contents of log files changes routinely,
+        and such changes can be ignored as long as the permissions of these
+        files stay the same, but both contents and permissions of
+        executable programs must be constant. Although not very complex,
+        the configuration syntax is not fully intuitive, and reading the
+        <citerefentry><refentrytitle>aide.conf</refentrytitle>
+        <manvolnum>5</manvolnum></citerefentry> manual page is therefore
+        recommended.</para>
+
+        <para>A new version of the database is generated daily in
+        <filename>/var/lib/aide/aide.db.new</filename>; if all recorded
+        changes were legitimate, it can be used to replace the reference
+        database.</para>
 
         <sidebar>
           <title><emphasis>ALTERNATIVE</emphasis> Tripwire and Samhain</title>
+          <indexterm><primary><emphasis role="pkg">tripwire</emphasis></primary></indexterm>
+          <indexterm><primary><emphasis role="pkg">samhain</emphasis></primary></indexterm>
 
-	  <para>Tripwire is very similar to AIDE; even the configuration
-	  file syntax is almost the same. The main addition provided by
-	  <emphasis role="pkg">tripwire</emphasis> is a mechanism to sign
-	  the configuration file, so that an attacker cannot make it point
-	  at a different version of the reference database.</para>
+          <para>Tripwire is very similar to AIDE; even the configuration
+          file syntax is almost the same. The main addition provided by
+          <emphasis role="pkg">tripwire</emphasis> is a mechanism to sign
+          the configuration file, so that an attacker cannot make it point
+          at a different version of the reference database.</para>
 
-	  <para>Samhain also offers similar features, as well as some
-	  functions to help detecting rootkits (see the sidebar
-	  <xref linkend="sidebar.the-checksecurity-and-chkrootkit-rkhunter-packages"/>).
-	  It can also be deployed globally on a network, and
-	  record its traces on a central server (with a signature).</para>
+          <para>Samhain also offers similar features, as well as some
+          functions to help detecting rootkits (see the sidebar
+          <xref linkend="sidebar.the-checksecurity-and-chkrootkit-rkhunter-packages"/>).
+          It can also be deployed globally on a network, and
+          record its traces on a central server (with a signature).</para>
         </sidebar>
 
         <sidebar id="sidebar.the-checksecurity-and-chkrootkit-rkhunter-packages">
           <title><emphasis>QUICK LOOK</emphasis> The <emphasis role="pkg">checksecurity</emphasis> and <emphasis role="pkg">chkrootkit</emphasis>/<emphasis role="pkg">rkhunter</emphasis> packages</title>
           <indexterm><primary><emphasis role="pkg">checksecurity</emphasis></primary></indexterm>
+          <indexterm><primary><emphasis role="pkg">chkrootkit</emphasis></primary></indexterm>
+          <indexterm><primary><emphasis role="pkg">rkhunter</emphasis></primary></indexterm>
 
-	  <para>The first of these packages contains several small scripts
-	  performing basic checks on the system (empty passwords, new
-	  setuid files, and so on) and warning the administrator if
-	  required. Despite its explicit name, an administrator should not
-	  rely solely on it to make sure a Linux system is secure.</para>
+          <para>The first of these packages contains several small scripts
+          performing basic checks on the system (empty passwords, new
+          setuid files, and so on) and warning the administrator if
+          required. Despite its explicit name, an administrator should not
+          rely solely on it to make sure a Linux system is secure.</para>
 
-	  <para>The <emphasis role="pkg">chkrootkit</emphasis> and
-	  <emphasis role="pkg">rkhunter</emphasis> packages allow looking
-	  for <emphasis>rootkits</emphasis> potentially installed on the
-	  system. As a reminder, these are pieces of software designed to
-	  hide the compromise of a system while discreetly keeping control
-	  of the machine. The tests are not 100% reliable, but they can
-	  usually draw the administrator's attention to potential
-	  problems.</para>
+          <para>The <emphasis role="pkg">chkrootkit</emphasis> and
+          <emphasis role="pkg">rkhunter</emphasis> packages allow looking
+          for <emphasis>rootkits</emphasis> potentially installed on the
+          system. As a reminder, these are pieces of software designed to
+          hide the compromise of a system while discreetly keeping control
+          of the machine. The tests are not 100% reliable, but they can
+          usually draw the administrator's attention to potential
+          problems.</para>
 
           <para><emphasis role="pkg">rkhunter</emphasis> also performs
           checks to see if commands have been modified, if the system
@@ -1112,39 +1158,42 @@ backend = %(sshd_backend)s
       <indexterm><primary>detection, intrusion</primary></indexterm>
       <indexterm><primary>intrusion detection</primary></indexterm>
       <indexterm><primary>IDS</primary></indexterm>
-      <indexterm><primary>intrusion detection system</primary></indexterm>
+      <indexterm><primary>Intrusion Detection System</primary><see>IDS</see></indexterm>
       <indexterm><primary>NIDS</primary></indexterm>
-      <indexterm><primary>Network</primary><secondary>IDS</secondary></indexterm>
+      <indexterm><primary>network</primary><secondary>IDS</secondary><seealso>NIDS</seealso></indexterm>
 
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> Denial of service</title>
-        <indexterm><primary>denial of service</primary></indexterm>
+        <indexterm><primary>Denial of Service</primary><see>DoS</see></indexterm>
+        <indexterm><primary>Distributed Denial of Service</primary><see>DDoS</see></indexterm>
+        <indexterm><primary>DoS</primary></indexterm>
+        <indexterm><primary>DDoS</primary></indexterm>
 
-	<para>A “denial of service” attack has only one goal: to make a
-	service unavailable. Whether such an attack involves overloading
-	the server with queries or exploiting a bug, the end result is the
-	same: the service is no longer operational. Regular users are
-	unhappy, and the entity hosting the targeted network service
-	suffers a loss in reputation (and possibly in revenue, for instance
-	if the service was an e-commerce site).</para>
+        <para>A “denial of service” attack has only one goal: to make a
+        service unavailable. Whether such an attack involves overloading
+        the server with queries or exploiting a bug, the end result is the
+        same: the service is no longer operational. Regular users are
+        unhappy, and the entity hosting the targeted network service
+        suffers a loss in reputation (and possibly in revenue, for instance
+        if the service was an e-commerce site).</para>
 
-	<para>Such an attack is sometimes “distributed”; this usually
-	involves overloading the server with large numbers of queries
-	coming from many different sources so that the server becomes
-	unable to answer the legitimate queries. These types of attacks
-	have gained well-known acronyms: <acronym>DDoS</acronym> and
-	<acronym>DoS</acronym> (depending on whether the denial of service
-	attack is distributed or not).</para>
+        <para>Such an attack is sometimes “distributed”; this usually
+        involves overloading the server with large numbers of queries
+        coming from many different sources so that the server becomes
+        unable to answer the legitimate queries. These types of attacks
+        have gained well-known acronyms: <acronym>DDoS</acronym> and
+        <acronym>DoS</acronym> (depending on whether the denial of service
+        attack is distributed or not).</para>
       </sidebar>
 
       <para><command>suricata</command> (in the Debian package of the same
-      name) is a NIDS — a <emphasis>Network Intrusion Detection
+      name) is an NIDS — a <emphasis>Network Intrusion Detection
       System</emphasis>. Its function is to listen to the network and try
       to detect infiltration attempts and/or hostile acts (including denial
       of service attacks). All these events are logged in multiple files
       in <filename>/var/log/suricata</filename>. There are third party tools
       (Kibana/logstash) to better browse all the data collected.
-      <ulink type="block" url="https://suricata-ids.org"/>
+      <ulink type="block" url="https://suricata.io"/>
       <ulink type="block" url="https://www.elastic.co/products/kibana"/>
       </para>
       <indexterm><primary><command>snort</command></primary></indexterm>
@@ -1153,65 +1202,64 @@ backend = %(sshd_backend)s
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Range of action</title>
 
-	<para>The effectiveness of <command>suricata</command> is limited by
-	the traffic seen on the monitored network interface. It will
-	obviously not be able to detect anything if it cannot observe the
-	real traffic. When plugged into a network switch, it will therefore
-	only monitor attacks targeting the machine it runs on, which is
-	probably not the intention. The machine hosting
-	<command>suricata</command> should therefore be plugged into the
-	“mirror” port of the switch, which is usually dedicated to
-	chaining switches and therefore gets all the traffic.</para>
+        <para>The effectiveness of <command>suricata</command> is limited by
+        the traffic seen on the monitored network interface. It will
+        obviously not be able to detect anything if it cannot observe the
+        real traffic. When plugged into a network switch, it will therefore
+        only monitor attacks targeting the machine it runs on, which is
+        probably not the intention. The machine hosting
+        <command>suricata</command> should therefore be plugged into the
+        “mirror” port of the switch, which is usually dedicated to
+        chaining switches and therefore gets all the traffic.</para>
       </sidebar>
 
-      <para>
-        Configuring suricata involves reviewing and editing
-        <filename>/etc/suricata/suricata-debian.yaml</filename>, which is
-        very long because each parameter is abundantly commented.
-        A minimal configuration requires describing the range of addresses
-        that the local network covers (<literal>HOME_NET</literal>
-        parameter). In practice, this means the set of all potential
-        attack targets. But getting the most of it requires reading it in
-        full and adapting it to the local situation.
-      </para>
-      <para>
-        On top of this, you should also edit
-        <filename>/etc/default/suricata</filename> to define the network
-        interface to monitor and to enable the init script (by setting
-        <literal>RUN=yes</literal>). You might also want to set
-        <literal>LISTENMODE=pcap</literal> because the default
-        <literal>LISTENMODE=nfqueue</literal> requires further configuration
-        to work properly (the netfilter firewall must be configured to
-        pass packets to some user-space queue handled by suricata via the
-        <literal>NFQUEUE</literal> target).
-      </para>
-      <para>
-        To detect bad behavior, <command>suricata</command> needs a set of
-        monitoring rules: you can find such rules in the
-        <emphasis role="pkg">snort-rules-default</emphasis> package.
-        <command>snort</command> is the historical reference in the IDS
-        ecosystem and <command>suricata</command> is able to reuse rules
-        written for it.
-      </para>
-      <para>
-        Alternatively, <command>oinkmaster</command> (in the package of the same name)
-        can be used to download Snort rulesets from external sources.
-      </para>
+      <para>Configuring suricata involves reviewing and editing
+      <filename>/etc/suricata/suricata.yaml</filename>, which is very
+      long because each parameter is abundantly commented.  A minimal
+      configuration requires describing the range of addresses that the local
+      network covers (<literal>HOME_NET</literal> parameter). In practice, this
+      means the set of all potential attack targets. But getting the most of it
+      requires reading it in full and adapting it to the local
+      situation.</para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/suricata/suricata.yaml</filename></secondary></indexterm>
+
+      <para>On top of this, you should also edit it to define the network
+      <literal>interface</literal>. You might also want to set
+      <literal>LISTENMODE=pcap</literal> because the default
+      <literal>LISTENMODE=nfqueue</literal> requires further configuration to
+      work properly (the netfilter firewall must be configured to pass packets
+      to some user-space queue handled by suricata via the
+      <literal>NFQUEUE</literal> target).</para>
+
+      <para>To detect bad behavior, <command>suricata</command> needs a set of
+      monitoring rules: you can find such rules in the <emphasis
+      role="pkg">snort-rules-default</emphasis> package.
+      <command>snort</command> is the historical reference in the IDS ecosystem
+      and <command>suricata</command> is able to reuse rules written for
+      it.</para>
+
+      <indexterm><primary><command>oinkmaster</command></primary></indexterm>
+
+      <para>Alternatively, <command>oinkmaster</command> (in the package of
+      the same name) can be used to download Snort rulesets from external
+      sources.</para>
+
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> Integration with <command>prelude</command></title>
-
-	<para>Prelude brings centralized monitoring of security
-	information. Its modular architecture includes a server (the
-	<emphasis>manager</emphasis> in <emphasis
-	role="pkg">prelude-manager</emphasis>) which gathers alerts
-	generated by <emphasis>sensors</emphasis> of various types.</para>
-
-	<para>Suricata can be configured as such a sensor. Other possibilities
-	include <emphasis>prelude-lml</emphasis> (<emphasis>Log Monitor
-	Lackey</emphasis>) which monitors log files (in a manner similar to
-	<command>logcheck</command>, described in <xref
-	linkend="sect.logcheck"/>).</para>
         <indexterm><primary><command>prelude</command></primary></indexterm>
+
+        <para>Prelude brings centralized monitoring of security
+        information. Its modular architecture includes a server (the
+        <emphasis>manager</emphasis> in <emphasis
+        role="pkg">prelude-manager</emphasis>) which gathers alerts
+        generated by <emphasis>sensors</emphasis> of various types.</para>
+
+        <para>Suricata can be configured as such a sensor. Other possibilities
+        include <emphasis>prelude-lml</emphasis> (<emphasis>Log Monitor
+        Lackey</emphasis>) which monitors log files (in a manner similar to
+        <command>logcheck</command>, described in <xref
+        linkend="sect.logcheck"/>).</para>
       </sidebar>
     </section>
   </section>
