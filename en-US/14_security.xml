@@ -1266,18 +1266,23 @@ backend  = %(sshd_backend)s
   <section id="sect.apparmor">
     <title>Introduction to AppArmor</title>
     <indexterm><primary>AppArmor</primary></indexterm>
+
     <section id="sect.apparmor-principles">
       <title>Principles</title>
+      <indexterm><primary>MAC</primary></indexterm>
+      <indexterm><primary>Mandatory Access Control</primary><see>MAC</see></indexterm>
+      <indexterm><primary>LSM</primary></indexterm>
+      <indexterm><primary>Linux Security Modules</primary><see>LSM</see></indexterm>
+
       <para>
         AppArmor is a <emphasis>Mandatory Access Control</emphasis> (MAC)
         system built on Linux's LSM (<emphasis>Linux Security
-          Modules</emphasis>) interface. In practice, the kernel queries
+        Modules</emphasis>) interface. In practice, the kernel queries
         AppArmor before each system call to know whether the process is
         authorized to do the given operation. Through this mechanism, AppArmor
         confines programs to a limited set of resources.
       </para>
-      <indexterm><primary><emphasis>Mandatory Access Control</emphasis></primary></indexterm>
-      <indexterm><primary><emphasis>Linux Security Modules</emphasis></primary></indexterm>
+
       <para>
         AppArmor applies a set of rules (known as “profile”) on each
         program. The profile applied by the kernel depends on the
@@ -1288,6 +1293,7 @@ backend  = %(sshd_backend)s
         program (but traditional user permissions still apply and
         might result in different behavior!).
       </para>
+
       <para>
         AppArmor profiles are stored in <filename>/etc/apparmor.d/</filename>
         and they contain a list of access control rules on resources that
@@ -1299,9 +1305,13 @@ backend  = %(sshd_backend)s
         latter does not enforce the policy but still logs the system
         calls that would have been denied.
       </para>
+
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apparmor.d/</filename></secondary></indexterm>
     </section>
     <section id="sect.apparmor-setup">
       <title>Enabling AppArmor and managing AppArmor profiles</title>
+      <indexterm><primary><command>aa-status</command></primary></indexterm>
+
       <para>
         AppArmor support is built into the standard kernels provided
         by Debian. Enabling AppArmor is thus just a matter of
@@ -1309,32 +1319,33 @@ backend  = %(sshd_backend)s
         <command>apt install apparmor apparmor-profiles apparmor-utils</command>
         with root privileges.
       </para>
+
       <para>
         AppArmor is functional after the installation, and <command>aa-status</command>
         will confirm it quickly:
       </para>
+
       <screen>
-<computeroutput># </computeroutput><userinput>aa-status</userinput>
-<computeroutput>apparmor module is loaded.
-40 profiles are loaded.
-23 profiles are in enforce mode.
-   /usr/bin/evince
-   /usr/bin/evince-previewer
+<computeroutput># </computeroutput><userinput>aa-status
+</userinput><computeroutput>apparmor module is loaded.
+32 profiles are loaded.
+15 profiles are in enforce mode.
+   /usr/bin/man
 [...]
 17 profiles are in complain mode.
    /usr/sbin/dnsmasq
 [...]
-14 processes have profiles defined.
-12 processes are in enforce mode.
-   /usr/bin/evince (3462)
-[...]
-2 processes are in complain mode.
-   /usr/sbin/avahi-daemon (429) avahi-daemon
-   /usr/sbin/avahi-daemon (511) avahi-daemon
+1 processes have profiles defined.
+1 processes are in enforce mode.
+   /usr/sbin/libvirtd (468) libvirtd
+0 processes are in complain mode.
 0 processes are unconfined but have a profile defined.</computeroutput>
 </screen>
+
       <sidebar>
         <title><emphasis>NOTE</emphasis> More AppArmor profiles</title>
+        <indexterm><primary>AppArmor</primary><secondary>profiles</secondary></indexterm>
+
         <para>
           The <emphasis role="pkg">apparmor-profiles</emphasis> package
           contains profiles managed by the upstream AppArmor community.
@@ -1343,6 +1354,11 @@ backend  = %(sshd_backend)s
           contains profiles developed by Ubuntu and Debian.
         </para>
       </sidebar>
+
+      <indexterm><primary><command>aa-complain</command></primary></indexterm>
+      <indexterm><primary><command>aa-enforce</command></primary></indexterm>
+      <indexterm><primary><command>aa-disable</command></primary></indexterm>
+
       <para>
         The state of each profile can be switched between
         enforcing and complaining with calls to <command>aa-enforce</command>
@@ -1352,15 +1368,17 @@ backend  = %(sshd_backend)s
         <command>aa-disable</command> or put in audit mode (to log
         accepted system calls too) with <command>aa-audit</command>.
       </para>
+
       <screen>
 <computeroutput># </computeroutput><userinput>aa-enforce /usr/bin/pidgin</userinput>
 <computeroutput>Setting /usr/bin/pidgin to enforce mode.</computeroutput>
 <computeroutput># </computeroutput><userinput>aa-complain /usr/sbin/dnsmasq</userinput>
 <computeroutput>Setting /usr/sbin/dnsmasq to complain mode.</computeroutput>
-      </screen>
+</screen>
     </section>
     <section id="sect.apparmor-new-profile">
       <title>Creating a new profile</title>
+
       <para>
         Even though creating an AppArmor profile is rather easy, most
         programs do not have one. This section will show you how to
@@ -1368,6 +1386,9 @@ backend  = %(sshd_backend)s
         program and letting AppArmor monitor the system call it makes
         and the resources it accesses.
       </para>
+
+      <indexterm><primary><command>aa-unconfined</command></primary></indexterm>
+
       <para>
         The most important programs that need to be confined
         are the network facing programs as those are the most likely
@@ -1378,39 +1399,21 @@ backend  = %(sshd_backend)s
         option you get all unconfined processes that have at least one
         active network connection.
       </para>
+
       <screen>
-<computeroutput># </computeroutput><userinput>aa-unconfined</userinput>
-<computeroutput>801 /sbin/dhclient not confined
-409 /usr/sbin/NetworkManager not confined
-411 /usr/sbin/cupsd confined by '/usr/sbin/cupsd (enforce)'
-429 /usr/sbin/avahi-daemon confined by 'avahi-daemon (enforce)'
-516 /usr/sbin/cups-browsed confined by '/usr/sbin/cups-browsed (enforce)'
-538 /usr/sbin/zebra not confined
-591 /usr/sbin/named not confined
-847 /usr/sbin/mysqld not confined
-849 /usr/sbin/sshd not confined
-1013 /usr/sbin/dhclient (/sbin/dhclient) not confined
-1276 /usr/sbin/apache2 not confined
-1322 /usr/sbin/apache2 not confined
-1323 /usr/sbin/apache2 not confined
-1324 /usr/sbin/apache2 not confined
-1325 /usr/sbin/apache2 not confined
-1327 /usr/sbin/apache2 not confined
-1829 /usr/lib/ipsec/charon confined by '/usr/lib/ipsec/charon (enforce)'
-2132 /usr/sbin/exim4 not confined
-12865 /usr/bin/python3.7 (/usr/bin/python3) not confined
-12873 /usr/bin/python3.7 (/usr/bin/python3) not confined</computeroutput>
-      </screen>
+<computeroutput># </computeroutput><userinput>aa-unconfined
+</userinput><computeroutput>451 /usr/bin/containerd not confined
+467 /usr/sbin/sshd (sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups) not confined
+892 /usr/sbin/exim4 not confined
+</computeroutput>
+</screen>
+
       <para>
         In the following example, we will thus try to create a
-        profile for <command>/sbin/dhclient</command>. For this
-        we will use <command>aa-genprof dhclient</command>. In Debian
-        <emphasis role="distribution">Buster</emphasis> there is a known
-        bug<footnote><para><ulink url="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=928160"/></para></footnote>
-        that makes the previous command fail with the following error:
-	<computeroutput>ERROR: Include file /etc/apparmor.d/local/usr.lib.dovecot.deliver not found</computeroutput>.
-        To fix it create the missing files with
-        <command>touch <replaceable>file</replaceable></command>. It
+        profile for <command>/sbin/dhclient</command> (there already is a
+        profile shipped by <emphasis role="pkg">apparmor-profiles</emphasis>,
+        so you can compare your results to the official one). For this
+        we will use <command>aa-genprof dhclient</command>. It
         will invite you to use the application in another window
         and when done to come back to <command>aa-genprof</command>
         to scan for AppArmor events in the system logs and
@@ -1418,9 +1421,10 @@ backend  = %(sshd_backend)s
         it will make one or more rule suggestions that you can
         either approve or further edit in multiple ways:
       </para>
+
       <screen>
-<computeroutput># </computeroutput><userinput>aa-genprof dhclient</userinput>
-<computeroutput>Writing updated profile for /usr/sbin/dhclient.
+<computeroutput># </computeroutput><userinput>aa-genprof dhclient
+</userinput><computeroutput>Writing updated profile for /usr/sbin/dhclient.
 Setting /usr/sbin/dhclient to complain mode.
 
 Before you begin, you may wish to check if a
@@ -1434,16 +1438,16 @@ Profiling: /usr/sbin/dhclient
 Please start the application to be profiled in
 another window and exercise its functionality now.
 
-Once completed, select the "Scan" option below in
-order to scan the system logs for AppArmor events.
+Once completed, select the "Scan" option below in 
+order to scan the system logs for AppArmor events. 
 
-For each AppArmor event, you will be given the
-opportunity to choose whether the access should be
+For each AppArmor event, you will be given the 
+opportunity to choose whether the access should be 
 allowed or denied.
 
 [(S)can system log for AppArmor events] / (F)inish
+<userinput>S</userinput>
 Reading log entries from /var/log/syslog.
-Updating AppArmor profiles in /etc/apparmor.d.
 
 Profile:  /usr/sbin/dhclient <co id="aa-genprof-execute"/>
 Execute:  /usr/sbin/dhclient-script
@@ -1451,6 +1455,7 @@ Severity: unknown
 
 (I)nherit / (C)hild / (P)rofile / (N)amed / (U)nconfined / (X) ix On / (D)eny / Abo(r)t / (F)inish
 <userinput>P</userinput>
+
 Should AppArmor sanitise the environment when
 switching profiles?
 
@@ -1458,7 +1463,7 @@ Sanitising environment is more secure,
 but some applications depend on the presence
 of LD_PRELOAD or LD_LIBRARY_PATH.
 
-(Y)es / [(N)o]
+[(Y)es] / (N)o
 <userinput>Y</userinput>
 Writing updated profile for /usr/sbin/dhclient-script.
 Complain-mode changes:
@@ -1468,15 +1473,15 @@ Capability: net_raw
 Severity:   8
 
  [1 - capability net_raw,]
-[(A)llow] / (D)eny / (I)gnore / Audi(t) / Abo(r)t / (F)inish
+(A)llow / [(D)eny] / (I)gnore / Audi(t) / Abo(r)t / (F)inish
 <userinput>A</userinput>
-Adding capability net_raw to profile.
+Adding capability net_raw, to profile.
 
-Profile:  /sbin/dhclient
+Profile:    /usr/sbin/dhclient
 Capability: net_bind_service
 Severity:   8
 
- [1 - #include &lt;abstractions/nis&gt; ]
+ [1 - #include &lt;abstractions/nis&gt;]
   2 - capability net_bind_service,
 (A)llow / [(D)eny] / (I)gnore / Audi(t) / Abo(r)t / (F)inish
 <userinput>A</userinput>
@@ -1499,10 +1504,10 @@ Path:     /etc/ssl/openssl.cnf
 New Mode: owner r
 Severity: 2
 
-  1 - #include &lt;abstractions/lightdm&gt;
+  1 - #include &lt;abstractions/lightdm&gt; 
  [2 - #include &lt;abstractions/openssl&gt;]
   3 - #include &lt;abstractions/ssl_keys&gt;
-  4 - owner /etc/ssl/openssl.cnf r,
+  4 - owner /etc/ssl/openssl.cnf r, 
 [(A)llow] / (D)eny / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Abo(r)t / (F)inish / (M)ore
 <userinput>A</userinput>
 [...]
@@ -1511,9 +1516,11 @@ Path:     /usr/bin/dash
 New Mode: owner r
 Severity: unknown
 
- [1 - #include &lt;abstractions/lightdm&gt;]
-  2 - #include &lt;abstractions/ubuntu-browsers.d/plugins-common&gt;
-  3 - owner /usr/bin/dash r,
+  1 - #include &lt;abstractions/gvfs-open&gt;
+ [2 - #include &lt;abstractions/lightdm&gt;]
+  3 - #include &lt;abstractions/ubuntu-browsers.d/plugins-common&gt;
+  4 - #include &lt;abstractions/xdg-open&gt;
+  5 - owner /usr/bin/dash r,
 (A)llow / [(D)eny] / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Audi(t) / (O)wner permissions off / Abo(r)t / (F)inish
 <userinput>A</userinput>
 Adding #include &lt;abstractions/lightdm&gt; to profile.
@@ -1544,6 +1551,9 @@ allowed or denied.
 
 [(S)can system log for AppArmor events] / (F)inish
 <userinput>F</userinput>
+Setting /usr/sbin/dhclient to enforce mode.
+Setting /usr/sbin/dhclient-script to enforce mode.
+
 Reloaded AppArmor profiles in enforce mode.
 
 Please consider contributing your new profile!
@@ -1552,11 +1562,13 @@ https://gitlab.com/apparmor/apparmor/wikis/Profiles
 
 Finished generating profile for /usr/sbin/dhclient.</computeroutput>
 </screen>
+
       <para>
         Note that the program does not display back the control
-        characters that you type but for the clarity of the explanation I
+        characters that you type but for the clarity of the explanation we
         have included them in the previous transcript.
       </para>
+
       <calloutlist>
         <callout arearefs="aa-genprof-execute">
           <para>
@@ -1616,6 +1628,10 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
           </para>
         </callout>
       </calloutlist>
+
+      <indexterm><primary><command>aa-genprof</command></primary></indexterm>
+      <indexterm><primary><command>aa-logprof</command></primary></indexterm>
+
       <para>
         <command>aa-genprof</command> is in fact only a smart wrapper
         around <command>aa-logprof</command>: it creates an empty profile,
@@ -1625,57 +1641,25 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
         re-run that tool later to improve the profile that you just
         created.
       </para>
+
       <para>
         If you want the generated profile to be complete, you should use the
         program in all the ways that it is legitimately used. In the case
         of dhclient, it means running it via Network Manager, running it via
         ifupdown, running it manually, etc. In the end, you might get
-        a <filename>/etc/apparmor.d/usr.sbin.dhclient</filename> close to this:
+        a <filename>/etc/apparmor.d/usr.sbin.dhclient</filename> close to the
+        profile shipped by <emphasis role="pkg">apparmor-profiles</emphasis> in
+        <filename>/usr/share/apparmor/extra-profiles/sbin.dhclient</filename>.
       </para>
-      <programlisting>
-# Last Modified: Fri Jul  5 00:51:02 2019
-#include &lt;tunables/global&gt;
 
-/usr/sbin/dhclient {
-  #include &lt;abstractions/base&gt;
-  #include &lt;abstractions/nameservice&gt;
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apparmor.d/</filename></secondary></indexterm>
 
-  capability net_bind_service,
-  capability net_raw,
-
-  /bin/dash r,
-  /etc/dhcp/* r,
-  /etc/dhcp/dhclient-enter-hooks.d/* r,
-  /etc/dhcp/dhclient-exit-hooks.d/* r,
-  /etc/resolv.conf.* w,
-  /etc/samba/dhcp.conf.* w,
-  /proc/*/net/dev r,
-  /proc/filesystems r,
-  /run/dhclient*.pid w,
-  /sbin/dhclient mr,
-  /sbin/dhclient-script rCx,
-  /usr/lib/NetworkManager/nm-dhcp-helper Px,
-  /var/lib/NetworkManager/* r,
-  /var/lib/NetworkManager/*.lease rw,
-  /var/lib/dhcp/*.leases rw,
-
-  owner /etc/** mrwk,
-  owner /var/** mrwk,
-  owner /{,var/}run/** mrwk,
-}
-      </programlisting>
-      <para>And <filename>/etc/apparmor.d/usr.sbin.dhclient-script</filename>
-      might be similar to this:</para>
-<programlisting>
-# Last Modified: Fri Jul  5 00:51:55 2019
-#include &lt;tunables/global&gt;
-
-/usr/sbin/dhclient-script {
-  #include &lt;abstractions/base&gt;
-  #include &lt;abstractions/bash&gt;
-  #include &lt;abstractions/lightdm&gt;
-}
-</programlisting>
+      <para>
+        And <filename>/etc/apparmor.d/usr.sbin.dhclient-script</filename> might
+        be similar to
+        <filename>/usr/share/apparmor/extra-profiles/sbin.dhclient</filename>,
+        shipped in <emphasis role="pkg">apparmor-profiles</emphasis> too.
+      </para>
     </section>
   </section>
   <section id="sect.selinux">
