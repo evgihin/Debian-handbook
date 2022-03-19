@@ -1901,7 +1901,7 @@ system_u:object_r:ssh_exec_t:s0 /usr/bin/ssh
         distribution. <ulink type="block"
         url="https://selinuxproject.org"/></para>
 
-        <para>You should also have a look at the dedicated Debian Wiki page.
+        <para>You should also have a look at the dedicated Debian wiki page.
         <ulink type="block" url="https://wiki.debian.org/SELinux"/></para>
       </sidebar>
       <section>
@@ -2492,6 +2492,7 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
     reviews some of the more common risks, as well as a few best practices
     which should, depending on the case, increase security or lessen the
     impact of a successful attack.</para>
+
     <section>
       <title>Inherent Risks of Web Applications</title>
 
@@ -2510,18 +2511,19 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> SQL injection</title>
 
-	<para>When a program inserts data into SQL queries in an insecure
-	manner, it becomes vulnerable to SQL injections; this name covers
-	the act of changing a parameter in such a way that the actual query
-	executed by the program is different from the intended one, either
-	to damage the database or to access data that should normally not
-	be accessible. <ulink type="block"
-	url="https://en.wikipedia.org/wiki/SQL_Injection"/></para>
+        <para>When a program inserts data into SQL queries in an insecure
+        manner, it becomes vulnerable to SQL injections; this name covers
+        the act of changing a parameter in such a way that the actual query
+        executed by the program is different from the intended one, either
+        to damage the database or to access data that should normally not
+        be accessible. <ulink type="block"
+        url="https://en.wikipedia.org/wiki/SQL_Injection"/></para>
+
         <indexterm><primary>SQL injection</primary></indexterm>
       </sidebar>
 
       <para>Updating web applications regularly is therefore a must, lest
-      any cracker (whether a professional attacker or a script kiddy) can
+      any cracker (whether a professional attacker or a “script kiddy“) can
       exploit a known vulnerability. The actual risk depends on the case,
       and ranges from data destruction to arbitrary code execution,
       including web site defacement.</para>
@@ -2536,31 +2538,33 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <sidebar>
         <title><emphasis>QUICK LOOK</emphasis> Filtering HTTP queries</title>
 
-	<para>Apache 2 includes modules allowing filtering incoming HTTP
-	queries. This allows blocking some attack vectors. For instance,
-	limiting the length of parameters can prevent buffer overflows.
-	More generally, one can validate parameters before they are even
-	passed to the web application and restrict access along many
-	criteria. This can even be combined with dynamic firewall updates,
-	so that a client infringing one of the rules is banned from
-	accessing the web server for a given period of time.</para>
+        <para>Apache 2 includes modules allowing filtering incoming HTTP
+        queries. This allows blocking some attack vectors. For instance,
+        limiting the length of parameters can prevent buffer overflows.
+        More generally, one can validate parameters before they are even
+        passed to the web application and restrict access along many
+        criteria. This can even be combined with dynamic firewall updates,
+        so that a client infringing one of the rules is banned from
+        accessing the web server for a given period of time.</para>
 
-	<para>Setting up these checks can be a long and cumbersome task,
-	but it can pay off when the web application to be deployed has a
-	dubious track record where security is concerned.</para>
+        <para>Setting up these checks can be a long and cumbersome task,
+        but it can pay off when the web application to be deployed has a
+        dubious track record where security is concerned.</para>
 
-	<para><emphasis>mod-security2</emphasis> (in the <emphasis
-	role="pkg">libapache2-mod-security2</emphasis> package) is the main
+        <para><emphasis>mod-security2</emphasis> (in the <emphasis
+        role="pkg">libapache2-mod-security2</emphasis> package) is the main
         such module. It even comes with many ready-to-use rules of its own
         (in the <emphasis role="pkg">modsecurity-crs</emphasis> package)
         that you can easily enable.</para>
-        <indexterm><primary><emphasis role="pkg">libapache-mod-security</emphasis></primary></indexterm>
-        <indexterm><primary><emphasis>mod-security</emphasis></primary></indexterm>
+
+        <indexterm><primary>Apache</primary><secondary><literal>mod-security2</literal></secondary></indexterm>
+        <indexterm><primary><emphasis role="pkg">libapache2-mod-security2</emphasis></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">modsecurity-crs</emphasis></primary></indexterm>
       </sidebar>
 
       <para>The consequences of an intrusion will have various levels of
       obviousness depending on the motivations of the attacker.
-      <emphasis>Script-kiddies</emphasis> only apply recipes they find on
+      “Script-kiddies“ only apply recipes they find on
       web sites; most often, they deface a web page or delete data. In more
       subtle cases, they add invisible contents to web pages so as to
       improve referrals to their own sites in search engines.</para>
@@ -2596,20 +2600,24 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Privilege escalation</title>
+        <indexterm><primary>permissions</primary><secondary>privilege escalation</secondary></indexterm>
+        <indexterm><primary><command>sudo</command></primary></indexterm>
 
-	<para>This term covers anything that can be used to obtain more
-	permissions than a given user should normally have. The
-	<command>sudo</command> program is designed for precisely the
-	purpose of giving administrative rights to some users. But the same
-	term is also used to describe the act of an attacker exploiting a
-	vulnerability to obtain undue rights.</para>
+        <para>This term covers anything that can be used to obtain more
+        permissions than a given user should normally have. The
+        <command>sudo</command> program is designed for precisely the
+        purpose of giving administrative rights to some users. But the same
+        term is also used to describe the act of an attacker exploiting a
+        vulnerability to obtain undue rights.</para>
       </sidebar>
 
       <para>Now the attacker owns the machine; they will usually try to
       keep this privileged access for as long as possible. This involves
       installing a <emphasis>rootkit</emphasis>, a program that will
       replace some components of the system so that the attacker will be
-      able to obtain the administrator privileges again at a later time;
+      able to obtain the administrator privileges again at a later time
+      (see also
+      <xref linkend="sidebar.the-checksecurity-and-chkrootkit-rkhunter-packages"/>);
       the rootkit also tries hiding its own existence as well as any traces
       of the intrusion. A subverted <command>ps</command> program will omit
       to list some processes, <command>netstat</command> will not list some
@@ -2631,26 +2639,26 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
     <section id="sect.choosing-the-software-wisely">
       <title>Choosing the Software Wisely</title>
 
-      <para>Once the potential security problems are known, they must be
-      taken into account at each step of the process of deploying a
-      service, especially when choosing the software to install. Many web
-      sites, such as <literal>SecurityFocus.com</literal>, keep a list of
-      recently-discovered vulnerabilities, which can give an idea of a
+      <para>Once the potential security problems are known, they must be taken
+      into account at each step of the process of deploying a service,
+      especially when choosing the software to install. Many web sites keep a
+      list of recently-discovered vulnerabilities, which can give an idea of a
       security track record before some particular software is deployed. Of
-      course, this information must be balanced against the popularity of
-      said software: a more widely-used program is a more tempting target,
-      and it will be more closely scrutinized as a consequence. On the
-      other hand, a niche program may be full of security holes that never
-      get publicized due to a lack of interest in a security audit.</para>
+      course, this information must be balanced against the popularity of said
+      software: a more widely-used program is a more tempting target, and it
+      will be more closely scrutinized as a consequence. On the other hand, a
+      niche program may be full of security holes that never get publicized due
+      to a lack of interest in a security audit.</para>
 
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Security audit</title>
+        <indexterm><primary>security</primary><secondary>audit</secondary></indexterm>
 
-	<para>A security audit is the process of thoroughly reading and
-	analyzing the source code of some software, looking for potential
-	security vulnerabilities it could contain. Such audits are usually
-	proactive and they are conducted to ensure a program meets certain
-	security requirements.</para>
+        <para>A security audit is the process of thoroughly reading and
+        analyzing the source code of some software, looking for potential
+        security vulnerabilities it could contain. Such audits are usually
+        proactive and they are conducted to ensure a program meets certain
+        security requirements.</para>
       </sidebar>
 
       <para>In the free software world, there is generally ample room for
@@ -2664,9 +2672,9 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
       <sidebar>
         <title><emphasis>VOCABULARY</emphasis> Zero-day exploit</title>
 
-	<para>A <emphasis>zero-day exploit</emphasis> attack is hard to
-	prevent; the term covers a vulnerability that is not yet known to
-	the authors of the program.</para>
+        <para>A <emphasis>zero-day exploit</emphasis> attack is hard to
+        prevent; the term covers a vulnerability that is not yet known to
+        the authors of the program.</para>
       </sidebar>
     </section>
     <section id="sect.managing-a-machine-as-a-whole">
@@ -2716,12 +2724,13 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 
       <sidebar>
         <title><emphasis>QUICK LOOK</emphasis> <emphasis role="pkg">autolog</emphasis></title>
+        <indexterm><primary><emphasis role="pkg">autolog</emphasis></primary></indexterm>
 
-	<para>The <emphasis role="pkg">autolog</emphasis> package provides
-	a program that automatically disconnects inactive users after a
-	configurable delay. It also allows killing user processes that
-	persist after a session ends, thereby preventing users from running
-	daemons.</para>
+        <para>The <emphasis role="pkg">autolog</emphasis> package provides
+        a program that automatically disconnects inactive users after a
+        configurable delay. It also allows killing user processes that
+        persist after a session ends, thereby preventing users from running
+        daemons.</para>
       </sidebar>
     </section>
     <section id="sect.physical-security">
