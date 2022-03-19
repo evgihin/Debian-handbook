@@ -1665,8 +1665,14 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
   <section id="sect.selinux">
     <title>Introduction to SELinux</title>
     <indexterm><primary>SELinux</primary></indexterm>
+
     <section id="sect.selinux-principles">
       <title>Principles</title>
+      <indexterm><primary>Security Enhanced Linux</primary><see>SELinux</see></indexterm>
+      <indexterm><primary>MAC</primary></indexterm>
+      <indexterm><primary>LSM</primary></indexterm>
+      <indexterm><primary>security</primary><secondary>policy</secondary></indexterm>
+      <indexterm><primary>SELinux</primary><secondary>concept</secondary></indexterm>
 
       <para>SELinux (<emphasis>Security Enhanced Linux</emphasis>) is a
       <emphasis>Mandatory Access Control</emphasis> system built on Linux's
@@ -1680,6 +1686,10 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
       policies (<emphasis>targeted</emphasis> and
       <emphasis>strict</emphasis>) are provided to avoid the bulk of the
       configuration work.</para>
+
+      <indexterm><primary>security</primary><secondary>context</secondary></indexterm>
+      <indexterm><primary>security</primary><secondary>role</secondary></indexterm>
+      <indexterm><primary>security</primary><secondary>domain</secondary></indexterm>
 
       <para>With SELinux, the management of rights is completely different
       from traditional Unix systems. The rights of a process depend on its
@@ -1723,10 +1733,11 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
 
       <sidebar>
         <title><emphasis>EXTRA</emphasis> Domains and types are equivalent</title>
+        <indexterm><primary>security</primary><secondary>domain</secondary></indexterm>
 
-	<para>Internally, a domain is just a type, but a type that only
-	applies to processes. That is why domains are suffixed with
-	<literal>_t</literal> just like objects' types.</para>
+        <para>Internally, a domain is just a type, but a type that only
+        applies to processes. That is why domains are suffixed with
+        <literal>_t</literal> just like objects' types.</para>
       </sidebar>
 
       <para>By default, a program inherits its domain from the user who
@@ -1751,44 +1762,53 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Finding the security context</title>
-        <indexterm><primary>security context</primary></indexterm>
+        <indexterm><primary>security</primary><secondary>context</secondary></indexterm>
         <indexterm><primary>context, security context</primary></indexterm>
-        <indexterm><primary>MCS (<emphasis>Multi-Category Security</emphasis>)</primary></indexterm>
+        <indexterm><primary>MCS</primary></indexterm>
+        <indexterm><primary>Multi-Category Security</primary><see>MCS</see></indexterm>
 
-	<para>To find the security context of a given process, you should
-	use the <literal>Z</literal> option of
-	<command>ps</command>.</para>
+        <para>To find the current security context in a shell, you should
+        call <command>id -Z</command>.</para>
 
-        <screen><computeroutput>$ </computeroutput><userinput>ps axZ | grep vstfpd</userinput>
-<computeroutput>system_u:system_r:ftpd_t:s0   2094 ?    Ss  0:00 /usr/sbin/vsftpd</computeroutput>
+        <screen><computeroutput>$ </computeroutput><userinput>id -Z
+</userinput><computeroutput>unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</computeroutput>
 </screen>
 
-	<para>The first field contains the identity, the role, the domain
-	and the MCS level, separated by colons. The MCS level
-	(<emphasis>Multi-Category Security</emphasis>) is a parameter that
-	intervenes in the setup of a confidentiality protection policy,
-	which regulates the access to files based on their sensitivity.
-	This feature will not be explained in this book.</para>
+        <para>If you receive a message saying <errortext>id: --context (-Z)
+        works only on an SELinux-enabled kernel</errortext> instead, then
+        you need to enable SELinux first by running
+        <command>selinux-activate</command> and rebooting.</para>
 
-	<para>To find the current security context in a shell, you should
-	call <command>id -Z</command>.</para>
+        <indexterm><primary>selinux-activate</primary></indexterm>
 
-        <screen><computeroutput>$ </computeroutput><userinput>id -Z</userinput>
-<computeroutput>unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</computeroutput>
+        <para>To find the security context of a given process, you should
+        use the <literal>Z</literal> option of
+        <command>ps</command>.</para>
+
+        <screen><computeroutput>$ </computeroutput><userinput>ps axZ | grep vstfpd
+</userinput><computeroutput>system_u:system_r:ftpd_t:s0   2094 ?    Ss  0:00 /usr/sbin/vsftpd</computeroutput>
 </screen>
 
-	<para>Finally, to find the type assigned to a file, you can use
-	<command>ls -Z</command>.</para>
+        <para>The first field contains the identity, the role, the domain
+        and the MCS level, separated by colons. The MCS level
+        (<emphasis>Multi-Category Security</emphasis>) is a parameter that
+        intervenes in the setup of a confidentiality protection policy,
+        which regulates the access to files based on their sensitivity.
+        This feature will not be explained in this book.</para>
 
-        <screen><computeroutput>$ </computeroutput><userinput>ls -Z test /usr/bin/ssh</userinput>
-<computeroutput>unconfined_u:object_r:user_home_t:s0 test
-     system_u:object_r:ssh_exec_t:s0 /usr/bin/ssh</computeroutput>
+        <para>Finally, to find the type assigned to a file, you can use
+        <command>ls -Z</command>.</para>
+
+        <screen><computeroutput>$ </computeroutput><userinput>ls -Z test /usr/bin/ssh
+</userinput><computeroutput>unconfined_u:object_r:user_home_t:s0 test
+system_u:object_r:ssh_exec_t:s0 /usr/bin/ssh
+</computeroutput>
 </screen>
 
-	<para>It is worth noting that the identity and role assigned to a
-	file bear no special importance (they are never used), but for the
-	sake of uniformity, all objects get assigned a complete security
-	context.</para>
+        <para>It is worth noting that the identity and role assigned to a
+        file bear no special importance (they are never used), but for the
+        sake of uniformity, all objects get assigned a complete security
+        context.</para>
       </sidebar>
     </section>
     <section id="sect.selinux-setup">
@@ -1798,9 +1818,9 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
       Debian. The core Unix tools support SELinux without any
       modifications. It is thus relatively easy to enable SELinux.</para>
 
-      <para>The <command>apt install selinux-basics
-      selinux-policy-default</command> command will automatically install
-      the packages required to configure an SELinux system.</para>
+      <para>The <command>apt install selinux-basics selinux-policy-defaulti
+      auditd</command> command will automatically install the packages required
+      to configure an SELinux system.</para>
 
       <para>The <emphasis role="pkg">selinux-policy-default</emphasis>
       package contains a set of standard rules. By default, this policy
@@ -1817,19 +1837,28 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
       must be manually started with <command>fixfiles
       relabel</command>.</para>
 
-      <para>The SELinux system is now ready. To enable it, you should add
-      the <literal>selinux=1 security=selinux</literal> parameter to the Linux kernel. The
-      <literal>audit=1</literal> parameter enables SELinux logging which
-      records all the denied operations. Finally, the
+      <indexterm><primary>kernel</primary><secondary><literal>selinux</literal></secondary></indexterm>
+      <indexterm><primary>kernel</primary><secondary><literal>security</literal></secondary></indexterm>
+      <indexterm><primary>kernel</primary><secondary><literal>audit</literal></secondary></indexterm>
+      <indexterm><primary>kernel</primary><secondary><literal>enforcing</literal></secondary></indexterm>
+      <indexterm><primary>SELinux</primary><secondary>kernel parameters</secondary></indexterm>
+
+      <para>The SELinux system is now ready. To enable it, you should add the
+      <literal>selinux=1 security=selinux</literal> parameter to the Linux
+      kernel. The <literal>audit=1</literal> parameter enables SELinux logging
+      which records all the denied operations. Finally, the
       <literal>enforcing=1</literal> parameter brings the rules into
       application: without it SELinux works in its default
-      <emphasis>permissive</emphasis> mode where denied actions are logged
-      but still executed. You should thus modify the GRUB bootloader
-      configuration file to append the desired parameters. One easy way to
-      do this is to modify the <literal>GRUB_CMDLINE_LINUX</literal>
-      variable in <filename>/etc/default/grub</filename> and to run
+      <emphasis>permissive</emphasis> mode where denied actions are logged but
+      still executed. You should thus modify the GRUB bootloader configuration
+      file to append the desired parameters. One easy way to do this is to
+      modify the <literal>GRUB_CMDLINE_LINUX</literal> variable in
+      <filename>/etc/default/grub</filename> and to run
       <command>update-grub</command>. SELinux will be active after a
       reboot.</para>
+
+      <indexterm><primary><command>selinux-activate</command></primary></indexterm>
+      <indexterm><primary>SELinux</primary><secondary>activate</secondary></indexterm>
 
       <para>It is worth noting that the <command>selinux-activate</command>
       script automates those operations and forces a labeling on next boot
@@ -1840,6 +1869,7 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
       <title>Managing an SELinux System</title>
       <indexterm><primary><command>semodule</command></primary></indexterm>
       <indexterm><primary><command>semanage</command></primary></indexterm>
+      <indexterm><primary>SELinux</primary><secondary>rules</secondary></indexterm>
 
       <para>The SELinux policy is a modular set of rules, and its
       installation detects and enables automatically all the relevant
@@ -1858,128 +1888,132 @@ Finished generating profile for /usr/sbin/dhclient.</computeroutput>
       all those files must not be changed by hand. You should use the
       programs designed for this purpose.</para>
 
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/selinux/default/</filename></secondary></indexterm>
+
       <sidebar>
         <title><emphasis>GOING FURTHER</emphasis> More documentation</title>
 
-	<para>Since the NSA doesn't provide any official documentation, the
-	community set up a wiki to compensate. It brings together a lot of
-	information, but you must be aware that most SELinux contributors
-	are Fedora users (where SELinux is enabled by default). The
-	documentation thus tends to deal specifically with that
-	distribution. <ulink type="block"
-	url="https://selinuxproject.org"/></para>
+        <para>Since the NSA doesn't provide any official documentation, the
+        community set up a wiki to compensate. It brings together a lot of
+        information, but you must be aware that most SELinux contributors
+        are Fedora users (where SELinux is enabled by default). The
+        documentation thus tends to deal specifically with that
+        distribution. <ulink type="block"
+        url="https://selinuxproject.org"/></para>
 
-	<para>You should also have a look at the dedicated Debian wiki page
-	as well as Russell Coker's blog, who is one of the most active
-	Debian developers working on SELinux support. <ulink type="block"
-	url="https://wiki.debian.org/SELinux"/> <ulink type="block"
-	url="https://etbe.coker.com.au/tag/selinux/"/></para>
+        <para>You should also have a look at the dedicated Debian Wiki page.
+        <ulink type="block" url="https://wiki.debian.org/SELinux"/></para>
       </sidebar>
       <section>
         <title>Managing SELinux Modules</title>
+        <indexterm><primary>SELinux</primary><secondary>modules</secondary></indexterm>
+        <indexterm><primary><command>semodule</command></primary></indexterm>
 
-	<para>Available SELinux modules are stored in the
-	<filename>/usr/share/selinux/default/</filename> directory. To
-	enable one of these modules in the current configuration, you
-	should use <command>semodule -i
-	<replaceable>module.pp.bz2</replaceable></command>. The
-	<emphasis>pp.bz2</emphasis> extension stands for <emphasis>policy
-	package</emphasis> (compressed with bzip2).</para>
+        <para>Available SELinux modules are stored in the
+        <filename>/usr/share/selinux/default/</filename> directory. To
+        enable one of these modules in the current configuration, you
+        should use <command>semodule -i
+        <replaceable>module.pp.bz2</replaceable></command>. The
+        <emphasis>pp.bz2</emphasis> extension stands for <emphasis>policy
+        package</emphasis> (compressed with bzip2).</para>
 
-	<para>Removing a module from the current configuration is done with
-	<command>semodule -r <replaceable>module</replaceable></command>.
-	Finally, the <command>semodule -l</command> command lists the
-	modules which are currently installed. It also outputs their version
+        <para>Removing a module from the current configuration is done with
+        <command>semodule -r <replaceable>module</replaceable></command>.
+        Finally, the <command>semodule -l</command> command lists the
+        modules which are currently installed. It also outputs their version
         numbers. Modules can be selectively enabled with <command>semodule -e</command>
         and disabled with <command>semodule -d</command>.</para>
 
-        <screen><computeroutput># </computeroutput><userinput>semodule -i /usr/share/selinux/default/abrt.pp.bz2</userinput>
-<computeroutput>libsemanage.semanage_direct_install_info: abrt module will be disabled after install as there is a disabled instance of this module present in the system.
-# </computeroutput><userinput>semodule -l</userinput>
-<computeroutput>accountsd
+        <screen><computeroutput># </computeroutput><userinput>semodule -i /usr/share/selinux/default/abrt.pp.bz2
+</userinput><computeroutput>libsemanage.semanage_direct_install_info: abrt module will be disabled after install as there is a disabled instance of this module present in the system.
+# </computeroutput><userinput>semodule -l
+</userinput><computeroutput>accountsd
 acct
 [...]</computeroutput>
-<computeroutput># </computeroutput><userinput>semodule -e abrt</userinput>
-<computeroutput># </computeroutput><userinput>semodule -d accountsd</userinput>
-<computeroutput># </computeroutput><userinput>semodule -l</userinput>
-<computeroutput>abrt
+<computeroutput># </computeroutput><userinput>semodule -e abrt
+</userinput><computeroutput># </computeroutput><userinput>semodule -d accountsd
+</userinput><computeroutput># </computeroutput><userinput>semodule -l
+</userinput><computeroutput>abrt
 acct
 [...]</computeroutput>
-<computeroutput># </computeroutput><userinput>semodule -r abrt</userinput>
-<computeroutput>libsemanage.semanage_direct_remove_key: abrt module at priority 100 is now active.</computeroutput>
+<computeroutput># </computeroutput><userinput>semodule -r abrt
+</userinput><computeroutput>libsemanage.semanage_direct_remove_key: abrt module at priority 100 is now active.</computeroutput>
 </screen>
 
-	<para><command>semodule</command> immediately loads the new
-	configuration unless you use its <literal>-n</literal> option. It
-	is worth noting that the program acts by default on the current
-	configuration (which is indicated by the
-	<literal>SELINUXTYPE</literal> variable in
-	<filename>/etc/selinux/config</filename>), but that you can modify
-	another one by specifying it with the <literal>-s</literal>
-	option.</para>
+        <para><command>semodule</command> immediately loads the new
+        configuration unless you use its <literal>-n</literal> option. It
+        is worth noting that the program acts by default on the current
+        configuration (which is indicated by the
+        <literal>SELINUXTYPE</literal> variable in
+        <filename>/etc/selinux/config</filename>), but that you can modify
+        another one by specifying it with the <literal>-s</literal>
+        option.</para>
+
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/selinux/config</filename></secondary></indexterm>
       </section>
       <section>
         <title>Managing Identities</title>
+        <indexterm><primary>SELinux</primary><secondary>identity</secondary></indexterm>
+        <indexterm><primary><command>semanage</command></primary></indexterm>
 
-	<para>Every time that a user logs in, they get assigned an SELinux
-	identity. This identity defines the roles that they will be able to
-	endorse. Those two mappings (from the user to the identity and from
-	this identity to roles) are configurable with the
-	<command>semanage</command> command.</para>
+        <para>Every time that a user logs in, they get assigned an SELinux
+        identity. This identity defines the roles that they will be able to
+        endorse. Those two mappings (from the user to the identity and from
+        this identity to roles) are configurable with the
+        <command>semanage</command> command.</para>
 
-	<para>You should definitely read the
-	<citerefentry><refentrytitle>semanage</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-	manual page. All the managed concepts have their own manual
-	page; for instance,
-	<citerefentry><refentrytitle>semanage-login</refentrytitle><manvolnum>8</manvolnum></citerefentry>.
-	Even if the command's syntax tends to be similar for all the
-	concepts which are managed, it is recommended to read its
-        manual page. You will find common options to
-	most sub-commands: <literal>-a</literal> to add,
-	<literal>-d</literal> to delete, <literal>-m</literal> to modify,
-	<literal>-l</literal> to list, and <literal>-t</literal> to
-	indicate a type (or domain).</para>
+        <para>You should definitely read the
+        <citerefentry><refentrytitle>semanage</refentrytitle>
+        <manvolnum>8</manvolnum></citerefentry> manual page. All the managed
+        concepts have their own manual page; for instance,
+        <citerefentry><refentrytitle>semanage-login</refentrytitle>
+        <manvolnum>8</manvolnum></citerefentry>.  Even if the command's syntax
+        tends to be similar for all the concepts which are managed, it is
+        recommended to read its manual page. You will find common options to
+        most sub-commands: <literal>-a</literal> to add, <literal>-d</literal>
+        to delete, <literal>-m</literal> to modify, <literal>-l</literal> to
+        list, and <literal>-t</literal> to indicate a type (or domain).</para>
 
-	<para><command>semanage login -l</command> lists the current
-	mapping between user identifiers and SELinux identities. Users that
-	have no explicit entry get the identity indicated in the
-	<literal>__default__</literal> entry. The <command>semanage login
-	-a -s user_u <replaceable>user</replaceable></command> command will
-	associate the <emphasis>user_u</emphasis> identity to the given
-	user. Finally, <command>semanage login -d
-	<replaceable>user</replaceable></command> drops the mapping entry
-	assigned to this user.</para>
+        <para><command>semanage login -l</command> lists the current
+        mapping between user identifiers and SELinux identities. Users that
+        have no explicit entry get the identity indicated in the
+        <literal>__default__</literal> entry. The <command>semanage login
+        -a -s user_u <replaceable>user</replaceable></command> command will
+        associate the <emphasis>user_u</emphasis> identity to the given
+        user. Finally, <command>semanage login -d
+        <replaceable>user</replaceable></command> drops the mapping entry
+        assigned to this user.</para>
 
-        <screen><computeroutput># </computeroutput><userinput>semanage login -a -s user_u rhertzog</userinput>
-<computeroutput># </computeroutput><userinput>semanage login -l</userinput>
-<computeroutput>
+        <screen><computeroutput># </computeroutput><userinput>semanage login -a -s user_u rhertzog
+</userinput><computeroutput># </computeroutput><userinput>semanage login -l
+</userinput><computeroutput>
 Login Name           SELinux User         MLS/MCS Range        Service
 
 __default__          unconfined_u         s0-s0:c0.c1023       *
 rhertzog             user_u               s0                   *
 root                 unconfined_u         s0-s0:c0.c1023       *
-# </computeroutput><userinput>semanage login -d rhertzog</userinput>
-</screen>
+# </computeroutput><userinput>semanage login -d rhertzog
+</userinput></screen>
 
-	<para><command>semanage user -l</command> lists the mapping between
-	SELinux user identities and allowed roles. Adding a new identity
-	requires to define both the corresponding roles and a labeling
-	prefix which is used to assign a type to personal files
-	(<filename>/home/<replaceable>user</replaceable>/*</filename>). The
-	prefix must be picked among <literal>user</literal>,
-	<literal>staff</literal>, and <literal>sysadm</literal>. The
-	“<literal>staff</literal>” prefix results in files of type
-	“<literal>staff_home_dir_t</literal>”. Creating a new SELinux
-	user identity is done with <command>semanage user -a -R
-	<replaceable>roles</replaceable> -P
-	<replaceable>prefix</replaceable>
-	<replaceable>identity</replaceable></command>. Finally, you can
-	remove an SELinux user identity with <command>semanage user -d
-	<replaceable>identity</replaceable></command>.</para>
+        <para><command>semanage user -l</command> lists the mapping between
+        SELinux user identities and allowed roles. Adding a new identity
+        requires to define both the corresponding roles and a labeling
+        prefix which is used to assign a type to personal files
+        (<filename>/home/<replaceable>user</replaceable>/*</filename>). The
+        prefix must be picked among <literal>user</literal>,
+        <literal>staff</literal>, and <literal>sysadm</literal>. The
+        “<literal>staff</literal>” prefix results in files of type
+        “<literal>staff_home_dir_t</literal>”. Creating a new SELinux
+        user identity is done with <command>semanage user -a -R
+        <replaceable>roles</replaceable> -P
+        <replaceable>prefix</replaceable>
+        <replaceable>identity</replaceable></command>. Finally, you can
+        remove an SELinux user identity with <command>semanage user -d
+        <replaceable>identity</replaceable></command>.</para>
 
-        <screen><computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u</userinput>
-<computeroutput># </computeroutput><userinput>semanage user -l</userinput>
-<computeroutput>
+        <screen><computeroutput># </computeroutput><userinput>semanage user -a -R 'staff_r user_r' -P staff test_u
+</userinput><computeroutput># </computeroutput><userinput>semanage user -l
+</userinput><computeroutput>
                 Labeling   MLS/       MLS/                          
 SELinux User    Prefix     MCS Level  MCS Range                      SELinux Roles
 
@@ -1990,53 +2024,59 @@ system_u        user       s0         s0-s0:c0.c1023                 system_r
 test_u          staff      s0         s0                             staff_r user_r
 unconfined_u    unconfined s0         s0-s0:c0.c1023                 system_r unconfined_r
 user_u          user       s0         s0                             user_r
-# </computeroutput><userinput>semanage user -d test_u</userinput>
-</screen>
+# </computeroutput><userinput>semanage user -d test_u
+</userinput></screen>
       </section>
       <section>
         <title>Managing File Contexts, Ports and Booleans</title>
+        <indexterm><primary><command>semanage</command></primary></indexterm>
+        <indexterm><primary><command>restorecon</command></primary></indexterm>
 
-	<para>Each SELinux module provides a set of file labeling rules,
-	but it is also possible to add custom labeling rules to cater to a
-	specific case. For example, if you want the web server to be able
-	to read files within the <filename>/srv/www/</filename> file
-	hierarchy, you could execute <command>semanage fcontext -a -t
-	httpd_sys_content_t "/srv/www(/.*)?"</command> followed by
-	<command>restorecon -R /srv/www/</command>. The former command
-	registers the new labeling rules and the latter resets the file
-	types according to the current labeling rules.</para>
+        <para>Each SELinux module provides a set of file labeling rules,
+        but it is also possible to add custom labeling rules to cater to a
+        specific case. For example, if you want the web server to be able
+        to read files within the <filename>/srv/www/</filename> file
+        hierarchy, you could execute <command>semanage fcontext -a -t
+        httpd_sys_content_t "/srv/www(/.*)?"</command> followed by
+        <command>restorecon -R /srv/www/</command>. The former command
+        registers the new labeling rules and the latter resets the file
+        types according to the current labeling rules.</para>
 
-	<para>Similarly, TCP/UDP ports are labeled in a way that ensures
-	that only the corresponding daemons can listen to them. For
-	instance, if you want the web server to be able to listen on port
-	8080, you should run <command>semanage port -m -t http_port_t -p
-	tcp 8080</command>.</para>
+        <para>Similarly, TCP/UDP ports are labeled in a way that ensures
+        that only the corresponding daemons can listen to them. For
+        instance, if you want the web server to be able to listen on port
+        8080, you should run <command>semanage port -m -t http_port_t -p
+        tcp 8080</command>.</para>
 
-	<para>Some SELinux modules export boolean options that you can
-	tweak to alter the behavior of the default rules. The
-	<command>getsebool</command> utility can be used to inspect those
-	options (<command>getsebool
-	<replaceable>boolean</replaceable></command> displays one option,
-	and <command>getsebool -a</command> them all). The
-	<command>setsebool <replaceable>boolean</replaceable>
-	<replaceable>value</replaceable></command> command changes the
-	current value of a boolean option. The <literal>-P</literal> option
-	makes the change permanent, it means that the new value becomes the
-	default and will be kept across reboots. The example below grants
-	web servers an access to home directories (this is useful when
-	users have personal websites in
-	<filename>~/public_html/</filename>).</para>
+        <indexterm><primary><command>getsebool</command></primary></indexterm>
+        <indexterm><primary><command>setsebool</command></primary></indexterm>
 
-        <screen><computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>
-<computeroutput>httpd_enable_homedirs --&gt; off
-# </computeroutput><userinput>setsebool -P httpd_enable_homedirs on</userinput>
-<computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs</userinput>
-<computeroutput>httpd_enable_homedirs --&gt; on</computeroutput>
+        <para>Some SELinux modules export boolean options that you can
+        tweak to alter the behavior of the default rules. The
+        <command>getsebool</command> utility can be used to inspect those
+        options (<command>getsebool
+        <replaceable>boolean</replaceable></command> displays one option,
+        and <command>getsebool -a</command> them all). The
+        <command>setsebool <replaceable>boolean</replaceable>
+        <replaceable>value</replaceable></command> command changes the
+        current value of a boolean option. The <literal>-P</literal> option
+        makes the change permanent, it means that the new value becomes the
+        default and will be kept across reboots. The example below grants
+        web servers an access to home directories (this is useful when
+        users have personal websites in
+        <filename>~/public_html/</filename>).</para>
+
+        <screen><computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs
+</userinput><computeroutput>httpd_enable_homedirs --&gt; off
+# </computeroutput><userinput>setsebool -P httpd_enable_homedirs on
+</userinput><computeroutput># </computeroutput><userinput>getsebool httpd_enable_homedirs
+</userinput><computeroutput>httpd_enable_homedirs --&gt; on</computeroutput>
 </screen>
       </section>
     </section>
     <section id="sect.selinux-custom-rules">
       <title>Adapting the Rules</title>
+      <indexterm><primary>SELinux</primary><secondary>rules</secondary></indexterm>
 
       <para>Since the SELinux policy is modular, it might be interesting to
       develop new modules for (possibly custom) applications that lack
@@ -2051,11 +2091,15 @@ user_u          user       s0         s0                             user_r
       sample files that can be used as templates to create new modules.
       Install those files and study them more closely:</para>
 
-      <screen><computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/Makefile.example Makefile</userinput>
-<computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.fc ./</userinput>
-<computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.if ./</userinput>
-<computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.te ./</userinput>
-</screen>
+      <screen><computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/Makefile.example Makefile
+</userinput><computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.fc ./
+</userinput><computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.if ./
+</userinput><computeroutput>$ </computeroutput><userinput>cp /usr/share/doc/selinux-policy-doc/example.te ./
+</userinput></screen>
+
+      <indexterm><primary><filename>.te</filename></primary></indexterm>
+      <indexterm><primary><filename>.fc</filename></primary></indexterm>
+      <indexterm><primary><filename>.if</filename></primary></indexterm>
 
       <para>The <filename>.te</filename> file is the most important one. It
       defines the rules. The <filename>.fc</filename> file defines the
@@ -2067,69 +2111,73 @@ user_u          user       s0         s0                             user_r
       properly interact with the module that you're creating.</para>
       <section>
         <title>Writing a <filename>.fc</filename> file</title>
+        <indexterm><primary><filename>.fc</filename></primary></indexterm>
 
-	<para>Reading the below example should be sufficient to understand
-	the structure of such a file. You can use regular expressions to
-	assign the same security context to multiple files, or even an
-	entire directory tree.</para>
+        <para>Reading the below example should be sufficient to understand
+        the structure of such a file. You can use regular expressions to
+        assign the same security context to multiple files, or even an
+        entire directory tree.</para>
 
         <example>
           <title><filename>example.fc</filename> file</title>
 
-          <programlisting role="scale"># myapp executable will have:
+          <programlisting role="scale"><![CDATA[# myapp executable will have:
 # label: system_u:object_r:myapp_exec_t
 # MLS sensitivity: s0
-# MCS categories: &lt;none&gt;
+# MCS categories: <none>
 
 /usr/sbin/myapp         --      gen_context(system_u:object_r:myapp_exec_t,s0)
-</programlisting>
+]]></programlisting>
         </example>
       </section>
       <section>
         <title>Writing a <filename>.if</filename> File</title>
+        <indexterm><primary><filename>.if</filename></primary></indexterm>
 
-	<para>In the sample below, the first interface
-	(“<literal>myapp_domtrans</literal>”) controls who can execute
-	the application. The second one
-	(“<literal>myapp_read_log</literal>”) grants read rights on the
-	application's log files.</para>
+        <para>In the sample below, the first interface
+        (“<literal>myapp_domtrans</literal>”) controls who can execute
+        the application. The second one
+        (“<literal>myapp_read_log</literal>”) grants read rights on the
+        application's log files.</para>
 
-	<para>Each interface must generate a valid set of rules which can
-	be embedded in a <filename>.te</filename> file. You should thus
-	declare all the types that you use (with the
-	<literal>gen_require</literal> macro), and use standard directives
-	to grant rights. Note, however, that you can use interfaces
-	provided by other modules. The next section will give more
-	explanations about how to express those rights.</para>
+        <para>Each interface must generate a valid set of rules which can
+        be embedded in a <filename>.te</filename> file. You should thus
+        declare all the types that you use (with the
+        <literal>gen_require</literal> macro), and use standard directives
+        to grant rights. Note, however, that you can use interfaces
+        provided by other modules. The next section will give more
+        explanations about how to express those rights.</para>
 
         <example>
           <title><filename>example.if</filename> File</title>
 
-          <programlisting>## &lt;summary&gt;Myapp example policy&lt;/summary&gt;
-## &lt;desc&gt;
-##      &lt;p&gt;
-##              More descriptive text about myapp.  The &lt;desc&gt;
-##              tag can also use &lt;p&gt;, &lt;ul&gt;, and &lt;ol&gt;
+          <programlisting><![CDATA[## <summary>Myapp example policy</summary>
+## <desc>
+##      <p>
+##              More descriptive text about myapp.  The desc
+##              tag can also use p, ul, and ol
 ##              html tags for formatting.
-##      &lt;/p&gt;
-##      &lt;p&gt;
+##      </p>
+##      <p>
 ##              This policy supports the following myapp features:
-##              &lt;ul&gt;
-##              &lt;li&gt;Feature A&lt;/li&gt;
-##              &lt;li&gt;Feature B&lt;/li&gt;
-##              &lt;li&gt;Feature C&lt;/li&gt;
-##              &lt;/ul&gt;
-##      &lt;/p&gt;
-## &lt;/desc&gt;
+##              <ul>
+##              <li>Feature A</li>
+##              <li>Feature B</li>
+##              <li>Feature C</li>
+##              </ul>
+##      </p>
+## </desc>
 #
 
 ########################################
-## &lt;summary&gt;
+## <summary>
 ##      Execute a domain transition to run myapp.
-## &lt;/summary&gt;
-## &lt;param name="domain"&gt;
+## </summary>
+## <param name="domain">
+##      <summary>
 ##      Domain allowed to transition.
-## &lt;/param&gt;
+##      </summary>
+## </param>
 #
 interface(`myapp_domtrans',`
         gen_require(`
@@ -2140,12 +2188,14 @@ interface(`myapp_domtrans',`
 ')
 
 ########################################
-## &lt;summary&gt;
+## <summary>
 ##      Read myapp log files.
-## &lt;/summary&gt;
-## &lt;param name="domain"&gt;
+## </summary>
+## <param name="domain">
+##      <summary>
 ##      Domain allowed to read the log files.
-## &lt;/param&gt;
+##      </summary>
+## </param>
 #
 interface(`myapp_read_log',`
         gen_require(`
@@ -2153,50 +2203,52 @@ interface(`myapp_read_log',`
         ')
 
         logging_search_logs($1)
-        allow $1 myapp_log_t:file r_file_perms;
+        allow $1 myapp_log_t:file read_file_perms;
 ')
-</programlisting>
+]]></programlisting>
         </example>
 
         <sidebar>
           <title><emphasis>DOCUMENTATION</emphasis> Explanations about the <emphasis>reference policy</emphasis></title>
 
-	  <para>The <emphasis>reference policy</emphasis> evolves like any
-	  free software project: based on volunteer contributions. The
-	  project is hosted by Tresys, one of the most active companies in
-	  the SELinux field. Their wiki contains explanations on how the
-	  rules are structured and how you can create new ones. <ulink
-	  type="block"
-	  url="https://github.com/SELinuxProject/refpolicy/wiki/GettingStarted"/></para>
+          <para>The <emphasis>reference policy</emphasis> evolves like any
+          free software project: based on volunteer contributions. The
+          project is hosted by Tresys, one of the most active companies in
+          the SELinux field. Their wiki contains explanations on how the
+          rules are structured and how you can create new ones. <ulink
+          type="block"
+          url="https://github.com/SELinuxProject/refpolicy/wiki/GettingStarted"/></para>
         </sidebar>
       </section>
       <section id="sect.writing-a-te-file">
         <title>Writing a <filename>.te</filename> File</title>
+        <indexterm><primary><filename>.te</filename></primary></indexterm>
 
-	<para>Have a look at the <filename>example.te</filename>
-	file:</para>
+        <para>Have a look at the <filename>example.te</filename>
+        file:</para>
 
         <sidebar>
           <title><emphasis>GOING FURTHER</emphasis> The <command>m4</command> macro language</title>
+          <indexterm><primary><command>m4</command></primary></indexterm>
 
-	  <para>To properly structure the policy, the SELinux developers
-	  used a macro-command processor. Instead of duplicating many
-	  similar <emphasis>allow</emphasis> directives, they created
-	  “macro functions” to use a higher-level logic, which also
-	  results in a much more readable policy.</para>
+          <para>To properly structure the policy, the SELinux developers
+          used a macro-command processor. Instead of duplicating many
+          similar <emphasis>allow</emphasis> directives, they created
+          “macro functions” to use a higher-level logic, which also
+          results in a much more readable policy.</para>
 
-	  <para>In practice, <command>m4</command> is used to compile those
-	  rules. It does the opposite operation: it expands all those
-	  high-level directives into a huge database of
-	  <emphasis>allow</emphasis> directives.</para>
+          <para>In practice, <command>m4</command> is used to compile those
+          rules. It does the opposite operation: it expands all those
+          high-level directives into a huge database of
+          <emphasis>allow</emphasis> directives.</para>
 
-	  <para>The SELinux “interfaces” are only macro functions which
-	  will be substituted by a set of rules at compilation time.
-	  Likewise, some rights are in fact sets of rights which are
-	  replaced by their values at compilation time.</para>
+          <para>The SELinux “interfaces” are only macro functions which
+          will be substituted by a set of rules at compilation time.
+          Likewise, some rights are in fact sets of rights which are
+          replaced by their values at compilation time.</para>
         </sidebar>
 
-        <programlisting>policy_module(myapp,1.0.0) <co id="example.te.module"/>
+        <programlisting>policy_module(example,1.0.0) <co id="example.te.module"/> # a non-base module name must match the file name
 
 ########################################
 #
@@ -2226,85 +2278,85 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
 </programlisting>
         <calloutlist>
           <callout arearefs="example.te.module">
-	    <para>The module must be identified by its name and version
-	    number. This directive is required.</para>
+            <para>The module must be identified by its name and version
+            number. This directive is required.</para>
           </callout>
           <callout arearefs="example.te.type">
-	    <para>If the module introduces new types, it must declare them
-	    with directives like this one. Do not hesitate to create as
-	    many types as required rather than granting too many useless
-	    rights.</para>
+            <para>If the module introduces new types, it must declare them
+            with directives like this one. Do not hesitate to create as
+            many types as required rather than granting too many useless
+            rights.</para>
           </callout>
           <callout arearefs="example.te.domain">
-	    <para>Those interfaces define the <literal>myapp_t</literal>
-	    type as a process domain that should be used by any executable
-	    labeled with <literal>myapp_exec_t</literal>. Implicitly, this
-	    adds an <literal>exec_type</literal> attribute on those
-	    objects, which in turn allows other modules to grant rights to
-	    execute those programs: for instance, the
-	    <literal>userdomain</literal> module allows processes with
-	    domains <literal>user_t</literal>, <literal>staff_t</literal>,
-	    and <literal>sysadm_t</literal> to execute them. The domains of
-	    other confined applications will not have the rights to execute
-	    them, unless the rules grant them similar rights (this is the
-	    case, for example, of <command>dpkg</command> with its
-	    <literal>dpkg_t</literal> domain).</para>
+            <para>Those interfaces define the <literal>myapp_t</literal>
+            type as a process domain that should be used by any executable
+            labeled with <literal>myapp_exec_t</literal>. Implicitly, this
+            adds an <literal>exec_type</literal> attribute on those
+            objects, which in turn allows other modules to grant rights to
+            execute those programs: for instance, the
+            <literal>userdomain</literal> module allows processes with
+            domains <literal>user_t</literal>, <literal>staff_t</literal>,
+            and <literal>sysadm_t</literal> to execute them. The domains of
+            other confined applications will not have the rights to execute
+            them, unless the rules grant them similar rights (this is the
+            case, for example, of <command>dpkg</command> with its
+            <literal>dpkg_t</literal> domain).</para>
           </callout>
           <callout arearefs="example.te.interface">
-	    <para><literal>logging_log_file</literal> is an interface
-	    provided by the reference policy. It indicates that files
-	    labeled with the given type are log files which ought to
-	    benefit from the associated rules (for example, granting rights
-	    to <command>logrotate</command> so that it can manipulate
-	    them).</para>
+            <para><literal>logging_log_file</literal> is an interface
+            provided by the reference policy. It indicates that files
+            labeled with the given type are log files which ought to
+            benefit from the associated rules (for example, granting rights
+            to <command>logrotate</command> so that it can manipulate
+            them).</para>
           </callout>
           <callout arearefs="example.te.allow">
-	    <para>The <literal>allow</literal> directive is the base
-	    directive used to authorize an operation. The first parameter
-	    is the process domain which is allowed to execute the
-	    operation. The second one defines the object that a process of
-	    the former domain can manipulate. This parameter is of the form
-	    “<replaceable>type</replaceable>:<replaceable>class</replaceable>“
-	    where <replaceable>type</replaceable> is its SELinux type and
-	    <replaceable>class</replaceable> describes the nature of the
-	    object (file, directory, socket, fifo, etc.). Finally, the last
-	    parameter describes the permissions (the allowed
-	    operations).</para>
+            <para>The <literal>allow</literal> directive is the base
+            directive used to authorize an operation. The first parameter
+            is the process domain which is allowed to execute the
+            operation. The second one defines the object that a process of
+            the former domain can manipulate. This parameter is of the form
+            “<replaceable>type</replaceable>:<replaceable>class</replaceable>“
+            where <replaceable>type</replaceable> is its SELinux type and
+            <replaceable>class</replaceable> describes the nature of the
+            object (file, directory, socket, fifo, etc.). Finally, the last
+            parameter describes the permissions (the allowed
+            operations).</para>
 
-	    <para>Permissions are defined as the set of allowed operations
-	    and follow this template: <literal>{
-	    <replaceable>operation1</replaceable>
-	    <replaceable>operation2</replaceable> }</literal>. However, you
-	    can also use macros representing the most useful permissions.
-	    The
-	    <filename>/usr/share/selinux/devel/include/support/obj_perm_sets.spt</filename>
-	    lists them.</para>
+            <para>Permissions are defined as the set of allowed operations
+            and follow this template: <literal>{
+            <replaceable>operation1</replaceable>
+            <replaceable>operation2</replaceable> }</literal>. However, you
+            can also use macros representing the most useful permissions.
+            The
+            <filename>/usr/share/selinux/devel/include/support/obj_perm_sets.spt</filename>
+            lists them.</para>
 
-	    <para>The following web page provides a relatively exhaustive
-	    list of object classes, and permissions that can be granted.
-	    <ulink type="block"
-	    url="https://selinuxproject.org/page/ObjectClassesPerms"/></para>
+            <para>The following web page provides a relatively exhaustive
+            list of object classes, and permissions that can be granted.
+            <ulink type="block"
+            url="https://selinuxproject.org/page/ObjectClassesPerms"/></para>
           </callout>
         </calloutlist>
 
-	<para>Now you just have to find the minimal set of rules required
-	to ensure that the target application or service works properly. To
-	achieve this, you should have a good knowledge of how the
-	application works and of what kind of data it manages and/or
-	generates.</para>
+        <para>Now you just have to find the minimal set of rules required
+        to ensure that the target application or service works properly. To
+        achieve this, you should have a good knowledge of how the
+        application works and of what kind of data it manages and/or
+        generates.</para>
 
-	<para>However, an empirical approach is possible. Once the
-	relevant objects are correctly labeled, you can use the
-	application in permissive mode: the operations that would be
-	forbidden are logged but still succeed. By analyzing the logs, you
-	can now identify the operations to allow. Here is an example of
-	such a log entry:</para>
+        <para>However, an empirical approach is possible. Once the
+        relevant objects are correctly labeled, you can use the
+        application in permissive mode: the operations that would be
+        forbidden are logged but still succeed. By analyzing the logs, you
+        can now identify the operations to allow. Here is an example of
+        such a log entry:</para>
 
         <programlisting>avc:  denied  { read write } for  pid=1876 comm="syslogd" name="xconsole" dev=tmpfs ino=5510 scontext=system_u:system_r:syslogd_t:s0 tcontext=system_u:object_r:device_t:s0 tclass=fifo_file permissive=1
 </programlisting>
 
-	<para>To better understand this message, let us study it piece by
-	piece.</para>
+        <para>To better understand this message, let us study it piece by
+        piece.</para>
 
         <table colsep="1">
           <title>Analysis of an SELinux trace</title>
@@ -2380,49 +2432,55 @@ files_tmp_filetrans(myapp_t,myapp_tmp_t,file)
           </tgroup>
         </table>
 
-	<para>By observing this log entry, it is possible to build a rule
-	that would allow this operation. For example, <literal>allow
-	syslogd_t device_t:fifo_file { read write }</literal>. This process
-	can be automated, and it is exactly what the
-	<command>audit2allow</command> command (of the <emphasis
-	role="pkg">policycoreutils</emphasis> package) offers. This
-	approach is only useful if the various objects are already
-	correctly labeled according to what must be confined. In any case,
-	you will have to carefully review the generated rules and validate
-	them according to your knowledge of the application. Effectively,
-	this approach tends to grant more rights than are really required.
-	The proper solution is often to create new types and to grant
-	rights on those types only. It also happens that a denied operation
-	isn't fatal to the application, in which case it might be better to
-	just add a “<literal>dontaudit</literal>” rule to avoid the log
-	entry despite the effective denial.</para>
+        <indexterm><primary><command>audit2allow</command></primary></indexterm>
+        <indexterm><primary><emphasis role="pkg">policycoreutils</emphasis></primary></indexterm>
+
+        <para>By observing this log entry, it is possible to build a rule
+        that would allow this operation. For example, <literal>allow
+        syslogd_t device_t:fifo_file { read write }</literal>. This process
+        can be automated, and it is exactly what the
+        <command>audit2allow</command> command (of the <emphasis
+        role="pkg">policycoreutils</emphasis> package) offers. This
+        approach is only useful if the various objects are already
+        correctly labeled according to what must be confined. In any case,
+        you will have to carefully review the generated rules and validate
+        them according to your knowledge of the application. Effectively,
+        this approach tends to grant more rights than are really required.
+        The proper solution is often to create new types and to grant
+        rights on those types only. It also happens that a denied operation
+        isn't fatal to the application, in which case it might be better to
+        just add a “<literal>dontaudit</literal>” rule to avoid the log
+        entry despite the effective denial.</para>
 
         <sidebar>
           <title><emphasis>COMPLEMENTS</emphasis> No roles in policy rules</title>
           <indexterm><primary>Type Enforcement</primary></indexterm>
           <indexterm><primary>Enforcement, Type Enforcement</primary></indexterm>
 
-	  <para>It might seem weird that roles do not appear at all when
-	  creating new rules. SELinux uses only the domains to find out
-	  which operations are allowed. The role intervenes only indirectly
-	  by allowing the user to switch to another domain. SELinux is
-	  based on a theory known as <emphasis>Type Enforcement</emphasis>
-	  and the type is the only element that matters when granting
-	  rights.</para>
+          <para>It might seem weird that roles do not appear at all when
+          creating new rules. SELinux uses only the domains to find out
+          which operations are allowed. The role intervenes only indirectly
+          by allowing the user to switch to another domain. SELinux is
+          based on a theory known as <emphasis>Type Enforcement</emphasis>
+          and the type is the only element that matters when granting
+          rights.</para>
         </sidebar>
       </section>
       <section>
         <title>Compiling the Files</title>
+        <indexterm><primary><filename>.fc</filename></primary></indexterm>
+        <indexterm><primary><filename>.if</filename></primary></indexterm>
+        <indexterm><primary><filename>.te</filename></primary></indexterm>
 
-	<para>Once the 3 files (<filename>example.if</filename>,
-	<filename>example.fc</filename>, and
-	<filename>example.te</filename>) match your expectations for the
-	new rules, rename them to <filename>myapp.<replaceable>extension</replaceable></filename>
+        <para>Once the 3 files (<filename>example.if</filename>,
+        <filename>example.fc</filename>, and
+        <filename>example.te</filename>) match your expectations for the
+        new rules, rename them to <filename>myapp.<replaceable>extension</replaceable></filename>
         and run <command>make NAME=devel</command> to generate a module in
-	the <filename>myapp.pp</filename> file (you can immediately load
-	it with <command>semodule -i myapp.pp</command>). If several
-	modules are defined, <command>make</command> will create all the
-	corresponding <filename>.pp</filename> files.</para>
+        the <filename>myapp.pp</filename> file (you can immediately load
+        it with <command>semodule -i myapp.pp</command>). If several
+        modules are defined, <command>make</command> will create all the
+        corresponding <filename>.pp</filename> files.</para>
       </section>
     </section>
   </section>
