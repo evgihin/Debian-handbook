@@ -51,7 +51,7 @@
       <indexterm><primary>Exim</primary></indexterm>
       <indexterm><primary>email</primary><secondary>Exim</secondary></indexterm>
       <indexterm><primary><emphasis role="pkg">exim4</emphasis></primary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exim4/</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/exim4/</filename></secondary><see>Exim</see></indexterm>
 
       <para>Debian uses Exim4 as the default email server (which is why the
       initial installation includes Exim4). The configuration is provided
@@ -105,7 +105,6 @@
       the package. The answers allow generating a first version of the
       <filename>/etc/postfix/main.cf</filename> configuration file.</para>
 
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
       <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
 
       <para>The first question deals with the type of setup. Only two of
@@ -213,8 +212,8 @@
 
       <example>
         <title>Initial <filename>/etc/postfix/main.cf</filename> file</title>
-        <indexterm><primary><filename>/etc/postfix/main.cf</filename></primary><secondary>example</secondary></indexterm>
-        <indexterm><primary>Examples</primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/</filename></secondary><see>Postfix</see></indexterm>
 
         <programlisting><![CDATA[
 # See /usr/share/postfix/main.cf.dist for a commented, more complete version
@@ -341,7 +340,7 @@ smtp_tls_CApath = /etc/ssl/certs
       <section>
         <title>Virtual Alias Domains</title>
         <indexterm><primary>alias</primary><secondary>virtual alias domain</secondary></indexterm>
-        <indexterm><primary>virtual domain</primary><secondary>virtual alias domain</secondary></indexterm>
+        <indexterm><primary>virtual alias domain</primary></indexterm>
 
         <para>A virtual alias domain only contains aliases, i.e. addresses
         that only forward emails to other addresses.</para>
@@ -369,7 +368,6 @@ virtual_alias_maps = hash:/etc/postfix/virtual
         <literal>@domain.com</literal> syntax covers all remaining
         aliases in a domain.</para>
 
-        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/virtual</filename></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/virtual</filename></secondary></indexterm>
 
         <informalexample>
@@ -420,7 +418,7 @@ contact@falcotsbrand.com    laure@falcot.com, sophie@falcot.com
 
         <indexterm><primary>Postfix</primary><secondary><literal>virtual_mailbox_domains</literal></secondary></indexterm>
         <indexterm><primary>Postfix</primary><secondary><literal>virtual_mailbox_maps</literal></secondary></indexterm>
-        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/vmailbox</filename></secondary></indexterm>
+        <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/vmailbox</filename></secondary></indexterm>
 
         <informalexample>
           <programlisting>
@@ -1334,6 +1332,7 @@ smtpd_milters = inet:[127.0.0.1]:10002
         <literal>include</literal> directive it must have one.</para>
 
         <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>SPF</literal></tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>TXT</literal></tertiary></indexterm>
 
         <informalexample>
           <programlisting><![CDATA[
@@ -1450,6 +1449,7 @@ falcot.org descriptive text "v=spf1 ip4:199.127.61.96 +a +mx +ip4:206.221.184.23
 
         <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>mail._domainkey</literal></tertiary></indexterm>
         <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>DKIM</literal></tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>TXT</literal></tertiary></indexterm>
 
         <programlisting><![CDATA[
 Name: mail._domainkey
@@ -1554,6 +1554,7 @@ smtpd_milters = inet:localhost:12345
         <indexterm><primary><emphasis role="pkg">opendmarc</emphasis></primary></indexterm>
         <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>_dmarc</literal></tertiary></indexterm>
         <indexterm><primary>DNS</primary><secondary>TXT</secondary><tertiary><literal>DMARC</literal></tertiary></indexterm>
+        <indexterm><primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>TXT</literal></tertiary></indexterm>
 
         <para>The Domain-based Message Authentication, Reporting and
         Conformance (<acronym>DMARC</acronym>) standard can be used to define a
@@ -1678,7 +1679,7 @@ smtpd_milters = inet:localhost:12345,inet:localhost:54321
       <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_auth_enable</literal></secondary></indexterm>
       <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_local_domain</literal></secondary></indexterm>
       <indexterm><primary>Postfix</primary><secondary><literal>permit_sasl_authenticated</literal></secondary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/main.cf</filename></secondary></indexterm>
 
       <example>
         <title>Enabling SASL in <filename>/etc/postfix/main.cf</filename></title>
@@ -1708,7 +1709,7 @@ smtpd_recipient_restrictions =
       add the following directive:</para>
 
       <indexterm><primary>Postfix</primary><secondary><literal>smtpd_sasl_auth_enable</literal></secondary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/postfix/master.cf</filename></secondary></indexterm>
+      <indexterm><primary>Postfix</primary><secondary><filename>/etc/postfix/master.cf</filename></secondary></indexterm>
 
       <informalexample>
         <programlisting><![CDATA[smtp      inet  n       -       y       -       -       smtpd
@@ -1841,6 +1842,7 @@ relay_host = [mail.falcot.com]
       <sidebar>
         <title><emphasis>SECURITY</emphasis> Execution under the <literal>www-data</literal> user</title>
         <indexterm><primary><literal>www-data</literal></primary></indexterm>
+        <indexterm><primary>group</primary><secondary>www-data</secondary></indexterm>
         <indexterm><primary>suexec</primary></indexterm>
         <indexterm><primary>Apache</primary><secondary><literal>www-data</literal>, user</secondary></indexterm>
         <indexterm><primary>Apache</primary><secondary><literal>suexec</literal></secondary></indexterm>
@@ -1895,14 +1897,16 @@ relay_host = [mail.falcot.com]
       <filename>/etc/apache2/mods-available/</filename>).</para>
 
       <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apache2/</filename></secondary><see>Apache</see></indexterm>
-      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-available</filename></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-enabled</filename></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-available/</filename></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/mods-enabled/</filename></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><command>a2enmod</command></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><command>a2dismod</command></secondary></indexterm>
+      <indexterm><primary><command>a2enmod</command></primary></indexterm>
+      <indexterm><primary><command>a2dismod</command></primary></indexterm>
 
       <sidebar>
         <title><emphasis>IN PRACTICE</emphasis> Checking the configuration</title>
-        <indexterm><primary>Apache</primary><secondary><literal>mod_info</literal></secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>mod_info</literal>, module</secondary></indexterm>
 
         <para>The <literal>mod_info</literal> module (<command>a2enmod
         info</command>) allows to access the comprehensive Apache server
@@ -1928,7 +1932,7 @@ relay_host = [mail.falcot.com]
       <indexterm><primary>HTTPS</primary></indexterm>
       <indexterm><primary>HTTP</primary><secondary>secure</secondary><see>HTTPS</see></indexterm>
       <indexterm><primary>Apache</primary><secondary>SSL</secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>mod_ssl</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>mod_ssl</literal>, module</secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/sites-available/default-ssl.conf</filename></secondary></indexterm>
 
       <para>Apache 2.4 includes the SSL module (<literal>mod_ssl</literal>)
@@ -1944,10 +1948,10 @@ relay_host = [mail.falcot.com]
       <xref linkend="sect.trusted-certs"/> and then adjust the following
       variables:</para>
 
-      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateFile</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateKeyFile</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateChainFile</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>SSLCACertificateFile</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateFile</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateKeyFile</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCertificateChainFile</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>SSLCACertificateFile</literal>, directive</secondary></indexterm>
 
       <programlisting>
 SSLCertificateFile      /etc/letsencrypt/live/<replaceable>DOMAIN</replaceable>/fullchain.pem
@@ -1977,13 +1981,13 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
       implications and is therefor not part of the Debian Bullseye release.
       <ulink type="block" url="https://mod.gnutls.org/"/> </para>
 
-      <indexterm><primary>Apache</primary><secondary>mod_gnutls</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>mod_gnutls</literal>, module</secondary></indexterm>
     </section>
 
     <section>
       <title>Configuring Virtual Hosts</title>
       <indexterm><primary>Apache</primary><secondary>virtual hosts</secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>VirtualHost</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>VirtualHost</literal>, directive</secondary></indexterm>
 
       <para>A virtual host is an extra identity for the web server.</para>
 
@@ -2064,9 +2068,10 @@ SSLCACertificateFile    /etc/ssl/certs/ca-certificates.crt
       simple matter of creating the following file, then enabling the
       virtual host with <command>a2ensite www.falcot.org</command>.</para>
 
-      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/sites-available</filename></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/sites-enabled</filename></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/sites-available/</filename></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/sites-enabled/</filename></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><command>a2ensite</command></secondary></indexterm>
+      <indexterm><primary><command>a2ensite</command></primary></indexterm>
 
       <example>
         <title>The <filename>/etc/apache2/sites-available/www.falcot.org.conf</filename> file</title>
@@ -2094,13 +2099,12 @@ DocumentRoot /srv/www/www.falcot.org
       <filename>/etc/apache2/sites-available/000-default.conf</filename>
       file.</para>
 
-      <indexterm><primary>Apache</primary><secondary><literal>CustomLog</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>LogFormat</literal></secondary></indexterm>
-      <indexterm><primary><literal>CustomLog</literal>, Apache directive</primary></indexterm>
-      <indexterm><primary><literal>LogFormat</literal>, Apache directive</primary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/conf-available</filename></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/conf-enabled</filename></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>CustomLog</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>LogFormat</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/conf-available/</filename></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><filename>/etc/apache2/conf-enabled/</filename></secondary></indexterm>
       <indexterm><primary>Apache</primary><secondary><command>a2enconf</command></secondary></indexterm>
+      <indexterm><primary><command>a2enconf</command></primary></indexterm>
 
       <example>
         <title>The <filename>/etc/apache2/conf-available/customlog.conf</filename> file</title>
@@ -2121,7 +2125,6 @@ CustomLog /var/log/apache2/access.log vhost
       <para>This section briefly reviews some of the commonly-used Apache
       configuration directives.</para>
 
-      <indexterm><primary>Apache directives</primary></indexterm>
       <indexterm><primary>directives, Apache</primary></indexterm>
       <indexterm><primary>Apache</primary><secondary>directives</secondary></indexterm>
 
@@ -2132,10 +2135,10 @@ CustomLog /var/log/apache2/access.log vhost
       <literal>AllowOverride</literal> directives.
       </para>
 
-      <indexterm><primary>Apache</primary><secondary><literal>Directory</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>Options</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>AllowOverride</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>DirectoryIndex</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>Directory</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>Options</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>AllowOverride</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>DirectoryIndex</literal>, directive</secondary></indexterm>
 
       <example>
         <title>Directory block</title>
@@ -2154,8 +2157,7 @@ DirectoryIndex index.php index.html index.htm
       first existing file in the list is used and sent as a response.
       </para>
 
-      <indexterm><primary><literal>DirectoryIndex</literal>, Apache directive</primary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>DirectoryIndex</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>DirectoryIndex</literal>, directive</secondary></indexterm>
 
       <para>The <literal>Options</literal>
       directive is followed by a list of options to enable. The
@@ -2163,39 +2165,33 @@ DirectoryIndex index.php index.html index.htm
       <literal>All</literal> enables them all except
       <literal>MultiViews</literal>. Available options include:</para>
 
-      <indexterm><primary><literal>Options</literal>, Apache directive</primary></indexterm>
-      <indexterm><primary><literal>AllowOverride</literal>, Apache directive</primary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>Options</literal></secondary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>AllowOverride</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>Options</literal>, directive</secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>AllowOverride</literal>, directive</secondary></indexterm>
 
       <itemizedlist>
         <listitem>
           <para><literal>ExecCGI</literal> indicates that CGI scripts can
           be executed.</para>
-          <indexterm><primary><literal>ExecCGI</literal>, Apache directive</primary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>ExecCGI</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>ExecCGI</literal>, directive</secondary></indexterm>
         </listitem>
         <listitem>
           <para><literal>FollowSymlinks</literal> tells the server that
           symbolic links can be followed, and that the response should
           contain the contents of the target of such links.</para>
-          <indexterm><primary><literal>FollowSymlinks</literal>, Apache directive</primary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>FollowSymlinks</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>FollowSymlinks</literal>, directive</secondary></indexterm>
         </listitem>
         <listitem>
           <para><literal>SymlinksIfOwnerMatch</literal> also tells the
           server to follow symbolic links, but only when the link and
           its target have the same owner.</para>
-          <indexterm><primary><literal>SymlinksIfOwnerMatch</literal>, Apache directive</primary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>SymlinksIfOwnerMatch</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>SymlinksIfOwnerMatch</literal>, directive</secondary></indexterm>
         </listitem>
         <listitem>
           <para><literal>Includes</literal> enables <emphasis>Server Side
           Includes</emphasis> (<emphasis>SSI</emphasis> for short). These
           are directives embedded in HTML pages and executed on the fly for
           each request.</para>
-          <indexterm><primary><literal>Includes</literal>, Apache directive</primary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>Includes</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>Includes</literal>, directive</secondary></indexterm>
           <indexterm><primary>Apache</primary><secondary>SSI</secondary></indexterm>
         </listitem>
         <listitem>
@@ -2203,8 +2199,7 @@ DirectoryIndex index.php index.html index.htm
           Includes</emphasis> (<emphasis>SSI</emphasis>) but disables the
           <literal>exec</literal> command and limits the
           <literal>include</literal> directive to text/markup files.</para>
-          <indexterm><primary><literal>IncludesNOEXEC</literal>, Apache directive</primary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>IncludesNOEXEC</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>IncludesNOEXEC</literal>, directive</secondary></indexterm>
         </listitem>
         <listitem>
           <para><literal>Indexes</literal> tells the server to list the
@@ -2212,15 +2207,13 @@ DirectoryIndex index.php index.html index.htm
           points at a directory without an index file (i.e., when no files
           mentioned by the <literal>DirectoryIndex</literal> directive
           exists in this directory).</para>
-          <indexterm><primary><literal>Indexes</literal>, Apache directive</primary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>Indexes</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>Indexes</literal>, directive</secondary></indexterm>
         </listitem>
         <listitem>
           <para><literal>MultiViews</literal> enables content negotiation;
           this can be used by the server to return a web page matching the
           preferred language as configured in the browser.</para>
-          <indexterm><primary><literal>MultiViews</literal>, Apache directive</primary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>MultiViews</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>MultiViews</literal>, directive</secondary></indexterm>
         </listitem>
       </itemizedlist>
 
@@ -2229,6 +2222,7 @@ DirectoryIndex index.php index.html index.htm
       <sidebar>
         <title><emphasis>BACK TO BASICS</emphasis> <filename>.htaccess</filename> file</title>
         <indexterm><primary>Apache</primary><secondary><filename>.htaccess</filename></secondary></indexterm>
+        <indexterm><primary><filename>.htaccess</filename></primary></indexterm>
 
         <para>The <filename>.htaccess</filename> file contains Apache
         configuration directives enforced each time a request concerns an
@@ -2249,12 +2243,12 @@ DirectoryIndex index.php index.html index.htm
       chooses which users are allowed to run programs under the web
       server's identity (the <literal>www-data</literal> user).</para>
 
-      <indexterm><primary><literal>AllowOverride</literal>, Apache directive</primary></indexterm>
-      <indexterm><primary>Apache</primary><secondary><literal>AllowOverride</literal></secondary></indexterm>
+      <indexterm><primary>Apache</primary><secondary><literal>AllowOverride</literal>, directive</secondary></indexterm>
 
       <section>
         <title>Requiring Authentication</title>
         <indexterm><primary>web authentication</primary></indexterm>
+        <indexterm><primary>authentication</primary><secondary>web authentication</secondary></indexterm>
         <indexterm><primary>Apache</primary><secondary>password-based authentication</secondary></indexterm>
 
         <para>In some circumstances, access to part of a website needs to
@@ -2262,14 +2256,14 @@ DirectoryIndex index.php index.html index.htm
         a password are granted access to the contents. These feature are
         provided by the <literal>mod_auth*</literal> modules.</para>
 
-        <indexterm><primary>Apache</primary><secondary><literal>mod_auth*</literal></secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>mod_auth*</literal>, modules</secondary></indexterm>
 
         <example>
           <title><filename>.htaccess</filename> file requiring authentication</title>
-          <indexterm><primary>Apache</primary><secondary><literal>Require</literal></secondary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>AuthName</literal></secondary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>AuthType</literal></secondary></indexterm>
-          <indexterm><primary>Apache</primary><secondary><literal>AuthUserFile</literal></secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>Require</literal>, directive</secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthName</literal>, directive</secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthType</literal>, directive</secondary></indexterm>
+          <indexterm><primary>Apache</primary><secondary><literal>AuthUserFile</literal>, directive</secondary></indexterm>
 
           <programlisting>
 Require valid-user
@@ -2319,8 +2313,7 @@ Adding password for user <replaceable>user</replaceable>
         <ulink type="block"
         url="https://httpd.apache.org/docs/2.4/howto/access.html"/></para>
 
-        <indexterm><primary><literal>Require</literal>, Apache directive</primary></indexterm>
-        <indexterm><primary>Apache</primary><secondary><literal>Require</literal></secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>Require</literal>, directive</secondary></indexterm>
 
         <para>It can be used to restrict access based on many
         criteria; we will stop at describing access restriction based
@@ -2352,12 +2345,9 @@ Adding password for user <replaceable>user</replaceable>
         from</literal> directives control access restrictions for a
         directory (and its subdirectories, recursively).</para>
 
-        <indexterm><primary><literal>Allow from</literal>, Apache directive</primary></indexterm>
-        <indexterm><primary>Apache</primary><secondary><literal>Allow from</literal></secondary></indexterm>
-        <indexterm><primary><literal>Deny from</literal>, Apache directive</primary></indexterm>
-        <indexterm><primary>Apache</primary><secondary><literal>Deny from</literal></secondary></indexterm>
-        <indexterm><primary><literal>Order</literal>, Apache directive</primary></indexterm>
-        <indexterm><primary>Apache</primary><secondary><literal>Order</literal></secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>Allow from</literal>, directive</secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>Deny from</literal>, directive</secondary></indexterm>
+        <indexterm><primary>Apache</primary><secondary><literal>Order</literal>, directive</secondary></indexterm>
 
         <para>The <literal>Order</literal> directive tells the server of
         the order in which the <literal>Allow from</literal> and
@@ -2399,10 +2389,10 @@ Deny from all
       <emphasis>AWStats</emphasis> (<emphasis>Advanced Web
       Statistics</emphasis>) to analyze their Apache log files.</para>
 
-      <indexterm><primary><emphasis>AWStats</emphasis></primary></indexterm>
+      <indexterm><primary><command>awstats</command></primary></indexterm>
       <indexterm><primary>web logs analyzer</primary></indexterm>
-      <indexterm><primary>logs</primary><secondary>web logs analyzer</secondary></indexterm>
-      <indexterm><primary>analyzer of web logs</primary></indexterm>
+      <indexterm><primary>log files</primary><secondary>web logs analyzer</secondary></indexterm>
+      <indexterm><primary>analyzer, of web logs</primary></indexterm>
       <indexterm><primary>Apache</primary><secondary>log analyzer</secondary></indexterm>
 
       <para>The first configuration step is the customization of the
@@ -3099,7 +3089,7 @@ arrakis.internal.falcot.com:/shared /srv/shared nfs4 rw,nosuid 0 0
         <emphasis role="pkg">cifs-utils</emphasis>).</para>
 
         <indexterm><primary><command>mount.cifs</command></primary></indexterm>
-        <indexterm><primary>Windows share, mounting</primary></indexterm>
+        <indexterm><primary>Windows share</primary><secondary>mounting</secondary></indexterm>
         <indexterm><primary><command>mount</command></primary><secondary>CIFS</secondary><see><command>mount.cifs</command></see></indexterm>
 
         <example>
@@ -3245,7 +3235,6 @@ password = <replaceable>password</replaceable></programlisting>
 
     <section>
       <title>Configuring a Cache</title>
-      <indexterm><primary><filename>squid.conf</filename></primary></indexterm>
       <indexterm><primary>Squid</primary><secondary><filename>/etc/squid/squid.conf</filename></secondary></indexterm>
       <indexterm><primary>Squid</primary><secondary><filename>/etc/squid/conf.d/</filename></secondary></indexterm>
       <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/squid/</filename></secondary><see>Squid</see></indexterm>
@@ -3288,7 +3277,6 @@ http_access deny all
 
       <indexterm><primary><command>squidGuard</command></primary></indexterm>
       <indexterm><primary>Squid</primary><secondary><command>squidGuard</command></secondary></indexterm>
-      <indexterm><primary><filename>squidGuard.conf</filename></primary></indexterm>
       <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/squidguard/squidGuard.conf.default</filename></secondary><seealso><command>squidGuard</command></seealso></indexterm>
 
       <programlisting>
@@ -3366,6 +3354,7 @@ url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
     <section>
       <title>Installing</title>
       <indexterm><primary>server</primary><secondary>slapd</secondary></indexterm>
+      <indexterm><primary>daemon</primary><secondary>slapd</secondary></indexterm>
 
       <para>The <emphasis role="pkg">slapd</emphasis> package contains the
       OpenLDAP server. The <emphasis role="pkg">ldap-utils</emphasis>
@@ -4218,6 +4207,7 @@ TURNSERVER_ENABLED=1
       connections between other organizations, SIP trunking providers,
       SIP PBXes such as Asterisk, SIP phones, SIP-based softphones
       and WebRTC applications.</para>
+      <indexterm><primary>proxy</primary><secondary>SIP</secondary></indexterm>
       <indexterm><primary>SIP</primary><secondary>server</secondary></indexterm>
       <indexterm><primary>SIP</primary><secondary>proxy</secondary></indexterm>
       <indexterm><primary>SIP</primary><secondary>PBX</secondary></indexterm>
@@ -4230,7 +4220,7 @@ TURNSERVER_ENABLED=1
 
       <section id="sect.sip-server-install">
         <title>Install the SIP proxy</title>
-        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/kamctlrc</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/</filename></secondary></indexterm>
 
         <para>Install the <emphasis role="pkg">kamailio</emphasis> package and
         the package for the database backend. The Falcot administrators chose
@@ -4261,7 +4251,7 @@ DBENGINE=MYSQL
 </programlisting>
 
         <indexterm><primary><command>kamailio</command></primary></indexterm>
-        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/kamailio.cfg</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/kamailio/</filename></secondary><seealso><command>kamailio</command></seealso></indexterm>
 
         <para>Now we focus on the configuration file
         <filename>/etc/kamailio/kamailio.cfg</filename>. Falcot needs

@@ -26,10 +26,10 @@
   </highlights>
 
   <indexterm><primary>APT</primary></indexterm>
-  <indexterm><primary>Advanced Package Tool</primary><seealso>APT</seealso></indexterm>
+  <indexterm><primary>Advanced Packaging Tool</primary><seealso>APT</seealso></indexterm>
 
   <para><acronym>APT</acronym> is
-  the abbreviation for Advanced Package Tool. What makes this program
+  the abbreviation for Advanced Packaging Tool. What makes this program
   “advanced” is its approach to packages. It doesn't simply evaluate
   them individually, but it considers them as a whole and produces the best
   possible combination of packages depending on what is available and
@@ -37,7 +37,7 @@
 
   <sidebar>
     <title><emphasis>VOCABULARY</emphasis> Package source and source package</title>
-    <indexterm><primary>package</primary><secondary>source package</secondary></indexterm>
+    <indexterm><primary>package</primary><secondary>source package</secondary><seealso><filename>.dsc</filename></seealso></indexterm>
     <indexterm><primary>package source</primary><seealso>repository</seealso></indexterm>
 
     <para>The word <emphasis>source</emphasis> can be ambiguous. A "source
@@ -93,9 +93,7 @@
     <indexterm><primary><filename>sources.list</filename></primary></indexterm>
     <indexterm><primary>source</primary><secondary>of packages</secondary></indexterm>
     <indexterm><primary>package</primary><secondary>source of</secondary></indexterm>
-    <indexterm><primary><filename>/etc/apt/sources.list</filename></primary></indexterm>
-    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary></indexterm>
-    <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/sources.list</filename></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary><seealso>sources.list</seealso></indexterm>
 
     <section>
       <title>Syntax</title>
@@ -205,8 +203,7 @@ deb-src url distribution component1 component2 component3 [..] componentX
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Files in <filename>/etc/apt/sources.list.d/</filename></title>
-        <indexterm><primary><filename>/etc/apt/sources.list.d</filename></primary></indexterm>
-        <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list.d</filename></secondary></indexterm>
+        <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list.d/</filename></secondary></indexterm>
 
         <para>If many package sources are referenced, it can be useful to split
         them in multiple files. Each part is then stored in
@@ -249,7 +246,7 @@ deb-src url distribution component1 component2 component3 [..] componentX
       <!-- MAYCHANGE: default codename -->
       <example id="example.stable-sources-list">
         <title><filename>/etc/apt/sources.list</filename> file for users of Debian Stable</title>
-        <indexterm><primary><filename>/etc/apt/sources.list</filename></primary><secondary>Example</secondary><tertiary><literal>stable</literal></tertiary></indexterm>
+        <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary><tertiary><literal>stable</literal></tertiary></indexterm>
         <indexterm><primary><literal>deb.debian.org</literal></primary></indexterm>
 
         <!-- TODO: <programlistingco> ? -->
@@ -491,8 +488,8 @@ deb-src https://deb.debian.org/debian bullseye-backports main contrib non-free
       <example id="example.testing-sources-list">
         <title><filename>/etc/apt/sources.list</filename> file for users of Debian <emphasis role="distribution">Testing</emphasis>/<emphasis role="distribution">Unstable</emphasis></title>
         <indexterm><primary><literal>deb.debian.org</literal></primary></indexterm>
-        <indexterm><primary><filename>/etc/apt/sources.list</filename></primary><secondary>Example</secondary><tertiary><literal>testing</literal></tertiary></indexterm>
-        <indexterm><primary><filename>/etc/apt/sources.list</filename></primary><secondary>Example</secondary><tertiary><literal>unstable</literal></tertiary></indexterm>
+        <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary><tertiary><literal>testing</literal></tertiary></indexterm>
+        <indexterm><primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary><tertiary><literal>unstable</literal></tertiary></indexterm>
 
         <programlisting>
 # Unstable
@@ -760,7 +757,7 @@ deb-src http://security.debian.org/ stable-security main contrib non-free
       configured to use them as proxy for outgoing requests.</para>
 
       <indexterm><primary><emphasis role="pkg">approx</emphasis></primary></indexterm>
-      <indexterm><primary>configuration files</primary><secondary><filename>/etc/approx/approx.conf</filename></secondary></indexterm>
+      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/approx/approx.conf</filename></secondary></indexterm>
 
       <para><emphasis role="pkg">approx</emphasis>, on the other hand, acts
       like an HTTP server that “mirrors” any number of remote repositories in
@@ -918,7 +915,6 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       <indexterm><primary>package</primary><secondary>purge</secondary></indexterm>
       <indexterm><primary>installation</primary><secondary>package installation</secondary></indexterm>
       <indexterm><primary>removal of a package</primary></indexterm>
-      <indexterm><primary>removal</primary><secondary>package removal</secondary></indexterm>
 
       <para>With APT, packages can be added or removed from the system,
       respectively with <command>apt install
@@ -1065,7 +1061,7 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
           <screen><computeroutput># </computeroutput><userinput>apt --reinstall -o Dpkg::Options::="--force-confask,confmiss" install <replaceable>package</replaceable></userinput></screen>
         </informalexample>
 
-        <indexterm><primary>configuration files</primary><secondary><filename>/etc/inputrc</filename></secondary></indexterm>
+        <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/inputrc</filename></secondary></indexterm>
 
         <para>Some packages don't ship the configuration file found in
         <filename>/etc</filename> with the package. Instead they create it
@@ -1102,8 +1098,9 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
         <screen><computeroutput># </computeroutput><userinput>apt install spamassassin/unstable</userinput></screen>
       </example>
 
-      <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary><tertiary>.deb file</tertiary></indexterm>
-      <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary><tertiary>.deb file</tertiary></indexterm>
+      <indexterm><primary><command>apt</command></primary><secondary><literal>install</literal></secondary></indexterm>
+      <indexterm><primary><command>apt-get</command></primary><secondary><literal>install</literal></secondary></indexterm>
+      <indexterm><primary><filename>.deb</filename></primary></indexterm>
 
       <para>If the package to install has been made available to you under the
       form of a simple <filename>.deb</filename> file without any associated
@@ -1118,12 +1115,13 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
 
       <sidebar id="sidebar.apt-clean">
         <title><emphasis>GOING FURTHER</emphasis> The cache of <filename>.deb</filename> files</title>
-        <indexterm><primary><filename>/var/cache/apt/archives/</filename></primary></indexterm>
+        <indexterm><primary><filename>/var</filename></primary><secondary><filename>/var/cache/apt/archives/</filename></secondary></indexterm>
         <indexterm><primary><command>apt-get</command></primary><secondary><literal>clean</literal></secondary></indexterm>
         <indexterm><primary><command>apt-get</command></primary><secondary><literal>autoclean</literal></secondary></indexterm>
         <indexterm><primary>APT</primary><secondary>download archive</secondary></indexterm>
         <indexterm><primary>APT</primary><secondary><filename>/var/cache/apt/archives/</filename></secondary></indexterm>
         <indexterm><primary>APT</primary><secondary><literal>APT::Clean-Installed</literal></secondary></indexterm>
+        <indexterm><primary><filename>.deb</filename></primary></indexterm>
 
         <para>APT keeps a copy of each downloaded <filename>.deb</filename>
         file in the directory <filename>/var/cache/apt/archives/</filename>. In
@@ -1174,7 +1172,7 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       intended.</para>
 
       <indexterm><primary>APT</primary><secondary><literal>APT::Default-Release</literal></secondary></indexterm>
-      <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/apt.conf</filename></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf</filename></secondary></indexterm>
 
       <para>To tell <command>apt</command> to use a specific distribution when
       searching for upgraded packages, you need to use the
@@ -1210,10 +1208,12 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       <command>aptitude</command> also accept for the convenience of users who
       got used to it.</para>
 
+      <indexterm><primary><filename>/var</filename></primary><secondary><filename>/var/log/apt/</filename></secondary><see>APT</see></indexterm>
       <indexterm><primary>APT</primary><secondary><filename>/var/log/apt/history.log</filename></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><filename>/var/log/apt/term.log</filename></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><filename>/var/log/apt/eipp.log.xz</filename></secondary></indexterm>
       <indexterm><primary>dpkg</primary><secondary><filename>/var/log/dpkg.log</filename></secondary></indexterm>
+      <indexterm><primary><filename>/var</filename></primary><secondary><filename>/var/log/dpkg.log</filename></secondary></indexterm>
 
       <para>The results of these operations are logged into
       <filename>/var/log/apt/history.log</filename> and
@@ -1225,18 +1225,13 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
 
     <section id="sect.apt-config">
       <title>Configuration Options</title>
-      <indexterm><primary>APT</primary><secondary>configuration</secondary></indexterm>
       <indexterm><primary><filename>apt.conf</filename></primary></indexterm>
-      <indexterm><primary><filename>apt.conf.d/</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/apt.conf</filename></secondary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/apt.conf.d/</filename></secondary></indexterm>
-      <indexterm><primary><citerefentry><refentrytitle>apt.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry></primary></indexterm>
+      <indexterm><primary>APT</primary><secondary>configuration</secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf</filename></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf.d/</filename></secondary></indexterm>
-      <indexterm><primary>APT</primary><secondary><literal>DPkg::options</literal></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary><literal>Dpkg::Options</literal></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><literal>Acquire::http::proxy</literal></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><literal>Acquire::ftp::proxy</literal></secondary></indexterm>
-      <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/apt.conf</filename></secondary></indexterm>
 
       <para>Besides the configuration elements already mentioned, it is
       possible to configure certain aspects of APT by adding directives in a
@@ -1336,10 +1331,8 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       version is older than the installed one and if its priority is less
       than 1000).</para>
 
-      <indexterm><primary><citerefentry><refentrytitle>apt_preferences</refentrytitle><manvolnum>5</manvolnum></citerefentry></primary></indexterm>
+      <indexterm><primary>apt_preferences</primary></indexterm>
       <indexterm><primary><filename>preferences</filename></primary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/preferences</filename></secondary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/preferences.d/</filename></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><foreignphrase>pinning</foreignphrase></secondary></indexterm>
       <indexterm><primary>APT</primary><secondary>preferences</secondary></indexterm>
       <indexterm><primary>APT</primary><secondary><literal>APT::Default-Release</literal></secondary></indexterm>
@@ -1347,7 +1340,6 @@ deb http://localhost:9999/debian   bullseye main contrib non-free
       <indexterm><primary>APT</primary><secondary><filename>/etc/apt/preferences.d/</filename></secondary></indexterm>
       <indexterm><primary><command>apt</command></primary><secondary><literal>-t <replaceable>release</replaceable></literal></secondary></indexterm>
       <indexterm><primary><command>apt-get</command></primary><secondary><literal>-t <replaceable>release</replaceable></literal></secondary></indexterm>
-      <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/preferences</filename></secondary></indexterm>
 
       <para>APT defines several default priorities. Each installed package
       version has a priority of 100. A non-installed version has a priority
@@ -1544,7 +1536,7 @@ Pin-Priority: 1001
 
       <sidebar>
         <title><emphasis>TIP</emphasis> Comments in <filename>/etc/apt/preferences</filename></title>
-        <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/preferences</filename></secondary></indexterm>
+        <indexterm><primary>APT</primary><secondary><filename>/etc/apt/preferences</filename></secondary></indexterm>
         <indexterm><primary><literal>Explanation</literal></primary></indexterm>
         <indexterm><primary><literal>Pin</literal></primary></indexterm>
         <indexterm><primary><literal>Pin-Priority</literal></primary></indexterm>
@@ -1755,7 +1747,7 @@ p   apt-xapian-index Depends  python3-debian (&gt;= 0.1.14)
     <section id="sect.apt-patterns">
       <title>APT Patterns</title>
       <indexterm><primary>APT</primary><secondary>patterns</secondary></indexterm>
-      <indexterm><primary><citerefentry><refentrytitle>apt-patterns</refentrytitle><manvolnum>7</manvolnum></citerefentry></primary></indexterm>
+      <indexterm><primary>apt-patterns</primary></indexterm>
       <indexterm><primary><command>apt</command></primary><secondary><literal>list</literal></secondary></indexterm>
 
       <para>Patterns allow you to specify complex search queries to select
@@ -1949,8 +1941,7 @@ Pinned packages:</computeroutput>
         100 /var/lib/dpkg/status</computeroutput></screen>
       </informalexample>
 
-      <indexterm><primary>APT</primary><secondary><filename>/etc/apt/preferences.d/</filename></secondary></indexterm>
-      <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/preferences.d/</filename></secondary></indexterm>
+      <indexterm><primary>APT</primary><secondary><filename>/etc/apt/preferences.d/</filename></secondary><seealso>preferences</seealso></indexterm>
 
       <!-- MAYCHANGE: stable release and package name -->
       <para>Although there is a newer version of <emphasis
@@ -2266,7 +2257,7 @@ apt-xapian-index: /usr/bin/axi-cache
           <title><emphasis>NOTE</emphasis> <command>aptitude</command>'s log</title>
           <indexterm><primary><command>aptitude</command></primary><secondary>log</secondary></indexterm>
           <indexterm><primary><command>aptitude</command></primary><secondary><filename>/var/log/aptitude</filename></secondary></indexterm>
-          <indexterm><primary>logs</primary><secondary><filename>/var/log/aptitude</filename></secondary></indexterm>
+          <indexterm><primary><filename>/var</filename></primary><secondary><filename>/var/log/aptitude</filename></secondary></indexterm>
 
           <para>Like <command>dpkg</command>, <command>aptitude</command>
           keeps a trace of executed actions in its logfile
@@ -2325,7 +2316,7 @@ apt-xapian-index: /usr/bin/axi-cache
     <indexterm><primary><filename>Release</filename></primary></indexterm>
     <indexterm><primary><filename>Release.gpg</filename></primary></indexterm>
     <indexterm><primary><filename>InRelease</filename></primary></indexterm>
-    <indexterm><primary>APT</primary><secondary><citerefentry><refentrytitle>apt-secure</refentrytitle><manvolnum>8</manvolnum></citerefentry></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary>apt-secure</secondary></indexterm>
     <indexterm><primary>APT</primary><secondary>archive authentification</secondary></indexterm>
 
     <para>Security is very important for Falcot Corp administrators.
@@ -2357,6 +2348,8 @@ apt-xapian-index: /usr/bin/axi-cache
     signed in-line, whereas the latter provides a detached signature in the form
     of the file <filename>Release.gpg</filename>.</para>
 
+    <indexterm><primary>signature</primary><secondary>repository signature</secondary></indexterm>
+
     <sidebar>
       <title><emphasis>NOTE</emphasis> The future of <filename>Release</filename> and <filename>Release.gpg</filename></title>
 
@@ -2367,17 +2360,13 @@ apt-xapian-index: /usr/bin/axi-cache
       introduced support for an archive authentication.</para>
     </sidebar>
 
-    <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary></indexterm>
-    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary></indexterm>
-    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/trusted.gpg.d</filename></secondary></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary><seealso><command>apt-key</command></seealso></indexterm>
+    <indexterm><primary>APT</primary><secondary><filename>/etc/apt/trusted.gpg.d/</filename></secondary><seealso><command>apt-key</command></seealso></indexterm>
     <indexterm><primary>APT</primary><secondary><filename>Release</filename></secondary></indexterm>
     <indexterm><primary>APT</primary><secondary><filename>Release.gpg</filename></secondary></indexterm>
     <indexterm><primary>APT</primary><secondary><filename>InRelease</filename></secondary></indexterm>
     <indexterm><primary><command>apt-key</command></primary></indexterm>
-    <indexterm><primary><command>apt-key</command></primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary></indexterm>
     <indexterm><primary><emphasis role="pkg">debian-archive-keyring</emphasis></primary></indexterm>
-    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/trusted.gpg.d/</filename></secondary></indexterm>
-    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/trusted.gpg</filename></secondary></indexterm>
 
     <para>APT needs a set of trusted GnuPG public keys to verify signatures in
     the <filename>InRelease</filename> and <filename>Release.gpg</filename>
@@ -2791,11 +2780,12 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
       <section>
         <title>Old or Unused Configuration Files</title>
-        <indexterm><primary>configuration files</primary><secondary><filename>.dpkg-dist</filename></secondary></indexterm>
-        <indexterm><primary>configuration files</primary><secondary><filename>.dpkg-old</filename></secondary></indexterm>
-        <indexterm><primary>configuration files</primary><secondary><filename>.ucf-old</filename></secondary></indexterm>
-        <indexterm><primary>configuration files</primary><secondary><filename>.ucf-new</filename></secondary></indexterm>
-        <indexterm><primary>configuration files</primary><secondary><filename>.ucf-dist</filename></secondary></indexterm>
+        <indexterm><primary>configuration</primary><secondary>configuration files</secondary></indexterm>
+        <indexterm><primary><filename>.dpkg-dist</filename></primary></indexterm>
+        <indexterm><primary><filename>.dpkg-old</filename></primary></indexterm>
+        <indexterm><primary><filename>.ucf-old</filename></primary></indexterm>
+        <indexterm><primary><filename>.ucf-new</filename></primary></indexterm>
+        <indexterm><primary><filename>.ucf-dist</filename></primary></indexterm>
         <indexterm><primary>package</primary><secondary>purge</secondary></indexterm>
         <indexterm><primary>apt</primary><secondary><literal>autoremove</literal></secondary></indexterm>
         <indexterm><primary>apt-get</primary><secondary><literal>autoremove</literal></secondary></indexterm>
@@ -2873,8 +2863,7 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
     <indexterm><primary>APT</primary><secondary><filename>/etc/cron.daily/apt-compat</filename></secondary></indexterm>
     <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf.d/10periodic</filename></secondary></indexterm>
-    <indexterm><primary>configuration files</primary><secondary><filename>/etc/cron.daily/apt-compat</filename></secondary></indexterm>
-    <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/apt.conf.d/10periodic</filename></secondary></indexterm>
+    <indexterm><primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.daily/apt-compat</filename></secondary></indexterm>
 
     <para>Administrators in charge of several computers will no doubt
     appreciate being informed of pending upgrades, but the upgrades
@@ -2934,9 +2923,8 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
           <literal>APT::Periodic::Unattended-Upgrade</literal>
         </term>
         <listitem>
-          <indexterm><primary><emphasis role="pkg">unattended-upgrades</emphasis></primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
-          <indexterm><primary>configuration files</primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
-          <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary></indexterm>
+          <indexterm><primary><emphasis role="pkg">unattended-upgrades</emphasis></primary></indexterm>
+          <indexterm><primary>APT</primary><secondary><filename>/etc/apt/apt.conf.d/50unattended-upgrades</filename></secondary><seealso><emphasis role="pkg">unattended-upgrades</emphasis></seealso></indexterm>
           <indexterm><primary><emphasis role="pkg">apt-listbugs</emphasis></primary></indexterm>
           <para>When this option is enabled, the daily script will
           execute <command>unattended-upgrade</command> (from the
@@ -3050,7 +3038,7 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
 
       <indexterm><primary><command>dpkg-reconfigure</command></primary></indexterm>
       <indexterm><primary>APT</primary><secondary><varname>DEBIAN_FRONTEND</varname></secondary></indexterm>
-      <indexterm><primary>environment variables</primary><secondary><varname>DEBIAN_FRONTEND</varname></secondary></indexterm>
+      <indexterm><primary>environment variable</primary><secondary><varname>DEBIAN_FRONTEND</varname></secondary></indexterm>
 
       <para>To reconfigure <command>debconf</command>, use the
       <command>dpkg-reconfigure</command> tool from the <emphasis
@@ -3092,7 +3080,7 @@ deb [ trusted=yes ] http://packages.falcot.com/ internal/</programlisting>
         <title>Non-interactive upgrade script</title>
 
         <programlisting>export DEBIAN_FRONTEND=noninteractive
-yes '' | apt-get -y -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" dist-upgrade
+yes '' | apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 </programlisting>
       </example>
 
