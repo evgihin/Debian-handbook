@@ -5,7 +5,7 @@ VERSION=$(shell sed -n -e 's|.*<productnumber>\(.*\)</productnumber>.*|\1|p' en-
 LANGS=$(shell echo [a-z][a-z]-[A-Z][A-Z])
 
 %:
-	dh $@ 
+	dh $@
 
 # Build multiple languages in parallel
 override_dh_auto_build: $(foreach lang,$(LANGS),build-html-$(lang))
