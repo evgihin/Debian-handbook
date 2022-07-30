@@ -30,18 +30,29 @@
     <para>There is no official list of all planned changes, and Debian never
     makes promises relating to technical goals of the coming versions.
     However, a few development trends and discussion topics can already be
-    noted, and we can try to guess what might happen (or not).  <ulink
-    type="block"
-    url="https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html#deprecated-components"/>
+    noted, and we can try to guess what might happen (or not). Some of the
+    expected changes are documented in the Debian 11 release notes:
+    <ulink type="block" url="https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html#deprecated-components"/>
     </para>
 
-    <para>Debian will continously improve to be used in container and cloud/VPS
-    systems, as well as dedicated hardware.</para>
+    <para>Beyond usual deprecation of some software components, it is worth
+    pointing out that Debian is in the process of switching to what is known
+    as a <emphasis>merged-usr filesystem</emphasis>: in this scheme <literal>/bin</literal>,
+    <literal>/sbin</literal> and <literal>/lib</literal> are symlinks pointing
+    to the corresponding directories in <literal>/usr</literal>. This improves
+    compatibility between all Unix systems, makes us closer of having all
+    Debian-supplied files in a single top-level directory that can be easily
+    protected, snapshotted or shared. You can learn more about
+    the benefits here:
+    <ulink type="block" url="https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/"/>
+    </para>
 
-    <para>Support for systems not using the merged-usr filesystem is at
-    stake, although the current implementation is considered to be broken and
-    discussions are ongoing.
-    <ulink type="block" url="https://wiki.debian.org/Teams/Dpkg/FAQ#Q:_Does_dpkg_support_merged-.2Fusr-via-aliased-dirs.3F"/>
+    <para>This important change is not without creating issues: <command>dpkg</command>
+    will have to learn about those aliased directories, but the <command>dpkg</command>
+    maintainer doesn't like the technical solution deployed by Debian and hasn't
+    yet made the required changes. The Debian technical committee's help has
+    been requested multiple times already. Their last decision can be found here:
+    <ulink type="block" url="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=994388#110"/>
     </para>
 
     <indexterm><primary><command>apt-key</command></primary></indexterm>
@@ -54,25 +65,28 @@
     <indexterm><primary><command>locate</command></primary></indexterm>
     <para>For some tasks the default software solution will change. As an
     example: <command>plocate</command> might be a faster and smaller
-    replacement for <command>mlocate</command>. Of course all the main
-    software suites will have a major release. The latest version of the
-    various desktops will bring better usability and new features.</para>
+    replacement for <command>mlocate</command>. <emphasis>systemd</emphasis>
+    will continue to add new features that help to standardize
+    the boot process and system management, allowing us to get rid of some
+    other software in the base system.
+    </para>
 
-    <para>Further the question has been raised to introduce "private" home
-    directories by default by changing the default user permissions. Also using
-    crypto policies and saving energy consumption can become quite big topics
-    in the upcoming years.</para>
+    <para>
+      Of course all the main software suites will have a major release. The
+      latest version of the various desktops will bring better usability and
+      new features.
+    </para>
+
+    <para>
+      The default permission of home directories will be more restrictive,
+      allowing only the user to access their files.
+    </para>
 
     <para>Developments which already began will continue: Improve build
     reproducibility and security for example. With the widespread use of
     continuous integration and the growth of the archive (and of the biggest
     packages!), the constraints on release architectures will be harder to meet
-    and architectures will be dropped. One of the architectures at stake is
-    i386. Autopkgtests (when provided) will continue to be considered across
-    all architectures for migration to <emphasis
-    role="distribution">Bookworm</emphasis>. In other words, the tests need to
-    succeed on all release architectures for packages to migrate and improve
-    stability and reliability.</para>
+    and architectures will be dropped.</para>
 
   </section>
   <section id="sect.future-of-debian">
@@ -93,7 +107,7 @@
     managers (e.g. <command>pip</command> for Python, <command>npm</command>
     for JavaScript, etc.), which are rendering <command>dpkg</command> and
     <command>apt</command> obsolete. Facing those threats, I am convinced that
-    Debian developers will find ways to embrace those evolutions and to
+    Debian developers will find ways to embrace those changes and to
     continue to provide value to users.</para>
 
     <para>In spite of its old age and its respectable size, Debian keeps on
@@ -104,13 +118,13 @@
     new free software project is attracted.</para>
 
     <para>Beyond the apparent satisfaction of most Debian users, a deep
-    trend is becoming more and more indisputable: people are increasingly
+    trend is becoming more and more indisputable: people (and companies!) are increasingly
     realizing that collaborating, rather than working alone in their corner, leads to
-    better results for everyone. Such is the rationale used by
-    distributions merging into Debian by way of subprojects.</para>
+    better results for everyone. The number of commercial companies relying on Debian
+    is larger every year.
+    </para>
 
-    <para>The Debian project is therefore not threatened by
-    extinction…</para>
+    <para>The Debian project is therefore not threatened by extinction…</para>
   </section>
   <section id="sect.future-of-this-book">
     <title>Future of this Book</title>
