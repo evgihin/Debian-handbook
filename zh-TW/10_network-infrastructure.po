@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-08-28 10:15+0200\n"
+"POT-Creation-Date: 2022-07-30 18:23+0200\n"
 "PO-Revision-Date: 2017-06-14 11:13+0000\n"
 "Last-Translator: mao <mao@lins.fju.edu.tw>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/zh_Hant/>\n"
@@ -43,9 +43,6 @@ msgstr "網路架構"
 msgid "Linux sports the whole Unix heritage for networking, and Debian provides a full set of tools to create and manage them. This chapter reviews these tools."
 msgstr "Linux 繼承整個 Unix 的網路功能，Debian 提供整套建立與管理網路的工具。本章介紹這些工具。"
 
-msgid "A gateway is a system linking several networks. This term often refers to a local network's “exit point” on the mandatory path to all external IP addresses. The gateway is connected to each of the networks it links together, and acts as a router to convey IP packets between its various interfaces."
-msgstr "閘道器是連結多個網路的系統。此名詞通常用於本地網路通往外部 IP 位址的 “出口”。閘道器把每個網路連結在一起，且做為路由器在不同介面間傳送 IP 封包。"
-
 msgid "<primary>gateway</primary>"
 msgstr "<primary>閘道器</primary>"
 
@@ -55,11 +52,24 @@ msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
 msgid "<primary>router</primary>"
 msgstr "<primary>路由器</primary>"
 
+msgid "A gateway is a system linking several networks. This term often refers to a local network's “exit point” on the mandatory path to all external IP addresses. The gateway is connected to each of the networks it links together, and acts as a router to convey IP packets between its various interfaces."
+msgstr "閘道器是連結多個網路的系統。此名詞通常用於本地網路通往外部 IP 位址的 “出口”。閘道器把每個網路連結在一起，且做為路由器在不同介面間傳送 IP 封包。"
+
 msgid "<emphasis>BACK TO BASICS</emphasis> IP packet"
 msgstr "<emphasis>基本</emphasis> IP 封包"
 
 msgid "<primary>packet</primary><secondary>IP</secondary>"
 msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>IP</primary><seealso>Internet Protocol</seealso>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>AH, protocol</primary>"
+msgid "<primary>Internet Protocol</primary>"
+msgstr "<primary>AH，協定</primary>"
 
 msgid "Most networks nowadays use the IP protocol (<emphasis>Internet Protocol</emphasis>). This protocol segments the transmitted data into limited-size packets. Each packet contains, in addition to its payload data, a number of details required for its proper routing."
 msgstr "今天，大部份的網路使用 IP 通信協定 (<emphasis>Internet Protocol</emphasis>)。這種協定把傳輸資料切割成小小的封包。除了實際傳輸的資料外，每個封包還包括必備的路由資訊。"
@@ -67,17 +77,41 @@ msgstr "今天，大部份的網路使用 IP 通信協定 (<emphasis>Internet Pr
 msgid "<emphasis>BACK TO BASICS</emphasis> TCP/UDP"
 msgstr "<emphasis>基本</emphasis> TCP/UDP"
 
+#, fuzzy
+#| msgid "<primary>protocol</primary><secondary>ESP</secondary>"
+msgid "<primary>protocol</primary><secondary>TCP</secondary>"
+msgstr "<primary>協定</primary><secondary>ESP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>protocol</primary><secondary>ESP</secondary>"
+msgid "<primary>protocol</primary><secondary>UDP</secondary>"
+msgstr "<primary>協定</primary><secondary>ESP</secondary>"
+
 msgid "<primary>port</primary><secondary>TCP</secondary>"
 msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
 msgid "<primary>port</primary><secondary>UDP</secondary>"
 msgstr "<primary>埠</primary><secondary>UDP</secondary>"
 
-msgid "<primary>TCP, port</primary>"
-msgstr "<primary>TCP，埠</primary>"
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>TCP</primary><secondary>port</secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
-msgid "<primary>UDP, port</primary>"
-msgstr "<primary>UDP，埠</primary>"
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>UDP</secondary>"
+msgid "<primary>UDP</primary><secondary>port</secondary>"
+msgstr "<primary>埠</primary><secondary>UDP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>protocol</primary><secondary>AH</secondary>"
+msgid "<primary>Transmission Control Protocol</primary><seealso></seealso>"
+msgstr "<primary>協定</primary><secondary>AH</secondary>"
+
+#, fuzzy
+#| msgid "<primary>protocol</primary><secondary>ESP</secondary>"
+msgid "<primary>User Datagram Protocol</primary><seealso>UDP</seealso>"
+msgstr "<primary>協定</primary><secondary>ESP</secondary>"
 
 msgid "Many programs do not handle the individual packets themselves, even though the data they transmit does travel over IP; they often use TCP (<emphasis>Transmission Control Protocol</emphasis>). TCP is a layer over IP allowing the establishment of connections dedicated to data streams between two points. The programs then only see an entry point into which data can be fed with the guarantee that the same data exits without loss (and in the same sequence) at the exit point at the other end of the connection. Although many kinds of errors can happen in the lower layers, they are compensated by TCP: lost packets are retransmitted, and packets arriving out of order (for example, if they used different paths) are re-ordered appropriately."
 msgstr "即使在 IP 上傳輸資料，大部份程式都不處理個別的封包問題；他們通常使用 TCP (<emphasis>Transmission Control Protocol</emphasis>)。TCP 是 IP 的上層，為專屬的資料流建立兩點間的連結。程式祗看到資料進來的款目，並保證同樣的資料無誤 (且以同樣順序) 流到另端連結的出口。在較低層可能發生多種錯誤，都可以被 TCP 補償：重送失去的封包、重組到達的封包 (例如，經由不同路徑送到) 的順序。"
@@ -88,10 +122,33 @@ msgstr "另個在 IP 上的協定是 UDP (<emphasis>User Datagram Protocol</emph
 msgid "TCP and UDP both involve ports, which are “extension numbers” for establishing communication with a given application on a machine. This concept allows keeping several different communications in parallel with the same correspondent, since these communications can be distinguished by the port number."
 msgstr "TCP 和 UDP 都涉及封包，也就是以 \"分機號碼\" 模式在機器內的程式建立連結。此做法允許在同個通訊中建立多個平行的管道，因為它們以不同的埠號區分之。"
 
+msgid "<primary>Internet Assigned Numbers Authority</primary><seealso>IANA</seealso>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>NAT</primary>"
+msgid "<primary>IANA</primary>"
+msgstr "<primary>NAT</primary>"
+
+#, fuzzy
+#| msgid "<primary>quality</primary><secondary>of service</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/services</filename></secondary>"
+msgstr "<primary>品質</primary><secondary>服務的</secondary>"
+
 #, fuzzy
 #| msgid "Some of these port numbers — standardized by the IANA (<emphasis>Internet Assigned Numbers Authority</emphasis>) — are “well-known” for being associated with network services. For instance, TCP port 25 is generally used by the email server. <ulink type=\"block\" url=\"http://www.iana.org/assignments/port-numbers\" />"
-msgid "Some of these port numbers — standardized by the IANA (<emphasis>Internet Assigned Numbers Authority</emphasis>) — are “well-known” for being associated with network services. For instance, TCP port 25 is generally used by the email server. <ulink type=\"block\" url=\"https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml\" />"
+msgid "Some of these port numbers — standardized by the IANA (<emphasis>Internet Assigned Numbers Authority</emphasis>) — are “well-known” for being associated with network services. For instance, TCP port 25 is generally used by the email server. The list of services associated with port numbers can be found in the <filename>/etc/services</filename> file, also explained in <citerefentry><refentrytitle>services</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, as well as in: <ulink type=\"block\" url=\"https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml\" />"
 msgstr "部份埠號 — 由 IANA (<emphasis>Internet Assigned Numbers Authority</emphasis>) 規範 — 以與網路服務相關而 “知名”。例如，TCP 埠號 25 係供電子郵件伺服器使用。<ulink type=\"block\" url=\"http://www.iana.org/assignments/port-numbers\" />"
+
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>IP</primary><secondary>masquerading</secondary>"
+msgstr "<primary>服務</primary><secondary>品質</secondary>"
+
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>gateway</secondary>"
+msgid "<primary>network</primary><secondary>masquerading</secondary>"
+msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
 
 msgid "When a local network uses a private address range (not routable on the Internet), the gateway needs to implement <emphasis>address masquerading</emphasis> so that the machines on the network can communicate with the outside world. The masquerading operation is a kind of proxy operating on the network level: each outgoing connection from an internal machine is replaced with a connection from the gateway itself (since the gateway does have an external, routable address), the data going through the masqueraded connection is sent to the new one, and the data coming back in reply is sent through to the masqueraded connection to the internal machine. The gateway uses a range of dedicated TCP ports for this purpose, usually with very high numbers (over 60000). Each connection coming from an internal machine then appears to the outside world as a connection coming from one of these reserved ports."
 msgstr "區域網路接在私人網址範圍內 (不在網路網路的路由上)，閘道器就需要 <emphasis>位址掩蔽</emphasis> 讓其經由網路與外界溝通。掩蔽作業是網路層次的代理工作：內部機器，都被閘道器取代 (因為閘道器有外部的路由位址)，藉由掩蔽連結，資料送出出去，進來的資料經由掩蔽連結至內部機器。閘道器以指定的 TCP 埠執行此工作，通常是較高的號碼 (超過 60000)。對外部而言，經由內部機器的連結，就是來自此等保留埠號。"
@@ -102,7 +159,9 @@ msgstr "<primary>掩蔽</primary>"
 msgid "<emphasis>CULTURE</emphasis> Private address range"
 msgstr "<emphasis>文化</emphasis> 私有位址範圍"
 
-msgid "<primary>IP address</primary><secondary>private</secondary>"
+#, fuzzy
+#| msgid "<primary>IP address</primary><secondary>private</secondary>"
+msgid "<primary>IP</primary><secondary>private address</secondary>"
 msgstr "<primary>IP 位址</primary><secondary>私有</secondary>"
 
 msgid "<primary>private IP address</primary>"
@@ -114,23 +173,45 @@ msgstr "RFC 1918 把三組 IPv4 位址設為區域網路專用，不能路由�
 msgid "The gateway can also perform two kinds of <emphasis>network address translation</emphasis> (or NAT for short). The first kind, <emphasis>Destination NAT</emphasis> (DNAT) is a technique to alter the destination IP address (and/or the TCP or UDP port) for a (generally) incoming connection. The connection tracking mechanism also alters the following packets in the same connection to ensure continuity in the communication. The second kind of NAT is <emphasis>Source NAT</emphasis> (SNAT), of which <emphasis>masquerading</emphasis> is a particular case; SNAT alters the source IP address (and/or the TCP or UDP port) of a (generally) outgoing connection. As for DNAT, all the packets in the connection are appropriately handled by the connection tracking mechanism. Note that NAT is only relevant for IPv4 and its limited address space; in IPv6, the wide availability of addresses greatly reduces the usefulness of NAT by allowing all “internal” addresses to be directly routable on the Internet (this does not imply that internal machines are accessible, since intermediary firewalls can filter traffic)."
 msgstr "閘道器有兩種 <emphasis>網路位址轉換</emphasis> (英文縮寫 NAT) 的功能。第一種是 <emphasis>目的 NAT</emphasis> (DNAT)，改變封包目的 IP 位址 (與 TCP 或 UDP 埠)。連結追蹤機制同時改變後續封包的連結。第二種 NAT 是 <emphasis>來源 NAT</emphasis> (SNAT)，其中的 <emphasis>偽裝</emphasis> 是特例之一；SNAT 改變出去連結的來源 IP 位址 (與 TCP 或 UDP 埠)。如同 DNAT，所有的封包由連結追蹤機制處理。NAT 祗用於 IPv4 及其限制的位址空間；在 IPv6 內，其寬廣的位址技術允許直接在網際網路路由 (並不表示可以近用內部機器，因為防火牆可以過濾流量) 減少 NAT 的用途。"
 
-msgid "<primary>NAT</primary>"
-msgstr "<primary>NAT</primary>"
-
-msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
+#, fuzzy
+#| msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
+msgid "<primary>NAT</primary><seealso>Network Address Translation</seealso>"
 msgstr "<primary>Network</primary><secondary>Address Translation</secondary>"
 
-msgid "<primary>SNAT</primary>"
-msgstr "<primary>SNAT</primary>"
+#, fuzzy
+#| msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
+msgid "<primary>Network Address Translation</primary><seealso>NAT</seealso>"
+msgstr "<primary>Network</primary><secondary>Address Translation</secondary>"
 
-msgid "<primary>DNAT</primary>"
-msgstr "<primary>DNAT</primary>"
+#, fuzzy
+#| msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
+msgid "<primary>network</primary><secondary>address translation</secondary><seealso>NAT</seealso>"
+msgstr "<primary>Network</primary><secondary>Address Translation</secondary>"
 
-msgid "<primary>Destination NAT</primary>"
-msgstr "<primary>Destination NAT</primary>"
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>gateway</secondary>"
+msgid "<primary>network</primary><secondary>NAT</secondary>"
+msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
 
-msgid "<primary>Source NAT</primary>"
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>SNAT</primary><seealso>Source NAT</seealso>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>Source NAT</primary>"
+msgid "<primary>Source NAT</primary><seealso>SNAT</seealso>"
 msgstr "<primary>Source NAT</primary>"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>DNAT</primary><seealso>Destination NAT</seealso>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>Destination NAT</primary>"
+msgid "<primary>Destination NAT</primary><seealso>DNAT</seealso>"
+msgstr "<primary>Destination NAT</primary>"
 
 msgid "<emphasis>BACK TO BASICS</emphasis> Port forwarding"
 msgstr "<emphasis>基本</emphasis> 埠轉發"
@@ -138,8 +219,21 @@ msgstr "<emphasis>基本</emphasis> 埠轉發"
 msgid "<primary>port forwarding</primary>"
 msgstr "<primary>埠映射</primary>"
 
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>gateway</secondary>"
+msgid "<primary>network</primary><secondary>port forwarding</secondary>"
+msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
+
+#, fuzzy
+#| msgid "<primary><command>tc</command></primary>"
+msgid "<primary><command>redir</command></primary>"
+msgstr "<primary><command>tc</command></primary>"
+
 msgid "A concrete application of DNAT is <emphasis>port forwarding</emphasis>. Incoming connections to a given port of a machine are forwarded to a port on another machine. Other solutions may exist for achieving a similar effect, though, especially at the application level with <command>ssh</command> (see <xref linkend=\"sect.ssh-port-forwarding\" />) or <command>redir</command>."
 msgstr "DNAT 的具體應用之一是 <emphasis>埠轉發</emphasis>。進來連結至機器的指定埠號轉發至另部機器的埠號。雖然還有其他的方案達成同樣的效果，諸如應用層面的 <command>ssh</command> (見 <xref linkend=\"sect.ssh-port-forwarding\" />) 或 <command>redir</command>。"
+
+msgid "<primary>filesystem</primary><secondary>virtual</secondary><tertiary><filename>/proc/</filename></tertiary>"
+msgstr ""
 
 msgid "Enough theory, let's get practical. Turning a Debian system into a gateway is a simple matter of enabling the appropriate option in the Linux kernel, by way of the <filename>/proc/</filename> virtual filesystem:"
 msgstr "理論講多了，看看實務怎麼做。system into a gateway is a simple matter of enabling the appropriate option in the Linux kernel, 經由 <filename>/proc/</filename> 虛擬檔案系統，從 Linux 核心進入 Debian 系統的閘道器："
@@ -151,7 +245,19 @@ msgstr ""
 "\n"
 "<computeroutput># </computeroutput><userinput>echo 1 &gt; /proc/sys/net/ipv4/conf/default/forwarding</userinput>"
 
-msgid "This option can also be automatically enabled on boot if <filename>/etc/sysctl.conf</filename> sets the <literal>net.ipv4.conf.default.forwarding</literal> option to <literal>1</literal>."
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.conf</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.d/</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
+
+#, fuzzy
+#| msgid "This option can also be automatically enabled on boot if <filename>/etc/sysctl.conf</filename> sets the <literal>net.ipv4.conf.default.forwarding</literal> option to <literal>1</literal>."
+msgid "This option can also be automatically enabled on boot if <filename>/etc/sysctl.conf</filename> or a configuration file in <filename>/etc/sysctl.d/</filename> sets the <literal>net.ipv4.conf.default.forwarding</literal> option to <literal>1</literal>."
 msgstr "若 <filename>/etc/sysctl.conf</filename> 設定 <literal>net.ipv4.conf.default.forwarding</literal> 選項為 <literal>1</literal>，就能以此方式在開機時自動啟用。"
 
 msgid "The <filename>/etc/sysctl.conf</filename> file"
@@ -182,16 +288,24 @@ msgstr "需組態 <emphasis>netfilter</emphasis>，才能使用 NAT (IPv4)。因
 msgid "X.509 certificates"
 msgstr "<primary>X.509，認證</primary>"
 
-#, fuzzy
-#| msgid "<primary>X.509, certificate</primary>"
-msgid "<primary>certificates</primary>"
-msgstr "<primary>X.509，認證</primary>"
+msgid "<primary>certificate</primary><secondary>X.509</secondary>"
+msgstr "<primary>認證</primary><secondary>X.509</secondary>"
 
 msgid "<primary>SSL</primary>"
 msgstr "<primary>SSL</primary>"
 
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>Secure Socket Layer</primary><seealso>SSL</seealso>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
 msgid "<primary>TLS</primary>"
 msgstr "<primary>TLS</primary>"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>Transport Layer Security</primary><seealso>TLS</seealso>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
 #, fuzzy
 #| msgid "<primary>IP address</primary><secondary>private</secondary>"
@@ -200,7 +314,7 @@ msgstr "<primary>IP 位址</primary><secondary>私有</secondary>"
 
 #, fuzzy
 #| msgid "<primary>port</primary><secondary>TCP</secondary>"
-msgid "<primary>CA</primary><see>Certificate Authority</see>"
+msgid "<primary>CA</primary><seealso>Certificate Authority</seealso>"
 msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
 #, fuzzy
@@ -212,6 +326,11 @@ msgid "Certificates are an important building block of many network services bui
 msgstr ""
 
 #, fuzzy
+#| msgid "<primary>IKE</primary>"
+msgid "<primary>IETF</primary>"
+msgstr "<primary>IKE</primary>"
+
+#, fuzzy
 #| msgid "The SSL protocol (<emphasis>Secure Socket Layer</emphasis>) was invented by Netscape to secure connections to web servers. It was later standardized by IETF under the acronym TLS (<emphasis>Transport Layer Security</emphasis>). Since then TLS continued to evolve and nowadays SSL is deprecated due to multiple design flaws that have been discovered."
 msgid "Among those protocols, SSL (<emphasis>Secure Socket Layer</emphasis>) was invented by Netscape to secure connections to web servers. It was later standardized by IETF under the acronym TLS (<emphasis>Transport Layer Security</emphasis>). Since then TLS continued to evolve, and nowadays SSL is deprecated due to multiple design flaws that have been discovered."
 msgstr "Netscape 研發的 SSL 協定 (<emphasis>Secure Socket Layer</emphasis>) 為安全連線至網站伺服器的工具。後來被 IETF 標準化為 TLS (<emphasis>Transport Layer Security</emphasis>)。後來，在 SSL 裡發現多個設計的缺失，棄置後，改使用 TLS。"
@@ -220,8 +339,13 @@ msgid "The TLS protocol aims primarily to provide privacy and data integrity bet
 msgstr ""
 
 #, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>certificate</primary><secondary>root certificate</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
 #| msgid "However, anyone can create a key pair, store any identity on it, and pretend to be the identity of their choice. One solution involves the concept of a <emphasis>Certification Authority</emphasis> (CA), formalized by the X.509 standard. This term covers an entity that holds a trusted key pair known as a <emphasis>root certificate</emphasis>. This certificate is only used to sign other certificates (key pairs), after proper steps have been undertaken to check the identity stored on the key pair. Applications using X.509 can then check the certificates presented to them, if they know about the trusted root certificates."
-msgid "A key par is needed for the exchange of information, which involves a public key that includes information about the identity of the owner and matches a private key. The private key must be kept secret, otherwise the security is compromised. However, anyone can create a key pair, store any identity on it, and pretend to be the identity of their choice. One solution involves the concept of a <emphasis>Certification Authority</emphasis> (CA), formalized by the X.509 standard. This term covers an entity that holds a trusted key pair known as a <emphasis>root certificate</emphasis>. This certificate is only used to sign other certificates (key pairs), after proper steps have been undertaken to check the identity stored on the key pair. Applications using X.509 can then check the certificates presented to them, if they know about the trusted root certificates."
+msgid "A key pair is needed for the exchange of information, which involves a public key that includes information about the identity of the owner and matches a private key. The private key must be kept secret, otherwise the security is compromised. However, anyone can create a key pair, store any identity on it, and pretend to be the identity of their choice. One solution involves the concept of a <emphasis>Certification Authority</emphasis> (CA), formalized by the X.509 standard. This term covers an entity that holds a trusted key pair known as a <emphasis>root certificate</emphasis>. This certificate is only used to sign other certificates (key pairs), after proper steps have been undertaken to check the identity stored on the key pair. Applications using X.509 can then check the certificates presented to them, if they know about the trusted root certificates."
 msgstr "任何人都可以新增密鑰配對。採用 <emphasis>授權認證</emphasis> (CA)，即 X.509 標準。此術語指的是擁有信任密鑰配對做為 <emphasis>root 認證</emphasis>。此認證祗用於簽署另個認證 (密鑰配對)，經過適當的程序，檢查儲存在密鑰配對的內容。使用 X.509 可以檢查其中的認證。"
 
 msgid "You can implement a CA (as described in <xref linkend=\"sect.easy-rsa\" />), but if you intend to use the certificate for a website, you need to rely on a trusted CA. The prices vary significantly, but it is possible to implement great security spending little to no money."
@@ -230,7 +354,22 @@ msgstr ""
 msgid "Creating gratis trusted certificates"
 msgstr ""
 
-msgid "Many programs create and use snakeoil certificates by default (see sidebar <xref linkend=\"sidebar.snakeoil-certs\" />). Fortunately the <emphasis role=\"pkg\">certbot</emphasis> package brings everything we need to create our own trusted certificates, provided by the \"Lets Encrypt\" initiative (see sidebar <xref linkend=\"sidebar.letsencrypt\" />), which can also be used for mail transport agents (Postfix) and mail delivery agents (Dovecot, Cyrus, etc.)."
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>certificate</primary><secondary>trusted certificate</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>certificate</primary><secondary>snakeoil certificate</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>certificate</primary><secondary>letsencrypt</secondary><seealso><emphasis role=\"pkg\">certbot</emphasis></seealso>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+msgid "Many programs create and use snakeoil certificates by default (see sidebar <xref linkend=\"sidebar.snakeoil-certs\" />). Fortunately the <emphasis role=\"pkg\">certbot</emphasis> package brings everything we need to create our own trusted certificates, provided by the \"Lets Encrypt\" initiative (see sidebar <xref linkend=\"sidebar.letsencrypt\" />), which can also be used for mail transport agents (Postfix), mail delivery agents (Dovecot, Cyrus, etc.), and other network services."
 msgstr ""
 
 msgid "The Falcot administrators just want to create a certificate for their website, which runs on Apache. There is a convenient Apache plugin for <emphasis role=\"pkg\">certbot</emphasis> that automatically edits the Apache configuration to serve the obtained certificate, so they make use of it:"
@@ -243,7 +382,7 @@ msgstr "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
 
 #, fuzzy
 #| msgid "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
-msgid "<primary><emphasis role=\"pkg\">python-certbot-apache</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">python3-certbot-apache</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
 
 #, fuzzy
@@ -253,39 +392,46 @@ msgstr "<primary>封包</primary><secondary>IP</secondary>"
 
 #, fuzzy
 #| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>Apache</primary><secondary><emphasis role=\"pkg\">python3-certbot-apache</emphasis></secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
 msgid "<primary>Apache</primary><secondary>trusted certificates</secondary>"
 msgstr "<primary>封包</primary><secondary>IP</secondary>"
 
 msgid ""
 "\n"
-"<computeroutput># </computeroutput><userinput>apt install python-certbot-apache\n"
+"<computeroutput># </computeroutput><userinput>apt install python3-certbot-apache\n"
 "</userinput><computeroutput>[...]\n"
 "# </computeroutput><userinput>certbot --apache\n"
-"</userinput><computeroutput>Saving debug log to /var/log/letsencrypt/letsencrypt.log\n"
+"</userinput><computeroutput>aving debug log to /var/log/letsencrypt/letsencrypt.log\n"
 "Plugins selected: Authenticator apache, Installer apache\n"
-"Enter email address (used for urgent renewal and security notices) (Enter 'c' to\n"
-"cancel): </computeroutput><userinput>admin@falcot.com\n"
+"Enter email address (used for urgent renewal and security notices)\n"
+" (Enter 'c' to cancel): </computeroutput><userinput>admin@falcot.com\n"
 "</userinput><computeroutput>\n"
 "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n"
 "Please read the Terms of Service at\n"
 "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf. You must\n"
-"agree in order to register with the ACME server at\n"
-"https://acme-v02.api.letsencrypt.org/directory\n"
+"agree in order to register with the ACME server. Do you agree?\n"
 "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n"
-"(A)gree/(C)ancel: </computeroutput><userinput>A\n"
+"(Y)es/(N)o: </computeroutput><userinput>Y\n"
 "</userinput><computeroutput>\n"
 "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n"
-"Would you be willing to share your email address with the Electronic Frontier\n"
-"Foundation, a founding partner of the Let's Encrypt project and the non-profit\n"
-"organization that develops Certbot? We'd like to send you email about our work\n"
-"encrypting the web, EFF news, campaigns, and ways to support digital freedom.\n"
+"Would you be willing, once your first certificate is successfully issued, to\n"
+"share your email address with the Electronic Frontier Foundation, a founding\n"
+"partner of the Let's Encrypt project and the non-profit organization that\n"
+"develops Certbot? We'd like to send you email about our work encrypting the web,\n"
+"EFF news, campaigns, and ways to support digital freedom.\n"
 "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n"
 "(Y)es/(N)o: </computeroutput><userinput> N\n"
 "</userinput><computeroutput>\n"
+"Account registered.\n"
+"\n"
 "No names were found in your configuration files. Please enter in your domain\n"
 "name(s) (comma and/or space separated)  (Enter 'c' to cancel): </computeroutput><userinput>falcot.com\n"
-"</userinput>\n"
-"<computeroutput>Obtaining a new certificate\n"
+"</userinput><computeroutput>\n"
+"Requesting a certificate for falcot.com\n"
 "Performing the following challenges:\n"
 "http-01 challenge for falcot.com\n"
 "Enabled Apache rewrite module\n"
@@ -321,7 +467,7 @@ msgid ""
 "   /etc/letsencrypt/live/falcot.com/fullchain.pem\n"
 "   Your key file has been saved at:\n"
 "   /etc/letsencrypt/live/falcot.com/privkey.pem\n"
-"   Your cert will expire on 2020-06-04. To obtain a new or tweaked\n"
+"   Your cert will expire on 2022-06-04. To obtain a new or tweaked\n"
 "   version of this certificate in the future, simply run certbot again\n"
 "   with the \"certonly\" option. To non-interactively renew *all* of\n"
 "   your certificates, run \"certbot renew\"\n"
@@ -342,13 +488,13 @@ msgstr ""
 msgid "<emphasis>CULTURE</emphasis> The Let's Encrypt Initiative"
 msgstr "<emphasis>文化</emphasis> 私有位址範圍"
 
-msgid "The <ulink url=\"https://letsencrypt.org/\">Let's Encrypt</ulink> initiative is a joint effort to create a free, automated, and open certificate authority (CA), run for the public's benefit. It is supported by the <acronym>EFF</acronym> and the Linux Foundation. The initiative provides an automated tool for acquiring and renewing certificates. This reduces the amount of manual effort involved, especially if multiple sites and domains must be managed. The certificates can also be used for SIP, XMPP, WebSockets and TURN servers. Usage of the service requires control over the DNS information of the domain in question (domain validation). <ulink type=\"block\" url=\"https://letsencrypt.org/how-it-works/\" />"
-msgstr ""
-
 #, fuzzy
 #| msgid "<primary>IPsec</primary>"
 msgid "<primary>Let's Encrypt</primary>"
 msgstr "<primary>網際網路安全協定</primary>"
+
+msgid "The <ulink url=\"https://letsencrypt.org/\">Let's Encrypt</ulink> initiative is a joint effort to create a free, automated, and open certificate authority (CA), run for the public's benefit. It is supported by the <acronym>EFF</acronym> and the Linux Foundation. The initiative provides an automated tool for acquiring and renewing certificates. This reduces the amount of manual effort involved, especially if multiple sites and domains must be managed. The certificates can also be used for SIP, XMPP, WebSockets and TURN servers. Usage of the service requires control over the DNS information of the domain in question (domain validation). <ulink type=\"block\" url=\"https://letsencrypt.org/how-it-works/\" />"
+msgstr ""
 
 msgid "If you would rather keep the server running during the certificate creation, you can use the webroot plugin to get the certificate with the arguments <command>certonly</command> and <command>--webroot</command>. You would have to specify a <command>--webroot-path</command> (abbreviated <command>-w</command>), which should contain the files served. The command looks as follows:"
 msgstr ""
@@ -359,29 +505,45 @@ msgstr ""
 msgid "You need to restart all services using the certificates that you have created."
 msgstr ""
 
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.d/certbot</filename></secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
+#| msgid "<primary><command>tc</command></primary>"
+msgid "<primary><command>certbot</command></primary>"
+msgstr "<primary><command>tc</command></primary>"
+
 msgid "The certificates created are so called short-life certificates, which are valid for 90 days and must therefor be renewed every once in three months using the <command>certbot renew</command> command. However, we shouldn't renew every certificate manually, but automatically. A basic cron job is included by <emphasis role=\"pkg\">certbot</emphasis> in <filename>/etc/cron.d/certbot</filename>. To ensure that certificates can be automatically renewed, you can execute <command>certbot renew --dry-run</command>."
 msgstr ""
 
 msgid "Public Key Infrastructure: <emphasis>easy-rsa</emphasis>"
 msgstr "公鑰基礎設施：<emphasis>easy-rsa</emphasis>"
 
-msgid "<primary>PKI (Public Key Infrastructure)</primary>"
+#, fuzzy
+#| msgid "<primary>PKI (Public Key Infrastructure)</primary>"
+msgid "<primary>PKI</primary><seealso>Public Key Infrastructure</seealso>"
 msgstr "<primary>PKI (Public Key Infrastructure)</primary>"
 
 msgid "<primary>Public Key Infrastructure</primary>"
 msgstr "<primary>公鑰基礎設施</primary>"
 
-msgid "<primary>X.509, certificate</primary>"
-msgstr "<primary>X.509，認證</primary>"
-
-msgid "<primary>certificate</primary><secondary>X.509</secondary>"
-msgstr "<primary>認證</primary><secondary>X.509</secondary>"
+#, fuzzy
+#| msgid "<primary>NAT</primary>"
+msgid "<primary>X.509</primary>"
+msgstr "<primary>NAT</primary>"
 
 msgid "<primary><emphasis>easy-rsa</emphasis></primary>"
 msgstr "<primary><emphasis>easy-rsa</emphasis></primary>"
 
 msgid "<primary>RSA (algorithm)</primary>"
 msgstr "<primary>RSA (演算法)</primary>"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>algorithm</primary><secondary>RSA</secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
 msgid "<primary>key pair</primary>"
 msgstr "<primary>密鑰配對</primary>"
@@ -436,55 +598,66 @@ msgstr "把必要的參數儲存在 <filename>vars</filename> 檔案內，特別
 
 msgid ""
 "\n"
-"<computeroutput>$ </computeroutput><userinput>vim vars\n"
-"</userinput><computeroutput>$ </computeroutput><userinput>grep EASYRSA vars\n"
-"</userinput><computeroutput>if [ -z \"$EASYRSA_CALLER\" ]; then\n"
+"<computeroutput>$ </computeroutput><userinput>grep EASYRSA vars\n"
+"</userinput><computeroutput><![CDATA[if [ -z \"$EASYRSA_CALLER\" ]; then\n"
 "# easyrsa.  More specific variables for specific files (e.g., EASYRSA_SSL_CONF)\n"
 "#set_var EASYRSA\t\"${0%/*}\"\n"
 "#set_var EASYRSA_OPENSSL\t\"openssl\"\n"
 "#set_var EASYRSA_OPENSSL\t\"C:/Program Files/OpenSSL-Win32/bin/openssl.exe\"\n"
 "#set_var EASYRSA_PKI\t\t\"$PWD/pki\"\n"
+"#set_var EASYRSA_TEMP_DIR\t\"$EASYRSA_PKI\"\n"
 "#set_var EASYRSA_DN\t\"cn_only\"\n"
-"#set_var EASYRSA_REQ_COUNTRY\t\"FR\"\n"
-"#set_var EASYRSA_REQ_PROVINCE\t\"Loire\"\n"
-"#set_var EASYRSA_REQ_CITY\t\"Saint-Étienne\"\n"
-"#set_var EASYRSA_REQ_ORG\t\"Falcot Corp\"\n"
-"#set_var EASYRSA_REQ_EMAIL\t\"admin@falcot.com\"\n"
-"#set_var EASYRSA_REQ_OU\t\t\"Certificate authority\"\n"
+"set_var EASYRSA_REQ_COUNTRY\t\"FR\"\n"
+"set_var EASYRSA_REQ_PROVINCE\t\"Loire\"\n"
+"set_var EASYRSA_REQ_CITY\t\"Saint-Étienne\"\n"
+"set_var EASYRSA_REQ_ORG\t\"Falcot Corp\"\n"
+"set_var EASYRSA_REQ_EMAIL\t\"admin@falcot.com\"\n"
+"set_var EASYRSA_REQ_OU\t\t\"Certificate authority\"\n"
 "#set_var EASYRSA_KEY_SIZE\t2048\n"
 "#set_var EASYRSA_ALGO\t\trsa\n"
 "#set_var EASYRSA_CURVE\t\tsecp384r1\n"
 "#set_var EASYRSA_CA_EXPIRE\t3650\n"
-"#set_var EASYRSA_CERT_EXPIRE\t1080\n"
-"#set_var EASYRSA_CERT_RENEW\t30\n"
+"#set_var EASYRSA_CERT_EXPIRE\t825\n"
 "#set_var EASYRSA_CRL_DAYS\t180\n"
+"#set_var EASYRSA_CERT_RENEW\t30\n"
+"#set_var EASYRSA_RAND_SN\t\"yes\"\n"
 "#set_var EASYRSA_NS_SUPPORT\t\"no\"\n"
 "#set_var EASYRSA_NS_COMMENT\t\"Easy-RSA Generated Certificate\"\n"
 "#set_var EASYRSA_TEMP_FILE\t\"$EASYRSA_PKI/extensions.temp\"\n"
 "# when undefined here, default behaviour is to look in $EASYRSA_PKI first, then\n"
 "# fallback to $EASYRSA for the 'x509-types' dir.  You may override this\n"
 "#set_var EASYRSA_EXT_DIR\t\"$EASYRSA/x509-types\"\n"
+"#set_var EASYRSA_KDC_REALM      \"CHANGEME.EXAMPLE.COM\"\n"
 "# EASYRSA_PKI or EASYRSA dir (in that order.) NOTE that this file is Easy-RSA\n"
 "#set_var EASYRSA_SSL_CONF\t\"$EASYRSA/openssl-easyrsa.cnf\"\n"
 "#set_var EASYRSA_REQ_CN\t\t\"ChangeMe\"\n"
 "#set_var EASYRSA_DIGEST\t\t\"sha256\"\n"
 "#set_var EASYRSA_BATCH\t\t\"\"\n"
-"$ </computeroutput>"
+"]]>$ </computeroutput><userinput>vim vars\n"
+"</userinput><computeroutput>$ </computeroutput>"
 msgstr ""
 
 msgid "Now we prepare the public key infrastructure directory with the following command:"
 msgstr ""
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot\n"
+#| "</userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>"
 msgid ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>./easyrsa init-pki\n"
 "</userinput><computeroutput>\n"
-"Note: using Easy-RSA configuration from: ./vars\n"
 "\n"
 "init-pki complete; you may now create a CA or requests.\n"
-"Your newly created PKI dir is: /home/roland/pki-falcot/pki\n"
+"Your newly created PKI dir is: /home/debian/pki-falcot/pki\n"
+"\n"
 "</computeroutput>"
 msgstr ""
+"\n"
+"<computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot\n"
+"</userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>"
 
 #, fuzzy
 #| msgid "The next step is the creation of the CA's key pair itself (the two parts of the key pair will be stored under <filename>keys/ca.crt</filename> and <filename>keys/ca.key</filename> during this step):"
@@ -520,12 +693,10 @@ msgid ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>./easyrsa build-ca nopass</userinput>\n"
 "<computeroutput>\n"
-"Note: using Easy-RSA configuration from: ./vars\n"
-"\n"
-"Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019\n"
+"Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021\n"
 "Generating RSA private key, 2048 bit long modulus (2 primes)\n"
-"......................................................................................+++++\n"
-"......................+++++\n"
+"..................+++++\n"
+"...............................+++++\n"
 "e is 65537 (0x010001)\n"
 "You are about to be asked to enter information that will be incorporated\n"
 "into your certificate request.\n"
@@ -538,7 +709,7 @@ msgid ""
 "\n"
 "CA creation complete and you may now import and sign cert requests.\n"
 "Your new CA certificate file for publishing is at:\n"
-"/home/roland/pki-falcot/pki/ca.crt\n"
+"/home/debian/pki-falcot/pki/ca.crt\n"
 "\n"
 "</computeroutput>"
 msgstr ""
@@ -567,6 +738,11 @@ msgstr ""
 "</computeroutput>"
 
 #, fuzzy
+#| msgid "<primary><emphasis>iproute</emphasis></primary>"
+msgid "<primary><filename>dh.pem</filename></primary>"
+msgstr "<primary><emphasis>iproute</emphasis></primary>"
+
+#, fuzzy
 #| msgid "The certificate for the VPN server can now be created, as well as the Diffie-Hellman parameters required for the server side of an SSL/TLS connection. The VPN server is identified by its DNS name <literal>vpn.falcot.com</literal>; this name is re-used for the generated key files (<filename>keys/vpn.falcot.com.crt</filename> for the public certificate, <filename>keys/vpn.falcot.com.key</filename> for the private key):"
 msgid "The certificate can now be created, as well as the Diffie-Hellman parameters required for the server side of an SSL/TLS connection. They want to use it for a VPN server (see section <xref linkend=\"sect.virtual-private-network\" />) that is identified by the DNS name <literal>vpn.falcot.com</literal>; this name is re-used for the generated key files (<filename>keys/vpn.falcot.com.crt</filename> for the public certificate, <filename>keys/vpn.falcot.com.key</filename> for the private key):"
 msgstr "現在 VPN 伺服器的認證完成，Diffie-Hellman 參數供伺服器的 SSL/TLS 連結亦完成。VPN 伺服器以其 DNS 名稱 <literal>vpn.falcot.com</literal> 識別；此名稱再次使用於新增鑰匙檔案 (<filename>keys/vpn.falcot.com.crt</filename> 供公鑰，<filename>keys/vpn.falcot.com.key</filename> 供私鑰)："
@@ -574,13 +750,12 @@ msgstr "現在 VPN 伺服器的認證完成，Diffie-Hellman 參數供伺服器�
 msgid ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>./easyrsa gen-req vpn.falcot.com nopass\n"
-"</userinput><computeroutput>Note: using Easy-RSA configuration from: ./vars\n"
-"\n"
-"Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019\n"
+"</userinput><computeroutput>\n"
+"Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021\n"
 "Generating a RSA private key\n"
-".................................................................................+++++\n"
-"........+++++\n"
-"writing new private key to '/home/roland/pki-falcot/pki/private/vpn.falcot.com.key.E5c3RGJBUd'\n"
+"......................................+++++\n"
+"..........................................................................+++++\n"
+"writing new private key to '/home/debian/pki-falcot/pki/easy-rsa-5515.0PwyXl/tmp.g1c6u6'\n"
 "-----\n"
 "You are about to be asked to enter information that will be incorporated\n"
 "into your certificate request.\n"
@@ -592,14 +767,13 @@ msgid ""
 "Common Name (eg: your user, host, or server name) [vpn.falcot.com]:\n"
 "\n"
 "Keypair and certificate request completed. Your files are:\n"
-"req: /home/roland/pki-falcot/pki/reqs/vpn.falcot.com.req\n"
-"key: /home/roland/pki-falcot/pki/private/vpn.falcot.com.key\n"
+"req: /home/debian/pki-falcot/pki/reqs/vpn.falcot.com.req\n"
+"key: /home/debian/pki-falcot/pki/private/vpn.falcot.com.key\n"
+"\n"
 "\n"
 "$ </computeroutput><userinput>./easyrsa sign-req server vpn.falcot.com\n"
 "</userinput><computeroutput>\n"
-"Note: using Easy-RSA configuration from: ./vars\n"
-"\n"
-"Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019\n"
+"Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021\n"
 "\n"
 "\n"
 "You are about to sign the following certificate.\n"
@@ -607,7 +781,7 @@ msgid ""
 "has not been cryptographically verified. Please be sure it came from a trusted\n"
 "source or that you have verified the request checksum with the sender.\n"
 "\n"
-"Request subject, to be signed as a server certificate for 1080 days:\n"
+"Request subject, to be signed as a server certificate for 825 days:\n"
 "\n"
 "subject=\n"
 "    commonName                = vpn.falcot.com\n"
@@ -615,27 +789,27 @@ msgid ""
 "\n"
 "Type the word 'yes' to continue, or any other input to abort.\n"
 "  Confirm request details: <userinput>yes\n"
-"</userinput>Using configuration from /home/roland/pki-falcot/pki/safessl-easyrsa.cnf\n"
+"</userinput>Using configuration from /home/debian/pki-falcot/pki/easy-rsa-5603.87iCIa/tmp.u8r8Fj\n"
 "Check that the request matches the signature\n"
 "Signature ok\n"
 "The Subject's Distinguished Name is as follows\n"
 "commonName            :ASN.1 12:'vpn.falcot.com'\n"
-"Certificate is to be certified until Jun 14 10:44:44 2022 GMT (1080 days)\n"
+"Certificate is to be certified until May 27 15:26:29 2024 GMT (825 days)\n"
 "\n"
 "Write out database with 1 new entries\n"
 "Data Base Updated\n"
 "\n"
-"Certificate created at: /home/roland/pki-falcot/pki/issued/vpn.falcot.com.crt\n"
+"Certificate created at: /home/debian/pki-falcot/pki/issued/vpn.falcot.com.crt\n"
+"\n"
 "\n"
 "$ </computeroutput><userinput>./easyrsa gen-dh\n"
 "</userinput><computeroutput>\n"
-"Note: using Easy-RSA configuration from: ./vars\n"
-"\n"
-"Using SSL: openssl OpenSSL 1.1.1b  26 Feb 2019\n"
+"Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021\n"
 "Generating DH parameters, 2048 bit long safe prime, generator 2\n"
 "This is going to take a long time\n"
 "[…]\n"
-"DH parameters of size 2048 created at /home/roland/pki-falcot/pki/dh.pem\n"
+"\n"
+"DH parameters of size 2048 created at /home/debian/pki-falcot/pki/dh.pem\n"
 "\n"
 "</computeroutput>"
 msgstr ""
@@ -647,31 +821,27 @@ msgid ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>./easyrsa build-client-full JoeSmith nopass\n"
 "</userinput><computeroutput>\n"
-"Note: using Easy-RSA configuration from: ./vars\n"
-"\n"
-"Using SSL: openssl OpenSSL 1.1.1d  10 Sep 2019\n"
+"Using SSL: openssl OpenSSL 1.1.1k  25 Mar 2021\n"
 "Generating a RSA private key\n"
-".......................................................+++++\n"
-"...........................+++++\n"
-"writing new private key to '/root/pki-falcot/pki/private/JoeSmith.key.Tgr8kk0a6a'\n"
+"...................................+++++\n"
+".........................................................................................+++++\n"
+"writing new private key to '/home/debian/pki-falcot/pki/easy-rsa-5694.DOYwSn/tmp.RKlbOE'\n"
 "-----\n"
-"Using configuration from /root/pki-falcot/pki/safessl-easyrsa.cnf\n"
+"Using configuration from /home/debian/pki-falcot/pki/easy-rsa-5694.DOYwSn/tmp.d5QHAC\n"
 "Check that the request matches the signature\n"
 "Signature ok\n"
 "The Subject's Distinguished Name is as follows\n"
 "commonName            :ASN.1 12:'JoeSmith'\n"
-"Certificate is to be certified until Feb 20 04:52:43 2023 GMT (1080 days)\n"
+"Certificate is to be certified until May 27 15:29:25 2024 GMT (825 days)\n"
 "\n"
 "Write out database with 1 new entries\n"
 "Data Base Updated\n"
+"\n"
 "</computeroutput>"
 msgstr ""
 
 msgid "Virtual Private Network"
 msgstr "虛擬專用網路"
-
-msgid "A <emphasis>Virtual Private Network</emphasis> (VPN for short) is a way to link two different local networks through the Internet by way of a tunnel; the tunnel is usually encrypted for confidentiality. VPNs are often used to integrate a remote machine within a company's local network."
-msgstr "<emphasis>虛擬專用網路</emphasis> (VPN) 是以通道方式，經由網際網路連結兩個區域網路的方式；通常以加密方式在通道內傳送資訊。VPN 通常用於整合公司內部遠端機器。"
 
 msgid "<primary>network</primary><secondary>virtual private</secondary>"
 msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
@@ -679,8 +849,18 @@ msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
 msgid "<primary>VPN</primary>"
 msgstr "<primary>VPN</primary>"
 
-msgid "<primary>virtual private network</primary>"
+#, fuzzy
+#| msgid "<primary>virtual private network</primary>"
+msgid "<primary>virtual private network</primary><seealso>VPN</seealso>"
 msgstr "<primary>虛擬專用網路</primary>"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>IP</primary><secondary>IPsec</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+msgid "A <emphasis>Virtual Private Network</emphasis> (VPN for short) is a way to link two different local networks through the Internet by way of a tunnel; the tunnel is usually encrypted for confidentiality. VPNs are often used to integrate a remote machine within a company's local network."
+msgstr "<emphasis>虛擬專用網路</emphasis> (VPN) 是以通道方式，經由網際網路連結兩個區域網路的方式；通常以加密方式在通道內傳送資訊。VPN 通常用於整合公司內部遠端機器。"
 
 #, fuzzy
 #| msgid "Several tools provide this. OpenVPN is an efficient solution, easy to deploy and maintain, based on SSL/TLS. Another possibility is using IPsec to encrypt IP traffic between two machines; this encryption is transparent, which means that applications running on these hosts need not be modified to take the VPN into account. SSH can also be used to provide a VPN, in addition to its more conventional features. Finally, a VPN can be established using Microsoft's PPTP protocol. Other solutions exist, but are beyond the focus of this book."
@@ -693,6 +873,21 @@ msgstr "OpenVPN"
 msgid "<primary>OpenVPN</primary>"
 msgstr "<primary>OpenVPN</primary>"
 
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>VPN</primary><secondary>OpenVPN</secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>virtual private</secondary>"
+msgid "<primary>network</primary><secondary><literal>tun</literal> interface</secondary>"
+msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
+
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>virtual private</secondary>"
+msgid "<primary>network</primary><secondary><literal>tap</literal> interface</secondary>"
+msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
+
 msgid "OpenVPN is a piece of software dedicated to creating virtual private networks. Its setup involves creating virtual network interfaces on the VPN server and on the client(s); both <literal>tun</literal> (for IP-level tunnels) and <literal>tap</literal> (for Ethernet-level tunnels) interfaces are supported. In practice, <literal>tun</literal> interfaces will most often be used except when the VPN clients are meant to be integrated into the server's local network by way of an Ethernet bridge."
 msgstr "OpenVPN 用於建立虛擬專用網路的一個軟體。在 VPN 伺服器及客戶端建立虛擬專用網路；支援 <literal>tun</literal> (IP 層面的通道) 和 <literal>tap</literal> (Ethernet 層面的通道) 介面。實務上，常用的是 <literal>tun</literal> 介面，除非 VPN 客戶端難以經由 Ethernet 橋接器整合入伺服器的區域網路。"
 
@@ -703,9 +898,29 @@ msgid "Configuring the OpenVPN Server"
 msgstr "組態 OpenVPN 伺服器"
 
 #, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>OpenVPN</primary><secondary>server</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
 #| msgid "Now all certificates have been created, they need to be copied where appropriate: the root certificate's public key (<filename>keys/ca.crt</filename>) will be stored on all machines (both server and clients) as <filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's certificate is installed only on the server (<filename>keys/vpn.falcot.com.crt</filename> goes to <filename>/etc/ssl/vpn.falcot.com.crt</filename>, and <filename>keys/vpn.falcot.com.key</filename> goes to <filename>/etc/ssl/private/vpn.falcot.com.key</filename> with restricted permissions so that only the administrator can read it), with the corresponding Diffie-Hellman parameters (<filename>keys/dh2048.pem</filename>) installed to <filename>/etc/openvpn/dh2048.pem</filename>. Client certificates are installed on the corresponding VPN client in a similar fashion."
 msgid "After all certificates have been created (follow the instructions from <xref linkend=\"sect.easy-rsa\" />), they need to be copied where appropriate: the root certificate's public key (<filename>pki/ca.crt</filename>) will be stored on all machines (both server and clients) as <filename>/etc/ssl/certs/Falcot_CA.crt</filename>. The server's certificate is installed only on the server (<filename>pki/issued/vpn.falcot.com.crt</filename> goes to <filename>/etc/ssl/certs/vpn.falcot.com.crt</filename>, and <filename>pki/private/vpn.falcot.com.key</filename> goes to <filename>/etc/ssl/private/vpn.falcot.com.key</filename> with restricted permissions so that only the administrator can read it), with the corresponding Diffie-Hellman parameters (<filename>pki/dh.pem</filename>) installed to <filename>/etc/openvpn/dh.pem</filename>. Client certificates are installed on the corresponding VPN client in a similar fashion."
 msgstr "新的認證建好後，需複製至適當的地方：超級使用者公鑰 (<filename>keys/ca.crt</filename>) 儲存在所有機器 (伺服器與客戶端) 的 <filename>/etc/ssl/certs/Falcot_CA.crt</filename>。伺服器的認證僅安裝在伺服器 (<filename>keys/vpn.falcot.com.crt</filename> 的 <filename>/etc/ssl/vpn.falcot.com.crt</filename>，以及 <filename>keys/vpn.falcot.com.key</filename> 在 <filename>/etc/ssl/private/vpn.falcot.com.key</filename> 限制其權限為管理者才能讀取)，對應至 Diffie-Hellman 參數 (<filename>keys/dh2048.pem</filename>) 安裝在 <filename>/etc/openvpn/dh2048.pem</filename>。客戶端認證則類似的方式，安裝在對應的 VPN 各戶端。"
+
+#, fuzzy
+#| msgid "<primary>certificate</primary><secondary>X.509</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary>/etc/ssl/</secondary>"
+msgstr "<primary>認證</primary><secondary>X.509</secondary>"
+
+#, fuzzy
+#| msgid "<primary>certificate</primary><secondary>X.509</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary>/etc/openvpn/dh.pem</secondary>"
+msgstr "<primary>認證</primary><secondary>X.509</secondary>"
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>control</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary>/etc/openvpn/*.conf</secondary>"
+msgstr "<primary>流量</primary><secondary>控制</secondary>"
 
 #, fuzzy
 #| msgid "By default, the OpenVPN initialization script tries starting all virtual private networks defined in <filename>/etc/openvpn/*.conf</filename>. Setting up a VPN server is therefore a matter of storing a corresponding configuration file in this directory. A good starting point is <filename>/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz</filename>, which leads to a rather standard server. Of course, some parameters need to be adapted: <literal>ca</literal>, <literal>cert</literal>, <literal>key</literal> and <literal>dh</literal> need to describe the selected locations (respectively, <literal>/etc/ssl/certs/Falcot_CA.crt</literal>, <literal>/etc/ssl/vpn.falcot.com.crt</literal>, <literal>/etc/ssl/private/vpn.falcot.com.key</literal> and <literal>/etc/openvpn/dh2048.pem</literal>). The <literal>server 10.8.0.0 255.255.255.0</literal> directive defines the subnet to be used by the VPN; the server uses the first IP address in that range (<literal>10.8.0.1</literal>) and the rest of the addresses are allocated to clients."
@@ -713,9 +928,29 @@ msgid "By default, the OpenVPN initialization script tries starting all virtual 
 msgstr "預設，OpenVPN 初始化的腳本在 <filename>/etc/openvpn/*.conf</filename> 啟動所有虛擬專用網路。設定 VPN 伺服器就是在此資料夾儲存對應的組態檔。<filename>/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz</filename> 是個好的起點，建立相當標準伺服器。當然，還有若干參數需要調整：<literal>ca</literal>、<literal>cert</literal>、<literal>key</literal> 和 <literal>dh</literal> 需指定其地點 (分別是 <literal>/etc/ssl/certs/Falcot_CA.crt</literal>、<literal>/etc/ssl/vpn.falcot.com.crt</literal>、<literal>/etc/ssl/private/vpn.falcot.com.key</literal> 和 <literal>/etc/openvpn/dh2048.pem</literal>)。<literal>server 10.8.0.0 255.255.255.0</literal> 設定 VPN 的次網路；此伺服器使用此範圍內的第一個 IP 位址 (<literal>10.8.0.1</literal>) 然後把其他的位址保留給客戶端。"
 
 #, fuzzy
+#| msgid "<primary>traffic</primary><secondary>control</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary>/etc/network/interfaces</secondary>"
+msgstr "<primary>流量</primary><secondary>控制</secondary>"
+
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>virtual private</secondary>"
+msgid "<primary>network</primary><secondary>virtual interface</secondary>"
+msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>OpenVPN</primary><secondary>network interface</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
 #| msgid "With this configuration, starting OpenVPN creates the virtual network interface, usually under the <literal>tun0</literal> name. However, firewalls are often configured at the same time as the real network interfaces, which happens before OpenVPN starts. Good practice therefore recommends creating a persistent virtual network interface, and configuring OpenVPN to use this pre-existing interface. This further allows choosing the name for this interface. To this end, <command>openvpn --mktun --dev vpn --dev-type tun</command> creates a virtual network interface named <literal>vpn</literal> with type <literal>tun</literal>; this command can easily be integrated in the firewall configuration script, or in an <literal>up</literal> directive of the <filename>/etc/network/interfaces</filename> file. The OpenVPN configuration file must also be updated accordingly, with the <literal>dev vpn</literal> and <literal>dev-type tun</literal> directives."
 msgid "With this configuration, starting OpenVPN creates the virtual network interface, usually under the <literal>tun0</literal> name. However, firewalls are often configured at the same time as the real network interfaces, which happens before OpenVPN starts. Good practice therefore recommends creating a persistent virtual network interface, and configuring OpenVPN to use this pre-existing interface. This further allows choosing the name for this interface. To this end, <command>openvpn --mktun --dev vpn --dev-type tun</command> creates a virtual network interface named <literal>vpn</literal> with type <literal>tun</literal>; this command can easily be integrated in the firewall configuration script, or in an <literal>up</literal> directive of the <filename>/etc/network/interfaces</filename> file, or a <emphasis role=\"package\">udev</emphasis> rule can be added to that end. The OpenVPN configuration file must also be updated accordingly, with the <literal>dev vpn</literal> and <literal>dev-type tun</literal> directives."
 msgstr "在這種組態下，通常以 <literal>tun0</literal> 之名，新增 OpenVPN 的虛擬網路介面。然而，有時在啟動 OpenVPN 前，把防火牆組態成真實的網路介面。最好固定新增的虛擬網路介面，OpenVPN 使用預存的介面。進一步選擇介面的名稱。到了這個階段，<command>openvpn --mktun --dev vpn --dev-type tun</command> 新增一個虛擬網路介面名稱為 <literal>vpn</literal> 型態為 <literal>tun</literal>；這個命令可以整合入防火牆組態腳本，或 <literal>up</literal> 指向 <filename>/etc/network/interfaces</filename> 檔案。OpenVPN 組態檔必須跟著更新，直接使用 <literal>dev vpn</literal> 和 <literal>dev-type tun</literal>。"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>OpenVPN</primary><secondary>push route</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
 
 msgid "Barring further action, VPN clients can only access the VPN server itself by way of the <literal>10.8.0.1</literal> address. Granting the clients access to the local network (192.168.0.0/24), requires adding a <literal>push route 192.168.0.0 255.255.255.0</literal> directive to the OpenVPN configuration so that VPN clients automatically get a network route telling them that this network is reachable by way of the VPN. Furthermore, machines on the local network also need to be informed that the route to the VPN goes through the VPN server (this automatically works when the VPN server is installed on the gateway). Alternatively, the VPN server can be configured to perform IP masquerading so that connections coming from VPN clients appear as if they are coming from the VPN server instead (see <xref linkend=\"sect.gateway\" />)."
 msgstr "禁止進一步的行動，VPN 客戶端祗能經由 <literal>10.8.0.1</literal> 位址近用 VPN 伺服器。為了授權客戶近用在地網路 (192.168.0.0/24)，需在 OpenVPN 組態中加入 <literal>推送路徑 192.168.0.0 255.255.255.0</literal>，讓 VPN 客戶端自動取得網路路由，使其明瞭經由 VPN 可以進入該網路。此外，在地網路的機器也需被告知，經由 VPN 伺服器 (在閘道安裝 VPN 伺服器即自動啟用) 進入VPN。另外，VPN 伺服器可以組態後執行偽裝 IP 的工作，讓來自 VPN 客戶端的訊息顯示成來自 VPN 伺服器 (見 <xref linkend=\"sect.gateway\" />)。"
@@ -723,22 +958,56 @@ msgstr "禁止進一步的行動，VPN 客戶端祗能經由 <literal>10.8.0.1</
 msgid "Configuring the OpenVPN Client"
 msgstr "組態 OpenVPN 客戶端"
 
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>OpenVPN</primary><secondary>client</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
 msgid "Setting up an OpenVPN client also requires creating a configuration file in <filename>/etc/openvpn/</filename>. A standard configuration can be obtained by using <filename>/usr/share/doc/openvpn/examples/sample-config-files/client.conf</filename> as a starting point. The <literal>remote vpn.falcot.com 1194</literal> directive describes the address and port of the OpenVPN server; the <literal>ca</literal>, <literal>cert</literal> and <literal>key</literal> also need to be adapted to describe the locations of the key files."
 msgstr "需組態 <filename>/etc/openvpn/</filename> 內的檔案才能設定 OpenVPN 客戶端。標準的組態方法可從使用 <filename>/usr/share/doc/openvpn/examples/sample-config-files/client.conf</filename> 這個檔案開始。<literal>remote vpn.falcot.com 1194</literal> 介紹 OpenVPN 伺服器的位址及埠號；描述密鑰文件位址時，需參考 <literal>ca</literal>、<literal>cert</literal> 和 <literal>key</literal>。"
+
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>virtual private</secondary>"
+msgid "<primary>OpenVPN</primary><secondary><literal>AUTOSTART</literal></secondary>"
+msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary>/etc/default/openvpn</secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
+
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>service</primary><secondary><filename>openvpn@.service</filename></secondary>"
+msgstr "<primary>服務</primary><secondary>品質</secondary>"
 
 #, fuzzy
 #| msgid "If the VPN should not be started automatically on boot, set the <literal>AUTOSTART</literal> directive to <literal>none</literal> in the <filename>/etc/default/openvpn</filename> file. Starting or stopping a given VPN connection is always possible with the commands <command>service openvpn@<replaceable>name</replaceable> start</command> and <command>service openvpn@<replaceable>name</replaceable> stop</command> (where the connection <replaceable>name</replaceable> matches the one defined in <filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename>)."
 msgid "If the VPN should not be started automatically on boot, set the <literal>AUTOSTART</literal> directive to <literal>none</literal> in the <filename>/etc/default/openvpn</filename> file. Starting or stopping a given VPN connection is always possible with the commands <command>systemctl start openvpn@<replaceable>name</replaceable></command> and <command>systemctl stop openvpn@<replaceable>name</replaceable></command> (where the connection <replaceable>name</replaceable> matches the one defined in <filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename>)."
 msgstr "若開機時無法自動進入 VPN，則需設定 <literal>AUTOSTART</literal> 為 <literal>none</literal> 於 <filename>/etc/default/openvpn</filename> 檔案內。以命令 <command>service openvpn@<replaceable>name</replaceable> start</command> 和 <command>service openvpn@<replaceable>name</replaceable> stop</command> (其中的 <replaceable>name</replaceable> 就是在 <filename>/etc/openvpn/<replaceable>name</replaceable>.conf</filename> 中設定的名稱) 就能啟用或停用指定的 VPN 連結。"
 
-msgid "The <emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis> package contains an extension to Network Manager (see <xref linkend=\"sect.roaming-network-config\" />) that allows managing OpenVPN virtual private networks. This allows every user to configure OpenVPN connections graphically and to control them from the network management icon. <indexterm><primary><emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis></primary></indexterm>"
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>OpenVPN</primary><secondary><emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis></secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
+#| msgid "The <emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis> package contains an extension to Network Manager (see <xref linkend=\"sect.roaming-network-config\" />) that allows managing OpenVPN virtual private networks. This allows every user to configure OpenVPN connections graphically and to control them from the network management icon. <indexterm><primary><emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis></primary></indexterm>"
+msgid "The <emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis> package contains an extension to Network Manager (see <xref linkend=\"sect.roaming-network-config\" />) that allows managing OpenVPN virtual private networks. This allows every user to configure OpenVPN connections graphically and to control them from the network management icon."
 msgstr "此 <emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis> 套件包括允許管理 OpenVPN 虛擬專屬網路的延伸網路管理者 (見 <xref linkend=\"sect.roaming-network-config\" />)。允許每個使用者以圖形介面組態 OpenVPN 且從網路管理圖示控制它們。 <indexterm><primary><emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis></primary></indexterm>"
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">network-manager-openvpn-gnome</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
 
 msgid "Virtual Private Network with SSH"
 msgstr "SSH 下的虛擬專屬網路"
 
-msgid "<primary>SSH</primary>"
-msgstr "<primary>SSH</primary>"
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>SSH</primary><secondary>VPN</secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
 msgid "<primary>PPP</primary>"
 msgstr "<primary>PPP</primary>"
@@ -747,6 +1016,16 @@ msgstr "<primary>PPP</primary>"
 #| msgid "There are actually two ways of creating a virtual private network with SSH. The historic one involves establishing a PPP layer over the SSH link. This method is described in a HOWTO document: <ulink type=\"block\" url=\"http://www.tldp.org/HOWTO/ppp-ssh/\" />"
 msgid "There are actually two ways of creating a virtual private network with SSH. The historic one involves establishing a PPP layer over the SSH link. This method is described in a HOWTO document: <ulink type=\"block\" url=\"https://www.tldp.org/HOWTO/ppp-ssh/\" />"
 msgstr "實際上有兩種方法以 SSH 新增虛擬專屬網路。較舊的是以 SSH 建立 PPP 層連結。此方法在 HOWTO 文件詳細說明：<ulink type=\"block\" url=\"http://www.tldp.org/HOWTO/ppp-ssh/\" />"
+
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>virtual private</secondary>"
+msgid "<primary>SSH</primary><secondary><literal>PermitTunnel</literal></secondary>"
+msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/ssh/sshd_config</filename></secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
 
 msgid "The second method is more recent, and was introduced with OpenSSH 4.3; it is now possible for OpenSSH to create virtual network interfaces (<literal>tun*</literal>) on both sides of an SSH connection, and these virtual interfaces can be configured exactly as if they were physical interfaces. The tunneling system must first be enabled by setting <literal>PermitTunnel</literal> to “yes” in the SSH server configuration file (<filename>/etc/ssh/sshd_config</filename>). When establishing the SSH connection, the creation of a tunnel must be explicitly requested with the <literal>-w any:any</literal> option (<literal>any</literal> can be replaced with the desired <literal>tun</literal> device number). This requires the user to have administrator privilege on both sides, so as to be able to create the network device (in other words, the connection must be established as root)."
 msgstr "第二個方法較新，適用於 OpenSSH 4.3；可以在 OpenSSH 之下建立虛擬網路介面 (<literal>tun*</literal>) 於 SSH 連結的兩端，且可以精準地組態這些虛擬介面，就像在實體介面環境下。必須先設定 <literal>PermitTunnel</literal> 為 “yes” 於 SSH 伺服器組態檔 (<filename>/etc/ssh/sshd_config</filename>)，才能啟用此隧道系統。啟用 SSH 連結後，新增的隧道必須以 <literal>-w any:any</literal> 選項 (<literal>any</literal> 可以用期望的 <literal>tun</literal> 設備名稱取代) 請求連結。兩端的使用者需有管理者權限，才能新增網路設備 (換句話說，必須以超級使用者的身份才能建立連結)。"
@@ -769,6 +1048,11 @@ msgid "<primary>IPsec</primary>"
 msgstr "<primary>網際網路安全協定</primary>"
 
 #, fuzzy
+#| msgid "<primary>protocol</primary><secondary>ESP</secondary>"
+msgid "<primary>Internet Protocol Security</primary><see>IPsec</see>"
+msgstr "<primary>協定</primary><secondary>ESP</secondary>"
+
+#, fuzzy
 #| msgid "<primary><command>strongswan</command></primary>"
 msgid "<primary><command>libreswan</command></primary>"
 msgstr "<primary><command>strongswan</command></primary>"
@@ -776,11 +1060,26 @@ msgstr "<primary><command>strongswan</command></primary>"
 msgid "<primary><command>strongswan</command></primary>"
 msgstr "<primary><command>strongswan</command></primary>"
 
-msgid "IPsec, despite being the standard in IP VPNs, is rather more involved in its implementation. The IPsec engine itself is integrated in the Linux kernel; the required user-space parts, the control and configuration tools, are provided by the <emphasis role=\"pkg\">libreswan</emphasis> package or the <emphasis role=\"pkg\">strongswan</emphasis> package. Here we describe briefly the <emphasis role=\"pkg\">libreswan</emphasis> option."
+msgid "IPsec, despite being the standard in IP VPNs, is rather more involved in its implementation. The IPsec engine itself is integrated in the Linux kernel; the required user-space parts, the control and configuration tools, are provided by the <emphasis role=\"pkg\">libreswan</emphasis> package or the <emphasis role=\"pkg\">strongswan</emphasis> package. Here we describe briefly the first of these options."
 msgstr ""
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/ipsec.conf</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
+
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>IPsec</primary><secondary>tunnel</secondary>"
+msgstr "<primary>服務</primary><secondary>品質</secondary>"
 
 msgid "First, we install the <emphasis role=\"pkg\">libreswan</emphasis> package. In concrete terms, each host's <filename>/etc/ipsec.conf</filename> contains the parameters for <emphasis>IPsec tunnels</emphasis> (or <emphasis>Security Associations</emphasis>, in the IPsec terminology) that the host is concerned with. There are many configuration examples in <filename>/usr/share/doc/libreswan/</filename>, but Libreswan's online documentation has more examples with explanations: <ulink type=\"block\" url=\"https://libreswan.org/wiki/\" />"
 msgstr ""
+
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>service</primary><secondary><filename>ipsec.service</filename></secondary>"
+msgstr "<primary>服務</primary><secondary>品質</secondary>"
 
 msgid "The IPsec service can be controlled with <command>systemctl</command>; for example, <command>systemctl start ipsec</command> will start the IPsec service."
 msgstr ""
@@ -788,7 +1087,14 @@ msgstr ""
 msgid "<primary>IKE</primary>"
 msgstr "<primary>IKE</primary>"
 
-msgid "<primary>IPsec</primary><secondary>IPsec Key Exchange</secondary>"
+#, fuzzy
+#| msgid "<primary>IPsec</primary>"
+msgid "<primary>IPsec Key Exchange</primary><see>IKE</see>"
+msgstr "<primary>網際網路安全協定</primary>"
+
+#, fuzzy
+#| msgid "<primary>IPsec</primary><secondary>IPsec Key Exchange</secondary>"
+msgid "<primary>IPsec</primary><secondary>IPsec Key Exchange</secondary><seealso>IKE</seealso>"
 msgstr "<primary>IPsec</primary><secondary>IPsec Key Exchange</secondary>"
 
 msgid "<primary><command>setkey</command></primary>"
@@ -800,20 +1106,22 @@ msgstr "僅管其狀態為參照，IPsec 的設定限制其用途。必備的通
 msgid "<emphasis>CAUTION</emphasis> IPsec and NAT"
 msgstr "<emphasis>注意</emphasis> IPsec 與 NAT"
 
-msgid "NATing firewalls and IPsec do not work well together: since IPsec signs the packets, any change on these packets that the firewall might perform will void the signature, and the packets will be rejected at their destination. Various IPsec implementations now include the <emphasis>NAT-T</emphasis> technique (for <emphasis>NAT Traversal</emphasis>), which basically encapsulates the IPsec packet within a standard UDP packet."
-msgstr "NAT 的防火牆與 IPsec 無法併用：因為 IPsec 是套件，任何改變將引發防火牆的作用，套件就會被拒絕。不同的 IPsec 應用包括：<emphasis>NAT-T</emphasis> 技術 (給 <emphasis>NAT Traversal</emphasis>)，把 IPsec 套件包裝在標準的 UDP 封包內。"
+msgid "<primary>NAT</primary>"
+msgstr "<primary>NAT</primary>"
 
 msgid "<primary>NAT-T</primary>"
 msgstr "<primary>NAT-T</primary>"
 
-msgid "<primary>NAT Traversal</primary>"
+#, fuzzy
+#| msgid "<primary>NAT Traversal</primary>"
+msgid "<primary>NAT Traversal</primary><seealso>NAT-T</seealso>"
 msgstr "<primary>NAT Traversal</primary>"
+
+msgid "NATing firewalls and IPsec do not work well together: since IPsec signs the packets, any change on these packets that the firewall might perform will void the signature, and the packets will be rejected at their destination. Various IPsec implementations now include the <emphasis>NAT-T</emphasis> technique (for <emphasis>NAT Traversal</emphasis>), which basically encapsulates the IPsec packet within a standard UDP packet."
+msgstr "NAT 的防火牆與 IPsec 無法併用：因為 IPsec 是套件，任何改變將引發防火牆的作用，套件就會被拒絕。不同的 IPsec 應用包括：<emphasis>NAT-T</emphasis> 技術 (給 <emphasis>NAT Traversal</emphasis>)，把 IPsec 套件包裝在標準的 UDP 封包內。"
 
 msgid "<emphasis>SECURITY</emphasis> IPsec and firewalls"
 msgstr "<emphasis>安全</emphasis> IPsec 與防火牆"
-
-msgid "The standard mode of operation of IPsec involves data exchanges on UDP port 500 for key exchanges (also on UDP port 4500 in the case that NAT-T is in use). Moreover, IPsec packets use two dedicated IP protocols that the firewall must let through; reception of these packets is based on their protocol numbers, 50 (ESP) and 51 (AH)."
-msgstr "IPsec 的標準操作模式在 UDP 埠號 500 做鍵值交換 (使用 NAT-T 時，也可在 UDP 埠號 4500)。而且，IPsec 封包使用兩個固定的 IP 協定允許防火牆通過；收到這些封包的基礎是其協定編號，50 (ESP) 與 51 (AH)。"
 
 msgid "<primary>ESP, protocol</primary>"
 msgstr "<primary>ESP，協定</primary>"
@@ -827,17 +1135,14 @@ msgstr "<primary>協定</primary><secondary>AH</secondary>"
 msgid "<primary>protocol</primary><secondary>ESP</secondary>"
 msgstr "<primary>協定</primary><secondary>ESP</secondary>"
 
+msgid "The standard mode of operation of IPsec involves data exchanges on UDP port 500 for key exchanges (also on UDP port 4500 in the case that NAT-T is in use). Moreover, IPsec packets use two dedicated IP protocols that the firewall must let through; reception of these packets is based on their protocol numbers, 50 (ESP) and 51 (AH)."
+msgstr "IPsec 的標準操作模式在 UDP 埠號 500 做鍵值交換 (使用 NAT-T 時，也可在 UDP 埠號 4500)。而且，IPsec 封包使用兩個固定的 IP 協定允許防火牆通過；收到這些封包的基礎是其協定編號，50 (ESP) 與 51 (AH)。"
+
 msgid "PPTP"
 msgstr "PPTP"
 
-msgid "PPTP (for <emphasis>Point-to-Point Tunneling Protocol</emphasis>) uses two communication channels, one for control data and one for payload data; the latter uses the GRE protocol (<emphasis>Generic Routing Encapsulation</emphasis>). A standard PPP link is then set up over the data exchange channel."
-msgstr "PPTP (𪅈原文是 <emphasis>Point-to-Point Tunneling Protocol</emphasis>) 用到兩種通訊閘道，一個控制資料另個酬載資料；後者使用 GRE 協定 (<emphasis>Generic Routing Encapsulation</emphasis>)。標準的 PPP 連結建立在資料交換閘道。"
-
 msgid "<primary>PPTP</primary>"
 msgstr "<primary>PPTP</primary>"
-
-msgid "<primary>Point-to-Point Tunneling Protocol</primary>"
-msgstr "<primary>Point-to-Point Tunneling Protocol</primary>"
 
 msgid "<primary>GRE, protocol</primary>"
 msgstr "<primary>GRE，協定</primary>"
@@ -845,14 +1150,27 @@ msgstr "<primary>GRE，協定</primary>"
 msgid "<primary>protocol</primary><secondary>GRE</secondary>"
 msgstr "<primary>協定</primary><secondary>GRE</secondary>"
 
+msgid "PPTP (for <emphasis>Point-to-Point Tunneling Protocol</emphasis>) uses two communication channels, one for control data and one for payload data; the latter uses the GRE protocol (<emphasis>Generic Routing Encapsulation</emphasis>). A standard PPP link is then set up over the data exchange channel."
+msgstr "PPTP (𪅈原文是 <emphasis>Point-to-Point Tunneling Protocol</emphasis>) 用到兩種通訊閘道，一個控制資料另個酬載資料；後者使用 GRE 協定 (<emphasis>Generic Routing Encapsulation</emphasis>)。標準的 PPP 連結建立在資料交換閘道。"
+
 msgid "Configuring the Client"
 msgstr "設定客戶端"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>PPTP</primary><secondary>Client</secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+msgid "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
 
 msgid "The <emphasis role=\"pkg\">pptp-linux</emphasis> package contains an easily-configured PPTP client for Linux. The following instructions take their inspiration from the official documentation: <ulink type=\"block\" url=\"http://pptpclient.sourceforge.net/howto-debian.phtml\" />"
 msgstr "此 <emphasis role=\"pkg\">pptp-linux</emphasis> 封包含有易於組態的 Linux 客戶端 PPTP。以下說明取自官方文件：<ulink type=\"block\" url=\"http://pptpclient.sourceforge.net/howto-debian.phtml\" />"
 
-msgid "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
-msgstr "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/ppp/</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
 
 msgid "The Falcot administrators created several files: <filename>/etc/ppp/options.pptp</filename>, <filename>/etc/ppp/peers/falcot</filename>, <filename>/etc/ppp/ip-up.d/falcot</filename>, and <filename>/etc/ppp/ip-down.d/falcot</filename>."
 msgstr "Falcot 管理者新增若干檔案：<filename>/etc/ppp/options.pptp</filename>、<filename>/etc/ppp/peers/falcot</filename>、<filename>/etc/ppp/ip-up.d/falcot</filename>、與 <filename>/etc/ppp/ip-down.d/falcot</filename>。"
@@ -956,17 +1274,24 @@ msgstr ""
 msgid "<emphasis>SECURITY</emphasis> MPPE"
 msgstr "<emphasis>安全</emphasis> MPPE"
 
-msgid "Securing PPTP involves using the MPPE feature (<emphasis>Microsoft Point-to-Point Encryption</emphasis>), which is available in official Debian kernels as a module."
-msgstr "加密的 PPTP 涉及使用 MPPE 功能 (<emphasis>Microsoft Point-to-Point Encryption</emphasis>)，可從 Debian 官方的核心取得模組。"
-
 msgid "<primary>MPPE</primary>"
 msgstr "<primary>MPPE</primary>"
 
-msgid "<primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary>"
+#, fuzzy
+#| msgid "<primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary>"
+msgid "<primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary><see>MPPE</see>"
 msgstr "<primary>Microsoft</primary><secondary>Point-to-Point Encryption</secondary>"
+
+msgid "Securing PPTP involves using the MPPE feature (<emphasis>Microsoft Point-to-Point Encryption</emphasis>), which is available in official Debian kernels as a module."
+msgstr "加密的 PPTP 涉及使用 MPPE 功能 (<emphasis>Microsoft Point-to-Point Encryption</emphasis>)，可從 Debian 官方的核心取得模組。"
 
 msgid "Configuring the Server"
 msgstr "組態伺服器"
+
+#, fuzzy
+#| msgid "<primary><command>tc</command></primary>"
+msgid "<primary><command>pptpd</command></primary>"
+msgstr "<primary><command>tc</command></primary>"
 
 msgid "<emphasis>CAUTION</emphasis> PPTP and firewalls"
 msgstr "<emphasis>注意</emphasis> PPTP 與防火牆"
@@ -974,39 +1299,85 @@ msgstr "<emphasis>注意</emphasis> PPTP 與防火牆"
 msgid "Intermediate firewalls need to be configured to let through IP packets using protocol 47 (GRE). Moreover, the PPTP server's port 1723 needs to be open so that the communication channel can happen."
 msgstr "需組態中間防火牆讓 IP 封包使用埠號 47 (GRE)。此外，需打開 PPTP 伺服器的埠號 1723以使用通訊閘道。"
 
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/pptpd.conf</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
+
 msgid "<command>pptpd</command> is the PPTP server for Linux. Its main configuration file, <filename>/etc/pptpd.conf</filename>, requires very few changes: <emphasis>localip</emphasis> (local IP address) and <emphasis>remoteip</emphasis> (remote IP address). In the example below, the PPTP server always uses the <literal>192.168.0.199</literal> address, and PPTP clients receive IP addresses from <literal>192.168.0.200</literal> to <literal>192.168.0.250</literal>."
 msgstr "<command>pptpd</command> 是 Linux 的 PPTP 伺服器。它的主要組態檔是，<filename>/etc/pptpd.conf</filename>，應做若干改變：<emphasis>localip</emphasis> (內網 IP 位址) 與 <emphasis>remoteip</emphasis> (外網 IP 位址)。在下例中，PPTP 伺服器總是使用 <literal>192.168.0.199</literal> 位址，以及從 <literal>192.168.0.200</literal> 至 <literal>192.168.0.250</literal> 之間接收 PPTP 客戶端的 IP 位址。"
 
 msgid "The <filename>/etc/pptpd.conf</filename> file"
 msgstr "<filename>/etc/pptpd.conf</filename> 檔案"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "# TAG: speed\n"
+#| "#\n"
+#| "#       Specifies the speed for the PPP daemon to talk at.\n"
+#| "#\n"
+#| "speed 115200\n"
+#| "\n"
+#| "# TAG: option\n"
+#| "#\n"
+#| "#       Specifies the location of the PPP options file.\n"
+#| "#       By default PPP looks in '/etc/ppp/options'\n"
+#| "#\n"
+#| "option /etc/ppp/pptpd-options\n"
+#| "\n"
+#| "# TAG: debug\n"
+#| "#\n"
+#| "#       Turns on (more) debugging to syslog\n"
+#| "#\n"
+#| "# debug\n"
+#| "\n"
+#| "# TAG: localip\n"
+#| "# TAG: remoteip\n"
+#| "#\n"
+#| "#       Specifies the local and remote IP address ranges.\n"
+#| "#\n"
+#| "#       You can specify single IP addresses separated by commas or you can\n"
+#| "#       specify ranges, or both. For example:\n"
+#| "#\n"
+#| "#               192.168.0.234,192.168.0.245-249,192.168.0.254\n"
+#| "#\n"
+#| "#       IMPORTANT RESTRICTIONS:\n"
+#| "#\n"
+#| "#       1. No spaces are permitted between commas or within addresses.\n"
+#| "#\n"
+#| "#       2. If you give more IP addresses than MAX_CONNECTIONS, it will\n"
+#| "#          start at the beginning of the list and go until it gets\n"
+#| "#          MAX_CONNECTIONS IPs. Others will be ignored.\n"
+#| "#\n"
+#| "#       3. No shortcuts in ranges! ie. 234-8 does not mean 234 to 238,\n"
+#| "#          you must type 234-238 if you mean this.\n"
+#| "#\n"
+#| "#       4. If you give a single localIP, that's ok - all local IPs will\n"
+#| "#          be set to the given one. You MUST still give at least one remote\n"
+#| "#          IP for each simultaneous client.\n"
+#| "#\n"
+#| "#localip 192.168.0.234-238,192.168.0.245\n"
+#| "#remoteip 192.168.1.234-238,192.168.1.245\n"
+#| "#localip 10.0.1.1\n"
+#| "#remoteip 10.0.1.2-100\n"
+#| "localip 192.168.0.199\n"
+#| "remoteip 192.168.0.200-250"
 msgid ""
 "\n"
-"# TAG: speed\n"
-"#\n"
-"#       Specifies the speed for the PPP daemon to talk at.\n"
-"#\n"
-"speed 115200\n"
-"\n"
-"# TAG: option\n"
-"#\n"
-"#       Specifies the location of the PPP options file.\n"
-"#       By default PPP looks in '/etc/ppp/options'\n"
-"#\n"
-"option /etc/ppp/pptpd-options\n"
-"\n"
-"# TAG: debug\n"
-"#\n"
-"#       Turns on (more) debugging to syslog\n"
-"#\n"
-"# debug\n"
-"\n"
+"[..]\n"
 "# TAG: localip\n"
 "# TAG: remoteip\n"
-"#\n"
 "#       Specifies the local and remote IP address ranges.\n"
 "#\n"
-"#       You can specify single IP addresses separated by commas or you can\n"
+"#       These options are ignored if delegate option is set.\n"
+"#\n"
+"#       Any addresses work as long as the local machine takes care of the\n"
+"#       routing.  But if you want to use MS-Windows networking, you should\n"
+"#       use IP addresses out of the LAN address space and use the proxyarp\n"
+"#       option in the pppd options file, or run bcrelay.\n"
+"#\n"
+"#       You can specify single IP addresses seperated by commas or you can\n"
 "#       specify ranges, or both. For example:\n"
 "#\n"
 "#               192.168.0.234,192.168.0.245-249,192.168.0.254\n"
@@ -1015,9 +1386,9 @@ msgid ""
 "#\n"
 "#       1. No spaces are permitted between commas or within addresses.\n"
 "#\n"
-"#       2. If you give more IP addresses than MAX_CONNECTIONS, it will\n"
-"#          start at the beginning of the list and go until it gets\n"
-"#          MAX_CONNECTIONS IPs. Others will be ignored.\n"
+"#       2. If you give more IP addresses than the value of connections,\n"
+"#          it will start at the beginning of the list and go until it\n"
+"#          gets connections IPs.  Others will be ignored.\n"
 "#\n"
 "#       3. No shortcuts in ranges! ie. 234-8 does not mean 234 to 238,\n"
 "#          you must type 234-238 if you mean this.\n"
@@ -1026,10 +1397,12 @@ msgid ""
 "#          be set to the given one. You MUST still give at least one remote\n"
 "#          IP for each simultaneous client.\n"
 "#\n"
+"# (Recommended)\n"
+"#localip 192.168.0.1\n"
+"#remoteip 192.168.0.234-238,192.168.0.245\n"
+"# or\n"
 "#localip 192.168.0.234-238,192.168.0.245\n"
 "#remoteip 192.168.1.234-238,192.168.1.245\n"
-"#localip 10.0.1.1\n"
-"#remoteip 10.0.1.2-100\n"
 "localip 192.168.0.199\n"
 "remoteip 192.168.0.200-250"
 msgstr ""
@@ -1084,6 +1457,11 @@ msgstr ""
 "#remoteip 10.0.1.2-100\n"
 "localip 192.168.0.199\n"
 "remoteip 192.168.0.200-250"
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/ppp/pptpd-options</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
 
 msgid "The PPP configuration used by the PPTP server also requires a few changes in <filename>/etc/ppp/pptpd-options</filename>. The important parameters are the server name (<literal>pptp</literal>), the domain name (<literal>falcot.com</literal>), and the IP addresses for DNS and WINS servers."
 msgstr "PPP 採用 PPTP 伺服器組態時也需在 <filename>/etc/ppp/pptpd-options</filename> 做若干改變。 重要的參數有伺服器名稱 (<literal>pptp</literal>)、網域名稱 (<literal>falcot.com</literal>)、以及 DNS 與 WINS 伺服器的 IP 位址。"
@@ -1091,26 +1469,67 @@ msgstr "PPP 採用 PPTP 伺服器組態時也需在 <filename>/etc/ppp/pptpd-opt
 msgid "The <filename>/etc/ppp/pptpd-options</filename> file"
 msgstr "<filename>/etc/ppp/pptpd-options</filename> 檔案"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "## turn pppd syslog debugging on\n"
+#| "#debug\n"
+#| "\n"
+#| "## change 'servername' to whatever you specify as your server name in chap-secrets\n"
+#| "name pptp\n"
+#| "## change the domainname to your local domain\n"
+#| "domain falcot.com\n"
+#| "\n"
+#| "## these are reasonable defaults for WinXXXX clients\n"
+#| "## for the security related settings\n"
+#| "# The Debian pppd package now supports both MSCHAP and MPPE, so enable them\n"
+#| "# here. Please note that the kernel support for MPPE must also be present!\n"
+#| "auth\n"
+#| "require-chap\n"
+#| "require-mschap\n"
+#| "require-mschap-v2\n"
+#| "require-mppe-128\n"
+#| "\n"
+#| "## Fill in your addresses\n"
+#| "ms-dns 192.168.0.1\n"
+#| "ms-wins 192.168.0.1\n"
+#| "\n"
+#| "## Fill in your netmask\n"
+#| "netmask 255.255.255.0\n"
+#| "\n"
+#| "## some defaults\n"
+#| "nodefaultroute\n"
+#| "proxyarp\n"
+#| "lock"
 msgid ""
 "\n"
-"## turn pppd syslog debugging on\n"
+"# Enable connection debugging facilities.\n"
+"# (see your syslog configuration for where pppd sends to)\n"
 "#debug\n"
 "\n"
-"## change 'servername' to whatever you specify as your server name in chap-secrets\n"
-"name pptp\n"
+"# Name of the local system for authentication purposes\n"
+"# (must match the second field in /etc/ppp/chap-secrets entries)\n"
+"name pptpd\n"
+"\n"
+"# Optional: domain name to use for authentication\n"
 "## change the domainname to your local domain\n"
 "domain falcot.com\n"
 "\n"
+"# Authentication\n"
 "## these are reasonable defaults for WinXXXX clients\n"
 "## for the security related settings\n"
-"# The Debian pppd package now supports both MSCHAP and MPPE, so enable them\n"
-"# here. Please note that the kernel support for MPPE must also be present!\n"
 "auth\n"
-"require-chap\n"
-"require-mschap\n"
+"refuse-pap\n"
+"refuse-chap\n"
+"refuse-mschap\n"
+"# Require the peer to authenticate itself using MS-CHAPv2 [Microsoft\n"
+"# Challenge Handshake Authentication Protocol, Version 2] authentication.\n"
 "require-mschap-v2\n"
+"# Require MPPE 128-bit encryption\n"
+"# (note that MPPE requires the use of MSCHAP-V2 during authentication)\n"
 "require-mppe-128\n"
 "\n"
+"# Network and Routing\n"
 "## Fill in your addresses\n"
 "ms-dns 192.168.0.1\n"
 "ms-wins 192.168.0.1\n"
@@ -1153,6 +1572,11 @@ msgstr ""
 "nodefaultroute\n"
 "proxyarp\n"
 "lock"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/ppp/chap-secrets</filename></secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
 
 msgid "The last step involves registering the <literal>vpn</literal> user (and the associated password) in the <filename>/etc/ppp/chap-secrets</filename> file. Contrary to other instances where an asterisk (<literal>*</literal>) would work, the server name must be filled explicitly here. Furthermore, Windows PPTP clients identify themselves under the <literal><replaceable>DOMAIN</replaceable>\\\\<replaceable>USER</replaceable></literal> form, instead of only providing a user name. This explains why the file also mentions the <literal>FALCOT\\\\vpn</literal> user. It is also possible to specify individual IP addresses for users; an asterisk in this field specifies that dynamic addressing should be used."
 msgstr "登錄 <literal>vpn</literal> 使用者 (及其密碼) 於 <filename>/etc/ppp/chap-secrets</filename> 檔案的最後一個步驟。其他的作為裡，星號 (<literal>*</literal>) 是有作用的，在此的伺服器名稱必須明示出來。而且，Windows PPTP 客戶端以 <literal><replaceable>DOMAIN</replaceable>\\\\<replaceable>USER</replaceable></literal> 形式辨識，不是以使用者名稱區別。這就說明了在 <literal>FALCOT\\\\vpn</literal> 使用者必須提及的檔案。也可以指定使用者使用特定的 IP 位址；此欄位內的星號用於指定動態的位址。"
@@ -1176,6 +1600,11 @@ msgstr ""
 msgid "<emphasis>SECURITY</emphasis> PPTP vulnerabilities"
 msgstr "<emphasis>安全</emphasis> PPTP 漏洞"
 
+#, fuzzy
+#| msgid "<primary>IP address</primary><secondary>private</secondary>"
+msgid "<primary>PPTP</primary><secondary>vulnerabilities</secondary>"
+msgstr "<primary>IP 位址</primary><secondary>私有</secondary>"
+
 msgid "Microsoft's first PPTP implementation drew severe criticism because it had many security vulnerabilities; most have since then been fixed in more recent versions. The configuration documented in this section uses the latest version of the protocol. Be aware though that removing some options (such as <literal>require-mppe-128</literal> and <literal>require-mschap-v2</literal>) would make the service vulnerable again."
 msgstr "𧢒微軟的第一個 PPTP 應用發生重大的瑕疪，因為出現很多安全漏洞；多半在新版已修正了。本節的組態文件使用最新版的協定。移除部份選項 (如 <literal>require-mppe-128</literal> 與 <literal>require-mschap-v2</literal>) 仍可能再出現服務漏洞。"
 
@@ -1185,36 +1614,47 @@ msgstr "品質服務"
 msgid "Principle and Mechanism"
 msgstr "原則與機制"
 
-msgid "<emphasis>Quality of Service</emphasis> (or <emphasis>QoS</emphasis> for short) refers to a set of techniques that guarantee or improve the quality of the service provided to applications. The most popular such technique involves classifying the network traffic into categories, and differentiating the handling of traffic according to which category it belongs to. The main application of this differentiated services concept is <emphasis>traffic shaping</emphasis>, which limits the data transmission rates for connections related to some services and/or hosts so as not to saturate the available bandwidth and starve important other services. Traffic shaping is a particularly good fit for TCP traffic, since this protocol automatically adapts to available bandwidth."
-msgstr "<emphasis>服務品質</emphasis> (Quality of Service 或縮寫為 <emphasis>QoS</emphasis>) 係指提供應用時足以保證或改進服務品質的技術。最常見的技術包括分類網路流量、及依照其類別區分流量的作用。這種區分服務的概念是 <emphasis>流量成形</emphasis>，限制部份服務或主機的資料傳輸率，使其不致塞飽可用的頻寬以及壓縮其他的服務。流量成形是 TCP 流量的特定形式，此協定自動調整可用的頻。"
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>gateway</secondary>"
+msgid "<primary>network</primary><secondary>QoS</secondary>"
+msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
 
 msgid "<primary>QoS</primary>"
 msgstr "<primary>QoS</primary>"
 
-msgid "<primary>quality of service</primary>"
+#, fuzzy
+#| msgid "<primary>quality of service</primary>"
+msgid "<primary>Quality of Service</primary><see>QoS</see>"
 msgstr "<primary>服務品質</primary>"
 
-msgid "<primary>quality</primary><secondary>of service</secondary>"
+#, fuzzy
+#| msgid "<primary>quality</primary><secondary>of service</secondary>"
+msgid "<primary>quality</primary><secondary>of service</secondary><see>QoS</see>"
 msgstr "<primary>品質</primary><secondary>服務的</secondary>"
 
-msgid "<primary>service</primary><secondary>quality</secondary>"
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>service</primary><secondary>quality</secondary><see>QoS</see>"
 msgstr "<primary>服務</primary><secondary>品質</secondary>"
+
+msgid "<emphasis>Quality of Service</emphasis> (or <emphasis>QoS</emphasis> for short) refers to a set of techniques that guarantee or improve the quality of the service provided to applications. The most popular such technique involves classifying the network traffic into categories, and differentiating the handling of traffic according to which category it belongs to. The main application of this differentiated services concept is <emphasis>traffic shaping</emphasis>, which limits the data transmission rates for connections related to some services and/or hosts so as not to saturate the available bandwidth and starve important other services. Traffic shaping is a particularly good fit for TCP traffic, since this protocol automatically adapts to available bandwidth."
+msgstr "<emphasis>服務品質</emphasis> (Quality of Service 或縮寫為 <emphasis>QoS</emphasis>) 係指提供應用時足以保證或改進服務品質的技術。最常見的技術包括分類網路流量、及依照其類別區分流量的作用。這種區分服務的概念是 <emphasis>流量成形</emphasis>，限制部份服務或主機的資料傳輸率，使其不致塞飽可用的頻寬以及壓縮其他的服務。流量成形是 TCP 流量的特定形式，此協定自動調整可用的頻。"
 
 #, fuzzy
 #| msgid "<emphasis>CULTURE</emphasis> SSL and TLS"
 msgid "<emphasis>CULTURE</emphasis> Net neutrality and QoS"
 msgstr "<emphasis>文化</emphasis> SSL 和 TLS"
 
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>gateway</secondary>"
+msgid "<primary>network</primary><secondary>neutrality</secondary>"
+msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
+
 msgid "Network neutrality is achieved when Internet service providers treat all Internet communications equally, that is, without any access limitation based on content, user, website, destination address, etc."
 msgstr ""
 
 msgid "Quality of service can be implemented in a net neutral Internet, but only if Internet service providers can't charge a special fee for a higher-quality service."
 msgstr ""
-
-#, fuzzy
-#| msgid "<primary>gateway</primary>"
-msgid "<primary>net neutrality</primary>"
-msgstr "<primary>閘道器</primary>"
 
 msgid "It is also possible to alter the priorities on traffic, which allows prioritizing packets related to interactive services (such as <command>ssh</command> and <command>telnet</command>) or to services that only deal with small blocks of data."
 msgstr "也可能改變流量的優先順序，允許與互動服務有關的 (如 <command>ssh</command> 與 <command>telnet</command>) 或祗服務小量資料的封包優先處理。"
@@ -1226,9 +1666,9 @@ msgid "<emphasis>CULTURE</emphasis> LARTC — <emphasis>Linux Advanced Routing &
 msgstr "<emphasis>文化</emphasis> LARTC — <emphasis>Linux 進階路由與流量控制</emphasis>"
 
 #, fuzzy
-#| msgid "The <emphasis>Linux Advanced Routing &amp; Traffic Control</emphasis> HOWTO is the reference document covering everything there is to know about network quality of service. <ulink type=\"block\" url=\"http://www.lartc.org/howto/\" />"
-msgid "The <emphasis>Linux Advanced Routing &amp; Traffic Control</emphasis> HOWTO is the reference document covering everything there is to know about network quality of service. <ulink type=\"block\" url=\"https://www.lartc.org/howto/\" />"
-msgstr "<emphasis>Linux 進階路由與流量控制</emphasis> 做法是一份包括網路服務品質的參考文件。<ulink type=\"block\" url=\"http://www.lartc.org/howto/\" />"
+#| msgid "<primary>network</primary><secondary>virtual private</secondary>"
+msgid "<primary>network</primary><secondary>advanced routing</secondary><seealso>routing</seealso>"
+msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
 
 msgid "<primary>routing</primary><secondary>advanced</secondary>"
 msgstr "<primary>路由</primary><secondary>進階</secondary>"
@@ -1239,11 +1679,13 @@ msgstr "<primary>流量</primary><secondary>控制</secondary>"
 msgid "<primary>control of traffic</primary>"
 msgstr "<primary>流量控制</primary>"
 
+#, fuzzy
+#| msgid "The <emphasis>Linux Advanced Routing &amp; Traffic Control</emphasis> HOWTO is the reference document covering everything there is to know about network quality of service. <ulink type=\"block\" url=\"http://www.lartc.org/howto/\" />"
+msgid "The <emphasis>Linux Advanced Routing &amp; Traffic Control</emphasis> HOWTO is the reference document covering everything there is to know about network quality of service. <ulink type=\"block\" url=\"https://www.lartc.org/howto/\" />"
+msgstr "<emphasis>Linux 進階路由與流量控制</emphasis> 做法是一份包括網路服務品質的參考文件。<ulink type=\"block\" url=\"http://www.lartc.org/howto/\" />"
+
 msgid "Configuring and Implementing"
 msgstr "組態與應用"
-
-msgid "QoS parameters are set through the <command>tc</command> command (provided by the <emphasis role=\"pkg\">iproute</emphasis> package). Since its interface is quite complex, using higher-level tools is recommended."
-msgstr "經由 <command>tc</command> 命令 (由 <emphasis role=\"pkg\">iproute</emphasis> 套件提供) 設定 QoS 參數。因為其介面較為複雜，建議使用高階的工具。"
 
 msgid "<primary><emphasis>iproute</emphasis></primary>"
 msgstr "<primary><emphasis>iproute</emphasis></primary>"
@@ -1251,11 +1693,11 @@ msgstr "<primary><emphasis>iproute</emphasis></primary>"
 msgid "<primary><command>tc</command></primary>"
 msgstr "<primary><command>tc</command></primary>"
 
+msgid "QoS parameters are set through the <command>tc</command> command (provided by the <emphasis role=\"pkg\">iproute</emphasis> package). Since its interface is quite complex, using higher-level tools is recommended."
+msgstr "經由 <command>tc</command> 命令 (由 <emphasis role=\"pkg\">iproute</emphasis> 套件提供) 設定 QoS 參數。因為其介面較為複雜，建議使用高階的工具。"
+
 msgid "Reducing Latencies: <command>wondershaper</command>"
 msgstr "減少延遲：<command>wondershaper</command>"
-
-msgid "The main purpose of <command>wondershaper</command> (in the similarly-named package) is to minimize latencies independent of network load. This is achieved by limiting total traffic to a value that falls just short of the link saturation value."
-msgstr "<command>wondershaper</command> (在同名的套件中) 的主要目的是最小化獨立網路負載的延遲。經由限制整體流量的值縮短連結的飽和值。"
 
 msgid "<primary><command>wondershaper</command></primary>"
 msgstr "<primary><command>wondershaper</command></primary>"
@@ -1266,10 +1708,20 @@ msgstr "<primary>流量的限制</primary>"
 msgid "<primary>traffic</primary><secondary>limitation</secondary>"
 msgstr "<primary>流量</primary><secondary>限制</secondary>"
 
-msgid "Once a network interface is configured, setting up this traffic limitation is achieved by running <command>wondershaper <replaceable>interface</replaceable> <replaceable>download_rate</replaceable> <replaceable>upload_rate</replaceable></command>. The interface can be <literal>eth0</literal> or <literal>ppp0</literal> for example, and both rates are expressed in kilobits per second. The <command>wondershaper remove <replaceable>interface</replaceable></command> command disables traffic control on the specified interface."
+msgid "The main purpose of <command>wondershaper</command> (in the similarly-named package) is to minimize latencies independent of network load. This is achieved by limiting total traffic to a value that falls just short of the link saturation value."
+msgstr "<command>wondershaper</command> (在同名的套件中) 的主要目的是最小化獨立網路負載的延遲。經由限制整體流量的值縮短連結的飽和值。"
+
+#, fuzzy
+#| msgid "Once a network interface is configured, setting up this traffic limitation is achieved by running <command>wondershaper <replaceable>interface</replaceable> <replaceable>download_rate</replaceable> <replaceable>upload_rate</replaceable></command>. The interface can be <literal>eth0</literal> or <literal>ppp0</literal> for example, and both rates are expressed in kilobits per second. The <command>wondershaper remove <replaceable>interface</replaceable></command> command disables traffic control on the specified interface."
+msgid "Once a network interface is configured, setting up this traffic limitation is achieved by running <command>wondershaper <replaceable>interface</replaceable> <replaceable>download_rate</replaceable> <replaceable>upload_rate</replaceable></command>. The interface can be <literal>enp1s0</literal>, <literal>eth0</literal> or <literal>ppp0</literal> for example, and both rates are expressed in kilobits per second. The <command>wondershaper remove <replaceable>interface</replaceable></command> command disables traffic control on the specified interface."
 msgstr "組態網路介面後，執行 <command>wondershaper <replaceable>interface</replaceable> <replaceable>download_rate</replaceable> <replaceable>upload_rate</replaceable></command>命令，設定流量控制。可以是 <literal>eth0</literal> 或 <literal>ppp0</literal> 介面，兩者的速度均以每秒千位元為單位。<command>wondershaper remove <replaceable>interface</replaceable></command> 命令可以在特定介面停用流量控制。"
 
-msgid "For an Ethernet connection, this script is best called right after the interface is configured. This is done by adding <literal>up</literal> and <literal>down</literal> directives to the <filename>/etc/network/interfaces</filename> file allowing declared commands to be run, respectively, after the interface is configured and before it is deconfigured. For example:"
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/network/interfaces</filename></secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+msgid "For an Ethernet connection, historically this script would be called right after the interface is configured. This is done by adding <literal>up</literal> and <literal>down</literal> directives to the <filename>/etc/network/interfaces</filename> file allowing declared commands to be run, respectively, after the interface is configured and before it is deconfigured. Or in the PPP case, creating a script that calls <command>wondershaper</command> in <filename>/etc/ppp/ip-up.d/</filename> will enable traffic control as soon as the connection is up. Below is an example using this first method:"
 msgstr ""
 
 msgid "Changes in the <filename>/etc/network/interfaces</filename> file"
@@ -1282,9 +1734,6 @@ msgid ""
 "    down /sbin/wondershaper remove eth0"
 msgstr ""
 
-msgid "In the PPP case, creating a script that calls <command>wondershaper</command> in <filename>/etc/ppp/ip-up.d/</filename> will enable traffic control as soon as the connection is up."
-msgstr ""
-
 msgid "<emphasis>GOING FURTHER</emphasis> Optimal configuration"
 msgstr ""
 
@@ -1294,9 +1743,6 @@ msgstr ""
 msgid "Standard Configuration"
 msgstr ""
 
-msgid "Barring a specific QoS configuration, the Linux kernel uses the <literal>pfifo_fast</literal> queue scheduler, which provides a few interesting features by itself. The priority of each processed IP packet is based on the DSCP field (<emphasis>Differentiated of Services Code Point</emphasis>) of this packet; modifying this 6-bit field is enough to take advantage of the scheduling features. Refer to <ulink url=\"https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector\" /> for more information."
-msgstr ""
-
 #, fuzzy
 #| msgid "<primary>DHCP</primary>"
 msgid "<primary>DSCP</primary>"
@@ -1304,8 +1750,16 @@ msgstr "<primary>DHCP</primary>"
 
 #, fuzzy
 #| msgid "<primary>Destination NAT</primary>"
-msgid "<primary>Differentiated Services Code Point</primary>"
+msgid "<primary>Differentiated Services Code Point</primary><see>DSCP</see>"
 msgstr "<primary>Destination NAT</primary>"
+
+msgid "Barring a specific QoS configuration, the Linux kernel uses the <literal>pfifo_fast</literal> queue scheduler, which provides a few interesting features by itself. The priority of each processed IP packet is based on the DSCP field (<emphasis>Differentiated Services Code Point</emphasis>) of this packet; modifying this 6-bit field is enough to take advantage of the scheduling features. Refer to <ulink url=\"https://en.wikipedia.org/wiki/Differentiated_services#Class_Selector\" /> for more information."
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>IP address</primary><secondary>private</secondary>"
+msgid "<primary>IP</primary><secondary>netfilter</secondary>"
+msgstr "<primary>IP 位址</primary><secondary>私有</secondary>"
 
 msgid "The DSCP field can be set by applications that generate IP packets, or modified on the fly by <emphasis>netfilter</emphasis>. The following rules are sufficient to increase responsiveness for a server's SSH service, note that the DSCP field must be set in hexadecimal:"
 msgstr ""
@@ -1320,16 +1774,27 @@ msgstr ""
 msgid "Dynamic Routing"
 msgstr ""
 
-msgid "<primary>routing</primary><secondary>dynamic</secondary>"
-msgstr ""
+#, fuzzy
+#| msgid "<primary>routing</primary><secondary>advanced</secondary>"
+msgid "<primary>routing</primary><secondary>dynamic</secondary><seealso><command>frr</command></seealso>"
+msgstr "<primary>路由</primary><secondary>進階</secondary>"
 
-msgid "<primary><command>quagga</command></primary>"
-msgstr ""
+#, fuzzy
+#| msgid "<primary><command>tc</command></primary>"
+msgid "<primary><command>frr</command></primary>"
+msgstr "<primary><command>tc</command></primary>"
 
-msgid "<primary><command>zebra</command></primary>"
-msgstr ""
+#, fuzzy
+#| msgid "<primary><command>nmap</command></primary>"
+msgid "<primary><command>quagga</command></primary><see><command>frr</command></see>"
+msgstr "<primary><command>nmap</command></primary>"
 
-msgid "The reference tool for dynamic routing is currently <command>quagga</command>, from the similarly-named package; it used to be <command>zebra</command> until development of the latter stopped. However, <command>quagga</command> kept the names of the programs for compatibility reasons which explains the <command>zebra</command> commands below."
+#, fuzzy
+#| msgid "<primary><command>strongswan</command></primary>"
+msgid "<primary><command>zebra</command></primary><see><command>frr</command></see>"
+msgstr "<primary><command>strongswan</command></primary>"
+
+msgid "The reference tool for dynamic routing is currently <command>frr</command> from the similarly-named package; it used to be <command>quagga</command>, and before that <command>zebra</command> until development of these stopped. However, <command>frr</command> kept the names of the programs for compatibility reasons which explains the <command>zebra</command> commands below."
 msgstr ""
 
 msgid "<emphasis>BACK TO BASICS</emphasis> Dynamic routing"
@@ -1338,18 +1803,18 @@ msgstr ""
 msgid "Dynamic routing allows routers to adjust, in real time, the paths used for transmitting IP packets. Each protocol involves its own method of defining routes (shortest path, use routes advertised by peers, and so on)."
 msgstr ""
 
-msgid "In the Linux kernel, a route links a network device to a set of machines that can be reached through this device. The <command>ip</command> command, when <literal>route</literal> is used as the first argument, defines new routes and displays existing ones. The <command>route</command> command was used for that purpose, but it is deprecated in favor of <command>ip</command>."
-msgstr ""
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><command>ip</command></primary><secondary><literal>route</literal></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
 
 msgid "<primary><command>route</command></primary>"
 msgstr ""
 
-#, fuzzy
-#| msgid "<primary><command>tc</command></primary>"
-msgid "<primary><command>ip route</command></primary>"
-msgstr "<primary><command>tc</command></primary>"
+msgid "In the Linux kernel, a route links a network device to a set of machines that can be reached through this device. The <command>ip</command> command, when <literal>route</literal> is used as the first argument, defines new routes and displays existing ones. The <command>route</command> command was used for that purpose, but it is deprecated in favor of <command>ip</command>."
+msgstr ""
 
-msgid "Quagga is a set of daemons cooperating to define the routing tables to be used by the Linux kernel; each routing protocol (most notably BGP, OSPF and RIP) provides its own daemon. The <command>zebra</command> daemon collects information from other daemons and handles static routing tables accordingly. The other daemons are known as <command>bgpd</command>, <command>ospfd</command>, <command>ospf6d</command>, <command>ripd</command>, <command>ripngd</command>, and <command>isisd</command>."
+msgid "FRR (FRRouting) is a set of daemons cooperating to define the routing tables to be used by the Linux kernel; each routing protocol (most notably BGP, OSPF and RIP) provides its own daemon(s). The <literal>zebra</literal> and <literal>staticd</literal> daemons, which are always started, collect information from other daemons and handle static routing tables accordingly. The other daemons are known as <command>bgpd</command>, <command>ospfd</command>, <command>ospf6d</command>, <command>ripd</command>, <command>ripngd</command>, <command>isisd</command>, etc."
 msgstr ""
 
 msgid "<primary>OSPF</primary>"
@@ -1382,26 +1847,50 @@ msgstr ""
 msgid "<primary><command>isisd</command></primary>"
 msgstr ""
 
-msgid "Daemons are enabled by creating the <filename>/etc/quagga/<replaceable>daemon</replaceable>.conf</filename> config file, daemon being the name of the daemon to use; this file must belong to the <literal>quagga</literal> user and group in order for the <filename>/etc/init.d/zebra</filename> script to invoke the daemon. The package <emphasis role=\"pkg\">quagga-core</emphasis> provides configuration examples under <filename>/usr/share/doc/quagga-core/examples/</filename>."
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>service</primary><secondary><filename>frr.service</filename></secondary>"
+msgstr "<primary>服務</primary><secondary>品質</secondary>"
+
+msgid "Daemons are enabled by creating the <filename>/etc/frr/<replaceable>daemon</replaceable>.conf</filename> config file, <replaceable>daemon</replaceable> being the name of the daemon to use, and editing the <filename>/etc/frr/daemon</filename> configuration file. The daemon config file must belong to the <literal>frr</literal> user and group with permissions of <literal>0640</literal> in order for the <filename>/etc/init.d/frr</filename> script or the <filename>frr.service</filename> systemd service file to invoke the daemon. The package <emphasis role=\"pkg\">frr</emphasis> provides configuration examples under <filename>/usr/share/doc/frr/examples/</filename>."
 msgstr ""
 
-msgid "The configuration of each of these daemons requires knowledge of the routing protocol in question. These protocols cannot be described in detail here, but <emphasis role=\"pkg\">quagga-doc</emphasis> provides ample explanation in the form of an <command>info</command> file. The same contents may be more easily browsed as HTML on the Quagga website: <ulink type=\"block\" url=\"http://www.nongnu.org/quagga/docs/docs-info.html\" />"
+msgid "The configuration of each of these daemons requires knowledge of the routing protocol in question. These protocols cannot be described in detail here, but <emphasis role=\"pkg\">frr-doc</emphasis> provides ample explanation in the form of both <command>info</command> and HTML files. The same contents may be more browsed on the project's website: <ulink type=\"block\" url=\"http://docs.frrouting.org/en/latest/\" />"
 msgstr ""
 
-msgid "In addition, the syntax is very close to a standard router's configuration interface, and network administrators will adapt quickly to <command>quagga</command>."
+msgid "In addition, the syntax is very close to a standard router's configuration interface, and network administrators will adapt quickly to <command>frr</command>."
 msgstr ""
 
 msgid "<emphasis>IN PRACTICE</emphasis> OSPF, BGP or RIP?"
 msgstr ""
 
+#, fuzzy
+#| msgid "<primary>protocol</primary><secondary>ESP</secondary>"
+msgid "<primary>protocol</primary><secondary>BGP</secondary>"
+msgstr "<primary>協定</primary><secondary>ESP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>protocol</primary><secondary>ESP</secondary>"
+msgid "<primary>protocol</primary><secondary>RIP</secondary>"
+msgstr "<primary>協定</primary><secondary>ESP</secondary>"
+
 msgid "<acronym>OSPF</acronym> (Open Shortest Path First) is generally the best protocol to use for dynamic routing on private networks, but <acronym>BGP</acronym> (Border Gateway Protocol) is more common for Internet-wide routing. <acronym>RIP</acronym> (Routing Information Protocol) is rather ancient, and hardly used anymore."
 msgstr ""
 
-msgid "IPv6, successor to IPv4, is a new version of the IP protocol designed to fix its flaws, most notably the scarcity of available IP addresses. This protocol handles the network layer; its purpose is to provide a way to address machines, to convey data to their intended destination, and to handle data fragmentation if needed (in other words, to split packets into chunks with a size that depends on the network links to be used on the path and to reassemble the chunks in their proper order on arrival)."
-msgstr ""
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>IP</primary><secondary>v4</secondary><seealso>IPv4</seealso>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
-msgid "Debian kernels include IPv6 handling in the core kernel (with the exception of some architectures that have it compiled as a module named <literal>ipv6</literal>). Basic tools such as <command>ping</command> and <command>traceroute</command> have their IPv6 equivalents in <command>ping6</command> and <command>traceroute6</command>, available respectively in the <emphasis role=\"pkg\">iputils-ping</emphasis> and <emphasis role=\"pkg\">iputils-tracepath</emphasis> packages."
-msgstr ""
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>IP</primary><secondary>v6</secondary><seealso>IPv6</seealso>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>IPsec</primary>"
+msgid "<primary>IPv4</primary>"
+msgstr "<primary>網際網路安全協定</primary>"
 
 msgid "<primary>IPv6</primary>"
 msgstr ""
@@ -1412,6 +1901,12 @@ msgstr ""
 msgid "<primary><emphasis role=\"pkg\">iputils-tracepath</emphasis></primary>"
 msgstr ""
 
+msgid "IPv6, successor to IPv4, is a newer version of the IP protocol designed to fix its flaws, most notably the scarcity of available IP addresses. This protocol handles the network layer; its purpose is to provide a way to address machines, to convey data to their intended destination, and to handle data fragmentation if needed (in other words, to split packets into chunks with a size that depends on the network links to be used on the path and to reassemble the chunks in their proper order on arrival)."
+msgstr ""
+
+msgid "Debian kernels include IPv6 handling in the core kernel (with the exception of some architectures that have it compiled as a module named <literal>ipv6</literal>). Basic tools such as <command>ping</command> and <command>traceroute</command> have their IPv6 equivalents in <command>ping6</command> and <command>traceroute6</command>, available respectively in the <emphasis role=\"pkg\">iputils-ping</emphasis> and <emphasis role=\"pkg\">iputils-tracepath</emphasis> packages."
+msgstr ""
+
 msgid "The IPv6 network is configured similarly to IPv4, in <filename>/etc/network/interfaces</filename>. But if you want that network to be globally available, you must ensure that you have an IPv6-capable router relaying traffic to the global IPv6 network."
 msgstr ""
 
@@ -1420,7 +1915,7 @@ msgstr ""
 
 msgid ""
 "\n"
-"iface eth0 inet6 static\n"
+"iface enp7s0 inet6 static\n"
 "    address 2001:db8:1234:5::1:1/64\n"
 "    # Disabling auto-configuration\n"
 "    # autoconf 0\n"
@@ -1429,10 +1924,28 @@ msgid ""
 "    # gateway 2001:db8:1234:5::1"
 msgstr ""
 
+#, fuzzy
+#| msgid "<primary>SSL</primary>"
+msgid "<primary>SLAAC</primary>"
+msgstr "<primary>SSL</primary>"
+
+msgid "<primary>Stateless Address Autoconfiguration</primary><see>SLAAC</see>"
+msgstr ""
+
 msgid "IPv6 subnets usually have a netmask of 64 bits. This means that 2<superscript>64</superscript> distinct addresses exist within the subnet. This allows Stateless Address Autoconfiguration (<acronym>SLAAC</acronym>) to pick an address based on the network interface's MAC address. By default, if <acronym>SLAAC</acronym> is activated in your network and IPv6 on your computer, the kernel will automatically find IPv6 routers and configure the network interfaces."
 msgstr ""
 
-msgid "This behavior may have privacy implications. If you switch networks frequently, e.g. with a laptop, you might not want your <acronym>MAC</acronym> address being a part of your public IPv6 address. This makes it easy to identify the same device across networks. A solution to this are IPv6 privacy extensions (which Debian enables by default if IPv6 connectivity is detected during initial installation), which will assign an additional randomly generated address to the interface, periodically change them and prefer them for outgoing connections. Incoming connections can still use the address generated by SLAAC. The following example, for use in <filename>/etc/network/interfaces</filename>, activates these privacy extensions."
+#, fuzzy
+#| msgid "<primary>NAT</primary>"
+msgid "<primary>MAC</primary>"
+msgstr "<primary>NAT</primary>"
+
+#, fuzzy
+#| msgid "<primary>IP address</primary><secondary>private</secondary>"
+msgid "<primary>IPv6</primary><secondary>privacy extensions</secondary>"
+msgstr "<primary>IP 位址</primary><secondary>私有</secondary>"
+
+msgid "This behavior may have privacy implications. If you switch networks frequently, e.g. with a laptop, you might not want your <acronym>MAC</acronym> address being a part of your public IPv6 address. This makes it easy to identify the same device across networks. A solution to this are IPv6 privacy extensions (which Debian enables by default if IPv6 connectivity is detected during initial installation), which will assign an additional randomly generated address to the interface, periodically change them and prefer them for outgoing connections. Incoming connections can still use the address generated by SLAAC. The following example, for use in <filename>/etc/network/interfaces</filename>, activates these privacy extensions for the interface <replaceable>enp7s0</replaceable>."
 msgstr ""
 
 msgid "IPv6 privacy extensions"
@@ -1440,7 +1953,7 @@ msgstr ""
 
 msgid ""
 "\n"
-"iface eth0 inet6 auto\n"
+"iface enp7s0 inet6 auto\n"
 "    # Prefer the randomly assigned addresses for outgoing connections.\n"
 "    privext 2"
 msgstr ""
@@ -1448,11 +1961,18 @@ msgstr ""
 msgid "<emphasis>TIP</emphasis> Programs built with IPv6"
 msgstr ""
 
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>mailing lists</primary><secondary><email>debian-ipv6@lists.debian.org</email></secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
 msgid "Many pieces of software need to be adapted to handle IPv6. Most of the packages in Debian have been adapted already, but not all. If your favorite package does not work with IPv6 yet, you can ask for help on the <emphasis>debian-ipv6</emphasis> mailing-list. They might know about an IPv6-aware replacement and could file a bug to get the issue properly tracked. <ulink type=\"block\" url=\"https://lists.debian.org/debian-ipv6/\" />"
 msgstr ""
 
-msgid "<primary>IPv6 firewall</primary>"
-msgstr ""
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>gateway</secondary>"
+msgid "<primary>IPv6</primary><secondary>firewall</secondary>"
+msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
 
 msgid "<primary>firewall</primary><secondary>IPv6</secondary>"
 msgstr ""
@@ -1466,8 +1986,18 @@ msgstr ""
 msgid "Tunneling"
 msgstr ""
 
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>IPv6</primary><secondary>tunneling</secondary>"
+msgstr "<primary>服務</primary><secondary>品質</secondary>"
+
 msgid "<emphasis>CAUTION</emphasis> IPv6 tunneling and firewalls"
 msgstr ""
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>control</secondary>"
+msgid "<primary>IPv6</primary><secondary>tunnel broker</secondary>"
+msgstr "<primary>流量</primary><secondary>控制</secondary>"
 
 msgid "IPv6 tunneling over IPv4 (as opposed to native IPv6) requires the firewall to accept the traffic, which uses IPv4 protocol number 41."
 msgstr ""
@@ -1488,13 +2018,28 @@ msgstr "<primary>路由器</primary>"
 msgid "To use a Hurricane Electric tunnel, you need to register an account, login, select a free tunnel and edit the file <filename>/etc/network/interfaces</filename> with the generated code."
 msgstr ""
 
+msgid "<primary><command>radvd</command></primary>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/radvd.conf</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
+
+#, fuzzy
+#| msgid "<primary>service</primary><secondary>quality</secondary>"
+msgid "<primary>service</primary><secondary><filename>radvd.service</filename></secondary>"
+msgstr "<primary>服務</primary><secondary>品質</secondary>"
+
 msgid "You can install and configure the <command>radvd</command> daemon (from the similarly-named package) if you want to use the configured computer as a router for a local network. This IPv6 configuration daemon has a role similar to <command>dhcpd</command> in the IPv4 world."
 msgstr ""
 
-msgid "The <filename>/etc/radvd.conf</filename> configuration file must then be created (see <filename>/usr/share/doc/radvd/examples/simple-radvd.conf</filename> as a starting point). In our case, the only required change is the prefix, which needs to be replaced with the one provided by Hurricane Electric; it can be found in the output of the <command>ip a</command> command, in the block concerning the <literal>he-ipv6</literal> interface."
-msgstr ""
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>virtual private</secondary>"
+msgid "<primary><command>ip</command></primary><secondary><literal>address</literal></secondary>"
+msgstr "<primary>網路</primary><secondary>虛擬專用</secondary>"
 
-msgid "<primary><command>radvd</command></primary>"
+msgid "The <filename>/etc/radvd.conf</filename> configuration file must then be created (see <filename>/usr/share/doc/radvd/examples/simple-radvd.conf</filename> as a starting point). In our case, the only required change is the prefix, which needs to be replaced with the one provided by Hurricane Electric; it can be found in the output of the <command>ip a</command> command, in the block concerning the <literal>he-ipv6</literal> interface."
 msgstr ""
 
 msgid "Then run <command>systemctl start radvd</command>. The IPv6 network should now work."
@@ -1506,10 +2051,20 @@ msgstr ""
 msgid "<primary>DNS</primary>"
 msgstr "<primary>DNS</primary>"
 
+#, fuzzy
+#| msgid "<primary>quality of service</primary>"
+msgid "<primary>Domain Name Service</primary><see>DNS</see>"
+msgstr "<primary>服務品質</primary>"
+
 msgid "<primary>server</primary><secondary>name</secondary>"
 msgstr ""
 
-msgid "The <emphasis>Domain Name Service</emphasis> (DNS) is a fundamental component of the Internet: it maps host names to IP addresses (and vice-versa), which allows the use of <literal>www.debian.org</literal> instead of <literal>149.20.4.15</literal> or <literal>2001:4f8:1:c::15</literal>."
+#, fuzzy
+#| msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
+msgid "<primary>IP</primary><secondary>address mapping</secondary>"
+msgstr "<primary>Network</primary><secondary>Address Translation</secondary>"
+
+msgid "The <emphasis>Domain Name Service</emphasis> (DNS) is a fundamental component of the Internet: it maps host names to IP addresses (and vice-versa), which allows the use of <literal>www.debian.org</literal> instead of <literal>130.89.148.77</literal> or <literal>2001:67c:2564:a119::77</literal>."
 msgstr ""
 
 msgid "DNS records are organized in zones; each zone matches either a domain (or a subdomain) or an IP address range (since IP addresses are generally allocated in consecutive ranges). A primary server is authoritative on the contents of a zone; secondary servers, usually hosted on separate machines, provide regularly refreshed copies of the primary zone."
@@ -1521,49 +2076,71 @@ msgstr ""
 msgid "<primary>DNS</primary><secondary>zone</secondary>"
 msgstr ""
 
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>control</secondary>"
+msgid "<primary>DNS</primary><secondary>resource record</secondary>"
+msgstr "<primary>流量</primary><secondary>控制</secondary>"
+
 msgid "Each zone can contain records of various kinds (<emphasis>Resource Records</emphasis>), these are some of the most common:"
 msgstr ""
 
-msgid "<literal>A</literal>: IPv4 address. <indexterm><primary>A, DNS record</primary></indexterm>"
+msgid "<literal>A</literal> (<emphasis>address record</emphasis>): IPv4 address. This is the most common form to point a domain to an IPv4 address."
 msgstr ""
 
-msgid "<literal>CNAME</literal>: alias (<emphasis>canonical name</emphasis>). <indexterm><primary>CNAME, DNS record</primary></indexterm>"
+msgid "<primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>A</literal></tertiary>"
 msgstr ""
 
-msgid "<literal>MX</literal>: <emphasis>mail exchange</emphasis>, an email server. This information is used by other email servers to find where to send email addressed to a given address. Each MX record has a priority. The highest-priority server (with the lowest number) is tried first (see sidebar <xref linkend=\"sidebar.smtp\" />); other servers are contacted in order of decreasing priority if the first one does not reply. <indexterm><primary>MX</primary><secondary>DNS record</secondary></indexterm>"
+msgid "<literal>CNAME</literal> (<emphasis>canonical name record</emphasis>): alias"
 msgstr ""
 
-msgid "<literal>PTR</literal>: mapping of an IP address to a name. Such a record is stored in a “reverse DNS” zone named after the IP address range. For example, <literal>1.168.192.in-addr.arpa</literal> is the zone containing the reverse mapping for all addresses in the <literal>192.168.1.0/24</literal> range. <indexterm><primary>PTR, DNS record</primary></indexterm>"
+msgid "<primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>CNAME</literal></tertiary>"
 msgstr ""
 
-msgid "<literal>AAAA</literal>: IPv6 address. <indexterm><primary>AAAA, DNS record</primary></indexterm>"
+msgid "<literal>MX</literal> (<emphasis>mail exchange</emphasis>): an email server. This information is used by other email servers to find where to send email addressed to a given address. Each MX record has a priority. The highest-priority server (with the lowest number) is tried first (see sidebar <xref linkend=\"sidebar.smtp\" />); other servers are contacted in order of decreasing priority if the first one does not reply."
 msgstr ""
 
-msgid "<literal>NS</literal>: maps a name to a name server. Each domain must have at least one NS record. These records point at a DNS server that can answer queries concerning this domain; they usually point at the primary and secondary servers for the domain. These records also allow DNS delegation; for instance, the <literal>falcot.com</literal> zone can include an NS record for <literal>internal.falcot.com</literal>, which means that the <literal>internal.falcot.com</literal> zone is handled by another server. Of course, this server must declare an <literal>internal.falcot.com</literal> zone. <indexterm><primary>NS, DNS record</primary></indexterm>"
+msgid "<primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>MX</literal></tertiary>"
 msgstr ""
 
-msgid "<primary>record</primary><secondary>DNS</secondary>"
+msgid "<literal>PTR</literal> (<emphasis>pointer</emphasis>): mapping of an IP address to a name. Such a record is stored in a “reverse DNS” zone named after the IP address range. For example, <literal>1.168.192.in-addr.arpa</literal> is the zone containing the reverse mapping for all addresses in the <literal>192.168.1.0/24</literal> range."
 msgstr ""
 
-msgid "<primary>DNS record</primary>"
+msgid "<primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>PTR</literal></tertiary>"
+msgstr ""
+
+msgid "<literal>AAAA</literal> (<emphasis>IPv6 address record</emphasis>): IPv6 address."
+msgstr ""
+
+msgid "<primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>AAAA</literal></tertiary>"
+msgstr ""
+
+msgid "<literal>NS</literal> (<emphasis>name server</emphasis>): maps a name to a name server. Each domain must have at least one NS record. These records point at a DNS server that can answer queries concerning this domain; they usually point at the primary and secondary servers for the domain. These records also allow DNS delegation; for instance, the <literal>falcot.com</literal> zone can include an NS record for <literal>internal.falcot.com</literal>, which means that the <literal>internal.falcot.com</literal> zone is handled by another server. Of course, this server must declare an <literal>internal.falcot.com</literal> zone."
+msgstr ""
+
+msgid "<primary>DNS</primary><secondary>resource record</secondary><tertiary><literal>NS</literal></tertiary>"
 msgstr ""
 
 msgid "DNS software"
 msgstr ""
 
-msgid "The reference name server, Bind, was developed and is maintained by ISC (<emphasis>Internet Software Consortium</emphasis>). It is provided in Debian by the <emphasis role=\"pkg\">bind9</emphasis> package. Version 9 brings two major changes compared to previous versions. First, the DNS server can now run under an unprivileged user, so that a security vulnerability in the server does not grant root privileges to the attacker (as was seen repeatedly with versions 8.x)."
+msgid "<primary>ISC</primary>"
 msgstr ""
 
-msgid "Furthermore, Bind supports the DNSSEC standard for signing (and therefore authenticating) DNS records, which allows blocking any spoofing of this data during man-in-the-middle attacks."
+msgid "<primary>Internet Software Consortium</primary><see>ISC</see>"
 msgstr ""
 
 msgid "<primary><emphasis role=\"pkg\">bind9</emphasis></primary>"
 msgstr ""
 
-msgid "<primary>ISC</primary>"
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>DNS</primary><secondary><emphasis role=\"pkg\">bind9</emphasis></secondary><seealso><command>bind</command></seealso>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+msgid "The reference name server, Bind, was developed and is maintained by ISC (the <emphasis>Internet Software Consortium</emphasis>). It is provided in Debian by the <emphasis role=\"pkg\">bind9</emphasis> package. Version 9 brings two major changes compared to previous versions. First, the DNS server can now run under an unprivileged user, so that a security vulnerability in the server does not grant root privileges to the attacker (as was seen repeatedly with versions 8.x)."
 msgstr ""
 
-msgid "<primary>Internet Software Consortium</primary>"
+msgid "Furthermore, Bind supports the DNSSEC standard for signing (and therefore authenticating) DNS records, which allows blocking any spoofing of this data during man-in-the-middle attacks."
 msgstr ""
 
 msgid "<emphasis>CULTURE</emphasis> DNSSEC"
@@ -1572,6 +2149,14 @@ msgstr ""
 msgid "<primary>DNSSEC</primary>"
 msgstr ""
 
+msgid "<primary>Domain Name System Security Extensions</primary><see>DNSSEC</see>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>IP address</primary><secondary>private</secondary>"
+msgid "<primary>DNS</primary><secondary>security extensions</secondary><see>DNSSEC</see>"
+msgstr "<primary>IP 位址</primary><secondary>私有</secondary>"
+
 msgid "The DNSSEC norm is quite complex; this partly explains why it is not in widespread usage yet (even if it perfectly coexists with DNS servers unaware of DNSSEC). To understand all the ins and outs, you should check the following article. <ulink type=\"block\" url=\"https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions\" />"
 msgstr ""
 
@@ -1579,6 +2164,21 @@ msgstr ""
 #| msgid "Configuring"
 msgid "Configuring bind"
 msgstr "配置"
+
+#, fuzzy
+#| msgid "<primary>packet</primary><secondary>IP</secondary>"
+msgid "<primary>daemon</primary><secondary>bind</secondary>"
+msgstr "<primary>封包</primary><secondary>IP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>UDP</secondary>"
+msgid "<primary>server</primary><secondary>DNS</secondary>"
+msgstr "<primary>埠</primary><secondary>UDP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>control</secondary>"
+msgid "<primary><command>bind</command></primary><secondary>configuration</secondary>"
+msgstr "<primary>流量</primary><secondary>控制</secondary>"
 
 msgid "Configuration files for <command>bind</command>, irrespective of version, have the same structure."
 msgstr ""
@@ -1594,6 +2194,11 @@ msgstr ""
 
 msgid "<primary>reverse zone</primary>"
 msgstr ""
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>DNS</primary><secondary>reverse zone</secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
 msgid "<primary><literal>in-addr.arpa</literal></primary>"
 msgstr ""
@@ -1613,19 +2218,18 @@ msgstr ""
 msgid "<emphasis>TIP</emphasis> Testing the DNS server"
 msgstr ""
 
-msgid "The <command>host</command> command (in the <emphasis role=\"pkg\">bind9-host</emphasis> package) queries a DNS server, and can be used to test the server configuration. For example, <command>host machine.falcot.com localhost</command> checks the local server's reply for the <literal>machine.falcot.com</literal> query. <command>host <replaceable>ipaddress</replaceable> localhost</command> tests the reverse resolution."
-msgstr ""
-
 msgid "<primary><command>host</command></primary>"
 msgstr ""
 
+msgid "The <command>host</command> command (in the <emphasis role=\"pkg\">bind9-host</emphasis> package) queries a DNS server, and can be used to test the server configuration. For example, <command>host machine.falcot.com localhost</command> checks the local server's reply for the <literal>machine.falcot.com</literal> query. <command>host <replaceable>ipaddress</replaceable> localhost</command> tests the reverse resolution."
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/bind/named.conf</filename></secondary>"
+msgstr "<primary>流量</primary><secondary>限制</secondary>"
+
 msgid "The following configuration excerpts, taken from the Falcot files, can serve as starting points to configure a DNS server:"
-msgstr ""
-
-msgid "<primary><filename>named.conf</filename></primary>"
-msgstr ""
-
-msgid "<primary><filename>/etc/bind/named.conf</filename></primary>"
 msgstr ""
 
 msgid "Excerpt of <filename>/etc/bind/named.conf.local</filename>"
@@ -1721,16 +2325,23 @@ msgid ""
 "1.3     IN      PTR     pau.internal.falcot.com."
 msgstr ""
 
-msgid "DHCP (for <emphasis>Dynamic Host Configuration Protocol</emphasis>) is a protocol by which a machine can automatically get its network configuration when it boots. This allows centralizing the management of network configurations, and ensuring that all desktop machines get similar settings."
-msgstr ""
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>DHCP</primary><seealso>Dynamic Host Configuration Protocol</seealso>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
 
-msgid "<primary>DHCP</primary>"
-msgstr "<primary>DHCP</primary>"
-
-msgid "<primary>Dynamic Host Configuration Protocol</primary>"
+msgid "<primary>Dynamic Host Configuration Protocol</primary><seealso>DHCP</seealso>"
 msgstr ""
 
 msgid "<primary>network</primary><secondary>DHCP configuration</secondary>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">isc-dhcp-server</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">pptp-linux</emphasis></primary>"
+
+msgid "DHCP (for <emphasis>Dynamic Host Configuration Protocol</emphasis>) is a protocol by which a machine can automatically get its network configuration when it boots. This allows centralizing the management of network configurations, and ensuring that all desktop machines get similar settings."
 msgstr ""
 
 msgid "A DHCP server provides many network-related parameters. The most common of these is an IP address and the network where the machine belongs, but it can also provide other information, such as DNS servers, WINS servers, NTP servers, and so on."
@@ -1741,6 +2352,27 @@ msgstr ""
 
 msgid "Configuring"
 msgstr "配置"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>DHCP</primary><secondary></secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>port</primary><secondary>TCP</secondary>"
+msgid "<primary>server</primary><secondary>DHCP</secondary>"
+msgstr "<primary>埠</primary><secondary>TCP</secondary>"
+
+#, fuzzy
+#| msgid "<primary>routing</primary><secondary>advanced</secondary>"
+msgid "<primary>daemon</primary><secondary>dhcpd</secondary>"
+msgstr "<primary>路由</primary><secondary>進階</secondary>"
+
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/dhcp/dhcpd.conf</filename></secondary>"
+msgstr ""
+
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/dhcp/dhcpd6.conf</filename></secondary>"
+msgstr ""
 
 msgid "The first elements that need to be edited in the DHCP server configuration files (<filename>/etc/dhcp/dhcpd.conf</filename>, and <filename>/etc/dhcp/dhcpd6.conf</filename> for IPv6) are the domain name and the DNS servers. If this server is alone on the local network (as defined by the broadcast propagation), the <literal>authoritative</literal> directive must also be enabled (or uncommented). One also needs to create a <literal>subnet</literal> section describing the local network and the configuration information to be provided. The following example fits a <literal>192.168.0.0/24</literal> local network with a router at <literal>192.168.0.1</literal> serving as the gateway. Available IP addresses are in the range <literal>192.168.0.128</literal> to <literal>192.168.0.254</literal>."
 msgstr ""
@@ -1790,6 +2422,11 @@ msgstr ""
 msgid "<primary>DNS</primary><secondary>automated updates</secondary>"
 msgstr ""
 
+#, fuzzy
+#| msgid "<primary><command>nmap</command></primary>"
+msgid "<primary><command>bind</command></primary>"
+msgstr "<primary><command>nmap</command></primary>"
+
 msgid "A nice feature is the automated registering of DHCP clients in the DNS zone, so that each machine gets a significant name (rather than something impersonal such as <literal>machine-192-168-0-131.internal.falcot.com</literal>). Using this feature requires configuring the DNS server to accept updates to the <literal>internal.falcot.com</literal> DNS zone from the DHCP server, and configuring the latter to submit updates for each registration."
 msgstr ""
 
@@ -1810,7 +2447,12 @@ msgstr ""
 msgid "Network Diagnosis Tools"
 msgstr ""
 
-msgid "When a network application does not run as expected, it is important to be able to look under the hood. Even when everything seems to run smoothly, running a network diagnosis can help ensure everything is working as it should. Several diagnosis tools exists for this purpose; each one operates on a different level."
+#, fuzzy
+#| msgid "<primary>network</primary><secondary>gateway</secondary>"
+msgid "<primary>network</primary><secondary>diagnosis</secondary>"
+msgstr "<primary>網路</primary><secondary>閘道器</secondary>"
+
+msgid "When a network application does not run as expected, it is important to be able to look under the hood. Even when everything seems to run smoothly, running a network diagnosis can help ensure everything is working as it should. Several diagnosis tools exists for this purpose; each one operates on a different level. It would go beyond the scope of this book to discuss all tools, so we will focus on the more well-known and commonly used tools in the following sections."
 msgstr ""
 
 msgid "Local Diagnosis: <command>netstat</command>"
@@ -1902,69 +2544,76 @@ msgstr ""
 
 msgid ""
 "\n"
-"<computeroutput># </computeroutput><userinput>nmap mirtuel</userinput>\n"
-"<computeroutput>\n"
-"Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:05 CET\n"
-"Nmap scan report for mirtuel (192.168.1.242)\n"
-"Host is up (0.000013s latency).\n"
-"rDNS record for 192.168.1.242: mirtuel.internal.placard.fr.eu.org\n"
-"Not shown: 998 closed ports\n"
+"<computeroutput># </computeroutput><userinput>nmap debian</userinput>\n"
+"<computeroutput><![CDATA[Starting Nmap 7.80 ( https://nmap.org ) at 2022-02-22 20:58 CET\n"
+"Nmap scan report for debian (192.168.122.57)\n"
+"Host is up (0.000087s latency).\n"
+"Not shown: 996 closed ports\n"
 "PORT    STATE SERVICE\n"
 "22/tcp  open  ssh\n"
-"111/tcp open  rpcbind\n"
+"79/tcp  open  finger\n"
+"80/tcp  open  http\n"
+"113/tcp open  ident\n"
 "\n"
-"Nmap done: 1 IP address (1 host up) scanned in 2.41 seconds\n"
-"# </computeroutput><userinput>nmap -A localhost</userinput>\n"
-"<computeroutput>\n"
-"Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 21:17 CEST\n"
+"Nmap done: 1 IP address (1 host up) scanned in 0.07 seconds\n"
+"]]># </computeroutput><userinput>nmap -A localhost</userinput>\n"
+"<computeroutput><![CDATA[nmap -A localhost\n"
+"Starting Nmap 7.80 ( https://nmap.org ) at 2022-02-22 20:56 CET\n"
+"Stats: 0:01:16 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan\n"
+"Service scan Timing: About 83.33% done; ETC: 20:57 (0:00:15 remaining)\n"
 "Nmap scan report for localhost (127.0.0.1)\n"
-"Host is up (0.000039s latency).\n"
+"Host is up (0.000086s latency).\n"
 "Other addresses for localhost (not scanned): ::1\n"
-"Not shown: 997 closed ports\n"
+"Not shown: 994 closed ports\n"
 "PORT    STATE SERVICE VERSION\n"
-"22/tcp  open  ssh     OpenSSH 7.9p1 Debian 10 (protocol 2.0)\n"
-"| ssh-hostkey: \n"
-"|   2048 33:a1:d8:b1:e5:5b:b2:0d:15:1b:8e:76:7f:e4:d7:3d (RSA)\n"
-"|   256 8f:83:cf:fa:b3:58:54:9a:1d:1b:4c:db:b1:e2:58:76 (ECDSA)\n"
-"|_  256 fa:3d:58:62:49:92:93:90:52:fe:f4:26:ca:dc:4c:40 (ED25519)\n"
-"25/tcp  open  smtp    Exim smtpd 4.92\n"
-"| smtp-commands: mirtuel Hello localhost [127.0.0.1], SIZE 52428800, 8BITMIME, PIPELINING, CHUNKING, PRDR, HELP, \n"
-"|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA BDAT NOOP QUIT RSET HELP \n"
-"631/tcp open  ipp     CUPS 2.2\n"
-"| http-methods: \n"
-"|_  Potentially risky methods: PUT\n"
+"22/tcp  open  ssh     OpenSSH 8.4p1 Debian 5 (protocol 2.0)\n"
+"|_auth-owners: foobar\n"
+"25/tcp  open  smtp    Postfix smtpd\n"
+"|_auth-owners: foobar\n"
+"|_smtp-commands: debian, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, SMTPUTF8, CHUNKING, \n"
+"| ssl-cert: Subject: commonName=debian\n"
+"| Subject Alternative Name: DNS:debian\n"
+"| Not valid before: 2022-02-22T14:48:42\n"
+"|_Not valid after:  2032-02-20T14:48:42\n"
+"|_ssl-date: TLS randomness does not represent time\n"
+"79/tcp  open  finger?\n"
+"|_auth-owners: foobar\n"
+"|_finger: ERROR: Script execution failed (use -d to debug)\n"
+"80/tcp  open  http    Apache httpd 2.4.52 ((Debian))\n"
+"|_auth-owners: foobar\n"
+"|_http-server-header: Apache/2.4.52 (Debian)\n"
+"|_http-title: Apache2 Debian Default Page: It works\n"
+"113/tcp open  ident   Liedentd (Claimed user: foobar)\n"
+"|_auth-owners: foobar\n"
+"631/tcp open  ipp     CUPS 2.3\n"
+"|_auth-owners: foobar\n"
 "| http-robots.txt: 1 disallowed entry \n"
 "|_/\n"
-"|_http-server-header: CUPS/2.2 IPP/2.1\n"
-"|_http-title: Home - CUPS 2.2.10\n"
-"Device type: general purpose\n"
-"Running: Linux 3.X\n"
-"OS CPE: cpe:/o:linux:linux_kernel:3\n"
-"OS details: Linux 3.7 - 3.10\n"
-"Network Distance: 0 hops\n"
-"Service Info: Host: debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel\n"
+"|_http-server-header: CUPS/2.3 IPP/2.1\n"
+"|_http-title: Home - CUPS 2.3.3op2\n"
+"Service Info: Host:  debian; OS: Linux; CPE: cpe:/o:linux:linux_kernel\n"
 "\n"
-"OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .\n"
-"Nmap done: 1 IP address (1 host up) scanned in 12.33 seconds\n"
-"</computeroutput>"
+"Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .\n"
+"Nmap done: 1 IP address (1 host up) scanned in 87.91 seconds\n"
+"]]></computeroutput>"
 msgstr ""
 
-msgid "As expected, the SSH and Exim4 applications are listed. Note that not all applications listen on all IP addresses; since Exim4 is only accessible on the <literal>lo</literal> loopback interface, it only appears during an analysis of <literal>localhost</literal> and not when scanning <literal>mirtuel</literal> (which maps to the <literal>eth0</literal> interface on the same machine)."
+msgid "As expected, e.g. the SSH, Apache and Postfix applications are listed. Note that not all applications listen on all IP addresses; since Postfix is only accessible on the <literal>lo</literal> loopback interface, it only appears during an analysis of <literal>localhost</literal> and not when scanning <literal>debian</literal> (which maps to the <literal>enp1s0</literal> interface on the same machine)."
 msgstr ""
 
 msgid "Sniffers: <command>tcpdump</command> and <command>wireshark</command>"
 msgstr ""
 
-msgid "Sometimes, one needs to look at what actually goes on the wire, packet by packet. These cases call for a “frame analyzer”, more widely known as a <emphasis>sniffer</emphasis>. Such a tool observes all the packets that reach a given network interface, and displays them in a user-friendly way."
-msgstr ""
-
 msgid "<primary><command>tcpdump</command></primary>"
 msgstr ""
 
-msgid "The venerable tool in this domain is <command>tcpdump</command>, available as a standard tool on a wide range of platforms. It allows many kinds of network traffic capture, but the representation of this traffic stays rather obscure. We will therefore not describe it in further detail."
+msgid "<primary><command>wireshark</command></primary>"
 msgstr ""
 
-msgid "<primary><command>wireshark</command></primary>"
+msgid "Sometimes, one needs to look at what actually goes on the wire, packet by packet. These cases call for a “frame analyzer”, more widely known as a <emphasis>sniffer</emphasis>. Such a tool observes all the packets that reach a given network interface, and displays them in a user-friendly way."
+msgstr ""
+
+msgid "The venerable tool in this domain is <command>tcpdump</command>, available as a standard tool on a wide range of platforms. It allows many kinds of network traffic capture, but the representation of this traffic stays rather obscure. We will therefore not describe it in further detail."
 msgstr ""
 
 msgid "A more recent (and more modern) tool, <command>wireshark</command> (in the <emphasis role=\"pkg\">wireshark</emphasis> package), has become the new reference in network traffic analysis due to its many decoding modules that allow for a simplified analysis of the captured packets. The packets are displayed graphically with an organization based on the protocol layers. This allows a user to visualize all protocols involved in a packet. For example, given a packet containing an HTTP request, <command>wireshark</command> displays, separately, the information concerning the physical layer, the Ethernet layer, the IP packet information, the TCP connection parameters, and finally the HTTP request itself."
@@ -1984,6 +2633,45 @@ msgstr ""
 
 msgid "When one cannot run a graphical interface, or does not wish to do so for whatever reason, a text-only version of <command>wireshark</command> also exists under the name <command>tshark</command> (in a separate <emphasis role=\"pkg\">tshark</emphasis> package). Most of the capture and decoding features are still available, but the lack of a graphical interface necessarily limits the interactions with the program (filtering packets after they've been captured, tracking of a given TCP connection, and so on). It can still be used as a first approach. If further manipulations are intended and require the graphical interface, the packets can be saved to a file and this file can be loaded into a graphical <command>wireshark</command> running on another machine."
 msgstr ""
+
+#~ msgid "<primary>TCP, port</primary>"
+#~ msgstr "<primary>TCP，埠</primary>"
+
+#~ msgid "<primary>UDP, port</primary>"
+#~ msgstr "<primary>UDP，埠</primary>"
+
+#~ msgid "<primary>SNAT</primary>"
+#~ msgstr "<primary>SNAT</primary>"
+
+#~ msgid "<primary>DNAT</primary>"
+#~ msgstr "<primary>DNAT</primary>"
+
+#, fuzzy
+#~| msgid "<primary>X.509, certificate</primary>"
+#~ msgid "<primary>certificates</primary>"
+#~ msgstr "<primary>X.509，認證</primary>"
+
+#~ msgid "<primary>X.509, certificate</primary>"
+#~ msgstr "<primary>X.509，認證</primary>"
+
+#~ msgid "<primary>SSH</primary>"
+#~ msgstr "<primary>SSH</primary>"
+
+#~ msgid "<primary>Point-to-Point Tunneling Protocol</primary>"
+#~ msgstr "<primary>Point-to-Point Tunneling Protocol</primary>"
+
+#, fuzzy
+#~| msgid "<primary>gateway</primary>"
+#~ msgid "<primary>net neutrality</primary>"
+#~ msgstr "<primary>閘道器</primary>"
+
+#, fuzzy
+#~| msgid "<primary><command>tc</command></primary>"
+#~ msgid "<primary><command>ip route</command></primary>"
+#~ msgstr "<primary><command>tc</command></primary>"
+
+#~ msgid "<primary>DHCP</primary>"
+#~ msgstr "<primary>DHCP</primary>"
 
 #~ msgid "<emphasis>NOTE</emphasis> <emphasis>easy-rsa</emphasis> before <emphasis role=\"distribution\">Jessie</emphasis>"
 #~ msgstr "<emphasis>說明</emphasis> <emphasis>easy-rsa</emphasis> 早於 <emphasis role=\"distribution\">Jessie</emphasis> 之前"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-05-17 17:54+0200\n"
+"POT-Creation-Date: 2022-07-30 18:23+0200\n"
 "PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/debian-handbook/tree/master/translation/ja_JP/push>\n"
@@ -43,34 +43,43 @@ msgstr "今後の開発"
 # Checked-By: Ryuunosuke Ayanokouzi;
 #, fuzzy
 #| msgid "Weeks (or months) before a new version of Debian is released, the Release Manager picks the codename for the next version. Now that Debian version 8 is out, the developers are already busy working on the next version, codenamed <emphasis role=\"distribution\">Stretch</emphasis>…"
-msgid "Now that Debian version 10 is out, the developers are already busy working on the next version, codenamed <emphasis role=\"distribution\">Bullseye</emphasis>…"
+msgid "Now that Debian version 11 is out, the developers are already busy working on the next version, codenamed <emphasis role=\"distribution\">Bookworm</emphasis>…"
 msgstr "Debian の新バージョンがリリースされる数週間前 (または数カ月前) にリリースマネージャは次のバージョンのコードネームを選びます。現在は Debian バージョン 8 が公開中です。しかしながら開発者は既に次のバージョン、コードネーム <emphasis role=\"distribution\">Stretch</emphasis>、の作業で忙しいです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 #, fuzzy
 #| msgid "There is no official list of planned changes, and Debian never makes promises relating to technical goals of the coming versions. However, a few development trends can already be noted, and we can try some bets on what might happen (or not)."
-msgid "There is no official list of planned changes, and Debian never makes promises relating to technical goals of the coming versions. However, a few development trends can already be noted, and we can try to guess what might happen (or not)."
+msgid "There is no official list of all planned changes, and Debian never makes promises relating to technical goals of the coming versions. However, a few development trends and discussion topics can already be noted, and we can try to guess what might happen (or not). Some of the expected changes are documented in the Debian 11 release notes: <ulink type=\"block\" url=\"https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html#deprecated-components\" />"
 msgstr "開発計画に関する公式のリストは存在しませんし、Debian が次期バージョンの技術的目標に関して何かを保証することは絶対にありません。しかしながら、いくつかの開発の方向性は既に発表されており、何が起こるか (起こらないか) について予想することが可能です。"
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-#, fuzzy
-#| msgid "In order to improve security and trust, most if not all the packages will be made to build reproducibly; that is to say, it will be possible to rebuild byte-for-byte identical binary packages from the source packages, thus allowing everyone to verify that no tampering has happened during the builds."
-msgid "In order to improve security and trust, an increasing number of packages will be made to build reproducibly; that is to say, it will be possible to rebuild byte-for-byte identical binary packages from the source packages, thus allowing everyone to verify that no tampering has happened during the builds. This feature might even be required by the release managers for testing migration."
-msgstr "安全性と信頼性を向上させるために、すべてとは言わないまでも多くのパッケージが再現性良くビルドされるようになるでしょう。すなわち、ソースパッケージからバイト単位で同一のバイナリパッケージを再ビルドできるようになるでしょう。こうすることで誰でもビルド中にパッケージが改竄されていないことを確認できるようになります。"
+msgid "Beyond usual deprecation of some software components, it is worth pointing out that Debian is in the process of switching to what is known as a <emphasis>merged-usr filesystem</emphasis>: in this scheme <literal>/bin</literal>, <literal>/sbin</literal> and <literal>/lib</literal> are symlinks pointing to the corresponding directories in <literal>/usr</literal>. This improves compatibility between all Unix systems, makes us closer of having all Debian-supplied files in a single top-level directory that can be easily protected, snapshotted or shared. You can learn more about the benefits here: <ulink type=\"block\" url=\"https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/\" />"
+msgstr ""
 
-# Checked-By: Ryuunosuke Ayanokouzi;
-#, fuzzy
-#| msgid "In a related theme, a lot of effort will have gone into improving security by default, and mitigating both “traditional” attacks and the new threats implied by mass surveillance."
-msgid "In a related theme, a lot of effort will have gone into improving security by default, with more packages shipping an AppArmor profile."
-msgstr "これに関連して、デフォルトの安全性を向上させ、「古典的な」攻撃と監視社会によってもたらされる新しい脅威の両方を軽減するために、数多くの努力がなされるでしょう。"
+msgid "This important change is not without creating issues: <command>dpkg</command> will have to learn about those aliased directories, but the <command>dpkg</command> maintainer doesn't like the technical solution deployed by Debian and hasn't yet made the required changes. The Debian technical committee's help has been requested multiple times already. Their last decision can be found here: <ulink type=\"block\" url=\"https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=994388#110\" />"
+msgstr ""
+
+msgid "<primary><command>apt-key</command></primary>"
+msgstr ""
+
+msgid "<command>apt-key</command> will become obsolete. The key management for third party repositories should only rely on keys found in <filename>/etc/apt/trusted.gpg.d</filename> or configured via <literal>Signed-By</literal> as described in <xref linkend=\"sect.package-authentication\" />."
+msgstr ""
+
+msgid "<primary><command>locate</command></primary>"
+msgstr ""
+
+msgid "For some tasks the default software solution will change. As an example: <command>plocate</command> might be a faster and smaller replacement for <command>mlocate</command>. <emphasis>systemd</emphasis> will continue to add new features that help to standardize the boot process and system management, allowing us to get rid of some other software in the base system."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 #, fuzzy
 #| msgid "Of course, all the main software suites will have had a major release. The latest version of the various desktops will bring better usability and new features. Wayland, the new display server that is being developed to replace X11 with a more modern alternative, will be available (although maybe not default) for at least some desktop environments."
-msgid "Of course, all the main software suites will have had a major release. The latest version of the various desktops will bring better usability and new features. Wayland, the new display server, will likely obsolete X11 entirely."
+msgid "Of course all the main software suites will have a major release. The latest version of the various desktops will bring better usability and new features."
 msgstr "もちろんすべての主要なソフトウェアスイートはメジャーリリースバージョンに更新されるでしょう。さまざまなデスクトップの最新版は一段と使いやすいものとなり、新機能を利用できるようになるでしょう。一部のデスクトップ環境は X11 を現代的な代替品で置き換えることを目標に開発された新しい描画サーバである Wayland を利用できるようになるでしょう (デフォルトではないかもしれません)。"
 
-msgid "With the widespread use of continuous integration and the growth of the archive (and of the biggest packages!), the constraints on release architectures will be harder to meet and some architectures will be dropped (like <emphasis>mips</emphasis>, <emphasis>mipsel</emphasis> and maybe <emphasis>mips64el</emphasis>)."
+msgid "The default permission of home directories will be more restrictive, allowing only the user to access their files."
+msgstr ""
+
+msgid "Developments which already began will continue: Improve build reproducibility and security for example. With the widespread use of continuous integration and the growth of the archive (and of the biggest packages!), the constraints on release architectures will be harder to meet and architectures will be dropped."
 msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -87,7 +96,7 @@ msgstr "これらの内部開発に加えて、新しい Debian ベースのデ�
 msgid "The Debian user community will increase, and new contributors will join the project… including, maybe, you!"
 msgstr "Debian ユーザコミュニティの規模は拡大し、新しい貢献者が Debian プロジェクトに参加するでしょう。そしてその貢献者とはあなたかもしれません!"
 
-msgid "There are recurring discussions about how the software ecosystem is evolving, towards applications shipped within containers, where Debian packages have no added value, or with language-specific package managers (e.g. <command>pip</command> for Python, <command>npm</command> for JavaScript, etc.), which are rendering <command>dpkg</command> and <command>apt</command> obsolete. Facing those threats, I am convinced that Debian developers will find ways to embrace those evolutions and to continue to provide value to users."
+msgid "There are recurring discussions about how the software ecosystem is evolving, towards applications shipped within containers, where Debian packages have no added value, or with language-specific package managers (e.g. <command>pip</command> for Python, <command>npm</command> for JavaScript, etc.), which are rendering <command>dpkg</command> and <command>apt</command> obsolete. Facing those threats, I am convinced that Debian developers will find ways to embrace those changes and to continue to provide value to users."
 msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -97,7 +106,7 @@ msgstr "Debian は高齢で相当な大きさにも関わらず、Debian はあ�
 # Checked-By: Ryuunosuke Ayanokouzi;
 #, fuzzy
 #| msgid "Beyond the apparent satisfaction of most Debian users, a deep trend is becoming more and more indisputable: people are increasingly realising that collaborating, rather than working alone in their corner, leads to better results for everyone. Such is the rationale used by distributions merging into Debian by way of subprojects."
-msgid "Beyond the apparent satisfaction of most Debian users, a deep trend is becoming more and more indisputable: people are increasingly realizing that collaborating, rather than working alone in their corner, leads to better results for everyone. Such is the rationale used by distributions merging into Debian by way of subprojects."
+msgid "Beyond the apparent satisfaction of most Debian users, a deep trend is becoming more and more indisputable: people (and companies!) are increasingly realizing that collaborating, rather than working alone in their corner, leads to better results for everyone. The number of commercial companies relying on Debian is larger every year."
 msgstr "多くの Debian ユーザが満足しているという外面的な評価以上に、Debian の根幹を成す方向性はますます揺るぎないものになりつつあります。すなわち人々は個人で作業を行うよりも他人と協力して作業を行うほうが皆にとってより良い結果につながるという点に次第に気が付き始めています。これはサブプロジェクトの型で Debian に合流するディストリビューションが使う論理的根拠です。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -111,7 +120,7 @@ msgstr "本書の将来"
 # Checked-By: Ryuunosuke Ayanokouzi;
 #, fuzzy
 #| msgid "We would like this book to evolve in the spirit of free software. We therefore welcome contributions, remarks, suggestions, and criticism. Please direct them to Raphaël (<email>hertzog@debian.org</email>) or Roland (<email>lolando@debian.org</email>). For actionable feedback, feel free to open bug reports against the <literal>debian-handbook</literal> Debian package. The website will be used to gather all information relevant to its evolution, and you will find there information on how to contribute, in particular if you want to translate this book to make it available to an even larger public than today. <ulink type=\"block\" url=\"http://debian-handbook.info/\" />"
-msgid "We would like this book to evolve in the spirit of free software. We therefore welcome contributions, remarks, suggestions, and criticism. Please direct them to Raphaël (<email>hertzog@debian.org</email>) or Roland (<email>lolando@debian.org</email>). For actionable feedback, feel free to open bug reports against the <literal>debian-handbook</literal> Debian package. The website will be used to gather all information relevant to its evolution, and you will find there information on how to contribute, in particular if you want to translate this book to make it available to an even larger public than today. <ulink type=\"block\" url=\"https://debian-handbook.info/\" />"
+msgid "We would like this book to evolve in the spirit of free software. We therefore welcome contributions, remarks, suggestions, and criticism. Please direct them to Raphaël (<email>hertzog@debian.org</email>) or Roland (<email>lolando@debian.org</email>). For actionable feedback, feel free to open bug reports against the <literal>debian-handbook</literal> Debian package. The website will be used to gather all information relevant to its evolution, and you will find there information on how to contribute, in particular if you want to translate this book to make it available to an even larger public than today. <ulink type=\"block\" url=\"https://debian-handbook.info/\" /> <ulink type=\"block\" url=\"https://bugs.debian.org/src:debian-handbook\" />"
 msgstr "われわれ著者は本書がフリーソフトウェアの精神で進化することを望んでいます。そのため、われわれ著者は貢献、意見、提案、批判を歓迎します。これらを著者である Raphaël (<email>hertzog@debian.org</email>) か Roland (<email>lolando@debian.org</email>) 宛にお送りください。実用的なフィードバックの場合、気軽に <literal>debian-handbook</literal> Debian パッケージに対してバグ報告を投稿してください。われわれ著者のウェブサイトは本書の更新に関するすべての情報を集めるために使われています。このウェブサイトには貢献する方法に関する情報が含まれ、特に本書を翻訳して今よりも多くの人々が利用できるものにしたいと思っている人にとって有用です。<ulink type=\"block\" url=\"http://debian-handbook.info/\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -124,12 +133,24 @@ msgstr "本書を執筆するにあたり、われわれ著者は Debian から�
 # Tag: PTAL;
 #, fuzzy
 #| msgid "We would like to conclude on a personal note. Writing (and translating) this book took a considerable amount of time out of our usual professional activity. Since we are both freelance consultants, any new source of income grants us the freedom to spend more time improving Debian; we hope this book to be successful and to contribute to this. In the meantime, feel free to retain our services! <ulink type=\"block\" url=\"http://www.freexian.com\" /> <ulink type=\"block\" url=\"http://www.gnurandal.com\" />"
-msgid "We would like to conclude on a personal note. Writing (and translating) this book took a considerable amount of time out of our usual professional activity. Since we are both freelance consultants, any new source of income grants us the freedom to spend more time improving Debian; we hope this book to be successful and to contribute to this. In the meantime, feel free to retain our services! <ulink type=\"block\" url=\"https://www.freexian.com\" /> <ulink type=\"block\" url=\"http://www.gnurandal.com\" />"
+msgid "We would like to conclude on a personal note. Writing (and translating) this book took a considerable amount of time out of our usual professional activity. Since we are both freelance consultants, any new source of income grants us the freedom to spend more time improving Debian; we hope this book to be successful and to contribute to this. In the meantime, feel free to retain our services! <ulink type=\"block\" url=\"https://www.freexian.com\" /> <ulink type=\"block\" url=\"https://www.gnurandal.com\" />"
 msgstr "われわれ著者は最後に個人的内容で本書を締め括りたいと思っています。われわれ著者は本書を執筆 (および翻訳) するために、通常の本業の他に、かなりの時間をかけました。われわれ著者は 2 人ともフリーランスのコンサルタントなので、新しい収入源があることで Debian を改善するためにより長い時間を使うことが可能になります。そしてわれわれ著者は本書が成功し、本書がわれわれ著者の新しい収入源になることを期待しています。その時が来るまでは、遠慮なくわれわれ著者のコンサルティングサービスをお使いください!<ulink type=\"block\" url=\"http://www.freexian.com\" /><ulink type=\"block\" url=\"http://www.gnurandal.com\" />"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "See you soon!"
 msgstr "それではまた!"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#~| msgid "In order to improve security and trust, most if not all the packages will be made to build reproducibly; that is to say, it will be possible to rebuild byte-for-byte identical binary packages from the source packages, thus allowing everyone to verify that no tampering has happened during the builds."
+#~ msgid "In order to improve security and trust, an increasing number of packages will be made to build reproducibly; that is to say, it will be possible to rebuild byte-for-byte identical binary packages from the source packages, thus allowing everyone to verify that no tampering has happened during the builds. This feature might even be required by the release managers for testing migration."
+#~ msgstr "安全性と信頼性を向上させるために、すべてとは言わないまでも多くのパッケージが再現性良くビルドされるようになるでしょう。すなわち、ソースパッケージからバイト単位で同一のバイナリパッケージを再ビルドできるようになるでしょう。こうすることで誰でもビルド中にパッケージが改竄されていないことを確認できるようになります。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#~| msgid "In a related theme, a lot of effort will have gone into improving security by default, and mitigating both “traditional” attacks and the new threats implied by mass surveillance."
+#~ msgid "In a related theme, a lot of effort will have gone into improving security by default, with more packages shipping an AppArmor profile."
+#~ msgstr "これに関連して、デフォルトの安全性を向上させ、「古典的な」攻撃と監視社会によってもたらされる新しい脅威の両方を軽減するために、数多くの努力がなされるでしょう。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: https://lists.debian.org/debian-devel/2015/09/msg00340.html;

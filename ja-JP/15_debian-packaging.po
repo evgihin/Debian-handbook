@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0\n"
-"POT-Creation-Date: 2020-07-22 15:37+0200\n"
+"POT-Creation-Date: 2022-07-30 18:23+0200\n"
 "PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/debian-handbook/tree/master/translation/ja_JP/push>\n"
@@ -42,6 +42,12 @@ msgid "Debian Developer"
 msgstr "Debian 開発者"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "Creating a Debian Package"
+msgid "Debian Package"
+msgstr "Debian パッケージの作成"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Maintainer"
 msgstr "メンテナ"
 
@@ -58,6 +64,18 @@ msgid "Rebuilding a Package from its Sources"
 msgstr "ソースを使ったパッケージの再ビルド"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>backport</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>rebuild</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Rebuilding a binary package is required under several sets of circumstances. In some cases, the administrator needs a software feature that requires the software to be compiled from sources, with a particular compilation option; in others, the software as packaged in the installed version of Debian is not recent enough. In the latter case, the administrator will usually build a more recent package taken from a newer version of Debian — such as <emphasis role=\"distribution\">Testing</emphasis> or even <emphasis role=\"distribution\">Unstable</emphasis> — so that this new package works in their <emphasis role=\"distribution\">Stable</emphasis> distribution; this operation is called “backporting”. As usual, care should be taken, before undertaking such a task, to check whether it has been done already — a quick look on the Debian Package Tracker for that package will reveal that information. <ulink type=\"block\" url=\"https://tracker.debian.org/\" /> <indexterm><primary>backport</primary></indexterm>"
 msgstr "いくつかの状況下では、バイナリパッケージの再ビルドが必要です。たとえば、管理者は特定のコンパイルオプションを付けてソフトウェアをソースからコンパイルすることで導入されるソフトウェアの機能を必要とする場合があります。そしてまた、インストール済みの Debian のバージョン用にパッケージングされたソフトウェアのバージョンが古い場合があります。ソフトウェアのバージョンが古い場合、管理者は<emphasis role=\"distribution\">テスト版</emphasis>や<emphasis role=\"distribution\">不安定版</emphasis>などの Debian の新しいバージョンから取得したより新しいパッケージをビルドすることが多いです。こうすることで、新しいパッケージを<emphasis role=\"distribution\">安定版</emphasis>ディストリビューションで動かすことが可能です。この操作は「バックポート」と呼ばれています。いつも通り、バックポート作業の前に既にバックポートパッケージが公開されているか否かを注意深く確認するべきです。対象のパッケージに対する Debian Package Tracker を一読するだけでこの種の情報が明らかになります。<ulink type=\"block\" url=\"https://tracker.debian.org/\" /><indexterm><primary>バックポート</primary></indexterm>"
 
@@ -66,14 +84,156 @@ msgid "Getting the Sources"
 msgstr "ソースの取得"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>source</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt</command></primary><secondary><literal>source</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt-get</command></primary><secondary><literal>source</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt</command></primary><secondary><literal>update</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt-get</command></primary><secondary><literal>update</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/</filename></secondary><see>APT</see>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><literal>deb-src</literal></primary>"
+msgstr "<primary><literal>Build-Depends</literal>、コントロールフィールド</primary>"
+
+msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note, however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line."
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 dget;
 # Ref: $ man 1 dpkg-source;
 # Ref: $ man 1 apt-get;
 # Tag: L-CFMD;
 #, fuzzy
 #| msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used)."
-msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note, however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it verifies the integrity of the downloaded source packages using <command>dscverify</command>, and it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used). The Debian keyring is needed, unless the option <literal>-u</literal> is supplied."
+msgid "If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it verifies the integrity of the downloaded source packages using <command>dscverify</command>, and it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used). The Debian keyring is needed, unless the option <literal>-u</literal> is supplied."
 msgstr "Debian パッケージの再ビルドはパッケージのソースコードを取得することから始まります。最も簡単な方法は <command>apt-get source <replaceable>source-package-name</replaceable></command> コマンドを使うことです。このコマンドを実行するには <filename>/etc/apt/sources.list</filename> ファイルの中に <literal>deb-src</literal> 行が必要で、さらに最新のインデックスファイルが必要です (たとえば <command>apt-get update</command> を実行する必要があります)。管理者が APT 設定を取り扱う章で説明した内容 (<xref linkend=\"sect.apt-sources.list\" />を参照してください) に従っている場合、これらの状況は既に満足されているはずです。しかしながら、<command>apt-get source <replaceable>source-package-name</replaceable></command> コマンドは <literal>deb-src</literal> 行で言及されている Debian バージョンのソースパッケージをダウンロードする点に注意してください。もし他のバージョンのソースパッケージが必要な場合、Debian アーカイブミラーや Debian のウェブサイトから手作業でダウンロードする必要があるかもしれません。この場合には 2、3 個のファイルをダウンロードする必要があります (<emphasis>Debian Source Control</emphasis> 用に <filename>*.dsc</filename> 拡張子を持つファイル、<filename>*.tar.<replaceable>comp</replaceable></filename> としばしば <filename>*.diff.gz</filename> や <filename>*.debian.tar.<replaceable>comp</replaceable></filename> 拡張子を持つファイル、ここで <replaceable>comp</replaceable> は使われている圧縮ツールに応じて <literal>gz</literal>、<literal>bz2</literal>、<literal>xz</literal> のうちのどれか 1 つです)。その後、<command>dpkg-source -x <replaceable>file.dsc</replaceable></command> コマンドを実行します。<filename>*.dsc</filename> ファイルがある URL から直接利用できるならば、<command>dget <replaceable>URL</replaceable></command> コマンドを使えばより簡単にすべてを取得することが可能です。dget コマンドは (<emphasis role=\"pkg\">devscripts</emphasis> パッケージに含まれます) 指定したアドレスから <filename>*.dsc</filename> ファイルを取得し、内容を解析し、ファイル内で参照されている単一もしくは複数のファイルを自動的に取得します。すべてのダウンロードが完了したら、dget コマンドはソースパッケージを展開します (これは <literal>-d</literal> または <literal>--download-only</literal> オプションが使われていない場合に限ります)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install devscripts;
+msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debi;
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>dscverify</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install dput;
+# Ref: $ man 1 dput;
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>dget</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install dput;
+# Ref: $ man 1 dput;
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>dpkg-source</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.dsc</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.diff.gz</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.gz</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.bz2</filename></secondary>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.xz</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.tar</filename></primary><secondary><filename>.tar.gz</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.tar</filename></primary><secondary><filename>.tar.bz2</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.tar</filename></primary><secondary><filename>.tar.xz</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt</command></primary><secondary><literal>--download-only</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt-get</command></primary><secondary><literal>--download-only</literal></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install devscripts;
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">debian-archive-keyring</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Making Changes"
@@ -90,18 +250,18 @@ msgid ""
 "Please use:\n"
 "git clone https://salsa.debian.org/samba-team/samba.git\n"
 "to retrieve the latest (possibly unreleased) updates to the package.\n"
-"Need to get 11.7 MB of source archives.\n"
-"Get:1 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (dsc) [4,316 B]\n"
-"Get:2 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (tar) [11.4 MB]\n"
-"Get:3 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (diff) [252 kB]\n"
-"Fetched 11.7 MB in 1s (9,505 kB/s)\n"
-"dpkg-source: info: extracting samba in samba-4.9.5+dfsg\n"
-"dpkg-source: info: unpacking samba_4.9.5+dfsg.orig.tar.xz\n"
-"dpkg-source: info: unpacking samba_4.9.5+dfsg-5+deb10u1.debian.tar.xz\n"
+"Need to get 12.3 MB of source archives.\n"
+"Get:1 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (dsc) [4,514 B]\n"
+"Get:2 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (tar) [11.8 MB]\n"
+"Get:3 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (diff) [468 kB]\n"
+"Fetched 12.3 MB in 3s (4,582 kB/s)\n"
+"dpkg-source: info: extracting samba in samba-4.13.13+dfsg\n"
+"dpkg-source: info: unpacking samba_4.13.13+dfsg.orig.tar.xz\n"
+"dpkg-source: info: unpacking samba_4.13.13+dfsg-1~deb11u3.debian.tar.xz\n"
 "dpkg-source: info: using patch list from debian/patches/series\n"
 "dpkg-source: info: applying 07_private_lib\n"
 "dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch\n"
-"[...]\n"
+"dpkg-source: info: applying [...]\n"
 "</computeroutput>"
 msgstr ""
 
@@ -110,7 +270,7 @@ msgstr ""
 # Tag: L-CFMD;
 #, fuzzy
 #| msgid "The source of the package is now available in a directory named after the source package and its version (for instance, <emphasis>samba-4.1.17+dfsg</emphasis>); this is where we'll work on our local changes."
-msgid "The source of the package is now available in a directory named after the source package and its version (<emphasis>samba-4.9.5+dfsg</emphasis>); this is where we'll work on our local changes."
+msgid "The source of the package is now available in a directory named after the source package and its version (<filename>samba-4.13.13+dfsg</filename>); this is where we'll work on our local changes."
 msgstr "これでパッケージのソースがソースパッケージとバージョンを基に名付けられたディレクトリ (たとえば <emphasis>samba-4.1.17+dfsg</emphasis> など) の中で利用できるようになりました。修正作業はこのディレクトリ内で行われます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -120,7 +280,7 @@ msgstr "これでパッケージのソースがソースパッケージとバー
 # Tag: L-CFMD;
 #, fuzzy
 #| msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.1.17+dfsg-2</literal>, we can create version <literal>2:4.1.17+dfsg-2falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package, with an command such as <command>dch --local falcot</command>. This invokes a text editor (<command>sensible-editor</command> — this should be your favorite editor if it is mentioned in the <varname>VISUAL</varname> or <varname>EDITOR</varname> environment variables, and the default editor otherwise) to allow documenting the differences brought by this rebuild. This editor shows us that <command>dch</command> really did change the <filename>debian/changelog</filename> file."
-msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.9.5+dfsg-5</literal>, we can create version <literal>2:4.9.5+dfsg-5falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package."
+msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.13.13+dfsg-1~deb11u3</literal>, we can create version <literal>2:4.13.13+dfsg-1~deb11u3+falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package. <indexterm><primary><command>dch</command></primary></indexterm> <indexterm><primary><emphasis role=\"pkg\">devscripts</emphasis></primary></indexterm> <indexterm><primary>package</primary><secondary>version</secondary></indexterm>"
 msgstr "最初にパッケージのバージョン番号を変更します。こうすることで、再ビルドされたパッケージを Debian の提供する元パッケージと区別することが可能です。現在のバージョンが <literal>2:4.1.17+dfsg-2</literal> の場合、バージョン <literal>2:4.1.17+dfsg-2falcot1</literal> を作成することが可能です。これはパッケージの出自を明らかに示しています。このパッケージのバージョン番号は Debian が提供する元パッケージのバージョン番号よりも大きいため、このパッケージを元パッケージの更新として簡単にインストールできます。このような作業を極めて効果的に行うには、<emphasis role=\"pkg\">devscripts</emphasis> パッケージの提供する <command>dch</command> コマンド (<emphasis>Debian CHangelog</emphasis>) を <command>dch --local falcot</command> のように使います。これは最良の効果を発揮します。<command>dch</command> コマンドはテキストエディタ (<command>sensible-editor</command>。このエディタは <varname>VISUAL</varname> または <varname>EDITOR</varname> 環境変数で定義されているお気に入りのエディタです。そうでなければデフォルトエディタです) を起動します。ここで、再ビルドによって導入される変更の内容を記述してください。このエディタは <command>dch</command> が <filename>debian/changelog</filename> ファイルを変更したことを示します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -132,8 +292,9 @@ msgstr "最初にパッケージのバージョン番号を変更します。こ
 #| "</userinput><computeroutput>[...]\n"
 #| "</computeroutput>"
 msgid ""
-"<computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg\n"
-"</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput>"
+"<computeroutput>$ </computeroutput><userinput>cd 4.13.13+dfsg-1~deb11u3\n"
+"</userinput><computeroutput>$ </computeroutput><userinput>dch --local +falcot\n"
+"</userinput>"
 msgstr ""
 "<computeroutput>$ </computeroutput><userinput>dpkg-buildpackage -us -uc\n"
 "</userinput><computeroutput>[...]\n"
@@ -143,16 +304,109 @@ msgid "The last command invokes a text editor (<command>sensible-editor</command
 msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debi;
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>sensible-editor</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><varname>VISUAL</varname></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>VISUAL</varname></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><varname>EDITOR</varname></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>EDITOR</varname></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary><filename>changelog</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 dh_auto_build;
 # Ref: $ man 1 dh_auto_configure;
 # Tag: L-CFMD;
-msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages for explanations on how to achieve this)."
+#, fuzzy
+#| msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages for explanations on how to achieve this)."
+msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal> or <literal>cmake …</literal> or …) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages and <citerefentry><refentrytitle>debhelper</refentrytitle> <manvolnum>7</manvolnum></citerefentry> for explanations on how to achieve this)."
 msgstr "ビルドオプションの変更が必要な場合、<filename>debian/rules</filename> を修正します。<filename>debian/rules</filename> はパッケージビルド作業の各段階を動作させるものです。<filename>debian/rules</filename> が最も単純に書かれている場合、初期設定 (<literal>./configure …</literal>) や実際のビルド (<literal>$(MAKE) …</literal> や <literal>make …</literal>) を実行するコマンドを簡単に見つけられるでしょう。ファイル内にこれらのコマンドが明示的に書かれていない場合、このファイルの内容は別のコマンドに対する作用を書いているのかもしれません。このような場合、デフォルト挙動を変える方法をより詳細に学ぶために文書を参照してください。<command>dh</command> を使っているパッケージのビルドオプションを変更する場合、<command>dh_auto_configure</command> や <command>dh_auto_build</command> コマンドを再定義する必要があるかもしれません (これを行う方法に関する説明は各コマンドのマニュアルページをご覧ください)。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary><command>dh_auto_build</command></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary><command>dh_auto_configure</command></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary>override target</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debchange;
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>dh</command></primary><seealso><command>debhelper</command></seealso>"
+msgstr "<primary><command>dch</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary>"
+msgid "<primary>package</primary><secondary><filename>rules</filename></secondary><seealso><filename>rules</filename></seealso>"
+msgstr "<primary>パッケージ</primary><secondary>Debian</secondary><tertiary>アーカイブ</tertiary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><emphasis>debhelper</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">debhelper</emphasis></primary>"
+msgstr "<primary><emphasis>debhelper</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 msgid "Depending on the local changes to the packages, an update may also be required in the <filename>debian/control</filename> file, which contains a description of the generated packages. In particular, this file contains <literal>Build-Depends</literal> lines controlling the list of dependencies that must be fulfilled at package build time. These often refer to versions of packages contained in the distribution the source package comes from, but which may not be available in the distribution used for the rebuild. There is no automated way to determine if a dependency is real or only specified to guarantee that the build should only be attempted with the latest version of a library — this is the only available way to force an <emphasis>autobuilder</emphasis> to use a given package version during build, which is why Debian maintainers frequently use strictly versioned build-dependencies."
 msgstr "パッケージに対して行った変更の内容によっては、<filename>debian/control</filename> ファイルの内容もまた更新する必要があります。<filename>debian/control</filename> ファイルには生成されるパッケージの説明が含まれます。特に、<filename>debian/control</filename> ファイルにはパッケージのビルド時点で満足されなければいけない依存関係のリストを制御する <literal>Build-Depends</literal> 行が含まれます。<literal>Build-Depends</literal> 行で指定されているパッケージのバージョンはソースパッケージが提供されるディストリビューションに含まれるパッケージのバージョンと一致している場合が多いです。しかし、再ビルドを行うディストリビューションではここで指定されているバージョンが利用できないかもしれません。依存関係が本物か、それともビルド時にライブラリの最新版を試すことを保証するためだけ指定されているかを決定する自動的な方法はありません。<literal>Build-Depends</literal> 行を使うことが<emphasis>自動ビルドロボット</emphasis>にビルド中に与えられたパッケージバージョンを使うことを強制するための唯一の方法なので、Debian メンテナはバージョンを厳しく指定したビルド依存関係を使うことが多いです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary>"
+msgid "<primary>package</primary><secondary><filename>control</filename></secondary><see><filename>control</filename></see>"
+msgstr "<primary>パッケージ</primary><secondary>Debian</secondary><tertiary>アーカイブ</tertiary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><filename>control</filename></primary><secondary><literal>Build-Depends</literal>, header field</secondary>"
+msgstr "<primary><literal>Build-Depends</literal>、コントロールフィールド</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -161,20 +415,39 @@ msgstr "もしあなたが、指定されているビルド依存関係を緩め
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "<emphasis>TIP</emphasis> Installing <literal>Build-Depends</literal>"
-msgstr "<emphasis>TIP</emphasis> <literal>Build-Depends</literal> のインストール"
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>INSTALL</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
-msgstr "<primary><literal>Build-Depends</literal>、コントロールフィールド</primary>"
+msgid "<emphasis>TIP</emphasis> Installing <literal>Build-Depends</literal>"
+msgstr "<emphasis>TIP</emphasis> <literal>Build-Depends</literal> のインストール"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 apt-get;
 # Tag: L-CFMD;
 # Tag: PTAL;
-msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>source-package</replaceable></command> command."
+#, fuzzy
+#| msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>source-package</replaceable></command> command."
+msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>package</replaceable></command> command."
 msgstr "<command>apt-get</command> を使うことで、あるソースパッケージの <literal>Build-Depends</literal> フィールドに指定されているすべてのパッケージをインストールすることが可能です。<command>apt-get</command> は <filename>/etc/apt/sources.list</filename> ファイルの <literal>deb-src</literal> 行で指定されているディストリビューションに含まれるソースパッケージの <literal>Build-Depends</literal> フィールドに指定されているパッケージをインストールします。これを行うには、<command>apt-get build-dep <replaceable>source-package</replaceable></command> コマンドを実行するだけです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install dput;
+# Ref: $ man 1 dput;
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>apt-get</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 apt-get;
@@ -187,6 +460,21 @@ msgstr "再ビルドの開始"
 # Tag: L-CFMD;
 msgid "When all the needed changes have been applied to the sources, we can start generating the actual binary package (<filename>.deb</filename> file). The whole process is managed by the <command>dpkg-buildpackage</command> command."
 msgstr "ソースに対するすべての必要な変更が完了したら、実際のバイナリパッケージ (<filename>.deb</filename> ファイル) を生成します。すべてのプロセスは <command>dpkg-buildpackage</command> コマンドで管理されます。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.deb</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 pbuilder;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><command>pbuilder</command></primary>"
+msgid "<primary><command>dpkg-buildpackage</command></primary>"
+msgstr "<primary><command>pbuilder</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Rebuilding a package"
@@ -207,14 +495,39 @@ msgstr ""
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 dpkg-buildpackage;
 # Tag: L-CFMD;
-msgid "The previous command can fail if the <literal>Build-Depends</literal> fields have not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time."
+#, fuzzy
+#| msgid "The previous command can fail if the <literal>Build-Depends</literal> fields have not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time."
+msgid "The previous command can fail if the <literal>Build-Depends</literal> field has not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time. The switch can still be very useful if you only want to create a source package, which is supposed to be passed to clean build environments as described in <xref linkend=\"sidebar.schroot\" />."
 msgstr "<literal>Build-Depends</literal> フィールドが更新されていなかったり、関連するパッケージがインストールされていなかった場合、<command>dpkg-buildpackage</command> コマンドは失敗します。そのような場合、<command>dpkg-buildpackage</command> に <literal>-d</literal> オプションを指定して、依存関係確認を行わないようにすることも可能です。しかしながら、依存関係を明示的に無視すると後々の段階でビルド作業が失敗する恐れがあります。さらに悪いことに、パッケージが正常にビルドされたように見えても正しく動かない可能性があります。なぜなら一部のプログラムは必要なライブラリがビルド時に利用できない場合に一部の機能を自動的に無効化するからです。"
+
+msgid "The other options used in the above example make sure that neither the source package's <filename>.dsc</filename> (<literal>-us</literal>) nor the produced <filename>.changes</filename> file (<literal>-uc</literal>) get signed with the package builder's cryptographic key after the asuccessful build."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 fakeroot;
 # Tag: L-CFMD;
 msgid "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
 msgstr "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debchange;
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>fakeroot</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>sponsoring</primary>"
+msgid "<primary>root</primary>"
+msgstr "<primary sortas=\"パッケージノシエン\">パッケージの支援</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>account</primary><secondary>root account</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 fakeroot;
@@ -233,16 +546,32 @@ msgstr "<command>fakeroot</command> 環境下で動作するプログラムは�
 # Ref: $ man 1 dpkg-buildpackage;
 # Ref: $ man 1 debuild;
 # Tag: L-CFMD;
-msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis>devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
+#, fuzzy
+#| msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis>devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
+msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis role=\"pkg\">devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
 msgstr "しばしば、Debian 開発者は <command>debuild</command> などの高レベルプログラムを使います。<command>debuild</command> は通常通り <command>dpkg-buildpackage</command> を実行するだけでなく、生成されたパッケージの Debian ポリシーに対する妥当性を確認するプログラムも実行します。<command>debuild</command> スクリプトは、手元の環境変数がパッケージビルドを「汚染」しないように、ビルド環境を整えます。<command>debuild</command> コマンドは <emphasis>devscripts</emphasis> スイートに含まれるツールの 1 つで、メンテナの作業を簡単にするためのいくつかの一貫性と設定を共有します。"
 
-msgid "<emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted</emphasis> environment"
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debuild;
+msgid "<primary><command>debuild</command></primary>"
+msgstr "<primary><command>debuild</command></primary>"
+
+msgid "<emphasis>QUICK LOOK</emphasis> Building packages in <emphasis>chrooted</emphasis> and <emphasis>virtual</emphasis> environments"
 msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 8 pbuilder;
 # Tag: L-CFMD;
 msgid "<primary><command>pbuilder</command></primary>"
+msgstr "<primary><command>pbuilder</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 pbuilder;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><command>pbuilder</command></primary>"
+msgid "<primary><command>cowbuilder</command></primary>"
 msgstr "<primary><command>pbuilder</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -254,19 +583,51 @@ msgid "<primary><command>schroot</command></primary>"
 msgstr "<primary><command>dch</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 8 pbuilder;
 # Tag: L-CFMD;
-msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
-msgstr "<command>pbuilder</command> プログラム (同名のパッケージに含まれます) を使うことで、<emphasis>chroot された</emphasis>環境の中で Debian パッケージをビルドすることが可能になります。<command>pbuilder</command> プログラムは最初にパッケージをビルドするために必要な最低限のシステム (と <emphasis>Build-Depends</emphasis> フィールドで指定されているパッケージ) を含む一時ディレクトリを作成します。このディレクトリは <command>chroot</command> コマンドビルド中に使うルートディレクトリ (<filename>/</filename>) として使われます。"
+# Ref: $ man 1 debuild;
+#, fuzzy
+#| msgid "<primary><command>debuild</command></primary>"
+msgid "<primary><command>sbuild</command></primary>"
+msgstr "<primary><command>debuild</command></primary>"
+
+msgid "Building a package on an existing system, like a workstation or server, can pose several problems. Maybe the system has packages installed, that conflict with the build requirements. Or maybe it has packages (libraries, headers, etc.) installed, that the project to build is not supposed to use - e.g. from <emphasis role=\"distribution\">Testing</emphasis>, <emphasis role=\"distribution\">Unstable</emphasis>, or even from third parties. Also it might have packages installed, which are actually required for the build, but are not listed in <filename>debian/control</filename>. It is therefore a good practice to build a packages in “clean“ environments."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 8 pbuilder;
 # Tag: L-CFMD;
-msgid "This tool allows the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and a <command>pbuilder</command> running on the same machine can be using <emphasis role=\"distribution\">Unstable</emphasis> for package builds."
+#, fuzzy
+#| msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
+msgid "The <command>sbuild</command>, <command>pbuilder</command>, or <command>cowbuilder</command> programs (in the similarly named packages) allow building a Debian package in a <emphasis>chrooted</emphasis> environment. Each of them first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
+msgstr "<command>pbuilder</command> プログラム (同名のパッケージに含まれます) を使うことで、<emphasis>chroot された</emphasis>環境の中で Debian パッケージをビルドすることが可能になります。<command>pbuilder</command> プログラムは最初にパッケージをビルドするために必要な最低限のシステム (と <emphasis>Build-Depends</emphasis> フィールドで指定されているパッケージ) を含む一時ディレクトリを作成します。このディレクトリは <command>chroot</command> コマンドビルド中に使うルートディレクトリ (<filename>/</filename>) として使われます。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debchange;
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>chroot</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 pbuilder;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "This tool allows the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and a <command>pbuilder</command> running on the same machine can be using <emphasis role=\"distribution\">Unstable</emphasis> for package builds."
+msgid "These tools allow the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and the chrooted environments can be running on the same machine using <emphasis role=\"distribution\">Unstable</emphasis> for package builds. Using these tools, it is also possible to build for a different distribution, like <emphasis role=\"distribution\">Ubuntu</emphasis>."
 msgstr "<command>pbuilder</command> ツールを使うことで、ビルド作業をユーザの操作によって変更されない環境の中で行うことが可能になります。さらに、<command>pbuilder</command> ツールを使うことで、言及されていないビルド依存関係を素早く検出することが可能になります (なぜなら、適切な依存関係が指定されていなければビルドは失敗するからです)。最後に、<command>pbuilder</command> ツールを使うことで、システム用に使われている Debian バージョン以外の Debian バージョン向けのパッケージをビルドすることが可能になります。つまり、マシンは通常の作業用に<emphasis role=\"distribution\">安定版</emphasis>を使うことが可能です。そして、同じマシン上で動作する <command>pbuilder</command> はパッケージビルド専用に<emphasis role=\"distribution\">不安定版</emphasis>を使うことが可能です。"
 
-msgid "<command>schroot</command> allows running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
+msgid "<command>schroot</command>, <command>sbuild-shell</command>, or <command>pbuilder</command> allow running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
 msgstr ""
+
+msgid "Sometimes it is not enough to build a package in a chrooted environment. This can be due to building for a different architecture where cross-compilation does not work, or due to the tools not being able to create a chrooted environment for the desired target system. Then one can create virtual machines to build the package there. These setups are usually more complex then the tools mentioned above, and rarely needed, so we will only mention this possibility without going into much detail. Check out <xref linkend=\"sect.virtualization\" /> for an introduction into this topic."
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>Debian Maintainer</primary>"
+msgid "<primary>virtualization</primary>"
+msgstr "<primary>Debian メンテナ</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Building your First Package"
@@ -275,6 +636,30 @@ msgstr "最初のパッケージのビルド"
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Meta-Packages or Fake Packages"
 msgstr "メタパッケージやフェイクパッケージ"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>meta-package</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package types</primary>"
+msgid "<primary>meta-package</primary>"
+msgstr "<primary sortas=\"パッケージノシュルイ\">パッケージの種類</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>fake package</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>key pair</primary>"
+msgid "<primary>fake package</primary>"
+msgstr "<primary sortas=\"カギペア\">鍵ペア</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Fake packages and meta-packages are similar, in that they are empty shells that only exist for the effects their meta-data have on the package handling stack."
@@ -299,6 +684,30 @@ msgstr "逆に、メタパッケージはメタパッケージをインストー
 # Ref: $ man 1 equivs-build;
 msgid "Both these kinds of packages can be created by the <command>equivs-control</command> and <command>equivs-build</command> commands (in the <emphasis role=\"pkg\">equivs</emphasis> package). The <command>equivs-control <replaceable>file</replaceable></command> command creates a Debian package header file that should be edited to contain the name of the expected package, its version number, the name of the maintainer, its dependencies, and its description. Other fields without a default value are optional and can be deleted. The <literal>Copyright</literal>, <literal>Changelog</literal>, <literal>Readme</literal> and <literal>Extra-Files</literal> fields are not standard fields in Debian packages; they only make sense within the scope of <command>equivs-build</command>, and they will not be kept in the headers of the generated package."
 msgstr "フェイクパッケージとメタパッケージは <command>equivs-control</command> と <command>equivs-build</command> コマンド (<emphasis role=\"pkg\">equivs</emphasis> パッケージに含まれます) を使って作成されます。<command>equivs-control <replaceable>file</replaceable></command> コマンドは Debian パッケージヘッダファイルを作成します。Debian パッケージヘッダファイルには、パッケージの名前、バージョン番号、メンテナ、依存関係、説明を含めるように編集します。デフォルト値を持たない他のフィールドは任意で、削除することも可能です。<literal>Copyright</literal>、<literal>Changelog</literal>、<literal>Readme</literal>、<literal>Extra-Files</literal> フィールドは Debian パッケージの標準的なフィールドではありません。さらに、これらのフィールドは <command>equivs-build</command> を使う限りにおいて意味を持つものであり、生成されるパッケージのヘッダから削除されます。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install devscripts;
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">equivs</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install devscripts;
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">equivs</emphasis></primary><secondary><command>equivs-control</command></secondary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install devscripts;
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">equivs</emphasis></primary><secondary><command>equivs-build</command></secondary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Header file of the <emphasis>libxml-libxml-perl</emphasis> fake package"
@@ -326,15 +735,15 @@ msgstr "<emphasis>libxml-libxml-perl</emphasis> フェイクパッケージの�
 #| " of the module has been manually compiled &amp; installed in the\n"
 #| " site_perl directory."
 msgid ""
-"\n"
+"<![CDATA[\n"
 "Section: perl\n"
 "Priority: optional\n"
-"Standards-Version: 4.4.1\n"
+"Standards-Version: 4.5.1\n"
 "\n"
 "Package: libxml-libxml-perl\n"
-"Version: 2.0134-1\n"
-"Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
-"Depends: libxml2 (&gt;= 2.7.4)\n"
+"Version: 2.0207-1\n"
+"Maintainer: Raphael Hertzog <hertzog@debian.org>\n"
+"Depends: libxml2 (>= 2.9.10)\n"
 "Architecture: all\n"
 "Description: Fake package - module manually installed in site_perl\n"
 " This is a fake package to let the packaging system\n"
@@ -342,7 +751,8 @@ msgid ""
 " .\n"
 " In fact, the package is not installed since a newer version\n"
 " of the module has been manually compiled &amp; installed in the\n"
-" site_perl directory."
+" site_perl directory.\n"
+"]]>"
 msgstr ""
 "\n"
 "Section: perl\n"
@@ -367,9 +777,67 @@ msgstr ""
 msgid "The next step is to generate the Debian package with the <command>equivs-build <replaceable>file</replaceable></command> command. Voilà: the package is created in the current directory and it can be handled like any other Debian package would."
 msgstr "次のステップでは、<command>equivs-build <replaceable>file</replaceable></command> コマンドを使って Debian パッケージを生成します。さぁこれでパッケージは現在のディレクトリに作成され、他の Debian パッケージと同様に取り扱うことが可能になります。"
 
+msgid ""
+"<computeroutput>$ </computeroutput><userinput>equivs-build <replaceable>file</replaceable>\n"
+"</userinput><computeroutput><![CDATA[equivs-build control \n"
+"dpkg-buildpackage: info: source package libxml-libxml-perl\n"
+"dpkg-buildpackage: info: source version 2.0207-1\n"
+"dpkg-buildpackage: info: source distribution unstable\n"
+"dpkg-buildpackage: info: source changed by Raphael Hertzog <hertzog@debian.org>\n"
+"dpkg-buildpackage: info: host architecture amd64\n"
+" dpkg-source --before-build .\n"
+" debian/rules clean\n"
+"dh clean\n"
+"   dh_clean\n"
+" debian/rules binary\n"
+"dh binary\n"
+"   dh_update_autotools_config\n"
+"   dh_autoreconf\n"
+"   create-stamp debian/debhelper-build-stamp\n"
+"   dh_prep\n"
+"   dh_install\n"
+"   dh_installdocs\n"
+"   dh_installchangelogs\n"
+"   dh_perl\n"
+"   dh_link\n"
+"   dh_strip_nondeterminism\n"
+"   dh_compress\n"
+"   dh_fixperms\n"
+"   dh_missing\n"
+"   dh_installdeb\n"
+"   dh_gencontrol\n"
+"   dh_md5sums\n"
+"   dh_builddeb\n"
+"dpkg-deb: building package 'libxml-libxml-perl' in '../libxml-libxml-perl_2.0207-1_all.deb'.\n"
+" dpkg-genbuildinfo --build=binary\n"
+" dpkg-genchanges --build=binary >../libxml-libxml-perl_2.0207-1_amd64.changes\n"
+"dpkg-genchanges: info: binary-only upload (no source code included)\n"
+" dpkg-source --after-build .\n"
+"dpkg-buildpackage: info: binary-only upload (no source included)\n"
+"\n"
+"The package has been created.\n"
+"Attention, the package has been created in the current directory,\n"
+"not in \"..\" as indicated by the messaige above!\n"
+"]]></computeroutput>"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Simple File Archive"
 msgstr "単純なファイルアーカイブ"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debchange;
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>dh_make</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary><emphasis>dh-make</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">dh-make</emphasis></primary>"
+msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The Falcot Corp administrators need to create a Debian package in order to ease deployment of a set of documents on a large number of machines. The administrator in charge of this task first reads the “New Maintainer's Guide”, then starts working on their first package. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
@@ -415,7 +883,7 @@ msgid ""
 "<computeroutput>\n"
 "Maintainer Name     : Raphael Hertzog\n"
 "Email-Address       : hertzog@debian.org\n"
-"Date                : Fri, 04 Sep 2015 12:09:39 -0400\n"
+"Date                : Sat, 26 Feb 2021 13:02:06 +0100\n"
 "Package Name        : falcot-data\n"
 "Version             : 1.0\n"
 "License             : gpl3\n"
@@ -451,16 +919,21 @@ msgstr ""
 # Ref: $ man 8 dh_make;
 #, fuzzy
 #| msgid "The selected type of package (<emphasis>indep binary</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single binary</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
-msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
+msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal> in <filename>debian/control</filename>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
 msgstr "パッケージの種類で <emphasis>indep binary</emphasis> を選ぶと、ソースパッケージから単一のバイナリパッケージを生成します。ここで生成されるバイナリパッケージはすべてのアーキテクチャで共有されます (<literal>Architecture: all</literal>)。<emphasis>single binary</emphasis> はその逆の振る舞いで、対象のアーキテクチャに依存する (<literal>Architecture: any</literal>) 単一のバイナリを生成します。今回作成するパッケージの場合、<emphasis>indep binary</emphasis> がより適切です。なぜなら、このパッケージは文書だけを含みバイナリプログラムを含まないからです。このため、すべてのアーキテクチャのコンピュータで同様に使うことが可能です。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>package types</primary>"
-msgstr "<primary sortas=\"パッケージノシュルイ\">パッケージの種類</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary>package</primary><secondary>types</secondary>"
 msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>architecture</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Architecture</literal>, header field</secondary>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -473,6 +946,40 @@ msgstr "<emphasis>multiple binary</emphasis> を選ぶと、ソースパッケ�
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<emphasis>TIP</emphasis> Maintainer's name and email address"
 msgstr "<emphasis>TIP</emphasis> メンテナの名前と電子メールアドレス"
+
+msgid "<primary><varname>DEBFULLNAME</varname></primary><see>environment variable</see>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>DEBFULLNAME</varname></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<primary><varname>DEBEMAIL</varname></primary><see>environment variable</see>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>DEBEMAIL</varname></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<primary><varname>EMAIL</varname></primary><see>environment variable</see>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>EMAIL</varname></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.bashrc</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -496,21 +1003,92 @@ msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>debian</filename>, directory</primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>rules</filename></secondary><seealso><filename>rules</filename></seealso>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>rules</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>control</filename></secondary><seealso><filename>control</filename></seealso>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>control</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>changelog</filename></secondary><seealso><filename>changelog</filename></seealso>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>changelog</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>copyright</filename></secondary><seealso><filename>copyright</filename></seealso>"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>copyright</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
 # Ref: $ man 8 dh_make;
 # Ref: $ ls debian/rules debian/control debian/changelog debian/copyright;
 # Ref: $ ls debian/*.ex;
 # Ref: $ ls debian/compat;
 # Ref: $ man 7 debhelper;
-msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file should be kept, since it is required for the correct functioning of the <emphasis>debhelper</emphasis> suite of programs (all beginning with the <command>dh_</command> prefix) used at various stages of the package build process."
+#, fuzzy
+#| msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file should be kept, since it is required for the correct functioning of the <emphasis>debhelper</emphasis> suite of programs (all beginning with the <command>dh_</command> prefix) used at various stages of the package build process."
+msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file is not used nor created anymore. Instead of defining the debhelper compatibility level as a number in this file, it is now defined as a build-dependency on the <emphasis role=\"pkg\">debhelper-compat</emphasis> virtual package in the <literal>Build-Depends</literal> file in <filename>debian/control</filename>."
 msgstr "<command>dh_make</command> コマンドによって <filename>debian</filename> サブディレクトリと各種ファイルが作成されました。特に <filename>rules</filename>、<filename>control</filename>、<filename>changelog</filename>、<filename>copyright</filename> などの一部のファイルは必須です。<filename>.ex</filename> 拡張子を持つファイルは例ファイルで、必要ならばこれらのファイルをひな形として (拡張子を削除して) 使うことが可能です。必要なければ例ファイルを削除することを推奨します。<filename>compat</filename> ファイルはそのままにしておくべきです。なぜなら、<filename>compat</filename> ファイルはパッケージビルド作業のさまざまな段階で使われる <emphasis>debhelper</emphasis> プログラムスイート (<command>dh_</command> から始まるプログラム群) を適切に動作させるために必要だからです。"
 
+msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related copyright and license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default format used for this file is defined in the <literal>Format</literal> field. <ulink type=\"block\" url=\"https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\" />"
+msgstr ""
+
+msgid "The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>UNRELEASED</literal> or <literal>unstable</literal> to the target release name is enough."
+msgstr ""
+
+msgid "The <filename>control</filename> file must also be updated: the <literal>Section</literal> field can be changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package. If the package does not require to run any commands as root (see <xref linkend=\"sidebar.fakeroot\" />), the <literal>Rules-Requires-Root</literal> field can be left as is."
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
-# Ref: $ cat debian/control debian/changelog debian/copyright;
 #, fuzzy
-#| msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>iceweasel | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
-msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
-msgstr "<filename>copyright</filename> ファイルには必ずパッケージに含まれる文書の著者と対応するライセンスに関する情報を含めなければいけません。今回の場合、パッケージには内部文書が含まれ、その使用は Falcot Corp の社内だけに制限されています。デフォルトの <filename>changelog</filename> ファイルはほとんどの場合に適切です。「Initial release」をより詳しい説明に置き換えたり、<literal>unstable</literal> を <literal>internal</literal> に変えるだけで十分です。<filename>control</filename> ファイルも更新します。具体的に言えば、<literal>Section</literal> フィールドの値を <emphasis>misc</emphasis> に変更し、<literal>Homepage</literal>、<literal>Vcs-Git</literal>、<literal>Vcs-Browser</literal> を削除しました。<literal>Depends</literal> フィールドの値には <literal>iceweasel | www-browser</literal> を加えました。これはパッケージ内の文書を表示するために必要なウェブブラウザがインストールされていることを保証するためです。"
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>control</filename></primary><secondary><literal>Depends</literal>, header field</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Homepage</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Rules-Requires-Root</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Section</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Vcs-Browser</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Vcs-Git</literal>, header field</secondary>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -543,13 +1121,14 @@ msgstr "<filename>control</filename> ファイル"
 #| " These documents MUST NOT leave the company.\n"
 #| " Their use is INTERNAL ONLY."
 msgid ""
-"\n"
+"<![CDATA[\n"
 "Source: falcot-data\n"
 "Section: misc\n"
 "Priority: optional\n"
-"Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
-"Build-Depends: debhelper (&gt;= 10)\n"
-"Standards-Version: 4.4.1\n"
+"Maintainer: Raphael Hertzog <hertzog@debian.org>\n"
+"Build-Depends: debhelper-compat (= 13)\n"
+"Standards-Version: 4.5.1\n"
+"Rules-Requires-Root: no\n"
 "\n"
 "Package: falcot-data\n"
 "Architecture: all\n"
@@ -561,7 +1140,8 @@ msgid ""
 "  - contacts for each department.\n"
 " .\n"
 " These documents MUST NOT leave the company.\n"
-" Their use is INTERNAL ONLY."
+" Their use is INTERNAL ONLY.\n"
+"]]>"
 msgstr ""
 "\n"
 "Source: falcot-data\n"
@@ -592,16 +1172,28 @@ msgstr "<filename>changelog</filename> ファイル"
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 # Ref: $ cat debian/changelog;
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "falcot-data (1.0) internal; urgency=low\n"
+#| "\n"
+#| "  * Initial Release.\n"
+#| "  * Let's start with few documents:\n"
+#| "    - internal company structure;\n"
+#| "    - contacts for each department.\n"
+#| "\n"
+#| " -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400"
 msgid ""
-"\n"
-"falcot-data (1.0) internal; urgency=low\n"
+"<![CDATA[\n"
+"falcot-data (1.0) bullseye; urgency=low\n"
 "\n"
 "  * Initial Release.\n"
 "  * Let's start with few documents:\n"
 "    - internal company structure;\n"
 "    - contacts for each department.\n"
 "\n"
-" -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400"
+" -- Raphael Hertzog <hertzog@debian.org>  Sat, 26 Feb 2022 15:12:06 +0100\n"
+"]]>"
 msgstr ""
 "\n"
 "falcot-data (1.0) internal; urgency=low\n"
@@ -638,7 +1230,7 @@ msgid ""
 "Upstream-Name: falcot-data\n"
 "\n"
 "Files: *\n"
-"Copyright: 2004-2019 Falcot Corp\n"
+"Copyright: 2004-2021 Falcot Corp\n"
 "License:\n"
 " All rights reserved."
 msgstr ""
@@ -663,6 +1255,14 @@ msgstr "<primary><filename>Makefile</filename></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
+# Ref: $ man 1 debi;
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>make</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
 # Ref: $ man 1 make;
 msgid "A <filename>Makefile</filename> file is a script used by the <command>make</command> program; it describes rules for how to build a set of files from each other in a tree of dependencies (for instance, a program can be built from a set of source files). The <filename>Makefile</filename> file describes these rules in the following format:"
 msgstr "<filename>Makefile</filename> ファイルは <command>make</command> プログラムによって使われるスクリプトであり、互いに依存関係を持つファイル群をビルドする規則を指定します (たとえば、複数のソースファイル群から 1 つのプログラムをビルドする規則を指定します)。<filename>Makefile</filename> ファイルはビルド規則を以下のフォーマットで指定します。"
@@ -684,7 +1284,9 @@ msgstr ""
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 # Ref: http://www.gnu.org/software/make/manual/make.html#Rule-Introduction;
-msgid "The interpretation of such a rule is as follows: if one of the <literal>source*</literal> files is more recent than the <literal>target</literal> file, then the target needs to be generated, using <command>command1</command> and <command>command2</command>."
+#, fuzzy
+#| msgid "The interpretation of such a rule is as follows: if one of the <literal>source*</literal> files is more recent than the <literal>target</literal> file, then the target needs to be generated, using <command>command1</command> and <command>command2</command>."
+msgid "The basic interpretation of such a rule is as follows: if one of the <literal>source*</literal> files is more recent than the <literal>target</literal> file, then the target needs to be generated, using <command>command1</command> and <command>command2</command>."
 msgstr "ビルド規則の解釈は以下の通り行われます。すなわち、<literal>source*</literal> ファイルの 1 つが <literal>target</literal> ファイルよりも新しい場合、<command>command1</command> と <command>command2</command> を使って target を生成します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -707,6 +1309,12 @@ msgid "Although this file is the heart of the process, it increasingly contains 
 msgstr "<filename>rules</filename> ファイルはビルド作業の核心で、<command>debhelper</command> ツールによって提供される標準的なコマンド群を実行するために必要な最低限の要素だけを含みます。<filename>rules</filename> ファイルが面倒を見るのは <command>dh_make</command> によって生成されたファイルだけです。自分のファイルをインストールするためには、以下の <filename>debian/falcot-data.install</filename> ファイルを作成して、<command>dh_install</command> コマンドの挙動を単純に設定します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary><command>dh_install</command></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 # Ref: https://www.debian.org/doc/manuals/maint-guide/dother.en.html#install;
 msgid ""
@@ -722,6 +1330,20 @@ msgstr ""
 #| msgid "At this point, the package can be created. We will however add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgid "At this point, the package can be created. We will, however, add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgstr "この時点でパッケージを作成することも可能ですが、パッケージにもう少しファイルを追加します。管理者はグラフィカルデスクトップ環境のメニューから文書へ簡単にアクセスできるようにしたいので、パッケージに <filename>falcot-data.desktop</filename> ファイルを追加します。さらに <filename>debian/falcot-data.install</filename> に例に示した 2 行目を追加して、<filename>/usr/share/applications</filename> の中に <filename>falcot-data.desktop</filename> ファイルをインストールします。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.desktop</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.install</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The <filename>falcot-data.desktop</filename> file"
@@ -772,8 +1394,10 @@ msgid "Creating a Package Repository for APT"
 msgstr "APT 用のパッケージリポジトリの作成"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>package archive</primary>"
-msgstr "<primary>パッケージアーカイブ</primary>"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>archive</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary>"
@@ -788,6 +1412,12 @@ msgstr "Falcot Corp のメンテナンスする Debian パッケージの数は�
 # Ref: $ man 5 sources.list;
 msgid "To make deployment easier, they want to integrate these packages in a package archive that can be directly used by APT. For obvious maintenance reasons, they wish to separate internal packages from locally-rebuilt packages. The goal is for the matching entries in a <filename>/etc/apt/sources.list.d/falcot.list</filename> file to be as follows:"
 msgstr "パッケージの配備を簡単にするために、管理者はこれらのパッケージを APT から直接使うことが可能なパッケージアーカイブに組み込みたいと思っています。明らかなメンテナンス上の理由により、管理者は内部パッケージと手元で再ビルドしたパッケージを別にしたいと思っています。すなわち、最終的に <filename>/etc/apt/sources.list.d/falcot.list</filename> ファイル内のエントリを以下のようにしたいと思っています。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>APT</primary><secondary><filename>/etc/apt/sources.list.d/</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -815,7 +1445,7 @@ msgstr "このため、管理者は内部 HTTP サーバ上に仮想ホストを
 # Checked-By: Ryuunosuke Ayanokouzi;
 #, fuzzy
 #| msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>"
-msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command>"
+msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>, <command>aptly</command>, and <command>reprepro</command>"
 msgstr "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -850,8 +1480,28 @@ msgstr ""
 msgid "The <command>apt-ftparchive sources</command> command allows creating <filename>Sources.gz</filename> files in a similar fashion."
 msgstr "<command>apt-ftparchive sources</command> コマンドを使えば、同様の方法で <filename>Sources.gz</filename> ファイルを作成することが可能です。"
 
-msgid "<command>reprepro</command> is a more advanced tool for the same purpose. It can produce, manage and synchronize a local repository of packages. It stores packages and checksums in a Berkeley DB database file, so no database server is needed. With <command>reprepro</command> you can check signatures of mirrored repositories and create signatures of the generated package indices."
+msgid "<command>reprepro</command> and <command>aptly</command> are more advanced tools for the same purpose. They can produce, manage and synchronize a number of package repositories, mirror other repositories, even cherry-pick packages from official repositories and provide them locally, create signatures of the generated package indices and thus provide signed repositories. <command>reprepro</command> stores packages and checksums in a Berkeley DB database file, so no database server is needed. <command>aptly</command> provides the same functionality, but it can be easier in handling. Unfortunately, both projects, although probably the most feature-rich solutions, are not actively developed at the moment."
 msgstr ""
+
+msgid "<command>reprepro</command> comes with a lot of documentation and examples in <filename>/usr/share/doc/reprepro/</filename>, while <command>aptly</command> has a vast online documentation. <ulink type=\"block\" url=\"https://www.aptly.info/\" />"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 8 pbuilder;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><command>pbuilder</command></primary>"
+msgid "<primary><command>reprepro</command></primary>"
+msgstr "<primary><command>pbuilder</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install dput;
+# Ref: $ man 1 dput;
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>aptly</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 1 mini-dinstall;
@@ -948,18 +1598,57 @@ msgid "Becoming a Package Maintainer"
 msgstr "パッケージメンテナになる"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>maintainer</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>new maintainer</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>maintainer</primary><secondary>package maintainer</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Learning to Make Packages"
 msgstr "パッケージを作るための知識"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 #, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>creation</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
 #| msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It's not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
-msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
+msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice in technical and legal matters. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
 msgstr "上質な Debian パッケージを作成する作業が常に簡単な作業であるとは限りません。パッケージメンテナになるためには理論と実践の両方の知識が必要です。上質な Debian パッケージを作成する作業は単純にソフトウェアをビルドしたりインストールするだけの簡単な作業ではありません。むしろ複雑さの大部分は他の無数の利用できるパッケージとの問題と対立 (より一般には相関性) を理解することに由来します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Rules"
 msgstr "規則"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>policy</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Policy</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Standards-Version</literal>, header field</secondary>"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -973,8 +1662,16 @@ msgid "Procedures"
 msgstr "手続き"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>Debian Developer's Reference</primary>"
-msgstr "<primary sortas=\"Debian カイハツシャリファレンス\">Debian 開発者リファレンス</primary>"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Developer's Reference</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>developer's reference</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Debian is not a simple collection of individual packages. Everyone's packaging work is part of a collective project; being a Debian developer involves knowing how the Debian project operates as a whole. Every developer will, sooner or later, interact with others. The Debian Developer's Reference (in the <emphasis role=\"pkg\">developers-reference</emphasis> package) summarizes what every developer must know in order to interact as smoothly as possible with the various teams within the project, and to take the best possible advantages of the available resources. This document also enumerates a number of duties a developer is expected to fulfill. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/developers-reference/\" />"
@@ -989,64 +1686,14 @@ msgid "Many tools help package maintainers in their work. This section describes
 msgstr "パッケージメンテナの作業を手助けする数多くのツールが存在します。この節では、それらのツールを簡単に説明します (詳細は説明しません)。なぜなら、これらのツールには自分自身を解説する総合的な文書が用意されているからです。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 1 lintian;
-# Tag: L-CFMD;
-msgid "The <command>lintian</command> Program"
-msgstr "<command>lintian</command> プログラム"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 1 lintian;
-# Tag: L-CFMD;
-msgid "<primary><command>lintian</command></primary>"
-msgstr "<primary><command>lintian</command></primary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 1 lintian;
-# Tag: L-CFMD;
 #, fuzzy
-#| msgid "This tool is one of the most important: it's the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
-msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
-msgstr "<command>lintian</command> は最も重要なツールの 1 つです。すなわち、<command>lintian</command> は Debian パッケージをチェックするツールです。<command>lintian</command> は Debian ポリシーから作成された大量のテスト群に基づき、多くのエラーを素早く自動的に検出します。<command>lintian</command> を使うことで、パッケージのリリース前に多くのエラーを修正することが可能となります。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 1 lintian;
-# Tag: L-CFMD;
-msgid "This tool is only a helper, and it sometimes gets it wrong (for instance, since the Debian policy changes over time, <command>lintian</command> is sometimes outdated). It is also not exhaustive: not getting any Lintian error should not be interpreted as a proof that the package is perfect; at most, it avoids the most common errors."
-msgstr "<command>lintian</command> の情報は参考程度にしかならず、間違いを犯すこともあります (たとえば、Debian ポリシーは常に変わるものなので、しばしば <command>lintian</command> は時代遅れになることがあります)。また、<command>lintian</command> は徹底的な調査を行いません。すなわち、<command>lintian</command> がエラーを出さないことを理由に対象のパッケージが完全であると結論付けてはいけません。<command>lintian</command> を使ってわかることはせいぜい最も一般的な間違いを犯していないことだけです。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 1 piuparts;
-# Tag: L-CFMD;
-msgid "The <command>piuparts</command> Program"
-msgstr "<command>piuparts</command> プログラム"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 1 piuparts;
-# Tag: L-CFMD;
-msgid "<primary><command>piuparts</command></primary>"
-msgstr "<primary><command>piuparts</command></primary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Ref: $ man 1 piuparts;
-# Tag: L-CFMD;
-msgid "This is another important tool: it automates the installation, upgrade, removal and purge of a package (in an isolated environment), and checks that none of these operations leads to an error. It can help in detecting missing dependencies, and it also detects when files are incorrectly left over after the package got purged."
-msgstr "<command>piuparts</command> もまた重要なツールの 1 つです。すなわち、<command>piuparts</command> は (隔離環境の中で) パッケージのインストール、アップグレード、削除、完全削除の作業を自動化し、これらの作業中にエラーが起きないことを確認します。<command>piuparts</command> は不足している依存関係を検出したり、パッケージが完全削除された後にファイルが誤って残されたことを検出したりする際にも役立ちます。"
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>tools</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "devscripts"
 msgstr "devscripts"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
-# Ref: # apt-get install devscripts;
-msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
-msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-# Tag: L-CFMD;
-# Ref: $ man 1 debuild;
-msgid "<primary><command>debuild</command></primary>"
-msgstr "<primary><command>debuild</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -1071,6 +1718,14 @@ msgstr "<primary><command>debi</command></primary>"
 # Ref: $ man 1 debc;
 msgid "<primary><command>debc</command></primary>"
 msgstr "<primary><command>debc</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debi;
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>bts</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -1104,6 +1759,9 @@ msgstr "<command>dch</command> を使うことで、素早く簡単にソース�
 msgid "<command>uscan</command> checks whether a new version of a software has been released by the upstream author; this requires a <filename>debian/watch</filename> file with a description of the location of such releases."
 msgstr "<command>uscan</command> を使うことで、上流開発者がソフトウェアの新しいバージョンをリリースしたか否かを確認することが可能です。確認を行うにはリリースの場所が書かれた <filename>debian/watch</filename> ファイルが必要です。"
 
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>watch</filename></secondary>"
+msgstr ""
+
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 # Ref: $ man 1 debi;
@@ -1119,7 +1777,9 @@ msgstr "<command>debc</command> を使うことで、Debian パッケージを�
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
 # Ref: $ man 1 bts;
-msgid "<command>bts</command> controls the bug tracking system from the command line; this program automatically generates the appropriate emails."
+#, fuzzy
+#| msgid "<command>bts</command> controls the bug tracking system from the command line; this program automatically generates the appropriate emails."
+msgid "<command>bts</command> controls the bug tracking system from the command line; this program automatically generates the appropriate emails. <ulink type=\"block\" url=\"https://www.debian.org/Bugs/server-refcard\" />"
 msgstr "<command>bts</command> を使うことで、コマンドラインからバグ追跡システムを制御することが可能です。<command>bts</command> プログラムは適切なメールを自動的に生成します。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1127,6 +1787,13 @@ msgstr "<command>bts</command> を使うことで、コマンドラインから�
 # Ref: $ man 1 debrelease;
 msgid "<command>debrelease</command> uploads a recently-generated package to a remote server, without needing to type the full name and path of the related <filename>.changes</filename> file."
 msgstr "<command>debrelease</command> を使うことで、Debian パッケージを生成した直後にそのパッケージをリモートサーバにアップロードすることが可能です。関連する <filename>.changes</filename> ファイルの完全な名前やパスを指定する必要はありません。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.changes</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -1139,6 +1806,9 @@ msgstr "<command>debsign</command> を使うことで、<filename>*.dsc</filenam
 # Ref: $ man 1 uupdate;
 msgid "<command>uupdate</command> automates the creation of a new revision of a package when a new upstream version has been released."
 msgstr "<command>uupdate</command> を使うことで、新しい上流開発版がリリースされた場合にパッケージの新しい修正版の作成を自動化することが可能です。"
+
+msgid "All of the mentioned commands are documented in their respective manual pages. They can further be configured per user in one file: <filename>~/.devscripts</filename>."
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -1157,7 +1827,23 @@ msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
-msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix."
+# Ref: $ man 1 debchange;
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>dh</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>debian</filename></primary><secondary><filename>rules</filename></secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix."
+msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix. Each of them is documented in a manual page. The different compatibility levels and common options are described in <citerefentry><refentrytitle>debhelper</refentrytitle> <manvolnum>7</manvolnum></citerefentry>."
 msgstr "debhelper はポリシーを遵守するパッケージの作成を簡単にするスクリプト群です。これらのスクリプトは <filename>debian/rules</filename> から呼び出されます。大多数の公式 Debian パッケージが debhelper を使っているという事実からも分かる通り、debhelper は Debian の中で広く採用されています。debhelper から提供されるすべてのコマンドは名前の頭に <command>dh_</command> が付けられています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1166,6 +1852,60 @@ msgstr "debhelper はポリシーを遵守するパッケージの作成を簡�
 # Ref: # apt-get install dh-make;
 msgid "The <command>dh_make</command> script (in the <emphasis>dh-make</emphasis> package) creates files required for generating a Debian package in a directory initially containing the sources for a piece of software. As can be guessed from the name of the program, the generated files use debhelper by default."
 msgstr "<command>dh_make</command> スクリプト (<emphasis>dh-make</emphasis> パッケージに含まれます) はソフトウェアのソースが含まれるディレクトリ内に Debian パッケージを生成するために必要なファイルを作成します。<command>dh_make</command> という名前から推測される通り、生成されたファイルはデフォルトで debhelper を使います。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 1 lintian;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "The <command>lintian</command> Program"
+msgid "<command>lintian</command>"
+msgstr "<command>lintian</command> プログラム"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 1 lintian;
+# Tag: L-CFMD;
+msgid "<primary><command>lintian</command></primary>"
+msgstr "<primary><command>lintian</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>checker</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 1 lintian;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "This tool is one of the most important: it's the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
+msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
+msgstr "<command>lintian</command> は最も重要なツールの 1 つです。すなわち、<command>lintian</command> は Debian パッケージをチェックするツールです。<command>lintian</command> は Debian ポリシーから作成された大量のテスト群に基づき、多くのエラーを素早く自動的に検出します。<command>lintian</command> を使うことで、パッケージのリリース前に多くのエラーを修正することが可能となります。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 1 lintian;
+# Tag: L-CFMD;
+msgid "This tool is only a helper, and it sometimes gets it wrong (for instance, since the Debian policy changes over time, <command>lintian</command> is sometimes outdated). It is also not exhaustive: not getting any Lintian error should not be interpreted as a proof that the package is perfect; at most, it avoids the most common errors."
+msgstr "<command>lintian</command> の情報は参考程度にしかならず、間違いを犯すこともあります (たとえば、Debian ポリシーは常に変わるものなので、しばしば <command>lintian</command> は時代遅れになることがあります)。また、<command>lintian</command> は徹底的な調査を行いません。すなわち、<command>lintian</command> がエラーを出さないことを理由に対象のパッケージが完全であると結論付けてはいけません。<command>lintian</command> を使ってわかることはせいぜい最も一般的な間違いを犯していないことだけです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 1 piuparts;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "The <command>piuparts</command> Program"
+msgid "<command>piuparts</command>"
+msgstr "<command>piuparts</command> プログラム"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 1 piuparts;
+# Tag: L-CFMD;
+msgid "<primary><command>piuparts</command></primary>"
+msgstr "<primary><command>piuparts</command></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Ref: $ man 1 piuparts;
+# Tag: L-CFMD;
+msgid "This is another important tool: it automates the installation, upgrade, removal and purge of a package (in an isolated environment), and checks that none of these operations leads to an error. It can help in detecting missing dependencies, and it also detects when files are incorrectly left over after the package got purged."
+msgstr "<command>piuparts</command> もまた重要なツールの 1 つです。すなわち、<command>piuparts</command> は (隔離環境の中で) パッケージのインストール、アップグレード、削除、完全削除の作業を自動化し、これらの作業中にエラーが起きないことを確認します。<command>piuparts</command> は不足している依存関係を検出したり、パッケージが完全削除された後にファイルが誤って残されたことを検出したりする際にも役立ちます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -1181,7 +1921,13 @@ msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
 msgid "<primary><emphasis>autopkgtest</emphasis></primary>"
 msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
-msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package."
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>tests</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package in <filename>debian/tests/</filename>. Several commands allow the easy creation of chrooted or virtual test environments."
 msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
@@ -1200,6 +1946,14 @@ msgstr "<primary><emphasis>debhelper</emphasis></primary>"
 
 msgid "<command>reprotest</command> builds the same source code twice in different environments, and then checks the binaries produced by each build for differences. If any are found, then <command>diffoscope</command> (if unavailable, <command>diff</command>) is used to display them in detail for later analysis."
 msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debchange;
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>diffoscope</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Tag: L-CFMD;
@@ -1228,12 +1982,109 @@ msgstr "<primary><command>dput</command></primary>"
 # Tag: L-CFMD;
 # Ref: $ man 1 dupload;
 # Ref: $ man 1 dput;
-msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>*.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
+#, fuzzy
+#| msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>*.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
+msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
 msgstr "<command>dupload</command> と <command>dput</command> コマンドを使うことで、Debian パッケージを (場合によってはリモート) サーバにアップロードすることが可能です。<command>dupload</command> と <command>dput</command> コマンドを使うことで、開発者は主たる Debian サーバ (<literal>ftp-master.debian.org</literal>) 上に自分のパッケージを公開することが可能です。こうすることで、パッケージはパッケージアーカイブに組み込まれ、アーカイブミラーによって配布されます。<command>dupload</command> と <command>dput</command> コマンドは <filename>*.changes</filename> ファイルをパラメータとして受け取り、<filename>*.changes</filename> ファイルの内容から他の関連するファイルを推測します。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install debhelper;
+# Ref: # apt-get install dh-make;
+#, fuzzy
+#| msgid "<emphasis role=\"pkg\">debhelper</emphasis> and <emphasis role=\"pkg\">dh-make</emphasis>"
+msgid "<emphasis role=\"pkg\">git-buildpackage</emphasis> and <emphasis role=\"pkg\">dgit</emphasis>"
+msgstr "<emphasis role=\"pkg\">debhelper</emphasis> と <emphasis role=\"pkg\">dh-make</emphasis>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install devscripts;
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">git-buildpackage</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: # apt-get install devscripts;
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">dgit</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+msgid "The project has been using various version control systems over the years to store packaging efforts or package source code, or allow collaborative package maintenance. In an effort to unify the systems and efforts, it was ultimately decided in 2017 to move (almost) all package sources into <emphasis>Git</emphasis> (<xref linkend=\"sidebar.git\" />) onto a Gitlab instance called <literal>salsa.debian.org</literal>. <ulink type=\"block\" url=\"https://salsa.debian.org/\" />"
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><literal>salsa.debian.org</literal></primary>"
+msgstr "<primary><literal>Build-Depends</literal>、コントロールフィールド</primary>"
+
+msgid "To make packaging using Git easier for Debian developers, tools have been developed. These allow not only to store the packaging files in Git, but also to use the Git repositories (and their history) of software projects, put patches applied to package sources into Git history, maintain software versions per distribution, etc."
+msgstr ""
+
+msgid "One of the most famous packages is <emphasis role=\"pkg\">git-buildpackage</emphasis>. An alternative is <emphasis role=\"pkg\">dgit</emphasis>. Of course it is still possible to use neither of those."
+msgstr ""
+
+msgid "Below is an example for a <filename>~/.gbp.conf</filename> configuration file"
+msgstr ""
+
+msgid ""
+"<![CDATA[[DEFAULT]\n"
+"builder = sbuild -d bullseye --build-dep-resolver=aptitude -s --source-only-changes --build-failed-commands \"%SBUILD_SHELL\"\n"
+"pristine-tar = true\n"
+"\n"
+"[buildpackage]\n"
+"sign-tags = true\n"
+"keyid = XXXX\n"
+"postbuild  = autopkgtest --user debci --apt-upgrade -s \"$GBP_CHANGES_FILE\" -- lxc --sudo autopkgtest-bullseye-amd64 \n"
+"export-dir = /tmp/build-area/\n"
+"notify = off\n"
+"\n"
+"[import-orig]\n"
+"filter-pristine-tar = true\n"
+"sign-tags = true\n"
+"\n"
+"[pq]\n"
+"drop = true\n"
+"]]>"
+msgstr ""
+
+msgid "Building the package is then as easy as running <command>gbp buildpackage</command> in the Git tree. It will start a package build in a Debian <emphasis role=\"distribution\">Bullseye</emphasis> chroot using <command>sbuild</command>. When the build succeeds, the created files are checked running the <command>autopkgtest</command>-testsuite (if defined). All the various options are explained in <citerefentry><refentrytitle>gbp.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> and <filename>/etc/git-buildpackage/gbp.conf</filename>."
+msgstr ""
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ man 1 debi;
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>gbp</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
+
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/git-buildpackage/gbp.conf</filename></secondary>"
+msgstr ""
+
+msgid "All the tools mentioned so far have been included in the continuous integration (CI) process in the <literal>salsa.debian.org</literal> instance as well: <ulink type=\"block\" url=\"https://salsa.debian.org/salsa-ci-team/pipeline\" />"
+msgstr ""
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Acceptance Process"
 msgstr "受け入れ過程"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Developer</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><literal>nm.debian.org</literal></primary>"
+msgstr "<primary><literal>Build-Depends</literal>、コントロールフィールド</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Becoming a “Debian developer” is not a simple administrative matter. The process comprises several steps, and is as much an initiation as it is a selection process. In any case, it is formalized and well-documented, so anyone can track their progression on the website dedicated to the new member process. <ulink type=\"block\" url=\"https://nm.debian.org/\" />"
@@ -1244,12 +2095,14 @@ msgid "<emphasis>EXTRA</emphasis> Lightweight process for “Debian Maintainers�
 msgstr "<emphasis>EXTRA</emphasis> 「Debian メンテナ」向けの簡単なプロセス"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "“Debian Maintainer” is another status that gives less privileges than “Debian developer” but whose associated process is quicker. With this status, the contributors can maintain their own packages only. A Debian developer only needs to perform a check on an initial upload, and issue a statement to the effect that they trust the prospective maintainer with the ability to maintain the package on their own."
-msgstr "「Debian メンテナ」とはもう一つの地位です。「Debian メンテナ」に与えられる特権は「Debian 開発者」よりも低いものですが、「Debian メンテナ」になるためのプロセスは「Debian 開発者」になるためのものよりも短い時間ですみます。「Debian メンテナ」の地位を持っている貢献者がメンテナンスできるのは自分自身のパッケージだけです。あなたが「Debian メンテナ」になりたいならば、少なくとも一人以上の Debian 開発者から最初のアップロードに対する確認を受ける必要があります。そして、あなたが自ら進んでパッケージをメンテナンスする能力を持つ見込みあるメンテナであるという点について、その Debian 開発者から信用されなければいけません。さらに、Debian 開発者があなたを信用するということについて声明を発表する必要があります。"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Maintainer</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary>Debian Maintainer</primary>"
-msgstr "<primary>Debian メンテナ</primary>"
+msgid "“Debian Maintainer” is another status that gives less privileges than “Debian developer” but whose associated process is quicker. With this status, the contributors can maintain their own packages only. A Debian developer only needs to perform a check on an initial upload, and issue a statement to the effect that they trust the prospective maintainer with the ability to maintain the package on their own."
+msgstr "「Debian メンテナ」とはもう一つの地位です。「Debian メンテナ」に与えられる特権は「Debian 開発者」よりも低いものですが、「Debian メンテナ」になるためのプロセスは「Debian 開発者」になるためのものよりも短い時間ですみます。「Debian メンテナ」の地位を持っている貢献者がメンテナンスできるのは自分自身のパッケージだけです。あなたが「Debian メンテナ」になりたいならば、少なくとも一人以上の Debian 開発者から最初のアップロードに対する確認を受ける必要があります。そして、あなたが自ら進んでパッケージをメンテナンスする能力を持つ見込みあるメンテナであるという点について、その Debian 開発者から信用されなければいけません。さらに、Debian 開発者があなたを信用するということについて声明を発表する必要があります。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Prerequisites"
@@ -1266,6 +2119,12 @@ msgstr "もう一つの必要条件は意欲です。Debian 開発者の受け�
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Registration"
 msgstr "登録"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>sponsor</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "The first (real) step consists in finding a sponsor or advocate; this means an official developer willing to state that they believe that accepting <emphasis>X</emphasis> would be a good thing for Debian. This usually implies that the candidate has already been active within the community, and that their work has been appreciated. If the candidate is shy and their work is not publicly touted, they can try to convince a Debian developer to advocate them by showing their work in a private way."
@@ -1309,13 +2168,13 @@ msgstr "加えて、Debian に参加したいと思っている各候補者は�
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: https://www.debian.org/devel/join/nm-amchecklist;
-msgid "<primary><emphasis>Philosophy &amp; Procedures</emphasis></primary>"
-msgstr "<primary><emphasis>Philosophy &amp; Procedures</emphasis></primary>"
+msgid "This step is usually known as the <emphasis>Philosophy &amp; Procedures</emphasis> (P&amp;P for short) in the lingo of the developers involved in the new member process."
+msgstr "この段階は新メンバー過程に参加する開発者の間で使われる用語の <emphasis>Philosophy &amp; Procedures</emphasis> (略して P&amp;P、哲学と手順) として知られています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: https://www.debian.org/devel/join/nm-amchecklist;
-msgid "This step is usually known as the <emphasis>Philosophy &amp; Procedures</emphasis> (P&amp;P for short) in the lingo of the developers involved in the new member process."
-msgstr "この段階は新メンバー過程に参加する開発者の間で使われる用語の <emphasis>Philosophy &amp; Procedures</emphasis> (略して P&amp;P、哲学と手順) として知られています。"
+msgid "<primary><emphasis>Philosophy &amp; Procedures</emphasis></primary>"
+msgstr "<primary><emphasis>Philosophy &amp; Procedures</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: https://www.debian.org/devel/join/nm-amchecklist;
@@ -1341,24 +2200,44 @@ msgid "<primary>sponsoring</primary>"
 msgstr "<primary sortas=\"パッケージノシエン\">パッケージの支援</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>New Member</secondary>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Debian developers can “sponsor” packages prepared by someone else, meaning that they publish them in the official Debian repositories after having performed a careful review. This mechanism enables external persons, who have not yet gone through the new member process, to contribute occasionally to the project. At the same time, it ensures that all packages included in Debian have always been checked by an official member."
 msgstr "Debian 開発者は誰かによって用意されたパッケージを「支援」することが可能です。これは注意深く調査した後に Debian 開発者が公式の Debian リポジトリの中でパッケージを公開することを意味します。このメカニズムのおかげで、まだ新メンバー過程を通過していない外部の人も時折 Debian プロジェクトに貢献することが可能になります。同時に、Debian に含まれるすべてのパッケージは常に公式メンバーによって確認されていることが保証されます。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
-msgid "Finally, the examiner checks the candidate's technical (packaging) skills with a detailed questionnaire. Bad answers are not permitted, but the answer time is not limited. All the documentation is available and several tries are allowed if the first answers are not satisfactory. This step does not intend to discriminate, but to ensure at least a modicum of knowledge common to new contributors."
+#, fuzzy
+#| msgid "Finally, the examiner checks the candidate's technical (packaging) skills with a detailed questionnaire. Bad answers are not permitted, but the answer time is not limited. All the documentation is available and several tries are allowed if the first answers are not satisfactory. This step does not intend to discriminate, but to ensure at least a modicum of knowledge common to new contributors."
+msgid "Finally, the examiner checks the candidate's technical (packaging) skills with a detailed questionnaire. Bad answers are not permitted, but the answer time is not limited. All the documentation is available and several attempts are allowed if the first answers are not satisfactory. This step does not intend to discriminate, but to ensure at least a modicum of knowledge common to new contributors."
 msgstr "最後に、応募管理者は詳細な質問を投げかけて技術的な (パッケージング) スキルを確認します。間違った回答は許されませんが、回答時間に制限はありません。どんな文書を参考にしても構いませんし、最初の回答が不十分ならば何度も回答を作っても構いません。この段階は候補者を不当に冷遇するためのものではなく、新しい貢献者が共通に認識しておくべき最低限のわずかな知識を保証するためのものです。"
-
-# Checked-By: Ryuunosuke Ayanokouzi;
-msgid "<primary><emphasis>Tasks &amp; Skills</emphasis></primary>"
-msgstr "<primary><emphasis>Tasks &amp; Skills</emphasis></primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "This step is known as the <emphasis>Tasks &amp; Skills</emphasis> step (T&amp;S for short) in the examiners' jargon."
 msgstr "この段階は応募管理者によって使われる隠語の <emphasis>Tasks &amp; Skills</emphasis> (略して T&amp;S、作業と技能) として知られています。"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
+msgid "<primary><emphasis>Tasks &amp; Skills</emphasis></primary>"
+msgstr "<primary><emphasis>Tasks &amp; Skills</emphasis></primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
 msgid "Final Approval"
 msgstr "最後の承認"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>key pair</primary>"
+msgid "<primary>DAM</primary>"
+msgstr "<primary sortas=\"カギペア\">鍵ペア</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Account Managers</secondary><seealso>DAM</seealso>"
+msgstr "<primary>パッケージ</primary><secondary sortas=\"シュルイ\">種類</secondary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 msgid "At the very last step, the whole process is reviewed by a DAM (<emphasis>Debian Account Manager</emphasis>). The DAM will review all the information about the candidate that the examiner collected, and makes the decision on whether or not to create an account on the Debian servers. In cases where extra information is required, the account creation may be delayed. Refusals are rather rare if the examiner does a good job of following the process, but they sometimes happen. They are never permanent, and the candidate is free to try again at a later time."
@@ -1368,6 +2247,22 @@ msgstr "最後の段階で、DAM (<emphasis>Debian アカウントマネージ�
 # Checked-By: Osamu Aoki;
 msgid "The DAM's decision is authoritative and (almost) without appeal, which explains why the people in that seat have often been criticized in the past."
 msgstr "DAM の決定は権威あるもので (ほとんど) 覆されません。このおかげで、DAM の役職に就く人はこれまでずっと批判され続けています。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+# Tag: L-CFMD;
+# Ref: $ cat debian/control debian/changelog debian/copyright;
+#, fuzzy
+#~| msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>iceweasel | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
+#~ msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
+#~ msgstr "<filename>copyright</filename> ファイルには必ずパッケージに含まれる文書の著者と対応するライセンスに関する情報を含めなければいけません。今回の場合、パッケージには内部文書が含まれ、その使用は Falcot Corp の社内だけに制限されています。デフォルトの <filename>changelog</filename> ファイルはほとんどの場合に適切です。「Initial release」をより詳しい説明に置き換えたり、<literal>unstable</literal> を <literal>internal</literal> に変えるだけで十分です。<filename>control</filename> ファイルも更新します。具体的に言えば、<literal>Section</literal> フィールドの値を <emphasis>misc</emphasis> に変更し、<literal>Homepage</literal>、<literal>Vcs-Git</literal>、<literal>Vcs-Browser</literal> を削除しました。<literal>Depends</literal> フィールドの値には <literal>iceweasel | www-browser</literal> を加えました。これはパッケージ内の文書を表示するために必要なウェブブラウザがインストールされていることを保証するためです。"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<primary>package archive</primary>"
+#~ msgstr "<primary>パッケージアーカイブ</primary>"
+
+# Checked-By: Ryuunosuke Ayanokouzi;
+#~ msgid "<primary>Debian Developer's Reference</primary>"
+#~ msgstr "<primary sortas=\"Debian カイハツシャリファレンス\">Debian 開発者リファレンス</primary>"
 
 # Checked-By: Ryuunosuke Ayanokouzi;
 # Ref: $ man 8 pbuilder;

@@ -1,5 +1,16 @@
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2020-07-22 15:37+0200\nPO-Revision-Date: 2020-09-07 20:36+0000\nLast-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/nb_NO/>\nLanguage: nb-NO\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.3-dev\n"
+msgstr ""
+"Project-Id-Version: 0\n"
+"POT-Creation-Date: 2022-07-30 18:23+0200\n"
+"PO-Revision-Date: 2020-09-07 20:36+0000\n"
+"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/debian-handbook/15_debian-packaging/nb_NO/>\n"
+"Language: nb-NO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: application/x-publican; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 msgid "Backport"
 msgstr "Bakdør"
@@ -19,6 +30,11 @@ msgstr "Meta-pakke"
 msgid "Debian Developer"
 msgstr "Debian-utvikler"
 
+#, fuzzy
+#| msgid "Creating a Debian Package"
+msgid "Debian Package"
+msgstr "Hvordan lage en Debian-pakke"
+
 msgid "Maintainer"
 msgstr "Vedlikeholder"
 
@@ -31,14 +47,133 @@ msgstr "Det er nokså vanlig for en administrator som har håndtert Debian-pakke
 msgid "Rebuilding a Package from its Sources"
 msgstr "Å bygge en pakke på nytt fra kildekoden"
 
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>backport</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>rebuild</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
 msgid "Rebuilding a binary package is required under several sets of circumstances. In some cases, the administrator needs a software feature that requires the software to be compiled from sources, with a particular compilation option; in others, the software as packaged in the installed version of Debian is not recent enough. In the latter case, the administrator will usually build a more recent package taken from a newer version of Debian — such as <emphasis role=\"distribution\">Testing</emphasis> or even <emphasis role=\"distribution\">Unstable</emphasis> — so that this new package works in their <emphasis role=\"distribution\">Stable</emphasis> distribution; this operation is called “backporting”. As usual, care should be taken, before undertaking such a task, to check whether it has been done already — a quick look on the Debian Package Tracker for that package will reveal that information. <ulink type=\"block\" url=\"https://tracker.debian.org/\" /> <indexterm><primary>backport</primary></indexterm>"
 msgstr "Å bygge en binær pakke på nytt er nødvendig under flere omstendigheter. I noen tilfeller trenger administratoren en programvarefunksjon som krever at programvaren som skal kompileres fra kildekoden med et spesielt kompileringsalternativ; i andre er programvaren som er pakket i den installerte versjonen av Debian ikke ny nok. I det sistnevnte tilfellet vil administratoren vanligvis bygge en nyere pakke tatt fra en nyere versjon av Debian - så som <emphasis role=\"distribution\">Testing</emphasis>, eller til og med <emphasis role=\"distribution\">Unstable</emphasis> - slik at denne nye pakken virker i deres <emphasis role=\"distribution\">Stable</emphasis>-distribusjon: Denne operasjonen kalles «backporting». Som vanlig bør man være forsiktig før en tar på seg en slik oppgave, og først sjekke om den har blitt gjort allerede: Ta en rask titt på Debians pakkesporer for å se om pakken kan vise informasjon om det. <ulink type=\"block\" url=\"https://tracker.debian.org/\" /> <indexterm><primary>backport</primary></indexterm>"
 
 msgid "Getting the Sources"
 msgstr "Henting av kildekode"
 
-msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note, however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it verifies the integrity of the downloaded source packages using <command>dscverify</command>, and it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used). The Debian keyring is needed, unless the option <literal>-u</literal> is supplied."
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>source</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt</command></primary><secondary><literal>source</literal></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt-get</command></primary><secondary><literal>source</literal></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt</command></primary><secondary><literal>update</literal></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt-get</command></primary><secondary><literal>update</literal></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/apt/</filename></secondary><see>APT</see>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><literal>deb-src</literal></primary>"
+msgstr "<primary><literal>Build-Depends</literal>, kontrollfelt</primary>"
+
+msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note, however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line."
+msgstr ""
+
+#, fuzzy
+#| msgid "Rebuilding a Debian package starts with getting its source code. The easiest way is to use the <command>apt-get source <replaceable>source-package-name</replaceable></command> command. This command requires a <literal>deb-src</literal> line in the <filename>/etc/apt/sources.list</filename> file, and up-to-date index files (i.e. <command>apt-get update</command>). These conditions should already be met if you followed the instructions from the chapter dealing with APT configuration (see <xref linkend=\"sect.apt-sources.list\" />). Note, however, that you will be downloading the source packages from the Debian version mentioned in the <literal>deb-src</literal> line. If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it verifies the integrity of the downloaded source packages using <command>dscverify</command>, and it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used). The Debian keyring is needed, unless the option <literal>-u</literal> is supplied."
+msgid "If you need another version, you may need to download it manually from a Debian mirror or from the web site. This involves fetching two or three files (with extensions <filename>*.dsc</filename> — for <emphasis>Debian Source Control</emphasis> — <filename>*.tar.<replaceable>comp</replaceable></filename>, and sometimes <filename>*.diff.gz</filename> or <filename>*.debian.tar.<replaceable>comp</replaceable></filename> — <replaceable>comp</replaceable> taking one value among <literal>gz</literal>, <literal>bz2</literal> or <literal>xz</literal> depending on the compression tool in use), then run the <command>dpkg-source -x <replaceable>file.dsc</replaceable></command> command. If the <filename>*.dsc</filename> file is directly accessible at a given URL, there is an even simpler way to fetch it all, with the <command>dget <replaceable>URL</replaceable></command> command. This command (which can be found in the <emphasis role=\"pkg\">devscripts</emphasis> package) fetches the <filename>*.dsc</filename> file at the given address, then analyzes its contents, and automatically fetches the file or files referenced within. Once everything has been downloaded, it verifies the integrity of the downloaded source packages using <command>dscverify</command>, and it extracts the source package (unless the <literal>-d</literal> or <literal>--download-only</literal> option is used). The Debian keyring is needed, unless the option <literal>-u</literal> is supplied."
 msgstr "Å bygge om en Debian-pakke starter med å skaffe seg kildekoden. Den enkleste måten er å bruke <command>apt-get source <replaceable>kildepakkenavn</replaceable></command>-kommandoen. Denne kommanoen krever en <literal>deb-src</literal>-linje i <filename>/etc/apt/sources.list</filename>-filen, og oppdaterte indeksfiler (det vil si <command>apt-get update</command>). Disse betingelsene skulle allerede være imøtekommet hvis du fulgte instruksjonene fra kapittelet om APT-oppsett (se <xref linkend=\"sect.apt-sources.list\" />). Merk imidlertid at du vil laste ned kildekodepakkene fra den Debian-versjonen som er nevnt i <literal>deb-src</literal>-linjen. Hvis du trenger en annen versjon, må du kanskje laste den ned manuelt fra et Debian-speil, eller fra nettstedet. Dette innebærer henting av to eller tre filer (med utvidelser <filename>*.dsc</filename> - for <emphasis>Debian Source Control</emphasis> - <filename>*.tar.<replaceable>comp</replaceable></filename>, og noen ganger <filename>*.diff.gz</filename> eller <filename>*.debian.tar.<replaceable>comp</replaceable></filename> - <replaceable>comp</replaceable> som tar en verdi blant <literal>gz</literal>, <literal>bz2</literal> eller <literal>xz</literal>, avhengig av kompresjonsverktøyet som ble bruk), kjør deretter <command>dpkg-source -x <replaceable>file.dsc</replaceable></command>-kommandoen. Hvis <filename>*.dsc</filename>-filen er tilgjengelig direkte fra en gitt URL, er det til og med enklere vei å få tak i alt sammen, med <command>dget <replaceable>URL</replaceable></command>-kommandoen. Denne kommandoen (som er en del av pakke <emphasis role=\"pkg\">devscripts</emphasis>) fanger opp <filename>*.dsc</filename>-filen på den gitte adressen, så analyserer den innholdet, og filen eller filene det refereres til hentes automatisk. Når alt er lastet ned, verifiseres integriteten til den nedlastede kildekoden ved å bruke <command>dscverify</command>, og det pakker ut kildekoden (om ikke <literal>-d</literal> eller <literal>--download-only</literal>-valget er benyttet). Debian nøkkelring behøves om ikke valget <literal>-u</literal> foreligger."
+
+msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>dscverify</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>dget</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>dpkg-source</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.dsc</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.diff.gz</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.gz</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "<primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.bz2</filename></secondary>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.debian.tar</filename></primary><secondary><filename>.tar.xz</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.tar</filename></primary><secondary><filename>.tar.gz</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.tar</filename></primary><secondary><filename>.tar.bz2</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>.tar</filename></primary><secondary><filename>.tar.xz</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt</command></primary><secondary><literal>--download-only</literal></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>apt-get</command></primary><secondary><literal>--download-only</literal></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">debian-archive-keyring</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
 
 msgid "Making Changes"
 msgstr "Hvordan gjøre endringer"
@@ -46,7 +181,50 @@ msgstr "Hvordan gjøre endringer"
 msgid "Let us use the <emphasis role=\"pkg\">samba</emphasis> package as an example."
 msgstr "La oss bruke <emphasis role=\"pkg\">samba</emphasis>-pakken som et eksempel."
 
+#, fuzzy
+#| msgid ""
+#| "<computeroutput>$ </computeroutput><userinput>apt source samba\n"
+#| "</userinput><computeroutput>Reading package lists... Done\n"
+#| "NOTICE: 'samba' packaging is maintained in the 'Git' version control system at:\n"
+#| "https://salsa.debian.org/samba-team/samba.git\n"
+#| "Please use:\n"
+#| "git clone https://salsa.debian.org/samba-team/samba.git\n"
+#| "to retrieve the latest (possibly unreleased) updates to the package.\n"
+#| "Need to get 11.7 MB of source archives.\n"
+#| "Get:1 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (dsc) [4,316 B]\n"
+#| "Get:2 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (tar) [11.4 MB]\n"
+#| "Get:3 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (diff) [252 kB]\n"
+#| "Fetched 11.7 MB in 1s (9,505 kB/s)\n"
+#| "dpkg-source: info: extracting samba in samba-4.9.5+dfsg\n"
+#| "dpkg-source: info: unpacking samba_4.9.5+dfsg.orig.tar.xz\n"
+#| "dpkg-source: info: unpacking samba_4.9.5+dfsg-5+deb10u1.debian.tar.xz\n"
+#| "dpkg-source: info: using patch list from debian/patches/series\n"
+#| "dpkg-source: info: applying 07_private_lib\n"
+#| "dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch\n"
+#| "[...]\n"
+#| "</computeroutput>"
 msgid ""
+"<computeroutput>$ </computeroutput><userinput>apt source samba\n"
+"</userinput><computeroutput>Reading package lists... Done\n"
+"NOTICE: 'samba' packaging is maintained in the 'Git' version control system at:\n"
+"https://salsa.debian.org/samba-team/samba.git\n"
+"Please use:\n"
+"git clone https://salsa.debian.org/samba-team/samba.git\n"
+"to retrieve the latest (possibly unreleased) updates to the package.\n"
+"Need to get 12.3 MB of source archives.\n"
+"Get:1 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (dsc) [4,514 B]\n"
+"Get:2 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (tar) [11.8 MB]\n"
+"Get:3 http://security.debian.org/debian-security bullseye-security/main samba 2:4.13.13+dfsg-1~deb11u3 (diff) [468 kB]\n"
+"Fetched 12.3 MB in 3s (4,582 kB/s)\n"
+"dpkg-source: info: extracting samba in samba-4.13.13+dfsg\n"
+"dpkg-source: info: unpacking samba_4.13.13+dfsg.orig.tar.xz\n"
+"dpkg-source: info: unpacking samba_4.13.13+dfsg-1~deb11u3.debian.tar.xz\n"
+"dpkg-source: info: using patch list from debian/patches/series\n"
+"dpkg-source: info: applying 07_private_lib\n"
+"dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch\n"
+"dpkg-source: info: applying [...]\n"
+"</computeroutput>"
+msgstr ""
 "<computeroutput>$ </computeroutput><userinput>apt source samba\n"
 "</userinput><computeroutput>Reading package lists... Done\n"
 "NOTICE: 'samba' packaging is maintained in the 'Git' version control system at:\n"
@@ -67,45 +245,151 @@ msgid ""
 "dpkg-source: info: applying bug_221618_precise-64bit-prototype.patch\n"
 "[...]\n"
 "</computeroutput>"
-msgstr "<computeroutput>$ </computeroutput><userinput>apt source samba\n</userinput><computeroutput>Reading package lists... Done\nNOTICE: 'samba' packaging is maintained in the 'Git' version control system at:\nhttps://salsa.debian.org/samba-team/samba.git\nPlease use:\ngit clone https://salsa.debian.org/samba-team/samba.git\nto retrieve the latest (possibly unreleased) updates to the package.\nNeed to get 11.7 MB of source archives.\nGet:1 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (dsc) [4,316 B]\nGet:2 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (tar) [11.4 MB]\nGet:3 http://security.debian.org/debian-security buster/updates/main samba 2:4.9.5+dfsg-5+deb10u1 (diff) [252 kB]\nFetched 11.7 MB in 1s (9,505 kB/s)\ndpkg-source: info: extracting samba in samba-4.9.5+dfsg\ndpkg-source: info: unpacking samba_4.9.5+dfsg.orig.tar.xz\ndpkg-source: info: unpacking samba_4.9.5+dfsg-5+deb10u1.debian.tar.xz\ndpkg-source: info: using patch list from debian/patches/series\ndpkg-source: info: applying 07_private_lib\ndpkg-source: info: applying bug_221618_precise-64bit-prototype.patch\n[...]\n</computeroutput>"
 
-msgid "The source of the package is now available in a directory named after the source package and its version (<emphasis>samba-4.9.5+dfsg</emphasis>); this is where we'll work on our local changes."
+#, fuzzy
+#| msgid "The source of the package is now available in a directory named after the source package and its version (<emphasis>samba-4.9.5+dfsg</emphasis>); this is where we'll work on our local changes."
+msgid "The source of the package is now available in a directory named after the source package and its version (<filename>samba-4.13.13+dfsg</filename>); this is where we'll work on our local changes."
 msgstr "Pakkekilden er tilgjengelig i en katalog oppkalt etter kildepakkens versjon (<emphasis>samba-4.9.5+dfsg</emphasis>): Dette er der vi skal jobbe med våre lokale endringer."
 
-msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.9.5+dfsg-5</literal>, we can create version <literal>2:4.9.5+dfsg-5falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package."
+#, fuzzy
+#| msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.9.5+dfsg-5</literal>, we can create version <literal>2:4.9.5+dfsg-5falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package."
+msgid "The first thing to do is to change the package version number, so that the rebuilt packages can be distinguished from the original packages provided by Debian. Assuming the current version is <literal>2:4.13.13+dfsg-1~deb11u3</literal>, we can create version <literal>2:4.13.13+dfsg-1~deb11u3+falcot1</literal>, which clearly indicates the origin of the package. This makes the package version number higher than the one provided by Debian, so that the package will easily install as an update to the original package. Such a change is best effected with the <command>dch</command> command (<emphasis>Debian CHangelog</emphasis>) from the <emphasis role=\"pkg\">devscripts</emphasis> package. <indexterm><primary><command>dch</command></primary></indexterm> <indexterm><primary><emphasis role=\"pkg\">devscripts</emphasis></primary></indexterm> <indexterm><primary>package</primary><secondary>version</secondary></indexterm>"
 msgstr "Det første du må gjøre er å endre pakkens versjonsnummer, slik at de nye pakkene kan skilles fra de opprinnelige pakkene som følger med Debian. Forutsatt at gjeldende versjon er <literal>2:4.9.5+dfsg-5</literal>, kan vi lage versjon <literal>2:4.9.5+dfsg-5falcot1</literal>, som tydelig viser opprinnelsen av pakken. Dette gjør pakkens versjonsnummer høyere enn den som tilbys av Debian, slik at pakken lett vil installeres som en oppdatering til den opprinnelige pakken. En slik endring er best utført med <command>dch</command>-kommandoen (<emphasis>Debian CHangelog</emphasis>) fra <emphasis role=\"pkg\">devscripts</emphasis>-pakken."
 
+#, fuzzy
+#| msgid ""
+#| "<computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg\n"
+#| "</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput>"
 msgid ""
+"<computeroutput>$ </computeroutput><userinput>cd 4.13.13+dfsg-1~deb11u3\n"
+"</userinput><computeroutput>$ </computeroutput><userinput>dch --local +falcot\n"
+"</userinput>"
+msgstr ""
 "<computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg\n"
 "</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput>"
-msgstr "<computeroutput>$ </computeroutput><userinput>cd samba-4.9.5+dfsg\n</userinput><computeroutput>$ </computeroutput><userinput>dch --local falcot</userinput>"
 
 msgid "The last command invokes a text editor (<command>sensible-editor</command> — this should be your favorite editor if it is mentioned in the <varname>VISUAL</varname> or <varname>EDITOR</varname> environment variables, and the default editor otherwise) to allow documenting the differences brought by this rebuild. This editor shows us that <command>dch</command> really did change the <filename>debian/changelog</filename> file."
 msgstr "Den siste kommandoen påkaller et tekstredigeringsprogram (<command>sensible-editor</command> – dette bør være ditt favoritt tekstredigeringsprogram hvis den er nevnt i <varname>VISUAL</varname> eller <varname>EDITOR</varname>-miljøvariabler, og standard tekstredigeringsprogrammet ellers) for å tillate å dokumentere forskjellene som er forårsaket av denne gjenoppbyggingen. Dette skriveprogrammet viser oss at <command>dch</command> virkelig har endret <filename>debian/changelog</filename>-filen."
 
-msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages for explanations on how to achieve this)."
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>sensible-editor</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><varname>VISUAL</varname></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>VISUAL</varname></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><varname>EDITOR</varname></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>EDITOR</varname></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary><filename>changelog</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal>) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages for explanations on how to achieve this)."
+msgid "When a change in build options is required, the changes need to be made in <filename>debian/rules</filename>, which drives the steps in the package build process. In the simplest cases, the lines concerning the initial configuration (<literal>./configure …</literal>) or the actual build (<literal>$(MAKE) …</literal> or <literal>make …</literal> or <literal>cmake …</literal> or …) are easy to spot. If these commands are not explicitly called, they are probably a side effect of another explicit command, in which case please refer to their documentation to learn more about how to change the default behavior. With packages using <command>dh</command>, you might need to add an override for the <command>dh_auto_configure</command> or <command>dh_auto_build</command> commands (see their respective manual pages and <citerefentry><refentrytitle>debhelper</refentrytitle> <manvolnum>7</manvolnum></citerefentry> for explanations on how to achieve this)."
 msgstr "Når det kreves en endring i oppbyggingen, må det lages endringer i <filename>debian/rules</filename>, som skritt for skritt driver pakkens byggeprosess. I de enkleste tilfellene er linjene om det opprinnelige oppsettet (<literal>./configure …</literal>), eller i den aktuelle utgaven (<literal>$(MAKE) …</literal>, eller <literal>make …</literal>) enkle å finne. Hvis disse kommandoene ikke påkalles eksplisitt, er de sannsynligvis en bivirkning av en annen eksplisitt kommando, i så fall kan du se i dokumentasjonen for å lære mer om hvordan du endrer standard virkemåten. Med pakker som bruker <command>dh</command>, kan du trenge å legge til en overstyring for <command>dh_auto_configure</command>, eller <command>dh_auto_build</command>-kommandoene (se de respektive manualsidene deres for forklaringer om hvordan du oppnår dette)."
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary><command>dh_auto_build</command></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary><command>dh_auto_configure</command></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary>override target</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>dh</command></primary><seealso><command>debhelper</command></seealso>"
+msgstr "<primary><command>dch</command></primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary>"
+msgid "<primary>package</primary><secondary><filename>rules</filename></secondary><seealso><filename>rules</filename></seealso>"
+msgstr "<primary>pakke</primary><secondary>Debian</secondary><tertiary>arkiv</tertiary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis>debhelper</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">debhelper</emphasis></primary>"
+msgstr "<primary><emphasis>debhelper</emphasis></primary>"
 
 msgid "Depending on the local changes to the packages, an update may also be required in the <filename>debian/control</filename> file, which contains a description of the generated packages. In particular, this file contains <literal>Build-Depends</literal> lines controlling the list of dependencies that must be fulfilled at package build time. These often refer to versions of packages contained in the distribution the source package comes from, but which may not be available in the distribution used for the rebuild. There is no automated way to determine if a dependency is real or only specified to guarantee that the build should only be attempted with the latest version of a library — this is the only available way to force an <emphasis>autobuilder</emphasis> to use a given package version during build, which is why Debian maintainers frequently use strictly versioned build-dependencies."
 msgstr "Avhengig av de lokale endringene i pakkene, kan en oppdatering også være nødvendig i <filename>debian/control</filename>-filen, som inneholder en beskrivelse av de genererte pakker. Spesielt inneholder denne filen <literal>Build-Depends</literal>-linjer som kontrollerer listen over avhengigheter som må være oppfylt når pakken bygges. Disse refererer ofte til versjonene til pakkene i distribusjonen som kildepakken kommer fra, men som kanskje ikke er tilgjengelig i distribusjonen som brukes til ombygging. Det er ingen automatisk måte å avgjøre om en avhengighet er ekte, eller bare spesifisert til å garantere at bygget kun skal bli forsøkt med den nyeste versjonen av et bibliotek - dette er den eneste tilgjengelige måten å tvinge en <emphasis>autobuilder</emphasis> til å bruke en gitt pakkeversjon under oppbyggingen, og det er derfor Debians vedlikeholdere ofte bruker strenge versjonsbestemte byggeavhengigheter."
 
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary>"
+msgid "<primary>package</primary><secondary><filename>control</filename></secondary><see><filename>control</filename></see>"
+msgstr "<primary>pakke</primary><secondary>Debian</secondary><tertiary>arkiv</tertiary>"
+
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><filename>control</filename></primary><secondary><literal>Build-Depends</literal>, header field</secondary>"
+msgstr "<primary><literal>Build-Depends</literal>, kontrollfelt</primary>"
+
 msgid "If you know for sure that these build-dependencies are too strict, you should feel free to relax them locally. Reading the files which document the standard way of building the software — these files are often called <filename>INSTALL</filename> — will help you figure out the appropriate dependencies. Ideally, all dependencies should be satisfiable from the distribution used for the rebuild; if they are not, a recursive process starts, whereby the packages mentioned in the <literal>Build-Depends</literal> field must be backported before the target package can be. Some packages may not need backporting, and can be installed as-is during the build process (a notable example is <emphasis role=\"pkg\">debhelper</emphasis>). Note that the backporting process can quickly become complex if you are not careful. Therefore, backports should be kept to a strict minimum when possible."
 msgstr "Hvis du vet sikkert at disse byggeavhengigheter er for strenge, bør du føle deg fri til å løsne på dem lokalt. Å lese filene som dokumenterer den vanlige måten å bygge programvare på - disse filene blir ofte kalt <filename>INSTALL</filename> - vil hjelpe deg å finne de riktige avhengighetene. Ideelt sett bør alle avhengigheter være imøtekommet fra distribusjonen som brukes til ombygging. Hvis de ikke er det, starter en gjentakingsprosess, der pakkene nevnt i <literal>Build-Depends</literal>-feltet må «backportes» («tilbakeporting») før målet pakken kan bli det. Noen pakker trenger kanskje ikke tilbakeporting, og kan installeres som de er i løpet av byggeprosessen (et kjent eksempel er <emphasis role=\"pkg\">debhelper</emphasis>). Merk at tilbakeportingsprosessen raskt kan bli komplisert hvis du ikke er forsiktig. Derfor bør tilbakeporting holdes på et absolutt minimum der det er mulig."
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>INSTALL</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 msgid "<emphasis>TIP</emphasis> Installing <literal>Build-Depends</literal>"
 msgstr "<emphasis>TIPS</emphasis> innstallere <literal>Build-Depends</literal>"
 
-msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
-msgstr "<primary><literal>Build-Depends</literal>, kontrollfelt</primary>"
-
-msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>source-package</replaceable></command> command."
+#, fuzzy
+#| msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>source-package</replaceable></command> command."
+msgid "<command>apt-get</command> allows installing all packages mentioned in the <literal>Build-Depends</literal> fields of a source package available in a distribution mentioned in a <literal>deb-src</literal> line of the <filename>/etc/apt/sources.list</filename> file. This is a simple matter of running the <command>apt-get build-dep <replaceable>package</replaceable></command> command."
 msgstr "<command>apt-get</command> tillater installasjon av alle pakker nevnt i <literal>Build-Depends</literal>-feltene til en kildepakke som er tilgjengelig i en distribusjon nevnt i en <literal>deb-src</literal>-linje i <filename>/etc/apt/sources.list</filename>-filen. Dette er så enkelt som å kjøre <command>apt-get build-dep <replaceable>kildepakken</replaceable></command>-kommandoen."
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>APT</primary><secondary><filename>/etc/apt/sources.list</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>apt-get</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
 
 msgid "Starting the Rebuild"
 msgstr "Å starte gjenoppbyggingen"
 
 msgid "When all the needed changes have been applied to the sources, we can start generating the actual binary package (<filename>.deb</filename> file). The whole process is managed by the <command>dpkg-buildpackage</command> command."
 msgstr "Når alle de nødvendige endringene har blitt brukt på kildene, kan vi starte å generere den aktuelle binære pakkefilen (<filename>.deb</filename>). Hele prosessen er håndtert av <command>dpkg-buildpackage</command>-kommandoen."
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.deb</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>pbuilder</command></primary>"
+msgid "<primary><command>dpkg-buildpackage</command></primary>"
+msgstr "<primary><command>pbuilder</command></primary>"
 
 msgid "Rebuilding a package"
 msgstr "Å bygge om en pakke"
@@ -119,11 +403,31 @@ msgstr ""
 "</userinput><computeroutput>[...]\n"
 "</computeroutput>"
 
-msgid "The previous command can fail if the <literal>Build-Depends</literal> fields have not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time."
+#, fuzzy
+#| msgid "The previous command can fail if the <literal>Build-Depends</literal> fields have not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time."
+msgid "The previous command can fail if the <literal>Build-Depends</literal> field has not been updated, or if the related packages are not installed. In such a case, it is possible to overrule this check by passing the <literal>-d</literal> option to <command>dpkg-buildpackage</command>. However, explicitly ignoring these dependencies runs the risk of the build process failing at a later stage. Worse, the package may seem to build correctly but fail to run properly: some programs automatically disable some of their features when a required library is not available at build time. The switch can still be very useful if you only want to create a source package, which is supposed to be passed to clean build environments as described in <xref linkend=\"sidebar.schroot\" />."
 msgstr "Den tidligere kommandoen kan mislykkes hvis <literal>Build-Depends</literal>-feltene ikke har blitt oppdatert, eller hvis de relaterte pakker ikke er installert. I dette tilfellet er det mulig å overprøve denne sjekken ved å sende <literal>-d</literal>-valget til <command>dpkg-buildpackage</command>. Men å eksplisitt ignorere disse avhengigheter gir risiko for at byggeprosessen mislykkes på et senere tidspunkt. Verre; pakken kan synes å bli bygget riktig, men klarer ikke å kjøre skikkelig: Noen programmer deaktiverer automatisk noen av sine oppgaver når et nødvendig bibliotek ikke er tilgjengelig på byggetidspunktet."
+
+msgid "The other options used in the above example make sure that neither the source package's <filename>.dsc</filename> (<literal>-us</literal>) nor the produced <filename>.changes</filename> file (<literal>-uc</literal>) get signed with the package builder's cryptographic key after the asuccessful build."
+msgstr ""
 
 msgid "<emphasis>TOOL</emphasis> <command>fakeroot</command>"
 msgstr "<emphasis>VERKTØY</emphasis> <command>fakeroot</command>"
+
+#, fuzzy
+#| msgid "<primary><command>schroot</command></primary>"
+msgid "<primary><command>fakeroot</command></primary>"
+msgstr "<primary><command>schroot</command></primary>"
+
+#, fuzzy
+#| msgid "<primary>sponsoring</primary>"
+msgid "<primary>root</primary>"
+msgstr "<primary>sponsing</primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>account</primary><secondary>root account</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
 
 msgid "In essence, the package creation process is a simple matter of gathering in an archive a set of existing (or built) files; most of the files will end up being owned by <emphasis>root</emphasis> in the archive. However, building the whole package under this user would imply increased risks; fortunately, this can be avoided with the <command>fakeroot</command> command. This tool can be used to run a program and give it the impression that it runs as <emphasis>root</emphasis> and creates files with arbitrary ownership and permissions. When the program creates the archive that will become the Debian package, it is tricked into creating an archive containing files marked as belonging to arbitrary owners, including <emphasis>root</emphasis>. This setup is so convenient that <command>dpkg-buildpackage</command> uses <command>fakeroot</command> by default when building packages."
 msgstr "I hovedsak er prosessen med å bygge pakker en så enkel sak som, i et arkiv, å samle et sett av eksisterende (eller bygde) filer. De fleste filene vil så bli eid av <emphasis>rot</emphasis> i arkivet. Men å bygge hele pakken under denne brukeren skulle tilsi økt risiko. Heldigvis kan dette unngås med <command>fakeroot</command>-kommandoen. Dette verktøyet kan brukes til å kjøre et program, og gi inntrykk av at det kjører som <emphasis>root</emphasis>, og skaper filer med vilkårlig eierskap og rettigheter. Når programmet skaper arkivet som vil bli Debian-pakken, er det lurt å skape et arkiv som inneholder filer merket som tilhørende vilkårlige eiere, inkludert <emphasis>rot</emphasis>. Dette oppsettet er så praktisk at <command>dpkg-buildpackage</command> bruker <command>fakeroot</command> som standard ved pakkebygging."
@@ -131,32 +435,91 @@ msgstr "I hovedsak er prosessen med å bygge pakker en så enkel sak som, i et a
 msgid "Note that the program is only tricked into “believing” that it operates as a privileged account, and the process actually runs as the user running <command>fakeroot <replaceable>program</replaceable></command> (and the files are actually created with that user's permissions). At no time does it actually get root privileges that it could abuse."
 msgstr "Merk at programmet bare er lurt til å «tro» at det fungerer som en priviligert konto, og prosessen faktisk kjører som om brukeren kjører <command>fakeroot <replaceable>program</replaceable></command> (og filene faktisk er opprettet med den brukerens tillatelser). Ikke på noe tidspunkt får det faktisk rotprivilegier som det kunne misbruke."
 
-msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis>devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
+#, fuzzy
+#| msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis>devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
+msgid "More often than not, Debian developers use a higher-level program such as <command>debuild</command>; this runs <command>dpkg-buildpackage</command> as usual, but it also adds an invocation of a program that runs many checks to validate the generated package against the Debian policy. This script also cleans up the environment so that local environment variables do not “pollute” the package build. The <command>debuild</command> command is one of the tools in the <emphasis role=\"pkg\">devscripts</emphasis> suite, which share some consistency and configuration to make the maintainers' task easier."
 msgstr "I de fleste tilfeller bruker Debian-utviklere et høynivå-program som <command>debuild</command>. Dette kjører <command>dpkg-buildpackage</command> til vanlig, men legger også til en påkalling til et program som kjører mange kontroller for å validere den genererte pakken opp mot Debians retningslinjer. Dette skriptet renser også opp i miljøet, slik at lokale miljøvariabler ikke «forurenser» pakkebyggingen. Kommandoen <command>debuild</command> er et av verktøyene i <emphasis>devscripts</emphasis>-pakken, som deler noe konsistens og oppsett for å gjøre vedlikeholderens oppgave enklere."
 
-msgid "<emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted</emphasis> environment"
+msgid "<primary><command>debuild</command></primary>"
+msgstr "<primary><command>debuild</command></primary>"
+
+#, fuzzy
+#| msgid "<emphasis>QUICK LOOK</emphasis> Building packages in a <emphasis>chrooted</emphasis> environment"
+msgid "<emphasis>QUICK LOOK</emphasis> Building packages in <emphasis>chrooted</emphasis> and <emphasis>virtual</emphasis> environments"
 msgstr "<emphasis>RASK TITT</emphasis> Å bygge pakker i en <emphasis>chrooted</emphasis> omgivelse"
 
 msgid "<primary><command>pbuilder</command></primary>"
 msgstr "<primary><command>pbuilder</command></primary>"
 
+#, fuzzy
+#| msgid "<primary><command>pbuilder</command></primary>"
+msgid "<primary><command>cowbuilder</command></primary>"
+msgstr "<primary><command>pbuilder</command></primary>"
+
 msgid "<primary><command>schroot</command></primary>"
 msgstr "<primary><command>schroot</command></primary>"
 
-msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
+#, fuzzy
+#| msgid "<primary><command>debuild</command></primary>"
+msgid "<primary><command>sbuild</command></primary>"
+msgstr "<primary><command>debuild</command></primary>"
+
+msgid "Building a package on an existing system, like a workstation or server, can pose several problems. Maybe the system has packages installed, that conflict with the build requirements. Or maybe it has packages (libraries, headers, etc.) installed, that the project to build is not supposed to use - e.g. from <emphasis role=\"distribution\">Testing</emphasis>, <emphasis role=\"distribution\">Unstable</emphasis>, or even from third parties. Also it might have packages installed, which are actually required for the build, but are not listed in <filename>debian/control</filename>. It is therefore a good practice to build a packages in “clean“ environments."
+msgstr ""
+
+#, fuzzy
+#| msgid "The <command>pbuilder</command> program (in the similarly named package) allows building a Debian package in a <emphasis>chrooted</emphasis> environment. It first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
+msgid "The <command>sbuild</command>, <command>pbuilder</command>, or <command>cowbuilder</command> programs (in the similarly named packages) allow building a Debian package in a <emphasis>chrooted</emphasis> environment. Each of them first creates a temporary directory containing the minimal system required for building the package (including the packages mentioned in the <emphasis>Build-Depends</emphasis> field). This directory is then used as the root directory (<filename>/</filename>), using the <command>chroot</command> command, during the build process."
 msgstr "Programmet <command>pbuilder</command> (i pakken med det tilsvarende navnet) tillater bygging av en Debian-pakke i en <emphasis>chrooted</emphasis>-omgivelse. Den lager først en midlertidig katalog med det minimale systemet som kreves for å bygge pakken (inkludert pakkene nevnt i <emphasis>Build-Depends</emphasis>-feltet). Denne katalogen blir så brukt som rotkatalog (<filename>/</filename>), og bruker <command>chroot</command>-kommandoen under byggeprosessen."
 
-msgid "This tool allows the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and a <command>pbuilder</command> running on the same machine can be using <emphasis role=\"distribution\">Unstable</emphasis> for package builds."
+#, fuzzy
+#| msgid "<primary><command>schroot</command></primary>"
+msgid "<primary><command>chroot</command></primary>"
+msgstr "<primary><command>schroot</command></primary>"
+
+#, fuzzy
+#| msgid "This tool allows the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and a <command>pbuilder</command> running on the same machine can be using <emphasis role=\"distribution\">Unstable</emphasis> for package builds."
+msgid "These tools allow the build process to happen in an environment that is not altered by users' manipulations. This also allows for quick detection of the missing build-dependencies (since the build will fail unless the appropriate dependencies are documented). Finally, it allows building a package for a Debian version that is not the one used by the system as a whole: the machine can be using <emphasis role=\"distribution\">Stable</emphasis> for its normal workload, and the chrooted environments can be running on the same machine using <emphasis role=\"distribution\">Unstable</emphasis> for package builds. Using these tools, it is also possible to build for a different distribution, like <emphasis role=\"distribution\">Ubuntu</emphasis>."
 msgstr "Dette verktøyet gjør at byggeprosessen skjer i et miljø som ikke endres av brukernes virksomhet. Dette gir også mulighet for rask påvisning av manglende byggeavhengigheter (siden byggingen vil mislykkes uten dokumentasjon av de riktige avhengighetene). Til slutt: Det tillater å bygge en pakke for en Debian-versjon som ikke er den som brukes av systemet som helhet. Maskinen kan bruke <emphasis role=\"distribution\">Stable</emphasis> i sitt normale arbeid, og en <command>pbuilder</command> som kjører på den samme maskinen, kan bruke <emphasis role=\"distribution\">Unstable</emphasis> til pakkebygging."
 
-msgid "<command>schroot</command> allows running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
+#, fuzzy
+#| msgid "<command>schroot</command> allows running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
+msgid "<command>schroot</command>, <command>sbuild-shell</command>, or <command>pbuilder</command> allow running a command or a login shell in a <emphasis>chrooted</emphasis> environment."
 msgstr "<command>schroot</command> tillater å kjøre en kommando eller et innloggingsskall i et <emphasis>chrooted</emphasis> miljø."
+
+msgid "Sometimes it is not enough to build a package in a chrooted environment. This can be due to building for a different architecture where cross-compilation does not work, or due to the tools not being able to create a chrooted environment for the desired target system. Then one can create virtual machines to build the package there. These setups are usually more complex then the tools mentioned above, and rarely needed, so we will only mention this possibility without going into much detail. Check out <xref linkend=\"sect.virtualization\" /> for an introduction into this topic."
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>Debian Maintainer</primary>"
+msgid "<primary>virtualization</primary>"
+msgstr "<primary>Debian-vedlikeholdere </primary>"
 
 msgid "Building your First Package"
 msgstr "Å bygge din første pakke"
 
 msgid "Meta-Packages or Fake Packages"
 msgstr "Meta-pakker eller falske pakker"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>meta-package</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package types</primary>"
+msgid "<primary>meta-package</primary>"
+msgstr "<primary>pakketyper</primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>fake package</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>key pair</primary>"
+msgid "<primary>fake package</primary>"
+msgstr "<primary>nøkkelpar</primary>"
 
 msgid "Fake packages and meta-packages are similar, in that they are empty shells that only exist for the effects their meta-data have on the package handling stack."
 msgstr "Falske pakker og meta-pakker er like ved at de er tomme skall som bare eksisterer for effektene meta-dataene deres har på pakkehåndteringsstabelen."
@@ -170,10 +533,63 @@ msgstr "På den annen side, en meta-pakke består oftest som en samling av avhen
 msgid "Both these kinds of packages can be created by the <command>equivs-control</command> and <command>equivs-build</command> commands (in the <emphasis role=\"pkg\">equivs</emphasis> package). The <command>equivs-control <replaceable>file</replaceable></command> command creates a Debian package header file that should be edited to contain the name of the expected package, its version number, the name of the maintainer, its dependencies, and its description. Other fields without a default value are optional and can be deleted. The <literal>Copyright</literal>, <literal>Changelog</literal>, <literal>Readme</literal> and <literal>Extra-Files</literal> fields are not standard fields in Debian packages; they only make sense within the scope of <command>equivs-build</command>, and they will not be kept in the headers of the generated package."
 msgstr "Begge disse pakkesalgene kan lages av kommandoene <command>equivs-control</command> og <command>equivs-build</command> (i <emphasis role=\"pkg\">equivs</emphasis>-pakken). Kommandoene <command>equivs-control <replaceable>filen</replaceable></command> oppretter en Debian-pakke topptekstfil som skal redigeres for å inneholde navnet på den forventede pakken, dens versjonsnummer, navnet på vedlikeholderen, avhengighetene, og beskrivelsen. Andre felt uten en standardverdi er valgfrie, og kan slettes. Feltene <literal>Copyright</literal>, <literal>Changelog</literal>, <literal>Readme</literal> og <literal>Extra-Files</literal> er ikke standard felt i Debian-pakker; de bare gir mening innenfor rammen av <command>equivs-build</command>, og de vil ikke bli beholdt i overskriftene til den genererte pakken."
 
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">equivs</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">equivs</emphasis></primary><secondary><command>equivs-control</command></secondary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">equivs</emphasis></primary><secondary><command>equivs-build</command></secondary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
 msgid "Header file of the <emphasis>libxml-libxml-perl</emphasis> fake package"
 msgstr "Topptekstfil for den falske pakken <emphasis>libxml-libxml-perl</emphasis>"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Section: perl\n"
+#| "Priority: optional\n"
+#| "Standards-Version: 4.4.1\n"
+#| "\n"
+#| "Package: libxml-libxml-perl\n"
+#| "Version: 2.0134-1\n"
+#| "Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
+#| "Depends: libxml2 (&gt;= 2.7.4)\n"
+#| "Architecture: all\n"
+#| "Description: Fake package - module manually installed in site_perl\n"
+#| " This is a fake package to let the packaging system\n"
+#| " believe that this Debian package is installed.\n"
+#| " .\n"
+#| " In fact, the package is not installed since a newer version\n"
+#| " of the module has been manually compiled &amp; installed in the\n"
+#| " site_perl directory."
 msgid ""
+"<![CDATA[\n"
+"Section: perl\n"
+"Priority: optional\n"
+"Standards-Version: 4.5.1\n"
+"\n"
+"Package: libxml-libxml-perl\n"
+"Version: 2.0207-1\n"
+"Maintainer: Raphael Hertzog <hertzog@debian.org>\n"
+"Depends: libxml2 (>= 2.9.10)\n"
+"Architecture: all\n"
+"Description: Fake package - module manually installed in site_perl\n"
+" This is a fake package to let the packaging system\n"
+" believe that this Debian package is installed.\n"
+" .\n"
+" In fact, the package is not installed since a newer version\n"
+" of the module has been manually compiled &amp; installed in the\n"
+" site_perl directory.\n"
+"]]>"
+msgstr ""
 "\n"
 "Section: perl\n"
 "Priority: optional\n"
@@ -191,13 +607,66 @@ msgid ""
 " In fact, the package is not installed since a newer version\n"
 " of the module has been manually compiled &amp; installed in the\n"
 " site_perl directory."
-msgstr "\nSection: perl\nPriority: optional\nStandards-Version: 4.4.1\n\nPackage: libxml-libxml-perl\nVersion: 2.0134-1\nMaintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\nDepends: libxml2 (&gt;= 2.7.4)\nArchitecture: all\nDescription: Fake package - module manually installed in site_perl\n This is a fake package to let the packaging system\n believe that this Debian package is installed.\n .\n In fact, the package is not installed since a newer version\n of the module has been manually compiled &amp; installed in the\n site_perl directory."
 
 msgid "The next step is to generate the Debian package with the <command>equivs-build <replaceable>file</replaceable></command> command. Voilà: the package is created in the current directory and it can be handled like any other Debian package would."
 msgstr "Det neste skrittet er å generere Debian-pakken med kommandoen <command>equivs-build <replaceable>filen</replaceable></command>. Og plutselig er pakken opprettet i den gjeldende katalogen, og kan håndteres som enhver annen Debian-pakke ville blitt."
 
+msgid ""
+"<computeroutput>$ </computeroutput><userinput>equivs-build <replaceable>file</replaceable>\n"
+"</userinput><computeroutput><![CDATA[equivs-build control \n"
+"dpkg-buildpackage: info: source package libxml-libxml-perl\n"
+"dpkg-buildpackage: info: source version 2.0207-1\n"
+"dpkg-buildpackage: info: source distribution unstable\n"
+"dpkg-buildpackage: info: source changed by Raphael Hertzog <hertzog@debian.org>\n"
+"dpkg-buildpackage: info: host architecture amd64\n"
+" dpkg-source --before-build .\n"
+" debian/rules clean\n"
+"dh clean\n"
+"   dh_clean\n"
+" debian/rules binary\n"
+"dh binary\n"
+"   dh_update_autotools_config\n"
+"   dh_autoreconf\n"
+"   create-stamp debian/debhelper-build-stamp\n"
+"   dh_prep\n"
+"   dh_install\n"
+"   dh_installdocs\n"
+"   dh_installchangelogs\n"
+"   dh_perl\n"
+"   dh_link\n"
+"   dh_strip_nondeterminism\n"
+"   dh_compress\n"
+"   dh_fixperms\n"
+"   dh_missing\n"
+"   dh_installdeb\n"
+"   dh_gencontrol\n"
+"   dh_md5sums\n"
+"   dh_builddeb\n"
+"dpkg-deb: building package 'libxml-libxml-perl' in '../libxml-libxml-perl_2.0207-1_all.deb'.\n"
+" dpkg-genbuildinfo --build=binary\n"
+" dpkg-genchanges --build=binary >../libxml-libxml-perl_2.0207-1_amd64.changes\n"
+"dpkg-genchanges: info: binary-only upload (no source code included)\n"
+" dpkg-source --after-build .\n"
+"dpkg-buildpackage: info: binary-only upload (no source included)\n"
+"\n"
+"The package has been created.\n"
+"Attention, the package has been created in the current directory,\n"
+"not in \"..\" as indicated by the messaige above!\n"
+"]]></computeroutput>"
+msgstr ""
+
 msgid "Simple File Archive"
 msgstr "Et enkelt filarkiv"
+
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>dh_make</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis>dh-make</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">dh-make</emphasis></primary>"
+msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
 msgid "The Falcot Corp administrators need to create a Debian package in order to ease deployment of a set of documents on a large number of machines. The administrator in charge of this task first reads the “New Maintainer's Guide”, then starts working on their first package. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
 msgstr "For å lette utplasseringen av et sett med dokumentasjon på et stort antall maskiner, trenger Falcot Corp-administratorene å lage en Debian-pakke. Administratoren med ansvaret for denne oppgaven leser først «Guide for nye Debian vedlikeholder» («New Maintainer's Guide»), og begynner så å jobbe med sin første pakke. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/maint-guide/\" />"
@@ -205,7 +674,48 @@ msgstr "For å lette utplasseringen av et sett med dokumentasjon på et stort an
 msgid "The first step is creating a <filename>falcot-data-1.0</filename> directory to contain the target source package. The package will logically, be named <literal>falcot-data</literal> and bear the <literal>1.0</literal> version number. The administrator then places the document files in a <filename>data</filename> subdirectory. Then they invoke the <command>dh_make</command> command (from the <emphasis role=\"pkg\">dh-make</emphasis> package) to add files required by the package generation process, which will all be stored in a <filename>debian</filename> subdirectory:"
 msgstr "Det første skrittet er å lage en <filename>falcot-data-1.0</filename>-mappe som skal inneholde mål-kildepakken. Pakken vil logisk nok få navnet <literal>falcot-data</literal>, og bære versjonsnummeret <literal>1.0</literal>. Administratoren plasserer så dokumentasjonsfilene i en <filename>data</filename>-undermappe. Så påkaller de <command>dh_make</command>-kommandoen (fra <emphasis role=\"pkg\">dh-make</emphasis>-pakken) for å legge til filene som kreves for pakke-genereringsprosessen - som alle blir lagret i en <filename>debian</filename>-undermappe:"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n"
+#| "<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n"
+#| "<computeroutput>\n"
+#| "Type of package: (single, indep, library, python)\n"
+#| "[s/i/l/p]? </computeroutput><userinput>i</userinput>\n"
+#| "<computeroutput>\n"
+#| "Maintainer Name     : Raphael Hertzog\n"
+#| "Email-Address       : hertzog@debian.org\n"
+#| "Date                : Fri, 04 Sep 2015 12:09:39 -0400\n"
+#| "Package Name        : falcot-data\n"
+#| "Version             : 1.0\n"
+#| "License             : gpl3\n"
+#| "Package Type        : indep\n"
+#| "Are the details correct? [Y/n/q]\n"
+#| "Currently there is not top level Makefile. This may require additional tuning\n"
+#| "Done. Please edit the files in the debian/ subdirectory now.\n"
+#| "\n"
+#| "$</computeroutput>"
 msgid ""
+"\n"
+"<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n"
+"<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n"
+"<computeroutput>\n"
+"Type of package: (single, indep, library, python)\n"
+"[s/i/l/p]? </computeroutput><userinput>i</userinput>\n"
+"<computeroutput>\n"
+"Maintainer Name     : Raphael Hertzog\n"
+"Email-Address       : hertzog@debian.org\n"
+"Date                : Sat, 26 Feb 2021 13:02:06 +0100\n"
+"Package Name        : falcot-data\n"
+"Version             : 1.0\n"
+"License             : gpl3\n"
+"Package Type        : indep\n"
+"Are the details correct? [Y/n/q]\n"
+"Currently there is not top level Makefile. This may require additional tuning\n"
+"Done. Please edit the files in the debian/ subdirectory now.\n"
+"\n"
+"$</computeroutput>"
+msgstr ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n"
 "<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n"
@@ -225,22 +735,57 @@ msgid ""
 "Done. Please edit the files in the debian/ subdirectory now.\n"
 "\n"
 "$</computeroutput>"
-msgstr "\n<computeroutput>$ </computeroutput><userinput>cd falcot-data-1.0</userinput>\n<computeroutput>$ </computeroutput><userinput>dh_make --native</userinput>\n<computeroutput>\nType of package: (single, indep, library, python)\n[s/i/l/p]? </computeroutput><userinput>i</userinput>\n<computeroutput>\nMaintainer Name     : Raphael Hertzog\nEmail-Address       : hertzog@debian.org\nDate                : Fri, 04 Sep 2015 12:09:39 -0400\nPackage Name        : falcot-data\nVersion             : 1.0\nLicense             : gpl3\nPackage Type        : indep\nAre the details correct? [Y/n/q]\nCurrently there is not top level Makefile. This may require additional tuning\nDone. Please edit the files in the debian/ subdirectory now.\n\n$</computeroutput>"
 
-msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
+#, fuzzy
+#| msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
+msgid "The selected type of package (<emphasis>indep</emphasis>) indicates that this source package will generate a single binary package that can be shared across all architectures (<literal>Architecture: all</literal> in <filename>debian/control</filename>). <emphasis>single</emphasis> acts as a counterpart, and leads to a single binary package that is dependent on the target architecture (<literal>Architecture: any</literal>). In this case, the former choice is more relevant since the package only contains documents and no binary programs, so it can be used similarly on computers of all architectures."
 msgstr "Den valgte pakketypen (<emphasis>indep</emphasis>) indikerer at denne kildepakken vil generere en enkelt binærpakke som kan deles på tvers av alle arkitekturer (<literal>Architecture: all</literal>). <emphasis>single</emphasis> virker som en motpart, og fører til en enkelt binærpakke som er avhengig av målarkitekturen (<literal>Architecture: any</literal>). I dette tilfellet er valget mer relevant, siden pakken bare inneholder dokumentasjon, og ingen binære programmer, slik at den kan brukes på samme måten på datamaskiner av alle arkitekturer."
-
-msgid "<primary>package types</primary>"
-msgstr "<primary>pakketyper</primary>"
 
 msgid "<primary>package</primary><secondary>types</secondary>"
 msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>architecture</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Architecture</literal>, header field</secondary>"
+msgstr ""
 
 msgid "The <emphasis>library</emphasis> type corresponds to a source package leading to several binary packages. It is useful for shared libraries, since they need to follow strict packaging rules."
 msgstr "<emphasis>library</emphasis>-typen svarer til en kildekodepakke som leder til forskjellige binærpakker. Det er nyttig for delte biblioteker, siden de må følge strenge pakkeregler."
 
 msgid "<emphasis>TIP</emphasis> Maintainer's name and email address"
 msgstr "<emphasis>TIPS</emphasis> Vedlikeholders navn og e-post"
+
+msgid "<primary><varname>DEBFULLNAME</varname></primary><see>environment variable</see>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>DEBFULLNAME</varname></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "<primary><varname>DEBEMAIL</varname></primary><see>environment variable</see>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>DEBEMAIL</varname></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "<primary><varname>EMAIL</varname></primary><see>environment variable</see>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>environment variable</primary><secondary><varname>EMAIL</varname></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.bashrc</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 msgid "Most of the programs involved in package maintenance will look for your name and email address in the <varname>DEBFULLNAME</varname> and <varname>DEBEMAIL</varname> or <varname>EMAIL</varname> environment variables. Defining them once and for all will avoid you having to type them multiple times. If your usual shell is <command>bash</command>, it is a simple matter of adding the following two lines in your <filename>~/.bashrc</filename> file (you will obviously replace the values with more relevant ones!):"
 msgstr "De fleste programmene involvert i pakkevedlikeholdet vil søke etter ditt navn og e-postadresse i <varname>DEBFULLNAME</varname> og <varname>DEBEMAIL</varname>, eller <varname>EMAIL</varname>-miljøvariabler. Ved å definere dem en gang for alle, vil du unngå å måtte sortere dem flere ganger. Hvis ditt vanlige skall er <command>bash</command>, er det bare å legge til følgende to linjer i din <filename>~/.bashrc</filename>-file (du vil ganske sikkert erstatte verdiene med noen mer relevante!):"
@@ -254,16 +799,124 @@ msgstr ""
 "export EMAIL=\"hertzog@debian.org\"\n"
 "export DEBFULLNAME=\"Raphael Hertzog\""
 
-msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file should be kept, since it is required for the correct functioning of the <emphasis>debhelper</emphasis> suite of programs (all beginning with the <command>dh_</command> prefix) used at various stages of the package build process."
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>debian</filename>, directory</primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>rules</filename></secondary><seealso><filename>rules</filename></seealso>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>rules</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>control</filename></secondary><seealso><filename>control</filename></seealso>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>control</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>changelog</filename></secondary><seealso><filename>changelog</filename></seealso>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>changelog</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>copyright</filename></secondary><seealso><filename>copyright</filename></seealso>"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>copyright</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file should be kept, since it is required for the correct functioning of the <emphasis>debhelper</emphasis> suite of programs (all beginning with the <command>dh_</command> prefix) used at various stages of the package build process."
+msgid "The <command>dh_make</command> command created a <filename>debian</filename> subdirectory with many files. Some are required, in particular <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> and <filename>copyright</filename>. Files with the <filename>.ex</filename> extension are example files that can be used by modifying them (and removing the extension) when appropriate. When they are not needed, removing them is recommended. The <filename>compat</filename> file is not used nor created anymore. Instead of defining the debhelper compatibility level as a number in this file, it is now defined as a build-dependency on the <emphasis role=\"pkg\">debhelper-compat</emphasis> virtual package in the <literal>Build-Depends</literal> file in <filename>debian/control</filename>."
 msgstr "Kommandoen <command>dh_make</command> laget en <filename>debian</filename>-undermappe med mange filer. Noen kreves, spesielt <filename>rules</filename>, <filename>control</filename>, <filename>changelog</filename> og <filename>copyright</filename>. Filer med <filename>.ex</filename>-forlengelsen er eksempelfiler som kan brukes ved å modifisere dem (og fjerne forlengelsen) når det passer. Når de ikke er nødvendige, anbefales det å fjerne dem. <filename>compat</filename> bør beholdes, ettersom den er nødvendig for riktig funksjon av <emphasis>debhelper</emphasis>-programpakken (som alle begynner med <command>dh_</command>-forstavelsen), og som brukes på ulike stadier i pakkebyggingsprosessen."
 
-msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
-msgstr "<filename>copyright</filename> må inneholde informasjon om forfatterne av dokumentasjonen som er inkludert i pakken, og den tilhørende lisensen. I vårt tilfelle er intern dokumentasjon og bruken av den begrenset til Falcot Corp-selskapet. Standardutgaven av <filename>changelog</filename> er vanligvis klar til bruk; det er nok å erstatte «Første utgivelse» med en mer detaljert forklaring, samt endre distribusjon fra <literal>unstable</literal> til <literal>internal</literal>. <filename>control</filename>-filen ble også oppdatert: <literal>Section</literal>-feltet er forandret til <emphasis>misc</emphasis>, samt <literal>Homepage</literal>, <literal>Vcs-Git</literal> og <literal>Vcs-Browser</literal>-feltene ble endret. <literal>Depends</literal>-feltene ble utvidet med <literal>firefox-esr | www-browser</literal> for å sikre tilgjengeligheten av en pålitelig nettleser som kan vise dokumentasjonen i pakken."
+msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related copyright and license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default format used for this file is defined in the <literal>Format</literal> field. <ulink type=\"block\" url=\"https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\" />"
+msgstr ""
+
+msgid "The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>UNRELEASED</literal> or <literal>unstable</literal> to the target release name is enough."
+msgstr ""
+
+msgid "The <filename>control</filename> file must also be updated: the <literal>Section</literal> field can be changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package. If the package does not require to run any commands as root (see <xref linkend=\"sidebar.fakeroot\" />), the <literal>Rules-Requires-Root</literal> field can be left as is."
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>control</filename></primary><secondary><literal>Depends</literal>, header field</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Homepage</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Rules-Requires-Root</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Section</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Vcs-Browser</literal>, header field</secondary>"
+msgstr ""
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Vcs-Git</literal>, header field</secondary>"
+msgstr ""
 
 msgid "The <filename>control</filename> file"
 msgstr "<filename>control</filename>-filen"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Source: falcot-data\n"
+#| "Section: misc\n"
+#| "Priority: optional\n"
+#| "Maintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\n"
+#| "Build-Depends: debhelper (&gt;= 10)\n"
+#| "Standards-Version: 4.4.1\n"
+#| "\n"
+#| "Package: falcot-data\n"
+#| "Architecture: all\n"
+#| "Depends: firefox-esr | www-browser, ${misc:Depends}\n"
+#| "Description: Internal Falcot Corp Documentation\n"
+#| " This package provides several documents describing the internal\n"
+#| " structure at Falcot Corp.  This includes:\n"
+#| "  - organization diagram\n"
+#| "  - contacts for each department.\n"
+#| " .\n"
+#| " These documents MUST NOT leave the company.\n"
+#| " Their use is INTERNAL ONLY."
 msgid ""
+"<![CDATA[\n"
+"Source: falcot-data\n"
+"Section: misc\n"
+"Priority: optional\n"
+"Maintainer: Raphael Hertzog <hertzog@debian.org>\n"
+"Build-Depends: debhelper-compat (= 13)\n"
+"Standards-Version: 4.5.1\n"
+"Rules-Requires-Root: no\n"
+"\n"
+"Package: falcot-data\n"
+"Architecture: all\n"
+"Depends: firefox-esr | www-browser, ${misc:Depends}\n"
+"Description: Internal Falcot Corp Documentation\n"
+" This package provides several documents describing the internal\n"
+" structure at Falcot Corp.  This includes:\n"
+"  - organization diagram\n"
+"  - contacts for each department.\n"
+" .\n"
+" These documents MUST NOT leave the company.\n"
+" Their use is INTERNAL ONLY.\n"
+"]]>"
+msgstr ""
 "\n"
 "Source: falcot-data\n"
 "Section: misc\n"
@@ -283,21 +936,32 @@ msgid ""
 " .\n"
 " These documents MUST NOT leave the company.\n"
 " Their use is INTERNAL ONLY."
-msgstr "\nSource: falcot-data\nSection: misc\nPriority: optional\nMaintainer: Raphael Hertzog &lt;hertzog@debian.org&gt;\nBuild-Depends: debhelper (&gt;= 10)\nStandards-Version: 4.4.1\n\nPackage: falcot-data\nArchitecture: all\nDepends: firefox-esr | www-browser, ${misc:Depends}\nDescription: Internal Falcot Corp Documentation\n This package provides several documents describing the internal\n structure at Falcot Corp.  This includes:\n  - organization diagram\n  - contacts for each department.\n .\n These documents MUST NOT leave the company.\n Their use is INTERNAL ONLY."
 
 msgid "The <filename>changelog</filename> file"
 msgstr "<filename>changelog</filename>-filen"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "falcot-data (1.0) internal; urgency=low\n"
+#| "\n"
+#| "  * Initial Release.\n"
+#| "  * Let's start with few documents:\n"
+#| "    - internal company structure;\n"
+#| "    - contacts for each department.\n"
+#| "\n"
+#| " -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400"
 msgid ""
-"\n"
-"falcot-data (1.0) internal; urgency=low\n"
+"<![CDATA[\n"
+"falcot-data (1.0) bullseye; urgency=low\n"
 "\n"
 "  * Initial Release.\n"
 "  * Let's start with few documents:\n"
 "    - internal company structure;\n"
 "    - contacts for each department.\n"
 "\n"
-" -- Raphael Hertzog &lt;hertzog@debian.org&gt;  Fri, 04 Sep 2015 12:09:39 -0400"
+" -- Raphael Hertzog <hertzog@debian.org>  Sat, 26 Feb 2022 15:12:06 +0100\n"
+"]]>"
 msgstr ""
 "\n"
 "falcot-data (1.0) internal; urgency=low\n"
@@ -312,7 +976,26 @@ msgstr ""
 msgid "The <filename>copyright</filename> file"
 msgstr "<filename>copyright</filename>-filen"
 
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\n"
+#| "Upstream-Name: falcot-data\n"
+#| "\n"
+#| "Files: *\n"
+#| "Copyright: 2004-2019 Falcot Corp\n"
+#| "License:\n"
+#| " All rights reserved."
 msgid ""
+"\n"
+"Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\n"
+"Upstream-Name: falcot-data\n"
+"\n"
+"Files: *\n"
+"Copyright: 2004-2021 Falcot Corp\n"
+"License:\n"
+" All rights reserved."
+msgstr ""
 "\n"
 "Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\n"
 "Upstream-Name: falcot-data\n"
@@ -321,13 +1004,17 @@ msgid ""
 "Copyright: 2004-2019 Falcot Corp\n"
 "License:\n"
 " All rights reserved."
-msgstr "\nFormat: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/\nUpstream-Name: falcot-data\n\nFiles: *\nCopyright: 2004-2019 Falcot Corp\nLicense:\n All rights reserved."
 
 msgid "<emphasis>BACK TO BASICS</emphasis> <filename>Makefile</filename> file"
 msgstr "<emphasis>DET GRUNNLEGGENDE</emphasis> <filename>Makefile</filename>-fil"
 
 msgid "<primary><filename>Makefile</filename></primary>"
 msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>make</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
 
 msgid "A <filename>Makefile</filename> file is a script used by the <command>make</command> program; it describes rules for how to build a set of files from each other in a tree of dependencies (for instance, a program can be built from a set of source files). The <filename>Makefile</filename> file describes these rules in the following format:"
 msgstr "<filename>Makefile</filename>-filen er et skript som brukes av <command>make</command>-programmet: Det beskriver regler for hvordan man skal bygge et sett med filer fra hverandre i et tre med avhengigheter (for eksempel kan et program bygges fra et sett med kildefiler). <filename>Makefile</filename>-filen beskriver disse reglene i det følgende formatet:"
@@ -337,9 +1024,15 @@ msgid ""
 "target: source1 source2 ...\n"
 "        command1\n"
 "        command2"
-msgstr "\nmål: kilde1 kilde2 ...\n        kommando1\n        kommando2"
+msgstr ""
+"\n"
+"mål: kilde1 kilde2 ...\n"
+"        kommando1\n"
+"        kommando2"
 
-msgid "The interpretation of such a rule is as follows: if one of the <literal>source*</literal> files is more recent than the <literal>target</literal> file, then the target needs to be generated, using <command>command1</command> and <command>command2</command>."
+#, fuzzy
+#| msgid "The interpretation of such a rule is as follows: if one of the <literal>source*</literal> files is more recent than the <literal>target</literal> file, then the target needs to be generated, using <command>command1</command> and <command>command2</command>."
+msgid "The basic interpretation of such a rule is as follows: if one of the <literal>source*</literal> files is more recent than the <literal>target</literal> file, then the target needs to be generated, using <command>command1</command> and <command>command2</command>."
 msgstr "Tolkningen av slik regel er som følger: Hvis en av <literal>source*</literal>-filene er nyere enn <literal>target</literal>-filen, trenger målet generering ved å bruke <command>command1</command> og <command>command2</command>."
 
 msgid "Note that the command lines must start with a tab character; also note that when a command line starts with a dash character (<literal>-</literal>), failure of the command does not interrupt the whole process."
@@ -351,6 +1044,11 @@ msgstr "Filen <filename>rules</filename> inneholder vanligvis et sett med regler
 msgid "Although this file is the heart of the process, it increasingly contains only the bare minimum for running a standard set of commands provided by the <command>debhelper</command> tool. Such is the case for files generated by <command>dh_make</command>. To install our files, we simply configure the behavior of the <command>dh_install</command> command by creating the following <filename>debian/falcot-data.install</filename> file:"
 msgstr "Selv om denne filen er hjertet av prosessen, inneholder den i økende grad bare et minimum for å kjøre et standard sett med kommandoer gitt av <command>debhelper</command>-verktøyet. Slik er tilfellet for filer generert av <command>dh_make</command>. For å installere våre filer må vi ganske enkelt sette opp atferden til <command>dh_install</command>-kommandoen ved å lage den følgende <filename>debian/falcot-data.install</filename>-filen:"
 
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><command>dh</command></primary><secondary><command>dh_install</command></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
 msgid ""
 "\n"
 "data/* usr/share/falcot-data/"
@@ -360,6 +1058,16 @@ msgstr ""
 
 msgid "At this point, the package can be created. We will, however, add a lick of paint. Since the administrators want the documents to be easily accessed from the menus of graphical desktop environments, we add a <filename>falcot-data.desktop</filename> file and get it installed in <filename>/usr/share/applications</filename> by adding a second line to <filename>debian/falcot-data.install</filename>."
 msgstr "På dette tidspunktet kan pakken opprettes. Vi vil imidlertid legge til et malingstrøk. Siden administratorene ønsker at dokumentasjonen blir lett tilgjengelig fra menyene i grafiske skrivebordsmiljøer, legger vi til en <filename>falcot-data.desktop</filename>-file og får den installert i <filename>/usr/share/applications</filename> ved å legge til en andre linje til <filename>debian/falcot-data.install</filename>."
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.desktop</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.install</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 msgid "The <filename>falcot-data.desktop</filename> file"
 msgstr "Filen <filename>falcot-data.desktop</filename>"
@@ -401,8 +1109,10 @@ msgstr "Vår kildepakke er nå klar. Alt som gjenstår er å generere den binær
 msgid "Creating a Package Repository for APT"
 msgstr "Å lage en pakkebrønn for APT"
 
-msgid "<primary>package archive</primary>"
-msgstr "<primary>pakkearkiv</primary>"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>archive</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
 
 msgid "<primary>package</primary><secondary>Debian</secondary><tertiary>archive of</tertiary>"
 msgstr "<primary>pakke</primary><secondary>Debian</secondary><tertiary>arkiv</tertiary>"
@@ -412,6 +1122,11 @@ msgstr "Falcot Corp begynte gradvis å vedlikeholde en rekke Debian-pakker, ente
 
 msgid "To make deployment easier, they want to integrate these packages in a package archive that can be directly used by APT. For obvious maintenance reasons, they wish to separate internal packages from locally-rebuilt packages. The goal is for the matching entries in a <filename>/etc/apt/sources.list.d/falcot.list</filename> file to be as follows:"
 msgstr "For å gjøre utplassering lettere ønsker de å integrere disse pakkene i et pakkearkiv som kan brukes direkte av APT. Av åpenbare vedlikeholdsgrunner ønsker de å skille interne pakker fra lokalt ombygde pakker. Målet for de samsvarende oppføringene i en <filename>/etc/apt/sources.list.d/falcot.list</filename>-fil er som følger:"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>APT</primary><secondary><filename>/etc/apt/sources.list.d/</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
 
 msgid ""
 "\n"
@@ -428,7 +1143,9 @@ msgstr "<primary><command>mini-dinstall</command></primary>"
 msgid "The administrators therefore configure a virtual host on their internal HTTP server, with <filename>/srv/vhosts/packages/</filename> as the root of the associated web space. The management of the archive itself is delegated to the <command>mini-dinstall</command> command (in the similarly-named package). This tool keeps an eye on an <filename>incoming/</filename> directory (in our case, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>) and waits for new packages there; when a package is uploaded, it is installed into a Debian archive at <filename>/srv/vhosts/packages/</filename>. The <command>mini-dinstall</command> command reads the <filename>*.changes</filename> file created when the Debian package is generated. These files contain a list of all other files associated with the version of the package (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, or their equivalents with other compression tools), and these allow <command>mini-dinstall</command> to know which files to install. <filename>*.changes</filename> files also contain the name of the target distribution (often <literal>unstable</literal>) mentioned in the latest <filename>debian/changelog</filename> entry, and <command>mini-dinstall</command> uses this information to decide where the package should be installed. This is why administrators must always change this field before building a package, and set it to <literal>internal</literal> or <literal>updates</literal>, depending on the target location. <command>mini-dinstall</command> then generates the files required by APT, such as <filename>Packages.gz</filename>."
 msgstr "Administratorene setter derfor opp en virtuell maskin på deres interne HTTP-tjener, med <filename>/srv/vhosts/packages/</filename> som roten til det tilhørende nettområdet. Håndteringen av selve arkivet er delegert til <command>mini-dinstall</command>-kommandoen (i den tilsvarende navngitte pakken). Dette verktøyet holder et øye med en <filename>incoming/</filename>-mappe (i vårt tilfelle, <filename>/srv/vhosts/packages/mini-dinstall/incoming/</filename>), og venter på nye pakker der; når en pakke er lastet opp, blir den installert i et Debian-arkiv på <filename>/srv/vhosts/packages/</filename>. Kommandoen <command>mini-dinstall</command> leser <filename>*.changes</filename>-filen som opprettes når Debian-pakken blir generert. Disse filene inneholder en liste med alle andre filer knyttet til den versjonen av pakken (<filename>*.deb</filename>, <filename>*.dsc</filename>, <filename>*.diff.gz</filename>/<filename>*.debian.tar.gz</filename>, <filename>*.orig.tar.gz</filename>, eller tilsvarende med andre komprimeringsverktøy), og disse åpner for at <command>mini-dinstall</command> får vite hvilke filer som skal installeres. <filename>*.changes</filename>-filer inneholder også navnet på måldistribusjonen (ofte <literal>unstable</literal>) nevnt i den siste <filename>debian/changelog</filename>-inngangen, og <command>mini-dinstall</command> bruker denne informasjonen til å avgjøre hvor pakken skal installeres. Dette er grunnen til at administratorer alltid må endre dette feltet før de bygger en pakke, og setter det til <literal>internal</literal>, eller <literal>updates</literal>, avhengig av måldistribusjonen. <command>mini-dinstall</command> genererer deretter filene som kreves av APT, for eksempel <filename>Packages.gz</filename>."
 
-msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command>"
+#, fuzzy
+#| msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command>"
+msgid "<emphasis>ALTERNATIVE</emphasis> <command>apt-ftparchive</command>, <command>aptly</command>, and <command>reprepro</command>"
 msgstr "<emphasis>ALTERNATIV</emphasis> <command>apt-ftparchive</command> and <command>reprepro</command>"
 
 msgid "<primary><command>apt-ftparchive</command></primary>"
@@ -455,8 +1172,21 @@ msgstr ""
 msgid "The <command>apt-ftparchive sources</command> command allows creating <filename>Sources.gz</filename> files in a similar fashion."
 msgstr "Kommandoen <command>apt-ftparchive sources</command> åpner for å lage <filename>Sources.gz</filename>-filer på en lignende måte."
 
-msgid "<command>reprepro</command> is a more advanced tool for the same purpose. It can produce, manage and synchronize a local repository of packages. It stores packages and checksums in a Berkeley DB database file, so no database server is needed. With <command>reprepro</command> you can check signatures of mirrored repositories and create signatures of the generated package indices."
-msgstr "<command>reprepro</command> er et mer avansert verktøy for samme formål. Det kan produsere, administrere og synkronisere et lokalt kodelager med pakker. Den lagrer pakker og sjekksumerer i en Berkeley DB databasefil, så ingen databasetjener er nødvendig. Med <command>reprepro</command> kan du sjekke signaturer av speilede kodelagre og opprette signaturer for de genererte pakkeindeksene."
+msgid "<command>reprepro</command> and <command>aptly</command> are more advanced tools for the same purpose. They can produce, manage and synchronize a number of package repositories, mirror other repositories, even cherry-pick packages from official repositories and provide them locally, create signatures of the generated package indices and thus provide signed repositories. <command>reprepro</command> stores packages and checksums in a Berkeley DB database file, so no database server is needed. <command>aptly</command> provides the same functionality, but it can be easier in handling. Unfortunately, both projects, although probably the most feature-rich solutions, are not actively developed at the moment."
+msgstr ""
+
+msgid "<command>reprepro</command> comes with a lot of documentation and examples in <filename>/usr/share/doc/reprepro/</filename>, while <command>aptly</command> has a vast online documentation. <ulink type=\"block\" url=\"https://www.aptly.info/\" />"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><command>pbuilder</command></primary>"
+msgid "<primary><command>reprepro</command></primary>"
+msgstr "<primary><command>pbuilder</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>dput</command></primary>"
+msgid "<primary><command>aptly</command></primary>"
+msgstr "<primary><command>dput</command></primary>"
 
 msgid "Configuring <command>mini-dinstall</command> requires setting up a <filename>~/.mini-dinstall.conf</filename> file; in the Falcot Corp case, the contents are as follows:"
 msgstr "Å sette opp <command>mini-dinstall</command> krever oppsett av en <filename>~/.mini-dinstall.conf</filename>-fil; i Falcot Corp-tilfellet er innholdet som følger:"
@@ -522,14 +1252,49 @@ msgstr "For å hjelpe til med denne prosessen inkluderer <command>mini-dinstall<
 msgid "Becoming a Package Maintainer"
 msgstr "Å bli en pakkevedlikeholder"
 
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>maintainer</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>new maintainer</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>maintainer</primary><secondary>package maintainer</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
 msgid "Learning to Make Packages"
 msgstr "Å lære å lage pakker"
 
-msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>creation</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
+msgid "Creating a quality Debian package is not always a simple task, and becoming a package maintainer takes some learning, both with theory and practice in technical and legal matters. It is not a simple matter of building and installing software; rather, the bulk of the complexity comes from understanding the problems and conflicts, and more generally the interactions, with the myriad of other packages available."
 msgstr "Å opprette en kvalitetsdebianpakke er ikke alltid en enkel oppgave, å bli en pakkeutvikler krever litt opplæring, både rundt teori og praksis. Det er ingen enkel sak å bygge og installere programvare; mesteparten av kompleksiteten kommer fra å forstå problemene og konfliktene, og mer generelt samhandlingene, med alle de andre pakkene som er tilgjengelige."
 
 msgid "Rules"
 msgstr "Regler"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>policy</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Policy</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "<primary><filename>control</filename></primary><secondary><literal>Standards-Version</literal>, header field</secondary>"
+msgstr ""
 
 msgid "A Debian package must comply with the precise rules compiled in the Debian policy, and each package maintainer must know them. There is no requirement to know them by heart, but rather to know they exist and to refer to them whenever a choice presents a non-trivial alternative. Every Debian maintainer has made mistakes by not knowing about a rule, but this is not a huge problem as long as the error gets fixed when a user reports it as a bug report (which tends to happen fairly soon thanks to advanced users). The <literal>Standards-Version</literal> field in <filename>debian/control</filename> specifies the version of the Debian policy with which a package complies. Maintainers should comply to the latest version of the Debian policy. <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
 msgstr "En Debian-pakke må være i samsvar med de presise regler utarbeidet i Debians retningslinjer, og hver pakkeutvikler må kjenne til dem. Det er ingen krav om å kjenne dem utenat, men heller å vite at de eksisterer, og referere til dem når et valg presenterer et ikke-trivielt alternativ. Hver Debian-vedlikeholder har gjort feil ved å ikke kjenne til en regel, men det er ikke et stort problem, så lenge feilen blir fikset når en bruker rapporterer den som en feilrapport (som pleier å skje ganske snart, takket være avanserte brukere). <literal>Standards-Version</literal>-feltet i <filename>debian/control</filename> spesifiserer versjonen av Debian-policyen som en pakke samsvarer med. Vedlikeholdere bør overholde den siste versjonen av Debian-policyen. <ulink type=\"block\" url=\"https://www.debian.org/doc/debian-policy/\" />"
@@ -537,8 +1302,15 @@ msgstr "En Debian-pakke må være i samsvar med de presise regler utarbeidet i D
 msgid "Procedures"
 msgstr "Prosedyrer"
 
-msgid "<primary>Debian Developer's Reference</primary>"
-msgstr "<primary>Debians utviklerreferanse</primary>"
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Developer's Reference</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>developer's reference</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
 
 msgid "Debian is not a simple collection of individual packages. Everyone's packaging work is part of a collective project; being a Debian developer involves knowing how the Debian project operates as a whole. Every developer will, sooner or later, interact with others. The Debian Developer's Reference (in the <emphasis role=\"pkg\">developers-reference</emphasis> package) summarizes what every developer must know in order to interact as smoothly as possible with the various teams within the project, and to take the best possible advantages of the available resources. This document also enumerates a number of duties a developer is expected to fulfill. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/developers-reference/\" />"
 msgstr "Debian er ikke en enkel samling av enkeltpakker. Alles pakkearbeid er en del av et kollektivt prosjekt; å være en Debian-utvikler innebærer å vite hvordan Debian-prosjektet fungerer som en helhet. Hver utbygger vil, før eller senere, samhandle med andre. Debians utviklerreferanse (Debian Developer's Reference) (i <emphasis role=\"pkg\">developers-reference</emphasis>-package) oppsummerer hva alle utviklere må vite for å samhandle så smidig som mulig med de ulike teamene i prosjektet, og for å få mest mulig ut av de tilgjengelige ressursene. Dette dokumentet oppsummerer også en rekke oppgaver en utvikler forventes å oppfylle. <ulink type=\"block\" url=\"https://www.debian.org/doc/manuals/developers-reference/\" />"
@@ -549,35 +1321,13 @@ msgstr "Verktøy"
 msgid "Many tools help package maintainers in their work. This section describes them quickly, but does not give the full details, since they all have comprehensive documentation of their own."
 msgstr "Mange verktøy hjelper pakkevedlikeholdere med deres arbeid. Denne seksjonen gir en rask gjennomgang, uten alle detaljene, ettersom verktøyene har sin egen omfattende dokumentasjon."
 
-msgid "The <command>lintian</command> Program"
-msgstr "Programmet <command>lintian</command>"
-
-msgid "<primary><command>lintian</command></primary>"
-msgstr "<primary><command>lintian</command></primary>"
-
-msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
-msgstr "Dette verktøyet er et av de viktigste: Det er Debian-pakkesjekkeren. Den bygger på et stort utvalg av tester opprettet fra Debians retningslinjer, og oppdager raskt og automatisk mange feil som deretter kan rettes før pakkene utgis."
-
-msgid "This tool is only a helper, and it sometimes gets it wrong (for instance, since the Debian policy changes over time, <command>lintian</command> is sometimes outdated). It is also not exhaustive: not getting any Lintian error should not be interpreted as a proof that the package is perfect; at most, it avoids the most common errors."
-msgstr "Dette verktøyet er bare en hjelper, og noen ganger gjør den feil (for eksempel, siden Debians retningslinjer endrer seg over tid, blir <command>lintian</command> noen ganger utdatert). Det er heller ikke uttømmende: Selv om du ikke får noen Lintian-feilmelding, bør dette ikke tolkes som et bevis på at pakken er perfekt; i beste fall unngås de vanligste feilene."
-
-msgid "The <command>piuparts</command> Program"
-msgstr "Programmet <command>piuparts</command>"
-
-msgid "<primary><command>piuparts</command></primary>"
-msgstr "<primary><command>piuparts</command></primary>"
-
-msgid "This is another important tool: it automates the installation, upgrade, removal and purge of a package (in an isolated environment), and checks that none of these operations leads to an error. It can help in detecting missing dependencies, and it also detects when files are incorrectly left over after the package got purged."
-msgstr "Dette er et annet viktig redskap: Det automatiserer installasjonen, oppgraderer, fjerner og renser en pakke (i et isolert miljø), og kontrollerer at ingen av disse operasjonene fører til feil. Det kan hjelpe til med å avdekke manglende avhengigheter, og det oppdager også når filer feilaktig er til overs etter at pakken er renset."
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>tools</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
 
 msgid "devscripts"
 msgstr "devscripts"
-
-msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
-msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
-
-msgid "<primary><command>debuild</command></primary>"
-msgstr "<primary><command>debuild</command></primary>"
 
 msgid "<primary><command>dch</command></primary>"
 msgstr "<primary><command>dch</command></primary>"
@@ -590,6 +1340,11 @@ msgstr "<primary><command>debi</command></primary>"
 
 msgid "<primary><command>debc</command></primary>"
 msgstr "<primary><command>debc</command></primary>"
+
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>bts</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
 
 msgid "The <emphasis role=\"pkg\">devscripts</emphasis> package contains many programs helping with a wide array of a Debian developer's job:"
 msgstr "Pakken <emphasis role=\"pkg\">devscripts</emphasis> inneholder mange programmer som hjelper til på et stort område i Debian-utviklerens jobb:"
@@ -606,23 +1361,36 @@ msgstr "<command>dch</command> tillater en rask og enkel redigering av en <filen
 msgid "<command>uscan</command> checks whether a new version of a software has been released by the upstream author; this requires a <filename>debian/watch</filename> file with a description of the location of such releases."
 msgstr "<command>uscan</command> sjekker om en ny programvareversjon er utgitt av oppstrømsforfatteren; dette krever en <filename>debian/watch</filename>-fil med beskrivelse av plasseringen av slike utgivelser."
 
+msgid "<primary><filename>debian</filename>, directory</primary><secondary><filename>watch</filename></secondary>"
+msgstr ""
+
 msgid "<command>debi</command> allows installing (with <command>dpkg -i</command>) the Debian package that was just generated without the need to type its full name and path."
 msgstr "<command>debi</command> tillater installering (med <command>dpkg -i</command>) av Debian-pakken som nettopp ble generert, uten å måtte skrive inn dens fulle navn og sti."
 
 msgid "In a similar fashion, <command>debc</command> allows scanning the contents of the recently-generated package (with <command>dpkg -c</command>), without needing to type its full name and path."
 msgstr "På lignende måte tillater <command>debc</command> skanning av innholdet i den nylig generert pakken (med <command>dpkg -c</command>), uten å måtte skrive inn dens fulle navn og sti."
 
-msgid "<command>bts</command> controls the bug tracking system from the command line; this program automatically generates the appropriate emails."
+#, fuzzy
+#| msgid "<command>bts</command> controls the bug tracking system from the command line; this program automatically generates the appropriate emails."
+msgid "<command>bts</command> controls the bug tracking system from the command line; this program automatically generates the appropriate emails. <ulink type=\"block\" url=\"https://www.debian.org/Bugs/server-refcard\" />"
 msgstr "<command>bts</command> styrer feilrapporteringssystemet fra kommandolinjen; dette programmet genererer automatisk de riktige e-postene."
 
 msgid "<command>debrelease</command> uploads a recently-generated package to a remote server, without needing to type the full name and path of the related <filename>.changes</filename> file."
 msgstr "<command>debrelease</command> laster opp en nylig generert pakke til en ekstern tjener, uten å måtte skrive hele navnet og banen til den relaterte <filename>.changes</filename>-filen."
+
+#, fuzzy
+#| msgid "<primary><filename>Makefile</filename></primary>"
+msgid "<primary><filename>.changes</filename></primary>"
+msgstr "<primary><filename>Makefile</filename></primary>"
 
 msgid "<command>debsign</command> signs the <filename>*.dsc</filename> and <filename>*.changes</filename> files."
 msgstr "<command>debsign</command> signerer <filename>*.dsc</filename> og <filename>*.changes</filename>-filene."
 
 msgid "<command>uupdate</command> automates the creation of a new revision of a package when a new upstream version has been released."
 msgstr "<command>uupdate</command> automatiserer opprettelsen av ny revisjon av en pakke når en ny oppstrømsversjon er utgitt."
+
+msgid "All of the mentioned commands are documented in their respective manual pages. They can further be configured per user in one file: <filename>~/.devscripts</filename>."
+msgstr ""
 
 msgid "<emphasis role=\"pkg\">debhelper</emphasis> and <emphasis role=\"pkg\">dh-make</emphasis>"
 msgstr "<emphasis role=\"pkg\">debhelper</emphasis> og <emphasis role=\"pkg\">dh-make</emphasis>"
@@ -633,11 +1401,53 @@ msgstr "<primary><emphasis>debhelper</emphasis></primary>"
 msgid "<primary><emphasis>dh-make</emphasis></primary>"
 msgstr "<primary><emphasis>dh-make</emphasis></primary>"
 
-msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix."
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>dh</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary><filename>debian</filename></primary><secondary><filename>rules</filename></secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix."
+msgid "Debhelper is a set of scripts easing the creation of policy-compliant packages; these scripts are invoked from <filename>debian/rules</filename>. Debhelper has been widely adopted within Debian, as evidenced by the fact that it is used by the majority of official Debian packages. All the commands it contains have a <command>dh_</command> prefix. Each of them is documented in a manual page. The different compatibility levels and common options are described in <citerefentry><refentrytitle>debhelper</refentrytitle> <manvolnum>7</manvolnum></citerefentry>."
 msgstr "Debhelper er et sett med skript som letter det å lage pakker som holder seg til retningslinjene: Disse skriptene påkalles fra <filename>debian/rules</filename>. Debhelper er bredt akseptert innen Debian, noe som gjenspeiles av det faktum at den brukes av de fleste offisielle Debian-pakker. Alle kommandoene den inneholder har en <command>dh_</command>-forstavelse."
 
 msgid "The <command>dh_make</command> script (in the <emphasis>dh-make</emphasis> package) creates files required for generating a Debian package in a directory initially containing the sources for a piece of software. As can be guessed from the name of the program, the generated files use debhelper by default."
 msgstr "Skriptet <command>dh_make</command> (i <emphasis>dh-make</emphasis>-pakken) lager filer som kreves for å generere en Debian-pakke i en katalog som i utgangspunktet inneholder kildene for et stykke programvare. Som det kan gjettes fra navnet på programmet, bruker de genererte filene debhelper som standard."
+
+#, fuzzy
+#| msgid "The <command>lintian</command> Program"
+msgid "<command>lintian</command>"
+msgstr "Programmet <command>lintian</command>"
+
+msgid "<primary><command>lintian</command></primary>"
+msgstr "<primary><command>lintian</command></primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>checker</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+msgid "This tool is one of the most important: it is the Debian package checker. It is based on a large array of tests created from the Debian policy, and detects quickly and automatically many errors that can then be fixed before packages are released."
+msgstr "Dette verktøyet er et av de viktigste: Det er Debian-pakkesjekkeren. Den bygger på et stort utvalg av tester opprettet fra Debians retningslinjer, og oppdager raskt og automatisk mange feil som deretter kan rettes før pakkene utgis."
+
+msgid "This tool is only a helper, and it sometimes gets it wrong (for instance, since the Debian policy changes over time, <command>lintian</command> is sometimes outdated). It is also not exhaustive: not getting any Lintian error should not be interpreted as a proof that the package is perfect; at most, it avoids the most common errors."
+msgstr "Dette verktøyet er bare en hjelper, og noen ganger gjør den feil (for eksempel, siden Debians retningslinjer endrer seg over tid, blir <command>lintian</command> noen ganger utdatert). Det er heller ikke uttømmende: Selv om du ikke får noen Lintian-feilmelding, bør dette ikke tolkes som et bevis på at pakken er perfekt; i beste fall unngås de vanligste feilene."
+
+#, fuzzy
+#| msgid "The <command>piuparts</command> Program"
+msgid "<command>piuparts</command>"
+msgstr "Programmet <command>piuparts</command>"
+
+msgid "<primary><command>piuparts</command></primary>"
+msgstr "<primary><command>piuparts</command></primary>"
+
+msgid "This is another important tool: it automates the installation, upgrade, removal and purge of a package (in an isolated environment), and checks that none of these operations leads to an error. It can help in detecting missing dependencies, and it also detects when files are incorrectly left over after the package got purged."
+msgstr "Dette er et annet viktig redskap: Det automatiserer installasjonen, oppgraderer, fjerner og renser en pakke (i et isolert miljø), og kontrollerer at ingen av disse operasjonene fører til feil. Det kan hjelpe til med å avdekke manglende avhengigheter, og det oppdager også når filer feilaktig er til overs etter at pakken er renset."
 
 msgid "<emphasis role=\"pkg\">autopkgtest</emphasis>"
 msgstr "<emphasis role=\"pkg\">autopkgtest</emphasis>"
@@ -645,7 +1455,14 @@ msgstr "<emphasis role=\"pkg\">autopkgtest</emphasis>"
 msgid "<primary><emphasis>autopkgtest</emphasis></primary>"
 msgstr "<primary><emphasis>autopkgtest</emphasis></primary>"
 
-msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package."
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>tests</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package."
+msgid "<command>autopkgtest</command> runs tests on binary packages, using the tests supplied in the source package in <filename>debian/tests/</filename>. Several commands allow the easy creation of chrooted or virtual test environments."
 msgstr "<command> autopkgtest</command> kjører tester på binære pakker, ved hjelp av testene som følger med i kildepakken."
 
 msgid "<emphasis role=\"pkg\">reprotest</emphasis>"
@@ -657,6 +1474,11 @@ msgstr "<primary><emphasis>reprotest</emphasis></primary>"
 msgid "<command>reprotest</command> builds the same source code twice in different environments, and then checks the binaries produced by each build for differences. If any are found, then <command>diffoscope</command> (if unavailable, <command>diff</command>) is used to display them in detail for later analysis."
 msgstr "<command> reprotest</command> bygger samme kildekode to ganger i forskjellige miljøer, og kontrollerer deretter binærfilene som produseres av hver oppbygning for forskjeller. Hvis noen blir funnet, brukes <command>diffoskop</command> (hvis det ikke er tilgjengelig, <command>diff</command>) for å vise dem i detalj for senere analyse."
 
+#, fuzzy
+#| msgid "<primary><command>dch</command></primary>"
+msgid "<primary><command>diffoscope</command></primary>"
+msgstr "<primary><command>dch</command></primary>"
+
 msgid "<command>dupload</command> and <command>dput</command>"
 msgstr "<command>dupload</command> og <command>dput</command>"
 
@@ -666,11 +1488,90 @@ msgstr "<primary><command>dupload</command></primary>"
 msgid "<primary><command>dput</command></primary>"
 msgstr "<primary><command>dput</command></primary>"
 
-msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>*.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
+#, fuzzy
+#| msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>*.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
+msgid "The <command>dupload</command> and <command>dput</command> commands allow uploading a Debian package to a (possibly remote) server. This allows developers to publish their package on the main Debian server (<literal>ftp-master.debian.org</literal>) so that it can be integrated to the archive and distributed by mirrors. These commands take a <filename>.changes</filename> file as a parameter, and deduce the other relevant files from its contents."
 msgstr "Kommandoene <command>dupload</command> og <command>dput</command> tillater å laste opp en Debian-pakke til en (muligens ekstern) tjener. Dette tillater utviklere å publisere sin pakke på Debians hovedtjener (<literal>ftp-master.debian.org</literal>) slik at den kan integreres i arkivet, og distribueres av speil. Disse kommandoene tar <filename>*.changes</filename>-filen som et parameter, og utleder de andre relevante filene fra innholdet sitt."
+
+#, fuzzy
+#| msgid "<emphasis role=\"pkg\">debhelper</emphasis> and <emphasis role=\"pkg\">dh-make</emphasis>"
+msgid "<emphasis role=\"pkg\">git-buildpackage</emphasis> and <emphasis role=\"pkg\">dgit</emphasis>"
+msgstr "<emphasis role=\"pkg\">debhelper</emphasis> og <emphasis role=\"pkg\">dh-make</emphasis>"
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">git-buildpackage</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+#, fuzzy
+#| msgid "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+msgid "<primary><emphasis role=\"pkg\">dgit</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">devscripts</emphasis></primary>"
+
+msgid "The project has been using various version control systems over the years to store packaging efforts or package source code, or allow collaborative package maintenance. In an effort to unify the systems and efforts, it was ultimately decided in 2017 to move (almost) all package sources into <emphasis>Git</emphasis> (<xref linkend=\"sidebar.git\" />) onto a Gitlab instance called <literal>salsa.debian.org</literal>. <ulink type=\"block\" url=\"https://salsa.debian.org/\" />"
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><literal>salsa.debian.org</literal></primary>"
+msgstr "<primary><literal>Build-Depends</literal>, kontrollfelt</primary>"
+
+msgid "To make packaging using Git easier for Debian developers, tools have been developed. These allow not only to store the packaging files in Git, but also to use the Git repositories (and their history) of software projects, put patches applied to package sources into Git history, maintain software versions per distribution, etc."
+msgstr ""
+
+msgid "One of the most famous packages is <emphasis role=\"pkg\">git-buildpackage</emphasis>. An alternative is <emphasis role=\"pkg\">dgit</emphasis>. Of course it is still possible to use neither of those."
+msgstr ""
+
+msgid "Below is an example for a <filename>~/.gbp.conf</filename> configuration file"
+msgstr ""
+
+msgid ""
+"<![CDATA[[DEFAULT]\n"
+"builder = sbuild -d bullseye --build-dep-resolver=aptitude -s --source-only-changes --build-failed-commands \"%SBUILD_SHELL\"\n"
+"pristine-tar = true\n"
+"\n"
+"[buildpackage]\n"
+"sign-tags = true\n"
+"keyid = XXXX\n"
+"postbuild  = autopkgtest --user debci --apt-upgrade -s \"$GBP_CHANGES_FILE\" -- lxc --sudo autopkgtest-bullseye-amd64 \n"
+"export-dir = /tmp/build-area/\n"
+"notify = off\n"
+"\n"
+"[import-orig]\n"
+"filter-pristine-tar = true\n"
+"sign-tags = true\n"
+"\n"
+"[pq]\n"
+"drop = true\n"
+"]]>"
+msgstr ""
+
+msgid "Building the package is then as easy as running <command>gbp buildpackage</command> in the Git tree. It will start a package build in a Debian <emphasis role=\"distribution\">Bullseye</emphasis> chroot using <command>sbuild</command>. When the build succeeds, the created files are checked running the <command>autopkgtest</command>-testsuite (if defined). All the various options are explained in <citerefentry><refentrytitle>gbp.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> and <filename>/etc/git-buildpackage/gbp.conf</filename>."
+msgstr ""
+
+#, fuzzy
+#| msgid "<primary><command>debi</command></primary>"
+msgid "<primary><command>gbp</command></primary>"
+msgstr "<primary><command>debi</command></primary>"
+
+msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/git-buildpackage/gbp.conf</filename></secondary>"
+msgstr ""
+
+msgid "All the tools mentioned so far have been included in the continuous integration (CI) process in the <literal>salsa.debian.org</literal> instance as well: <ulink type=\"block\" url=\"https://salsa.debian.org/salsa-ci-team/pipeline\" />"
+msgstr ""
 
 msgid "Acceptance Process"
 msgstr "Aksepteringsprosess"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Developer</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
+#, fuzzy
+#| msgid "<primary><literal>Build-Depends</literal>, control field</primary>"
+msgid "<primary><literal>nm.debian.org</literal></primary>"
+msgstr "<primary><literal>Build-Depends</literal>, kontrollfelt</primary>"
 
 msgid "Becoming a “Debian developer” is not a simple administrative matter. The process comprises several steps, and is as much an initiation as it is a selection process. In any case, it is formalized and well-documented, so anyone can track their progression on the website dedicated to the new member process. <ulink type=\"block\" url=\"https://nm.debian.org/\" />"
 msgstr "Å bli en «Debian-utvikler» er ikke en enkel administrativ sak. Fremgangsmåten omfatter flere trinn, og er like mye en igangsetting som det er utvelgelsesprosess. I alle fall er det formalisert og godt dokumentert, slik at alle kan spore sin progresjon på nettsiden dedikert til prosessen for det nye medlemmet. <ulink type=\"block\" url=\"https://nm.debian.org/\" />"
@@ -678,11 +1579,13 @@ msgstr "Å bli en «Debian-utvikler» er ikke en enkel administrativ sak. Fremga
 msgid "<emphasis>EXTRA</emphasis> Lightweight process for “Debian Maintainers”"
 msgstr "<emphasis>EKSTRA</emphasis> Lettvektsprosessen for «Debian vedlikeholdere»"
 
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Maintainer</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
 msgid "“Debian Maintainer” is another status that gives less privileges than “Debian developer” but whose associated process is quicker. With this status, the contributors can maintain their own packages only. A Debian developer only needs to perform a check on an initial upload, and issue a statement to the effect that they trust the prospective maintainer with the ability to maintain the package on their own."
 msgstr "«Debian-vedlikeholder» er en annen status som gir færre privilegier enn «Debian-utvikler», men tilknytningsprosessen går raskere. Med denne statusen kan bidragsyterne bare vedlikeholde sine egne pakker. En Debian-utvikler trenger bare å utføre en sjekk på en første opplasting, og avgi en uttalelse om at de stoler på den potensielle vedlikeholderens evne til å vedlikeholde pakken på egen hånd."
-
-msgid "<primary>Debian Maintainer</primary>"
-msgstr "<primary>Debian-vedlikeholdere </primary>"
 
 msgid "Prerequisites"
 msgstr "Forutsetninger"
@@ -695,6 +1598,11 @@ msgstr "Den andre forutsetningen omhandler motivasjon. Å bli en Debian-utvikler
 
 msgid "Registration"
 msgstr "Registrering"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>package</primary><secondary>sponsor</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
 
 msgid "The first (real) step consists in finding a sponsor or advocate; this means an official developer willing to state that they believe that accepting <emphasis>X</emphasis> would be a good thing for Debian. This usually implies that the candidate has already been active within the community, and that their work has been appreciated. If the candidate is shy and their work is not publicly touted, they can try to convince a Debian developer to advocate them by showing their work in a private way."
 msgstr "Det første (virkelige) trinnet består i å finne en sponsor eller talsperson. Det betyr en offisiell utvikler som er villig til å si at de tror at å akseptere, <emphasis>X</emphasis> vil bli en god ting for Debian. Dette innebærer vanligvis at kandidaten allerede har vært aktiv i samfunnet, og at arbeidet har blitt verdsatt. Dersom kandidaten er sjenert, og arbeidet ikke er offentlig kjent, kan de prøve å overbevise en Debian-utvikler til å argumentere for dem ved å vise deres arbeid i fortrolighet."
@@ -720,11 +1628,11 @@ msgstr "Disse administrative formaliteter følges ut fra filosofiske betraktning
 msgid "In addition, each candidate wishing to join the Debian ranks is expected to know the workings of the project, and how to interact appropriately to solve the problems they will doubtless encounter as time passes. All of this information is generally documented in manuals targeting the new maintainers, and in the Debian developer's reference. An attentive reading of this document should be enough to answer the examiner's questions. If the answers are not satisfactory, the candidate will be informed. They will then have to read (again) the relevant documentation before trying again. In the cases where the existing documentation does not contain the appropriate answer for the question, the candidate can usually reach an answer with some practical experience within Debian, or potentially by discussing with other Debian developers. This mechanism ensures that candidates get involved somewhat in Debian before becoming a full part of it. It is a deliberate policy, by which candidates who eventually join the project are integrated as another piece of an infinitely extensible jigsaw puzzle."
 msgstr "I tillegg skal hver kandidat som ønsker å bli med i Debians rekker forventes å kjenne arbeidet i prosjektet, og hvordan de skal samhandle på riktig måte for å løse de problemene de vil utvilsomt vil møte under tiden. All denne informasjonen er vanligvis dokumentert i manualer rettet mot de nye vedlikeholderne, og i Debian-utviklerreferanse. En oppmerksom lesing av dette dokumentet bør være nok til å svare på eksaminators spørsmål. Hvis svarene ikke er tilfredsstillende, vil kandidaten bli informert. De vil da måtte lese (igjen) den relevante dokumentasjonen før de prøver igjen. I de tilfeller hvor den eksisterende dokumentasjonen ikke inneholder riktig svar på spørsmålet, kan kandidaten vanligvis komme med et svar fra litt praktisk erfaring innen Debian, eller potensielt ved å diskutere med andre Debian-utviklere. Denne mekanismen sikrer at kandidatene blir noe involvert i Debian, før de blir en full del av det. Dette er en bevisst politikk, der kandidatene som til slutt blir med i prosjektet, er integrert som en del av et uendelig utvidbart puslespill."
 
-msgid "<primary><emphasis>Philosophy &amp; Procedures</emphasis></primary>"
-msgstr "<primary><emphasis>Filosofi &amp; Prosedyrer</emphasis></primary>"
-
 msgid "This step is usually known as the <emphasis>Philosophy &amp; Procedures</emphasis> (P&amp;P for short) in the lingo of the developers involved in the new member process."
 msgstr "Dette trinnet er vanligvis kjent som <emphasis>Filosofi &amp; Prosedyrer</emphasis> (P&amp; P i kortform) i språket til utviklerne som er involvert i nye medlemmer-prosessen."
+
+msgid "<primary><emphasis>Philosophy &amp; Procedures</emphasis></primary>"
+msgstr "<primary><emphasis>Filosofi &amp; Prosedyrer</emphasis></primary>"
 
 msgid "Checking Skills"
 msgstr "Å sjekke ferdigheter"
@@ -741,26 +1649,55 @@ msgstr "<emphasis>FELLESSKAP</emphasis> Sponsing"
 msgid "<primary>sponsoring</primary>"
 msgstr "<primary>sponsing</primary>"
 
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>New Member</secondary>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
+
 msgid "Debian developers can “sponsor” packages prepared by someone else, meaning that they publish them in the official Debian repositories after having performed a careful review. This mechanism enables external persons, who have not yet gone through the new member process, to contribute occasionally to the project. At the same time, it ensures that all packages included in Debian have always been checked by an official member."
 msgstr "Debian-utviklerne kan være «sponsor» for pakker utarbeidet av en annen, noe som betyr at de publiserer dem i de offisielle Debian-kildebrønner etter å ha utført en nøye gjennomgang. Denne mekanismen gjør at eksterne personer, som ennå ikke har gått gjennom prosessen for nye medlemmer, fra tid til annen kan bidra til prosjektet. Samtidig sikrer det at alle pakker som er inkludert i Debian alltid har blitt sjekket av et offisielt medlem."
 
-msgid "Finally, the examiner checks the candidate's technical (packaging) skills with a detailed questionnaire. Bad answers are not permitted, but the answer time is not limited. All the documentation is available and several tries are allowed if the first answers are not satisfactory. This step does not intend to discriminate, but to ensure at least a modicum of knowledge common to new contributors."
+#, fuzzy
+#| msgid "Finally, the examiner checks the candidate's technical (packaging) skills with a detailed questionnaire. Bad answers are not permitted, but the answer time is not limited. All the documentation is available and several tries are allowed if the first answers are not satisfactory. This step does not intend to discriminate, but to ensure at least a modicum of knowledge common to new contributors."
+msgid "Finally, the examiner checks the candidate's technical (packaging) skills with a detailed questionnaire. Bad answers are not permitted, but the answer time is not limited. All the documentation is available and several attempts are allowed if the first answers are not satisfactory. This step does not intend to discriminate, but to ensure at least a modicum of knowledge common to new contributors."
 msgstr "Til slutt kontrollerer eksaminator kandidatens tekniske (pakke-)ferdigheter med et detaljert spørreskjema. Dårlige svar er ikke tillatt, men svartiden er ikke begrenset. All dokumentasjon er tilgjengelig, og flere forsøk er tillatt dersom de første svarene ikke er tilfredsstillende. Dette trinnet har ikke til hensikt å diskriminere, men skal sikre i det minste et minstemål av kunnskap felles for nye bidragsytere."
-
-msgid "<primary><emphasis>Tasks &amp; Skills</emphasis></primary>"
-msgstr "<primary><emphasis>Oppgaver &amp; Ferdigheter</emphasis></primary>"
 
 msgid "This step is known as the <emphasis>Tasks &amp; Skills</emphasis> step (T&amp;S for short) in the examiners' jargon."
 msgstr "Dette skrittet er kjent som <emphasis>Oppgaver &amp; Ferdigheter</emphasis> trinnet (forkortet til: T&amp;S) i eksaminators språkbruk."
 
+msgid "<primary><emphasis>Tasks &amp; Skills</emphasis></primary>"
+msgstr "<primary><emphasis>Oppgaver &amp; Ferdigheter</emphasis></primary>"
+
 msgid "Final Approval"
 msgstr "Endelig godkjenning"
+
+#, fuzzy
+#| msgid "<primary>key pair</primary>"
+msgid "<primary>DAM</primary>"
+msgstr "<primary>nøkkelpar</primary>"
+
+#, fuzzy
+#| msgid "<primary>package</primary><secondary>types</secondary>"
+msgid "<primary>Debian</primary><secondary>Account Managers</secondary><seealso>DAM</seealso>"
+msgstr "<primary>pakke</primary><secondary>typer</secondary>"
 
 msgid "At the very last step, the whole process is reviewed by a DAM (<emphasis>Debian Account Manager</emphasis>). The DAM will review all the information about the candidate that the examiner collected, and makes the decision on whether or not to create an account on the Debian servers. In cases where extra information is required, the account creation may be delayed. Refusals are rather rare if the examiner does a good job of following the process, but they sometimes happen. They are never permanent, and the candidate is free to try again at a later time."
 msgstr "I det aller siste trinnet blir hele prosessen gjennomgått av en DAM (<emphasis>Debian Account Manager</emphasis>). DAM vil gjennomgå all informasjon om kandidaten som sensor har samlet inn, og gjør vedtak hvorvidt det skal opprettes en konto på Debian-tjenerne. I tilfeller der ekstra informasjon er nødvendig, kan det å opprette en konto bli forsinket. Avslag er ganske sjeldne hvis eksaminator gjør en god jobb med å følge prosessen, men kan skje noen ganger. De er aldri permanente, og kandidaten er fri til å prøve igjen på et senere tidspunkt."
 
 msgid "The DAM's decision is authoritative and (almost) without appeal, which explains why the people in that seat have often been criticized in the past."
 msgstr "DAMs avgjørelse er autoritativ og (nesten) uten ankemuligheter, noe som forklarer hvorfor folk i denne posisjonen ofte har blitt kritisert i det siste."
+
+#~ msgid "The <filename>copyright</filename> file must contain information about the authors of the documents included in the package, and the related license. In our case, these are internal documents and their use is restricted to within the Falcot Corp company. The default <filename>changelog</filename> file is generally appropriate; replacing the “Initial release” with a more verbose explanation and changing the distribution from <literal>unstable</literal> to <literal>internal</literal> is enough. The <filename>control</filename> file was also updated: the <literal>Section</literal> field has been changed to <emphasis>misc</emphasis> and the <literal>Homepage</literal>, <literal>Vcs-Git</literal> and <literal>Vcs-Browser</literal> fields were removed. The <literal>Depends</literal> fields was completed with <literal>firefox-esr | www-browser</literal> so as to ensure the availability of a web browser able to display the documents in the package."
+#~ msgstr "<filename>copyright</filename> må inneholde informasjon om forfatterne av dokumentasjonen som er inkludert i pakken, og den tilhørende lisensen. I vårt tilfelle er intern dokumentasjon og bruken av den begrenset til Falcot Corp-selskapet. Standardutgaven av <filename>changelog</filename> er vanligvis klar til bruk; det er nok å erstatte «Første utgivelse» med en mer detaljert forklaring, samt endre distribusjon fra <literal>unstable</literal> til <literal>internal</literal>. <filename>control</filename>-filen ble også oppdatert: <literal>Section</literal>-feltet er forandret til <emphasis>misc</emphasis>, samt <literal>Homepage</literal>, <literal>Vcs-Git</literal> og <literal>Vcs-Browser</literal>-feltene ble endret. <literal>Depends</literal>-feltene ble utvidet med <literal>firefox-esr | www-browser</literal> for å sikre tilgjengeligheten av en pålitelig nettleser som kan vise dokumentasjonen i pakken."
+
+#~ msgid "<primary>package archive</primary>"
+#~ msgstr "<primary>pakkearkiv</primary>"
+
+#~ msgid "<command>reprepro</command> is a more advanced tool for the same purpose. It can produce, manage and synchronize a local repository of packages. It stores packages and checksums in a Berkeley DB database file, so no database server is needed. With <command>reprepro</command> you can check signatures of mirrored repositories and create signatures of the generated package indices."
+#~ msgstr "<command>reprepro</command> er et mer avansert verktøy for samme formål. Det kan produsere, administrere og synkronisere et lokalt kodelager med pakker. Den lagrer pakker og sjekksumerer i en Berkeley DB databasefil, så ingen databasetjener er nødvendig. Med <command>reprepro</command> kan du sjekke signaturer av speilede kodelagre og opprette signaturer for de genererte pakkeindeksene."
+
+#~ msgid "<primary>Debian Developer's Reference</primary>"
+#~ msgstr "<primary>Debians utviklerreferanse</primary>"
 
 #~ msgid "<emphasis>QUICK LOOK</emphasis> <command>pbuilder</command>"
 #~ msgstr "<emphasis>RASK TITT</emphasis> <command>pbuilder</command>"
