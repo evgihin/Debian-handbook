@@ -1,5 +1,5 @@
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-07-30 18:23+0200\nPO-Revision-Date: 2022-10-04 02:26+0000\nLast-Translator: Allan Nordhøy <epost@anotheragency.no>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/nb_NO/>\nLanguage: nb-NO\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.14.1\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-07-30 18:23+0200\nPO-Revision-Date: 2022-10-15 06:20+0000\nLast-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/debian-handbook/05_packaging-system/nb_NO/>\nLanguage: nb-NO\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.15-dev\n"
 
 msgid "Binary package"
 msgstr "Binærpakke"
@@ -508,10 +508,10 @@ msgid "Replacing Files: The <literal>Replaces</literal> Field"
 msgstr "Erstatte filer: <literal>Replaces</literal>-feltet"
 
 msgid "<primary>replacement</primary>"
-msgstr "<primary>erstatning</primary>"
+msgstr "<primary>erstatting</primary>"
 
 msgid "<primary>package</primary><secondary>replacement</secondary>"
-msgstr "<primary>pakke</primary><secondary>erstatning</secondary>"
+msgstr "<primary>pakke</primary><secondary>erstatting</secondary>"
 
 msgid "<primary><filename>control</filename></primary><secondary><literal>Replaces</literal>, header field</secondary>"
 msgstr "<primary><filename>control</filename></primary><secondary><literal>Replaces</literal>, hodefelt</secondary>"
@@ -609,6 +609,7 @@ msgstr "Dette skjer i løpet av en installasjon (eller en oppgradering). <replac
 msgid "For an update, <command>dpkg</command> calls the <command>old-prerm</command> script and passes <command>upgrade <replaceable>new-version</replaceable></command> as arguments."
 msgstr "For en oppdatering så kjører <command>dpkg</command> skriptet <command>old-prerm</command> og sender inn <command>upgrade <replaceable>ny-versjon</replaceable></command> som argument."
 
+#, fuzzy
 msgid "Still for an update, <command>dpkg</command> then executes the <command>new-preinst</command> script with the arguments <command>upgrade <replaceable>old-version</replaceable></command>; for the initial installation, it executes the <command>new-preinst</command> script and passes <command>install</command> as argument. It may add the old version in the last parameter, if the package has already been installed and removed since (but not purged, and thus configuration files have been retained)."
 msgstr "Fremdeles for en oppdatering, <command>dpkg</command> utfører så <command>new-preinst</command>-skruptet med argumentene <command>upgrade <replaceable>gammel versjon</replaceable></command>. Som en innledende installasjon igangsetter det <command>new-preinst</command>-skriptet og sender <command>install</command> som argument. Den kan legge til den gamle versjonen i den siste parameteren, hvis pakken allerede er installert og deretter fjernet (men ikke renset vekk, og dermed forblir oppsettsfilene bevart)."
 
@@ -642,27 +643,33 @@ msgstr "<command>dpkg</command> kaller skriptet <command>prerm</command> og send
 msgid "<command>dpkg</command> removes all of the package's files, with the exception of the configuration files and maintainer scripts."
 msgstr "<command>dpkg</command> fjerner alle filer i pakken, med unntak av oppsettsfiler og vedlikeholderskript."
 
+#, fuzzy
 msgid "<command>dpkg</command> executes the <command>postrm</command> script and passes <command>remove</command> as argument. Afterwards, all of the maintainer scripts, except the <filename>postrm</filename> script, are removed. If the user has not used the “purge” option, the process stops here."
 msgstr "<command>dpkg</command> utfører skriptet <command>postrm</command> og sender inn argumentet <command>remove</command>. Etterpå blir alle oppsettsskriptene, unntatt skriptet <filename>postrm</filename>, fjernet. Prosessen stopper her med mindre brukeren har brukt «purge»-tilvalget."
 
+#, fuzzy
 msgid "For a complete purge of the package (command issued with <command>dpkg --purge</command> or <command>dpkg -P</command>), the configuration files are also deleted, as well as a certain number of copies (<filename>*.dpkg-tmp</filename>, <filename>*.dpkg-old</filename>, <filename>*.dpkg-new</filename>) and temporary files; <command>dpkg</command> then executes the <command>postrm</command> script and passes <command>purge</command> as argument."
 msgstr "For en fullstendig fjerning av pakken (kommandoen utført med <command>dpkg --purge</command> eller <command>dpkg -P</command>), blir oppsettsfilene også slettet, i tillegg til et bestemt antall kopier (<filename>*.dpkg-tmp</filename>, <filename>*.dpkg-old</filename>, <filename>*.dpkg-new</filename>) og midlertidige filer; deretter utfører <command>dpkg</command> skriptet <command>postrm</command> med <command>purge</command>."
 
+#, fuzzy
 msgid "<emphasis>VOCABULARY</emphasis> Purge, a complete removal"
 msgstr "<emphasis>ORDFORRÅD</emphasis> Opprydding, en komplett fjerning"
 
 msgid "<primary>purging a package</primary>"
 msgstr "<primary>fullstendig fjerning av en pakke</primary>"
 
+#, fuzzy
 msgid "<primary>package</primary><secondary>purge</secondary>"
 msgstr "<primary>pakke</primary><secondary>fullstendig fjerning</secondary>"
 
 msgid "When a Debian package is removed, the configuration files are retained in order to facilitate possible re-installation. Likewise, the data generated by a daemon (such as the content of an LDAP server directory, or the content of a database for an SQL server) are usually retained."
 msgstr "Når en Debian-pakke er fjernet, blir oppsettsfilene beholdt for å tilrettelegge for eventuell re-installasjon. På samme måte blir data generert av en bakgrunnsprosess vanligvis beholdt (for eksempel innholdet i en LDAP-tjenerkatalog, eller innholdet i en database for en SQL-tjener)."
 
+#, fuzzy
 msgid "To remove all data associated with a package, it is necessary to “purge” the package with the command, <command>dpkg -P <replaceable>package</replaceable></command>, <command>apt-get remove --purge <replaceable>package</replaceable></command> or <command>aptitude purge <replaceable>package</replaceable></command>."
 msgstr "For å fjerne alle data knyttet til en pakke må man «renske» pakken med kommandoen <command>dpkg -P <replaceable>package</replaceable></command>, <command>apt-get remove --purge <replaceable>package</replaceable></command> eller <command>aptitude purge <replaceable>package</replaceable></command>."
 
+#, fuzzy
 msgid "Given the definitive nature of such data removals, a purge should not be taken lightly."
 msgstr "Gitt den endelige virkningen av slik fjerning av data, bør en ikke ta lett på oppryddingen."
 
@@ -1083,7 +1090,7 @@ msgid "<emphasis>CAUTION</emphasis> Effective use of <literal>--force-*</literal
 msgstr "<emphasis>VÆR VARSOM</emphasis> Effektiv bruk av <literal>--force-*</literal>"
 
 msgid "<primary>broken dependency</primary>"
-msgstr "<primary>brutt avhengighet</primary>"
+msgstr "<primary>knekt avhengighet</primary>"
 
 msgid "If you are not careful, the use of an option <literal>--force-*</literal> can lead to a system where the APT family of commands will refuse to function. In effect, some of these options allow installation of a package when a dependency is not met, or when there is a conflict. The result is an inconsistent system from the point of view of dependencies, and the APT commands will refuse to execute any action except those that will bring the system back to a consistent state (this often consists of installing the missing dependency or removing a problematic package). This often results in a message like this one, obtained after installing a new version of <emphasis role=\"pkg\">rdesktop</emphasis> while ignoring its dependency on a newer version of the <emphasis role=\"pkg\">libc6</emphasis>:"
 msgstr "Hvis du ikke er forsiktig, kan bruken av valget <literal>--force-*</literal> føre til et system hvor APT-kommandofamilien vil nekte å fungere. Faktisk vil noen av disse alternativene tillate installasjon av en pakke selv om en avhengighet ikke er oppfylt, eller når det er en konflikt. Resultatet er et ikke-konsistent system sett fra et avhengighetssynspunkt, og APT-kommandoer vil nekte å utføre handlinger, med unntak av de som vil bringe systemet tilbake til en konsistent tilstand (dette består ofte av å installere den manglende avhengighet, eller fjerne en problematisk pakke). Dette resulterer ofte i en melding lik dette, som kom etter installasjon av en ny versjon av <emphasis role=\"pkg\">rdesktop</emphasis> mens man så bort fra dennes avhengigheten til en nyere versjon av <emphasis role=\"pkg\">libc6</emphasis>:"
@@ -1118,9 +1125,11 @@ msgstr "<primary><command>dpkg</command></primary><secondary>--remove</secondary
 msgid "<primary><command>dpkg</command></primary><secondary>--purge</secondary>"
 msgstr "<primary><command>dpkg</command></primary><secondary>--purge</secondary>"
 
+#, fuzzy
 msgid "Invoking <command>dpkg</command> with the <literal>-r</literal> or <literal>--remove</literal> option, followed by the name of a package, removes that package. This removal is, however, not complete: all of the configuration files, maintainer scripts, log files (system logs) and other user data handled by the package remain. That way disabling the program is easily done by uninstalling it, and it is still possible to quickly reinstall it with the same configuration. To completely remove everything associated with a package, use the <literal>-P</literal> or <literal>--purge</literal> option, followed by the package name."
 msgstr "Å aktivere <command>dpkg</command> med <literal>-r</literal> eller <literal>--remove</literal>-valget, etterfulgt av navnet på en pakke, fjerner denne pakken. Denne fjerningen er imidlertid ikke komplett: Alle oppsettsfiler, vedlikeholderskript, loggfiler (systemlogger) og andre brukerdata som håndteres av pakken blir igjen. Dette gjør det enkelt å koble ut programmet ved å avinstallere det, og det kan raskt tilbakeføres med samme oppsett ved å installere det på nytt. For å fjerne alt som er tilknyttet en pakke kan du bruke <literal>-P</literal> eller <literal>-- purge</literal>-valget, fulgt av pakkenavnet."
 
+#, fuzzy
 msgid "Removal and purge of the <emphasis role=\"pkg\">debian-cd</emphasis> package"
 msgstr "Fjerning og fullstendig fjerning av <emphasis role=\"pkg\">debian-cd</emphasis>-pakken"
 
