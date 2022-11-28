@@ -2,7 +2,7 @@
 # Beatrice Torracca <beatricet@libero.it>, 2014.
 # Marco De Luca <marcodeluca@hotmail.it>, 2015.
 msgid ""
-msgstr "Project-Id-Version: 0\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2022-09-27 17:55+0200\nPO-Revision-Date: 2022-11-12 19:52+0000\nLast-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/debian-handbook/09_unix-services/it/>\nLanguage: it-IT\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.15-dev\n"
+msgstr "Project-Id-Version: 0\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2022-09-27 17:55+0200\nPO-Revision-Date: 2022-11-29 07:44+0000\nLast-Translator: Davide Prina <Davide.Prina@tuta.io>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/debian-handbook/09_unix-services/it/>\nLanguage: it-IT\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.15-dev\n"
 
 msgid "System boot"
 msgstr "Avvio del sistema"
@@ -64,10 +64,8 @@ msgstr "<primary>BIOS</primary>"
 msgid "<primary>MBR</primary>"
 msgstr "<primary>MBR</primary>"
 
-#, fuzzy
-#| msgid "<primary>SSH</primary>"
 msgid "<primary>ESP</primary>"
-msgstr "<primary>SSH</primary>"
+msgstr "<primary>ESP</primary>"
 
 msgid "<primary>Compatibility Support Mode</primary><see>CSM</see>"
 msgstr "<primary>Compatibility Support Mode</primary><see>CSM</see>"
@@ -84,10 +82,8 @@ msgstr "Su sistemi con un BIOS, all'inizio, esso prende il controllo del compute
 msgid "In contrast to the BIOS, UEFI is more sophisticated, it knows filesystems and can read the partition tables. The interface searches the system storage for a partition labeled with a specific globally unique identifier (<acronym>GUID</acronym>) that marks it as the <acronym>EFI System Partition</acronym> (<acronym>ESP</acronym>), where the bootloaders, boot managers, UEFI shell, etc., are located, and launches the desired bootloader. If Secure Boot is enabled, the boot process will verify authenticity of the EFI binaries there by signature (thus <emphasis role=\"pkg\">grub-efi-<replaceable>arch</replaceable>-signed</emphasis> is required in this case). The UEFI specification also defines support for booting in legacy BIOS mode. This is called the <emphasis>Compatibility Support Module</emphasis> (<acronym>CSM</acronym>). If CSM is enabled, it will attempt to boot from a drive's MBR. However, many new systems do no longer support the CSM mode."
 msgstr "A differenza del BIOS, UEFI è più sofisticato, conosce i filesystem e può leggere la tabella delle partizioni. L'interfaccia cerca nel sistema di archiviazione una partizione etichettata con un Globally Unique Identifier (identificatore univoco globale - <acronym>GUID</acronym>), dove i bootloader, boot manager, shell UEFI, ecc. sono posizionati ed esegue il bootloader voluito. Se è abilitato il Secure Boot, il processo di boot verificherà l'autenticità dei binari EFI qui contenuti tramite la firma (in questo caso è necessario <emphasis role=\"pkg\">grub-efi-<replaceable>arch</replaceable>-signed</emphasis>). La specifica UEFI definisce anche il supporto per l'avvio nella vecchia modalità BIOS. Questo è chiamato <emphasis>Compatibility Support Module</emphasis> (<acronym>CSM</acronym>). Se CSM è abilitato, cercherà di effettuare l'avvio dall'MBR dell'unità. Purtroppo molti sistemi nuovi non supportano più la modalità CSM."
 
-#, fuzzy
-#| msgid "First, the BIOS takes control of the computer, detects the disks, loads the <emphasis>Master Boot Record</emphasis>, and executes the bootloader. The bootloader takes over, finds the kernel on the disk, loads and executes it. The kernel is then initialized, and starts to search for and mount the partition containing the root filesystem, and finally executes the first program — <command>init</command>. Frequently, this “root partition” and this <command>init</command> are, in fact, located in a virtual filesystem that only exists in RAM (hence its name, “initramfs”, formerly called “initrd” for “initialization RAM disk”). This filesystem is loaded in memory by the bootloader, often from a file on a hard drive or from the network. It contains the bare minimum required by the kernel to load the “true” root filesystem: this may be driver modules for the hard drive, or other devices without which the system cannot boot, or, more frequently, initialization scripts and modules for assembling RAID arrays, opening encrypted partitions, activating LVM volumes, etc. Once the root partition is mounted, the initramfs hands over control to the real init, and the machine goes back to the standard boot process."
 msgid "In both cases then the actual bootloader takes over, finds either a chained bootloader or the kernel on the disk, loads, and executes it. The kernel is then initialized, and starts to search for and mount the partition containing the root filesystem, and finally executes the first program — <command>init</command>. Frequently, this “root partition” and this <command>init</command> are, in fact, located in a virtual filesystem that only exists in RAM (hence its name, “initramfs”, formerly called “initrd” for “initialization RAM disk”). This filesystem is loaded in memory by the bootloader, often from a file on a hard drive or from the network. It contains the bare minimum required by the kernel to load the “true” root filesystem: this may be driver modules for the hard drive, or other devices without which the system cannot boot, or, more frequently, initialization scripts and modules for assembling RAID arrays, opening encrypted partitions, activating LVM volumes, etc. Once the root partition is mounted, the initramfs hands over control to the real init, and the machine goes back to the standard boot process."
-msgstr "In primo luogo, il BIOS prende il controllo del computer, rileva i dischi, carica il <emphasis>Master Boot Record</emphasis>, ed esegue il bootloader. Il bootloader subentra, trova il kernel sul disco, lo carica e lo esegue. Il kernel è quindi inizializzato, e comincia a cercare e montare la partizione contenente il file system root, infine esegue il primo programma — <command>init</command>. Spesso, questa \"partizione root\" e questo <command>init</command> sono, di fatto, presenti in un filesystem virtuale che esiste solo nella RAM (da qui il suo nome, \"initramfs\", precedentemente chiamato \"initrd\" che sta per \"disco RAM di inizializzazione\"). Questo filesystem è caricato in memoria dal bootloader, spesso da un file su disco rigido o dalla rete. Contiene il minimo indispensabile richiesto dal kernel per caricare il \"vero\" filesystem root: possono essere moduli driver per l'hard disk, o altri dispositivi senza i quali il sistema non si avvia, o, più frequentemente, gli script di inizializzazione ed i moduli per il montaggio degli array RAID, l'apertura di partizioni cifrate, l'attivazione di volumi LVM, ecc. Una volta che la partizione di root è montata, initramfs passa il controllo all'init reale, e la macchina torna al processo di avvio standard."
+msgstr "In entrambi i casi il bootloader presente subentra, trova la catena di bootloader o il kernel sul disco, lo carica e lo esegue. Il kernel è quindi inizializzato, e comincia a cercare e montare la partizione contenente il filesystem root, infine esegue il primo programma — <command>init</command>. Spesso, questa \"partizione root\" e questo <command>init</command> sono, di fatto, presenti in un filesystem virtuale che esiste solo nella RAM (da qui il suo nome, \"initramfs\", precedentemente chiamato \"initrd\" che sta per \"disco RAM di inizializzazione\"). Questo filesystem è caricato in memoria dal bootloader, spesso da un file su disco rigido o dalla rete. Contiene il minimo indispensabile richiesto dal kernel per caricare il \"vero\" filesystem root: possono essere moduli driver per l'hard disk, o altri dispositivi senza i quali il sistema non si avvia, o, più frequentemente, gli script di inizializzazione ed i moduli per il montaggio degli array RAID, l'apertura di partizioni cifrate, l'attivazione di volumi LVM, ecc. Una volta che la partizione di root è montata, initramfs passa il controllo all'init reale, e la macchina torna al processo di avvio standard."
 
 msgid "The systemd init system"
 msgstr "Il sistema di init systemd"
@@ -95,7 +91,7 @@ msgstr "Il sistema di init systemd"
 #, fuzzy
 #| msgid "<primary>booting</primary><secondary>the system</secondary>"
 msgid "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">systemd</emphasis></secondary>"
-msgstr "<primary>avvio</primary><secondary>del sistema</secondary>"
+msgstr "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">systemd</emphasis></secondary>"
 
 msgid "The “real init” is currently provided by <emphasis role=\"pkg\">systemd</emphasis> and this section documents this init system."
 msgstr "Il \"vero init\" è attualmente fornito da <emphasis role=\"pkg\">systemd</emphasis> e questa sezione documenta questo sistema di init."
@@ -115,20 +111,16 @@ msgstr "<command>systemd</command> è un \"sistema di init\" relativamente recen
 msgid "<emphasis>ALTERNATIVE</emphasis> Other boot systems"
 msgstr "<emphasis>ALTERNATIVA</emphasis> Altri sistemi di avvio"
 
-#, fuzzy
-#| msgid "<primary>SSH tunnel</primary><seealso>VPN</seealso>"
 msgid "<primary>boot systems</primary><seealso><command>init</command></seealso>"
-msgstr "<primary>SSH, tunnel</primary><seealso>VPN</seealso>"
+msgstr "<primary>sistemi di avvio</primary><seealso><command>init</command></seealso>"
 
-#, fuzzy
-#| msgid "This book describes the boot system used by default in Debian <emphasis role=\"distribution\">Buster</emphasis> (as implemented by the <emphasis role=\"pkg\">systemd</emphasis> package), as well as the previous default, <emphasis role=\"pkg\">sysvinit</emphasis>, which is derived and inherited from <emphasis>System V</emphasis> Unix systems; there are others."
 msgid "This book describes the boot system used by default in Debian since <emphasis role=\"distribution\">Buster</emphasis> (as implemented by the <emphasis role=\"pkg\">systemd</emphasis> package), as well as the previous default, <emphasis role=\"pkg\">sysvinit</emphasis>, which is derived and inherited from <emphasis>System V</emphasis> Unix systems; there are others."
-msgstr "Questo libro descrive il sistema di avvio usato in modo predefinito in Debian <emphasis role=\"distribution\">Buster</emphasis> (come implementato dal pacchetto <emphasis role=\"pkg\">systemd</emphasis>), come il sistema di default precedente, <emphasis role=\"pkg\">sysvinit</emphasis>, che è derivato ed ereditato dal <emphasis>System V</emphasis> dei sistemi Unix; ma ce ne sono altri."
+msgstr "Questo libro descrive il sistema di avvio usato in modo predefinito in Debian a partire da <emphasis role=\"distribution\">Buster</emphasis> (come implementato dal pacchetto <emphasis role=\"pkg\">systemd</emphasis>), come il sistema predefinito precedente, <emphasis role=\"pkg\">sysvinit</emphasis>, che è derivato ed ereditato dai sistemi Unix <emphasis>System V</emphasis>; ma ce ne sono altri."
 
 #, fuzzy
 #| msgid "<primary>service</primary><secondary>restart</secondary>"
 msgid "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">upstart</emphasis></secondary>"
-msgstr "<primary>servizio</primary><secondary>riavvio</secondary>"
+msgstr "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">upstart</emphasis></secondary>"
 
 msgid "The <command>upstart</command> system is still not perfectly tested on Debian. It is event based: init scripts are no longer executed in a sequential order but in response to events such as the completion of another script upon which they are dependent. This system, started by Ubuntu, was present in Debian <emphasis role=\"distribution\">Jessie</emphasis>, but was not the default; it came, in fact, as a replacement for <emphasis role=\"pkg\">sysvinit</emphasis>, and one of the tasks launched by <command>upstart</command> was to launch the scripts written for traditional systems, especially those from the <emphasis role=\"pkg\">sysv-rc</emphasis> package."
 msgstr "Il sistema <command>upstart</command> non è ancora perfettamente testato su Debian. È basato su eventi: gli script di init non vengono più eseguiti in un ordine sequenziale, ma in risposta a eventi come il completamento di un altro script da cui essi dipendono. Questo sistema, inizialmente sviluppato per Ubuntu, era presente in Debian <emphasis role=\"distribution\">Jessie</emphasis>, ma non era il predefinito; veniva fornito, di fatto, in sostituzione di <emphasis role=\"pkg\">sysvinit</emphasis>, e uno dei compiti avviati da <command>upstart</command> era quello di avviare gli script scritti per i sistemi tradizionali, in particolare quelli del pacchetto <emphasis role=\"pkg\">sysv-rc</emphasis>."
@@ -136,15 +128,13 @@ msgstr "Il sistema <command>upstart</command> non è ancora perfettamente testat
 #, fuzzy
 #| msgid "<primary>network</primary><secondary>wireless</secondary>"
 msgid "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">openrc</emphasis></secondary>"
-msgstr "<primary>rete</primary><secondary>wireless</secondary>"
+msgstr "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">openrc</emphasis></secondary>"
 
 msgid "<command>openrc</command> is a dependency based service manager. It was originally written for the Gentoo project, but it aims at being platform agnostic. It maintains compatibility with the System V init system and provides support for booting, changing runlevels, starting and stopping services (in parallel), and shutting down."
 msgstr "<command>openrc</command> è un gestore dei servizi basato sulle dipendenze. Originariamente è stato scritto per il progetto Gentoo ma mira ad essere indipendente dalla piattaforma. Mantiene la compatibilità con il sistema di avvio System V fornendo supporto per l'avvio, la modifica dei runlevels, l'avvio e la terminazione dei servizi (in parallelo) e lo spegnimento del sistema."
 
-#, fuzzy
-#| msgid "There are also other systems and other operating modes, such as <command>runit</command> or <command>minit</command>, but they are relatively specialized and not widespread."
 msgid "There are also other systems and other operating modes, such as <command>file-rc</command>, <command>runit</command>, or <command>minit</command>, but some of them are relatively specialized and not widespread."
-msgstr "Esistono anche altri sistemi e modalità operative, come <command>runit</command> o <command>minit</command>, ma sono relativamente specializzati e non molto diffusi."
+msgstr "Esistono anche altri sistemi e modalità operative, come <command>file-rc</command>, <command>runit</command> o <command>minit</command>, ma alcuni di questi sono relativamente specializzati e non molto diffusi."
 
 msgid "Boot sequence of a computer running Linux with systemd"
 msgstr "Sequenza di avvio di un computer Linux con systemd"
@@ -152,10 +142,8 @@ msgstr "Sequenza di avvio di un computer Linux con systemd"
 msgid "<emphasis>SPECIFIC CASE</emphasis> Booting from the network"
 msgstr "<emphasis>CASO SPECIFICO</emphasis> Avvio da rete"
 
-#, fuzzy
-#| msgid "In some configurations, the BIOS may be configured not to execute the MBR, but to seek its equivalent on the network, making it possible to build computers without a hard drive, or which are completely reinstalled on each boot. This option is not available on all hardware and it generally requires an appropriate combination of BIOS and network card."
 msgid "In some configurations, the system may be configured not to execute code from the physical hardware, but to seek its equivalent on the network, making it possible to build computers without a hard drive, or which are completely reinstalled on each boot. This option is not available on all hardware and it generally requires an appropriate combination of firmware and network card."
-msgstr "In alcune configurazioni, il BIOS può essere configurato per non eseguire l'MBR, ma per cercare il suo equivalente in rete, rendendo possibile la costruzione di computer senza un disco rigido, o che sono completamente reinstallati ad ogni avvio. Questa opzione non è disponibile su tutto l'hardware e richiede in genere una combinazione appropriata di BIOS e scheda di rete."
+msgstr "In alcune configurazioni, il sistema può essere configurato per non eseguire il codice dall'hardware fisico, ma per cercare il suo equivalente in rete, rendendo possibile la costruzione di computer senza un disco rigido, o che sono completamente reinstallati ad ogni avvio. Questa opzione non è disponibile su tutto l'hardware e richiede in genere una combinazione appropriata di firmware e scheda di rete."
 
 msgid "Booting from the network can be used to launch the <command>debian-installer</command> or FAI (see <xref linkend=\"sect.installation-methods\" />)."
 msgstr "L'avvio da rete può essere utilizzato per lanciare il <command>debian-installer</command> o FAI (vedere la <xref linkend=\"sect.installation-methods\" /> )."
@@ -166,10 +154,8 @@ msgstr "<emphasis>FONDAMENTALI</emphasis> Il processo, un'istanza di programma"
 msgid "<primary>process</primary>"
 msgstr "<primary>processo</primary>"
 
-#, fuzzy
-#| msgid "A process is the representation in memory of a running program. It includes all of the information necessary for the proper execution of the software (the code itself, but also the data that it has in memory, the list of files that it has opened, the network connections it has established, etc.). A single program may be instantiated into several processes, not necessarily running under different user IDs."
 msgid "A process is the representation of a running program in memory. It includes all of the information necessary for the proper execution of the software (the code itself, but also the data that it has in memory, the list of files that it has opened, the network connections it has established, etc.). A single program may be instantiated into several processes, not necessarily running under different user IDs."
-msgstr "Un processo è la rappresentazione in memoria di un programma in esecuzione. Esso comprende tutte le informazioni necessarie per la corretta esecuzione del software (il codice stesso, ma anche i dati che ha in memoria, l'elenco di file che ha aperto, le connessioni di rete che ha stabilito, ecc.). Un programma unico può essere istanziato in vari processi diversi, non necessariamente in esecuzione con diversi ID utente."
+msgstr "Un processo è la rappresentazione di un programma in esecuzione in memoria. Esso comprende tutte le informazioni necessarie per la corretta esecuzione del software (il codice stesso, ma anche i dati che ha in memoria, l'elenco di file che ha aperto, le connessioni di rete che ha stabilito, ecc.). Un programma unico può essere istanziato in vari processi diversi, non necessariamente in esecuzione con diversi ID utente."
 
 msgid "<emphasis>SECURITY</emphasis> Using a shell as <command>init</command> to gain root rights"
 msgstr "<emphasis>SICUREZZA</emphasis> Usare una shell come <command>init</command> per ottenere i privilegi di root"
@@ -186,31 +172,23 @@ msgstr "Chiunque è in grado di accedere al computer può premere il pulsante <k
 msgid "To prevent this, you can protect the bootloader itself with a password. You might also think about protecting access to the BIOS (a password protection mechanism is almost always available), without which a malicious intruder could still boot the machine on a removable media containing its own Linux system, which they could then use to access data on the computer's hard drives."
 msgstr "Per evitare ciò, è possibile proteggere lo stesso bootloader con una password. Si potrebbe anche pensare di proteggere l'accesso al BIOS (un meccanismo di protezione con password è quasi sempre disponibile), senza di ciò un intruso malintenzionato potrebbe ancora avviare la macchina su un supporto rimovibile contenente il proprio sistema Linux, che potrebbe utilizzare per accedere ai dati sull'hard disk del computer."
 
-#, fuzzy
-#| msgid "Finally, be aware that most BIOS have a generic password available. Initially intended for troubleshooting for those who have forgotten their password, these passwords are now public and available on the Internet (see for yourself by searching for “generic BIOS passwords” in a search engine). All of these protections will thus impede unauthorized access to the machine without being able to completely prevent it. There is no reliable way to protect a computer if the attacker can physically access it; they could dismount the hard drives to connect them to a computer under their own control anyway, or even steal the entire machine, or erase the BIOS memory to reset the password…"
 msgid "Finally, be aware that most BIOS/EFI implementations have a generic password available. Initially intended for troubleshooting for those who have forgotten their password, these passwords are now public and available on the Internet (see for yourself by searching for “generic BIOS passwords” in a search engine). All of these protections will thus impede unauthorized access to the machine without being able to completely prevent it. There is no reliable way to protect a computer if the attacker can physically access it; they could dismount the hard drives to connect them to a computer under their own control anyway, or even steal the entire machine, or erase the BIOS memory to reset the password…"
-msgstr "Infine, fare attenzione al fatto che la maggior parte dei BIOS dispone di una password generica. Inizialmente destinate alla risoluzione di problemi per coloro che hanno dimenticato la password, queste password sono ora pubbliche e disponibili su Internet (provare a cercare \"password generica per BIOS\" in un motore di ricerca). Tutte queste protezioni ostacoleranno quindi l'accesso non autorizzato alla macchina senza essere in grado di evitarlo completamente. Non c'è un modo affidabile per proteggere un computer se l'utente malintenzionato può accedervi fisicamente; in ogni caso potrebbe smontare gli hard disk per connetterli a un computer sotto il proprio controllo, o addirittura rubare l'intera macchina, o cancellare la memoria del BIOS per ripristinarne la password…"
+msgstr "Infine, fare attenzione al fatto che la maggior parte delle implementazioni di BIOS/EFI dispongono di una password generica. Inizialmente destinate alla risoluzione di problemi per coloro che hanno dimenticato la password, queste password sono ora pubbliche e disponibili su Internet (provare a cercare \"password generica per BIOS\" in un motore di ricerca). Tutte queste protezioni ostacoleranno quindi l'accesso non autorizzato alla macchina senza essere in grado di evitarlo completamente. Non c'è un modo affidabile per proteggere un computer se l'attaccante può accedervi fisicamente; in ogni caso potrebbe smontare gli hard disk per connetterli a un computer sotto il proprio controllo, o addirittura rubare l'intera macchina, o cancellare la memoria del BIOS per ripristinarne la password…"
 
 msgid "Systemd executes several processes, in charge of setting up the system: keyboard, drivers, filesystems, network, services. It does this while keeping a global view of the system as a whole, and the requirements of the components. Each component is described by a “unit file” (sometimes more); the general syntax is derived from the widely-used “*.ini files“ syntax, with <literal><replaceable>key</replaceable> = <replaceable>value</replaceable></literal> pairs grouped between <literal>[<replaceable>section</replaceable>]</literal> headers. Unit files are stored under <filename>/lib/systemd/system/</filename> and <filename>/etc/systemd/system/</filename>; they come in several flavors, but we will focus on “services” and “targets” here."
 msgstr "Systemd esegue diversi processi, responsabili della configurazione del sistema: tastiera, drivers, filesystem, rete, servizi. Lo fa mantenendo una vsione globale del sistema nel suo complesso, ed i requisiti dei componenti. Ciascun componente è descritto da un \"file unit\" (a volte più); la sintassi generale deriva dalla sintassi ampiamente usata nei \"file *.ini\", con coppie <literal><replaceable>chiave</replaceable> = <replaceable>valore</replaceable></literal> raggruppate tra le intestazioni <literal>[<replaceable>section</replaceable>]</literal>. I file unit vengono memorizzati in <filename>/lib/systemd/system/</filename> e <filename>/etc/systemd/system/</filename>; sono disponibili in vari gusti, ma qui ci si concentrerà su \"service\" e \"target\"."
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>display manager</secondary>"
 msgid "<primary><command>systemd</command></primary><secondary><filename>.service</filename> file</secondary>"
-msgstr "<primary>manager</primary><secondary>display manager</secondary>"
+msgstr "<primary><command>systemd</command></primary><secondary>file <filename>.service</filename></secondary>"
 
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/systemd/system/</filename></secondary><see><command>systemd</command></see>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/systemd/system/</filename></secondary><see><command>systemd</command></see>"
 
-#, fuzzy
-#| msgid "<primary>service</primary><secondary>restart</secondary>"
 msgid "<primary>service</primary><secondary><filename>ssh.service</filename></secondary>"
-msgstr "<primary>servizio</primary><secondary>riavvio</secondary>"
+msgstr "<primary>servizio</primary><secondary><filename>ssh.service</filename></secondary>"
 
-#, fuzzy
-#| msgid "A systemd “service file” describes a process managed by systemd. It contains roughly the same information as old-style init-scripts, but expressed in a declaratory (and much more concise) way. Systemd handles the bulk of the repetitive tasks (starting and stopping the process, checking its status, logging, dropping privileges, and so on), and the service file only needs to fill in the specifics of the process. For instance, here is the service file for SSH:"
 msgid "A systemd “<filename>.service</filename> file” describes a process managed by systemd. It contains roughly the same information as old-style init-scripts, but expressed in a declaratory (and much more concise) way. Systemd handles the bulk of the repetitive tasks (starting and stopping the process, checking its status, logging, dropping privileges, and so on), and the service file only needs to fill in the specifics of the process. For instance, here is the service file for SSH:"
-msgstr "Un \"service file\" di systemd descrive un processo gestito da systemd. Contiene più o meno le stesso informazioni degli script-init vecchio stile, ma espresse in modo dichiarativo (e molto più conciso). Systemd gestisce la maggior parte dei compiti ripetitivi (avviare e arrestare il processo, controllare il suo stato, la registrazione, far cadere i privilegi, e così via), ed il service file ha bisogno solo di compilare le specifiche dei processi. Per esempio, questo è un service file per SSH:"
+msgstr "Un \"file <filename>.service</filename>\" di systemd descrive un processo gestito da systemd. Contiene più o meno le stesse informazioni degli script-init vecchio stile, ma espresse in modo dichiarativo (e molto più conciso). Systemd gestisce la maggior parte dei compiti ripetitivi (avviare e arrestare il processo, controllare il suo stato, salvare i log, togliere privilegi, e così via), ed il service file ha bisogno solo di compilare le specifiche del processo. Per esempio, questo è un service file per SSH:"
 
 msgid ""
 "[Unit]\n"
@@ -260,93 +238,78 @@ msgstr ""
 "Alias=sshd.service"
 
 msgid "The <literal>[Unit]</literal> section contains generic information about the service, like its description and manual page resources, as well as relations (dependency and order) to other services. The <literal>[Service]</literal> part contains the declarations related to the service execution (starting, stopping, killing, restarting), directories and configuration file(s) used. The last section, <literal>[Install]</literal>, again carries generic information into which targets to install the service and, in this case, the alias that can be used instead of the service name. As you can see, there is very little code in there, only declarations. Systemd takes care of displaying progress reports, keeping track of the processes, and even restarting them when needed. The syntax of these files is fully described in several manual pages (e.g. <citerefentry><refentrytitle>systemd.service</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.unit</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.exec</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, etc.)."
-msgstr ""
+msgstr "La sezione <literal>[Unit]</literal> contiene informazioni generiche relative al servizio, come le risorse per la pagina del manuale e la descrizione, ma anche relazioni (dipendenza e ordine) verso gli altri servizi. La parte <literal>[Service]</literal> contiene le dichiarazioni relative all'esecuzione del servizio (avvio, arresto, azione di kill, riavvio), directory e file di configurazione usati. L'ultima sezione, <literal>[Install]</literal>, riporta ancora informazioni generiche con l'obiettivo di installare il servizio e, in questo caso, l'alias che può essere utilizzato al posto del nome del servizio. Come si può vedere, c'è veramente poco codice qui, solo dichiarazioni. Systemd si prende cura di visualizzare i rapporti di progresso, tenere traccia dei processi e anche riavviarli quando necessario. La sintassi di questi file è completamente descritta in diverse pagine del manuale (ad esempio: <citerefentry><refentrytitle>systemd.service</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.unit</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.exec</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, ecc.)."
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>display manager</secondary>"
 msgid "<primary><command>systemd</command></primary><secondary><filename>.target</filename> file</secondary>"
-msgstr "<primary>manager</primary><secondary>display manager</secondary>"
+msgstr "<primary><command>systemd</command></primary><secondary>file <filename>.target</filename></secondary>"
 
-#, fuzzy
-#| msgid "A systemd “target file” describes a state of the system, where a set of services are known to be operational. It can be thought of as an equivalent of the old-style runlevel. One of the targets is <literal>local-fs.target</literal>; when it is reached, the rest of the system can assume that all local filesystems are mounted and accessible. Other targets include <literal>network-online.target</literal> and <literal>sound.target</literal>. The dependencies of a target can be listed either within the target file (in the <literal>Requires=</literal> line), or using a symbolic link to a service file in the <literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal> directory. For instance, <filename>/etc/systemd/system/printer.target.wants/</filename> contains a link to <filename>/lib/systemd/system/cups.service</filename>; systemd will therefore ensure CUPS is running in order to reach <literal>printer.target</literal>."
 msgid "A systemd “<filename>.target</filename> file” describes a state of the system where a set of services are known to be operational. It can be thought of as an equivalent of the old-style runlevel. One of the pre-defined targets is <literal>local-fs.target</literal>; when it is reached, the rest of the system can assume that all local filesystems are mounted and accessible. Other targets include <literal>network-online.target</literal> and <literal>sound.target</literal> (for a full list of special targets see <citerefentry><refentrytitle>systemd.special</refentrytitle> <manvolnum>7</manvolnum></citerefentry>). The dependencies of a target can be listed either within the target file (in the <literal>Requires=</literal> line), or using a symbolic link to a service file in the <literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal> directory. For instance, <filename>/etc/systemd/system/printer.target.wants/</filename> contains a link to <filename>/lib/systemd/system/cups.service</filename>; systemd will therefore ensure CUPS is running in order to reach <literal>printer.target</literal>."
-msgstr "Un \"target file\" di systemd descrive uno stato del sistema, dove un insieme di servizi sono noti per essere operativi. Può essere pensato come un equivalente del runlevel vecchio-stile. Uno dei target è <literal>local-fs.target</literal>; quando è raggiunto, il resto del sistema può ritenere tutti i filesystem locali montati ed accessibili. Un'altro target include <literal>network-online.target</literal> e <literal>sound.target</literal>. Le dipendenze del target possono essere elencate sia nel file di destinazione (alla riga <literal>Requires=</literal>), oppure usando un collegamento simbolico al file del servizio nella directory <literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal>. Per esempio, <filename>/etc/systemd/system/printer.target.wants/</filename> contiene un collegamento a <filename>/lib/systemd/system/cups.service</filename>; systemd si assicurerà quindi che CUPS sia in esecuzione in modo da raggiungere il target <literal>printer.target</literal>."
+msgstr "Un \"file <filename>.target</filename>\" di systemd descrive uno stato del sistema, dove un insieme di servizi sono noti per essere operativi. Può essere pensato come un equivalente del runlevel vecchio-stile. Uno dei target predefiniti è <literal>local-fs.target</literal>; quando è raggiunto, il resto del sistema può ritenere tutti i filesystem locali montati ed accessibili. Altri target includono <literal>network-online.target</literal> e <literal>sound.target</literal> (per un elenco di terget speciali vedere <citerefentry><refentrytitle>systemd.special</refentrytitle> <manvolnum>7</manvolnum></citerefentry>). Le dipendenze di un target possono essere elencate sia nel file di destinazione (alla riga <literal>Requires=</literal>), oppure usando un collegamento simbolico al file del servizio nella directory <literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal>. Per esempio, <filename>/etc/systemd/system/printer.target.wants/</filename> contiene un collegamento a <filename>/lib/systemd/system/cups.service</filename>; systemd si assicurerà quindi che CUPS sia in esecuzione in modo da raggiungere il target <literal>printer.target</literal>."
 
 msgid "Since unit files are declarative rather than scripts or programs, they cannot be run directly, and they are only interpreted by systemd; several utilities therefore allow the administrator to interact with systemd and control the state of the system and of each component."
 msgstr "Dal momento che gli unit file sono dichiararativi e non script o programmi, non possono essere eseguiti direttamente, e sono solo interpretati da systemd; diverese utility consentono quindi all'amministratore di interagire con systemd e controllare lo stato del sistema e di ogni componente."
 
-msgid "<primary><command>systemd</command></primary><secondary><command>systemctl</command></secondary><see><command>systemctl</command></see>"
-msgstr ""
-
 #, fuzzy
-#| msgid "<primary>owner</primary><secondary>user</secondary>"
+msgid "<primary><command>systemd</command></primary><secondary><command>systemctl</command></secondary><see><command>systemctl</command></see>"
+msgstr "<primary><command>systemd</command></primary><secondary><command>systemctl</command></secondary><see><command>systemctl</command></see>"
+
 msgid "<primary><command>systemctl</command></primary><secondary><literal>status</literal></secondary>"
-msgstr "<primary>proprietario</primary><secondary>utente</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>stato</literal></secondary>"
 
 msgid "The first such utility is <command>systemctl</command>. When run without any arguments, it lists all the unit files known to systemd (except those that have been disabled), as well as their status. <command>systemctl status</command> gives a better view of the services, as well as the related processes. If given the name of a service (as in <command>systemctl status ntp.service</command>), it returns even more details, as well as the last few log lines related to the service (more on that later)."
 msgstr "La prima di queste utility è <command>systemctl</command>. Quando viene eseguita senza argomenti, elenca tutti gli unit file noti a systemd (eccetto quelli che sono stati disabilitati), coì come il loro stato. <command>systemctl status</command> dà una migliore visione dei servizi, nonchè dei relativi processi. Se viene passato il nome di un servizio (come in <command>systemctl status ntp.service</command>), restituisce ancora più dettagli, così come le ultime righe dei log relativi al servizio (ne parleremo più avanti)."
 
-#, fuzzy
-#| msgid "<primary>service</primary><secondary>restart</secondary>"
 msgid "<primary><command>systemctl</command></primary><secondary><literal>start</literal></secondary>"
-msgstr "<primary>servizio</primary><secondary>riavvio</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>avvio</literal></secondary>"
 
 #, fuzzy
 #| msgid "<primary>interface</primary><secondary>administration interface</secondary>"
 msgid "<primary><command>systemctl</command></primary><secondary><literal>stop</literal></secondary>"
-msgstr "<primary>interfaccia</primary><secondary>interfaccia di amministrazione</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>stop</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>network</primary><secondary>wireless</secondary>"
 msgid "<primary><command>systemctl</command></primary><secondary><literal>reload</literal></secondary>"
-msgstr "<primary>rete</primary><secondary>wireless</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>ricaricamento</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>service</primary><secondary>restart</secondary>"
 msgid "<primary><command>systemctl</command></primary><secondary><literal>restart</literal></secondary>"
-msgstr "<primary>servizio</primary><secondary>riavvio</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>riavvio</literal></secondary>"
 
 msgid "Starting a service by hand is a simple matter of running <command>systemctl start <replaceable>servicename</replaceable>.service</command>. As one can guess, stopping the service is done with <command>systemctl stop <replaceable>servicename</replaceable>.service</command>; other subcommands include <command>reload</command> and <command>restart</command>."
 msgstr "L'avvio manuale del servizio è una cosa semplice eseguendo <command>systemctl start <replaceable>nomedelservizio</replaceable>.service</command>. Come si può intuire, l'arresto di un servizio è fatto con <command>systemctl stop <replaceable>nomedelservizio</replaceable>.service</command>; altri comandi includono <command>reload</command> e <command>restart</command>."
 
-#, fuzzy
-#| msgid "<primary>network</primary><secondary>wireless</secondary>"
 msgid "<primary><command>systemctl</command></primary><secondary><literal>enable</literal></secondary>"
-msgstr "<primary>rete</primary><secondary>wireless</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>abilita</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>network</primary><secondary>wireless</secondary>"
 msgid "<primary><command>systemctl</command></primary><secondary><literal>disable</literal></secondary>"
-msgstr "<primary>rete</primary><secondary>wireless</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>disabilita</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>interface</primary><secondary>administration interface</secondary>"
 msgid "<primary><command>systemctl</command></primary><secondary><literal>is-enabled</literal></secondary>"
-msgstr "<primary>interfaccia</primary><secondary>interfaccia di amministrazione</secondary>"
+msgstr "<primary><command>systemctl</command></primary><secondary><literal>è abilitato</literal></secondary>"
 
 msgid "To control whether a service is active (i.e. whether it will get started automatically on boot), use <command>systemctl enable <replaceable>servicename</replaceable>.service</command> (or <command>disable</command>). <command>is-enabled</command> allows checking the status of the service."
 msgstr "Per controllare se un servizio è attivo (es. se partirà automaticamente all'avvio), usa <command>systemctl enable <replaceable>nomedelservizio</replaceable>.service</command> (oppure <command>disable</command>). <command>is-enabled</command> permette il controllo dello stato del servizio."
 
+#, fuzzy
 msgid "<primary><command>systemd</command></primary><secondary><command>journald</command></secondary><see><command>journald</command></see>"
-msgstr ""
+msgstr "<primary><command>systemd</command></primary><secondary><command>journald</command></secondary><see><command>journald</command></see>"
 
+#, fuzzy
 msgid "<primary><command>systemd</command></primary><secondary><command>journalctl</command></secondary><see><command>journalctl</command></see>"
-msgstr ""
+msgstr "<primary><command>systemd</command></primary><secondary><command>journalctl</command></secondary><see><command>journalctl</command></see>"
 
 #, fuzzy
 #| msgid "<primary><command>mondo</command></primary>"
 msgid "<primary><command>journald</command></primary>"
-msgstr "<primary><command>mondo</command></primary>"
+msgstr "<primary><command>journald</command></primary>"
 
 #, fuzzy
 #| msgid "<primary><command>rsyslogd</command></primary>"
 msgid "<primary><command>syslogd</command></primary>"
-msgstr "<primary><command>rsyslogd</command></primary>"
+msgstr "<primary><command>syslogd</command></primary>"
 
 #, fuzzy
 #| msgid "<primary><command>at</command></primary>"
 msgid "<primary><command>journalctl</command></primary>"
-msgstr "<primary><command>at</command></primary>"
+msgstr "<primary><command>journalctl</command></primary>"
 
 msgid "An interesting feature of systemd is that it includes a logging component named <command>journald</command>. It comes as a complement to more traditional logging systems such as <command>syslogd</command>, but it adds interesting features such as a formal link between a service and the messages it generates, and the ability to capture error messages generated by its initialization sequence. The messages can be displayed later on, with a little help from the <command>journalctl</command> command. Without any arguments, it simply spews all log messages that occurred since system boot; it will rarely be used in such a manner. Most of the time, it will be used with a service identifier:"
 msgstr "Una caratteristica interessante di systemd è che include un componente di registrazione chiamato <command>journald</command>. Si presenta come un complemento a più sistemi di registrazione tradizionali come <command>syslogd</command>, ma aggiunge delle caratteristiche interessanti come un collegamento formale tra un servizio ed i messaggi che genera, e la capacità di cattuare i messaggi generati dalla sua sequenza di avvio. I messaggi possono essere visualizzati in seguito, con un piccolo aiuto da parte del comando <command>journalctl</command>. Senza argomenti, sputa fuori semplicemente tutti i messaggi di log che si sono verificati dall'avvio del sistema; raramente è usato in questo modo. La maggior parte delle volte sarà utilizzato con un identificatore del servizio:"
@@ -494,35 +457,23 @@ msgstr "<emphasis>APPROFONDIMENTO</emphasis> Altri tipi di file unit"
 msgid "We have only described the most basic of systemd's capabilities in this section. It offers many other interesting features; we will only list a few here:"
 msgstr "Abbiamo descritto solo la più fondamentale capacità di systemd in questa sezione. Esso offre molte altre caratteristiche interessanti; qui ne elencheremo solo alcune:"
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>display manager</secondary>"
 msgid "<primary><command>systemd</command></primary><secondary><filename>.socket</filename> file</secondary>"
-msgstr "<primary>manager</primary><secondary>display manager</secondary>"
+msgstr "<primary><command>systemd</command></primary><secondary>file <filename>.socket</filename></secondary>"
 
-#, fuzzy
-#| msgid "socket activation: a “socket” unit file can be used to describe a network or Unix socket managed by systemd; this means that the socket will be created by systemd, and the actual service may be started on demand when an actual connection attempt comes. This roughly replicates the feature set of <command>inetd</command>. See <citerefentry><refentrytitle>systemd.socket</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
 msgid "socket activation: a “socket” unit file can be used to describe a network or Unix socket managed by systemd; this means that the socket will be created by systemd, and the actual service may be started on demand when an actual connection attempt comes. This roughly replicates the feature set of <command>inetd</command>. See <citerefentry><refentrytitle>systemd.socket</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
-msgstr "attivazione socket: un'unità file \"socket\" può essere usata per descrivere una reteo un socket Unix gestito da systemd; questo significa il socket viene creato da systemd, ed il servizio vero e proprio può essere avviato quando arriva un'effettivo tentativo di connessione. Questo più o meno replica il set di funzionalità di <command>inetd</command>. Vedere <citerefentry><refentrytitle>systemd.socket</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
+msgstr "attivazione socket: un'unità file \"socket\" può essere usata per descrivere una rete o un socket Unix gestito da systemd; questo significa che il socket viene creato da systemd, ed il servizio vero e proprio può essere avviato su richiesta quando arriva un effettivo tentativo di connessione. Questo più o meno replica il set di funzionalità di <command>inetd</command>. Vedere <citerefentry><refentrytitle>systemd.socket</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>display manager</secondary>"
 msgid "<primary><command>systemd</command></primary><secondary><filename>.timer</filename> file</secondary>"
-msgstr "<primary>manager</primary><secondary>display manager</secondary>"
+msgstr "<primary><command>systemd</command></primary><secondary>file <filename>.timer</filename></secondary>"
 
-#, fuzzy
-#| msgid "timers: a “timer” unit file describes events that occur with a fixed frequency or on specific times; when a service is linked to such a timer, the corresponding task will be executed whenever the timer fires. This allows replicating part of the <command>cron</command> features. See <citerefentry><refentrytitle>systemd.timer</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
 msgid "timers: a “timer” unit file describes events that occur with a fixed frequency or on specific times; when a service is linked to such a timer, the corresponding task will be executed whenever the timer fires. This allows replicating part of the <command>cron</command> features. See <citerefentry><refentrytitle>systemd.timer</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
-msgstr "timer: un'unità file “timer” descriveeventi che si verificano con una frequenza fissa o a tempo; quando un servizio è collegato a tale timer, il compito corrispondernte verrà eseguito ogni volta che scatterà il timer. Questo permette di replicare parte delle caratteristiche del comando <command>cron</command>. Vedere <citerefentry><refentrytitle>systemd.timer</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
+msgstr "timer: un'unità file “timer” descrive eventi che si verificano con una frequenza fissa o in tempi specifici; quando un servizio è collegato a tale timer, il compito corrispondente verrà eseguito ogni volta che scatterà il timer. Questo permette di replicare parte delle caratteristiche del comando <command>cron</command>. Vedere <citerefentry><refentrytitle>systemd.timer</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 
-#, fuzzy
-#| msgid "<primary>manager</primary><secondary>display manager</secondary>"
 msgid "<primary><command>systemd</command></primary><secondary><filename>.network</filename> file</secondary>"
-msgstr "<primary>manager</primary><secondary>display manager</secondary>"
+msgstr "<primary><command>systemd</command></primary><secondary>file <filename>.network</filename></secondary>"
 
-#, fuzzy
-#| msgid "network: a “network“ unit file describes a network interface, which allows configuring such interfaces as well as expressing that a service depends on one particular interface being up."
 msgid "network: a “network“ unit file describes a network interface, which allows configuring such interfaces as well as expressing that a service depends on one particular interface being up. See <citerefentry><refentrytitle>systemd.network</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
-msgstr "rete: un file di \"rete\" descrive un'interfaccia di rete, che permette di configurare tali interfacce oltre che manifestare che un servizio dipende da un particolare interfaccia."
+msgstr "rete: un'unità file di \"rete\" descrive un'interfaccia di rete, che permette di configurare tali interfacce oltre che indicare che un servizio dipende dal fatto che una particolare interfaccia sia attiva. Vedere <citerefentry><refentrytitle>systemd.network</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 
 msgid "The System V init system"
 msgstr "Il sistema di init System V"
@@ -530,21 +481,19 @@ msgstr "Il sistema di init System V"
 msgid "The System V init system (which we'll call init for brevity) executes several processes, following instructions from the <filename>/etc/inittab</filename> file. The first program that is executed (which corresponds to the <emphasis>sysinit</emphasis> step) is <command>/etc/init.d/rcS</command>, a script that executes all of the programs in the <filename>/etc/rcS.d/</filename> directory."
 msgstr "Il sistema di init di System V (che per brevità chiameremo init) esegue diversi processi, seguendo le istruzioni del file <filename>/etc/inittab</filename>. Il primo programma che viene eseguito (che corrisponde allo step <emphasis>sysinit</emphasis> ) è <command>/etc/init.d/rcS</command>, uno script che esegue tutti i programmi contenuti nella directory <filename>/etc/rcS.d/</filename>."
 
+#, fuzzy
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rcS</filename></secondary><seealso><emphasis role=\"pkg\">sysv-rc</emphasis></seealso>"
-msgstr ""
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rcS</filename></secondary><seealso><emphasis role=\"pkg\">sysv-rc</emphasis></seealso>"
 
+#, fuzzy
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/rcS.d/</filename></secondary><seealso><emphasis role=\"pkg\">sysv-rc</emphasis></seealso>"
-msgstr ""
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/rcS.d/</filename></secondary><seealso><emphasis role=\"pkg\">sysv-rc</emphasis></seealso>"
 
-#, fuzzy
-#| msgid "<primary><filename>crontab</filename></primary>"
 msgid "<primary><filename>rcS</filename></primary>"
-msgstr "<primary><filename>crontab</filename></primary>"
+msgstr "<primary><filename>rcS</filename></primary>"
 
-#, fuzzy
-#| msgid "<primary><filename>crontab</filename></primary>"
 msgid "<primary><filename>rcS.d</filename></primary>"
-msgstr "<primary><filename>crontab</filename></primary>"
+msgstr "<primary><filename>rcS.d</filename></primary>"
 
 msgid "Among these, you will find successively programs in charge of:"
 msgstr "Tra questi, si trovano successivamente i programmi incaricati di:"
@@ -558,7 +507,7 @@ msgstr "caricare i driver: la maggior parte dei moduli del kernel vengono carica
 #, fuzzy
 #| msgid "<primary>modules</primary><secondary>kernel modules</secondary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modules</filename></secondary>"
-msgstr "<primary>moduli</primary><secondary>moduli del kernel</secondary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modules</filename></secondary>"
 
 msgid "checking the integrity of filesystems;"
 msgstr "verificare l'integrità dei file system;"
@@ -578,36 +527,30 @@ msgstr "<emphasis>FONDAMENTALI</emphasis> I moduli del kernel e le opzioni"
 msgid "<primary>modules</primary><secondary>kernel modules</secondary>"
 msgstr "<primary>moduli</primary><secondary>moduli del kernel</secondary>"
 
-#, fuzzy
-#| msgid "<primary>user</primary><secondary>owner</secondary>"
 msgid "<primary>kernel</primary><secondary>modules</secondary>"
-msgstr "<primary>utente</primary><secondary>proprietario</secondary>"
+msgstr "<primary>kernel</primary><secondary>moduli</secondary>"
 
 msgid "<primary>kernel</primary><secondary>modules</secondary><tertiary>load</tertiary><seealso><command>modprobe</command></seealso>"
-msgstr ""
+msgstr "<primary>kernel</primary><secondary>moduli</secondary><tertiary>caricamento</tertiary><seealso><command>modprobe</command></seealso>"
 
 msgid "<primary>kernel</primary><secondary>modules</secondary><tertiary>options</tertiary><seealso><command>modinfo</command></seealso>"
-msgstr ""
+msgstr "<primary>kernel</primary><secondary>moduli</secondary><tertiary>opzioni</tertiary><seealso><command>modinfo</command></seealso>"
 
 #, fuzzy
 #| msgid "<primary>files</primary><secondary>log files</secondary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modprobe.d</filename></secondary>"
-msgstr "<primary>file</primary><secondary>file di log</secondary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modprobe.d</filename></secondary>"
 
 #, fuzzy
 #| msgid "<primary>modules</primary><secondary>kernel modules</secondary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modules-load.d/</filename></secondary>"
-msgstr "<primary>moduli</primary><secondary>moduli del kernel</secondary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modules-load.d/</filename></secondary>"
 
-#, fuzzy
-#| msgid "Kernel modules also have options that can be configured by putting some files in <filename>/etc/modprobe.d/</filename>. These options are defined with directives like this: <literal>options <replaceable>module-name</replaceable> <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>. Several options can be specified with a single directive if necessary."
 msgid "You have already learned that kernel modules can be loaded during the start of the system by adding them to <filename>/etc/modules</filename> or a file below <filename>/etc/modules-load.d/</filename>. But modules can also have options that can be configured by putting some files in <filename>/etc/modprobe.d/</filename>. These options are defined with directives like this: <literal>options <replaceable>module-name</replaceable> <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>. Several options can be specified with a single directive if necessary."
-msgstr "I moduli del kernel hanno anche opzioni che possono essere configurate mettendo alcuni file in <filename>/etc/modprobe.d/</filename>. Queste opzioni sono definite con direttive come questa: <literal>options <replaceable>nome-modulo</replaceable> <replaceable>nome-opzione</replaceable>=<replaceable>valore-opzione</replaceable></literal>. Diverse opzioni possono essere specificate con un'unica direttiva, se necessario."
+msgstr "I moduli del kernel\nSi è già appreso che i moduli del kernel possono essere caricati durante l'avvio del sistema aggiungendoli a <filename>/etc/modules</filename> o in un file sottostante <filename>/etc/modules-load.d/</filename>. Ma i moduli possono avere anche opzioni che possono essere configurate mettendo alcuni file in <filename>/etc/modprobe.d/</filename>. Queste opzioni sono definite con direttive del tipo: <literal>options <replaceable>nome-modulo</replaceable> <replaceable>nome-opzione</replaceable>=<replaceable>valore-opzione</replaceable></literal>. Diverse opzioni possono essere specificate con un'unica direttiva, se necessario."
 
-#, fuzzy
-#| msgid "These configuration files are intended for <command>modprobe</command> — the program that loads a kernel module with its dependencies (modules can indeed call other modules). This program is provided by the <emphasis role=\"pkg\">kmod</emphasis> package."
 msgid "These configuration files are intended for <command>modprobe</command> — the program that loads a kernel module with its dependencies (modules can indeed call other modules). To list all options of a module use the <command>modinfo -p <replaceable>module</replaceable></command> command. Both programs are provided by the <emphasis role=\"pkg\">kmod</emphasis> package together with other tools to handle modules."
-msgstr "Questi file di configurazione sono destinati a <command>modprobe</command>: il programma che carica un modulo del kernel con le sue dipendenze (i moduli possono infatti chiamare altri moduli). Questo programma è fornito dal pacchetto <emphasis role=\"pkg\">kmod</emphasis>."
+msgstr "Questi file di configurazione sono destinati a <command>modprobe</command>: il programma che carica un modulo del kernel con le sue dipendenze (i moduli possono infatti richiamare altri moduli). Per elencare tutte le opzioni di un modulo utilizzare il programma <command>modinfo -p <replaceable>modulo</replaceable></command> fornito dal pacchetto <emphasis role=\"pkg\">kmod</emphasis> insieme ad altri strumenti per gestire i moduli."
 
 msgid "<primary><command>modprobe</command></primary>"
 msgstr "<primary><command>modprobe</command></primary>"
@@ -615,33 +558,31 @@ msgstr "<primary><command>modprobe</command></primary>"
 #, fuzzy
 #| msgid "<primary><command>mondo</command></primary>"
 msgid "<primary><command>modinfo</command></primary>"
-msgstr "<primary><command>mondo</command></primary>"
+msgstr "<primary><command>modinfo</command></primary>"
 
 msgid "<primary><emphasis role=\"pkg\">kmod</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">kmod</emphasis></primary>"
 
 msgid "Having learned about systemd, services and targets can use the <filename>modprobe@<replaceable>module</replaceable>.service</filename> to load kernel modules they depend on."
-msgstr ""
+msgstr "Avendo imparato a conoscere systemd, i servizi e i target si può usare <filename>modprobe@<replaceable>modulo</replaceable> .service</filename> per caricare i moduli del kernel che dipendono da esso."
 
-#, fuzzy
-#| msgid "<primary>server</primary><secondary>client/server architecture</secondary>"
 msgid "<primary>service</primary><secondary><filename>modprobe@<replaceable>module</replaceable>.service</filename></secondary>"
-msgstr "<primary>server</primary><secondary>architettura client/server</secondary>"
+msgstr "<primary>servizio</primary><secondary><filename>modprobe@<replaceable>modulo</replaceable>.service</filename></secondary>"
 
 #, fuzzy
 #| msgid "<primary>interface</primary><secondary>administration interface</secondary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rc</filename></secondary>"
-msgstr "<primary>interfaccia</primary><secondary>interfaccia di amministrazione</secondary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rc</filename></secondary>"
 
 #, fuzzy
 #| msgid "<primary>files</primary><secondary>log files</secondary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/rcX.d/</filename></secondary>"
-msgstr "<primary>file</primary><secondary>file di log</secondary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/rcX.d/</filename></secondary>"
 
 #, fuzzy
 #| msgid "<primary><command>inetd</command></primary>"
 msgid "<primary><command>insserv</command></primary>"
-msgstr "<primary><command>inetd</command></primary>"
+msgstr "<primary><command>insserv</command></primary>"
 
 msgid "After this stage, <command>init</command> takes over and starts the programs enabled in the default runlevel (which is usually runlevel 2). It executes <command>/etc/init.d/rc 2</command>, a script that starts all services which are listed in <filename>/etc/rc2.d/</filename> and whose names start with the “S” letter. The two-figures number that follows had historically been used to define the order in which services had to be started, but nowadays the default boot system uses <command>insserv</command>, which schedules everything automatically based on the scripts' dependencies. Each boot script thus declares the conditions that must be met to start or stop the service (for example, if it must start before or after another service); <command>init</command> then launches them in the order that meets these conditions. The static numbering of scripts is therefore no longer taken into consideration (but they must always have a name beginning with “S” followed by two digits and the actual name of the script used for the dependencies). Generally, base services (such as logging with <command>rsyslog</command>, or port assignment with <command>portmap</command>) are started first, followed by standard services and the graphical interface (<command>gdm3</command>)."
 msgstr "In seguito a questa fase, subentra <command>init</command> e avvia quei programmi attivati nel runlevel predefinito (che di solito è il runlevel 2). Viene eseguito <command>/etc/init.d/rc 2</command>, uno script che lancia tutti i servizi che sono elencati in <filename>/etc/rc2.d/</filename> ed i cui nomi iniziano con la lettera «S». Il numero a due cifre che segue era storicamente utilizzato per definire l'ordine in cui i servizi dovevano essere avviati, ma al giorno d'oggi il sistema di avvio predefinito utilizza <command>insserv</command>, che pianifica tutto automaticamente in base alle dipendenze degli script. Ogni script di avvio dichiara in tal modo le condizioni che devono essere soddisfatte per avviare o arrestare il servizio (per esempio, se si deve avviare prima o dopo un altro servizio); <command>init</command> poi li esegue nell'ordine che soddisfa queste condizioni. La numerazione statica degli script quindi non è più presa in considerazione (ma devono sempre avere un nome che inizia con una «S» seguita da due cifre ed il nome effettivo dello script usato per le dipendenze). In generale, i servizi di base (come la registrazione con <command>rsyslog</command>, o l'assegnazione di porte con <command>portmap</command>) vengono avviati per primi, seguiti dai servizi standard e dall'interfaccia grafica (<command>gdm3</command>)."
@@ -658,7 +599,7 @@ msgstr "<primary>livello, runlevel</primary>"
 #, fuzzy
 #| msgid "<primary><command>telnet</command></primary>"
 msgid "<primary><command>telinit</command></primary>"
-msgstr "<primary><command>telnet</command></primary>"
+msgstr "<primary><command>telinit</command></primary>"
 
 msgid "<command>init</command> distinguishes several runlevels, so it can switch from one to another with the <command>telinit <replaceable>new-level</replaceable></command> command. Immediately, <command>init</command> executes <command>/etc/init.d/rc</command> again with the new runlevel. This script will then start the missing services and stop those that are no longer desired. To do this, it refers to the content of the <filename>/etc/rc<replaceable>X</replaceable>.d</filename> (where <replaceable>X</replaceable> represents the new runlevel). Scripts starting with “S” (as in “Start”) are services to be started; those starting with “K” (as in “Kill”) are the services to be stopped. The script does not start any service that was already active in the previous runlevel."
 msgstr "<command>init</command> distingue tra diversi runlevel, in modo da poter passare da uno all'altro con il comando <command>telinit <replaceable>nuovo-livello</replaceable></command>. Immediatamente, <command>init</command> esegue ancora una volta <command>/etc/init.d/rc</command> con il nuovo runlevel. Questo script quindi avvia i servizi mancanti e ferma quelli che non sono più desiderati. Per fare ciò, fa riferimento al contenuto di <filename>/etc/rc<replaceable>X</replaceable>.d</filename> (dove <replaceable>X</replaceable> rappresenta il nuovo runlevel). Gli script che iniziano con «S» (come in «Start») sono i servizi da avviare, quelli che iniziano con «K» (come in «Kill») sono i servizi che devono essere arrestati. Lo script non avvia alcun servizio che era già attivo nel runlevel precedente."
