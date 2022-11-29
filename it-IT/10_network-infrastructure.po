@@ -2,7 +2,7 @@
 # Beatrice Torracca <beatricet@libero.it>, 2014.
 # Marco De Luca <marcodeluca@hotmail.it>, 2015.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-10-16 20:49+0200\nPO-Revision-Date: 2022-11-07 20:06+0000\nLast-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/it/>\nLanguage: it-IT\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.14.2\nLast-Reviser: Dario <dario.java@gmail.com>\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-10-16 20:49+0200\nPO-Revision-Date: 2022-11-29 18:32+0000\nLast-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/debian-handbook/10_network-infrastructure/it/>\nLanguage: it-IT\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.15-dev\nLast-Reviser: Dario <dario.java@gmail.com>\n"
 
 msgid "Network"
 msgstr "Rete"
@@ -114,12 +114,12 @@ msgstr "Alcuni di questi numeri di porta — standardizzati da IANA (<emphasis>I
 #, fuzzy
 #| msgid "<primary>service</primary><secondary>quality</secondary>"
 msgid "<primary>IP</primary><secondary>masquerading</secondary>"
-msgstr "<primary>servizio</primary><secondary>qualità</secondary>"
+msgstr "<primary>IP</primary><secondary>masquerading</secondary>"
 
 #, fuzzy
 #| msgid "<primary>network</primary><secondary>gateway</secondary>"
 msgid "<primary>network</primary><secondary>masquerading</secondary>"
-msgstr "<primary>rete</primary><secondary>gateway</secondary>"
+msgstr "<primary>rete</primary><secondary>masquerading</secondary>"
 
 msgid "When a local network uses a private address range (not routable on the Internet), the gateway needs to implement <emphasis>address masquerading</emphasis> so that the machines on the network can communicate with the outside world. The masquerading operation is a kind of proxy operating on the network level: each outgoing connection from an internal machine is replaced with a connection from the gateway itself (since the gateway does have an external, routable address), the data going through the masqueraded connection is sent to the new one, and the data coming back in reply is sent through to the masqueraded connection to the internal machine. The gateway uses a range of dedicated TCP ports for this purpose, usually with very high numbers (over 60000). Each connection coming from an internal machine then appears to the outside world as a connection coming from one of these reserved ports."
 msgstr "Quando una rete locale utilizza un intervallo di indirizzi privati (non instradabili su Internet), il gateway deve attuare il <emphasis>mascheramento degli indirizzi</emphasis> in modo che le macchine sulla rete possano comunicare con il mondo esterno. L'operazione di mascheramento è una sorta di proxy operante a livello di rete: ogni connessione in uscita da una macchina interna viene sostituita con una connessione dal gateway stesso (in quanto il gateway ha un indirizzo instradabile verso l'esterno), i dati che passano dalla connessione mascherata vengono inviati alla nuova, ed i dati che ritornano in risposta vengono inviati attraverso la connessione mascherata alla macchina interna. Il gateway utilizza una serie di porte TCP dedicate a questo scopo, di solito con numeri molto elevati (oltre 60000). Ogni connessione proveniente da una macchina interna appare quindi al mondo esterno, come una connessione proveniente da una di queste porte riservate."
@@ -130,10 +130,8 @@ msgstr "<primary>mascheramento</primary>"
 msgid "<emphasis>CULTURE</emphasis> Private address range"
 msgstr "<emphasis>CULTURA</emphasis> Intervallo di indirizzi privati"
 
-#, fuzzy
-#| msgid "<primary>IP address</primary><secondary>private</secondary>"
 msgid "<primary>IP</primary><secondary>private address</secondary>"
-msgstr "<primary>indirizzo IP </primary><secondary>privato</secondary>"
+msgstr "<primary>IP</primary><secondary>indirizzo privato</secondary>"
 
 msgid "<primary>private IP address</primary>"
 msgstr "<primary>indirizzo IP privato</primary>"
@@ -144,45 +142,39 @@ msgstr "La RFC 1918 definisce tre intervalli di indirizzi IPv4 che non possono e
 msgid "The gateway can also perform two kinds of <emphasis>network address translation</emphasis> (or NAT for short). The first kind, <emphasis>Destination NAT</emphasis> (DNAT) is a technique to alter the destination IP address (and/or the TCP or UDP port) for a (generally) incoming connection. The connection tracking mechanism also alters the following packets in the same connection to ensure continuity in the communication. The second kind of NAT is <emphasis>Source NAT</emphasis> (SNAT), of which <emphasis>masquerading</emphasis> is a particular case; SNAT alters the source IP address (and/or the TCP or UDP port) of a (generally) outgoing connection. As for DNAT, all the packets in the connection are appropriately handled by the connection tracking mechanism. Note that NAT is only relevant for IPv4 and its limited address space; in IPv6, the wide availability of addresses greatly reduces the usefulness of NAT by allowing all “internal” addresses to be directly routable on the Internet (this does not imply that internal machines are accessible, since intermediary firewalls can filter traffic)."
 msgstr "Il gateway può anche eseguire due tipi di <emphasis>Network Address Translation</emphasis> (Traduzione degli Indirizzi di Rete o abbreviato NAT). Il primo tipo, <emphasis>Destination NAT</emphasis> (DNAT) consiste nel modificare l'indirizzo IP di destinazione (e/o la porta TCP o UDP) per una connessione (generalmente) in ingresso. Il meccanismo di controllo e tracciatura del collegamento modifica anche i pacchetti successivi nella stessa connessione per assicurare la continuità nella comunicazione. Il secondo tipo di NAT è <emphasis>Source NAT</emphasis> (SNAT), di cui è un caso particolare il <emphasis>masquerading</emphasis> (mascheramento). SNAT modifica l'indirizzo IP sorgente (e/o la porta TCP o UDP) del pacchetto (generalmente) in uscita. Come per DNAT, tutti i pacchetti nella connessione sono opportunamente gestiti dal meccanismo di tracciamento della connessione stessa. Si noti che NAT è rilevante solo per IPv4 e il suo limitato spazio di indirizzi; in IPv6, l'ampia disponibilità di indirizzi riduce notevolmente l'utilità di NAT, consentendo a tutti gli indirizzi \"interni\" di essere direttamente instradabili su Internet (ciò non implica che le macchine interne siano accessibili, in quanto i firewall intermedi sono in grado di filtrare il traffico)."
 
-#, fuzzy
-#| msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
 msgid "<primary>NAT</primary><seealso>Network Address Translation</seealso>"
-msgstr "<primary>Network</primary><secondary>Address Translation</secondary>"
+msgstr "<primary>NAT</primary><seealso>Network Address Translation</seealso>"
 
-#, fuzzy
-#| msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
 msgid "<primary>Network Address Translation</primary><seealso>NAT</seealso>"
-msgstr "<primary>Network</primary><secondary>Address Translation</secondary>"
+msgstr "<primary>Network Address Translation</primary><seealso>NAT</seealso>"
 
 #, fuzzy
 #| msgid "<primary>Network</primary><secondary>Address Translation</secondary>"
 msgid "<primary>network</primary><secondary>address translation</secondary><seealso>NAT</seealso>"
-msgstr "<primary>Network</primary><secondary>Address Translation</secondary>"
+msgstr "<primary>network</primary><secondary>address translation</secondary><seealso>NAT</seealso>"
 
-#, fuzzy
-#| msgid "<primary>network</primary><secondary>gateway</secondary>"
 msgid "<primary>network</primary><secondary>NAT</secondary>"
-msgstr "<primary>rete</primary><secondary>gateway</secondary>"
+msgstr "<primary>rete</primary><secondary>NAT</secondary>"
 
 #, fuzzy
 #| msgid "<primary>DNS</primary><secondary>automated updates</secondary>"
 msgid "<primary>SNAT</primary><seealso>Source NAT</seealso>"
-msgstr "<primary>DNS</primary><secondary>aggiornamenti automatici</secondary>"
+msgstr "<primary>SNAT</primary><seealso>Source NAT</seealso>"
 
 #, fuzzy
 #| msgid "<primary>Source NAT</primary>"
 msgid "<primary>Source NAT</primary><seealso>SNAT</seealso>"
-msgstr "<primary>Source NAT</primary>"
+msgstr "<primary>Source NAT</primary><seealso>SNAT</seealso>"
 
 #, fuzzy
 #| msgid "<primary>DNS</primary><secondary>automated updates</secondary>"
 msgid "<primary>DNAT</primary><seealso>Destination NAT</seealso>"
-msgstr "<primary>DNS</primary><secondary>aggiornamenti automatici</secondary>"
+msgstr "<primary>DNAT</primary><seealso>Destination NAT</seealso>"
 
 #, fuzzy
 #| msgid "<primary>Destination NAT</primary>"
 msgid "<primary>Destination NAT</primary><seealso>DNAT</seealso>"
-msgstr "<primary>Destination NAT</primary>"
+msgstr "<primary>Destination NAT</primary><seealso>DNAT</seealso>"
 
 msgid "<emphasis>BACK TO BASICS</emphasis> Port forwarding"
 msgstr "<emphasis>FONDAMENTALI</emphasis> Port forwarding"
@@ -193,18 +185,18 @@ msgstr "<primary>port forwarding</primary>"
 #, fuzzy
 #| msgid "<primary>network</primary><secondary>gateway</secondary>"
 msgid "<primary>network</primary><secondary>port forwarding</secondary>"
-msgstr "<primary>rete</primary><secondary>gateway</secondary>"
+msgstr "<primary>rete</primary><secondary>port forwarding</secondary>"
 
 #, fuzzy
 #| msgid "<primary><command>ripd</command></primary>"
 msgid "<primary><command>redir</command></primary>"
-msgstr "<primary><command>ripd</command></primary>"
+msgstr "<primary><command>redir</command></primary>"
 
 msgid "A concrete application of DNAT is <emphasis>port forwarding</emphasis>. Incoming connections to a given port of a machine are forwarded to a port on another machine. Other solutions may exist for achieving a similar effect, though, especially at the application level with <command>ssh</command> (see <xref linkend=\"sect.ssh-port-forwarding\" />) or <command>redir</command>."
 msgstr "Un'applicazione concreta di DNAT è il <emphasis>port forwarding</emphasis>. Le connessioni in ingresso su una determinata porta di una macchina vengono inoltrate verso una porta su un'altra macchina. Tuttavia esistono altre soluzioni tecniche che possono ottenere un risultato simile, anche se, soprattutto a livello di applicazione con <command>ssh</command> (vedere la <xref linkend=\"sect.ssh-port-forwarding\" /> ) o <command>redir</command>."
 
 msgid "<primary>filesystem</primary><secondary>virtual</secondary><tertiary><filename>/proc/</filename></tertiary>"
-msgstr ""
+msgstr "<primary>filesystem</primary><secondary>virtuale</secondary><tertiary><filename>/proc/</filename></tertiary>"
 
 msgid "Enough theory, let's get practical. Turning a Debian system into a gateway is a simple matter of enabling the appropriate option in the Linux kernel, by way of the <filename>/proc/</filename> virtual filesystem:"
 msgstr "Basta teoria, andiamo sul pratico. Trasformare un sistema Debian in un gateway è una questione semplice, basta attivare l'apposita opzione nel kernel Linux, mediante il filesystem virtuale <filename>/proc/</filename>:"
@@ -216,20 +208,14 @@ msgstr ""
 "\n"
 "<computeroutput># </computeroutput><userinput>echo 1 &gt; /proc/sys/net/ipv4/conf/default/forwarding</userinput>"
 
-#, fuzzy
-#| msgid "<primary><filename>/etc/bind/named.conf</filename></primary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.conf</filename></secondary>"
-msgstr "<primary><filename>/etc/bind/named.conf</filename></primary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.conf</filename></secondary>"
 
-#, fuzzy
-#| msgid "<primary>traffic</primary><secondary>limitation</secondary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.d/</filename></secondary>"
-msgstr "<primary>traffico</primary><secondary>limitazione</secondary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/sysctl.d/</filename></secondary>"
 
-#, fuzzy
-#| msgid "This option can also be automatically enabled on boot if <filename>/etc/sysctl.conf</filename> sets the <literal>net.ipv4.conf.default.forwarding</literal> option to <literal>1</literal>."
 msgid "This option can also be automatically enabled on boot if <filename>/etc/sysctl.conf</filename> or a configuration file in <filename>/etc/sysctl.d/</filename> sets the <literal>net.ipv4.conf.default.forwarding</literal> option to <literal>1</literal>."
-msgstr "Questa opzione può anche essere attivata automaticamente all'avvio, se <filename>/etc/sysctl.conf</filename> imposta l'opzione <literal>net.ipv4.conf.default.forwarding</literal> a <literal>1</literal>."
+msgstr "Questa opzione può anche essere abilitata automaticamente all'avvio se <filename>/etc/sysctl.conf</filename> o un file di configurazione in <filename>/etc/sysctl.d/</filename> imposta l'opzione <literal>net.ipv4.conf.default.forwarding</literal> su <literal>1</literal>."
 
 msgid "The <filename>/etc/sysctl.conf</filename> file"
 msgstr "Il file <filename>/etc/sysctl.conf</filename>"
@@ -254,10 +240,8 @@ msgstr "Abilitare il mascheramento IPv4 è un'operazione leggermente più comple
 msgid "Similarly, using NAT (for IPv4) requires configuring <emphasis>netfilter</emphasis>. Since the primary purpose of this component is packet filtering, the details are listed in <xref linkend=\"security\" xrefstyle=\"select: label quotedtitle nopage\" /> (see <xref linkend=\"sect.firewall-packet-filtering\" />)."
 msgstr "Similmente, l'utilizzo di NAT (per IPv4) richiede configurare <emphasis>netfilter</emphasis>. Dato che lo scopo primario di questo componente è il filtraggio dei pacchetti, i dettagli sono elencati nel <xref linkend=\"security\" xrefstyle=\"select: label quotedtitle nopage\" /> (vedere la <xref linkend=\"sect.firewall-packet-filtering\" />)."
 
-#, fuzzy
-#| msgid "<primary>X.509, certificate</primary>"
 msgid "X.509 certificates"
-msgstr "<primary>X.509, certificato</primary>"
+msgstr "Certificati X.509"
 
 msgid "<primary>certificate</primary><secondary>X.509</secondary>"
 msgstr "<primary>certificato</primary><secondary>X.509</secondary>"
@@ -265,46 +249,34 @@ msgstr "<primary>certificato</primary><secondary>X.509</secondary>"
 msgid "<primary>SSL</primary>"
 msgstr "<primary>SSL</primary>"
 
-#, fuzzy
-#| msgid "<primary>record</primary><secondary>DNS</secondary>"
 msgid "<primary>Secure Socket Layer</primary><seealso>SSL</seealso>"
-msgstr "<primary>record</primary><secondary>DNS</secondary>"
+msgstr "<primary>Secure Socket Layer</primary><seealso>SSL</seealso>"
 
 msgid "<primary>TLS</primary>"
 msgstr "<primary>TLS</primary>"
 
-#, fuzzy
-#| msgid "<primary>port</primary><secondary>TCP</secondary>"
 msgid "<primary>Transport Layer Security</primary><seealso>TLS</seealso>"
-msgstr "<primary>porta</primary><secondary>TCP</secondary>"
+msgstr "<primary>Transport Layer Security</primary><seealso>TLS</seealso>"
 
-#, fuzzy
-#| msgid "<primary>zone</primary><secondary>reverse</secondary>"
 msgid "<primary>X.509</primary><secondary>certificates</secondary>"
-msgstr "<primary>zona</primary><secondary>inversa</secondary>"
+msgstr "<primary>X.509</primary><secondary>certificati</secondary>"
 
 #, fuzzy
 #| msgid "<primary>DNS</primary><secondary>automated updates</secondary>"
 msgid "<primary>CA</primary><seealso>Certificate Authority</seealso>"
-msgstr "<primary>DNS</primary><secondary>aggiornamenti automatici</secondary>"
+msgstr "<primary>CA</primary><seealso>Certificate Authority (Autorità di Certificazione)</seealso>"
 
-#, fuzzy
-#| msgid "<primary>X.509, certificate</primary>"
 msgid "<primary>Certificate Authority</primary>"
-msgstr "<primary>X.509, certificato</primary>"
+msgstr "<primary>Autorità di certificazione</primary>"
 
 msgid "Certificates are an important building block of many network services built on cryptographic protocols, when they need some sort of central authentication."
 msgstr "I certificat,i sono un elemento fondamentale di molti servizi di rete basati su protocolli crittografici che necessitano di una sorta di autenticazione centrale."
 
-#, fuzzy
-#| msgid "<primary>IKE</primary>"
 msgid "<primary>IETF</primary>"
-msgstr "<primary>IKE</primary>"
+msgstr "<primary>IETF</primary>"
 
-#, fuzzy
-#| msgid "The SSL protocol (<emphasis>Secure Socket Layer</emphasis>) was invented by Netscape to secure connections to web servers. It was later standardized by IETF under the acronym TLS (<emphasis>Transport Layer Security</emphasis>). Since then TLS continued to evolve and nowadays SSL is deprecated due to multiple design flaws that have been discovered."
 msgid "Among those protocols, SSL (<emphasis>Secure Socket Layer</emphasis>) was invented by Netscape to secure connections to web servers. It was later standardized by IETF under the acronym TLS (<emphasis>Transport Layer Security</emphasis>). Since then TLS continued to evolve, and nowadays SSL is deprecated due to multiple design flaws that have been discovered."
-msgstr "Il protocollo SSL (<emphasis>Secure Socket Layer</emphasis>) è stato inventato da Netscape per rendere sicure le connessioni ai server web. È stato poi standardizzato da IETF sotto l'acronimo TLS (<emphasis>Transport Layer Security</emphasis>). Da allora TLS ha continuato ad evolversi ed oggi SSL è deprecato a causa di molteplici difetti di progettazione che sono stati scoperti."
+msgstr "Tra questi protocolli, SSL (<emphasis>Secure Socket Layer</emphasis>) è stato realizzato da Netscape per proteggere le connessioni ai server Web. In seguito è stato standardizzato dall'IETF con l'acronimo TLS (<emphasis>Transport Layer Security</emphasis>). Da allora TLS ha continuato ad evolversi ed oggi SSL è deprecato a causa dei numerosi difetti di progettazione scoperti."
 
 msgid "The TLS protocol aims primarily to provide privacy and data integrity between two or more communicating computer applications. The most common case on the Internet is the communication between a client (e.g. a web browser) and a server."
 msgstr "Il protocollo TLS aspira principalmente a fornire privacy ed integrità dei dati tra due o più applicazioni per computer che stanno comunicando tra loro. Il caso più comune su Internet è la comunicazione tra un client (ad esempio un browser web) ed un server."
@@ -312,12 +284,10 @@ msgstr "Il protocollo TLS aspira principalmente a fornire privacy ed integrità 
 #, fuzzy
 #| msgid "<primary>zone</primary><secondary>reverse</secondary>"
 msgid "<primary>certificate</primary><secondary>root certificate</secondary>"
-msgstr "<primary>zona</primary><secondary>inversa</secondary>"
+msgstr "<primary>certificato</primary><secondary>certificato attendibile</secondary>"
 
-#, fuzzy
-#| msgid "However, anyone can create a key pair, store any identity on it, and pretend to be the identity of their choice. One solution involves the concept of a <emphasis>Certification Authority</emphasis> (CA), formalized by the X.509 standard. This term covers an entity that holds a trusted key pair known as a <emphasis>root certificate</emphasis>. This certificate is only used to sign other certificates (key pairs), after proper steps have been undertaken to check the identity stored on the key pair. Applications using X.509 can then check the certificates presented to them, if they know about the trusted root certificates."
 msgid "A key pair is needed for the exchange of information, which involves a public key that includes information about the identity of the owner and matches a private key. The private key must be kept secret, otherwise the security is compromised. However, anyone can create a key pair, store any identity on it, and pretend to be the identity of their choice. One solution involves the concept of a <emphasis>Certification Authority</emphasis> (CA), formalized by the X.509 standard. This term covers an entity that holds a trusted key pair known as a <emphasis>root certificate</emphasis>. This certificate is only used to sign other certificates (key pairs), after proper steps have been undertaken to check the identity stored on the key pair. Applications using X.509 can then check the certificates presented to them, if they know about the trusted root certificates."
-msgstr "Tuttavia, chiunque può creare una coppia di chiavi, archiviarvi qualsiasi identità, e fingere di essere l'identità da lui scelta. Una soluzione implica il concetto di <emphasis>Autorità di certificazione</emphasis> (CA: «Certification Authority» ), formalizzato dallo standard X.509. Questo termine si riferisce a un soggetto che detiene una coppia di chiavi fidate conosciuto come <emphasis>certificato principale</emphasis>. Questo certificato viene utilizzato solamente per firmare altri certificati (coppie di chiavi), dopo che sono state adottate misure adeguate per controllare l'identità memorizzata nella coppia di chiavi. Le applicazioni che utilizzano X.509 possono quindi controllare i certificati presentati, se ne conoscono i certificati principali attendibili."
+msgstr "Per lo scambio di informazioni è necessaria una coppia di chiavi che prevede una chiave pubblica, che include informazioni sull'identità del proprietario e la corrispondente chiave privata. La chiave privata deve essere mantenuta segreta, altrimenti la sicurezza è compromessa. Tuttavia, chiunque potrebbe creare una coppia di chiavi, impostare una falsa identità e fingere di essere quell'identità. Una soluzione prevede il concetto di <emphasis>Autorità di Certificazione</emphasis> (CA), formalizzata dallo standard X.509. Questo termine indica un'entità che detiene una coppia di chiavi affidabili, nota come <emphasis>root certificate</emphasis>. Questo certificato viene utilizzato solo per firmare altri certificati (coppie di chiavi), dopo che sono stati compiuti passi adeguati per verificare l'identità memorizzata nella coppia di chiavi. Le applicazioni che utilizzano X.509 possono quindi verificare i certificati presentati, se sono a conoscenza dei root certificate affidabili."
 
 msgid "You can implement a CA (as described in <xref linkend=\"sect.easy-rsa\" />), but if you intend to use the certificate for a website, you need to rely on a trusted CA. The prices vary significantly, but it is possible to implement great security spending little to no money."
 msgstr "Si può implementare un CA (come descritto in <xref linkend=\"sect.easy-rsa\" />), ma se si intende usare il certificato per un sito web, è necessario affidarsi a una CA attendibile. I prezzi variano in modo significativo, ma è possibile implementare un'ottima sicurezza spendendo poco o nulla."
@@ -331,10 +301,8 @@ msgstr "<primary>certificato</primary><secondary>certificato attendibile</second
 msgid "<primary>certificate</primary><secondary>snakeoil certificate</secondary>"
 msgstr "<primary>certificato</primary><secondary>certificato snakeoil</secondary>"
 
-#, fuzzy
-#| msgid "<primary>zone</primary><secondary>reverse</secondary>"
 msgid "<primary>certificate</primary><secondary>letsencrypt</secondary><seealso><emphasis role=\"pkg\">certbot</emphasis></seealso>"
-msgstr "<primary>zona</primary><secondary>inversa</secondary>"
+msgstr "<primary>certificato</primary><secondary>letsencrypt</secondary><seealso><emphasis role=\"pkg\">certbot</emphasis></seealso>"
 
 msgid "Many programs create and use snakeoil certificates by default (see sidebar <xref linkend=\"sidebar.snakeoil-certs\" />). Fortunately the <emphasis role=\"pkg\">certbot</emphasis> package brings everything we need to create our own trusted certificates, provided by the \"Lets Encrypt\" initiative (see sidebar <xref linkend=\"sidebar.letsencrypt\" />), which can also be used for mail transport agents (Postfix), mail delivery agents (Dovecot, Cyrus, etc.), and other network services."
 msgstr ""
@@ -342,25 +310,17 @@ msgstr ""
 msgid "The Falcot administrators just want to create a certificate for their website, which runs on Apache. There is a convenient Apache plugin for <emphasis role=\"pkg\">certbot</emphasis> that automatically edits the Apache configuration to serve the obtained certificate, so they make use of it:"
 msgstr ""
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">bind9</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">certbot</emphasis></primary>"
-msgstr "<primary><emphasis role=\"pkg\">bind9</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">certbot</emphasis></primary>"
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">iputils-tracepath</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">python3-certbot-apache</emphasis></primary>"
-msgstr "<primary><emphasis role=\"pkg\">iputils-tracepath</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">python3-certbot-apache</emphasis></primary>"
 
-#, fuzzy
-#| msgid "<primary>zone</primary><secondary>reverse</secondary>"
 msgid "<primary>Apache</primary><secondary><emphasis role=\"pkg\">certbot</emphasis></secondary>"
-msgstr "<primary>zona</primary><secondary>inversa</secondary>"
+msgstr "<primary>Apache</primary><secondary><emphasis role=\"pkg\">certbot</emphasis></secondary>"
 
-#, fuzzy
-#| msgid "<primary>zone</primary><secondary>reverse</secondary>"
 msgid "<primary>Apache</primary><secondary><emphasis role=\"pkg\">python3-certbot-apache</emphasis></secondary>"
-msgstr "<primary>zona</primary><secondary>inversa</secondary>"
+msgstr "<primary>Apache</primary><secondary><emphasis role=\"pkg\">python3-certbot-apache</emphasis></secondary>"
 
 #, fuzzy
 #| msgid "<primary>zone</primary><secondary>reverse</secondary>"
@@ -448,17 +408,15 @@ msgid ""
 "   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate\n"
 "   Donating to EFF:                    https://eff.org/donate-le\n"
 "</computeroutput>"
-msgstr ""
+msgstr "\n<computeroutput># </computeroutput><userinput>apt install python3-certbot-apache\n</userinput><computeroutput>[...]\n# </computeroutput><userinput>certbot --apache\n</userinput><computeroutput>aving debug log to /var/log/letsencrypt/letsencrypt.log\nPlugins selected: Authenticator apache, Installer apache\nEnter email address (used for urgent renewal and security notices)\n (Enter 'c' to cancel): </computeroutput><userinput>admin@falcot.com\n</userinput><computeroutput>\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nPlease read the Terms of Service at\nhttps://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf. You must\nagree in order to register with the ACME server. Do you agree?\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n(Y)es/(N)o: </computeroutput><userinput>Y\n</userinput><computeroutput>\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nWould you be willing, once your first certificate is successfully issued, to\nshare your email address with the Electronic Frontier Foundation, a founding\npartner of the Let's Encrypt project and the non-profit organization that\ndevelops Certbot? We'd like to send you email about our work encrypting the web,\nEFF news, campaigns, and ways to support digital freedom.\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n(Y)es/(N)o: </computeroutput><userinput> N\n</userinput><computeroutput>\nAccount registered.\n\nNo names were found in your configuration files. Please enter in your domain\nname(s) (comma and/or space separated)  (Enter 'c' to cancel): </computeroutput><userinput>falcot.com\n</userinput><computeroutput>\nRequesting a certificate for falcot.com\nPerforming the following challenges:\nhttp-01 challenge for falcot.com\nEnabled Apache rewrite module\nWaiting for verification...\nCleaning up challenges\nCreated an SSL vhost at /etc/apache2/sites-available/000-default-le-ssl.conf\nEnabled Apache socache_shmcb module\nEnabled Apache ssl module\nDeploying Certificate to VirtualHost /etc/apache2/sites-available/000-default-le-ssl.conf\nEnabling available site: /etc/apache2/sites-available/000-default-le-ssl.conf\n\nPlease choose whether or not to redirect HTTP traffic to HTTPS, removing HTTP access.\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n1: No redirect - Make no further changes to the webserver configuration.\n2: Redirect - Make all requests redirect to secure HTTPS access. Choose this for\nnew sites, or if you're confident your site works on HTTPS. You can undo this\nchange by editing your web server's configuration.\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nSelect the appropriate number [1-2] then [enter] (press 'c' to cancel):</computeroutput> <userinput>2\n</userinput><computeroutput>\nEnabled Apache rewrite module\nRedirecting vhost in /etc/apache2/sites-enabled/000-default.conf to ssl vhost in /etc/apache2/sites-available/000-default-le-ssl.conf\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nCongratulations! You have successfully enabled https://falcot.com\n\nYou should test your configuration at:\nhttps://www.ssllabs.com/ssltest/analyze.html?d=falcot.com\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\nIMPORTANT NOTES:\n - Congratulations! Your certificate and chain have been saved at:\n   /etc/letsencrypt/live/falcot.com/fullchain.pem\n   Your key file has been saved at:\n   /etc/letsencrypt/live/falcot.com/privkey.pem\n   Your cert will expire on 2022-06-04. To obtain a new or tweaked\n   version of this certificate in the future, simply run certbot again\n   with the \"certonly\" option. To non-interactively renew *all* of\n   your certificates, run \"certbot renew\"\n - Your account credentials have been saved in your Certbot\n   configuration directory at /etc/letsencrypt. You should make a\n   secure backup of this folder now. This configuration directory will\n   also contain certificates and private keys obtained by Certbot so\n   making regular backups of this folder is ideal.\n - If you like Certbot, please consider supporting our work by:\n\n   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate\n   Donating to EFF:                    https://eff.org/donate-le\n</computeroutput>"
 
 #, fuzzy
 #| msgid "<emphasis>CULTURE</emphasis> Private address range"
 msgid "<emphasis>CULTURE</emphasis> The Let's Encrypt Initiative"
-msgstr "<emphasis>CULTURA</emphasis> Intervallo di indirizzi privati"
+msgstr "<emphasis>CULTURA</emphasis> L'iniziati Let's Encrypt"
 
-#, fuzzy
-#| msgid "<primary>IPsec</primary>"
 msgid "<primary>Let's Encrypt</primary>"
-msgstr "<primary>IPsec</primary>"
+msgstr "<primary>Let's Encrypt</primary>"
 
 msgid "The <ulink url=\"https://letsencrypt.org/\">Let's Encrypt</ulink> initiative is a joint effort to create a free, automated, and open certificate authority (CA), run for the public's benefit. It is supported by the <acronym>EFF</acronym> and the Linux Foundation. The initiative provides an automated tool for acquiring and renewing certificates. This reduces the amount of manual effort involved, especially if multiple sites and domains must be managed. The certificates can also be used for SIP, XMPP, WebSockets and TURN servers. Usage of the service requires control over the DNS information of the domain in question (domain validation). <ulink type=\"block\" url=\"https://letsencrypt.org/how-it-works/\" />"
 msgstr ""
@@ -470,18 +428,14 @@ msgid "<computeroutput># </computeroutput><userinput>certbot certonly --webroot 
 msgstr ""
 
 msgid "You need to restart all services using the certificates that you have created."
-msgstr ""
+msgstr "È necessario riavviare tutti i servizi utilizzando i certificati creati."
 
-#, fuzzy
-#| msgid "<primary>zone</primary><secondary>reverse</secondary>"
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.d/certbot</filename></secondary>"
-msgstr "<primary>zona</primary><secondary>inversa</secondary>"
+msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.d/certbot</filename></secondary>"
 
 # route: non tradurre, è riferito al comando, ecco perché messo come termine in indice. DarioJ
-#, fuzzy
-#| msgid "<primary><command>route</command></primary>"
 msgid "<primary><command>certbot</command></primary>"
-msgstr "<primary><command>route</command></primary>"
+msgstr "<primary><command>certbot</command></primary>"
 
 msgid "The certificates created are so called short-life certificates, which are valid for 90 days and must therefor be renewed every once in three months using the <command>certbot renew</command> command. However, we shouldn't renew every certificate manually, but automatically. A basic cron job is included by <emphasis role=\"pkg\">certbot</emphasis> in <filename>/etc/cron.d/certbot</filename>. To ensure that certificates can be automatically renewed, you can execute <command>certbot renew --dry-run</command>."
 msgstr ""
@@ -489,18 +443,14 @@ msgstr ""
 msgid "Public Key Infrastructure: <emphasis>easy-rsa</emphasis>"
 msgstr "Infrastruttura a chiave pubblica: <emphasis>easy-rsa</emphasis>"
 
-#, fuzzy
-#| msgid "<primary>PKI (Public Key Infrastructure)</primary>"
 msgid "<primary>PKI</primary><seealso>Public Key Infrastructure</seealso>"
-msgstr "<primary>PKI (Public Key Infrastructure)</primary>"
+msgstr "<primary>PKI</primary><seealso>Public Key Infrastructure (Infrastruttura a chiave pubblica)</seealso>"
 
 msgid "<primary>Public Key Infrastructure</primary>"
 msgstr "<primary>Public Key Infrastructure</primary>"
 
-#, fuzzy
-#| msgid "<primary>NAT</primary>"
 msgid "<primary>X.509</primary>"
-msgstr "<primary>NAT</primary>"
+msgstr "<primary>X.509</primary>"
 
 msgid "<primary><emphasis>easy-rsa</emphasis></primary>"
 msgstr "<primary><emphasis>easy-rsa</emphasis></primary>"
@@ -508,10 +458,8 @@ msgstr "<primary><emphasis>easy-rsa</emphasis></primary>"
 msgid "<primary>RSA (algorithm)</primary>"
 msgstr "<primary>RSA (algoritmo)</primary>"
 
-#, fuzzy
-#| msgid "<primary>port</primary><secondary>TCP</secondary>"
 msgid "<primary>algorithm</primary><secondary>RSA</secondary>"
-msgstr "<primary>porta</primary><secondary>TCP</secondary>"
+msgstr "<primary>algoritmo</primary><secondary>RSA</secondary>"
 
 msgid "<primary>key pair</primary>"
 msgstr "<primary>coppia di chiavi</primary>"
@@ -521,31 +469,23 @@ msgstr "<primary>coppia di chiavi</primary>"
 msgid "It is also possible to create our own CA, for that we will use the RSA algorithm, widely used in public-key cryptography. It involves a “key pair”, comprised of a private and a public key. The two keys are closely linked to each other, and their mathematical properties are such that a message encrypted with the public key can only be decrypted by someone knowing the private key, which ensures confidentiality. In the opposite direction, a message encrypted with the private key can be decrypted by anyone knowing the public key, which allows authenticating the origin of a message since only someone with access to the private key could generate it. When associated with a digital hash function (MD5, SHA1, or a more recent variant), this leads to a signature mechanism that can be applied to any message."
 msgstr "Si tratta di una «coppia di chiavL'algoritmo RSA è ampiamente utilizzato nella crittografia a chiave pubblica. i», formata da una chiave privata e una chiave pubblica. Le due chiavi sono strettamente legate l'una all'altra, e le loro proprietà matematiche sono tali che un messaggio cifrato con la chiave pubblica può essere decifrato solo da qualcuno a conoscenza della chiave privata, garantendone la riservatezza. Al contrario, un messaggio cifrato con la chiave privata può essere decodificato da chiunque conosca la chiave pubblica, il che permette di autenticare l'origine di un messaggio in quanto solo una persona con accesso alla chiave privata lo avrebbe potuto generare. Quando è associato ad una funzione hash digitale (MD5, SHA1 o una variante più recente), si ottiene un meccanismo di firma che può essere applicato a qualsiasi messaggio."
 
-#, fuzzy
-#| msgid "OpenVPN follows this rule. Since public CAs only emit certificates in exchange for a (hefty) fee, it is also possible to create a private certification authority within the company. The <emphasis role=\"pkg\">easy-rsa</emphasis> package provides tools to serve as an X.509 certification infrastructure, implemented as a set of scripts using the <command>openssl</command> command."
 msgid "Since public CAs only emit certificates in exchange for a (hefty) fee, it is also possible to create a private certification authority within the company. The <emphasis role=\"pkg\">easy-rsa</emphasis> package provides tools to serve as an X.509 certification infrastructure, implemented as a set of scripts using the <command>openssl</command> command."
-msgstr "OpenVPN segue questa regola. Dal momento che le CA pubbliche emettono solamente certificati in cambio di un (costoso) pagamento, è possibile creare un'autorità di certificazione privata all'interno dell'azienda. Il pacchetto <emphasis role=\"pkg\">easy-rsa</emphasis> fornisce gli strumenti che servono come infrastruttura di certificazione X.509, offrendo un insieme di script utilizzando il comando <command>openssl</command>."
+msgstr "Dal momento che le CA pubbliche emettono certificati solo in cambio di un (salato) compenso, è anche possibile creare un'autorità di certificazione privata all'interno dell'azienda. Il pacchetto <emphasis role=\"pkg\">easy-rsa</emphasis> fornisce gli strumenti per fungere da infrastruttura di certificazione X.509, implementati con un insieme di script che utilizzano il comando <command>openssl</command>."
 
-#, fuzzy
-#| msgid "<emphasis>CULTURE</emphasis> SSL and TLS"
 msgid "<emphasis>ALTERNATIVE</emphasis> GnuTLS"
-msgstr "<emphasis>CULTURA</emphasis> SSL e TLS"
+msgstr "<emphasis>ALTERNATIVA</emphasis> GnuTLS"
 
-#, fuzzy
-#| msgid "<primary>TLS</primary>"
 msgid "<primary>DTLS</primary>"
-msgstr "<primary>TLS</primary>"
+msgstr "<primary>DTLS</primary>"
 
-#, fuzzy
-#| msgid "<primary>TLS</primary>"
 msgid "<primary>GnuTLS</primary>"
-msgstr "<primary>TLS</primary>"
+msgstr "<primary>GnuTLS</primary>"
 
 msgid "GnuTLS can also be used to generate a CA, and deal with other technologies around the TLS, DTLS and SSL protocols."
-msgstr ""
+msgstr "GnuTLS può anche essere usato per generare una CA e per gestire altre tecnologie relative ai protocolli TLS, DTLS e SSL."
 
 msgid "The package <emphasis role=\"pkg\">gnutls-bin</emphasis> contains the command-line utilities. It is also useful to install the <emphasis role=\"pkg\">gnutls-doc</emphasis> package, which includes extensive documentation."
-msgstr ""
+msgstr "Il pacchetto <emphasis role=\"pkg\">gnutls-bin</emphasis> contiene le utilità a riga di comando. È anche utile installare il pacchetto <emphasis role=\"pkg\">gnutls-doc</emphasis>, che contiene un'ampia documentazione."
 
 msgid "The Falcot Corp administrators use this tool to create the required certificates, both for the server and the clients. This allows the configuration of all clients to be similar since they will only have to be set up so as to trust certificates coming from Falcot's local CA. This CA is the first certificate to create; to this end, the administrators set up a directory with the files required for the CA in an appropriate location, preferably on a machine not connected to the network in order to mitigate the risk of the CA's private key being stolen."
 msgstr "Gli amministratori della Falcot Corp utilizzano questo strumento per creare i certificati richiesti, sia per il server che per i client. Questo permette una configurazione simile di tutti i client, dato che dovranno essere impostati solo per considerare attendibili i certificati provenienti dalla CA locale di Falcot. Questa CA crea il primo certificato; a tal fine, gli amministratori impostano in un luogo appropriato la directory con i file richiesti per la CA, preferibilmente su una macchina non connessa alla rete, per ridurre il rischio di furto della chiave privata della CA."
@@ -559,10 +499,8 @@ msgstr ""
 "<computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot\n"
 "</userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>"
 
-#, fuzzy
-#| msgid "They then store the required parameters into the <filename>vars</filename> file, especially those named with a <literal>KEY_</literal> prefix; these variables are then integrated into the environment:"
 msgid "They then store the required parameters into the <filename>vars</filename> file, which can be uncommented and edited:"
-msgstr "Successivamente salvano i parametri richiesti nel file <filename>vars</filename>, specialmente quelli denominati con un prefisso <literal>KEY_</literal>; queste variabili vengono poi integrate nell'ambiente:"
+msgstr "Essi memorizzano i parametri richiesti nel file <filename>vars</filename>, che può essere decommentato e modificato:"
 
 msgid ""
 "\n"
@@ -603,16 +541,11 @@ msgid ""
 "#set_var EASYRSA_BATCH\t\t\"\"\n"
 "]]>$ </computeroutput><userinput>vim vars\n"
 "</userinput><computeroutput>$ </computeroutput>"
-msgstr ""
+msgstr "\n<computeroutput>$ </computeroutput><userinput>grep EASYRSA vars\n</userinput><computeroutput><![CDATA[if [ -z \"$EASYRSA_CALLER\" ]; then\n# easyrsa.  More specific variables for specific files (e.g., EASYRSA_SSL_CONF)\n#set_var EASYRSA\t\"${0%/*}\"\n#set_var EASYRSA_OPENSSL\t\"openssl\"\n#set_var EASYRSA_OPENSSL\t\"C:/Program Files/OpenSSL-Win32/bin/openssl.exe\"\n#set_var EASYRSA_PKI\t\t\"$PWD/pki\"\n#set_var EASYRSA_TEMP_DIR\t\"$EASYRSA_PKI\"\n#set_var EASYRSA_DN\t\"cn_only\"\nset_var EASYRSA_REQ_COUNTRY\t\"FR\"\nset_var EASYRSA_REQ_PROVINCE\t\"Loire\"\nset_var EASYRSA_REQ_CITY\t\"Saint-Étienne\"\nset_var EASYRSA_REQ_ORG\t\"Falcot Corp\"\nset_var EASYRSA_REQ_EMAIL\t\"admin@falcot.com\"\nset_var EASYRSA_REQ_OU\t\t\"Certificate authority\"\n#set_var EASYRSA_KEY_SIZE\t2048\n#set_var EASYRSA_ALGO\t\trsa\n#set_var EASYRSA_CURVE\t\tsecp384r1\n#set_var EASYRSA_CA_EXPIRE\t3650\n#set_var EASYRSA_CERT_EXPIRE\t825\n#set_var EASYRSA_CRL_DAYS\t180\n#set_var EASYRSA_CERT_RENEW\t30\n#set_var EASYRSA_RAND_SN\t\"yes\"\n#set_var EASYRSA_NS_SUPPORT\t\"no\"\n#set_var EASYRSA_NS_COMMENT\t\"Easy-RSA Generated Certificate\"\n#set_var EASYRSA_TEMP_FILE\t\"$EASYRSA_PKI/extensions.temp\"\n# when undefined here, default behaviour is to look in $EASYRSA_PKI first, then\n# fallback to $EASYRSA for the 'x509-types' dir.  You may override this\n#set_var EASYRSA_EXT_DIR\t\"$EASYRSA/x509-types\"\n#set_var EASYRSA_KDC_REALM      \"CHANGEME.EXAMPLE.COM\"\n# EASYRSA_PKI or EASYRSA dir (in that order.) NOTE that this file is Easy-RSA\n#set_var EASYRSA_SSL_CONF\t\"$EASYRSA/openssl-easyrsa.cnf\"\n#set_var EASYRSA_REQ_CN\t\t\"ChangeMe\"\n#set_var EASYRSA_DIGEST\t\t\"sha256\"\n#set_var EASYRSA_BATCH\t\t\"\"\n]]>$ </computeroutput><userinput>vim vars\n</userinput><computeroutput>$ </computeroutput>"
 
 msgid "Now we prepare the public key infrastructure directory with the following command:"
-msgstr ""
+msgstr "Ora prepariamo la directory dell'infrastruttura a chiave pubblica con il seguente comando:"
 
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "<computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot\n"
-#| "</userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>"
 msgid ""
 "\n"
 "<computeroutput>$ </computeroutput><userinput>./easyrsa init-pki\n"
@@ -622,10 +555,7 @@ msgid ""
 "Your newly created PKI dir is: /home/debian/pki-falcot/pki\n"
 "\n"
 "</computeroutput>"
-msgstr ""
-"\n"
-"<computeroutput>$ </computeroutput><userinput>make-cadir pki-falcot\n"
-"</userinput><computeroutput>$ </computeroutput><userinput>cd pki-falcot</userinput>"
+msgstr "\n<computeroutput>$ </computeroutput><userinput>./easyrsa init-pki\n</userinput><computeroutput>\n\ninit-pki complete; you may now create a CA or requests.\nYour newly created PKI dir is: /home/debian/pki-falcot/pki\n\n</computeroutput>"
 
 #, fuzzy
 #| msgid "The next step is the creation of the CA's key pair itself (the two parts of the key pair will be stored under <filename>keys/ca.crt</filename> and <filename>keys/ca.key</filename> during this step):"
