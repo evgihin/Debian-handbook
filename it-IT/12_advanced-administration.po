@@ -2,7 +2,7 @@
 # Beatrice Torracca <beatricet@libero.it>, 2014.
 # Marco De Luca <marcodeluca@hotmail.it>, 2015.
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-07-30 18:23+0200\nPO-Revision-Date: 2022-12-03 16:05+0000\nLast-Translator: Davide Prina <Davide.Prina@tuta.io>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/it/>\nLanguage: it-IT\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.15-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-07-30 18:23+0200\nPO-Revision-Date: 2022-12-03 21:38+0000\nLast-Translator: Davide Prina <Davide.Prina@tuta.io>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/debian-handbook/12_advanced-administration/it/>\nLanguage: it-IT\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.15-dev\n"
 
 msgid "RAID"
 msgstr "RAID"
@@ -1156,10 +1156,8 @@ msgstr "Si sarebbe potuto impostare un unico volume RAID-1 come volume fisico pe
 msgid "The rationale for the first split (<filename>md0</filename> vs. the others) is about data safety: data written to both elements of a RAID-1 mirror are exactly the same, and it is therefore possible to bypass the RAID layer and mount one of the disks directly. In case of a kernel bug, for instance, or if the LVM metadata become corrupted, it is still possible to boot a minimal system to access critical data such as the layout of disks in the RAID and LVM volumes; the metadata can then be reconstructed and the files can be accessed again, so that the system can be brought back to its nominal state."
 msgstr "Il motivo della prima suddivisione (<filename>md0</filename> separato dagli altri) è la sicurezza dei dati: i dati scritti su entrambi gli elementi di un mirror RAID-1 sono esattamente gli stessi ed è quindi possibile aggirare il livello RAID e montare uno dei dischi direttamente. In caso di un bug nel kernel, per esempio, o se i metadati LVM si rovinano, è comunque possibile avviare un sistema minimale per avere accesso ai dati critici come la struttura dei dischi nei volumi RAID e LVM; i metadati possono poi essere ricostruiti e i file resi di nuovo accessibili, cosicché il sistema può essere riportato al suo stato normale."
 
-#, fuzzy
-#| msgid "The rationale for the second split (<filename>md1</filename> vs. <filename>md2</filename>) is less clear-cut, and more related to acknowledging that the future is uncertain. When the workstation is first assembled, the exact storage requirements are not necessarily known with perfect precision; they can also evolve over time. In our case, we can't know in advance the actual storage space requirements for video rushes and complete video clips. If one particular clip needs a very large amount of rushes, and the VG dedicated to redundant data is less than halfway full, we can re-use some of its unneeded space. We can remove one of the physical volumes, say <filename>md2</filename>, from <filename>vg_raid</filename> and either assign it to <filename>vg_bulk</filename> directly (if the expected duration of the operation is short enough that we can live with the temporary drop in performance), or undo the RAID setup on <filename>md2</filename> and integrate its components <filename>sda6</filename> and <filename>sdc6</filename> into the bulk VG (which grows by 200 GB instead of 100 GB); the <filename>lv_rushes</filename> logical volume can then be grown according to requirements."
 msgid "The rationale for the second split (<filename>md2</filename> vs. <filename>md3</filename>) is less clear-cut, and more related to acknowledging that the future is uncertain. When the workstation is first assembled, the exact storage requirements are not necessarily known with perfect precision; they can also evolve over time. In our case, we can't know in advance the actual storage space requirements for video rushes and complete video clips. If one particular clip needs a very large amount of rushes, and the VG dedicated to redundant data is less than halfway full, we can re-use some of its unneeded space. We can remove one of the physical volumes, say <filename>md3</filename>, from <filename>vg_raid</filename> and either assign it to <filename>vg_bulk</filename> directly (if the expected duration of the operation is short enough that we can live with the temporary drop in performance), or undo the RAID setup on <filename>md3</filename> and integrate its components <filename>sda5</filename> and <filename>sdc5</filename> into the bulk VG (which grows by 600 GB instead of 300 GB); the <filename>lv_rushes</filename> logical volume can then be grown according to requirements."
-msgstr "Il motivo della seconda suddivisione (<filename>md1</filename> separato da <filename>md2</filename>) è meno evidente e più collegato all'accettazione del fatto che il futuro è incerto. Quando la postazione di lavoro viene assemblata all'inizio, i requisiti di spazio su disco non sono necessariamente noti con precisione assoluta; inoltre questi possono evolvere nel tempo. In questo caso, non si può conoscere in anticipo gli effettivi requisiti di spazio per gli spezzoni di video ed i video completi. Se un particolare video necessita di una grande quantità di spezzoni e il VG dedicato ai dati ridondanti è pieno per meno della metà, si può riutilizzare parte del suo spazio non usato. Si può rimuovere uno dei volumi fisici, ad esempio <filename>md2</filename>, da <filename>vg_raid</filename> e assegnarlo direttamente a <filename>vg_bulk</filename> (se la durata attesa dell'operazione è abbastanza breve da poter convivere con il temporaneo calo di prestazioni) o disfare l'impostazione RAID su <filename>md2</filename> e integrare le sue componenti <filename>sda6</filename> e <filename>sdc6</filename> nel VG grande (che cresce di 200 GB invece di 100 GB); il volume logico <filename>lv_rushes</filename> può quindi essere allargato secondo necessità."
+msgstr "Il motivo della seconda suddivisione (<filename>md2</filename> vs. <filename>md3</filename>) è meno evidente e più collegato all'accettazione del fatto che il futuro è incerto. Quando la postazione di lavoro viene inizialmente installata, i requisiti esatti di archiviazione non sono necessariamente noti con precisione perfetta; inoltre questi possono evolvere nel tempo. In questo caso, non si può conoscere in anticipo gli effettivi requisiti di spazio per gli spezzoni di video ed i video completi. Se un particolare video necessita di una grande quantità di spezzoni e il VG dedicato ai dati ridondanti è pieno per meno della metà, si può riutilizzare parte del suo spazio non usato. Si può rimuovere uno dei volumi fisici, ad esempio <filename>md3</filename>, da <filename>vg_raid</filename> e assegnarlo direttamente a <filename>vg_bulk</filename> (se la durata attesa dell'operazione è abbastanza breve da poter convivere con il temporaneo calo di prestazioni) o annullare l'impostazione RAID su <filename>md3</filename> e integrare le sue componenti <filename>sda5</filename> e <filename>sdc5</filename> nel VG di grosse dimensioni (che cresce di 600 GB invece di 300 GB); il volume logico <filename>lv_rushes</filename> può quindi essere allargato secondo necessità."
 
 msgid "<primary>virtualization</primary>"
 msgstr "<primary>virtualizzazione</primary>"
@@ -1200,15 +1198,11 @@ msgstr "Bochs è un'altra macchina virtuale libera, ma emula soltanto le archite
 msgid "VMWare is a proprietary virtual machine; being one of the oldest out there, it is also one of the most widely-known. It works on principles similar to QEMU. VMWare proposes advanced features such as “snapshotting“ a running virtual machine. <ulink type=\"block\" url=\"https://vmware.com/\" />"
 msgstr "VMWare è una macchina virtuale proprietaria; essendo una delle più vecchie in circolazione, è anche una delle più conosciute. Funziona in modo simile a QEMU. VMWare propone funzionalità avanzate, come immagini istantanee di una macchina virtuale in esecuzione. <ulink type=\"block\" url=\"https://vmware.com/\" />"
 
-#, fuzzy
-#| msgid "VirtualBox is a virtual machine that is mostly free software (some extra components are available under a proprietary license). Unfortunately it is in Debian's “contrib” section because it includes some precompiled files that cannot be rebuilt without a proprietary compiler. While younger than VMWare and restricted to the i386 and amd64 architectures, it still includes some snapshotting and other interesting features. <ulink type=\"block\" url=\"http://www.virtualbox.org/\" />"
 msgid "VirtualBox is a virtual machine that is mostly free software (some extra components are available under a proprietary license). Unfortunately it is in Debian's “contrib” section because it includes some precompiled files that cannot be rebuilt without a proprietary compiler and it currently only resides in Debian Unstable as Oracle's policies make it impossible to keep it secure in a Debian stable release (see <ulink url=\"https://bugs.debian.org/794466\">#794466</ulink>). While younger than VMWare and restricted to the i386 and amd64 architectures, it still includes some “snapshotting“ and other interesting features. <ulink type=\"block\" url=\"https://www.virtualbox.org/\" />"
-msgstr "VirtualBox è una macchina virtuale che è perlopiù software libero (sebbene alcune componenti aggiuntive siano sotto una licenza proprietaria). Purtoppo è nella sezione \"contrib\" di Debian poichè include alcuni file precompilati che non possono essere ricostruiti senza un compilatore proprietario. Sebbene sia più giovane di VMWare e limitata alle architetture i386 e amd64, include già la possibilità di effettuare immagini istantanee ed altre caratteristiche interessanti. <ulink type=\"block\" url=\"http://www.virtualbox.org/\" />"
+msgstr "VirtualBox è una macchina virtuale che è perlopiù software libero (sebbene alcune componenti aggiuntive siano sotto una licenza proprietaria). Purtroppo è nella sezione \"contrib\" di Debian poiché include alcuni file precompilati che non possono essere ricostruiti senza un compilatore proprietario e attualmente è presente solo in Debian Unstable dato che le politiche di Oracle rendono impossibile mantenerlo sicuro in un rilascio stabile di Debian (vedere <ulink url=\"https://bugs.debian.org/794466\">#794466</ulink>). Sebbene sia più giovane di VMWare e limitata alle architetture i386 e amd64, include già la possibilità di effettuare immagini istantanee ed altre caratteristiche interessanti. <ulink type=\"block\" url=\"https://www.virtualbox.org/\" />"
 
-#, fuzzy
-#| msgid "<emphasis>GOING FURTHER</emphasis> Mass virtualization"
 msgid "<emphasis>HARDWARE</emphasis> Virtualization support"
-msgstr "<emphasis>APPROFONDIMENTO</emphasis> Virtualizzazione di massa"
+msgstr "<emphasis>HARDWARE</emphasis> Supporto alla virtualizzazione"
 
 msgid "Some computers might not have hardware virtualization support; when they do, it should be enabled in the BIOS."
 msgstr "Alcuni computer potrebbero non avere il supporto per la virtualizzazione hardware; quando disponibile, dev'essere abilitato nel BIOS."
@@ -1217,46 +1211,34 @@ msgid "To know if you have virtualization support enabled, you can check if the 
 msgstr "Per sapere se è abilitato il supporto per la virtualizzazione, si può verificare se il relativo flag è abilitato con <command>grep</command>. Se il seguente comando restituisce del testo, significa che il supporto alla virtualizzazione è abilitato:"
 
 msgid "For Intel processors you can execute <command>grep vmx /proc/cpuinfo</command> to check for Intel's Virtual Machine Extensions."
-msgstr ""
+msgstr "Per processori Intel è possibile eseguire <command>grep vmx /proc/cpuinfo</command> per controllare se sono presenti le Virtual Machine Extensions (estensioni della macchina virtuale) di Intel."
 
 msgid "For AMD processors you can execute <command>grep svm /proc/cpuinfo</command> to check for AMD's Secure Virtual Machine."
-msgstr ""
+msgstr "Per processori AMD è possibile eseguire <command>grep svm /proc/cpuinfo</command> per verificare la presenza della Secure Virtual Machine (macchina virtuale sicura) di AMD."
 
 msgid "If that is not the case, you can access the BIOS of your system and check for entries like “Intel Virtualization Technology”/“Intel VT-x” or “SVM mode” (AMD) - usually to be found in the CPU configuration in the Advanced section."
-msgstr ""
+msgstr "Se questo non è il caso, è possibile accedere al BIOS del sistema e verificare la presenza di voci del tipo “Intel Virtualization Technology”/“Intel VT-x” o “SVM mode” (AMD) che di solito si trovano nella configurazione della CPU nella sezione Advanced."
 
-#, fuzzy
-#| msgid "<primary>virtualization</primary>"
 msgid "<primary>paravirtualization</primary>"
-msgstr "<primary>virtualizzazione</primary>"
+msgstr "<primary>paravirtualizzazione</primary>"
 
-#, fuzzy
-#| msgid "<primary>libvirt</primary>"
 msgid "<primary>hypervisor</primary>"
-msgstr "<primary>libvirt</primary>"
+msgstr "<primary>hypervisor</primary>"
 
 msgid "Xen <indexterm><primary>Xen</primary></indexterm> is a “paravirtualization” solution. It introduces a thin abstraction layer, called a “hypervisor”, between the hardware and the upper systems; this acts as a referee that controls access to hardware from the virtual machines. However, it only handles a few of the instructions, the rest is directly executed by the hardware on behalf of the systems. The main advantage is that performances are not degraded, and systems run close to native speed; the drawback is that the kernels of the operating systems one wishes to use on a Xen hypervisor need to be adapted to run on Xen."
 msgstr "Xen <indexterm><primary>Xen</primary></indexterm> è una situazione di «paravirtualizzazione». Introduce un sottile strato di astrazione, chiamato «ipervisore», fra l'hardware e i sistemi superiori; ciò agisce come un arbitro che controlla l'accesso all'hardware dalle macchine virtuali. Tuttavia, questo gestisce solo alcune delle istruzioni, mentre il resto è eseguito direttamente dall'hardware per conto dei sistemi. Il vantaggio principale è che non c'è degrado di prestazioni e i sistemi girano a una velocità prossima a quella nativa; il difetto è che i kernel dei sistemi operativi che si vogliono usare su un ipervisore Xen devono essere adattati per girare su Xen."
 
-#, fuzzy
-#| msgid "<primary>deployment</primary>"
 msgid "<primary>dom0</primary>"
-msgstr "<primary>allestimento</primary>"
+msgstr "<primary>dom0</primary>"
 
-#, fuzzy
-#| msgid "<primary>deployment</primary>"
 msgid "<primary>domU</primary>"
-msgstr "<primary>allestimento</primary>"
+msgstr "<primary>domU</primary>"
 
-#, fuzzy
-#| msgid "<primary>installation</primary><secondary>automated installation</secondary>"
 msgid "<primary>virtualization</primary><secondary>host</secondary>"
-msgstr "<primary>installazione</primary><secondary>installazione automatica</secondary>"
+msgstr "<primary>virtualizzazione</primary><secondary>host</secondary>"
 
-#, fuzzy
-#| msgid "<primary>installation</primary><secondary>automated installation</secondary>"
 msgid "<primary>virtualization</primary><secondary>guest</secondary>"
-msgstr "<primary>installazione</primary><secondary>installazione automatica</secondary>"
+msgstr "<primary>virtualizzazione</primary><secondary>guest</secondary>"
 
 #, fuzzy
 #| msgid "Let's spend some time on terms. The hypervisor is the lowest layer, that runs directly on the hardware, even below the kernel. This hypervisor can split the rest of the software across several <emphasis>domains</emphasis>, which can be seen as so many virtual machines. One of these domains (the first one that gets started) is known as <emphasis>dom0</emphasis>, and has a special role, since only this domain can control the hypervisor and the execution of other domains. These other domains are known as <emphasis>domU</emphasis>. In other words, and from a user point of view, the <emphasis>dom0</emphasis> matches the “host” of other virtualization systems, while a <emphasis>domU</emphasis> can be seen as a “guest”."
