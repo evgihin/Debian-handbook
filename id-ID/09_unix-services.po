@@ -2,7 +2,7 @@
 # AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-09-27 17:55+0200\nPO-Revision-Date: 2022-12-08 22:46+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/09_unix-services/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.15-dev\n"
+msgstr "Project-Id-Version: 0\nPOT-Creation-Date: 2022-09-27 17:55+0200\nPO-Revision-Date: 2022-12-17 16:50+0000\nLast-Translator: Andika Triwidada <andika@gmail.com>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/debian-handbook/09_unix-services/id/>\nLanguage: id-ID\nMIME-Version: 1.0\nContent-Type: application/x-publican; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.15.1-dev\n"
 
 msgid "System boot"
 msgstr "Boot sistem"
@@ -77,15 +77,13 @@ msgid "When you boot the computer, the many messages scrolling by on the console
 msgstr "Ketika Anda mem-boot komputer, banyak pesan bergulir pada layar konsol yang menampilkan banyak inisialisasi dan konfigurasi otomatis yang sedang dieksekusi. Kadang-kadang Anda mungkin ingin mengubah sedikit bagaimana tahap ini bekerja, yang berarti bahwa Anda perlu untuk memahaminya dengan baik. Itulah tujuan dari bagian ini."
 
 msgid "On systems with a BIOS, first, the BIOS takes control of the computer, initializes the controllers and hardware, detects the disks, and bridges everything together. Then it looks up the <emphasis>Master Boot Record</emphasis> (MBR) of the first disk in the boot order and loads the code stored there (first stage). This code then launches the second stage and finally executes the bootloader."
-msgstr ""
+msgstr "Pada sistem dengan BIOS, pertama, BIOS mengambil kendali atas komputer, menginisialisasi pengontrol dan perangkat keras, mendeteksi disk, dan menjembatani semuanya bersama-sama. Kemudian mencari <emphasis>Master Boot Record</emphasis> (MBR) dari disk pertama dalam urutan boot dan memuat kode yang disimpan di sana (tahap pertama). Kode ini kemudian meluncurkan tahap kedua dan akhirnya mengeksekusi bootloader."
 
 msgid "In contrast to the BIOS, UEFI is more sophisticated, it knows filesystems and can read the partition tables. The interface searches the system storage for a partition labeled with a specific globally unique identifier (<acronym>GUID</acronym>) that marks it as the <acronym>EFI System Partition</acronym> (<acronym>ESP</acronym>), where the bootloaders, boot managers, UEFI shell, etc., are located, and launches the desired bootloader. If Secure Boot is enabled, the boot process will verify authenticity of the EFI binaries there by signature (thus <emphasis role=\"pkg\">grub-efi-<replaceable>arch</replaceable>-signed</emphasis> is required in this case). The UEFI specification also defines support for booting in legacy BIOS mode. This is called the <emphasis>Compatibility Support Module</emphasis> (<acronym>CSM</acronym>). If CSM is enabled, it will attempt to boot from a drive's MBR. However, many new systems do no longer support the CSM mode."
-msgstr ""
+msgstr "Berbeda dengan BIOS, UEFI lebih canggih, ia tahu sistem berkas dan dapat membaca tabel partisi. Antarmuka mencari penyimpanan sistem untuk partisi berlabel pengidentifikasi unik global (<acronym>GUID</acronym>) tertentu yang menandainya sebagai <acronym>EFI System Partition</acronym> (<acronym>ESP</acronym>), tempat bootloader, boot manager, UEFI shell, dll., berada, dan meluncurkan bootloader yang diinginkan. Jika Boot Aman diaktifkan, proses boot akan memverifikasi keaslian biner EFI di sana dengan tanda tangan (sehingga <emphasis role=\"pkg\">grub-efi-<replaceable>arch</replaceable>-signed</emphasis> diperlukan dalam kasus ini). Spesifikasi UEFI juga mendefinisikan dukungan untuk boot dalam mode BIOS lama. Ini disebut <emphasis>Compatibility Support Module</emphasis> (<acronym>CSM</acronym>/Modul Dukungan Kompatibilitas). Jika CSM diaktifkan, CSM akan mencoba boot dari MBR drive. Namun, banyak sistem baru tidak lagi mendukung mode CSM."
 
-#, fuzzy
-#| msgid "First, the BIOS takes control of the computer, detects the disks, loads the <emphasis>Master Boot Record</emphasis>, and executes the bootloader. The bootloader takes over, finds the kernel on the disk, loads and executes it. The kernel is then initialized, and starts to search for and mount the partition containing the root filesystem, and finally executes the first program — <command>init</command>. Frequently, this “root partition” and this <command>init</command> are, in fact, located in a virtual filesystem that only exists in RAM (hence its name, “initramfs”, formerly called “initrd” for “initialization RAM disk”). This filesystem is loaded in memory by the bootloader, often from a file on a hard drive or from the network. It contains the bare minimum required by the kernel to load the “true” root filesystem: this may be driver modules for the hard drive, or other devices without which the system cannot boot, or, more frequently, initialization scripts and modules for assembling RAID arrays, opening encrypted partitions, activating LVM volumes, etc. Once the root partition is mounted, the initramfs hands over control to the real init, and the machine goes back to the standard boot process."
 msgid "In both cases then the actual bootloader takes over, finds either a chained bootloader or the kernel on the disk, loads, and executes it. The kernel is then initialized, and starts to search for and mount the partition containing the root filesystem, and finally executes the first program — <command>init</command>. Frequently, this “root partition” and this <command>init</command> are, in fact, located in a virtual filesystem that only exists in RAM (hence its name, “initramfs”, formerly called “initrd” for “initialization RAM disk”). This filesystem is loaded in memory by the bootloader, often from a file on a hard drive or from the network. It contains the bare minimum required by the kernel to load the “true” root filesystem: this may be driver modules for the hard drive, or other devices without which the system cannot boot, or, more frequently, initialization scripts and modules for assembling RAID arrays, opening encrypted partitions, activating LVM volumes, etc. Once the root partition is mounted, the initramfs hands over control to the real init, and the machine goes back to the standard boot process."
-msgstr "Pertama, BIOS mengambil kendali komputer, mendeteksi disk, memuat <emphasis>Master Boot Record</emphasis>, dan mengeksekusi bootloader. Bootloader mengambil alih, menemukan kernel pada disk, memuat dan mengeksekusinya. Kernel kemudian diinisialisasi, dan mulai mencari dan me-mount partisi yang memuat sistem berkas root, dan akhirnya mengeksekusi program pertama — <command>init</command>. Seringkali, \"partisi root partisi\" ini dan =<command>init</command> ini, pada kenyataannya, terletak di sistem berkas virtual yang hanya ada dalam RAM (maka namanya, \"initramfs\", sebelumnya disebut \"initrd\" untuk \"initialization RAM disk\"). Sistem berkas ini dimuat ke dalam memori oleh bootloader, sering dari suatu berkas pada hard drive atau dari jaringan. Ini berisi minimal yang diperlukan oleh kernel untuk memuat sistem berkas root yang \"benar\": ini mungkin modul penggerak untuk hard drive, atau perangkat lain yang tanpanya sistem tidak bisa boot, atau, lebih sering, skrip inisialisasi dan modul untuk merakit larik RAID, membuka partisi yang dienkripsi, mengaktifkan volume LVM, dll. Setelah partisi root di-mount, initramfs menyerahkan kontrol untuk init nyata, dan mesin kembali ke proses boot standar."
+msgstr "Dalam kedua kasus kemudian bootloader yang sebenarnya mengambil alih, menemukan bootloader berantai atau kernel pada disk, memuat, dan mengeksekusinya. Kernel kemudian diinisialisasi, dan mulai mencari dan memasang partisi yang berisi sistem berkas root, dan akhirnya menjalankan program pertama — <command>init</command>. Sering kali, \"partisi root\" ini dan ini <command>init</command> pada kenyataannya, terletak di sistem berkas virtual yang hanya ada di RAM (karena itu namanya, \"initramfs\", sebelumnya disebut \"initrd\" untuk \"initialization RAM disk\"). Sistem berkas ini dimuat dalam memori oleh bootloader, seringkali dari berkas pada hard drive atau dari jaringan. Ini berisi minimum yang diperlukan oleh kernel untuk memuat sistem berkas root \"sebenarnya\": ini mungkin modul driver untuk hard drive, atau perangkat lain yang tanpanya sistem tidak dapat boot, atau, lebih sering, skrip inisialisasi dan modul untuk merakit larik RAID, membuka partisi terenkripsi, mengaktifkan volume LVM, dll. Setelah partisi root dipasang, initramfs menyerahkan kontrol ke init yang sebenarnya, dan mesin kembali ke proses boot standar."
 
 msgid "The systemd init system"
 msgstr "Sistem init systemd"
@@ -111,15 +109,11 @@ msgstr "<command>systemd</command> adalah ”sistem init” yang relatif baru, d
 msgid "<emphasis>ALTERNATIVE</emphasis> Other boot systems"
 msgstr "<emphasis>ALTERNATIF</emphasis> Sistem boot lain"
 
-#, fuzzy
-#| msgid "<primary>SSH tunnel</primary><seealso>VPN</seealso>"
 msgid "<primary>boot systems</primary><seealso><command>init</command></seealso>"
-msgstr "<primary>SSH tunnel</primary><seealso>VPN</seealso>"
+msgstr "<primary>sistem boot</primary><seealso><command>init</command></seealso>"
 
-#, fuzzy
-#| msgid "This book describes the boot system used by default in Debian <emphasis role=\"distribution\">Buster</emphasis> (as implemented by the <emphasis role=\"pkg\">systemd</emphasis> package), as well as the previous default, <emphasis role=\"pkg\">sysvinit</emphasis>, which is derived and inherited from <emphasis>System V</emphasis> Unix systems; there are others."
 msgid "This book describes the boot system used by default in Debian since <emphasis role=\"distribution\">Buster</emphasis> (as implemented by the <emphasis role=\"pkg\">systemd</emphasis> package), as well as the previous default, <emphasis role=\"pkg\">sysvinit</emphasis>, which is derived and inherited from <emphasis>System V</emphasis> Unix systems; there are others."
-msgstr "Buku ini menjelaskan sistem boot yang dipakai secara baku dalam Debian <emphasis role=\"distribution\">Buster</emphasis> (yang diimplementasikan oleh paket <emphasis role=\"pkg\">systemd</emphasis>), maupun baku sebelumnya, <emphasis role=\"pkg\">sysvinit</emphasis>, yang diturunkan dan diwariskan dari sistem Unix <emphasis>System V</emphasis>; ada juga yang lain."
+msgstr "Buku ini menjelaskan sistem boot yang dipakai secara baku dalam Debian sejak <emphasis role=\"distribution\">Buster</emphasis> (yang diimplementasikan oleh paket <emphasis role=\"pkg\">systemd</emphasis>), maupun baku sebelumnya, <emphasis role=\"pkg\">sysvinit</emphasis>, yang diturunkan dan diwariskan dari sistem Unix <emphasis>System V</emphasis>; ada juga yang lain."
 
 msgid "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">upstart</emphasis></secondary>"
 msgstr "<primary><command>init</command></primary><secondary><emphasis role=\"pkg\">upstart</emphasis></secondary>"
@@ -133,10 +127,8 @@ msgstr "<primary><command>init</command></primary><secondary><emphasis role=\"pk
 msgid "<command>openrc</command> is a dependency based service manager. It was originally written for the Gentoo project, but it aims at being platform agnostic. It maintains compatibility with the System V init system and provides support for booting, changing runlevels, starting and stopping services (in parallel), and shutting down."
 msgstr "<command>OpenRC</command> adalah manajer layanan berbasis dependensi. Awalnya ditulis untuk proyek Gentoo, tetapi bertujuan untuk menjadi platform agnostik. Ini mempertahankan kompatibilitas dengan sistem init Sistem V dan memberikan dukungan untuk boot, mengubah runlevel, memulai dan menghentikan layanan (secara paralel), dan mematikan."
 
-#, fuzzy
-#| msgid "There are also other systems and other operating modes, such as <command>runit</command> or <command>minit</command>, but they are relatively specialized and not widespread."
 msgid "There are also other systems and other operating modes, such as <command>file-rc</command>, <command>runit</command>, or <command>minit</command>, but some of them are relatively specialized and not widespread."
-msgstr "Ada juga sistem-sistem lain dan mode-mode operasi lain, seperti misalnya <command>runit</command> atau <command>minit</command>, tapi mereka relatif khusus dan tidak meluas."
+msgstr "Ada juga sistem-sistem lain dan mode-mode operasi lain, seperti misalnya <command>file-rc</command>, <command>runit</command>, atau <command>minit</command>, tapi mereka relatif khusus dan tidak meluas."
 
 msgid "Boot sequence of a computer running Linux with systemd"
 msgstr "Urutan boot dari komputer yang menjalankan Linux dengan systemd"
@@ -144,10 +136,8 @@ msgstr "Urutan boot dari komputer yang menjalankan Linux dengan systemd"
 msgid "<emphasis>SPECIFIC CASE</emphasis> Booting from the network"
 msgstr "<emphasis>KASUS SPESIFIK</emphasis> Boot dari jaringan"
 
-#, fuzzy
-#| msgid "In some configurations, the BIOS may be configured not to execute the MBR, but to seek its equivalent on the network, making it possible to build computers without a hard drive, or which are completely reinstalled on each boot. This option is not available on all hardware and it generally requires an appropriate combination of BIOS and network card."
 msgid "In some configurations, the system may be configured not to execute code from the physical hardware, but to seek its equivalent on the network, making it possible to build computers without a hard drive, or which are completely reinstalled on each boot. This option is not available on all hardware and it generally requires an appropriate combination of firmware and network card."
-msgstr "Dalam beberapa konfigurasi, BIOS mungkin dikonfigurasi untuk tidak menjalankan MBR, tapi untuk mencari yang setara di jaringan, sehingga memungkinkan untuk membangun komputer tanpa hard drive, atau yang sepenuhnya diinstal ulang pada setiap boot. Opsi ini tidak tersedia pada semua perangkat keras dan umumnya memerlukan kombinasi kartu BIOS dan jaringan yang sesuai."
+msgstr "Dalam beberapa konfigurasi, BIOS mungkin dikonfigurasi untuk tidak menjalankan MBR dari perangkat keras fisik, tapi untuk mencari yang setara di jaringan, sehingga memungkinkan untuk membangun komputer tanpa hard drive, atau yang sepenuhnya dipasang ulang pada setiap boot. Opsi ini tidak tersedia pada semua perangkat keras dan umumnya memerlukan kombinasi kartu BIOS dan jaringan yang sesuai."
 
 msgid "Booting from the network can be used to launch the <command>debian-installer</command> or FAI (see <xref linkend=\"sect.installation-methods\" />)."
 msgstr "Boot dari jaringan dapat digunakan untuk meluncurkan <command>debian-installer</command> atau FAI (lihat <xref linkend=\"sect.installation-methods\" />."
@@ -158,10 +148,8 @@ msgstr "<emphasis>KEMBALI KE DASAR</emphasis> Proses, suatu instansi program"
 msgid "<primary>process</primary>"
 msgstr "<primary>proses</primary>"
 
-#, fuzzy
-#| msgid "A process is the representation in memory of a running program. It includes all of the information necessary for the proper execution of the software (the code itself, but also the data that it has in memory, the list of files that it has opened, the network connections it has established, etc.). A single program may be instantiated into several processes, not necessarily running under different user IDs."
 msgid "A process is the representation of a running program in memory. It includes all of the information necessary for the proper execution of the software (the code itself, but also the data that it has in memory, the list of files that it has opened, the network connections it has established, etc.). A single program may be instantiated into several processes, not necessarily running under different user IDs."
-msgstr "Sebuah proses adalah representasi dalam memori dari suau program yang sedang berjalan. Ini mencakup semua informasi yang diperlukan untuk menjalankan perangkat lunak dengan benar (kode itu sendiri, juga data yang dimilikinya dalam memori, daftar berkas yang telah dibukanya, koneksi jaringan yang telah dijalin, dll.). Satu program dapat diinstansikan ke beberapa proses, tidak perlu berjalan di bawah ID pengguna yang berbeda."
+msgstr "Sebuah proses adalah representasi dalam memori dari suatu program yang sedang berjalan. Ini mencakup semua informasi yang diperlukan untuk menjalankan perangkat lunak dengan benar (kode itu sendiri, juga data yang dimilikinya dalam memori, daftar berkas yang telah dibukanya, koneksi jaringan yang telah dijalin, dll.). Satu program dapat diinstansikan ke beberapa proses, tidak perlu berjalan di bawah ID pengguna yang berbeda."
 
 msgid "<emphasis>SECURITY</emphasis> Using a shell as <command>init</command> to gain root rights"
 msgstr "<emphasis>KEAMANAN</emphasis> Memakai sebuah shell sebagai <command>init</command> untuk mendapatkan hak root"
@@ -178,10 +166,8 @@ msgstr "Sebarang orang yang dapat mengakses komputer bisa menekan tombol <keycap
 msgid "To prevent this, you can protect the bootloader itself with a password. You might also think about protecting access to the BIOS (a password protection mechanism is almost always available), without which a malicious intruder could still boot the machine on a removable media containing its own Linux system, which they could then use to access data on the computer's hard drives."
 msgstr "Untuk mencegah hal ini, Anda dapat melindungi bootloader sendiri dengan kata sandi. Anda juga mungkin berpikir tentang melindungi akses ke BIOS (mekanisme perlindungan sandi hampir selalu tersedia), yang tanpanya penyusup jahat masih bisa mem-boot mesin pada media lepas-pasang yang berisi sistem Linux sendiri, yang kemudian dapat digunakan untuk mengakses data pada hard drive komputer."
 
-#, fuzzy
-#| msgid "Finally, be aware that most BIOS have a generic password available. Initially intended for troubleshooting for those who have forgotten their password, these passwords are now public and available on the Internet (see for yourself by searching for “generic BIOS passwords” in a search engine). All of these protections will thus impede unauthorized access to the machine without being able to completely prevent it. There is no reliable way to protect a computer if the attacker can physically access it; they could dismount the hard drives to connect them to a computer under their own control anyway, or even steal the entire machine, or erase the BIOS memory to reset the password…"
 msgid "Finally, be aware that most BIOS/EFI implementations have a generic password available. Initially intended for troubleshooting for those who have forgotten their password, these passwords are now public and available on the Internet (see for yourself by searching for “generic BIOS passwords” in a search engine). All of these protections will thus impede unauthorized access to the machine without being able to completely prevent it. There is no reliable way to protect a computer if the attacker can physically access it; they could dismount the hard drives to connect them to a computer under their own control anyway, or even steal the entire machine, or erase the BIOS memory to reset the password…"
-msgstr "Akhirnya, sadarilah bahwa kebanyakan BIOS memiliki password generik. Awalnya dimaksudkan untuk pemecahan masalah bagi mereka yang telah lupa password, password ini sekarang umum dan tersedia di Internet (lihat sendiri dengan mencari \"password BIOS generik\" di mesin pencari). Semua perlindungan ini justru akan menghambat akses tidak sah ke mesin tanpa bisa sepenuhnya mencegah itu. Tidak ada cara yang handal untuk melindungi komputer jika penyerang dapat secara fisik mengakses mereka; mereka bisa melepas hard drive untuk menghubungkan mereka ke komputer di bawah kendali mereka sendiri, atau bahkan mencuri seluruh mesin, atau menghapus memori BIOS untuk me-reset password…"
+msgstr "Akhirnya, sadarilah bahwa kebanyakan BIOS memiliki kata sandi generik. Awalnya dimaksudkan untuk pemecahan masalah bagi mereka yang telah lupa kata sandi, kata sandi ini sekarang umum dan tersedia di Internet (lihat sendiri dengan mencari \"kata sandi BIOS generik\" di mesin pencari). Semua perlindungan ini justru akan menghambat akses tidak sah ke mesin tanpa bisa sepenuhnya mencegah itu. Tidak ada cara yang handal untuk melindungi komputer jika penyerang dapat secara fisik mengaksesnya; mereka bisa melepas hard drive untuk menghubungkan mereka ke komputer di bawah kendali mereka sendiri, atau bahkan mencuri seluruh mesin, atau menghapus memori BIOS untuk me-reset kata sandi…"
 
 msgid "Systemd executes several processes, in charge of setting up the system: keyboard, drivers, filesystems, network, services. It does this while keeping a global view of the system as a whole, and the requirements of the components. Each component is described by a “unit file” (sometimes more); the general syntax is derived from the widely-used “*.ini files“ syntax, with <literal><replaceable>key</replaceable> = <replaceable>value</replaceable></literal> pairs grouped between <literal>[<replaceable>section</replaceable>]</literal> headers. Unit files are stored under <filename>/lib/systemd/system/</filename> and <filename>/etc/systemd/system/</filename>; they come in several flavors, but we will focus on “services” and “targets” here."
 msgstr "Systemd mengeksekusi beberapa proses, yang bertanggung jawab menyiapkan sistem: papan ketik, driver, sistem berkas, jaringan, layanan. Itu melakukan hal ini sambil menyimpan pandangan global sistem secara keseluruhan, serta kebutuhan komponen-komponen. Masing-masing komponen digambarkan oleh ”berkas unit” (kadang-kadang lebih); sintaks yang umum diturunkan dari sintaks ”berkas *.ini” yang banyak digunakan, dengan pasangan-pasangan <literal><replaceable>kunci</replaceable> = <replaceable>nilai</replaceable></literal> dikelompokkan antara header-header <literal>[<replaceable>section</replaceable>]</literal>. Berkas unit disimpan di bawah <filename>/lib/systemd/sistem/</filename> dan <filename>/etc/systemd/system/</filename>; mereka datang dalam beberapa rasa, tapi kami akan fokus pada ”layanan” dan ”target” di sini."
@@ -195,10 +181,8 @@ msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/sy
 msgid "<primary>service</primary><secondary><filename>ssh.service</filename></secondary>"
 msgstr "<primary>service</primary><secondary><filename>ssh.service</filename></secondary>"
 
-#, fuzzy
-#| msgid "A systemd “service file” describes a process managed by systemd. It contains roughly the same information as old-style init-scripts, but expressed in a declaratory (and much more concise) way. Systemd handles the bulk of the repetitive tasks (starting and stopping the process, checking its status, logging, dropping privileges, and so on), and the service file only needs to fill in the specifics of the process. For instance, here is the service file for SSH:"
 msgid "A systemd “<filename>.service</filename> file” describes a process managed by systemd. It contains roughly the same information as old-style init-scripts, but expressed in a declaratory (and much more concise) way. Systemd handles the bulk of the repetitive tasks (starting and stopping the process, checking its status, logging, dropping privileges, and so on), and the service file only needs to fill in the specifics of the process. For instance, here is the service file for SSH:"
-msgstr "Suatu ”berkas layanan” systemd menggambarkan proses yang dikelola oleh systemd. Itu kurang lebih berisi informasi yang sama seperti init-script gaya lama, tetapi dinyatakan dalam cara yang deklaratif (dan jauh lebih ringkas). Systemd menangani sebagian besar tugas-tugas yang berulang (memulai dan menghentikan proses, memeriksa status, mencatat log, menurunkan hak, dan sebagainya), dan berkas layanan hanya perlu mengisi spesifik dari proses. Sebagai contoh, berikut adalah berkas layanan untuk SSH:"
+msgstr "Suatu ”berkas <filename>.service</filename>” systemd menggambarkan proses yang dikelola oleh systemd. Itu kurang lebih berisi informasi yang sama seperti init-script gaya lama, tetapi dinyatakan dalam cara yang deklaratif (dan jauh lebih ringkas). Systemd menangani sebagian besar tugas-tugas yang berulang (memulai dan menghentikan proses, memeriksa status, mencatat log, menurunkan hak, dan sebagainya), dan berkas layanan hanya perlu mengisi spesifik dari proses. Sebagai contoh, berikut adalah berkas layanan untuk SSH:"
 
 msgid ""
 "[Unit]\n"
@@ -226,15 +210,13 @@ msgid ""
 msgstr "[Unit]\nDescription=OpenBSD Secure Shell server\nDocumentation=man:sshd(8) man:sshd_config(5)\nAfter=network.target auditd.service\nConditionPathExists=!/etc/ssh/sshd_not_to_be_run\n\n[Service]\nEnvironmentFile=-/etc/default/ssh\nExecStartPre=/usr/sbin/sshd -t\nExecStart=/usr/sbin/sshd -D $SSHD_OPTS\nExecReload=/usr/sbin/sshd -t\nExecReload=/bin/kill -HUP $MAINPID\nKillMode=process\nRestart=on-failure\nRestartPreventExitStatus=255\nType=notify\nRuntimeDirectory=sshd\nRuntimeDirectoryMode=0755\n\n[Install]\nWantedBy=multi-user.target\nAlias=sshd.service"
 
 msgid "The <literal>[Unit]</literal> section contains generic information about the service, like its description and manual page resources, as well as relations (dependency and order) to other services. The <literal>[Service]</literal> part contains the declarations related to the service execution (starting, stopping, killing, restarting), directories and configuration file(s) used. The last section, <literal>[Install]</literal>, again carries generic information into which targets to install the service and, in this case, the alias that can be used instead of the service name. As you can see, there is very little code in there, only declarations. Systemd takes care of displaying progress reports, keeping track of the processes, and even restarting them when needed. The syntax of these files is fully described in several manual pages (e.g. <citerefentry><refentrytitle>systemd.service</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.unit</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.exec</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, etc.)."
-msgstr ""
+msgstr "Bagian <literal>[Unit]</literal> berisi informasi umum tentang layanan, seperti deskripsi dan sumber daya halaman manualnya, serta hubungan (ketergantungan dan urutan) ke layanan lain. Bagian <literal>[Service]</literal> berisi deklarasi yang terkait dengan eksekusi layanan (memulai, menghentikan, mematikan, memulai ulang), direktori, dan berkas konfigurasi yang digunakan. Bagian terakhir, <literal>[Install]</literal>, sekali lagi membawa informasi umum ke mana target untuk memasang layanan dan, dalam hal ini, alias yang dapat digunakan sebagai pengganti nama layanan. Seperti yang Anda lihat, hanya ada sedikit kode di sana, hanya deklarasi. Systemd menangani menampilkan laporan kemajuan, melacak proses, dan bahkan memulai ulang saat diperlukan. Sintaks berkas-berkas ini sepenuhnya dijelaskan dalam beberapa halaman manual (misalnya <citerefentry><refentrytitle>systemd.service</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.unit</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, <citerefentry><refentrytitle>systemd.exec</refentrytitle> <manvolnum>5</manvolnum></citerefentry>, dsb.)."
 
 msgid "<primary><command>systemd</command></primary><secondary><filename>.target</filename> file</secondary>"
 msgstr "<primary><command>systemd</command></primary><secondary>berkas <filename>.target</filename></secondary>"
 
-#, fuzzy
-#| msgid "A systemd “target file” describes a state of the system, where a set of services are known to be operational. It can be thought of as an equivalent of the old-style runlevel. One of the targets is <literal>local-fs.target</literal>; when it is reached, the rest of the system can assume that all local filesystems are mounted and accessible. Other targets include <literal>network-online.target</literal> and <literal>sound.target</literal>. The dependencies of a target can be listed either within the target file (in the <literal>Requires=</literal> line), or using a symbolic link to a service file in the <literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal> directory. For instance, <filename>/etc/systemd/system/printer.target.wants/</filename> contains a link to <filename>/lib/systemd/system/cups.service</filename>; systemd will therefore ensure CUPS is running in order to reach <literal>printer.target</literal>."
 msgid "A systemd “<filename>.target</filename> file” describes a state of the system where a set of services are known to be operational. It can be thought of as an equivalent of the old-style runlevel. One of the pre-defined targets is <literal>local-fs.target</literal>; when it is reached, the rest of the system can assume that all local filesystems are mounted and accessible. Other targets include <literal>network-online.target</literal> and <literal>sound.target</literal> (for a full list of special targets see <citerefentry><refentrytitle>systemd.special</refentrytitle> <manvolnum>7</manvolnum></citerefentry>). The dependencies of a target can be listed either within the target file (in the <literal>Requires=</literal> line), or using a symbolic link to a service file in the <literal>/lib/systemd/system/<replaceable>targetname</replaceable>.target.wants/</literal> directory. For instance, <filename>/etc/systemd/system/printer.target.wants/</filename> contains a link to <filename>/lib/systemd/system/cups.service</filename>; systemd will therefore ensure CUPS is running in order to reach <literal>printer.target</literal>."
-msgstr "Suatu \"berkas target\" Systemd menggambarkan keadaan sistem, dimana satu set layanan diketahui beroperasi. Ini dapat dianggap sebagai setara runlevel gaya lama. Salah satu target adalah <literal>local-fs.target</literal>; ketika itu dicapai, sisa sistem bisa berasumsi bahwa seluruh sistem berkas lokal dikait dan dapat diakses. Target lain termasuk <literal>network-online.target</literal> dan <literal>sound.target</literal>. Dependensi target dapat dicantumkan baik dalam berkas target (di baris <literal>Requires</literal>), atau menggunakan symlink ke berkas layanan di direktori <literal>/lib/systemd/sistem/<replaceable>namatarget</replaceable>.target.wants/ </literal>. Sebagai contoh, <filename>/etc/systemd/system/printer.target.wants/</filename> berisi taut ke <filename>/lib/systemd/system/cups.service</filename>; systemd karena itu akan memastikan CUPS berjalan untuk mencapai <literal>printer.target</literal>."
+msgstr "Suatu \"berkas <filename>.target</filename>\" Systemd menggambarkan keadaan sistem, dimana satu set layanan diketahui beroperasi. Ini dapat dianggap sebagai setara runlevel gaya lama. Salah satu target adalah <literal>local-fs.target</literal>; ketika itu dicapai, sisa sistem bisa berasumsi bahwa seluruh sistem berkas lokal dikait dan dapat diakses. Target lain termasuk <literal>network-online.target</literal> dan <literal>sound.target</literal> (untuk daftar lengkap target khusus lihat <citerefentry><refentrytitle>systemd.special</refentrytitle> <manvolnum>7</manvolnum></citerefentry>). Dependensi target dapat dicantumkan baik dalam berkas target (di baris <literal>Requires=</literal>), atau menggunakan tautan simbolis ke berkas layanan di direktori <literal>/lib/systemd/system/<replaceable>nama_target</replaceable>.target.wants/</literal>. Misalnya, <filename>/etc/systemd/system/printer.target.wants/</filename> berisi tautan ke <filename>/lib/systemd/system/cups.service</filename>; oleh karena itu systemd akan memastikan CUPS berjalan untuk mencapai <literal>printer.target</literal>."
 
 msgid "Since unit files are declarative rather than scripts or programs, they cannot be run directly, and they are only interpreted by systemd; several utilities therefore allow the administrator to interact with systemd and control the state of the system and of each component."
 msgstr "Karena berkas unit deklaratif, bukan skrip atau program, mereka tidak dapat dijalankan secara langsung, dan mereka hanya ditafsirkan oleh systemd; beberapa utilitas karena itu memungkinkan administrator untuk berinteraksi dengan systemd dan mengendalikan keadaan sistem dan setiap komponen."
@@ -439,34 +421,26 @@ msgstr "Kami hanya menggambarkan kapabilitas systemd yang paling dasar dalam bag
 msgid "<primary><command>systemd</command></primary><secondary><filename>.socket</filename> file</secondary>"
 msgstr "<primary><command>systemd</command></primary><secondary>berkas <filename>.socket</filename></secondary>"
 
-#, fuzzy
-#| msgid "socket activation: a “socket” unit file can be used to describe a network or Unix socket managed by systemd; this means that the socket will be created by systemd, and the actual service may be started on demand when an actual connection attempt comes. This roughly replicates the feature set of <command>inetd</command>. See <citerefentry><refentrytitle>systemd.socket</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
 msgid "socket activation: a “socket” unit file can be used to describe a network or Unix socket managed by systemd; this means that the socket will be created by systemd, and the actual service may be started on demand when an actual connection attempt comes. This roughly replicates the feature set of <command>inetd</command>. See <citerefentry><refentrytitle>systemd.socket</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 msgstr "aktivasi soket: suatu berkas unit \"socket\" dapat digunakan untuk menggambarkan sebuah jaringan atau soket Unix yang dikelola oleh systemd; ini berarti bahwa soket akan diciptakan oleh systemd, dan layanan yang sebenarnya dapat dimulai saat diminta ketika datang upaya koneksi sebenarnya. Ini kurang lebih mereplikasi set fitur <command>inetd</command>. Lihat <citerefentry><refentrytitle>systemd.socket</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
 
 msgid "<primary><command>systemd</command></primary><secondary><filename>.timer</filename> file</secondary>"
 msgstr "<primary><command>systemd</command></primary><secondary>berkas <filename>.timer</filename></secondary>"
 
-#, fuzzy
-#| msgid "timers: a “timer” unit file describes events that occur with a fixed frequency or on specific times; when a service is linked to such a timer, the corresponding task will be executed whenever the timer fires. This allows replicating part of the <command>cron</command> features. See <citerefentry><refentrytitle>systemd.timer</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
 msgid "timers: a “timer” unit file describes events that occur with a fixed frequency or on specific times; when a service is linked to such a timer, the corresponding task will be executed whenever the timer fires. This allows replicating part of the <command>cron</command> features. See <citerefentry><refentrytitle>systemd.timer</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 msgstr "timer: suatu berkas unit \"timer\" menggambarkan peristiwa yang terjadi dengan frekuensi tetap atau pada waktu tertentu; ketika suatu layanan dikaitkan dengan sebuah timer, tugas terkait akan dijalankan setiap kali timer menembak. Hal ini memungkinkan mereplikasi sebagian dari fitur <command>cron</command>. Lihat <citerefentry><refentrytitle>systemd.timer</refentrytitle><manvolnum>5</manvolnum></citerefentry>."
 
 msgid "<primary><command>systemd</command></primary><secondary><filename>.network</filename> file</secondary>"
 msgstr "<primary><command>systemd</command></primary><secondary>berkas <filename>.network</filename></secondary>"
 
-#, fuzzy
-#| msgid "network: a “network“ unit file describes a network interface, which allows configuring such interfaces as well as expressing that a service depends on one particular interface being up."
 msgid "network: a “network“ unit file describes a network interface, which allows configuring such interfaces as well as expressing that a service depends on one particular interface being up. See <citerefentry><refentrytitle>systemd.network</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
-msgstr "jaringan: suatu berkas unit \"network\" menjelaskan sebuah antarmuka jaringan, yang memungkinkan konfigurasi antarmuka tersebut serta mengungkapkan bahwa suatu layanan bergantung kepada satu antarmuka tertentu yang hidup."
+msgstr "jaringan: suatu berkas unit \"network\" menjelaskan sebuah antarmuka jaringan, yang memungkinkan mengonfigurasi antarmuka tersebut serta mengungkapkan bahwa suatu layanan bergantung kepada satu antarmuka tertentu yang hidup. Lihat <citerefentry><refentrytitle>systemd.network</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 
 msgid "The System V init system"
 msgstr "Sistem init System V"
 
-#, fuzzy
-#| msgid "The System V init system (which we'll call init for brevity) executes several processes, following instructions from the <filename>/etc/inittab</filename> file. The first program that is executed (which corresponds to the <emphasis>sysinit</emphasis> step) is <command>/etc/init.d/rcS</command>, a script that executes all of the programs in the <filename>/etc/rcS.d/</filename> directory. <indexterm><primary><filename>/etc/init.d/rcS</filename></primary></indexterm> <indexterm><primary><filename>rcS</filename></primary></indexterm> <indexterm><primary><filename>/etc/init.d/rcS.d/</filename></primary></indexterm> <indexterm><primary><filename>rcS.d</filename></primary></indexterm>"
 msgid "The System V init system (which we'll call init for brevity) executes several processes, following instructions from the <filename>/etc/inittab</filename> file. The first program that is executed (which corresponds to the <emphasis>sysinit</emphasis> step) is <command>/etc/init.d/rcS</command>, a script that executes all of the programs in the <filename>/etc/rcS.d/</filename> directory."
-msgstr "Sistem init System V (yang akan kami namai init agar ringkas) mengeksekusi beberapa proses, mengikuti instruksi dari berkas <filename>/etc/inittab</filename>. Program pertama yang dijalankan (yang sesuai dengan langkah <emphasis>sysinit</emphasis>) adalah <command>/etc/init.d/rcS</command>, sebuah skrip yang menjalankan semua program di direktori <filename>/etc/rcS.d/</filename>. <indexterm><primary><filename>/etc/init.d/rcS</filename></primary></indexterm ><indexterm><primary><filename>rcS</filename></primary></indexterm> <indexterm><primary><filename>/etc/init.d/rcS.d/</filename></primary></indexterm> <indexterm><primary><filename>rcS.d</filename></primary></indexterm>"
+msgstr "Sistem init Sistem V (yang akan kita panggil init untuk singkatnya) menjalankan beberapa proses, mengikuti instruksi dari berkas <filename>/etc/inittab</filename>. Program pertama yang dijalankan (yang sesuai dengan langkah <emphasis>sysinit</emphasis>) adalah <command>/etc/init.d/rcS</command>, skrip yang mengeksekusi semua program di direktori <filename>/etc/rcS.d/</filename>."
 
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rcS</filename></secondary><seealso><emphasis role=\"pkg\">sysv-rc</emphasis></seealso>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/init.d/rcS</filename></secondary><seealso><emphasis role=\"pkg\">sysv-rc</emphasis></seealso>"
@@ -525,15 +499,11 @@ msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/mo
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modules-load.d/</filename></secondary>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/modules-load.d/</filename></secondary>"
 
-#, fuzzy
-#| msgid "Kernel modules also have options that can be configured by putting some files in <filename>/etc/modprobe.d/</filename>. These options are defined with directives like this: <literal>options <replaceable>module-name</replaceable> <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>. Several options can be specified with a single directive if necessary."
 msgid "You have already learned that kernel modules can be loaded during the start of the system by adding them to <filename>/etc/modules</filename> or a file below <filename>/etc/modules-load.d/</filename>. But modules can also have options that can be configured by putting some files in <filename>/etc/modprobe.d/</filename>. These options are defined with directives like this: <literal>options <replaceable>module-name</replaceable> <replaceable>option-name</replaceable>=<replaceable>option-value</replaceable></literal>. Several options can be specified with a single directive if necessary."
-msgstr "Modul kernel juga memiliki pilihan yang dapat dikonfigurasi dengan menempatkan beberapa berkas dalam <filename>/etc/modprobe.d/</filename>. Pilihan ini ditentukan dengan perintah seperti ini: <literal>options <replaceable>nama-modul</replaceable> <replaceable>nama-opsi</replaceable>=<replaceable>nilai-opsi</replaceable></literal>. Beberapa pilihan dapat dispesifikasikan dalam satu baris jika diperlukan."
+msgstr "Anda telah mengetahui bahwa modul kernel dapat dimuat selama awal sistem dengan menambahkannya ke <filename>/etc/modules</filename> atau berkas di bawah <filename>/etc/modules-load.d/</filename>. Tetapi modul juga dapat memiliki opsi yang dapat dikonfigurasi dengan meletakkan beberapa berkas di <filename>/etc/modprobe.d/</filename>. Opsi ini didefinisikan dengan direktif seperti ini: <literal>options <replaceable>nam_modul</replaceable> <replaceable>nama_opsi</replaceable>=<replaceable>nilai_opsi</replaceable></literal>. Beberapa opsi dapat ditentukan dengan satu direktif jika perlu."
 
-#, fuzzy
-#| msgid "These configuration files are intended for <command>modprobe</command> — the program that loads a kernel module with its dependencies (modules can indeed call other modules). This program is provided by the <emphasis role=\"pkg\">kmod</emphasis> package."
 msgid "These configuration files are intended for <command>modprobe</command> — the program that loads a kernel module with its dependencies (modules can indeed call other modules). To list all options of a module use the <command>modinfo -p <replaceable>module</replaceable></command> command. Both programs are provided by the <emphasis role=\"pkg\">kmod</emphasis> package together with other tools to handle modules."
-msgstr "Berkas konfigurasi ini ditujukan untuk <command>modprobe</command> — program yang memuat suatu modul kernel dengan dependensinya (modul memang dapat memanggil modul lain). Program ini disediakan oleh paket <emphasis role=\"pkg\">kmod</emphasis>."
+msgstr "File konfigurasi ini ditujukan untuk <command>Modprobe</command> — program yang memuat modul kernel dengan dependensinya (modul memang dapat memanggil modul lain). Untuk mencantumkan semua opsi modul, gunakan perintah <command>modinfo -p <replaceable>modul</replaceable></command>. Kedua program disediakan oleh paket <emphasis role=\"pkg\">kmod</emphasis> bersama dengan alat lain untuk menangani modul."
 
 msgid "<primary><command>modprobe</command></primary>"
 msgstr "<primary><command>modprobe</command></primary>"
@@ -545,7 +515,7 @@ msgid "<primary><emphasis role=\"pkg\">kmod</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">kmod</emphasis></primary>"
 
 msgid "Having learned about systemd, services and targets can use the <filename>modprobe@<replaceable>module</replaceable>.service</filename> to load kernel modules they depend on."
-msgstr ""
+msgstr "Setelah mempelajari tentang systemd, layanan dan target dapat menggunakan <filename>modprobe@<replaceable>modul</replaceable>.service</filename> untuk memuat modul kernel yang mereka bergantung padanya."
 
 msgid "<primary>service</primary><secondary><filename>modprobe@<replaceable>module</replaceable>.service</filename></secondary>"
 msgstr "<primary>layanan</primary><secondary><filename>modprobe@<replaceable>modul</replaceable>.service</filename></secondary>"
@@ -610,10 +580,8 @@ msgstr "<primary><command>update-rc.d</command></primary>"
 msgid "<primary><command>rcconf</command></primary>"
 msgstr "<primary><command>rcconf</command></primary>"
 
-#, fuzzy
-#| msgid "All the scripts contained in the various <filename>/etc/rc<replaceable>X</replaceable>.d</filename> directories are really only symbolic links — created upon package installation by the <command>update-rc.d</command> program — pointing to the actual scripts which are stored in <filename>/etc/init.d/</filename>. The administrator can fine tune the services available in each runlevel by re-running <command>update-rc.d</command> with adjusted parameters. The <citerefentry><refentrytitle>update-rc.d</refentrytitle><manvolnum>1</manvolnum></citerefentry> manual page describes the syntax in detail. Please note that removing all symbolic links (with the <literal>remove</literal> parameter) is not a good method to disable a service. Instead you should simply configure it to not start in the desired runlevel (while preserving the corresponding calls to stop it in the event that the service runs in the previous runlevel). Since <command>update-rc.d</command> has a somewhat convoluted interface, you may prefer using <command>rcconf</command> (from the <emphasis role=\"pkg\">rcconf</emphasis> package) which provides a more user-friendly interface."
 msgid "All the scripts contained in the various <filename>/etc/rc<replaceable>X</replaceable>.d</filename> directories are really only symbolic links — created upon package installation by the <command>update-rc.d</command> program — pointing to the actual scripts which are stored in <filename>/etc/init.d/</filename>. The administrator can fine tune the services available in each runlevel by re-running <command>update-rc.d</command> with adjusted parameters. The <citerefentry><refentrytitle>update-rc.d</refentrytitle> <manvolnum>1</manvolnum></citerefentry> manual page describes the syntax in detail. Please note that removing all symbolic links (with the <literal>remove</literal> parameter) is not a good method to disable a service. Instead you should simply configure it to not start in the desired runlevel (while preserving the corresponding calls to stop it in the event that the service runs in the previous runlevel). Since <command>update-rc.d</command> has a somewhat convoluted interface, you may prefer using <command>rcconf</command> (from the <emphasis role=\"pkg\">rcconf</emphasis> package) which provides a more user-friendly interface."
-msgstr "Semua skrip yang terkandung dalam berbagai direktori <filename>/etc/rc<replaceable>X</replaceable>.d</filename> benar-benar hanya link simbolik — dibuat saat instalasi paket oleh program <command>update-rc.d</command> — menunjuk ke skrip sebenarnya yang disimpan dalam <filename>/etc/init.d/</filename>. Administrator dapat menala layanan yang tersedia pada masing-masing runlevel dengan kembali menjalankan <command>update-rc.d</command> dengan parameter yang disesuaikan. Halaman manual <citerefentry><refentrytitle>update-rc.d</refentrytitle><manvolnum>1</manvolnum></citerefentry> menjelaskan sintaks secara rinci. Harap dicatat bahwa menghapus semua link simbolik (dengan parameter <literal>remove</literal>) bukanlah metode yang baik untuk menonaktifkan layanan yang ada. Sebaliknya Anda hanya harus mengkonfigurasi itu untuk tidak mulai berjalan pada runlevel yang diinginkan (sambil mempertahankan panggilan yang sesuai untuk menghentikannya apabila layanan berjalan pada runlevel sebelumnya). Karena <command>update-rc.d</command> memiliki antarmuka yang agak rumit, Anda mungkin lebih suka menggunakan <command>rcconf</command> (dari paket <emphasis role=\"pkg\">rcconf</emphasis>) yang menyediakan antar muka yang lebih mudah dipakai."
+msgstr "Semua skrip yang terkandung dalam berbagai direktori <filename>/etc/rc<replaceable>X</replaceable>.d</filename> benar-benar hanya taut simbolik — dibuat saat instalasi paket oleh program <command>update-rc.d</command> — menunjuk ke skrip sebenarnya yang disimpan dalam <filename>/etc/init.d/</filename>. Administrator dapat menala layanan yang tersedia pada masing-masing runlevel dengan kembali menjalankan <command>update-rc.d</command> dengan parameter yang disesuaikan. Halaman manual <citerefentry><refentrytitle>update-rc.d</refentrytitle><manvolnum>1</manvolnum></citerefentry> menjelaskan sintaks secara rinci. Harap dicatat bahwa menghapus semua taut simbolik (dengan parameter <literal>remove</literal>) bukanlah metode yang baik untuk menonaktifkan layanan yang ada. Sebaliknya Anda hanya harus mengonfigurasi itu untuk tidak mulai berjalan pada runlevel yang diinginkan (sambil mempertahankan panggilan yang sesuai untuk menghentikannya apabila layanan berjalan pada runlevel sebelumnya). Karena <command>update-rc.d</command> memiliki antarmuka yang agak rumit, Anda mungkin lebih suka menggunakan <command>rcconf</command> (dari paket <emphasis role=\"pkg\">rcconf</emphasis>) yang menyediakan antar muka yang lebih mudah dipakai."
 
 msgid "<emphasis>DEBIAN POLICY</emphasis> Restarting services"
 msgstr "<emphasis>KEBIJAKAN DEBIAN</emphasis> Restart layanan"
@@ -654,8 +622,6 @@ msgstr "Komputer pertama biasanya dipisahkan menjadi beberapa bagian yang sangat
 msgid "With the development of computers, operating systems have offered several virtual consoles to allow for several independent sessions at the same time, even if there is only one keyboard and screen. Most GNU/Linux systems offer six virtual consoles (in text mode), accessible by typing the key combinations <keycombo action=\"simul\"> <keycap>Control</keycap> <keycap>Alt</keycap> <keycap>F1</keycap> </keycombo> through <keycombo action=\"simul\"> <keycap>Control</keycap> <keycap>Alt</keycap> <keycap>F6</keycap> </keycombo>."
 msgstr "Dengan perkembangan komputer, sistem operasi telah menawarkan beberapa konsol virtual untuk memungkinkan beberapa sesi independen pada saat yang sama, bahkan jika ada hanya satu papan ketik dan layar. Kebanyakan sistem GNU/Linux menawarkan enam virtual konsol (dalam modus teks), dapat diakses dengan mengetikkan kombinasi tombol <keycombo action=\"simul\"><keycap>Control</keycap> <keycap>Alt</keycap><keycap>F1</keycap></keycombo> sampai <keycombo action=\"simul\"><keycap>Control</keycap><keycap>Alt</keycap><keycap>F6</keycap></keycombo>."
 
-#, fuzzy
-#| msgid "By extension, the terms “console” and “terminal” can also refer to a terminal emulator in a graphical X11 session (such as <command>xterm</command>, <command>gnome-terminal</command> or <command>konsole</command>)."
 msgid "By extension, the terms “console” and “terminal” can also refer to a terminal emulator in a graphical session (such as <command>xterm</command>, <command>gnome-terminal</command> or <command>konsole</command>)."
 msgstr "Diperluas, istilah \"konsol\" dan \"terminal\" juga dapat merujuk ke emulator terminal dalam sesi X11 grafis (seperti misalnya <command>xterm</command>, <command>gnome-terminal</command>, atau <command>konsole</command>)."
 
@@ -716,10 +682,8 @@ msgstr "Sebelum SSH, <emphasis>Telnet</emphasis> dan <emphasis>RSH</emphasis> ad
 msgid "<emphasis>VOCABULARY</emphasis> Authentication, encryption"
 msgstr "<emphasis>KOSAKATA</emphasis> Otentikasi, enkripsi"
 
-#, fuzzy
-#| msgid "When you need to give a client the ability to conduct or trigger actions on a server, security is important. You must ensure the identity of the client; this is authentication. This identity usually consists of a password that must be kept secret, or any other client could get the password. This is the purpose of encryption, which is a form of encoding that allows two systems to communicate confidential information on a public channel while protecting it from being readable to others."
 msgid "When you need to give a client the ability to conduct or trigger actions on a server, security is important. You must ensure the identity of the client; this is <emphasis>authentication</emphasis>. This identity usually consists of a password or passphrase that must be kept secret, or any other client could it. This is the purpose of <emphasis>encryption</emphasis>, which is a form of encoding that allows two systems to communicate confidential information on a public channel while protecting it from being readable to others."
-msgstr "Ketika Anda perlu memberikan klien kemampuan untuk melakukan atau memicu tindakan pada server, keamanan penting. Anda harus memastikan identitas dari klien; ini adalah otentikasi. Identitas ini biasanya terdiri dari password yang harus dirahasiakan, atau klien lain jadi bisa mendapatkankan password tersebut. Ini adalah tujuan dari enkripsi, yang merupakan bentuk enkoding yang memungkinkan dua sistem untuk mengkomunikasikan informasi rahasia pada saluran umum sekaligus melindungi dari dapat dibaca oleh orang lain."
+msgstr "Ketika Anda perlu memberikan klien kemampuan untuk melakukan atau memicu tindakan pada server, keamanan penting. Anda harus memastikan identitas dari klien; ini adalah <emphasis>otentikasi</emphasis>. Identitas ini biasanya terdiri dari kata sandi atau frasa sandi yang harus dirahasiakan, atau klien lain jadi bisa mendapatkan kata sandi tersebut. Ini adalah tujuan dari <emphasis>enkripsi</emphasis>, yang merupakan bentuk enkoding yang memungkinkan dua sistem untuk mengkomunikasikan informasi rahasia pada saluran umum sekaligus melindungi dari dapat dibaca oleh orang lain."
 
 msgid "Authentication and encryption are often mentioned together, both because they are frequently used together, and because they are usually implemented with similar mathematical concepts."
 msgstr "Otentikasi dan enkripsi sering disebut bersama, baik karena mereka sering digunakan bersama-sama, dan karena mereka biasanya diimplementasikan dengan konsep-konsep matematika yang serupa."
@@ -766,10 +730,8 @@ msgstr "<primary><emphasis role=\"pkg\">openssh-client</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">openssh-server</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">openssh-server</emphasis></primary>"
 
-#, fuzzy
-#| msgid "OpenSSH is split into two packages: the client part is in the <emphasis role=\"pkg\">openssh-client</emphasis> package, and the server is in the <emphasis role=\"pkg\">openssh-server</emphasis> package. The <emphasis role=\"pkg\">ssh</emphasis> meta-package depends on both parts and facilitates installation of both (<command>apt install ssh</command>)."
 msgid "OpenSSH is split into two packages: the client part is in the <emphasis role=\"pkg\">openssh-client</emphasis> package, and the server is in the <emphasis role=\"pkg\">openssh-server</emphasis> package. The <emphasis role=\"pkg\">ssh</emphasis> meta-package depends on both parts and facilitates installation of both (<command>apt install ssh</command>), while the <emphasis role=\"pkg\">task-ssh-server</emphasis>, often chosen during the initial installation, depends on the server package only."
-msgstr "OpenSSH dipecah menjadi dua paket: bagian klien dalam paket <emphasis role=\"pkg\">openssh-client</emphasis>, dan server dalam paket <emphasis role=\"pkg\">openssh-server</emphasis>. Meta-paket <emphasis role=\"pkg\">ssh</emphasis> bergantung pada kedua bagian dan memfasilitasi instalasi keduanya (<command>apt install ssh</command>)."
+msgstr "OpenSSH dipecah menjadi dua paket: bagian klien dalam paket <emphasis role=\"pkg\">openssh-client</emphasis>, dan server dalam paket <emphasis role=\"pkg\">openssh-server</emphasis>. Paket meta <emphasis role=\"pkg\">ssh</emphasis> bergantung pada kedua bagian dan memfasilitasi instalasi keduanya (<command>apt install ssh</command>), sedangkan <emphasis role=\"pkg\">task-ssh-server</emphasis>, sering dipilih selama instalasi awal, tergantung pada paket server saja."
 
 msgid "Key-Based Authentication"
 msgstr "Otentikasi Berbasis Kunci"
@@ -787,17 +749,13 @@ msgid "<primary><command>ssh-copy-id</command></primary>"
 msgstr "<primary><command>ssh-copy-id</command></primary>"
 
 msgid "The user generates a key pair on the client machine with <command>ssh-keygen -t rsa</command>; the so generated public key is stored in <filename>~/.ssh/id_rsa.pub</filename>, while the corresponding private key is stored in <filename>~/.ssh/id_rsa</filename>. The user can then use <command>ssh-copy-id <replaceable>server</replaceable></command> to add their public key to the <filename>~/.ssh/authorized_keys</filename> file on the server, or, if SSH access hasn't been enabled yet, they have to ask the administrator to add their key manually."
-msgstr ""
+msgstr "Pengguna menghasilkan pasangan kunci pada komputer klien dengan <command>ssh-keygen -t rsa</command>; kunci publik yang dihasilkan disimpan di <filename>~/.ssh/id_rsa.pub</filename>, sedangkan kunci privat yang sesuai disimpan di <filename>~/.ssh/id_rsa</filename>. Pengguna kemudian dapat menggunakan <command>ssh-copy-id <replaceable>server</replaceable></command> untuk menambahkan kunci publik mereka ke berkas <filename>~/.ssh/authorized_keys</filename> di server, atau, jika akses SSH belum diaktifkan, mereka harus meminta administrator untuk menambahkan kunci mereka secara manual."
 
-#, fuzzy
-#| msgid "<primary>logs</primary><secondary>dispatching</secondary>"
 msgid "<primary>SSH</primary><secondary>passphrase cache</secondary>"
-msgstr "<primary>log</primary><secondary>pengiriman</secondary>"
+msgstr "<primary>SSH</primary><secondary>singgahan frasa sandi</secondary>"
 
-#, fuzzy
-#| msgid "<primary>link</primary><secondary>hard link</secondary>"
 msgid "<primary>SSH</primary><secondary>passwordless</secondary>"
-msgstr "<primary>link</primary><secondary>hard link</secondary>"
+msgstr "<primary>SSH</primary><secondary>tanpa kata sandi</secondary>"
 
 msgid "<primary>SSH</primary><secondary>authentication agent</secondary>"
 msgstr "<primary>SSH</primary><secondary>agen otentikasi</secondary>"
@@ -808,10 +766,8 @@ msgstr "<primary><command>ssh-agent</command></primary>"
 msgid "<primary>X.org</primary><secondary><filename>/etc/X11/Xsession.options</filename></secondary>"
 msgstr "<primary>X.org</primary><secondary><filename>/etc/X11/Xsession.options</filename></secondary>"
 
-#, fuzzy
-#| msgid "The user generates a key pair on the client machine with <command>ssh-keygen -t rsa</command>; the public key is stored in <filename>~/.ssh/id_rsa.pub</filename>, while the corresponding private key is stored in <filename>~/.ssh/id_rsa</filename>. The user then uses <command>ssh-copy-id <replaceable>server</replaceable></command> to add their public key to the <filename>~/.ssh/authorized_keys</filename> file on the server. If the private key was not protected with a “passphrase” at the time of its creation, all subsequent logins on the server will work without a password. Otherwise, the private key must be decrypted each time by entering the passphrase. Fortunately, <command>ssh-agent</command> allows us to keep private keys in memory to not have to regularly re-enter the password. For this, you simply use <command>ssh-add</command> (once per work session) provided that the session is already associated with a functional instance of <command>ssh-agent</command>. Debian activates it by default in graphical sessions, but this can be deactivated by changing <filename>/etc/X11/Xsession.options</filename>. For a console session, you can manually start it with <command>eval $(ssh-agent)</command>."
 msgid "If the private key was not protected with a “passphrase” at the time of its creation, all subsequent logins on the server will work without a password. Otherwise, the private key must be decrypted each time by entering the passphrase. Fortunately, <command>ssh-agent</command> allows us to keep private keys in memory to not have to regularly re-enter the password. For this, you simply use <command>ssh-add</command> (once per work session) provided that the session is already associated with a functional instance of <command>ssh-agent</command>. Debian activates it by default in graphical sessions, but this can be deactivated by changing <filename>/etc/X11/Xsession.options</filename> and commenting out <literal>use-ssh-agent</literal>. For a console session, you can manually start the agent with <command>eval $(ssh-agent)</command>."
-msgstr "Pengguna membuat sepasang kunci pada mesin klien dengan <command>ssh-keygen-t rsa</command>; kunci publik disimpan dalam <filename>~/.ssh/id_rsa.pub</filename>, sementara kunci privat disimpan dalam <filename>~/.ssh/id_rsa</filename>. Pengguna kemudian menggunakan <command>ssh-copy-id <replaceable>server</replaceable></command> untuk menambahkan kunci publik mereka ke berkas <filename>~/.ssh/authorized_keys</filename> pada server. Jika kunci privat tidak dilindungi dengan \"frasa sandi\" pada saat penciptaan, semua login berikutnya pada server akan bekerja tanpa kata sandi. Sebaliknya, kunci pribadi harus didekripsi setiap kali dengan memasukkan kata sandi. Untungnya, <command>ssh-agent</command> memungkinkan kita untuk menjaga kunci privat dalam memori untuk tidak perlu secara teratur memasukkan kembali kata sandi. Untuk ini, Anda hanya menggunakan <command>ssh-add</command> (sekali per sesi) asalkan sesi sudah terkait dengan instansi fungsional <command>ssh-agent</command>. Debian mengaktifkannya secara default dalam sesi grafis, tapi ini dapat dinonaktifkan dengan mengubah <filename>/etc/X11/Xsession.options</filename>. Untuk sesi konsol, Anda dapat secara manual memulainya dengan <command>eval $(ssh-agent)</command>."
+msgstr "Jika kunci pribadi tidak dilindungi dengan \"frasa sandi\" pada saat pembuatannya, semua login berikutnya di server akan berfungsi tanpa kata sandi. Jika tidak, kunci pribadi harus didekripsi setiap kali dengan memasukkan frasa sandi. Untungnya <command>ssh-agent</command> memungkinkan kita untuk menyimpan kunci pribadi dalam memori untuk tidak perlu memasukkan kembali kata sandi secara teratur. Untuk ini, Anda cukup menggunakan <command>ssh-add</command> (sekali per sesi kerja) asalkan sesi tersebut sudah dikaitkan dengan contoh fungsional <command>ssh-agent</command>. Debian mengaktifkannya secara baku dalam sesi grafis, tetapi ini dapat dinonaktifkan dengan mengubah <filename>/etc/X11/Xsession.options</filename> dan mengomentari <literal>use-ssh-agent</literal>. Untuk sesi konsol, Anda dapat memulai agen secara manual dengan <command>eval $(ssh-agent)</command>."
 
 msgid "<emphasis>SECURITY</emphasis> Protection of the private key"
 msgstr "<emphasis>KEAMANAN</emphasis> Perlindungan kunci privat"
@@ -843,15 +799,11 @@ msgstr "Analisis lebih mendalam terhadap kejadian ini mengungkap bahwa itu adala
 msgid "It is difficult under such conditions to find the corrective measures to prevent such incidents from recurring. The lesson to be learned here is that every divergence Debian introduces to upstream software must be justified, documented, submitted to the upstream project when possible, and widely publicized. It is from this perspective that the new source package format (“3.0 (quilt)”) and the Debian sources webservice were developed. <ulink type=\"block\" url=\"https://sources.debian.org\" />"
 msgstr "Sulit dalam kondisi seperti ini untuk menemukan tindakan korektif demi mencegah insiden tersebut dari berulang. Pelajaran yang bisa dipetik di sini adalah bahwa setiap perbedaan yang diperkenalkan Debian ke perangkat lunak hulu harus dijustifikasi, didokumentasikan, diserahkan kepada proyek hulu bila mungkin, dan dipublikasikan secara luas. Dari perspektif inilah format paket sumber baru (\"3.0 (quilt)\") dan layanan web sumber Debian dikembangkan. <ulink type=\"block\" url=\"https://sources.debian.net\" />"
 
-#, fuzzy
-#| msgid "Key-Based Authentication"
 msgid "Cert-Based Authentication"
-msgstr "Otentikasi Berbasis Kunci"
+msgstr "Otentikasi Berbasis Sertifikat"
 
-#, fuzzy
-#| msgid "<primary>user</primary><secondary>owner</secondary>"
 msgid "<primary>SSH</primary><secondary>signed key</secondary>"
-msgstr "<primary>pengguna</primary><secondary>pemilik</secondary>"
+msgstr "<primary>SSH</primary><secondary>kunci bertanda tangan</secondary>"
 
 msgid "<primary>SSH</primary><secondary><literal>TrustedUserCAKeys</literal></secondary>"
 msgstr "<primary>SSH</primary><secondary><literal>TrustedUserCAKeys</literal></secondary>"
@@ -866,7 +818,7 @@ msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/ssh
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/ssh/known_hosts</filename></secondary>"
 
 msgid "SSH keys cannot just be protected by a password (or not). An often unknown feature is that they can also be signed via certificate, both the host as well as the client keys. This approach comes with several advantages. Instead of maintaining an <filename>authorized_keys</filename> file per user as described in the previous section, the SSH server can be configured to trust all client keys signed by the same certificate (see also <xref linkend=\"sect.easy-rsa\" />) by using the <literal>TrustedUserCAKeys</literal> and <literal>HostCertificate</literal> directives in <filename>/etc/ssh/sshd_config</filename>."
-msgstr ""
+msgstr "Kunci SSH tidak bisa hanya dilindungi oleh kata sandi (atau tidak). Fitur yang sering tidak dikenal adalah bahwa mereka juga dapat ditandatangani melalui sertifikat, baik host maupun kunci klien. Pendekatan ini hadir dengan beberapa keunggulan. Alih-alih memelihara berkas <filename>authorized_keys</filename> per pengguna seperti yang dijelaskan di bagian sebelumnya, server SSH dapat dikonfigurasi untuk mempercayai semua kunci klien yang ditandatangani oleh sertifikat yang sama (lihat juga <xref linkend=\"sect.easy-rsa\" />) dengan menggunakan direktif <literal>TrustedUserCAKeys</literal> dan <literal>HostCertificate</literal> di <filename>/etc/ssh/sshd_config</filename>."
 
 msgid ""
 "\n"
@@ -877,13 +829,13 @@ msgid ""
 msgstr "\nTrustedUserCAKeys /etc/ssh/ssh_users_ca.pub\n\nHostKey /etc/ssh/ssh_host_ecdsa_key\nHostCertificate /etc/ssh/ssh_host_ecdsa_key-cert.pub"
 
 msgid "Vice-versa the clients can also be configured to trust the host key signed by the same authority, making it easier to maintain the <filename>known_hosts</filename> file (even system wide via <filename>/etc/ssh/known_hosts</filename>)."
-msgstr ""
+msgstr "Sebaliknya klien juga dapat dikonfigurasi untuk mempercayai kunci host yang ditandatangani oleh otoritas yang sama, sehingga lebih mudah untuk memelihara berkas <filename>known_hosts</filename> (bahkan di seluruh sistem melalui <filename>/etc/ssh/known_hosts</filename>)."
 
 msgid "@cert-authority *.falcot.com ssh-rsa AAAA[..]"
 msgstr "@cert-authority *.falcot.com ssh-rsa AAAA[..]"
 
 msgid "Both, public key and certificate authentication, can be used alongside each other."
-msgstr ""
+msgstr "Keduanya, otentikasi sertifikat dan kunci publik, dapat digunakan bersama satu sama lain."
 
 msgid "Using Remote X11 Applications"
 msgstr "Menggunakan Aplikasi-aplikasi X11 Jarak Jauh"
@@ -891,20 +843,14 @@ msgstr "Menggunakan Aplikasi-aplikasi X11 Jarak Jauh"
 msgid "<primary>SSH</primary><secondary><literal>X11Forwarding</literal></secondary>"
 msgstr "<primary>SSH</primary><secondary><literal>X11Forwarding</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>login</primary><secondary>remote login</secondary>"
 msgid "<primary>SSH</primary><secondary><literal>remote graphical applications</literal></secondary>"
-msgstr "<primary>login</primary><secondary>login jarak jauh</secondary>"
+msgstr "<primary>SSH</primary><secondary><literal>aplikasi grafis jarak jauh</literal></secondary>"
 
-#, fuzzy
-#| msgid "<primary>remote graphical desktop</primary>"
 msgid "<primary>remote graphical application</primary>"
-msgstr "<primary>remote desktop grafis</primary>"
+msgstr "<primary>aplikasi grafis jarak jauh</primary>"
 
-#, fuzzy
-#| msgid "<primary>desktop, remote graphical desktop</primary>"
 msgid "<primary>application, remote graphical application</primary>"
-msgstr "<primary>desktop, remote desktop grafis</primary>"
+msgstr "<primary>aplikasi, aplikasi grafis jarak jauh</primary>"
 
 msgid "The SSH protocol allows forwarding of graphical data (“X11” session, from the name of the most widespread graphical system in Unix); the server then keeps a dedicated channel for those data. Specifically, a graphical program executed remotely can be displayed on the X.org server of the local screen, and the whole session (input and display) will be secure. Since this feature allows remote applications to interfere with the local system, it is disabled by default. You can enable it by specifying <literal>X11Forwarding yes</literal> in the server configuration file (<filename>/etc/ssh/sshd_config</filename>). Finally, the user must also request it by adding the <literal>-X</literal> option to the <command>ssh</command> command-line."
 msgstr "Protokol SSH memungkinkan penerusan data grafis (sesi \"X11\", dari nama sistem grafis yang paling terkenal di Unix); server kemudian mempertahankan saluran khusus untuk data tersebut. Secara khusus, program grafis yang dijalankan dari jarak jauh dapat ditampilkan pada layar lokal server XFree86, dan seluruh sesi (masukan dan tampilan) akan aman. Karena fitur ini memungkinkan aplikasi remote untuk mengganggu sistem lokal, ini dinonaktifkan secara default. Anda dapat mengaktifkannya dengan menetapkan <literal>X11Forwarding yes</literal> di berkas konfigurasi server (<filename>/etc/ssh/sshd_config</filename>). Akhirnya, pengguna juga harus memintanya dengan menambahkan opsi <literal>-X</literal> untuk baris perintah <command>ssh</command>."
@@ -922,7 +868,7 @@ msgid "<primary>magic cookie</primary>"
 msgstr "<primary>magic cookie</primary>"
 
 msgid "When a user connects via SSH and starts a remote X11 session, a so-called <emphasis>magic cookie</emphasis> is created and stored in the <filename>.Xauthority</filename> file in the user's home directory that initiated the connection. This cookie is used by <command>xauth</command> to authenticate the user during the X session. If the user impersonates another user on the system, e.g. using <command>su</command> or <command>sudo</command>, then the cookie is not copied automatically to the target user and the X server will refuse to start graphical applications under the target user's context. You will have to copy the magic cookie into the target user's home directory (by exporting and re-importing the cookie via <command>xauth</command>) to allow another user to start graphical programs as well during the X session."
-msgstr ""
+msgstr "Ketika pengguna terhubung melalui SSH dan memulai sesi X11 jarak jauh, apa yang disebut <emphasis>magic cookie</emphasis> dibuat dan disimpan dalam berkas <filename>.Xauthority</filename> di direktori home pengguna yang memulai koneksi. Cookie ini digunakan oleh <command>xauth</command> untuk mengotentikasi pengguna selama sesi X. Jika pengguna meniru pengguna lain di sistem, misalnya menggunakan <command>su</command> atau <command>sudo</command>, maka cookie tidak disalin secara otomatis ke pengguna target dan server X akan menolak untuk memulai aplikasi grafis di bawah konteks pengguna target. Anda harus menyalin magic cookie ke direktori home pengguna target (dengan mengekspor dan mengimpor ulang cookie melalui <command>xauth</command>) untuk memungkinkan pengguna lain memulai program grafis juga selama sesi X."
 
 msgid "Creating Encrypted Tunnels with Port Forwarding"
 msgstr "Menciptakan Tunnel Terenkripsi dengan Penerusan Port"
@@ -1014,10 +960,8 @@ msgstr "<primary><emphasis role=\"pkg\">tightvncserver</emphasis></primary><seea
 msgid "<primary><emphasis role=\"pkg\">tigervnc-standalone-server</emphasis></primary><seealso>VNC</seealso>"
 msgstr "<primary><emphasis role=\"pkg\">tigervnc-standalone-server</emphasis></primary><seealso>VNC</seealso>"
 
-#, fuzzy
-#| msgid "First, the user must authorize sharing their session. The GNOME graphical desktop environment from <emphasis role=\"distribution\">Jessie</emphasis> onward includes that option in its configuration panel (contrary to previous versions of Debian, where the user had to install and run <command>vino</command>). KDE Plasma still requires using <command>krfb</command> to allow sharing an existing session over VNC. For other graphical desktop environments, the <command>x11vnc</command> command (from the Debian package of the same name) serves the same purpose; you can make it available to the user with an explicit icon."
 msgid "First, the user must authorize sharing their session. The GNOME graphical desktop environment includes that option via <menuchoice> <guimenu>Settings</guimenu> <guimenuitem>Sharing</guimenuitem> </menuchoice> (contrary to previous versions of Debian, where the user had to install and run <command>vino</command>). For this to work <emphasis role=\"pkg\">network-manager</emphasis> must be managing the network used (e.g. enable the <literal>managed</literal> mode for devices handled by <emphasis role=\"pkg\">ifupdown</emphasis> in <filename>/etc/NetworkManager/NetworkManager.conf</filename>). KDE Plasma still requires using <command>krfb</command> to allow sharing an existing session over VNC. For other graphical desktop environments, the <command>x11vnc</command> or <command>tightvncserver</command> commands (from the Debian packages of the same name) or <command>tigervncserver</command> (<emphasis role=\"pkg\">tigervnc-standalone-server</emphasis>) serve the same purpose and provide the <emphasis role=\"pkg\">vnc-server</emphasis> virtual package; you can make either of them available to the user with an explicit menu or desktop entry."
-msgstr "Pertama, pengguna harus mengotorisasi berbagi sesi mereka. Grafis lingkungan desktop GNOME di <emphasis role=\"distribution\">Jessie</emphasis> dan setelahnya menyertakan pilihan itu di panel konfigurasi (berbeda dengan versi Debian sebelumnya, di mana pengguna harus menginstal dan menjalankan <command>vino</command>). KDE masih perlu menggunakan <command>krfb</command> untuk memungkinkan berbagi sesi yang ada melalui VNC. Untuk lingkungan desktop grafis lainnya, perintah <command>x11vnc</command> (dari paket Debian dengan nama yang sama) melayani tujuan yang sama; Anda dapat membuatnya tersedia untuk pengguna dengan ikon eksplisit."
+msgstr "Pertama, pengguna harus mengotorisasi berbagi sesi mereka. Lingkungan desktop grafis GNOME mencakup opsi itu melalui <menuchoice> <guimenu>Pengaturan</guimenu> <guimenuitem>Berbagi</guimenuitem> </menuchoice> (bertentangan dengan versi Debian sebelumnya, di mana pengguna harus memasang dan menjalankan <command>vino</command>). Agar ini berfungsi <emphasis role=\"pkg\">network-manager</emphasis> harus mengelola jaringan yang digunakan (misalnya mengaktifkan mode <literal>dikelola</literal> untuk perangkat yang ditangani oleh <emphasis role=\"pkg\">ifupdown</emphasis> di <filename>/etc/NetworkManager/NetworkManager.conf</filename>). KDE Plasma masih membutuhkan penggunaan <command>krfb</command> untuk memungkinkan berbagi sesi yang ada melalui VNC. Untuk lingkungan desktop grafis lainnya, <command>x11vnc</command> atau <command>tightvncserver</command> perintah (dari paket Debian dengan nama yang sama) atau <command>tigervncserver</command> (<emphasis role=\"pkg\">tigervnc-standalone-server</emphasis>) melayani tujuan yang sama dan menyediakan paket virtual <emphasis role=\"pkg\">vnc-server</emphasis>; Anda dapat membuat salah satu dari mereka tersedia untuk pengguna dengan menu eksplisit atau entri desktop."
 
 msgid "<primary>VNC</primary><secondary>client</secondary>"
 msgstr "<primary>VNC</primary><secondary>klien</secondary>"
@@ -1034,10 +978,8 @@ msgstr "<primary><emphasis role=\"pkg\">xtightvncviewer</emphasis></primary><see
 msgid "<primary><emphasis role=\"pkg\">tigervnc-viewer</emphasis></primary><seealso>VNC</seealso>"
 msgstr "<primary><emphasis role=\"pkg\">tigervnc-viewer</emphasis></primary><seealso>VNC</seealso>"
 
-#, fuzzy
-#| msgid "When the graphical session is made available by VNC, the administrator must connect to it with a VNC client. GNOME has <command>vinagre</command> and <command>remmina</command> for that, while the KDE project provides <command>krdc</command> (in the menu at <menuchoice> <guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice>). There are other VNC clients that use the command line, such as <command>xvnc4viewer</command> in the Debian package of the same name. Once connected, the administrator can see what is going on, work on the machine remotely, and show the user how to proceed."
 msgid "When the graphical session is made available by VNC, the administrator must connect to it with a VNC client. GNOME has <command>vinagre</command> and <command>remmina</command> for that, while the KDE project provides <command>krdc</command> (in the menu at <menuchoice> <guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Remote Desktop Client</guimenuitem></menuchoice>). There are other VNC clients that use the command line, such as <command>xtightvncviewer</command> from the homonym package or <command>xtigervncviewer</command> from the <emphasis role=\"pkg\">tigervnc-viewer</emphasis> Debian package. Once connected, the administrator can see what is going on, work on the machine remotely, and show the user how to proceed."
-msgstr "Ketika sesi grafis dibuat tersedia oleh VNC, administrator harus menyambung ke sana dengan klien VNC. GNOME memiliki <command>vinagre</command> dan <command>remmina</command> untuk itu, sementara KDE menyertakan <command>krdc</command> (pada menu di <menuchoice><guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Klien Remote Desktop</guimenuitem></menuchoice>). Ada klien VNC lainnya yang menggunakan baris perintah, seperti <command>xvnc4viewer</command> dalam paket Debian dengan nama yang sama. Setelah terhubung, administrator dapat melihat apa yang terjadi, bekerja pada mesin dari jarak jauh, dan menunjukkan ke pengguna bagaimana untuk melanjutkan."
+msgstr "Ketika sesi grafis dibuat tersedia oleh VNC, administrator harus menyambung ke sana dengan klien VNC. GNOME memiliki <command>vinagre</command> dan <command>remmina</command> untuk itu, sementara KDE menyertakan <command>krdc</command> (pada menu di <menuchoice><guimenu>K</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Klien Remote Desktop</guimenuitem></menuchoice>). Ada klien VNC lainnya yang menggunakan baris perintah, seperti <command>xtightvncviewer</command> dalam paket Debian dengan nama yang sama atau <command>xtigervncviewer</command> dari <emphasis role=\"pkg\">tigervnc-viewer</emphasis>. Setelah terhubung, administrator dapat melihat apa yang terjadi, bekerja pada mesin dari jarak jauh, dan menunjukkan ke pengguna bagaimana untuk melanjutkan."
 
 msgid "<emphasis>SECURITY</emphasis> VNC over SSH"
 msgstr "<emphasis>KEAMANAN</emphasis> VNC di atas SSH"
@@ -1141,10 +1083,8 @@ msgstr "<primary>izin</primary><secondary><literal>o</literal></secondary>"
 msgid "the others (symbolized by <literal>o</literal> as in “other”)."
 msgstr "yang lain (dilambangkan oleh <literal>o</literal> seperti \"other/yang lain\")."
 
-#, fuzzy
-#| msgid "Three types of rights can be combined:"
 msgid "Three basic types of rights can be combined:"
-msgstr "Tiga jenis hak dapat digabungkan:"
+msgstr "Tiga jenis hak dasar dapat digabungkan:"
 
 msgid "<primary>permissions</primary><secondary><literal>r</literal></secondary>"
 msgstr "<primary>izin</primary><secondary><literal>r</literal></secondary>"
@@ -1200,8 +1140,6 @@ msgstr "<primary>izin</primary><secondary><literal>setgid</literal></secondary><
 msgid "<primary>permissions</primary><secondary><literal>s</literal></secondary>"
 msgstr "<primary>izin</primary><secondary><literal>s</literal></secondary>"
 
-#, fuzzy
-#| msgid "Two particular rights are relevant to executable files: <literal>setuid</literal> and <literal>setgid</literal> (symbolized with the letter “s”). Note that we frequently speak of “bit”, since each of these boolean values can be represented by a 0 or a 1. These two rights allow any user to execute the program with the rights of the owner or the group, respectively. This mechanism grants access to features requiring higher level permissions than those you would usually have."
 msgid "Two particular rights are relevant to executable files: <literal>setuid</literal> and <literal>setgid</literal> (symbolized with the letter “s”). Note that we frequently speak of “bit”, since each of these Boolean values can be represented by a 0 or a 1. These two rights allow any user to execute the program with the rights of its owner or its group, respectively. This mechanism grants access to features requiring higher level permissions than those you would usually have."
 msgstr "Dua hak khusus relevan ke berkas yang dapat dieksekusi: <literal>setuid</literal> dan <literal>setgid</literal> (dilambangkan dengan huruf \"s\"). Perhatikan bahwa kita sering berbicara tentang \"bit\", karena setiap nilai-nilai boolean ini dapat diwakili oleh 0 atau 1. Dua hak ini memungkinkan pengguna untuk mengeksekusi program dengan hak-hak pemilik atau kelompok. Mekanisme ini memberikan akses ke fitur yang memerlukan izin tingkat yang lebih tinggi daripada yang Anda biasa miliki."
 
@@ -1224,7 +1162,7 @@ msgid "<primary><command>runuser</command></primary>"
 msgstr "<primary><command>runuser</command></primary>"
 
 msgid "If you require running a program under a different user or if a program requires higher permissions, the <command>sudo</command>, <command>su</command>, or <command>runuser</command> commands are usually better choices than using these bits (see <xref linkend=\"sect.sharing-admin-rights\" />)."
-msgstr ""
+msgstr "Jika Anda memerlukan menjalankan program di bawah pengguna yang berbeda atau jika program memerlukan izin yang lebih tinggi, perintah <command>sudo</command>, <command>su</command>, atau <command>runuser</command> biasanya merupakan pilihan yang lebih baik daripada menggunakan bit-bit ini (lihat <xref linkend=\"sect.sharing-admin-rights\" />)."
 
 msgid "A directory is handled differently. Read access gives the right to consult the list of its entries (files and directories), write access allows creating or deleting files, and execute access allows crossing through it (especially to go there with the <command>cd</command> command). Being able to cross through a directory without being able to read it gives permission to access the entries therein that are known by name, but not to find them if you do not know their existence or their exact name."
 msgstr "Direktori ditangani secara berbeda. Akses baca memberikan hak untuk berkonsultasi ke daftar entri (berkas dan direktori), akses tulis mengizinkan membuat atau menghapus berkas, dan akses mengeksekusi memungkinkan melintasinya (terutama untuk pergi ke sana dengan perintah <command>cd</command>). Mampu untuk melintasi sebuah direktori tanpa bisa membacanya memberikan izin untuk mengakses entri di dalamnya yang dikenal dengan nama, tetapi tidak untuk menemukan mereka jika Anda tidak tahu keberadaan mereka atau nama yang tepat."
@@ -1271,10 +1209,8 @@ msgstr "<primary><command>chmod</command></primary>"
 msgid "<command>chmod <replaceable>rights</replaceable> <replaceable>file</replaceable></command> changes the permissions for the file."
 msgstr "<command>chmod <replaceable>hak</replaceable> <replaceable>berkas</replaceable></command> mengubah izin untuk berkas."
 
-#, fuzzy
-#| msgid "<primary>octal representation of rights</primary>"
 msgid "<primary>symbolic representation of rights</primary>"
-msgstr "<primary>representasi oktal hak</primary>"
+msgstr "<primary>representasi simbolis hak</primary>"
 
 msgid "<primary>rights</primary><secondary>symbolic representation</secondary>"
 msgstr "<primary>hak</primary><secondary>representasi simbolis</secondary>"
@@ -1297,10 +1233,8 @@ msgstr "<primary>izin</primary><secondary>representasi oktal</secondary>"
 msgid "The (octal) numeric representation associates each right with a value: 4 for read, 2 for write, and 1 for execute. We associate each combination of rights with the sum of the figures. Each value is then assigned to different categories of users by putting them end to end in the usual order (owner, group, others)."
 msgstr "Representasi numerik (oktal) mengasosiasikan hak masing-masing dengan suatu nilai: 4 untuk baca, 2 untuk tulis, dan 1 untuk eksekusi. Kita menghubungkan setiap kombinasi hak dengan menjumlah angka-angka. Setiap nilai kemudian ditugaskan untuk berbagai kategori pengguna dengan meletakkan mereka dalam urutan biasa (pemilik, kelompok, lain-lain)."
 
-#, fuzzy
-#| msgid "For instance, the <command>chmod 754 <replaceable>file</replaceable></command> command will set the following rights: read, write and execute for the owner (since 7 = 4 + 2 + 1); read and execute for the group (since 5 = 4 + 1); read-only for others. The <literal>0</literal> means no rights; thus <command>chmod 600 <replaceable>file</replaceable></command> allows for read/write rights for the owner, and no rights for anyone else. The most frequent right combinations are <literal>755</literal> for executable files and directories, and <literal>644</literal> for data files."
 msgid "For instance, the <command>chmod 754 <replaceable>file</replaceable></command> command will set the following rights: read, write and execute for the owner (since 7 = 4 + 2 + 1); read and execute for the group (since 5 = 4 + 1); read-only for others. The <literal>0</literal> (zero) means no rights; thus <command>chmod 600 <replaceable>file</replaceable></command> allows for read/write rights for the owner, and no rights for anyone else. The most frequent right combinations are <literal>755</literal> for executable files and directories, and <literal>644</literal> for data files."
-msgstr "Misalnya, perintah <command>chmod 754<replaceable>berkas</replaceable></command> akan menetapkan hak-hak berikut: baca, tulis dan, jalankan untuk pemilik (karena 7 = 4 + 2 + 1); baca dan jalankan untuk group (karena 5 = 4 + 1); hanya-baca untuk orang lain. <literal>0</literal> berarti tidak ada hak; dengan demikian <command>chmod 600<replaceable>berkas</replaceable></command> memungkinkan hak baca/tulis untuk pemilik, dan tidak ada hak untuk orang lain. Kombinasi tepat yang paling sering adalah <literal>755</literal> untuk berkas yang dapat dieksekusi dan direktori, dan <literal>644</literal> untuk berkas data."
+msgstr "Misalnya, perintah <command>chmod 754<replaceable>berkas</replaceable></command> akan menetapkan hak-hak berikut: baca, tulis dan, jalankan untuk pemilik (karena 7 = 4 + 2 + 1); baca dan jalankan untuk grup (karena 5 = 4 + 1); hanya-baca untuk orang lain. <literal>0</literal> berarti tidak ada hak; dengan demikian <command>chmod 600<replaceable>berkas</replaceable></command> memungkinkan hak baca/tulis untuk pemilik, dan tidak ada hak untuk orang lain. Kombinasi tepat yang paling sering adalah <literal>755</literal> untuk berkas yang dapat dieksekusi dan direktori, dan <literal>644</literal> untuk berkas data."
 
 msgid "<primary><literal>setuid</literal></primary>"
 msgstr "<primary><literal>setuid</literal></primary>"
@@ -1326,13 +1260,11 @@ msgstr "Kadang-kadang kita harus mengubah hak untuk seluruh pohon berkas. Semua 
 msgid "<primary>permissions</primary><secondary><literal>X</literal></secondary>"
 msgstr "<primary>izin</primary><secondary><literal>X</literal></secondary>"
 
-#, fuzzy
-#| msgid "The distinction between directories and files sometimes causes problems with recursive operations. That is why the “X” letter has been introduced in the symbolic representation of rights. It represents a right to execute which applies only to directories (and not to files lacking this right). Thus, <command>chmod -R a+X <replaceable>directory</replaceable></command> will only add execute rights for all categories of users (<literal>a</literal>) for all of the sub-directories and files for which at least one category of user (even if their sole owner) already has execute rights."
 msgid "The distinction between directories and files sometimes causes problems with recursive operations. That is why the “<literal>X</literal>” letter has been introduced in the symbolic representation of rights. It also represents the right to execute, but it applies differently to directories and files."
-msgstr "Perbedaan antara direktori dan berkas kadang-kadang menyebabkan masalah dengan operasi rekursif. Itu sebabnya huruf \"X\" telah diperkenalkan di representasi simbolik dari hak-hak. Ini mewakili hak untuk menjalankan yang berlaku hanya untuk direktori (dan tidak untuk berkas yang tidak memiliki hak ini). Dengan demikian, <command>chmod -R a+X<replaceable>direktori</replaceable></command> hanya akan menambah hak mengeksekusi bagi semua kategori pengguna (<literal>a</literal>) untuk semua sub direktori dan berkas yang setidaknya satu kategori pengguna (bahkan jika pemilik satu-satunya) sudah memiliki hak mengeksekusi."
+msgstr "Perbedaan antara direktori dan berkas terkadang menyebabkan masalah dengan operasi rekursif. Itulah sebabnya huruf \"<literal>X</literal>\" telah diperkenalkan dalam representasi simbolis hak. Ini juga mewakili hak untuk mengeksekusi, tetapi berlaku berbeda untuk direktori dan berkas."
 
 msgid "For directories it adds executable permissions to the chosen user(s). For files, it adds the executable bit <emphasis>only</emphasis> if at least one of the users (owner, group, or others) already has executable permissions. Let's demonstrate it, because this bit can be confusing:"
-msgstr ""
+msgstr "Untuk direktori, ia menambahkan izin yang dapat dieksekusi ke pengguna yang dipilih. Untuk berkas, ia menambahkan bit yang dapat dieksekusi <emphasis>hanya</emphasis> jika setidaknya salah satu pengguna (pemilik, grup, atau lainnya) sudah memiliki izin yang dapat dieksekusi. Mari kita tunjukkan, karena bit ini bisa membingungkan:"
 
 msgid ""
 "<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>\n"
@@ -1350,18 +1282,16 @@ msgid ""
 msgstr "<computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>\n  <computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>\n  <computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>\n  <computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>\n  <computeroutput>-rw-r--r-- 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>\n  <computeroutput>$ </computeroutput><userinput>chmod o+x test.txt</userinput>\n  <computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>\n  <computeroutput>-rw-r--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>\n  <computeroutput>$ </computeroutput><userinput>chmod u+X test.txt</userinput>\n  <computeroutput>$ </computeroutput><userinput>ls test.txt</userinput>\n  <computeroutput>-rwxr--r-x 1 daniel daniel 0 18. Nov 01:07 test.txt</computeroutput>\n  "
 
 msgid "The example shows a typical file with its default permissions: its owner can read and write it, the owner's group and all other users can read it. The next operation (<literal>u+X</literal>) won't add executable permissions for the owner of the file, because permissions to execute have not been assigned. The operation has no effect on the file. Next we assign execute rights for \"other\" users and repeat the operation. This time it is successful, because at least one user group already had executable permissions."
-msgstr ""
+msgstr "Contoh ini menunjukkan berkas umum dengan izin bakunya: pemiliknya dapat membaca dan menulis, grup pemilik, dan semua pengguna lain dapat membacanya. Operasi berikutnya (<literal>u+X</literal>) tidak akan menambahkan izin yang dapat dieksekusi untuk pemilik berkas, karena izin untuk mengeksekusi belum ditetapkan. Operasi tidak berpengaruh pada berkas. Selanjutnya kami menetapkan hak eksekusi untuk pengguna \"lain\" dan mengulangi operasi. Kali ini berhasil, karena setidaknya satu grup pengguna sudah memiliki izin yang dapat dieksekusi."
 
 msgid "It is a misconception that this bit will only affect directories. If files and directories have mixed permissions, it is often a good idea to use the <command>find</command> command to locate the targets you want to operate on."
-msgstr ""
+msgstr "Ini adalah kesalah pahaman bahwa bit ini hanya akan mempengaruhi direktori. Jika berkas dan direktori memiliki izin campuran, sering kali merupakan ide yang baik untuk menggunakan perintah <command>find</command> untuk mencari target yang ingin Anda lakukan operasi atasnya."
 
 msgid "<emphasis>TIP</emphasis> Changing the user and group together"
 msgstr "<emphasis>TIP</emphasis> Mengubah pengguna dan grup bersama-sama"
 
-#, fuzzy
-#| msgid "Frequently you want to change the group of a file at the same time that you change the owner. The <command>chown</command> command has a special syntax for that: <command>chown <replaceable>user</replaceable>:<replaceable>group</replaceable> <replaceable>file</replaceable></command>"
 msgid "Frequently you want to change the group of a file at the same time that you change the owner. The <command>chown</command> command has a special syntax for that: <command>chown <replaceable>user</replaceable>:<replaceable>group</replaceable> <replaceable>file</replaceable></command>. This syntax can also be used to recursively (<literal>-R</literal>) change the ownership of a whole directory."
-msgstr "Sering Anda ingin mengubah kelompok berkas pada waktu yang sama dengan Anda mengubah pemilik. Perintah <command>chown</command> memiliki sintaks yang khusus untuk itu: <command>chown <replaceable>pengguna</replaceable>:<replaceable>kelompok</replaceable> <replaceable>berkas</replaceable></command>"
+msgstr "Sering Anda ingin mengubah kelompok berkas pada waktu yang sama dengan Anda mengubah pemilik. Perintah <command>chown</command> memiliki sintaks yang khusus untuk itu: <command>chown <replaceable>pengguna</replaceable>:<replaceable>grup</replaceable> <replaceable>berkas</replaceable></command>. Sintaks ini juga dapat digunakan untuk secara rekursif (<literal>-R</literal>) mengubah kepemilikan seluruh direktori."
 
 msgid "<emphasis>GOING FURTHER</emphasis> <command>umask</command>"
 msgstr "<emphasis>LEBIH LANJUT</emphasis> <command>umask</command>"
@@ -1369,10 +1299,8 @@ msgstr "<emphasis>LEBIH LANJUT</emphasis> <command>umask</command>"
 msgid "<primary><command>umask</command></primary>"
 msgstr "<primary><command>umask</command></primary>"
 
-#, fuzzy
-#| msgid "When an application creates a file, it assigns indicative permissions, knowing that the system automatically removes certain rights, given by the command <command>umask</command>. Enter <command>umask</command> in a shell; you will see a mask such as <computeroutput>0022</computeroutput>. This is simply an octal representation of the rights to be systematically removed (in this case, the write right for the group and other users)."
 msgid "When an application creates a file, it assigns indicative permissions, knowing that the system automatically removes certain rights, given by the command <command>umask</command>. Enter <command>umask</command> in a shell; you will see a mask such as <computeroutput>0022</computeroutput>. This is simply an octal representation of the rights to be systematically removed. In this case, the write right for the group and other users: With the above umask value, the default for directories <literal>777</literal> becomes <literal>755</literal> and the default permissions for files <literal>666</literal> become <literal>644</literal>."
-msgstr "Ketika sebuah aplikasi menciptakan sebuah berkas, itu menetapkan izin indikatif, mengetahui bahwa sistem secara otomatis menghapus hak tertentu, yang diberikan oleh perintah <command>umask</command>. Masukkan <command>umask</command> dalam shell; Anda akan melihat sebuah mask seperti <computeroutput>0022</computeroutput>. Ini adalah sekadar representasi oktal hak untuk yang secara sistematis dihapus (dalam kasus ini, hak tulis untuk grup dan pengguna lain)."
+msgstr "Ketika sebuah aplikasi menciptakan sebuah berkas, itu menetapkan izin indikatif, mengetahui bahwa sistem secara otomatis menghapus hak tertentu, yang diberikan oleh perintah <command>umask</command>. Masukkan <command>umask</command> dalam shell; Anda akan melihat sebuah mask seperti <computeroutput>0022</computeroutput>. Ini adalah sekadar representasi oktal hak yang secara sistematis akan dihapus (dalam kasus ini, hak tulis untuk grup dan pengguna lain). Dengan nilai umask di atas, baku untuk direktori <literal>777</literal> menjadi <literal>755</literal> dan izin baku untuk berkas <literal>666</literal> menjadi <literal>644</literal>."
 
 msgid "<primary>rights</primary><secondary>mask</secondary>"
 msgstr "<primary>hak</primary><secondary>mask</secondary>"
@@ -1383,21 +1311,17 @@ msgstr "<primary>izin</primary><secondary>umask</secondary>"
 msgid "<primary>mask</primary><secondary>rights mask</secondary>"
 msgstr "<primary>mask</primary><secondary>mask hak</secondary>"
 
-#, fuzzy
-#| msgid "All these details are documented in the <citerefentry><refentrytitle>crontab</refentrytitle> <manvolnum>5</manvolnum></citerefentry> man page."
 msgid "The system's default value is handled by <citerefentry><refentrytitle>pam_umask</refentrytitle> <manvolnum>8</manvolnum></citerefentry> and <filename>/etc/login.defs</filename>."
-msgstr "Semua rincian ini didokumentasikan di halaman manual <citerefentry><refentrytitle>crontab</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
+msgstr "Nilai baku sistem ditangani oleh <citerefentry><refentrytitle>pam_umask</refentrytitle> <manvolnum>8</manvolnum></citerefentry> dan /<filename>etc/login.defs</filename>."
 
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/login.defs</filename></secondary>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/login.defs</filename></secondary>"
 
-#, fuzzy
-#| msgid "If you give it a new octal value, the <command>umask</command> command modifies the mask. Used in a shell initialization file (for example, <filename>~/.bash_profile</filename>), it will effectively change the default mask for your work sessions."
 msgid "If you give it a new octal value, the <command>umask</command> command modifies the mask. Used in a shell initialization file (for example, <filename>~/.bashrc</filename> or <filename>~/.profile</filename>), it will effectively change the default mask for your work sessions."
-msgstr "Jika Anda memberikan nilai oktal baru, perintah <command>umask</command> memodifikasi mask. Digunakan dalam berkas inisialisasi shell (misalnya, <filename>~/.bash_profile</filename>), ini akan secara efektif mengubah mask baku untuk sesi kerja Anda."
+msgstr "Jika Anda memberikan nilai oktal baru, perintah <command>umask</command> memodifikasi mask. Digunakan dalam berkas inisialisasi shell (misalnya, <filename>~/.bashrc</filename> atau <filename>~/.profile</filename>), ini akan secara efektif mengubah mask baku untuk sesi kerja Anda."
 
 msgid "ACLs - Access Control Lists"
-msgstr ""
+msgstr "ACLs - Access Control Lists (Daftar Kontrol Akses)"
 
 msgid "<primary>ACL</primary>"
 msgstr "<primary>ACL</primary>"
@@ -1409,7 +1333,7 @@ msgid "<primary><emphasis role=\"pkg\">acl</emphasis></primary>"
 msgstr "<primary><emphasis role=\"pkg\">acl</emphasis></primary>"
 
 msgid "Many filesystems, e.g. Btrfs, Ext3, Ext4, JFS, XFS, etc., support the use of Access Control Lists (ACLs). These extend the basic features of file ownership and permission, described in the previous section, and allow for a more fine-grained control of each (file) object. For example: A user wants to share a file with another user and that user should only be able to read the file, but not write or change it."
-msgstr ""
+msgstr "Banyak sistem berkas, misalnya Btrfs, Ext3, Ext4, JFS, XFS, dll., mendukung penggunaan Access Control Lists (ACL). Ini memperluas fitur dasar kepemilikan dan izin berkas, yang dijelaskan di bagian sebelumnya, dan memungkinkan kontrol yang lebih halus dari setiap objek (berkas). Misalnya: Pengguna ingin berbagi berkas dengan pengguna lain dan pengguna tersebut seharusnya hanya dapat membaca berkas tersebut, tetapi tidak menulis atau mengubahnya."
 
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/fstab</filename></secondary>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/fstab</filename></secondary>"
@@ -1421,13 +1345,13 @@ msgid "<primary>ACL</primary><secondary><literal>noacl</literal></secondary>"
 msgstr "<primary>ACL</primary><secondary><literal>noacl</literal></secondary>"
 
 msgid "For some of the filesystems, the usage of ACLs is enabled by default (e.g. Btrfs, Ext3, Ext4). For other filesystems or older systems it must be enabled using the <literal>acl</literal> mount option - either in the <command>mount</command> command directly or in <filename>/etc/fstab</filename>. In the same way the usage of ACLs can be disabled by using the <literal>noacl</literal> mount option. For Ext* filesystems one can also use the <command>tune2fs -o [no]acl /dev/<replaceable>device</replaceable></command> command to enable/disable the usage of ACLs by default. The default values for each filesystem can usually be found in their homonym manual pages in section 5 (<citerefentry><refentrytitle><replaceable>filesystem</replaceable></refentrytitle> <manvolnum>5</manvolnum></citerefentry>) or in <citerefentry><refentrytitle>mount</refentrytitle> <manvolnum>8</manvolnum></citerefentry>."
-msgstr ""
+msgstr "Untuk beberapa sistem berkas, penggunaan ACL diaktifkan secara baku (misalnya Btrfs, Ext3, Ext4). Untuk sistem berkas lain atau sistem yang lebih lama, itu harus diaktifkan menggunakan opsi kait <literal>acl</literal> - baik di perintah <command>mount</command> langsung atau di <filename>/etc/fstab</filename>. Dengan cara yang sama penggunaan ACL dapat dinonaktifkan dengan menggunakan opsi kait <literal>noacl</literal>. Untuk sistem berkas Ext*, seseorang juga dapat menggunakan perintah <command>tune2fs -o [no]acl /dev/<replaceable>peranti</replaceable></command> untuk mengaktifkan/menonaktifkan penggunaan ACL secara baku. Nilai baku untuk setiap sistem berkas biasanya dapat ditemukan di halaman manual homonim mereka di bagian 5 (<citerefentry><refentrytitle><replaceable>filesystem</replaceable></refentrytitle> <manvolnum>5</manvolnum></citerefentry>) atau di <citerefentry><refentrytitle>mount</refentrytitle> <manvolnum>8</manvolnum></citerefentry>."
 
 msgid "After enabling ACLs, permissions can be set using the <citerefentry><refentrytitle>setfacl</refentrytitle> <manvolnum>1</manvolnum></citerefentry> command, while <citerefentry><refentrytitle>getfacl</refentrytitle> <manvolnum>1</manvolnum></citerefentry> allows one to retrieve the ACLs for a given object or path. These commands are part of the <emphasis role=\"pkg\">acl</emphasis> package. With <command>setfacl</command> one can also configure newly created files or directories to inherit permissions from the parent directory. It is important to note that ACLs are processed in their order and that an earlier entry that fits the situation has precedence over later entries."
-msgstr ""
+msgstr "Setelah mengaktifkan ACL, izin dapat diatur menggunakan perintah <citerefentry><refentrytitle>setfacl</refentrytitle> <manvolnum>1</manvolnum></citerefentry>, sementara <citerefentry><refentrytitle>getfacl</refentrytitle> <manvolnum>1</manvolnum></citerefentry> memungkinkan seseorang untuk mendapatkan ACL bagi objek atau path tertentu. Perintah ini adalah bagian dari paket <emphasis role=\"pkg\">acl</emphasis>. Dengan<command>setfacl</command> Seseorang juga dapat mengonfigurasi berkas atau direktori yang baru dibuat untuk mewarisi izin dari direktori induk. Penting untuk dicatat bahwa ACL diproses dalam urutannya dan bahwa entri sebelumnya yang sesuai dengan situasi lebih diutamakan daripada entri selanjutnya."
 
 msgid "If a file has ACLs set, the output of the <command>ls -l</command> command will show a plus-sign after the traditional permissions. When using ACLs, the <command>chmod</command> command behaves slightly different, and <command>umask</command> might be ignored. The extensive documentation, e.g. <citerefentry><refentrytitle>acl</refentrytitle> <manvolnum>5</manvolnum></citerefentry> contains more information."
-msgstr ""
+msgstr "Jika berkas memiliki ACL yang ditetapkan, keluaran dari <command>ls -l</command> perintah akan menampilkan tanda plus setelah izin tradisional. Saat menggunakan ACL, <command>chmod</command> perintah berperilaku sedikit berbeda, dan <command>umask</command> mungkin diabaikan. Dokumentasi ekstensif, misalnya <citerefentry><refentrytitle>acl</refentrytitle> <manvolnum>5</manvolnum></citerefentry> berisi lebih banyak informasi."
 
 msgid "Administration Interfaces"
 msgstr "Antarmuka Administrasi"
@@ -1462,10 +1386,8 @@ msgstr "Ini, tak diragukan lagi, adalah salah satu antarmuka administrasi yang p
 msgid "Webmin dashboard"
 msgstr "Dasbor Webmin"
 
-#, fuzzy
-#| msgid "Sadly, <command>webmin</command> is no longer part of Debian. Its Debian maintainer — Jaldhar H. Vyas — removed the packages he created because he no longer had the time required to maintain them at an acceptable quality level. Nobody has officially taken over, so <emphasis role=\"distribution\">Buster</emphasis> does not have the <command>webmin</command> package."
 msgid "Sadly, <command>webmin</command> is no longer part of Debian. Its Debian maintainer removed the packages created because they no longer had the time required to maintain them at an acceptable quality level. Nobody has officially taken over, so Debian does not provide the <command>webmin</command> package."
-msgstr "Sayangnya, <command>webmin</command> tidak lagi merupakan bagian dari Debian. Para pengelola Debian — Jaldhar H. Vyas — menghapus paket yang diciptakannya karena ia tidak lagi memiliki waktu yang dibutuhkan untuk mempertahankan mereka pada tingkat kualitas yang dapat diterima. Tak seorang pun telah secara resmi mengambil alih, sehingga <emphasis role=\"distribution\">Buster</emphasis> tidak memiliki paket <command>webmin</command>."
+msgstr "Sayangnya <command>webmin</command> bukan lagi bagian dari Debian. Pengelola Debian-nya menghapus paket yang dibuat karena mereka tidak lagi memiliki waktu yang diperlukan untuk mempertahankannya pada tingkat kualitas yang dapat diterima. Tidak ada yang secara resmi mengambil alih, jadi Debian tidak menyediakan paket <command>webmin</command>."
 
 msgid "There is, however, an unofficial package distributed on the <literal>webmin.com</literal> website. Contrary to the original Debian packages, this package is monolithic; all of its configuration modules are installed and activated by default, even if the corresponding service is not installed on the machine."
 msgstr "Namun, ada sebuah paket tidak resmi yang didistribusikan pada <literal>webmin.com</literal> website. Bertentangan dengan paket-paket Debian asli, paket ini monolitik; semua modul konfigurasinya dipasang dan diaktifkan secara default, bahkan jika layanan yang sesuai tidak dipasang pada mesin."
@@ -1473,15 +1395,11 @@ msgstr "Namun, ada sebuah paket tidak resmi yang didistribusikan pada <literal>w
 msgid "<emphasis>SECURITY</emphasis> Changing the root password"
 msgstr "<emphasis>KEAMANAN</emphasis> Mengubah password root"
 
-#, fuzzy
-#| msgid "On the first login, identification is conducted with the root username and its usual password. It is recommended to change the password used for <command>webmin</command> as soon as possible, so that if it is compromised, the root password for the server will not be involved, even if this confers important administrative rights to the machine."
 msgid "On the first login, identification is conducted with the root username and its usual password (or any user's login credentials which belongs to the <literal>sudo</literal> group). It is recommended to change the password used for <command>webmin</command> as soon as possible, so that if it is compromised, the server's user accounts will not be involved, even if this confers important administrative rights to the machine."
-msgstr "Saat login pertama, identifikasi dilakukan dengan nama pengguna root dan kata sandi yang biasa. Dianjurkan untuk mengubah sandi yang digunakan untuk <command>webmin</command> secepat mungkin, sehingga jika itu disusupi, kata sandi root untuk server tidak akan terlibat, bahkan jika ini menganugerahkan hak administratif yang penting untuk mesin."
+msgstr "Saat login pertama, identifikasi dilakukan dengan nama pengguna root dan kata sandi yang biasa (atau sebarang kredensial login pengguna yang masuk grup <literal>sudo</literal>). Dianjurkan untuk mengubah kata sandi yang digunakan untuk <command>webmin</command> secepat mungkin, sehingga jika itu terkompromi, kata sandi root untuk server tidak akan terlibat, bahkan jika ini menganugerahkan hak administratif yang penting untuk mesin."
 
-#, fuzzy
-#| msgid "Beware! Since <command>webmin</command> has so many features, a malicious user accessing it could compromise the security of the entire system. In general, interfaces of this kind are not recommended for important systems with strong security constraints (firewall, sensitive servers, etc.)."
 msgid "Beware! Since <command>webmin</command> has so many features, a malicious user accessing it could compromise the security of the entire system. In general, interfaces of this kind are not recommended for important systems with strong security constraints (firewall, sensitive servers, etc.), and they are not recommended to be exposed to the public either."
-msgstr "Berhati-hatilah! Karena <command>webmin</command> memiliki begitu banyak fitur, pengguna jahat yang mengakses itu dapat membahayakan keamanan seluruh sistem. Secara umum, antarmuka semacam ini tidak dianjurkan untuk sistem penting dengan kendala-kendala keamanan yang kuat (firewall, server sensitif, dll.)."
+msgstr "Berhati-hatilah! Karena <command>webmin</command> memiliki begitu banyak fitur, pengguna jahat yang mengakses itu dapat membahayakan keamanan seluruh sistem. Secara umum, antarmuka semacam ini tidak dianjurkan untuk sistem penting dengan kendala-kendala keamanan yang kuat (firewall, server sensitif, dll.), dan mereka tidak disarankan untuk dipaparkan ke publik juga."
 
 msgid "Webmin is used through a web interface, but it does not require Apache to be installed. Essentially, this software has its own integrated mini web server. This server listens by default on port 10000 and accepts secure HTTP connections."
 msgstr "Webmin digunakan melalui antarmuka web, tetapi tidak memerlukan Apache untuk diinstal. Pada dasarnya, perangkat lunak ini memiliki server web mini terpadu sendiri. Server ini mendengarkan secara default pada port 10000 dan menerima koneksi HTTP aman."
@@ -1489,10 +1407,8 @@ msgstr "Webmin digunakan melalui antarmuka web, tetapi tidak memerlukan Apache u
 msgid "Included modules cover a wide variety of services, among which:"
 msgstr "Modul-modul yang disertakan mencakup berbagai macam layanan, diantaranya:"
 
-#, fuzzy
-#| msgid "all base services: creation of users and groups, management of <filename>crontab</filename> files, init scripts, viewing of logs, etc."
 msgid "all base services: creation of users and groups, management of <filename>crontab</filename> files, service scripts/files, viewing of logs, etc."
-msgstr "semua layanan dasar: penciptaan pengguna dan kelompok, manajemen berkas <filename>crontab</filename>, init script, melihat log, dll."
+msgstr "semua layanan dasar: penciptaan pengguna dan grup, manajemen berkas <filename>crontab</filename>, skrip/berkas layanan, melihat log, dll."
 
 msgid "bind: DNS server configuration (name service);"
 msgstr "bind: konfigurasi server DNS (layanan nama);"
@@ -1500,15 +1416,11 @@ msgstr "bind: konfigurasi server DNS (layanan nama);"
 msgid "postfix: SMTP server configuration (e-mail);"
 msgstr "postfix: konfigurasi server SMTP (e-mail);"
 
-#, fuzzy
-#| msgid "inetd: configuration of the <command>inetd</command> super-server;"
 msgid "network services: configuration of the <command>xinetd</command> super-server;"
-msgstr "inetd: konfigurasi server super <command>inetd</command>;"
+msgstr "layanan jaringan: konfigurasi super-server <command>xinetd</command>;"
 
-#, fuzzy
-#| msgid "quota: user quota management;"
 msgid "disk quota: user quota management;"
-msgstr "kuota: manajemen kuota pengguna;"
+msgstr "kuota disk: manajemen kuota pengguna;"
 
 msgid "dhcpd: DHCP server configuration;"
 msgstr "dhcpd: konfigurasi server DHCP;"
@@ -1543,10 +1455,8 @@ msgstr "<primary><command>debconf</command></primary><seealso><command>dpkg-reco
 msgid "<primary><command>dpkg-reconfigure</command></primary><seealso><command>debconf</command></seealso>"
 msgstr "<primary><command>dpkg-reconfigure</command></primary><seealso><command>debconf</command></seealso>"
 
-#, fuzzy
-#| msgid "Many packages are automatically configured after asking a few questions during installation through the Debconf tool. These packages can be reconfigured by running <command>dpkg-reconfigure <replaceable>package</replaceable></command>."
 msgid "Many packages are automatically configured after asking a few questions during installation through the Debconf tool. These packages can be reconfigured by running <command>dpkg-reconfigure -p<replaceable>level</replaceable> <replaceable>package</replaceable></command>."
-msgstr "Banyak paket secara otomatis dikonfigurasi setelah mengajukan beberapa pertanyaan selama instalasi melalui alat Debconf. Paket-paket ini dapat dikonfigurasi ulang dengan menjalankan <command>dpkg-reconfigure <replaceable>paket</replaceable></command>."
+msgstr "Banyak paket secara otomatis dikonfigurasi setelah mengajukan beberapa pertanyaan selama instalasi melalui alat Debconf. Paket-paket ini dapat dikonfigurasi ulang dengan menjalankan <command>dpkg-reconfigure -p<replaceable>level</replaceable> <replaceable>paket</replaceable></command>."
 
 msgid "For most cases, these settings are very simple; only a few important variables in the configuration file are changed. These variables are often grouped between two “demarcation” lines so that reconfiguration of the package only impacts the enclosed area. In other cases, reconfiguration will not change anything if the script detects a manual modification of the configuration file, in order to preserve these human interventions (because the script can't ensure that its own modifications will not disrupt the existing settings)."
 msgstr "Untuk kebanyakan kasus, pengaturan ini sangat sederhana; hanya beberapa variabel penting di berkas konfigurasi diganti. Variabel ini sering dikelompokkan antara dua garis \"demarkasi\" sehingga konfigurasi ulang paket hanya berdampak ke daerah tertentu. Dalam kasus lain, konfigurasi ulang tidak akan mengubah apa-apa jika skrip mendeteksi modifikasi manual berkas konfigurasi, dalam rangka untuk mempertahankan intervensi manusia ini (karena skrip tidak dapat memastikan bahwa modifikasinya tidak akan mengganggu pengaturan yang ada)."
@@ -1578,10 +1488,8 @@ msgstr "<primary><command>rsyslogd</command></primary>"
 msgid "<primary>file</primary><secondary>log file</secondary>"
 msgstr "<primary>berkas</primary><secondary>berkas log</secondary>"
 
-#, fuzzy
-#| msgid "<primary>logs</primary><secondary>dispatching</secondary>"
 msgid "<primary>log files</primary><secondary>dispatching</secondary>"
-msgstr "<primary>log</primary><secondary>pengiriman</secondary>"
+msgstr "<primary>berkas log</primary><secondary>pengiriman</secondary>"
 
 msgid "<primary>log files</primary><seealso><filename>/var/log</filename></seealso>"
 msgstr "<primary>berkas log</primary><seealso><filename>/var/log/</filename></seealso>"
@@ -1676,8 +1584,6 @@ msgstr "Berkas Konfigurasi"
 msgid "<primary><command>rsyslogd</command></primary><secondary>configuration</secondary><seealso><filename>/etc/rsyslog.conf</filename></seealso>"
 msgstr "<primary><command>rsyslogd</command></primary><secondary>konfigurasi</secondary><seealso><filename>/etc/rsyslog.conf</filename></seealso>"
 
-#, fuzzy
-#| msgid "The syntax of the <filename>/etc/rsyslog.conf</filename> file is detailed in the <citerefentry><refentrytitle>rsyslog.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry> manual page, but there is also HTML documentation available in the <emphasis role=\"pkg\">rsyslog-doc</emphasis> package (<filename>/usr/share/doc/rsyslog-doc/html/index.html</filename>). The overall principle is to write “selector” and “action” pairs. The selector defines all relevant messages, and the actions describes how to deal with them."
 msgid "The syntax of the <filename>/etc/rsyslog.conf</filename> file is detailed in the <citerefentry><refentrytitle>rsyslog.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> manual page, but there is also HTML documentation available in the <emphasis role=\"pkg\">rsyslog-doc</emphasis> package (<filename>/usr/share/doc/rsyslog-doc/html/index.html</filename>). The overall principle is to write “selector” and “action” pairs. The selector defines all relevant messages, and the action describes how to deal with them."
 msgstr "Sintaks berkas <filename>/etc/rsyslog.conf</filename> dirinci dalam halaman manual <citerefentry><refentrytitle>rsyslog.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>, tetapi ada juga dokumentasi HTML yang tersedia di paket <emphasis role=\"pkg\">rsyslog-doc</emphasis> (<filename>/usr/share/doc/rsyslog-doc/html/index.html</filename>). Prinsip keseluruhan adalah untuk menulis pasangan \"pemilih\" dan \"tindakan\". Pemilih mendefinisikan semua pesan yang relevan, dan tindakan yang menjelaskan bagaimana menangani mereka."
 
@@ -1705,10 +1611,8 @@ msgstr "<emphasis>KEMBALI KE DASAR</emphasis> Pipa bernama (named pipe), pipa pe
 msgid "<primary>named pipe</primary>"
 msgstr "<primary>named pipe</primary>"
 
-#, fuzzy
-#| msgid "<primary>backup</primary><secondary>on tape</secondary>"
 msgid "<primary>pipe</primary><secondary>named pipe</secondary>"
-msgstr "<primary>cadangan</primary><secondary>pada tape</secondary>"
+msgstr "<primary>pipa</primary><secondary>pipa bernama</secondary>"
 
 msgid "<primary><command>mkfifo</command></primary>"
 msgstr "<primary><command>mkfifo</command></primary>"
@@ -1800,18 +1704,14 @@ msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/se
 msgid "The socket type: <literal>stream</literal> for a TCP connection, <literal>dgram</literal> for UDP datagrams."
 msgstr "Jenis soket: <literal>stream</literal> untuk koneksi TCP, <literal>dgram</literal> untuk datagram UDP."
 
-#, fuzzy
-#| msgid "The protocol: <literal>tcp</literal> or <literal>udp</literal>."
 msgid "The protocol: <literal>tcp</literal>, <literal>tcp6</literal>, <literal>udp</literal>, or <literal>udp6</literal>."
-msgstr "Protokol: <literal>tcp</literal> atau <literal>udp</literal>."
+msgstr "Protokol: <literal>tcp</literal>, <literal>tcp6</literal>, <literal>udp</literal>, atau <literal>udp6</literal>."
 
 msgid "The options: two possible values: <literal>wait</literal> or <literal>nowait</literal>, to tell <command>inetd</command> whether it should wait or not for the end of the launched process before accepting another connection. For TCP connections, easily multiplexable, you can usually use <literal>nowait</literal>. For programs responding over UDP, you should use <literal>nowait</literal> only if the server is capable of managing several connections in parallel. You can suffix this field with a period, followed by the maximum number of connections authorized per minute (the default limit is 256)."
 msgstr "Pilihan: dua nilai yang mungkin: <literal>wait</literal> atau <literal>nowait</literal>, untuk memberitahu <command>inetd</command> apakah itu harus menunggu atau tidak untuk akhir dari proses diluncurkan sebelum menerima koneksi lain. Untuk koneksi TCP, yang mudah dimultiplekskan, Anda dapat biasanya menggunakan <literal>nowait</literal>. Untuk program yang merespon melalui UDP, Anda harus menggunakan <literal>nowait</literal> hanya jika server mampu mengelola beberapa koneksi secara paralel. Anda dapat menambahkan akhiran pada ruas ini dengan titik dua, diikuti oleh jumlah maksimum koneksi resmi per menit (batas default adalah 256)."
 
-#, fuzzy
-#| msgid "The user name of the user under whose identity the server will run."
 msgid "The user name of the user under whose identity the server will run. Optionally one can add the group too via <literal>user.group</literal> syntax."
-msgstr "Nama pengguna yang di bawah identitasnya server akan berjalan."
+msgstr "Nama pengguna dari pengguna yang identitasnya akan dipakai untuk menjalankan server. Secara opsional seseorang dapat menambahkan grup juga melalui sintaks <literal>user.group</literal>."
 
 msgid "The full path to the server program to execute."
 msgstr "Path lengkap ke program server yang akan dijalankan."
@@ -1819,10 +1719,8 @@ msgstr "Path lengkap ke program server yang akan dijalankan."
 msgid "The arguments: this is a complete list of the program's arguments, including its own name (<literal>argv[0]</literal> in C)."
 msgstr "Argumen: ini adalah daftar lengkap dari argumen program, termasuk nama sendiri (<literal>argv[0]</literal> dalam C)."
 
-#, fuzzy
-#| msgid "While Debian installs <emphasis role=\"pkg\">openbsd-inetd</emphasis> by default, there is no lack of alternatives: we can mention <emphasis role=\"pkg\">inetutils-inetd</emphasis>, <emphasis role=\"pkg\">micro-inetd</emphasis>, <emphasis role=\"pkg\">rlinetd</emphasis> and <emphasis role=\"pkg\">xinetd</emphasis>."
 msgid "The following example illustrates some use-cases after installing <emphasis role=\"pkg\">talkd</emphasis>, <emphasis role=\"pkg\">nullidentd</emphasis> (<emphasis role=\"pkg\">ident-server</emphasis>), and <emphasis role=\"pkg\">fingerd</emphasis>:"
-msgstr "Walaupun Debian menginstal <emphasis role=\"pkg\">openbsd-inetd</emphasis> secara default, ada tidak ada kekurangan alternatif: kita dapat menyebutkan <emphasis role=\"pkg\">inetutils-inetd</emphasis>, <emphasis role=\"pkg\">micro-inetd</emphasis>, <emphasis role=\"pkg\">rlinetd</emphasis>, dan <emphasis role=\"pkg\">xinetd</emphasis>."
+msgstr "Contoh berikut mengilustrasikan beberapa kasus penggunaan setelah memasang <emphasis role=\"pkg\">talkd</emphasis>, <emphasis role=\"pkg\">nullidentd</emphasis> (<emphasis role=\"pkg\">ident-server</emphasis>), dan <emphasis role=\"pkg\">fingerd</emphasis>:"
 
 msgid "Excerpt from <filename>/etc/inetd.conf</filename>"
 msgstr "Kutipan dari <filename>/etc/inetd.conf</filename>"
@@ -1843,8 +1741,6 @@ msgstr "<primary><command>tcpd</command></primary>"
 msgid "<primary>super-server</primary><secondary>access limitation</secondary>"
 msgstr "<primary>super-server</primary><secondary>batasan akses</secondary>"
 
-#, fuzzy
-#| msgid "The <command>tcpd</command> program is frequently used in the <filename>/etc/inetd.conf</filename> file. It allows limiting incoming connections by applying access control rules, documented in the <citerefentry><refentrytitle>hosts_access</refentrytitle><manvolnum>5</manvolnum></citerefentry> manual page, and which are configured in the <filename>/etc/hosts.allow</filename> and <filename>/etc/hosts.deny</filename> files. Once it has been determined that the connection is authorized, <command>tcpd</command> executes the real server (like <command>in.fingerd</command> in our example). It is worth noting that <command>tcpd</command> relies on the name under which it was invoked (that is the first argument, <literal>argv[0]</literal>) to identify the real program to run. So you should not start the arguments list with <literal>tcpd</literal> but with the program that must be wrapped."
 msgid "The <command>tcpd</command> program is frequently used in the <filename>/etc/inetd.conf</filename> file. It allows limiting incoming connections by applying access control rules, documented in the <citerefentry><refentrytitle>hosts_access</refentrytitle> <manvolnum>5</manvolnum></citerefentry> manual page, and which are configured in the <filename>/etc/hosts.allow</filename> and <filename>/etc/hosts.deny</filename> files. Once it has been determined that the connection is authorized, <command>tcpd</command> executes the real server (like <command>in.fingerd</command> in our example). It is worth noting that <command>tcpd</command> relies on the name under which it was invoked (that is the first argument, <literal>argv[0]</literal>) to identify the real program to run. So you should not start the arguments list with <literal>tcpd</literal> but with the program that must be wrapped."
 msgstr "Program <command>tcpd</command> sering digunakan dalam berkas <filename>/etc/inetd.conf</filename>. Hal ini memungkinkan membatasi koneksi masuk dengan menerapkan aturan kontrol akses, didokumentasikan di halaman manual <citerefentry><refentrytitle>hosts_access</refentrytitle><manvolnum>5</manvolnum></citerefentry>, yang dikonfigurasi di berkas <filename>/etc/hosts.allow</filename> dan <filename>/etc/hosts.deny</filename>. Setelah ditentukan bahwa sambungan diizinkan, <command>tcpd</command> mengeksekusi server sebenarnya (seperti <command>in.fingerd</command> dalam contoh kita). Perlu dicatat bahwa <command>tcpd</command> mengandalkan nama apa dia dipanggil (yaitu argumen pertama, <literal>argv [0]</literal>) untuk mengidentifikasi program nyata yang akan dijalankan. Jadi Anda tidak harus memulai daftar argumen dengan <literal>tcpd</literal> tapi dengan program yang harus dibungkus."
 
@@ -1863,39 +1759,29 @@ msgstr "<primary>Wietse Venema</primary>"
 msgid "<primary>Venema, Wietse</primary>"
 msgstr "<primary>Venema, Wietse</primary>"
 
-#, fuzzy
-#| msgid "Wietse Venema, whose expertise in security has made him a renowned programmer, is the author of the <command>tcpd</command> program. He is also the main creator of Postfix, the modular e-mail server (SMTP, Simple Mail Transfer Protocol), designed to be safer and more reliable than <command>sendmail</command>, which features a long history of security vulnerabilities."
 msgid "Wietse Venema, whose expertise in security has made him a renowned programmer, is the author of the <command>tcpd</command> program. He is also the main creator of Postfix, the modular e-mail server (SMTP, Simple Mail Transfer Protocol), designed to be safer and more reliable than <command>sendmail</command>, which features a long history of security vulnerabilities. We will have a closer look at this mail server in <xref linkend=\"sect.smtp-mail-server\" />."
-msgstr "Wietse Venema, yang keahliannya dalam keamanan telah membuatnya menjadi programmer yang terkenal, adalah penulis program <command>tcpd</command>. Ia adalah pencipta utama Postfix, server modular surel (SMTP, Simple Mail Transfer Protocol), yang dirancang untuk menjadi lebih aman dan lebih dapat diandalkan daripada <command>sendmail</command>, yang memiliki sejarah panjang kerentanan keamanan."
+msgstr "Wietse Venema, yang keahliannya dalam keamanan telah membuatnya menjadi programmer yang terkenal, adalah penulis program <command>tcpd</command>. Ia adalah pencipta utama Postfix, server modular surel (SMTP, Simple Mail Transfer Protocol), yang dirancang untuk menjadi lebih aman dan lebih dapat diandalkan daripada <command>sendmail</command>, yang memiliki sejarah panjang kerentanan keamanan. Kita akan melihat lebih dekat server surel ini dalam <xref linkend=\"sect.smtp-mail-server\" />."
 
 msgid "<emphasis>ALTERNATIVE</emphasis> Other <command>inetd</command> commands"
 msgstr "<emphasis>ALTERNATIF</emphasis> Perintah <command>inetd</command> lain"
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">vnc4server</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">inet-superserver</emphasis></primary><seealso>super-server</seealso>"
-msgstr "<primary><emphasis role=\"pkg\">vnc4server</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">inet-superserver</emphasis></primary><seealso>super-server</seealso>"
 
-#, fuzzy
-#| msgid "<primary><emphasis role=\"pkg\">vino</emphasis></primary>"
 msgid "<primary><emphasis role=\"pkg\">xinetd</emphasis></primary><seealso>super-server</seealso>"
-msgstr "<primary><emphasis role=\"pkg\">vino</emphasis></primary>"
+msgstr "<primary><emphasis role=\"pkg\">xinetd</emphasis></primary><seealso>super-server</seealso>"
 
-#, fuzzy
-#| msgid "While Debian installs <emphasis role=\"pkg\">openbsd-inetd</emphasis> by default, there is no lack of alternatives: we can mention <emphasis role=\"pkg\">inetutils-inetd</emphasis>, <emphasis role=\"pkg\">micro-inetd</emphasis>, <emphasis role=\"pkg\">rlinetd</emphasis> and <emphasis role=\"pkg\">xinetd</emphasis>."
 msgid "While Debian installs <emphasis role=\"pkg\">openbsd-inetd</emphasis> by default, there is no lack of alternatives: we can mention <emphasis role=\"pkg\">inetutils-inetd</emphasis>, <emphasis role=\"pkg\">rlinetd</emphasis>, and <emphasis role=\"pkg\">xinetd</emphasis>, which all provide the virtual package <emphasis role=\"pkg\">inet-superserver</emphasis>."
-msgstr "Walaupun Debian menginstal <emphasis role=\"pkg\">openbsd-inetd</emphasis> secara default, ada tidak ada kekurangan alternatif: kita dapat menyebutkan <emphasis role=\"pkg\">inetutils-inetd</emphasis>, <emphasis role=\"pkg\">micro-inetd</emphasis>, <emphasis role=\"pkg\">rlinetd</emphasis>, dan <emphasis role=\"pkg\">xinetd</emphasis>."
+msgstr "Walaupun Debian memasang <emphasis role=\"pkg\">openbsd-inetd</emphasis> secara baku, tidak ada kekurangan alternatif: kita dapat menyebutkan <emphasis role=\"pkg\">inetutils-inetd</emphasis>, <emphasis role=\"pkg\">rlinetd</emphasis>, dan <emphasis role=\"pkg\">xinetd</emphasis>, yang semua menyediakan paket virtual <emphasis role=\"pkg\">inet-superserver</emphasis>."
 
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/xinetd.d/</filename></secondary><seealso><command>xinetd</command></seealso>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/xinetd.d/</filename></secondary><seealso><command>xinetd</command></seealso>"
 
 msgid "Most of these alternatives share the same configuration file <filename>/etc/inetd.conf</filename>."
-msgstr ""
+msgstr "Sebagian besar alternatif ini berbagi berkas konfigurasi yang sama <filename>/etc/inetd.conf</filename>."
 
-#, fuzzy
-#| msgid "This last incarnation of a super-server offers very interesting possibilities. Most notably, its configuration can be split into several files (stored, of course, in the <filename>/etc/xinetd.d/</filename> directory), which can make an administrator's life easier."
 msgid "This last incarnation of a super-server however, offers different syntax and very interesting possibilities. Most notably, its configuration can be split into several files (stored, of course, in the <filename>/etc/xinetd.d/</filename> directory), which can make an administrator's life easier. It is considered to be more powerful, but also more complex."
-msgstr "Inkarnasi ini terakhir server super menawarkan kemungkinan yang sangat menarik. Paling menonjol, konfigurasinya dapat dibagi menjadi beberapa berkas (disimpan, tentu saja, dalam direktori <filename>/etc/xinetd.d/</filename>), yang dapat membuat hidup seorang administrator lebih mudah."
+msgstr "Inkarnasi ini terakhir super-server menawarkan kemungkinan yang sangat menarik. Paling menonjol, konfigurasinya dapat dibagi menjadi beberapa berkas (disimpan, tentu saja, dalam direktori <filename>/etc/xinetd.d/</filename>), yang dapat membuat hidup seorang administrator lebih mudah. Itu dianggap lebih kuat, tapi juga lebih kompleks."
 
 msgid "Last but not least, it is even possible to emulate <command>inetd</command>'s behavior with <command>systemd</command>'s socket-activation mechanism (see <xref linkend=\"sect.systemd\" />)."
 msgstr "Terakhir tetapi bukan tidak penting, bahkan mungkin untuk meniru perilaku <command>inetd</command> dengan mekanisme aktivasi soket <command>systemd</command> (lihat <xref linkend=\"sect.systemd\" />)."
@@ -1954,10 +1840,8 @@ msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/cr
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.deny</filename></secondary><seealso><command>cron</command></seealso>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/cron.deny</filename></secondary><seealso><command>cron</command></seealso>"
 
-#, fuzzy
-#| msgid "You can restrict access to <command>cron</command> by creating an explicit authorization file (whitelist) in <filename>/etc/cron.allow</filename>, in which you indicate the only users authorized to schedule commands. All others will automatically be deprived of this feature. Conversely, to only block one or two troublemakers, you could write their username in the explicit prohibition file (blacklist), <filename>/etc/cron.deny</filename>. This same feature is available for <command>atd</command>, with the <filename>/etc/at.allow</filename> and <filename>/etc/at.deny</filename> files."
 msgid "You can restrict access to <command>crontab</command> by creating an explicit authorization file (whitelist) in <filename>/etc/cron.allow</filename>, in which you indicate the only users authorized to schedule commands. All others will automatically be deprived of this feature. Conversely, to only block one or two troublemakers, you could write their username in the explicit prohibition file (blacklist), <filename>/etc/cron.deny</filename>. This same feature is available for <command>atd</command>, with the <filename>/etc/at.allow</filename> and <filename>/etc/at.deny</filename> files (also described in their manual pages)."
-msgstr "Anda dapat membatasi akses ke <command>cron</command> dengan membuat berkas otorisasi eksplisit (whitelist) di <filename>/etc/cron.allow</filename>, di mana Anda menunjukkan hanya pengguna yang berwenang untuk menjadwalkan perintah. Semua yang lain akan secara otomatis kehilangan fitur ini. Sebaliknya, hanya untuk memblokir satu atau dua pengacau, Anda bisa menulis nama mereka dalam file larangan eksplisit (blacklist), <filename>/etc/cron.deny</filename>. Fitur yang sama tersedia untuk <command>atd</command>, dengan berkas <filename>/etc/at.allow</filename> dan <filename>/etc/at.deny</filename>."
+msgstr "Anda dapat membatasi akses ke <command>crontab</command> dengan membuat berkas otorisasi eksplisit (whitelist) di <filename>/etc/cron.allow</filename>, di mana Anda menunjukkan hanya para pengguna yang berwenang untuk menjadwalkan perintah. Semua yang lain akan secara otomatis kehilangan fitur ini. Sebaliknya, hanya untuk memblokir satu atau dua pengacau, Anda bisa menulis nama mereka dalam berkas larangan eksplisit (blacklist), <filename>/etc/cron.deny</filename>. Fitur yang sama tersedia untuk <command>atd</command>, dengan berkas <filename>/etc/at.allow</filename> dan <filename>/etc/at.deny</filename> (juga diuraikan dalam halaman manual mereka)."
 
 msgid "<primary><filename>/etc</filename></primary><secondary><filename>/etc/crontab</filename></secondary>"
 msgstr "<primary><filename>/etc</filename></primary><secondary><filename>/etc/crontab</filename></secondary>"
@@ -2025,10 +1909,8 @@ msgstr "<literal>@daily</literal>: sekali per hari (pukul 24:00);"
 msgid "<literal>@hourly</literal>: once per hour (at the beginning of each hour)."
 msgstr "<literal>@hourly</literal>: sekali per jam (pada permulaan setiap jam)."
 
-#, fuzzy
-#| msgid "The protocol: <literal>tcp</literal> or <literal>udp</literal>."
 msgid "More abbreviations are recognized, like <literal>@reboot</literal>or <literal>@midnight</literal>."
-msgstr "Protokol: <literal>tcp</literal> atau <literal>udp</literal>."
+msgstr "Lebih banyak singkatan yang dikenali, seperti <literal>@reboot</literal> atau <literal>@midnight</literal>."
 
 msgid "<emphasis>SPECIAL CASE</emphasis> <command>cron</command> and daylight savings time"
 msgstr "<emphasis>KASUS KHUSUS</emphasis> <command>cron</command> dan daylight saving time"
@@ -2039,10 +1921,8 @@ msgstr "Di Debian, <command>cron</command> memperhitungkan perubahan waktu (Dayl
 msgid "Be careful, however, if the order in which the different scheduled tasks and the delay between their respective executions matters, you should check the compatibility of these constraints with <command>cron</command>'s behavior; if necessary, you can prepare a special schedule for the two problematic nights per year."
 msgstr "Namun hati-hati, jika urutan antara tugas berbeda yang dijadwalkan dan penundaan antara eksekusi mereka masing-masing penting, Anda harus memeriksa kompatibilitas kendala dengan perilaku <command>cron</command>; jika perlu, Anda dapat mempersiapkan jadwal khusus untuk dua malam bermasalah per tahun."
 
-#, fuzzy
-#| msgid "Each significant line of a <emphasis>crontab</emphasis> describes a scheduled command with the six (or seven) following fields:"
 msgid "Each significant line of a <filename>crontab</filename> entry describes a scheduled command with the six (or seven) following fields:"
-msgstr "Setiap baris yang signifikan dari <emphasis>crontab</emphasis> menggambarkan perintah yang dijadwalkan dengan enam (atau tujuh) ruas berikut:"
+msgstr "Setiap baris yang signifikan dari <filename>crontab</filename> menggambarkan perintah yang dijadwalkan dengan enam (atau tujuh) ruas berikut:"
 
 msgid "the value for the minute (from 0 to 59);"
 msgstr "nilai untuk menit (angka dari 0-59);"
@@ -2068,27 +1948,12 @@ msgstr "perintah yang akan dilaksanakan (ketika kondisi yang didefinisikan oleh 
 msgid "All these details are documented in the <citerefentry><refentrytitle>crontab</refentrytitle> <manvolnum>5</manvolnum></citerefentry> man page."
 msgstr "Semua rincian ini didokumentasikan di halaman manual <citerefentry><refentrytitle>crontab</refentrytitle> <manvolnum>5</manvolnum></citerefentry>."
 
-#, fuzzy
-#| msgid "Each value can be expressed in the form of a list of possible values (separated by commas). The syntax <literal>a-b</literal> describes the interval of all the values between <literal>a</literal> and <literal>b</literal>. The syntax <literal>a-b/c</literal> describes the interval with an increment of <literal>c</literal> (example: <literal>0-10/2</literal> means <literal>0,2,4,6,8,10</literal>). An asterisk <literal>*</literal> is a wildcard, representing all possible values."
 msgid "Each value can also be expressed in the form of a list of possible values (separated by commas). The syntax <literal>a-b</literal> describes the interval of all the values between <literal>a</literal> and <literal>b</literal>. The syntax <literal>a-b/c</literal> describes the interval with an increment of <literal>c</literal> (example: <literal>0-10/2</literal> means <literal>0,2,4,6,8,10</literal>). An asterisk <literal>*</literal> is a wildcard, representing all possible values."
-msgstr "Setiap nilai dapat dinyatakan dalam bentuk daftar nilai yang mungkin (dipisahkan dengan koma). Sintaks <literal>a-b</literal> menjelaskan interval semua nilai antara <literal>a</literal> dan <literal>b</literal>. Sintaks <literal>a-b/c</literal> menggambarkan interval dengan kenaikan <literal>c</literal> (contoh: <literal>0-10/2</literal> berarti <literal>0,2,4,6,8,10</literal>). Asterisk <literal>*</literal> adalah wildcard, mewakili semua nilai yang mungkin."
+msgstr "Setiap nilai dapat dinyatakan dalam bentuk daftar nilai yang mungkin (dipisahkan dengan koma). Sintaks <literal>a-b</literal> menjelaskan interval semua nilai antara <literal>a</literal> dan <literal>b</literal>. Sintaks <literal>a-b/c</literal> menggambarkan interval dengan kenaikan <literal>c</literal> (contoh: <literal>0-10/2</literal> berarti <literal>0,2,4,6,8,10</literal>). Tanda bintang <literal>*</literal> adalah wildcard, mewakili semua nilai yang mungkin."
 
 msgid "Sample user <filename>crontab</filename> file"
 msgstr "Contoh berkas <filename>crontab</filename> pengguna"
 
-#, fuzzy
-#| msgid ""
-#| "#Format\n"
-#| "#min hour day mon dow  command\n"
-#| "\n"
-#| "# Download data every night at 7:25 pm\n"
-#| " 25  19   *   *   *    $HOME/bin/get.pl\n"
-#| "\n"
-#| "# 8:00 am, on weekdays (Monday through Friday)\n"
-#| " 00  08   *   *   1-5  $HOME/bin/dosomething\n"
-#| "\n"
-#| "# Restart the IRC proxy after each reboot\n"
-#| "@reboot /usr/bin/dircproxy"
 msgid ""
 "#Format\n"
 "#min hour day mon dow  command\n"
@@ -2104,18 +1969,7 @@ msgid ""
 "\n"
 "# Restart the IRC proxy after each reboot\n"
 "@reboot /usr/bin/dircproxy"
-msgstr ""
-"#Format\n"
-"#min jam hari bul dow perintah\n"
-"\n"
-"# Unduh data setiap malam pukul 19.25\n"
-" 25 19 * * * $HOME /bin/get.pl\n"
-"\n"
-"# 08:00, pada hari kerja (Senin hingga Jumat)\n"
-" 00 08 * * 1-5 $HOME/bin/dosomething\n"
-"\n"
-"# Mulai ulang proxy IRC setelah setiap reboot\n"
-"@reboot /usr/bin/dircproxy"
+msgstr "#Format\n#min hour day mon dow  command\n\n# Download data every night at 7:25 pm\n 25  19   *   *   *    $HOME/bin/get.pl\n\n# 8:00 am, on weekdays (Monday through Friday)\n 00  08   *   *   1-5  $HOME/bin/dosomething\n\n# every two hours\n *  */2   *   *   *    $HOME/bin/dosomethingelse\n\n# Restart the IRC proxy after each reboot\n@reboot /usr/bin/dircproxy"
 
 msgid "<emphasis>TIP</emphasis> Executing a command on boot"
 msgstr "<emphasis>TIPS</emphasis> Mengeksekusi perintah saat boot"
@@ -2138,10 +1992,8 @@ msgstr "Menggunakan Perintah <command>at</command>"
 msgid "<primary><command>at</command></primary>"
 msgstr "<primary><command>at</command></primary>"
 
-#, fuzzy
-#| msgid "The <command>at</command> executes a command at a specified moment in the future. It takes the desired time and date as command-line parameters, and the command to be executed in its standard input. The command will be executed as if it had been entered in the current shell. <command>at</command> even takes care to retain the current environment, in order to reproduce the same conditions when it executes the command. The time is indicated by following the usual conventions: <literal>16:12</literal> or <literal>4:12pm</literal> represents 4:12 pm. The date can be specified in several European and Western formats, including <literal>DD.MM.YY</literal> (<literal>27.07.15</literal> thus representing 27 July 2015), <literal>YYYY-MM-DD</literal> (this same date being expressed as <literal>2015-07-27</literal>), <literal>MM/DD/[CC]YY</literal> (ie., <literal>12/25/15</literal> or <literal>12/25/2015</literal> will be December 25, 2015), or simple <literal>MMDD[CC]YY</literal> (so that <literal>122515</literal> or <literal>12252015</literal> will, likewise, represent December 25, 2015). Without it, the command will be executed as soon as the clock reaches the time indicated (the same day, or tomorrow if that time has already passed on the same day). You can also simply write “today” or “tomorrow”, which is self-explanatory."
 msgid "The <command>at</command> executes a command at a specified moment in the future. It takes the desired time and date as command-line parameters, and the command to be executed in its standard input. The command will be executed as if it had been entered in the current shell. <command>at</command> even takes care to retain the current environment, in order to reproduce the same conditions when it executes the command. The time is indicated by following the usual conventions: <literal>16:12</literal> or <literal>4:12pm</literal> represents 4:12 pm. The date can be specified in several European and Western formats, including <literal>DD.MM.YY</literal> (<literal>27.07.22</literal> thus representing 27 July 2022), <literal>YYYY-MM-DD</literal> (this same date being expressed as <literal>2022-07-27</literal>), <literal>MM/DD/[CC]YY</literal> (i.e., <literal>12/25/22</literal> or <literal>12/25/2022</literal> will be December 25, 2022), or simple <literal>MMDD[CC]YY</literal> (so that <literal>122522</literal> or <literal>12252022</literal> will, likewise, represent December 25, 2022). Without it, the command will be executed as soon as the clock reaches the time indicated (the same day, or tomorrow if that time has already passed on the same day). You can also simply write “today” or “tomorrow”, which is self-explanatory."
-msgstr "<command>at</command> mengeksekusi perintah pada saat tertentu di masa depan. Ini membutuhkan masukan waktu dan tanggal sebagai parameter baris perintah, dan perintah akan dieksekusi di masukan standar. Perintah akan dieksekusi seolah-olah itu telah dimasukkan di shell saat ini. <command>at</command> bahkan mempertahankan lingkungan saat ini, untuk mereproduksi kondisi yang sama ketika itu mengeksekusi perintah. Waktu ditunjukkan dengan mengikuti konvensi biasa: <literal>16:12</literal> atau <literal>4:12 pm</literal> mewakili 4:12 pm. Tanggal dapat ditentukan dalam beberapa format Eropa dan Barat, termasuk <literal>DD. MM. YY</literal> (<literal>27.07.15</literal> dengan demikian mewakili 27 Juli 2015), <literal>YYYY-MM-DD</literal> (tanggal yang sama ini dinyatakan sebagai <literal>2015-07-27</literal>), <literal>MM/DD/ [CC]YY</literal> (yaitu, <literal>12/25/15</literal> atau <literal>12/25/2015</literal> akan menjadi 25 Desember 2015), atau sekadar <literal>MMDD[CC]YY</literal> (Jadi <literal>122515</literal> atau <literal>12252015</literal> akan juga mewakili 25 Desember 2015). Tanpa itu, perintah akan dilaksanakan segera setelah jam mencapai waktu yang ditunjukkan (hari yang sama, atau besok jika waktu itu telah melewati pada hari yang sama). Anda juga dapat menulis \"today (hari ini)\" atau \"tomorrow (besok)\", yang sudah cukup jelas."
+msgstr "<command>at</command> mengeksekusi perintah pada saat tertentu di masa depan. Ini membutuhkan masukan waktu dan tanggal sebagai parameter baris perintah, dan perintah akan dieksekusi di masukan standar. Perintah akan dieksekusi seolah-olah itu telah dimasukkan di shell saat ini. <command>at</command> bahkan mempertahankan lingkungan saat ini, untuk mereproduksi kondisi yang sama ketika itu mengeksekusi perintah. Waktu ditunjukkan dengan mengikuti konvensi biasa: <literal>16:12</literal> atau <literal>4:12 pm</literal> mewakili pukul 4:12 sore. Tanggal dapat ditentukan dalam beberapa format Eropa dan Barat, termasuk <literal>DD.MM.YY</literal> (<literal>27.07.22</literal> dengan demikian mewakili 27 Juli 2022), <literal>YYYY-MM-DD</literal> (tanggal yang sama ini dinyatakan sebagai <literal>2022-07-27</literal>), <literal>MM/DD/[CC]YY</literal> (yaitu, <literal>12/25/22</literal> atau <literal>12/25/2022</literal> akan menjadi 25 Desember 2022), atau sekadar <literal>MMDD[CC]YY</literal> (jadi <literal>122522</literal> atau <literal>12252022</literal> akan juga mewakili 25 Desember 2022). Tanpa itu, perintah akan dilaksanakan segera setelah jam mencapai waktu yang ditunjukkan (hari yang sama, atau besok jika waktu itu telah melewati pada hari yang sama). Anda juga dapat menulis \"today (hari ini)\" atau \"tomorrow (besok)\", yang sudah cukup jelas."
 
 msgid ""
 "\n"
@@ -2189,15 +2041,11 @@ msgstr "<emphasis>KEMBALI KE DASAR</emphasis> Prioritas dan <command>nice</comma
 msgid "<primary><command>renice</command></primary>"
 msgstr "<primary><command>renice</command></primary>"
 
-#, fuzzy
-#| msgid "<primary>SSH tunnel</primary><seealso>VPN</seealso>"
 msgid "<primary>niceness</primary><seealso><command>nice</command></seealso>"
-msgstr "<primary>SSH tunnel</primary><seealso>VPN</seealso>"
+msgstr "<primary>tingkat nice</primary><seealso><command>nice</command></seealso>"
 
-#, fuzzy
-#| msgid "Unix systems (and thus Linux) are multi-tasking and multi-user systems. Indeed, several processes can run in parallel, and be owned by different users: the kernel mediates access to the resources between the different processes. As a part of this task, it has a concept of priority, which allows it to favor certain processes over others, as needed. When you know that a process can run in low priority, you can indicate so by running it with <command>nice <replaceable>program</replaceable></command>. The program will then have a smaller share of the CPU, and will have a smaller impact on other running processes. Of course, if no other processes needs to run, the program will not be artificially held back."
 msgid "Unix systems (and thus Linux) are multi-tasking and multi-user systems. Indeed, several processes can run in parallel, and be owned by different users: the kernel mediates access to the resources between the different processes. As a part of this task, it has a concept of priority, which allows it to favor certain processes over others, as needed. When you know that a process can run in low priority, you can indicate so by running it with <command>nice <replaceable>program</replaceable></command>. The program will then have a smaller share of the CPU, and will have a smaller impact on other running processes. Of course, if no other process needs to run, the program will not be artificially held back."
-msgstr "Sistem Unix (dan dengan demikian Linux) adalah sistem multi-tasking dan multi-user. Memang, beberapa proses dapat berjalan secara paralel, dan dimiliki oleh pengguna yang berbeda: kernel menengahi akses ke sumber daya antara proses yang berbeda. Sebagai bagian dari tugas ini, ada konsep prioritas, yang memungkinkan untuk lebih mendukung proses tertentu daripada yang lain, sesuai kebutuhan. Ketika Anda tahu bahwa proses dapat berjalan dalam prioritas rendah, Anda dapat menunjukkannya dengan menjalankan <command>nice <replaceable>program</replaceable></command>. Program akan memiliki bagian lebih kecil dari CPU, dan akan memiliki dampak yang lebih kecil pada proses berjalan lainnya. Tentu saja, jika tidak ada proses lain yang perlu berjalan, program itu tidak akan dihambat."
+msgstr "Sistem Unix (dan dengan demikian Linux) adalah sistem multi-tasking dan multi-user. Memang, beberapa proses dapat berjalan secara paralel, dan dimiliki oleh pengguna yang berbeda: kernel menengahi akses ke sumber daya antara proses yang berbeda. Sebagai bagian dari tugas ini, ada konsep prioritas, yang memungkinkan untuk lebih mendukung proses tertentu daripada yang lain, sesuai kebutuhan. Ketika Anda tahu bahwa proses dapat berjalan dalam prioritas rendah, Anda dapat menunjukkannya dengan menjalankan <command>nice <replaceable>program</replaceable></command>. Program akan mendapat jatah lebih kecil dari CPU, dan akan memiliki dampak yang lebih kecil pada proses berjalan lainnya. Tentu saja, jika tidak ada proses lain yang perlu berjalan, program itu tidak akan dihambat."
 
 msgid "<command>nice</command> works with levels of “niceness”: the positive levels (from 1 to 19) progressively lower the priority, while the negative levels (from -1 to -20) will increase it — but only root can use these negative levels. Unless otherwise indicated (see the <citerefentry><refentrytitle>nice</refentrytitle> <manvolnum>1</manvolnum></citerefentry> manual page), <command>nice</command> increases the current level by 10."
 msgstr "<command>nice</command> bekerja dengan tingkat \"niceness\": tingkat positif (dari 1 sampai 19) semakin menurunkan prioritas, sementara tingkat negatif (dari -1 untuk-20) akan meningkatkan — tetapi hanya root yang dapat menggunakan tingkat negatif ini. Kecuali jika dinyatakan (lihat halaman manual <citerefentry><refentrytitle>nice</refentrytitle> <manvolnum>1</manvolnum></citerefentry>), <command>nice</command> menaikkan tingkat saat ini sebanyak 10."
@@ -2250,15 +2098,11 @@ msgstr "Program <command>setquota</command> dapat digunakan dalam skrip untuk se
 msgid "The quota system allows you to set four limits:"
 msgstr "Sistem kuota memungkinkan Anda untuk mengatur empat batas:"
 
-#, fuzzy
-#| msgid "two limits (called “soft” and “hard”) refer to the number of blocks consumed. If the filesystem was created with a block-size of 1 kibibyte, a block contains 1024 bytes from the same file. Unsaturated blocks thus induce losses of disk space. A quota of 100 blocks, which theoretically allows storage of 102,400 bytes, will, however, be saturated with just 100 files of 500 bytes each, only representing 50,000 bytes in total."
 msgid "two limits (called “soft” and “hard”) refer to the number of blocks consumed. If the filesystem was created with a block-size of 1 kibibyte, the 1024 available bytes of each block can only be assigned to one file. Unsaturated blocks thus induce losses of disk space. A quota of 100 blocks, which theoretically allows storage of 102,400 bytes, will, however, be saturated with just 100 files of 500 bytes each, only representing 50,000 bytes in total."
 msgstr "dua batas (disebut \"lunak\" dan \"keras\") mengacu pada jumlah blok yang dikonsumsi. Jika sistem berkas diciptakan dengan ukuran blok 1 kibibyte, blok berisi 1024 byte dari berkas yang sama. Blok tak penuh akan menyebabkan kerugian ruang disk. Kuota 100 blok, yang secara teoritis memungkinkan penyimpanan 102,400 byte, akan jenuh dengan hanya 100 berkas yang masing-masing berukuran 500 byte, hanya mewakili 50.000 byte total."
 
-#, fuzzy
-#| msgid "two limits (soft and hard) refer to the number of inodes used. Each file occupies at least one inode to store information about it (permissions, owner, timestamp of last access, etc.). It is thus a limit on the number of user files."
 msgid "two limits (“soft” and “hard”) refer to the number of inodes used. Each file occupies at least one inode to store information about it (permissions, owner, timestamp of last access, etc.). It is thus a limit on the number of user files."
-msgstr "dua batas (lembut dan keras) mengacu pada cacah inode yang digunakan. Setiap berkas menempati setidaknya satu inode untuk menyimpan informasi tentangnya (izin, pemilik, stempel waktu akses terakhir, dll). Karena itu, membatasi banyaknya berkas pengguna."
+msgstr "dua batas (lunak dan keras) mengacu pada cacah inode yang digunakan. Setiap berkas menempati setidaknya satu inode untuk menyimpan informasi tentangnya (izin, pemilik, stempel waktu akses terakhir, dll). Karena itu, membatasi banyaknya berkas pengguna."
 
 msgid "<primary>inode</primary>"
 msgstr "<primary>inode</primary>"
@@ -2344,13 +2188,11 @@ msgstr "<primary><command>rsnapshot</command></primary>"
 msgid "<primary><command>timeshift</command></primary>"
 msgstr "<primary><command>timeshift</command></primary>"
 
-#, fuzzy
-#| msgid "Many programs exist, such as <command>amanda</command>, <command>bacula</command>, <command>BackupPC</command>. Those are client/server system featuring many options, whose configuration is rather difficult. Some of them provide user-friendly web interfaces to mitigate this. But Debian contains dozens of other backup software covering all possible use cases, as you can easily confirm with <command>apt-cache search backup</command>."
 msgid "Many programs exist, such as <command>amanda</command>, <command>bacula</command>, or <command>BackupPC</command>. Those are client/server systems featuring many options, whose configuration is rather difficult. Some of them provide user-friendly web interfaces to mitigate this. For non-enterprise systems, administrators might want to check out <command>rsnapshot</command> or <command>rdiff-backup</command>. Users can easily create backups of their filesystems with <command>timeshift</command>, <command>fsarchiver</command>, <command>duplicity</command>, or even <command>dd</command>."
-msgstr "Banyak program yang ada, seperti <command>amanda</command>, <command>bacula</command>, <command>BackupPC</command>. Mereka adalah sistem klien/server yang menampilkan banyak pilihan, yang konfigurasi yang agak sulit. Beberapa diantaranya menyediakan antarmuka web yang ramah pengguna untuk mengurangi ini. Tapi Debian berisi puluhan perangkat lunak cadangan lain yang meliputi semua kemungkinan penggunaan kasus, yang Anda dapat Anda konfirmasi dengan mudah memakai <command>apt-cache search backup</command>."
+msgstr "Banyak program yang ada, seperti <command>amanda</command>, <command>bacula</command>, <command>BackupPC</command>. Mereka adalah sistem klien/server yang menampilkan banyak pilihan, yang konfigurasi yang agak sulit. Beberapa diantaranya menyediakan antarmuka web yang ramah pengguna untuk mengurangi ini. Untuk sistem bukan enterprise, administrator mungkin ingin mencoba <command>rsnapshot</command> atau <command>rdiff-backup</command>. Pengguna dapat dengan mudah membuat cadangan sistem berkas mereka dengan <command>timeshift</command>, <command>fsarchiver</command>, <command>duplicity</command>, atau bahkan <command>dd</command>."
 
 msgid "Debian contains dozens of other backup software covering all possible use cases, as you can easily confirm with <command>apt-cache search backup</command>."
-msgstr ""
+msgstr "Debian berisi lusinan perangkat lunak cadangan lainnya yang mencakup semua kemungkinan kasus penggunaan, yang dapat dengan mudah Anda konfirmasi memakai <command>apt-cache search backup</command>."
 
 msgid "Rather than detailing some of them, this section will present the thoughts of the Falcot Corp administrators when they defined their backup strategy."
 msgstr "Daripada merinci beberapa dari mereka, artikel ini akan menyajikan pikiran para administrator Falcot Corp ketika mereka mendefinisikan strategi cadangan mereka."
@@ -2440,10 +2282,8 @@ msgstr ""
 "    *   *     1-7 *         1    +1 year\n"
 "    *   *     1-7 1,4,7,10  1"
 
-#, fuzzy
-#| msgid "The <literal>bank</literal> setting indicates the directory in which the backups are stored. The <literal>exclude</literal> setting allows you to indicate files (or file types) to exclude from the backup. The <literal>Runall</literal> is a list of file sets to backup with a time-stamp for each set, which allows you to assign the correct date to the copy, in case the backup is not triggered at precisely the assigned time. You have to indicate a time just before the actual execution time (which is, by default, 10:04 pm in Debian, according to <filename>/etc/cron.d/dirvish</filename>). Finally, the <literal>expire-default</literal> and <literal>expire-rule</literal> settings define the expiration policy for backups. The above example keeps forever backups that are generated on the first Sunday of each quarter, deletes after one year those from the first Sunday of each month, and after 3 months those from other Sundays. Other daily backups are kept for 15 days. The order of the rules does matter, Dirvish uses the last matching rule, or the <literal>expire-default</literal> one if no other <literal>expire-rule</literal> matches."
 msgid "The <literal>bank</literal> setting indicates the directory in which the backups are stored. The <literal>exclude</literal> setting allows you to indicate files (or file types) to exclude from the backup. The <literal>Runall</literal> is a list of file sets to backup with a time-stamp for each set, which allows you to assign the correct date to the copy, in case the backup is not triggered at precisely the assigned time. You have to indicate a time just before the actual execution time (according to <filename>/etc/cron.d/dirvish</filename>). Finally, the <literal>expire-default</literal> and <literal>expire-rule</literal> settings define the expiration policy for backups. The above example keeps forever backups that are generated on the first Sunday of each quarter, deletes after one year those from the first Sunday of each month, and after 3 months those from other Sundays. Other daily backups are kept for 15 days. The order of the rules does matter, Dirvish uses the last matching rule, or the <literal>expire-default</literal> one if no other <literal>expire-rule</literal> matches."
-msgstr "Pengaturan <literal>bank</literal> menunjukkan direktori di mana cadangan disimpan. Pengaturan <literal>exclude</literal> memungkinkan Anda untuk menunjukkan berkas (atau jenis berkas) yang dikecualikan dari cadangan. <literal>Runall</literal> adalah daftar set berkas yang akan dibuat cadangannya dengan sebuah stempel waktu untuk setiap set, yang memungkinkan Anda untuk menetapkan tanggal yang benar yang akan disalin, dalam kasus cadangan tidak dipicu pada tepat waktu yang ditetapkan. Anda harus menunjukkan waktu yang tepat sebelum waktu eksekusi yang sebenarnya (yang, secara default, 22:04 di Debian, menurut <filename>/etc/cron.d/dirvish</filename>). Akhirnya, pengaturan <literal>expire-default</literal> dan <literal>expire-rule</literal> menetapkan kebijakan kedaluwarsa untuk cadangan. Contoh di atas menyimpan selamanya cadangan yang dihasilkan pada hari Minggu pertama setiap kuartal, menghapus setelah satu tahun dari hari Minggu pertama setiap bulan, dan setelah 3 bulan dari hari Minggu lainnya. Cadangan harian lainnya disimpan selama 15 hari. Urutan aturan penting, Dirvish menggunakan aturan terakhir yang cocok, atau <literal>expire-default</literal> jika tidak ada <literal>expire-rule</literal> yang cocok."
+msgstr "Pengaturan <literal>bank</literal> menunjukkan direktori di mana cadangan disimpan. Pengaturan <literal>exclude</literal> memungkinkan Anda untuk menunjukkan berkas (atau jenis berkas) yang dikecualikan dari cadangan. <literal>Runall</literal> adalah daftar set berkas yang akan dibuat cadangannya dengan sebuah stempel waktu untuk setiap set, yang memungkinkan Anda untuk menetapkan tanggal yang benar yang akan disalin, dalam kasus cadangan tidak dipicu pada tepat waktu yang ditetapkan. Anda harus menunjukkan waktu yang tepat sebelum waktu eksekusi yang sebenarnya (menurut <filename>/etc/cron.d/dirvish</filename>). Akhirnya, pengaturan <literal>expire-default</literal> dan <literal>expire-rule</literal> menetapkan kebijakan kedaluwarsa untuk cadangan. Contoh di atas menyimpan selamanya cadangan yang dihasilkan pada hari Minggu pertama setiap kuartal, menghapus setelah satu tahun dari hari Minggu pertama setiap bulan, dan setelah 3 bulan dari hari Minggu lainnya. Cadangan harian lainnya disimpan selama 15 hari. Urutan aturan penting, Dirvish menggunakan aturan terakhir yang cocok, atau <literal>expire-default</literal> jika tidak ada <literal>expire-rule</literal> yang cocok."
 
 msgid "<emphasis>IN PRACTICE</emphasis> Scheduled expiration"
 msgstr "<emphasis>DALAM PRAKTEK</emphasis> Kedaluwarsa terjadwal"
@@ -2482,10 +2322,8 @@ msgstr ""
 msgid "The above example specifies the set of files to back up: these are files on the machine <emphasis>rivendell.falcot.com</emphasis> (for local data backup, simply specify the name of the local machine as indicated by <command>hostname</command>), especially those in the root tree (<literal>tree: /</literal>), except those listed in <literal>exclude</literal>. The backup will be limited to the contents of one filesystem (<literal>xdev: 1</literal>). It will not include files from other mount points. An index of saved files will be generated (<literal>index: gzip</literal>), and the image will be named according to the current date (<literal>image-default: %Y%m%d</literal>)."
 msgstr "Contoh di atas menyatakan set berkas yang akan dibuat cadangannya: ini adalah berkas-berkas pada mesin <emphasis>rivendell.falcot.com</emphasis> (untuk cadangan data lokal, cukup nyatakan nama dari mesin lokal seperti yang ditunjukkan oleh <command>hostname</command>), terutama yang ada di akar pohon (<literal>tree: /</literal>), kecuali yang tercantum dalam <literal>exclude</literal>. Cadangan akan terbatas pada isi dari satu sistem berkas (<literal>xdev: 1</literal>). Itu tidak akan menyertakan berkas dari titik kait lainnya. Suatu indeks dari berkas-berkas yang disimpan akan dihasilkan (<literal>index: gzip</literal>), dan image akan dinamai menurut tanggal saat ini (<literal>image-default: %Y%m%d</literal>)."
 
-#, fuzzy
-#| msgid "There are many options available, all documented in the <citerefentry><refentrytitle>dirvish.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry> manual page. Once these configuration files are setup, you have to initialize each file set with the <command>dirvish --vault <replaceable>vault</replaceable> --init</command> command. From there on the daily invocation of <command>dirvish-runall</command> will automatically create a new backup copy just after having deleted those that expired."
 msgid "There are many options available, all documented in the <citerefentry><refentrytitle>dirvish.conf</refentrytitle> <manvolnum>5</manvolnum></citerefentry> manual page. Once these configuration files are setup, you have to initialize each file set with the <command>dirvish --vault <replaceable>vault</replaceable> --init</command> command. From there on the daily invocation of <command>dirvish-runall</command> will automatically create a new backup copy just after having deleted those that expired."
-msgstr "Ada banyak pilihan yang tersedia, semua didokumentasikan di halaman manual <citerefentry><refentrytitle>dirvish.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>. Setelah berkas konfigurasi ini disiapkan, Anda mesti menginisialisasi setiap set berkas dengan perintah <command>dirvish --vault <replaceable>vault</replaceable>--init</command>. Selanjutnya dari sana eksekusi harian <command>dirvish-runall</command> akan secara otomatis membuat salinan cadangan baru setelah menghapus yang kedaluwarsa."
+msgstr "Ada banyak pilihan yang tersedia, semua didokumentasikan di halaman manual <citerefentry><refentrytitle>dirvish.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>. Setelah berkas konfigurasi ini disiapkan, Anda mesti menginisialisasi setiap set berkas dengan perintah <command>dirvish --vault <replaceable>vault</replaceable> --init</command>. Selanjutnya dari sana eksekusi harian <command>dirvish-runall</command> akan secara otomatis membuat salinan cadangan baru setelah menghapus yang kedaluwarsa."
 
 msgid "<emphasis>IN PRACTICE</emphasis> Remote backup over SSH"
 msgstr "<emphasis>DALAM PRAKTEK</emphasis> Cadangan remote melalui SSH"
@@ -2496,10 +2334,8 @@ msgstr "Ketika dirvish perlu menyimpan data ke suatu mesin remote, itu akan meng
 msgid "Restoring Machines without Backups"
 msgstr "Memulihkan Mesin tanpa Cadangan"
 
-#, fuzzy
-#| msgid "Desktop computers, which are not backed up, will be easy to reinstall from custom DVD-ROMs prepared with <emphasis>Simple-CDD</emphasis> (see <xref linkend=\"sect.simple-cdd\" />). Since this performs an installation from scratch, it loses any customization that can have been made after the initial installation. This is fine since the systems are all hooked to a central LDAP directory for accounts and most desktop applications are preconfigured thanks to dconf (see <xref linkend=\"sect.gnome-desktop\" /> for more information about this)."
 msgid "Desktop computers, which are not backed up, will be easy to reinstall from custom DVD-ROMs/USB sticks prepared with <emphasis role=\"pkg\">simple-cdd</emphasis> (see <xref linkend=\"sect.simple-cdd\" />). Since this performs an installation from scratch, it loses any customization that can have been made after the initial installation. This is fine since the systems are all hooked to a central LDAP directory for accounts and most desktop applications are preconfigured thanks to <command>dconf</command> (see <xref linkend=\"sect.gnome-desktop\" /> for more information about this)."
-msgstr "Desktop komputer, yang tidak di backup, akan sangat mudah untuk diinstal ulang dari DVD-ROM kustom yang disiapkan dengan <emphasis>Simple-CDD</emphasis> (lihat <xref linkend=\"sect.simple-cdd\" />). Karena ini melakukan instalasi dari awal, itu kehilangan kustomisasi apapun yang mungkin telah dibuat setelah instalasi awal. Ini tidak apa karena semua sistem terhubung ke direktori LDAP pusat untuk akun dan sebagian besar aplikasi desktop yang telah diprakonfigurasikan berkat dconf (lihat <xref linkend=\"sect.gnome-desktop\" /> untuk informasi lebih lanjut tentang ini)."
+msgstr "Komputer desktop, yang tidak dicadangkan, akan sangat mudah untuk dipasang ulang dari DVD-ROM/flash disk USB ubahan yang disiapkan dengan <emphasis role=\"pkg\">simple-cdd</emphasis> (lihat <xref linkend=\"sect.simple-cdd\" />). Karena ini melakukan instalasi dari awal, itu kehilangan penyesuaian apa pun yang mungkin telah dibuat setelah instalasi awal. Ini tidak apa karena semua sistem terhubung ke direktori LDAP pusat untuk akun dan sebagian besar aplikasi desktop telah diprakonfigurasikan berkat <command>dconf</command> (lihat <xref linkend=\"sect.gnome-desktop\" /> untuk informasi lebih lanjut tentang ini)."
 
 msgid "The Falcot Corp administrators are aware of the limits in their backup policy. Since they can't protect the backup server as well as a tape in a fireproof safe, they have installed it in a separate room so that a disaster such as a fire in the server room won't destroy backups along with everything else. Furthermore, they do an incremental backup on DVD-ROM once per week — only files that have been modified since the last backup are included."
 msgstr "Para administrator Falcot Corp menyadari batas kebijakan cadangan mereka. Karena mereka tidak bisa melindungi server cadangan serta tape di tempat yang aman yang tahan api, mereka telah terinstal di ruang yang terpisah sehingga bencana seperti kebakaran pada ruang server tidak akan menghancurkan backup bersama dengan segala sesuatu yang lain. Selain itu, mereka melakukan backup incremental pada DVD-ROM sekali per minggu — hanya berkas yang telah dimodifikasi sejak cadangan terakhir yang disertakan."
@@ -2546,10 +2382,8 @@ msgstr "Pengenalan"
 msgid "<primary>hotplug</primary>"
 msgstr "<primary>hotplug</primary>"
 
-#, fuzzy
-#| msgid "<primary>booting</primary><secondary>the system</secondary>"
 msgid "<primary>kernel</primary><secondary>hotplug subsystem</secondary>"
-msgstr "<primary>boot</primary><secondary>sistem</secondary>"
+msgstr "<primary>kernel</primary><secondary>subsistem hotplug</secondary>"
 
 msgid "<primary><command>udevd</command></primary>"
 msgstr "<primary><command>udevd</command></primary>"
@@ -2572,10 +2406,8 @@ msgstr "<primary>PCMCIA</primary>"
 msgid "<primary>SATA</primary>"
 msgstr "<primary>SATA</primary>"
 
-#, fuzzy
-#| msgid "The <emphasis>hotplug</emphasis> kernel subsystem dynamically handles the addition and removal of devices, by loading the appropriate drivers and by creating the corresponding device files (with the help of <command>udevd</command>). With modern hardware and virtualization, almost everything can be hotplugged: from the usual USB/PCMCIA/IEEE 1394 peripherals to SATA hard drives, but also the CPU and the memory."
 msgid "The <emphasis>hotplug</emphasis> kernel subsystem dynamically handles the addition and removal of devices, by loading the appropriate drivers and by creating the corresponding device files (with the help of <command>udevd</command>). With modern hardware and virtualization, almost everything can be “hotplugged“: from the usual USB/PCMCIA/IEEE 1394 peripherals to SATA hard drives, but also the CPU and the memory."
-msgstr "Subsistem kernel <emphasis>hotplug</emphasis> secara dinamis menangani penambahan dan penghapusan perangkat, dengan memuat driver yang sesuai dan membuat berkas-berkas divais yang sesuai (dengan bantuan <command>udevd</command>). Dengan perangkat keras modern dan virtualisasi, hampir semuanya dapat di-hotplug: dari peripheral PCMCIA/USB/IEEE 1394 yang biasa sampai hard drive SATA, tetapi juga CPU dan memori."
+msgstr "Subsistem kernel <emphasis>hotplug</emphasis> secara dinamis menangani penambahan dan penghapusan perangkat, dengan memuat driver yang sesuai dan membuat berkas-berkas peranti yang sesuai (dengan bantuan <command>udevd</command>). Dengan perangkat keras modern dan virtualisasi, hampir semuanya dapat di-hotplug: dari periferal PCMCIA/USB/IEEE 1394 yang biasa sampai hard drive SATA, tetapi juga CPU dan memori."
 
 msgid "The kernel has a database that associates each device ID with the required driver. This database is used during boot to load all the drivers for the peripheral devices detected on the different buses, but also when an additional hotplug device is connected. Once the device is ready for use, a message is sent to <command>udevd</command> so it will be able to create the corresponding entry in <filename>/dev/</filename>."
 msgstr "Kernel memiliki basis data yang mengaitkan setiap ID perangkat dengan driver yang diperlukan. Basis data ini digunakan selama boot untuk memuat semua driver untuk perangkat periferal yang terdeteksi pada bus berbeda, tetapi juga ketika perangkat tambahan hotplug terhubung. Setelah perangkat siap untuk digunakan, pesan dikirim ke <command>udevd</command> sehingga akan dapat membuat entri yang sesuai di <filename>/dev/</filename>."
@@ -2691,10 +2523,8 @@ msgstr "<literal>$result</literal> atau <literal>%c</literal>: string keluaran d
 msgid "and, finally, <literal>%%</literal> and <literal>$$</literal> for the percent and dollar sign, respectively."
 msgstr "dan, akhirnya, <literal>%%</literal> dan <literal>$$</literal> masing-masing untuk persen dan tanda dolar."
 
-#, fuzzy
-#| msgid "The above lists are not complete (they include only the most important parameters), but the <citerefentry><refentrytitle>udev</refentrytitle><manvolnum>7</manvolnum></citerefentry> manual page should be exhaustive."
 msgid "The above lists are not complete (they include only the most important parameters), but the <citerefentry><refentrytitle>udev</refentrytitle> <manvolnum>7</manvolnum></citerefentry> manual page should be exhaustive."
-msgstr "Di atas daftar ini tidak lengkap (mereka hanya menyertakan parameter-parameter terpenting), tetapi halaman manual <citerefentry><refentrytitle>udev</refentrytitle> <manvolnum>7</manvolnum></citerefentry> harus lengkap."
+msgstr "Daftar di atas ini tidak lengkap (mereka hanya menyertakan parameter-parameter terpenting), tetapi halaman manual <citerefentry><refentrytitle>udev</refentrytitle> <manvolnum>7</manvolnum></citerefentry> harus lengkap."
 
 msgid "A concrete example"
 msgstr "Contoh konkret"
@@ -2794,10 +2624,8 @@ msgstr "<primary><command>acpid</command></primary>"
 msgid "The topic of power management is often problematic. Indeed, properly suspending the computer requires that all the computer's device drivers know how to put them to standby, and that they properly reconfigure the devices upon waking. Unfortunately, there are still a few devices unable to sleep well under Linux, because their manufacturers have not provided the required specifications."
 msgstr "Topik manajemen daya ini sering bermasalah. Memang, mensuspensi komputer secara benar mensyaratkan bahwa semua driver perangkat komputer tahu bagaimana untuk menempatkan mereka ke standby, dan bahwa mereka secara benar mengkonfigurasi perangkat saat bangun. Sayangnya, masih ada beberapa perangkat yang tidak dapat tidur dengan baik di bawah Linux, karena produsen mereka belum memberikan spesifikasi yang dibutuhkan."
 
-#, fuzzy
-#| msgid "Linux supports ACPI (Advanced Configuration and Power Interface) — the most recent standard in power management. The <emphasis role=\"pkg\">acpid</emphasis> package provides a daemon that looks for power management related events (switching between AC and battery power on a laptop, etc.) and that can execute various commands in response."
 msgid "Linux supports <acronym>ACPI</acronym> (Advanced Configuration and Power Interface) — the most recent standard in power management. The <emphasis role=\"pkg\">acpid</emphasis> package provides a daemon that looks for power management related events (switching between AC and battery power on a laptop, etc.) and that can execute various commands in response."
-msgstr "Linux mendukung ACPI ((Advanced Configuration and Power Interface) — standar terkini dalam manajemen daya. Paket <emphasis role=\"pkg\">acpid</emphasis> menyediakan daemon yang mencari kejadian-kejadian yang terkait manajemen daya (berpindah antara daya AC dan baterai pada laptop, dll) dan bisa menjalankan berbagai perintah sebagai respon."
+msgstr "Linux mendukung <acronym>ACPI</acronym> ((Advanced Configuration and Power Interface) — standar terkini dalam manajemen daya. Paket <emphasis role=\"pkg\">acpid</emphasis> menyediakan daemon yang mencari kejadian-kejadian yang terkait manajemen daya (berpindah antara daya AC dan baterai pada laptop, dll) dan bisa menjalankan berbagai perintah sebagai respon."
 
 msgid "<emphasis>BEWARE</emphasis> Graphics card and standby"
 msgstr "<emphasis>HATI-HATI</emphasis> Kartu grafis dan standby"
