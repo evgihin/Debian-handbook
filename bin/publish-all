@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -e
+
+. $(dirname $0)/common.sh
+
+debian_handbook_info_dir=/home/rhertzog/écriture/debian-handbook/debian-handbook.info
+
+distro=$(get_release)
+version=$(get_product_version)
+download_dir=$debian_handbook_info_dir/download
+browse_dir=$debian_handbook_info_dir/browse
+
+parse_options "$@"
+
+if [ -n "$OPT_lang" ]; then
+    bin/build-all --lang="$OPT_lang"
+else
+    bin/build-all
+fi
+
+OPT_lang=${OPT_lang:-[a-z][a-z]-[A-Z][A-Z]}
+
+for lang in $OPT_lang; do
+    echo "Sending files for $lang"
+    htmldir="publish/$lang/Debian/$version/html/debian-handbook/"
+    if [ -e $htmldir ]; then
+	rsync --delete -avz \
+	    publish/$lang/Debian/$version/html/debian-handbook/ \
+	    $browse_dir/$lang/$distro/
+    else
+	echo "Missing HTML files for $lang" >&2
+    fi
+    epubfile=publish/$lang/Debian/$version/epub/debian-handbook/*.epub
+    if [ -e $epubfile ]; then
+	rsync -avz $epubfile $download_dir/$lang/$distro/debian-handbook.epub
+    else
+	echo "Missing EPUB file for $lang" >&2
+    fi
+    mobifile=publish/$lang/Debian/$version/epub/debian-handbook/*.mobi
+    if [ -e $mobifile ]; then
+	rsync -avz $mobifile $download_dir/$lang/$distro/debian-handbook.mobi
+    else
+	echo "Missing MOBI file for $lang" >&2
+    fi
+done
+
+cd $debian_handbook_info_dir
+git add --all
+git commit -m "Updated versions to release"
